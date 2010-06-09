@@ -69,7 +69,7 @@ RESOURCES += _resources/SwConfigurationRsc.qrc
 DEFINES += SWCONFIGURATION_LIB
 MOC_DIR += ./_intermediaire
 OBJECTS_DIR += ./_obj
-RCC_DIR += ._/intermediaire
+RCC_DIR += ./_intermediaire
 UI_DIR += ./_intermediaire
 INCLUDEPATH += ./ \
     ./_intermediaire \
