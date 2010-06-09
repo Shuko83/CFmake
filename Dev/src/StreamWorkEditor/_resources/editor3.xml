@@ -1,0 +1,481 @@
+<streamwork version="1.0.0" build_date="Nov 27 2008" build_time="09:27:22" >
+    <component description="C:/Projects/Libraries/StreamWork/Dev/sdk/StreamWorkEditor/resources/editor3.xml" name="Nonamed" >
+        <service name="EditorGraphicItem" >
+            <gitem width="1499" x="-454" y="-381" height="1297" px="0" py="0" />
+            <giitems history="53" />
+            <gpitems history="54" />
+        </service>
+        <service name="EditorGraphicScene" >
+            <gscene width="1519" x="-454" y="-381" height="1317" />
+        </service>
+        <component factory_name="SwGuiMainWindow" name="_main" factory="SwGuid.swdld" >
+            <service name="Properties" >
+                <property width="1266" x="8" y="27" pname="QMainWindow.geometry" height="837" />
+                <property pname="QMainWindow.visible" >true</property>
+                <property pname="QMainWindow.windowTitle" >StreamWork Editor (Version 1.0)</property>
+                <property enum="5" pname="QMainWindow.dockOptions" />
+                <property pname="nb_menus" >3</property>
+                <property pname="nb_actions" >0</property>
+                <property pname="nb_toolbars" >3</property>
+                <property pname="nb_dockwidgets" >3</property>
+                <property enum="4" pname="ToolBar_0.where" />
+                <property enum="4" pname="ToolBar_1.where" />
+                <property enum="4" pname="ToolBar_2.where" />
+                <property enum="2" pname="DockWidget_0.where" />
+                <property enum="2" pname="DockWidget_1.where" />
+                <property enum="2" pname="DockWidget_2.where" />
+            </service>
+            <service name="InterfacesConsumer" >
+                <interface provider_path=".the_central" idx="205" provider_interface="Widget" name="CentralWidget" />
+                <interface provider_path=".components_list_container" idx="308" provider_interface="DockWidget" name="DockWidget_0" />
+                <interface provider_path=".stream_tree_container" idx="310" provider_interface="DockWidget" name="DockWidget_1" />
+                <interface provider_path=".stream_tree_properties" idx="203" provider_interface="DockWidget" name="DockWidget_2" />
+                <interface provider_path=".menu_actions_core" idx="199" provider_interface="Menu" name="Menu_0" />
+                <interface provider_path=".menu_actions_operations" idx="251" provider_interface="Menu" name="Menu_1" />
+                <interface provider_path=".menu_actions_about" idx="297" provider_interface="Menu" name="Menu_2" />
+                <interface provider_path=".toolbar_actions_core" idx="201" provider_interface="ToolBar" name="ToolBar_0" />
+                <interface provider_path=".toolbar_actions_operations" idx="245" provider_interface="ToolBar" name="ToolBar_1" />
+                <interface provider_path=".toolbar_actions_navigation" idx="247" provider_interface="ToolBar" name="ToolBar_2" />
+            </service>
+            <service name="EditorGraphicItem" >
+                <gitem width="727" x="-452" y="-361" height="683" px="408" py="51" />
+                <giitems history="311" >
+                    <giitem_pro ppos="0" px="-50" py="-50" name="MainWindow" />
+                    <giitem_con ppos="0.05" px="-64.4" py="440" name="CentralWidget" />
+                    <giitem_con ppos="0.272621" px="-300" py="-67.8" name="DockWidget_0" />
+                    <giitem_con ppos="0.281625" px="-356" py="44.6" name="DockWidget_1" />
+                    <giitem_con ppos="0.29063" px="-325" py="258" name="DockWidget_2" />
+                    <giitem_con ppos="0.1" px="-227.8" py="-6" name="Menu_0" />
+                    <giitem_con ppos="0.15" px="-374.2" py="212" name="Menu_1" />
+                    <giitem_con ppos="0.2" px="-518.6" py="-6" name="Menu_2" />
+                    <giitem_con ppos="0.25" px="-558" py="-5" name="ToolBar_0" />
+                    <giitem_con ppos="0.3" px="-558" py="76.4" name="ToolBar_1" />
+                    <giitem_con ppos="0.347438" px="-558" py="-165.2" name="ToolBar_2" />
+                </giitems>
+                <gpitems history="58" />
+            </service>
+            <component factory_name="SwEditorStreamsManagerActions" name="actions_core" factory="SwEditord.swdld" >
+                <service name="Properties" />
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..core" idx="207" provider_interface="StreamsManager" name="StreamsManager" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-446" py="-318" />
+                    <giitems history="208" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="ActionClose" />
+                        <giitem_pro ppos="0.05" px="-32.102" py="-63.0037" name="ActionNew" />
+                        <giitem_pro ppos="0.1" px="-11.0616" py="-69.8401" name="ActionOpen" />
+                        <giitem_pro ppos="0.15" px="11.0616" py="-69.8401" name="ActionQuit" />
+                        <giitem_pro ppos="0.2" px="32.102" py="-63.0037" name="ActionSave" />
+                        <giitem_pro ppos="0.25" px="50" py="-50" name="ActionSaveAs" />
+                        <giitem_con ppos="0.3" px="12.102" py="242.996" name="StreamsManager" />
+                    </giitems>
+                    <gpitems history="76" />
+                </service>
+            </component>
+            <component factory_name="SwEditorStreamNavigatorActions" name="actions_navigation" factory="SwEditord.swdld" >
+                <service name="Properties" />
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..core" idx="239" provider_interface="StreamNavigator" name="StreamNavigator" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-445" py="-209" />
+                    <giitems history="240" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="ActionGoToParent" />
+                        <giitem_pro ppos="0.05" px="-32.102" py="-63.0037" name="CurrentPath" />
+                        <giitem_con ppos="0.1" px="-12.0616" py="147.16" name="StreamNavigator" />
+                    </giitems>
+                    <gpitems history="81" />
+                </service>
+            </component>
+            <component factory_name="SwEditorStreamOperationsActions" name="actions_operations" factory="SwEditord.swdld" >
+                <service name="Properties" />
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..core" idx="249" provider_interface="StreamOperations" name="StreamOperations" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-446" py="-99" />
+                    <giitems history="250" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="ActionCopySelection" />
+                        <giitem_pro ppos="0.05" px="-32.102" py="-63.0037" name="ActionCutSelection" />
+                        <giitem_pro ppos="0.1" px="-11.0616" py="-69.8401" name="ActionPasteSelection" />
+                        <giitem_pro ppos="0.15" px="11.0616" py="-69.8401" name="ActionRemoveSelection" />
+                        <giitem_pro ppos="0.2" px="32.102" py="-63.0037" name="ActionSelectAll" />
+                        <giitem_pro ppos="0.25" px="50" py="-50" name="ActionSelectInvert" />
+                        <giitem_pro ppos="0.3" px="63.0037" py="-32.102" name="ActionSelectNone" />
+                        <giitem_con ppos="0.35" px="-28.9384" py="-2.8401" name="StreamOperations" />
+                    </giitems>
+                    <gpitems history="91" />
+                </service>
+            </component>
+            <component factory_name="SwGuiDockWidget" name="components_list_container" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property pname="QDockWidget.windowTitle" >Components</property>
+                    <property enum="7" pname="QDockWidget.features" />
+                    <property enum="3" pname="QDockWidget.allowedAreas" />
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path=".components_list" idx="219" provider_interface="Widget" name="Widget" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="123" x="-21" y="-25" height="127" px="46" py="-292" />
+                    <giitems history="220" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="DockWidget" />
+                        <giitem_con ppos="0.05" px="-64.6" py="-27" name="Widget" />
+                    </giitems>
+                    <gpitems history="95" />
+                </service>
+                <component factory_name="SwEditorCompToolbox" name="components_list" factory="SwEditord.swdld" >
+                    <service name="Properties" >
+                        <property width="256" x="0" y="20" pname="QToolBox.geometry" height="595" />
+                    </service>
+                    <service name="EditorGraphicItem" >
+                        <gitem width="100" x="0" y="0" height="100" px="-11" py="-2" />
+                        <giitems history="97" >
+                            <giitem_pro ppos="0" px="-50" py="-50" name="Widget" />
+                        </giitems>
+                        <gpitems history="98" />
+                    </service>
+                </component>
+            </component>
+            <component factory_name="SwEditorApplicativeCore" name="core" factory="SwEditord.swdld" >
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-446" py="8" />
+                    <giitems history="105" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="Model" />
+                        <giitem_pro ppos="0.05" px="-32.102" py="-63.0037" name="SelectedComponent" />
+                        <giitem_pro ppos="0.1" px="-11.0616" py="-69.8401" name="StreamNavigator" />
+                        <giitem_pro ppos="0.15" px="11.0616" py="-69.8401" name="StreamOperations" />
+                        <giitem_pro ppos="0.2" px="32.102" py="-63.0037" name="StreamsManager" />
+                        <giitem_pro ppos="0.25" px="50" py="-50" name="ViewSlots" />
+                    </giitems>
+                    <gpitems history="106" />
+                </service>
+            </component>
+            <component factory_name="SwGuiMenu" name="menu_actions_about" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property pname="QMenu.title" >About</property>
+                    <property pname="nb_menus" >0</property>
+                    <property pname="nb_actions" >1</property>
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..plugins_list" idx="299" provider_interface="Action" name="Action_0" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-339" py="-317" />
+                    <giitems history="300" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="Menu" />
+                        <giitem_con ppos="0.05" px="-70" py="-50" name="Action_0" />
+                    </giitems>
+                    <gpitems history="109" />
+                </service>
+            </component>
+            <component factory_name="SwGuiMenu" name="menu_actions_core" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property pname="QMenu.title" >Stream</property>
+                    <property pname="nb_menus" >0</property>
+                    <property pname="nb_actions" >7</property>
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..actions_core" idx="209" provider_interface="ActionNew" name="Action_0" />
+                    <interface provider_path="..actions_core" idx="211" provider_interface="ActionOpen" name="Action_1" />
+                    <interface provider_path="..actions_core" idx="213" provider_interface="ActionSave" name="Action_2" />
+                    <interface provider_path="..actions_core" idx="215" provider_interface="ActionSaveAs" name="Action_3" />
+                    <interface provider_path="..actions_core" idx="217" provider_interface="ActionClose" name="Action_4" />
+                    <interface provider_path="..wizard" idx="293" provider_interface="WizardEntry" name="Action_5" />
+                    <interface provider_path="..actions_core" idx="295" provider_interface="ActionQuit" name="Action_6" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-339" py="-317" />
+                    <giitems history="296" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="Menu" />
+                        <giitem_con ppos="0.05" px="-139.102" py="-64.0037" name="Action_0" />
+                        <giitem_con ppos="0.1" px="-118.062" py="-70.8401" name="Action_1" />
+                        <giitem_con ppos="0.15" px="-54.898" py="-64.0037" name="Action_2" />
+                        <giitem_con ppos="0.2" px="-37" py="-51" name="Action_3" />
+                        <giitem_con ppos="0.25" px="-257" py="-51" name="Action_4" />
+                        <giitem_con ppos="0.3" px="-257" py="255" name="Action_5" />
+                        <giitem_con ppos="0.35" px="-135.938" py="-110.84" name="Action_6" />
+                    </giitems>
+                    <gpitems history="113" />
+                </service>
+            </component>
+            <component factory_name="SwGuiMenu" name="menu_actions_operations" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property pname="QMenu.title" >Edition</property>
+                    <property pname="nb_menus" >0</property>
+                    <property pname="nb_actions" >7</property>
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..actions_operations" idx="253" provider_interface="ActionSelectAll" name="Action_0" />
+                    <interface provider_path="..actions_operations" idx="255" provider_interface="ActionSelectNone" name="Action_1" />
+                    <interface provider_path="..actions_operations" idx="257" provider_interface="ActionSelectInvert" name="Action_2" />
+                    <interface provider_path="..actions_operations" idx="259" provider_interface="ActionCopySelection" name="Action_3" />
+                    <interface provider_path="..actions_operations" idx="261" provider_interface="ActionPasteSelection" name="Action_4" />
+                    <interface provider_path="..actions_operations" idx="263" provider_interface="ActionCutSelection" name="Action_5" />
+                    <interface provider_path="..actions_operations" idx="265" provider_interface="ActionRemoveSelection" name="Action_6" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-340" py="-99" />
+                    <giitems history="266" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="Menu" />
+                        <giitem_con ppos="0.05" px="-13.898" py="-63.0037" name="Action_0" />
+                        <giitem_con ppos="0.1" px="17.0037" py="-12.102" name="Action_1" />
+                        <giitem_con ppos="0.15" px="-16" py="-50" name="Action_2" />
+                        <giitem_con ppos="0.2" px="-236" py="-50" name="Action_3" />
+                        <giitem_con ppos="0.25" px="-177.062" py="-69.8401" name="Action_4" />
+                        <giitem_con ppos="0.3" px="-218.102" py="-83.0037" name="Action_5" />
+                        <giitem_con ppos="0.35" px="-134.938" py="-109.84" name="Action_6" />
+                    </giitems>
+                    <gpitems history="123" />
+                </service>
+            </component>
+            <component factory_name="SwGuiPluginsTree" name="plugins_list" factory="SwGuid.swdld" >
+                <service name="Properties" />
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-339" py="-317" />
+                    <giitems history="132" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="Action" />
+                    </giitems>
+                    <gpitems history="133" />
+                </service>
+            </component>
+            <component factory_name="SwGuiCompToPropertiesModel" name="properties" factory="SwGuid.swdld" >
+                <service name="Properties" />
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..core" idx="287" provider_interface="SelectedComponent" name="ComponentProvider" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-338" py="9" />
+                    <giitems history="288" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="Model" />
+                        <giitem_pro ppos="0.05" px="-32.102" py="-63.0037" name="ViewSlots" />
+                        <giitem_con ppos="0.1" px="-160.102" py="-64.0037" name="ComponentProvider" />
+                    </giitems>
+                    <gpitems history="138" />
+                </service>
+            </component>
+            <component factory_name="SwGuiDockWidget" name="stream_tree_container" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property pname="QDockWidget.windowTitle" >Current stream</property>
+                    <property enum="7" pname="QDockWidget.features" />
+                    <property enum="15" pname="QDockWidget.allowedAreas" />
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path=".stream_tree" idx="275" provider_interface="Widget" name="Widget" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="164" x="-62" y="-71" height="173" px="31" py="-109" />
+                    <giitems history="276" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="DockWidget" />
+                        <giitem_con ppos="0.05" px="-62.8" py="-20" name="Widget" />
+                    </giitems>
+                    <gpitems history="142" />
+                </service>
+                <component factory_name="SwGuiTreeView" name="stream_tree" factory="SwGuid.swdld" >
+                    <service name="Properties" >
+                        <property width="256" x="0" y="20" pname="QTreeView.geometry" height="580" />
+                    </service>
+                    <service name="InterfacesConsumer" >
+                        <interface provider_path="...core" idx="277" provider_interface="Model" name="Model" />
+                        <interface provider_path="...core" idx="279" provider_interface="ViewSlots" name="ViewSlots" />
+                    </service>
+                    <service name="EditorGraphicItem" >
+                        <gitem width="100" x="0" y="0" height="100" px="-42" py="-41" />
+                        <giitems history="280" >
+                            <giitem_pro ppos="0" px="-50" py="-50" name="Widget" />
+                            <giitem_con ppos="0.05" px="-505" py="108" name="Model" />
+                            <giitem_con ppos="0.1" px="-325" py="108" name="ViewSlots" />
+                        </giitems>
+                        <gpitems history="147" />
+                    </service>
+                </component>
+            </component>
+            <component factory_name="SwGuiDockWidget" name="stream_tree_properties" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property pname="QDockWidget.windowTitle" >Properties</property>
+                    <property enum="7" pname="QDockWidget.features" />
+                    <property enum="15" pname="QDockWidget.allowedAreas" />
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path=".properties_tree" idx="285" provider_interface="Widget" name="Widget" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="122" x="-20" y="-20" height="134" px="20" py="78" />
+                    <giitems history="286" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="DockWidget" />
+                        <giitem_con ppos="0.05" px="-59.4" py="-24" name="Widget" />
+                    </giitems>
+                    <gpitems history="151" />
+                </service>
+                <component factory_name="SwGuiTreeView" name="properties_tree" factory="SwGuid.swdld" >
+                    <service name="Properties" >
+                        <property width="1266" x="0" y="20" pname="QTreeView.geometry" height="121" />
+                    </service>
+                    <service name="InterfacesConsumer" >
+                        <interface provider_path="...properties" idx="289" provider_interface="Model" name="Model" />
+                        <interface provider_path="...properties" idx="301" provider_interface="ViewSlots" name="ViewSlots" />
+                    </service>
+                    <service name="EditorGraphicItem" >
+                        <gitem width="100" x="0" y="0" height="100" px="-5" py="6" />
+                        <giitems history="302" >
+                            <giitem_pro ppos="0" px="-50" py="-50" name="Widget" />
+                            <giitem_con ppos="0.05" px="-423" py="-125" name="Model" />
+                            <giitem_con ppos="0.1" px="-405.102" py="-138.004" name="ViewSlots" />
+                        </giitems>
+                        <gpitems history="156" />
+                    </service>
+                </component>
+            </component>
+            <component factory_name="SwGuiWidget" name="the_central" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property width="800" pname="QWidget.minimumSize" height="600" />
+                    <property pname="QWidget.minimumWidth" >800</property>
+                    <property pname="nb_widgets" >0</property>
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path=".the_central_layout" idx="223" provider_interface="Layout" name="Layout" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="277" x="-121" y="-40" height="182" px="-200" py="169" />
+                    <giitems history="224" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="Widget" />
+                        <giitem_con ppos="0.05" px="-103.4" py="-27" name="Layout" />
+                    </giitems>
+                    <gpitems history="160" />
+                </service>
+                <component factory_name="SwGuiVerticalLayout" name="the_central_layout" factory="SwGuid.swdld" >
+                    <service name="Properties" >
+                        <property pname="QVBoxLayout.margin" >0</property>
+                        <property pname="QVBoxLayout.spacing" >6</property>
+                        <property pname="nb_widgets" >3</property>
+                        <property pname="nb_layouts" >0</property>
+                    </service>
+                    <service name="InterfacesConsumer" >
+                        <interface provider_path="...actions_navigation" idx="225" provider_interface="CurrentPath" name="Widget_0" />
+                        <interface provider_path=".streams_tabbar" idx="227" provider_interface="Widget" name="Widget_1" />
+                        <interface provider_path=".stream_view" idx="243" provider_interface="Widget" name="Widget_2" />
+                    </service>
+                    <service name="EditorGraphicItem" >
+                        <gitem width="210" x="-56" y="-20" height="157" px="-63" py="3" />
+                        <giitems history="244" >
+                            <giitem_pro ppos="0" px="-50" py="-50" name="Layout" />
+                            <giitem_con ppos="0.05" px="-180.102" py="-424.004" name="Widget_0" />
+                            <giitem_con ppos="0.1" px="-25" py="-14" name="Widget_1" />
+                            <giitem_con ppos="0.15" px="-171" py="-14" name="Widget_2" />
+                        </giitems>
+                        <gpitems history="163" />
+                    </service>
+                    <component factory_name="SwEditorStreamView" name="stream_view" factory="SwEditord.swdld" >
+                        <service name="Properties" >
+                            <property width="1004" x="0" y="32" pname="QGraphicsView.geometry" height="605" />
+                        </service>
+                        <service name="InterfacesConsumer" >
+                            <interface provider_path="....core" idx="283" provider_interface="StreamsManager" name="StreamsManager" />
+                        </service>
+                        <service name="EditorGraphicItem" >
+                            <gitem width="100" x="0" y="0" height="100" px="-51" py="16" />
+                            <giitems history="284" >
+                                <giitem_pro ppos="0" px="-50" py="-50" name="Widget" />
+                                <giitem_con ppos="0.05" px="-39.898" py="-243.004" name="StreamsManager" />
+                            </giitems>
+                            <gpitems history="170" />
+                        </service>
+                    </component>
+                    <component factory_name="SwEditorCompStreamTabBar" name="streams_tabbar" factory="SwEditord.swdld" >
+                        <service name="Properties" >
+                            <property width="1004" x="0" y="26" pname="QTabBar.geometry" height="0" />
+                        </service>
+                        <service name="InterfacesConsumer" >
+                            <interface provider_path="....core" idx="221" provider_interface="StreamsManager" name="StreamsManager" />
+                        </service>
+                        <service name="EditorGraphicItem" >
+                            <gitem width="100" x="0" y="0" height="100" px="53" py="16" />
+                            <giitems history="222" >
+                                <giitem_pro ppos="0" px="-50" py="-50" name="Widget" />
+                                <giitem_con ppos="0.05" px="-143.898" py="-243.004" name="StreamsManager" />
+                            </giitems>
+                            <gpitems history="174" />
+                        </service>
+                    </component>
+                </component>
+            </component>
+            <component factory_name="SwGuiToolBar" name="toolbar_actions_core" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property pname="QToolBar.windowTitle" >Stream</property>
+                    <property pname="nb_actions" >5</property>
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..actions_core" idx="229" provider_interface="ActionNew" name="Action_0" />
+                    <interface provider_path="..actions_core" idx="231" provider_interface="ActionOpen" name="Action_1" />
+                    <interface provider_path="..actions_core" idx="233" provider_interface="ActionSave" name="Action_2" />
+                    <interface provider_path="..actions_core" idx="235" provider_interface="ActionSaveAs" name="Action_3" />
+                    <interface provider_path="..actions_core" idx="237" provider_interface="ActionClose" name="Action_4" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-233" py="-316" />
+                    <giitems history="238" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="ToolBar" />
+                        <giitem_con ppos="0.05" px="-245.102" py="-65.0037" name="Action_0" />
+                        <giitem_con ppos="0.1" px="-224.062" py="-71.8401" name="Action_1" />
+                        <giitem_con ppos="0.15" px="-160.898" py="-65.0037" name="Action_2" />
+                        <giitem_con ppos="0.2" px="-143" py="-52" name="Action_3" />
+                        <giitem_con ppos="0.25" px="-363" py="-52" name="Action_4" />
+                    </giitems>
+                    <gpitems history="177" />
+                </service>
+            </component>
+            <component factory_name="SwGuiToolBar" name="toolbar_actions_navigation" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property pname="QToolBar.windowTitle" >Stream Navigation</property>
+                    <property pname="nb_actions" >1</property>
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..actions_navigation" idx="241" provider_interface="ActionGoToParent" name="Action_0" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-233" py="-210" />
+                    <giitems history="242" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="ToolBar" />
+                        <giitem_con ppos="0.05" px="-282" py="-49" name="Action_0" />
+                    </giitems>
+                    <gpitems history="185" />
+                </service>
+            </component>
+            <component factory_name="SwGuiToolBar" name="toolbar_actions_operations" factory="SwGuid.swdld" >
+                <service name="Properties" >
+                    <property pname="nb_actions" >4</property>
+                </service>
+                <service name="InterfacesConsumer" >
+                    <interface provider_path="..actions_operations" idx="267" provider_interface="ActionCopySelection" name="Action_0" />
+                    <interface provider_path="..actions_operations" idx="269" provider_interface="ActionPasteSelection" name="Action_1" />
+                    <interface provider_path="..actions_operations" idx="271" provider_interface="ActionCutSelection" name="Action_2" />
+                    <interface provider_path="..actions_operations" idx="273" provider_interface="ActionRemoveSelection" name="Action_3" />
+                </service>
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-233" py="-98" />
+                    <giitems history="274" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="ToolBar" />
+                        <giitem_con ppos="0.05" px="-283" py="-51" name="Action_0" />
+                        <giitem_con ppos="0.1" px="-224.062" py="-70.8401" name="Action_1" />
+                        <giitem_con ppos="0.15" px="-285.102" py="-64.0037" name="Action_2" />
+                        <giitem_con ppos="0.2" px="-221.938" py="-70.8401" name="Action_3" />
+                    </giitems>
+                    <gpitems history="189" />
+                </service>
+            </component>
+            <component factory_name="SwWizard" name="wizard" factory="WizardIDEd.swdld" >
+                <service name="Properties" />
+                <service name="InterfacesConsumer" />
+                <service name="PinsManager" />
+                <service name="EditorGraphicItem" >
+                    <gitem width="100" x="0" y="0" height="100" px="-446" py="8" />
+                    <giitems history="197" >
+                        <giitem_pro ppos="0" px="-50" py="-50" name="WizardEntry" />
+                    </giitems>
+                    <gpitems history="198" />
+                </service>
+            </component>
+        </component>
+    </component>
+</streamwork>

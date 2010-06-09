@@ -1,0 +1,109 @@
+#include <exception>
+
+#include <QApplication>
+#include <QMessageBox>
+#include <QPlastiqueStyle>
+#include <QCleanlooksStyle>
+#include <QFile>
+#include <QDir>
+#include <QTextStream>
+
+#include <SwApplication.h>
+#include <SwMacros.h>
+#include <SwFileLogRecorder_Class.h>
+#include <QMainWindow>
+#include "SwSplash.h"
+
+using namespace StreamWork::SwCore;
+
+const char * VL_Help="Usage: %1 [options]\n\
+    -h                   this help\n\
+    -v                   informations about this application\n\
+    -d                   display core actions\n\
+    -ppath path          plugin path\n\
+    -pdesc pathdesc      plugin paths descriptor\n\
+    -log logfile         logs will be write in the specified file\n\
+\n\
+";
+
+const char * VL_Version="%1\n\
+Version 1.0.0\n\
+Author Big\n\
+Description\n\
+StreamWorkEditor\n\
+Build on %2 at %3\n";
+
+int main(int argc, char *argv[])
+{
+	QApplication app(argc, argv);
+	QApplication::setStyle(new QPlastiqueStyle);
+    QCoreApplication::setApplicationName("StreamWorkEditor");
+    QCoreApplication::setOrganizationName("Diginext");
+    QCoreApplication::setOrganizationDomain("diginext.fr");
+    QStringList liste_arg;
+    int nb_args;
+	QString stream_desc;
+    SwFileLogRecorder_Class * log_recorder=NULL;
+    int result=-1;
+    ISwService * un_service;
+    QPixmap pixmap(":/StreamWorkEditor/splash.png");
+    SwSplash splash(pixmap);
+    //QSplashScreen splash(pixmap);
+    //splash.resize(QSize(800,600));
+    splash.show();
+    app.processEvents();
+    //Test
+    //QString test=QString(typeid(un_service).name());
+    //QMessageBox::information(0,QString("typeid"),test,QMessageBox::Ok,QMessageBox::NoButton,QMessageBox::NoButton);
+    //Test
+
+    try {
+        SW_APP->Verbose();
+        SW_APP->Logger().AttachLogRecorder(&splash);
+        liste_arg=QCoreApplication::instance()->arguments();
+        nb_args=liste_arg.count();
+        for(int i=1;i<nb_args;i++) {
+            QString test=liste_arg[i];
+            //aide
+            if (liste_arg[i]=="-h") {
+                QString s=QString(VL_Help).arg(liste_arg[0]);
+                QMessageBox::information(0,QString("Help"),s,QMessageBox::Ok,QMessageBox::NoButton,QMessageBox::NoButton);
+                exit(0);
+            }
+            //version
+            if (liste_arg[i]=="-v") {
+                QString s=QString(VL_Version).arg(liste_arg[0]).arg(QString(__DATE__)).arg(QString(__TIME__));
+                QMessageBox::information(0,QString("Version"),s,QMessageBox::Ok,QMessageBox::NoButton,QMessageBox::NoButton);
+                exit(0);
+            }            
+            //Definition d'un fichier de log
+            if (log_recorder==NULL && liste_arg[i]=="-log" && i+1<nb_args) {
+        	    log_recorder=new SwFileLogRecorder_Class(liste_arg[i+1]);
+                SW_APP->Logger().AttachLogRecorder(log_recorder);
+            }
+
+        }
+        //Lancement
+        QFile * f=new QFile(":/StreamWorkEditor/editor3.xml");
+        f->open(QIODevice::ReadOnly | QIODevice::Text);
+        stream_desc=QString(f->readAll());
+        f->close();
+        delete f;
+        result=SW_APP->Launch(stream_desc);
+        //Destruction du log_recorder
+        // Le detachement n'est pas utile puisque l'application est detruite
+        delete log_recorder;
+    } catch(SwException & se) {
+        //L'application a levé une exception
+        //Traiter l'exception
+        QMessageBox::critical(0,QString("Aborting swlauncher because swexception..."),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
+		result=-1;
+   } catch(std::exception & e) {
+        //L'application a levé une exception
+        //Traiter l'exception
+        QMessageBox::critical(0,QString("Aborting swlauncher because exception..."),QString(e.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
+		result=-1;
+   }
+    //Fin
+    return result;
+}
