@@ -9,5 +9,7 @@ xcopy /Y .\Dev\bin\vc\release\*.dll .\Stable\bin\vc\release\
 xcopy /Y .\Dev\bin\vc\release\*.swdl .\Stable\bin\vc\release\
 xcopy /Y .\Dev\lib\vc\release\*.lib .\Stable\lib\vc\release\
 
-xcopy /Y /S  .\Dev\src\*.h .\Stable\src\ 
-del /F /S /Q  .\Stable\_*
+xcopy /Y /S  .\Dev\src\*.h .\Stable\src\
+cd .\Stable\src\
+del /F /S /Q  _*.h
+cd ..
