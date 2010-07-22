@@ -196,7 +196,7 @@ SwComponent_Class * SwAddress_ToolBox::FindTarget(QString path,SwComponent_Class
                 c_target=SW_APP->GetNextStream();
             }
             if (c_target==NULL) {
-                QString msg=QString("Stream source % undefined");
+                QString msg=QString("Stream source %1 undefined").arg(path);
                 LAUNCH_SWEXCEPTION("SwCore",msg);
             }
             index=1;
