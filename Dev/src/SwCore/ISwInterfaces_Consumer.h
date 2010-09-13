@@ -33,6 +33,18 @@ namespace StreamWork
         */
         class ISwInterfaces_Consumer: public ISwInterfaces_Service, public ISwPersistent {
         public:
+	        /*! \brief Enregistre une interface a fournir */
+            template<typename T> inline void RegisterConsumedInterface(QString cinterface_name,T ** handle_handle_interface) {
+                T * named_handle;
+				named_handle=0;
+                RegisterConsumedInterfaceWithType(cinterface_name,QString(typeid(named_handle).name()),(void **)handle_handle_interface);
+            }
+	        /*! \brief Enregistre une interface a fournir (utliser de préférence la methode précédente)*/
+            virtual void RegisterConsumedInterfaceWithType(QString cinterface_name,QString cinterface_type,void ** handle_handle_interface)=0;
+	        /*! \brief Desenregistre une interface fournie */
+            virtual void UnregisterConsumedInterface(QString cinterface_name)=0;
+	        /*! \brief Permet de savoir si une interface est disponible */
+            virtual bool IsInterfaceAvailable(QString cinterface_name)=0;
 	        /*! \brief Attache un fournisseur a une interface donnée */
 	        virtual void AttachProvider(ISwInterfaces_Provider * provider,QString cinterface_name,QString pinterface_name)=0;
 	        /*! \brief Detache un fournisseur d'une interface donnée */

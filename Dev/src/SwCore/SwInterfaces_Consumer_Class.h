@@ -52,18 +52,12 @@ namespace StreamWork
 	        SwInterfaces_Consumer_Class(SwComponent_Class * host);
 	        /*! \brief Destrusteur */
 	        virtual ~SwInterfaces_Consumer_Class();
-	        /*! \brief Enregistre une interface a fournir */
-            template<typename T> inline void RegisterConsumedInterface(QString cinterface_name,T ** handle_handle_interface) {
-                T * named_handle;
-				named_handle=0;
-                RegisterConsumedInterfaceWithType(cinterface_name,QString(typeid(named_handle).name()),(void **)handle_handle_interface);
-            }
 	        /*! \brief Enregistre une interface a fournir (utliser de préférence la methode précédente)*/
-            void RegisterConsumedInterfaceWithType(QString cinterface_name,QString cinterface_type,void ** handle_handle_interface);
+            virtual void RegisterConsumedInterfaceWithType(QString cinterface_name,QString cinterface_type,void ** handle_handle_interface);
 	        /*! \brief Desenregistre une interface fournie */
-            void UnregisterConsumedInterface(QString cinterface_name);
+            virtual void UnregisterConsumedInterface(QString cinterface_name);
 	        /*! \brief Permet de savoir si une interface est disponible */
-            bool IsInterfaceAvailable(QString cinterface_name);
+            virtual bool IsInterfaceAvailable(QString cinterface_name);
 	        /*! \brief Attache un observateur du consommateur d'interface */
             void AttachInterfacesConsumerObserver(ISwInterfaces_ConsumerObserver * observer);
 	        /*! \brief Detache un observateur du consommateur d'interface */

@@ -1,7 +1,7 @@
 /*!
 \file ISwCheckService.h
 \date 12/04/2006
-\brief service pour le check application
+\brief interface service pour la v&eacute;rification de clef logicielle
 \author  Big
 \version 1.0
  */
@@ -27,8 +27,8 @@ namespace StreamWork
     namespace SwCore
     {
         /*!
-        \class service pour le check
-        \brief service pour le check application
+        \class ISwCheckService
+        \brief interface service pour la v&eacute;rification de clef logicielle
         */
         class ISwCheckService : public ISwService {
         public:

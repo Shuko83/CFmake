@@ -260,6 +260,10 @@
 				>
 			</File>
 			<File
+				RelativePath="Component.cpp"
+				>
+			</File>
+			<File
 				RelativePath="SwAddress_ToolBox.cpp"
 				>
 			</File>
@@ -458,6 +462,32 @@
 			<File
 				RelativePath="_SwTreeItem.h"
 				>
+			</File>
+			<File
+				RelativePath="Component.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC Component.h"
+						CommandLine="C:\Qt\4.5.0\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.5.0\include\QtCore&quot; -I&quot;c:\Qt\4.5.0\include\QtGui&quot; -I&quot;c:\Qt\4.5.0\include\QtXml&quot; -I&quot;c:\Qt\4.5.0\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.5.0\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.5.0\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component.h -o _intermediaire\moc_Component.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.5.0\bin\moc.exe;Component.h"
+						Outputs="_intermediaire\moc_Component.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC Component.h"
+						CommandLine="C:\Qt\4.5.0\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.5.0\include\QtCore&quot; -I&quot;c:\Qt\4.5.0\include\QtGui&quot; -I&quot;c:\Qt\4.5.0\include\QtXml&quot; -I&quot;c:\Qt\4.5.0\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.5.0\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.5.0\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component.h -o _intermediaire\moc_Component.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.5.0\bin\moc.exe;Component.h"
+						Outputs="_intermediaire\moc_Component.cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="ISwAdminSetup.h"
@@ -867,6 +897,10 @@
 			>
 			<File
 				RelativePath="_intermediaire\moc__SwPluginsBank_Class.cpp"
+				>
+			</File>
+			<File
+				RelativePath="_intermediaire\moc_Component.cpp"
 				>
 			</File>
 			<File

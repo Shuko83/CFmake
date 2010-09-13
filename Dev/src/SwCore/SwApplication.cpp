@@ -59,9 +59,6 @@ SwApplication::SwApplication():SwServicesManager_Class() {
     _bank=new _SwPluginsBank_Class;
     //Creation de la banque des fabriques des adatpateurs de type complexe
     _ctadaptersbank=new _SwComplexeTypeAdaptersFactoriesBankImpl;
-    //Creation de la bd des file editors
-    _feManager=new _SwFileEditorManager();
-    RegisterService(_feManager);
     //Pas de stream
     _streams.clear();
     _current_stream=_streams.begin();
@@ -243,7 +240,11 @@ int SwApplication::Launch(QString stream_desc) throw(SwException) {
 void SwApplication::FinalizeInitialisation() {
     if (_initialisationFinalized)
         return;
-    //
+
+    //Creation de la bd des file editors lors de la phase de finale de l'initialisation
+    _feManager=new _SwFileEditorManager();
+    RegisterService(_feManager);
+
     QMap<QString,SwPluginFactory_Class *> * plugins=_bank->GetAllPlugins();
     QMap<QString,SwPluginFactory_Class *>::iterator it=plugins->begin();
     while(it!=plugins->end()) {

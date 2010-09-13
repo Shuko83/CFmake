@@ -1,7 +1,7 @@
 /*!
 \file ISwProperties.h
 \date 12/04/2006
-\brief service propri�t�s
+\brief service propriétés
 \author  Big
 \version 1.0
  */
@@ -33,36 +33,42 @@ namespace StreamWork
         class ISwProperty;
         /*!
         \class ISwProperties
-        \brief service service propri�t�s
+        \brief service propriétés
         */
         class ISwProperties: public ISwService, public ISwHost, public ISwPersistent {
         public:
-	        /*! \brief Permet de cr�e une propri�t� */
+	        /*! \brief Permet de crée une propriété */
 	        virtual ISwProperty * CreatePropertyWithType(int type_id,QString name)=0;
-	        /*! \brief Attache un fournisseur a une interface donn�e */
+	        /*! \brief Attache un fournisseur a une interface donnée */
             template<typename T> inline ISwProperty * CreateProperty(QString name){
                 int type_id;
                 type_id=qMetaTypeId<T>();
                 return CreatePropertyWithType(type_id,name);
             }
-	        /*! \brief Permet de cr�e une propri�t� issue d'un object Qt*/
+	        /*! \brief Permet de crée une propriété issue d'un object Qt*/
 	        virtual ISwProperty * CreatePropertyForQObject(QObject * obj,QString name,QString prefix=QString())=0;
-	        /*! \brief Permet de cr�e toutes les propri�t�s issues d'un object Qt*/
+	        /*! \brief Permet de créer toutes les propriétés issues d'un object Qt*/
 	        virtual void CreatePropertiesForQObject(QObject * obj,QString prefix=QString(),bool disable_objectName=false)=0;
-	        /*! \brief Permet de detruire une propri�t�*/
+	        /*! \brief Permet de detruire une propriété*/
 	        virtual void DestroyProperty(QString name)=0;
-	        /*! \brief Permet d'acceder a une propri�t�*/
+	        /*! \brief Permet d'acceder a une propriété*/
 	        virtual ISwProperty * GetProperty(QString name)=0;
-	        /*! \brief Permet d'acceder a la liste des propri�t�s*/
+	        /*! \brief Permet d'acceder a la liste des propriétés*/
             virtual QList<ISwProperty *> & GetProperties()=0;
 	        /*! \brief methode d'acces au signal avant changement*/
 	        virtual LibIndeSig::iSignal1<ISwProperties *> & GetOnBeforePropertiesChange()=0;
 	        /*! \brief methode d'acces au signal apres changement*/
 	        virtual LibIndeSig::iSignal1<ISwProperties *> & GetOnAfterPropertiesChange()=0;
-	        /*! \brief methode d'acces au signal de creation de propri�t�*/
+	        /*! \brief methode d'acces au signal de creation de propriété*/
 	        virtual LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> & GetOnCreateProperty()=0;
-	        /*! \brief methode d'acces au signal de destruction de propri�t�*/
+	        /*! \brief methode d'acces au signal de destruction de propriété*/
 	        virtual LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> & GetOnDestroyProperty()=0;
+	        /*! \brief Change la visibilite de la propriété */
+	        virtual void ChangePropertyVisibility(QString name,bool is_visible)=0;
+	        /*! \brief Change l'editabilite de la propriété */
+	        virtual void ChangePropertyEdition(QString name,bool is_editable)=0;
+	        /*! \brief Change l'aspect controllable de la propriété */
+	        virtual void ChangePropertyControllable(QString name,bool is_controllable)=0;
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------
@@ -71,7 +77,7 @@ namespace StreamWork
             QString GetServiceName(){return QString(CG_SW_SERVICE_PROPERTIES); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
             \return le nom du service reel (le nom de l'interface)
-            \note au niveau de l'interface (pas d'une de ses classes deriv�es) renvoyer typeid(this).name()*/
+            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(this).name()*/
             QString GetServiceRealName() {return QString(typeid(this).name());}
         };
     }

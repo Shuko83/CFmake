@@ -33,7 +33,26 @@ namespace StreamWork
         */
         class ISwInterfaces_Provider : public ISwInterfaces_Service {
         public:
-	        /*! \brief Ajoute un consommateur a une interface donnée (est appelé par le consommateur)*/
+	        /*! \brief Enregistre une interface a fournir */
+            template<typename T> inline void RegisterProvidedInterface(QString pinterface_name,T * handle_interface) {
+                RegisterProvidedInterfaceWithType(pinterface_name,QString(typeid(handle_interface).name()),(void *)handle_interface);
+            }
+	        /*! \brief Enregistre une interface a fournir préférer le methode precedente*/
+            virtual void RegisterProvidedInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface)  throw(SwException)=0;
+	        /*! \brief Desenregistre une interface fournie */
+            virtual void UnregisterProvidedInterface(QString pinterface_name) throw(SwException)=0;
+	        /*! \brief Rend disponible une interface */
+            virtual void SetInterfaceAvailable(QString pinterface_name,void * new_handle=NULL) throw(SwException)=0;
+	        /*! \brief Rend undisponible une interface */
+            virtual void SetInterfaceUnavailable(QString pinterface_name) throw(SwException)=0;
+ 	        /*! \brief Remplacer une interface (DP strategie capability)*/
+            template<typename T> void SubstituteInterface(QString pinterface_name,T * handle_interface) {
+                SubstituteInterfaceWithType(pinterface_name,QString(typeid(handle_interface).name()),(void *)handle_interface);
+            }
+ 	        /*! \brief Remplacer une interface (DP strategie capability) préférer le methode precedente*/
+            virtual void SubstituteInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface) throw(SwException)=0;
+
+            /*! \brief Ajoute un consommateur a une interface donnée (est appelé par le consommateur)*/
 	        virtual void AddConsumer(ISwInterfaces_Consumer * consumer,QString cinterface_name,QString pinterface_name)=0;
 	        /*! \brief Supprime un consommateur d'une interface donnée (est appelé par le consommateur)*/
 	        virtual void RemoveConsumer(ISwInterfaces_Consumer * consumer,QString cinterface_name,QString pinterface_name)=0;
