@@ -20,7 +20,8 @@ HEADERS += ISwExecutable_Service.h \
     ISwSwitchExecutorListener.h \
     ISwSwitchExecutorListProvider.h \
     ISwSupportReplay.h \
-    ISwClockProvider.h
+    ISwClockProvider.h \
+    ExecutableComponent.h 
     
 SOURCES += _SwExecutionPluginFactory_Class.cpp \
     _SwExecutionSetup.cpp \
@@ -32,7 +33,9 @@ SOURCES += _SwExecutionPluginFactory_Class.cpp \
     _SwSwitchExecution_Service.cpp \
     _SwSwitchExecutionList.cpp \
     _SwSwitchExecutionSetup.cpp \
-    _SwSwitchExecutor.cpp
+    _SwSwitchExecutor.cpp \
+    ExecutableComponent.cpp 
+
     
     
 FORMS +=

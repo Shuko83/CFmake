@@ -332,12 +332,6 @@ QVariant ComponentGraphicItem::itemChange ( GraphicsItemChange change, const QVa
     }
     return result;
 }
-/** @brief sur double click dans l'item */
-void ComponentGraphicItem::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event ) {
-    if (event->buttons().testFlag(Qt::LeftButton)) {
-        _controler->showProperties();    
-    }
-}
 /** @brief sur release sourie */
 void ComponentGraphicItem::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event ) {
     QGraphicsItem::mouseReleaseEvent(event);

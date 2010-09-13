@@ -23,10 +23,7 @@ using namespace StreamWork::SwGui;
 
 
 /*! \brief Constructeur */
-_SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwComponent_Class(){
-    _provider_service=NULL;
-    _consumer_service=NULL;
-    _properties_service=NULL;
+_SwGuiCompMainWindow::_SwGuiCompMainWindow(): Component(){
     _main_window=NULL;
     _use_aswidget_property = 0;
     _menus_nb=0;
@@ -52,100 +49,87 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwComponent_Class(){
 }
 /*! \brief Destructeur */
 _SwGuiCompMainWindow::~_SwGuiCompMainWindow(){
-    //Desenregistrement des services
-    this->UnregisterService(_provider_service->GetServiceName());
-    this->UnregisterService(_consumer_service->GetServiceName());
-    this->UnregisterService(_properties_service->GetServiceName());
-    //Destruction des services
-    delete _provider_service;
-    delete _consumer_service;
-    delete _properties_service;
-    delete _main_window;
 }
 
 /*! \brief Initialisation des ressources
 \note tous les services du composants doivent être déclarés dans cette methodes*/
-void _SwGuiCompMainWindow::InitializeResources() throw(SwException) {
-    //Creation des service
-    _provider_service=new SwInterfaces_Provider_Class(this) ;
-    _consumer_service=new SwInterfaces_Consumer_Class(this);
-    _properties_service=new SwProperties_Class(this);
+void _SwGuiCompMainWindow::initializeComponent() throw(SwException) {
     //Creation de l'interface principale
     _main_window=new QMainWindow();
-    //Enregistrement des services
-    this->RegisterService(_properties_service);
-    this->RegisterService(_consumer_service);
-    this->RegisterService(_provider_service);
 
     if (!_useAsWidget)
     {
       //Exportation de l'interface ISwMainWindow
-      _provider_service->RegisterProvidedInterface<ISwMainWindow>("MainWindow",(ISwMainWindow *)this);
+      getIProviderService().RegisterProvidedInterface<ISwMainWindow>("MainWindow",(ISwMainWindow *)this);
     }
     else
     {
       //Exportation de l'interface ISwWidget
-      _provider_service->RegisterProvidedInterface<ISwWidget>("MainWindowAsWidget",(ISwWidget *)this);
+      getIProviderService().RegisterProvidedInterface<ISwWidget>("MainWindowAsWidget",(ISwWidget *)this);
     }
     //Importation de l'interface ISwWidget
-    _consumer_service->RegisterConsumedInterface<ISwWidget>(CL_CENTRALWIDGET_INTERFACE_NAME,&_handle_central_widget);
-
-    //S'enregistrer comme observer du consumer
-    _consumer_service->AttachInterfacesConsumerObserver(this);
+    getIConsumerService().RegisterConsumedInterface<ISwWidget>(CL_CENTRALWIDGET_INTERFACE_NAME,&_handle_central_widget);
 
     //Enregistrement des propriétés
-    _properties_service->CreatePropertiesForQObject(_main_window,"QMainWindow");
+    getPropertiesService().CreatePropertiesForQObject(_main_window,"QMainWindow");
     
     //Gestion des menus
-    _menus_nb_property=_properties_service->CreateProperty<uint>("nb_menus");
+    _menus_nb_property=getPropertiesService().CreateProperty<uint>("nb_menus");
     if (_menus_nb_property==NULL) {
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register nb_menus property\n"));
     } 
     _menus_nb_property->SetDescription("Define how many ISwMenu interfaces this component accept");  
     _menus_nb_property->SetValue(QVariant(_menus_nb));
-    _menus_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompMainWindow::OnPropertyChange);
+    enableListeningChangeForProperty(_menus_nb_property);
     
     //Gestion des actions
-    _actions_nb_property=_properties_service->CreateProperty<uint>("nb_actions");
+    _actions_nb_property=getPropertiesService().CreateProperty<uint>("nb_actions");
     if (_actions_nb_property==NULL) {
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register nb_actions property\n"));
     }
     _actions_nb_property->SetDescription("Define how many ISwAction interfaces this component accept");  
     _actions_nb_property->SetValue(QVariant(_actions_nb));
-    _actions_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompMainWindow::OnPropertyChange);
+    enableListeningChangeForProperty(_actions_nb_property);
+
     //Gestion des toolbars
-    _toolbars_nb_property=_properties_service->CreateProperty<uint>("nb_toolbars");
+    _toolbars_nb_property=getPropertiesService().CreateProperty<uint>("nb_toolbars");
     if (_toolbars_nb_property==NULL) {
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register nb_toolbars property\n"));
     }
     _toolbars_nb_property->SetDescription("Define how many ISwToolBar interfaces this component accept");  
     _toolbars_nb_property->SetValue(QVariant(_toolbars_nb));
-    _toolbars_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompMainWindow::OnPropertyChange);
-    
+    enableListeningChangeForProperty(_toolbars_nb_property);
+
     //Gestion des dockwidgets
-    _dockwidgets_nb_property=_properties_service->CreateProperty<uint>("nb_dockwidgets");
+    _dockwidgets_nb_property=getPropertiesService().CreateProperty<uint>("nb_dockwidgets");
     if (_dockwidgets_nb_property==NULL) {
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register nb_dockwidgets property\n"));
     }
     _dockwidgets_nb_property->SetDescription("Define how many ISwDockWidget interfaces this component accept");  
     _dockwidgets_nb_property->SetValue(QVariant(_dockwidgets_nb));
-    _dockwidgets_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompMainWindow::OnPropertyChange);
+    enableListeningChangeForProperty(_dockwidgets_nb_property);
 
     // choix de l'interface externe
-    _use_aswidget_property   =_properties_service->CreateProperty<bool>("use_aswidget");    
+    _use_aswidget_property   =getPropertiesService().CreateProperty<bool>("use_aswidget");    
     if (_use_aswidget_property==NULL) {
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register _use_aswidget_property property\n"));
     }
     _use_aswidget_property->SetDescription("Define kind of widget interface this component produces");  
     _use_aswidget_property->SetValue(QVariant(_useAsWidget));
-    _use_aswidget_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompMainWindow::OnPropertyChange);
+    enableListeningChangeForProperty(_use_aswidget_property);
     
     //Fin
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiMainWindow done\n"));
 
 }
+/*! \brief Terminaison du composant */
+void _SwGuiCompMainWindow::terminateComponent() throw(SwException) {
+    delete _main_window;
+    _main_window=0;
+}
+
 /*! \brief Callback sur les changements de propriétés*/
-void _SwGuiCompMainWindow::OnPropertyChange(ISwProperty * property) {
+void _SwGuiCompMainWindow::eventPropertyChange(ISwProperty * property) {
     uint val;
     QString interface_name;
     QString property_name;
@@ -157,17 +141,17 @@ void _SwGuiCompMainWindow::OnPropertyChange(ISwProperty * property) {
        bool boolval=property->GetValue().toBool();    
        if (!_useAsWidget && boolval)
        {
-           _provider_service->UnregisterProvidedInterface("MainWindow");
+           getIProviderService().UnregisterProvidedInterface("MainWindow");
            //Exportation de l'interface ISwWidget
-           _provider_service->RegisterProvidedInterface<ISwWidget>("MainWindowAsWidget",(ISwWidget *)this);
+           getIProviderService().RegisterProvidedInterface<ISwWidget>("MainWindowAsWidget",(ISwWidget *)this);
        }
        else
        {
         if (_useAsWidget && !boolval)
         {
-            _provider_service->UnregisterProvidedInterface("MainWindowAsWidget");
+            getIProviderService().UnregisterProvidedInterface("MainWindowAsWidget");
             //Exportation de l'interface ISwMainWindow
-            _provider_service->RegisterProvidedInterface<ISwMainWindow>("MainWindow",(ISwMainWindow *)this);
+            getIProviderService().RegisterProvidedInterface<ISwMainWindow>("MainWindow",(ISwMainWindow *)this);
         }
        }
     }
@@ -177,13 +161,13 @@ void _SwGuiCompMainWindow::OnPropertyChange(ISwProperty * property) {
         if (val<_menus_nb) {
             for (uint i=val;i<_menus_nb;i++) {
                 interface_name=QString(CL_MENU_INTERFACE_NAME).arg(i);
-                _consumer_service->UnregisterConsumedInterface(interface_name);
+                getIConsumerService().UnregisterConsumedInterface(interface_name);
             }
         } else {
             for (uint i=_menus_nb;i<val;i++) {
                 interface_name=QString(CL_MENU_INTERFACE_NAME).arg(i);
                 _menus.insert(interface_name,(ISwMenu *)NULL);
-                _consumer_service->RegisterConsumedInterface<ISwMenu>(interface_name,&_tmp_handle_menu);
+                getIConsumerService().RegisterConsumedInterface<ISwMenu>(interface_name,&_tmp_handle_menu);
             }
         }
         _menus_nb=val;
@@ -194,13 +178,13 @@ void _SwGuiCompMainWindow::OnPropertyChange(ISwProperty * property) {
         if (val<_actions_nb) {
             for (uint i=val;i<_actions_nb;i++) {
                 interface_name=QString(CL_ACTION_INTERFACE_NAME).arg(i);
-                _consumer_service->UnregisterConsumedInterface(interface_name);
+                getIConsumerService().UnregisterConsumedInterface(interface_name);
             }
         } else {
             for (uint i=_actions_nb;i<val;i++) {
                 interface_name=QString(CL_ACTION_INTERFACE_NAME).arg(i);
                 _actions.insert(interface_name,(ISwAction *)NULL);
-                _consumer_service->RegisterConsumedInterface<ISwAction>(interface_name,&_tmp_handle_action);
+                getIConsumerService().RegisterConsumedInterface<ISwAction>(interface_name,&_tmp_handle_action);
             }
         }
         _actions_nb=val;
@@ -211,20 +195,20 @@ void _SwGuiCompMainWindow::OnPropertyChange(ISwProperty * property) {
         if (val<_toolbars_nb) {
             for (uint i=val;i<_toolbars_nb;i++) {
                 interface_name=QString(CL_TOOLBAR_INTERFACE_NAME).arg(i);
-                _consumer_service->UnregisterConsumedInterface(interface_name);
+                getIConsumerService().UnregisterConsumedInterface(interface_name);
                 property_name=interface_name+".where";
                 _toolbar_positions.erase(_toolbar_positions.find(interface_name));
-                _properties_service->DestroyProperty(property_name.toLatin1().constData());
+                getPropertiesService().DestroyProperty(property_name.toLatin1().constData());
             }
         } else {
             variant.setValue(_default_toolbar_position);
             for (uint i=_toolbars_nb;i<val;i++) {
                 interface_name=QString(CL_TOOLBAR_INTERFACE_NAME).arg(i);
                 _toolbars.insert(interface_name,(ISwToolBar *)NULL);
-                _consumer_service->RegisterConsumedInterface<ISwToolBar>(interface_name,&_tmp_handle_toolbar);
+                getIConsumerService().RegisterConsumedInterface<ISwToolBar>(interface_name,&_tmp_handle_toolbar);
                 //Ajout d'une propriete pour le placement
                 property_name=interface_name+".where";
-                toolbar_position=_properties_service->CreateProperty<SwEnum>(property_name.toLatin1().constData());
+                toolbar_position=getPropertiesService().CreateProperty<SwEnum>(property_name.toLatin1().constData());
                 if (toolbar_position!=NULL) {
                     toolbar_position->SetValue(variant);
                     _toolbar_positions.insert(interface_name,toolbar_position);
@@ -241,20 +225,20 @@ void _SwGuiCompMainWindow::OnPropertyChange(ISwProperty * property) {
         if (val<_dockwidgets_nb) {
             for (uint i=val;i<_dockwidgets_nb;i++) {
                 interface_name=QString(CL_DOCKWIDGET_INTERFACE_NAME).arg(i);
-                _consumer_service->UnregisterConsumedInterface(interface_name);
+                getIConsumerService().UnregisterConsumedInterface(interface_name);
                 property_name=interface_name+".where";
                 _dockwidget_positions.erase(_dockwidget_positions.find(interface_name));
-                _properties_service->DestroyProperty(property_name.toLatin1().constData());
+                getPropertiesService().DestroyProperty(property_name.toLatin1().constData());
             }
         } else {
             variant.setValue(_default_dockwidget_position);
             for (uint i=_dockwidgets_nb;i<val;i++) {
                 interface_name=QString(CL_DOCKWIDGET_INTERFACE_NAME).arg(i);
                 _dockwidgets.insert(interface_name,(ISwDockWidget *)NULL);
-                _consumer_service->RegisterConsumedInterface<ISwDockWidget>(interface_name,&_tmp_handle_dockwidget);
+                getIConsumerService().RegisterConsumedInterface<ISwDockWidget>(interface_name,&_tmp_handle_dockwidget);
                 //Ajout d'une propriete pour le placement
                 property_name=interface_name+".where";
-                dockwidget_position=_properties_service->CreateProperty<SwEnum>(property_name.toLatin1().constData());
+                dockwidget_position=getPropertiesService().CreateProperty<SwEnum>(property_name.toLatin1().constData());
                 if (dockwidget_position!=NULL) {
                     dockwidget_position->SetValue(variant);
                     _dockwidget_positions.insert(interface_name,dockwidget_position);
@@ -283,7 +267,7 @@ QWidget & _SwGuiCompMainWindow::GetWidget(){
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
 /*! \brief Avant changement de la disponibilité de l'interface */
-void _SwGuiCompMainWindow::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
+void _SwGuiCompMainWindow::eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host) {
     QMap<QString,ISwMenu *>::iterator menu_it;
     QMap<QString,ISwAction *>::iterator action_it;
     QMap<QString,ISwToolBar *>::iterator toolbar_it;
@@ -338,7 +322,7 @@ void _SwGuiCompMainWindow::BeforeInterfaceAvailabilityChange(QString interface_n
 
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
-void _SwGuiCompMainWindow::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
+void _SwGuiCompMainWindow::eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host) {
     QMap<QString,ISwMenu *>::iterator menu_it;
     QMap<QString,ISwAction *>::iterator action_it;
     QMap<QString,ISwToolBar *>::iterator toolbar_it;

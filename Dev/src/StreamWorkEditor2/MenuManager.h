@@ -51,6 +51,8 @@ private:
 	MenuManager();
 	/** @brief Destructor */
 	~MenuManager();
+	/** @brief rebuildMenu() */
+	void rebuildMenu();
 
 private:
     /** @brief Menu */
@@ -75,6 +77,8 @@ private:
     bool _disableSelectionChanged;
     /** @brief menu position*/
     QPointF _menuPosition;
+    /** @brief Le menu a besoin d'etre reconstruit*/
+    bool menuNeedBeRebuild;
 };
 
 #endif

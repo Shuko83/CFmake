@@ -30,6 +30,7 @@ MenuManager::MenuManager():QObject() {
     _contextualMenuSwap->setStyleSheet("* { border: 1px solid gray; background: #ccc; font-size:10px}");
     _disableSelectionChanged=false;
     _streamControler=0;
+    menuNeedBeRebuild=true;
 
 }
 /** @brief Destructor */
@@ -66,6 +67,10 @@ void MenuManager::setControler(StreamControler * controler) {
 }
 /** @brief selection changed */
 void MenuManager::selectionChanged() {
+    menuNeedBeRebuild=true;
+}
+/** @brief rebuildMenu() */
+void MenuManager::rebuildMenu() {
     QList<QGraphicsItem *> list=_streamControler->getScene()->selectedItems();
     _gwList.clear();
     _lkList.clear();
@@ -112,10 +117,14 @@ void MenuManager::selectionChanged() {
         _contextualMenu->addAction("Setup",this,SLOT(onSetup()));
     }
     _contextualMenu->addAction("Add interest area",this,SLOT(onAddInterestArea()));
+    menuNeedBeRebuild=false;
 }
 
 /** @brief construction du menu en fonction du contexte */
 QMenu * MenuManager::buildContextMenu(const QPointF & pos) {
+    if (menuNeedBeRebuild) {
+        rebuildMenu();
+    }
     _menuPosition=pos;
     if (!_contextualMenu->isEmpty()) {
         QMenu * tmp=_contextualMenuSwap;

@@ -15,23 +15,12 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
 
 /*! \brief Constructeur */
-_SwSimpleExecutable::_SwSimpleExecutable(): SwComponent_Class(){
+_SwSimpleExecutable::_SwSimpleExecutable(): ExecutableComponent(){
 }
 /*! \brief Destructeur */
 _SwSimpleExecutable::~_SwSimpleExecutable(){
-    //Desenregistrement des services
-    this->UnregisterService(this->GetServiceName());
 }
 
-/*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
-void _SwSimpleExecutable::InitializeResources() throw(SwException) {
-    //Enregistrement des services
-    this->RegisterService(this);
-
-    if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwSimpleExecutable done\n"));
-
-}
  //----------------------------------------------------
 // Interface ISwExecutable_Service
 //----------------------------------------------------
@@ -52,18 +41,3 @@ void _SwSimpleExecutable::Execute(double current_time,bool is_first_call) throw 
 void _SwSimpleExecutable::Stop(double current_time){
     SW_LOG.Log(LogLvl_Info,QString("%1->Stop at %2\n").arg(GetName()).arg(current_time-_start_time));
 }                       
-//---------------------------------------------------------------------
-// Interface ISwService
-//---------------------------------------------------------------------            
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
-void _SwSimpleExecutable::Liberate(){
-	//Rien a faire
-}             
-//---------------------------------------------------------------------
-// Interface ISwHost
-//---------------------------------------------------------------------
-/*! \brief acces a son composant hote */
-SwComponent_Class * _SwSimpleExecutable::GetHostComponent(){
-	return this;
-}                      

@@ -49,7 +49,7 @@ using namespace StreamWork::SwCore;
 #define CL_CGCNTITEM_ATT_POS "pos"
 
 /** @brief Constructor */
-StreamControler::StreamControler():QObject() {
+StreamControler::StreamControler(PropertiesWidget * propertiesWidget):QObject() {
     _enableStreamControlerObservation=false;
     _streamView=0;
     _creationPosition=QPointF(0.0f,0.0f);
@@ -63,7 +63,7 @@ StreamControler::StreamControler():QObject() {
     //Ajout widget
     //_streamScene->addApplicativeWidget(WidgetFactory::getInstance()->buildPluginsBankView(true));
 
-    _propertiesWidget=WidgetFactory::getInstance()->buildPropertiesWidget();
+    _propertiesWidget=propertiesWidget;
     //Connections signaux
     connect(_streamScene,SIGNAL(sceneRectChanged ( const QRectF &)),this,SLOT(onSceneRectChanged ( const QRectF &)));
     connect(_streamScene,SIGNAL(selectionChanged()),this,SLOT(selectionChanged()));
@@ -92,8 +92,6 @@ StreamControler::~StreamControler() {
     SW_APP->DestroyStream(_rootComponent);
     //Destruction de la scene
     delete _streamScene;
-    //Destruction du widget properties
-    delete _propertiesWidget;
 }
 	/** @brief Scene access */
 StreamScene * StreamControler::getScene() {
@@ -241,7 +239,7 @@ void StreamControler::addComponent(QString & name,const QPointF & p) {
 //------------------------------------------------------------------------------
 /** @brief demande de visualisation des propriétés */
 void StreamControler::showProperties() {
-    _propertiesWidget->showProperties(_streamView);
+    //_propertiesWidget->showProperties(_streamView);
 }
 //------------------------------------------------------------------------------
 // Evenements de la scene 

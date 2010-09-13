@@ -7,6 +7,7 @@
 #ifndef _STREAMWORK_SWCORE_COMPONENT_H
 #define _STREAMWORK_SWCORE_COMPONENT_H
 
+#include <SwComponent_Class.h>
 #include <ISwInterfaces_Provider.h>
 #include <ISwInterfaces_Consumer.h>
 #include <ISwProperties.h>
@@ -26,7 +27,7 @@ namespace StreamWork {
         @class Component
         @brief Implementation avance d'un composant par defaut
         */
-        class Component: public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwPin_Listener {
+        class BUILD_SWCORE Component: public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwPin_Listener {
             Q_OBJECT
         public:
             /** @brief Constructor */
@@ -37,6 +38,9 @@ namespace StreamWork {
             /*! \brief Initialisation des ressources
             \note tous les services du composants doivent être déclarés dans cette methodes*/
             virtual void InitializeResources() throw(SwException);
+
+            /*! \brief surcharge du setter pour signaler le changement d'activation */
+            virtual void setActive(bool active);
 
 
              /*! \brief Callback sur les changements de propriétés */
@@ -74,6 +78,9 @@ namespace StreamWork {
             /*! \brief evenement sur reception d'une data
                 \note A Surcharger*/
             virtual void eventReceiveData(SwPin * src,SwData_Class * data);
+            /*! \brief evenement sur changement d'activation
+                \note A Surcharger*/
+            virtual void eventActivationChanged();
 
             /*! \brief Acces au service fournisseur d'interface*/
             ISwInterfaces_Provider & getIProviderService();
@@ -83,6 +90,9 @@ namespace StreamWork {
             ISwProperties & getPropertiesService();
             /*! \brief Acces au service de connexion */
             ISwPins_Manager & getPinsService();
+
+            /*! \brief enable listening change for property */
+            void enableListeningChangeForProperty(ISwProperty * property);
         private:
             /* service de fourniture d'interface */
             SwInterfaces_Provider_Class * _provider_service;

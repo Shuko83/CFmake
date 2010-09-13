@@ -24,7 +24,7 @@
 #endif
 
 //Version
-#define CG_STREAMWORK_VERSION "3.0.1"
+#define CG_STREAMWORK_VERSION "3.0.2"
 
 //PATH Separator
 #define CG_PATH_SEPARATOR '.'

@@ -14,7 +14,7 @@
   */
 #include <QMap>
 #include <Qt>
-#include <SwComponent_Class.h>
+#include <Component.h>
 #include <SwInterfaces_Provider_Class.h>
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
@@ -37,17 +37,11 @@ using namespace StreamWork::SwGui;
 	\class _SwGuiCompMainWindow 
 	\brief _SwGuiMainWindow generant une QMainWindow
 */
-class _SwGuiCompMainWindow : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwMainWindow , public ISwWidget
+class _SwGuiCompMainWindow : public Component, public ISwMainWindow , public ISwWidget
 {
 protected:
     /* fenetre principale */
     QMainWindow * _main_window;
-    /* service de fourniture d'interface */
-    SwInterfaces_Provider_Class * _provider_service;
-    /* service de consommation d'interface */
-    SwInterfaces_Consumer_Class * _consumer_service;
-    /* service de gestion des propriétés */
-    SwProperties_Class * _properties_service;
     // --- Menus ---
     /* nombre de menus */
     uint _menus_nb;
@@ -105,11 +99,12 @@ public:
     /*! \brief Destructeur */
     virtual ~_SwGuiCompMainWindow();
 
-    /*! \brief Initialisation des ressources
-    \note tous les services du composants doivent être déclarés dans cette methodes*/
-    virtual void InitializeResources() throw(SwException);
+    /*! \brief Initialisation du composant */
+    virtual void initializeComponent() throw(SwException);
+    /*! \brief Terminaison du composant */
+    virtual void terminateComponent() throw(SwException);
      /*! \brief Callback sur les changements de propriétés*/
-    void OnPropertyChange(ISwProperty * property);
+    void eventPropertyChange(ISwProperty * property);
     
     //---------------------------------------------------------------------
     // Interface ISwMainWindow
@@ -127,9 +122,9 @@ public:
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
 	/*! \brief Avant changement de la disponibilité de l'interface */
-	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
+	virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);            
 	/*! \brief Apres changement de la disponibilité de l'interface */
-	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
+	virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);            
 
 
 };

@@ -66,8 +66,6 @@ public:
 protected:
     /** @brief sur changement de l'item */
     virtual QVariant itemChange ( GraphicsItemChange change, const QVariant & value );
-    /** @brief sur double click dans l'item */
-    virtual void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
     /** @brief sur release sourie */
     virtual void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
     /** @brief arrange des connecteurs */

@@ -10,17 +10,14 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 /** @brief Constructor */
-PropertiesWidget::PropertiesWidget():QWidget(0,Qt::Dialog) {
+PropertiesWidget::PropertiesWidget():QWidget(0) {
     //setWindowOpacity(0.9);
+    setEnabled(false);
     setWindowModality(Qt::ApplicationModal);
 	QGridLayout  *formLayout;
     formLayout = new QGridLayout (this);
     formLayout->setSpacing(5);
     formLayout->setMargin(2);
-    QLabel * header=new QLabel("Component properties",this);
-    header->setAlignment(Qt::AlignHCenter);
-    header->setStyleSheet("QLabel {font: bold 14px;}");
-    formLayout->addWidget(header,0,0,1,2);
     formLayout->addWidget(new QLabel("Name:",this),1,0);
     _nameEdit=new QLineEdit(this);
     connect(_nameEdit,SIGNAL(textChanged ( const QString &)),this,SLOT(nameChanged ( const QString &)));
@@ -46,6 +43,10 @@ void PropertiesWidget::setSelectedGraphicComponent(ComponentGraphicItem * cgi) {
         _pModel->SetProperties(dynamic_cast<ISwProperties *>(cgi->getComponent()->QueryService(CG_SW_SERVICE_PROPERTIES)));
         _pView->expandAll();
         _pView->setColumnWidth(0,200);
+        setEnabled(true);
+    } else {
+        _nameEdit->setText("");
+        setEnabled(false);
     }
     _cgi=cgi;
 }

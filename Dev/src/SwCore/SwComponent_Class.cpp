@@ -24,6 +24,7 @@ SwComponent_Class::SwComponent_Class():QObject(),SwNamed_Class(),SwRef(),SwServi
     _child_components.clear();
     _current_child=_child_components.begin();
     _factory_component_name=QString();
+    _active=true;
 }
 
 /*! \brief Destructeur */
@@ -248,6 +249,14 @@ QString SwComponent_Class::GetSuggestedNameForChild(QString initial_name) {
     }
     return nouveau_nom;
 }
+/*! \brief getter active */
+bool SwComponent_Class::isActive() {
+    return _active;
+}
+/*! \brief setter active */
+void SwComponent_Class::setActive(bool active){
+    _active=true;
+}
 //------------------------------------------------
 //Surcharge de la classe mère SwNamed_Class
 //------------------------------------------------
@@ -276,7 +285,7 @@ void SwComponent_Class::SetName(const QString & new_name) throw(SwException) {
             it=_parent->_child_components.find(oldName);
             _parent->_child_components.erase(it);
         }
-    } catch (SwException & se) {
+    } catch (SwException & ) {
 
     }
     OnChangeComponentName(this);

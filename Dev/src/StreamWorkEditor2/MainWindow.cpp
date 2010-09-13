@@ -55,6 +55,8 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
     pdock->setWidget(WidgetFactory::getInstance()->buildPluginsBankView(true));
     addDockWidget(Qt::RightDockWidgetArea, pdock);
 
+
+   
     QDockWidget * stdock = new QDockWidget(tr("Stream Tree"), this);
     stdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     _streamTreeModel=new QStreamTreeModel(this);
@@ -76,6 +78,13 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
     iadock->setWidget(treew);
 
 
+    QDockWidget * propdock = new QDockWidget(tr("Component Properties"), this);
+    propdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+    _propertyWidget=WidgetFactory::getInstance()->buildPropertiesWidget();
+    propdock->setWidget(_propertyWidget);
+    addDockWidget(Qt::RightDockWidgetArea, propdock);
+
+
     QDockWidget * navdock = new QDockWidget(tr("Navigator"), this);
     navdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     navdock->setWidget(new ViewNavigator(_streamView,this));
@@ -84,10 +93,11 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 /** @brief sur new stream */
 void MainWindow::onNewStream() {
     _streamTreeModel->setStreamControler(0);
+    _iaTreeModel->setStreamControler(0);
     if (_streamControler!=0) {
         delete _streamControler;
     }
-    _streamControler=new StreamControler();
+    _streamControler=new StreamControler(_propertyWidget);
     _streamControler->setView(_streamView);
     _streamTreeModel->setStreamControler(_streamControler);
     _iaTreeModel->setStreamControler(_streamControler);
@@ -116,7 +126,7 @@ void MainWindow::onLoadStream(){
             _iaTreeModel->setStreamControler(0);
            delete _streamControler;
         }
-        _streamControler=new StreamControler();
+        _streamControler=new StreamControler(_propertyWidget);
         _streamControler->loadStream(*it);
         _streamControler->setView(_streamView);
         _streamTreeModel->setStreamControler(_streamControler);

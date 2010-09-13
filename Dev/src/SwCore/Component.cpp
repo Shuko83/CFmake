@@ -9,6 +9,7 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <SwPins_Manager_Class.h>
+#include <ISwProperty.h>
  
 using namespace StreamWork::SwCore;
 
@@ -48,6 +49,13 @@ void Component::InitializeResources() throw(SwException) {
     this->RegisterService(_provider_service);
     
     initializeComponent();
+}
+/*! \brief surcharge du setter pour signaler le changement d'activation */
+void Component::setActive(bool active) {
+    if (isActive()==active)
+        return;
+    SwComponent_Class::setActive(active);
+    eventActivationChanged();
 }
  /*! \brief Callback sur les changements de propriétés
      \note a surcharger pour ecouter les changements de propriétés*/
@@ -109,6 +117,11 @@ void Component::eventAfterInterfaceAvailability(QString interface_name,SwCompone
 void Component::eventReceiveData(SwPin * src,SwData_Class * data){
 
 }
+/*! \brief evenement sur changement d'activation
+    \note A Surcharger*/
+void Component::eventActivationChanged(){
+
+}
 /*! \brief Acces au fournisseur d'interface*/
 ISwInterfaces_Provider & Component::getIProviderService() {
     return *_provider_service;
@@ -124,5 +137,9 @@ ISwProperties & Component::getPropertiesService() {
 /*! \brief Acces au service de connexion */
 ISwPins_Manager & Component::getPinsService() {
     return * _pins_service;
+}
+/*! \brief enable listening change for property */
+void Component::enableListeningChangeForProperty(ISwProperty * property) {
+    property->GetOnChangeSignal().iconnect(*this,&Component::OnPropertyChange);
 }
 
