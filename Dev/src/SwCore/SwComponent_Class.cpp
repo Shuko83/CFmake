@@ -255,7 +255,7 @@ bool SwComponent_Class::isActive() {
 }
 /*! \brief setter active */
 void SwComponent_Class::setActive(bool active){
-    _active=true;
+    _active=active;
 }
 //------------------------------------------------
 //Surcharge de la classe mère SwNamed_Class

@@ -1,7 +1,7 @@
 /*!
 \file ISwCreationPostProcessor.h
 \date 12/04/2006
-\brief Interface de tout traitement a effectuer sur les modules apr�s leur creations
+\brief Interface permettant l'implementation de traitement suite a la cr&eacute; d'un module 
 \author  Big
 \version 1.0
  */
@@ -17,23 +17,23 @@ namespace StreamWork
     {
         /*!
         \class ISwCreationPostProcessor
-        \brief Interface de tout traitement a effectuer sur les modules apr�s leur creations
+        \brief Interface permettant l'implementation de traitement suite a la cr&eacute; d'un module 
         Mise en oeuvre:
-        Soit un objet a supportant cette interface, il faut enregistrer a aupr�s de la banque de plugin
+        Soit un objet Foo supportant cette interface, il faut enregistrer Foo aupr&eacute;s de la banque de plugin
         \code
-        SW_APP->ComponentsBank().AddCreationPostProcessor(a);
+        SW_APP->ComponentsBank().AddCreationPostProcessor(Foo);
         \endcode
-        A chaque creation de composant la methode AfterCreatePostProcess de a est appel� avec le composant
-        cr�� en parametre.
-        Avant la destruction de a, il faut le desenregistrer
+        A chaque creation de composant la methode AfterCreatePostProcess de Foo est appel&eacute; avec le composant
+        cr&eacute;&eacute; en param&egrave;tre.
+        Avant la destruction de Foo, il faut le desenregistrer
         \code
-        SW_APP->ComponentsBank().RemoveCreationPostProcessor(a);
+        SW_APP->ComponentsBank().RemoveCreationPostProcessor(Foo);
         \endcode
         */
         class ISwCreationPostProcessor  {
         public:
-	        /*! \brief methode appel�e apr�s la creation d'un composant
-            \param[in] h_comp handle sur le composant qui vient d'etre cr��*/
+	        /*! \brief methode appel&eacute;e apr&eacute;s la creation d'un composant
+            \param[in] h_comp handle sur le composant qui vient d'etre cr&eacute;&eacute;*/
 	        virtual void AfterCreatePostProcess(SwComponent_Class *h_comp)=0;
         };
     }

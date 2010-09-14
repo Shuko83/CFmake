@@ -43,6 +43,7 @@
 
 #define CG_SW_XML_COMPONENT_NODE    "component"
 #define CG_SW_XML_COMPONENT_NODE_ATT_NAME    "name"
+#define CG_SW_XML_COMPONENT_NODE_ATT_ACTIVE    "active"
 #define CG_SW_XML_COMPONENT_NODE_ATT_DESC    "description"
 #define CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME    "factory_name"
 #define CG_SW_XML_COMPONENT_NODE_ATT_FACTORY    "factory"

@@ -63,6 +63,7 @@ void Component::OnPropertyChange(ISwProperty * property) {
     if (!_disable_service)
         eventPropertyChange(property);
 }
+
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
@@ -141,5 +142,9 @@ ISwPins_Manager & Component::getPinsService() {
 /*! \brief enable listening change for property */
 void Component::enableListeningChangeForProperty(ISwProperty * property) {
     property->GetOnChangeSignal().iconnect(*this,&Component::OnPropertyChange);
+}
+/*! \brief enable listening for pin */
+void Component::enableListeningForPin(SwPin * pin) {
+    pin->RegisterListener(this);
 }
 

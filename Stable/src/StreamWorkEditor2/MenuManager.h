@@ -46,11 +46,17 @@ public slots:
     void onSetup();
 	/** @brief sur ajout de la zone d'interet */
     void onAddInterestArea();
+	/** @brief activated */
+    void onActivated();
+	/** @brief activated */
+    void onDeActivated();
 private:
 	/** @brief Constructor */
 	MenuManager();
 	/** @brief Destructor */
 	~MenuManager();
+	/** @brief rebuildMenu() */
+	void rebuildMenu();
 
 private:
     /** @brief Menu */
@@ -75,6 +81,8 @@ private:
     bool _disableSelectionChanged;
     /** @brief menu position*/
     QPointF _menuPosition;
+    /** @brief Le menu a besoin d'etre reconstruit*/
+    bool menuNeedBeRebuild;
 };
 
 #endif

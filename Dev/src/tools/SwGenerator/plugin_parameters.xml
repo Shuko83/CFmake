@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SwFactoryEntry Name="BigFactory" Author="big" IsOwnPluginInDistribution="true" Path="Test">
+	<Description>Bonjour Francis</Description>
+	<Components Name="BigComponent" Description="BigDescription">
+    	<Properties PropertyName="Etage" DefaultValue="RDC" ObserveChange="true"/>
+    	<Properties PropertyName="Testion" Type="integer" ObserveChange="true"/>
+    	<Interfaces InterfaceName="level" Type="ISwLevel" IsProvider="true"/>
+    	<Interfaces InterfaceName="level2" />
+    	<Connectors ConnectorName="emitter" ReceiveData="true"/>
+    	<Connectors ConnectorName="emitter2" ReceiveData="true" Type="BasicData"/>
+  	</Components>
+	<Components Name="BigComponent2" Description="BigDescription2">
+    	<Properties PropertyName="Etage" Type="integer" DefaultValue="RDC" ObserveChange="true"/>
+    	<Interfaces InterfaceName="level" Type="ISwLevel" IsProvider="true"/>
+    	<Connectors ConnectorName="emitter" ReceiveData="true"/>
+  	</Components>
+	<Components Name="BigComponent3" Description="BigDescription2">
+    	<Properties PropertyName="Etage" Type="integer" DefaultValue="RDC" ObserveChange="true"/>
+    	<Interfaces InterfaceName="level" Type="ISwLevel" IsProvider="true"/>
+    	<Connectors ConnectorName="emitter" ReceiveData="true"/>
+  	</Components>
+	
+</SwFactoryEntry>

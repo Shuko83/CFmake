@@ -46,6 +46,10 @@ public slots:
     void onSetup();
 	/** @brief sur ajout de la zone d'interet */
     void onAddInterestArea();
+	/** @brief activated */
+    void onActivated();
+	/** @brief activated */
+    void onDeActivated();
 private:
 	/** @brief Constructor */
 	MenuManager();

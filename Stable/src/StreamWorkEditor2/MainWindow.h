@@ -13,6 +13,7 @@
 #include "QStreamTreeModel.h"
 #include "QInterestAreaTreeModel.h"
 #include "SwWizardFrontEnd.h"
+#include "PropertiesWidget.h"
 
 /**
 @class MainWindow
@@ -58,6 +59,8 @@ private:
     QStreamTreeModel * _streamTreeModel;
     /** @brief Model */
     QInterestAreaTreeModel * _iaTreeModel;
+    /** @brief PropertyWidget */
+    PropertiesWidget *_propertyWidget;
 };
 
 #endif

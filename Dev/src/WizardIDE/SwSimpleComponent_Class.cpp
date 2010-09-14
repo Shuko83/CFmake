@@ -66,6 +66,11 @@ void SwSimpleComponent_Class::InternalSaveAttributs(QDomElement & parent,QDomDoc
             parent.setAttribute(plist[i]->GetName(),var.toString());   
             save_done=true;
         }
+        //Type bool
+        if (!save_done && var.type()==QVariant::Bool) {
+            parent.setAttribute(plist[i]->GetName(),var.toString());   
+            save_done=true;
+        }
         //Type enum
         if (!save_done && var.userType()==qMetaTypeId<SwEnum>()) {
             SwEnum enum_value=var.value<SwEnum>();

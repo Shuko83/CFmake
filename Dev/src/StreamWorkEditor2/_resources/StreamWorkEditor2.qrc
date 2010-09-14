@@ -6,5 +6,6 @@
   <file>mod_run.png</file>
   <file>mod_run_disable.png</file>
   <file>mod_replay.png</file>
+  <file>editdelete.png</file>
  </qresource>
 </RCC>

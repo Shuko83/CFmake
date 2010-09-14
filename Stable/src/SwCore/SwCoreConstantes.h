@@ -24,7 +24,7 @@
 #endif
 
 //Version
-#define CG_STREAMWORK_VERSION "3.0.1"
+#define CG_STREAMWORK_VERSION "3.0.2"
 
 //PATH Separator
 #define CG_PATH_SEPARATOR '.'
@@ -43,6 +43,7 @@
 
 #define CG_SW_XML_COMPONENT_NODE    "component"
 #define CG_SW_XML_COMPONENT_NODE_ATT_NAME    "name"
+#define CG_SW_XML_COMPONENT_NODE_ATT_ACTIVE    "active"
 #define CG_SW_XML_COMPONENT_NODE_ATT_DESC    "description"
 #define CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME    "factory_name"
 #define CG_SW_XML_COMPONENT_NODE_ATT_FACTORY    "factory"

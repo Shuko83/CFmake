@@ -42,6 +42,8 @@ namespace StreamWork
             friend class SwPluginFactory_Class;
             /*! \brief parent */
             SwComponent_Class * _parent;
+            /*! \bien activation */
+            bool _active;
             /*! \brief nom usine du composant (pour retrouver la façon de le fabriquer) */
             QString _factory_component_name;
             /*! \brief QMap des enfants */
@@ -92,6 +94,13 @@ namespace StreamWork
 
             /*! \brief Permet de suggerer un nom pour un futur enfant*/
 			QString GetSuggestedNameForChild(QString initial_name);
+
+            /*! \brief getter active */
+            virtual bool isActive();
+            /*! \brief setter active */
+            virtual void setActive(bool active);
+
+
         public:
             /*! \brief Permet de signaler un changement du parent*/
 	        LibIndeSig::iSignal0 OnParentChange;

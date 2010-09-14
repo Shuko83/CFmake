@@ -145,6 +145,11 @@ QMenu * MenuManager::buildContextMenu(const QPointF & pos) {
     if (_adminList.count()>0) {
         _contextualMenu->addAction("Setup",this,SLOT(onSetup()));
     }
+    if (_gwList.count()>0) {
+        _contextualMenu->addAction("Activate",this,SLOT(onActivated()));
+        _contextualMenu->addAction("DesActivate",this,SLOT(onDeActivated()));
+    }
+
     _contextualMenu->addAction("Add interest area",this,SLOT(onAddInterestArea()));
     return _contextualMenu;
 }
@@ -235,4 +240,18 @@ void MenuManager::onAddInterestArea() {
     ia->setPos(_menuPosition);
     _streamControler->getScene()->addItem(ia);
     _streamControler->streamControlerChanged();
+}
+/** @brief activated */
+void MenuManager::onActivated() {
+    for(int i=0;i<_gwList.count();i++) {
+        _gwList[i]->getComponent()->setActive(true);
+    }
+    _streamControler->getScene()->update();
+}
+/** @brief activated */
+void MenuManager::onDeActivated() {
+    for(int i=0;i<_gwList.count();i++) {
+        _gwList[i]->getComponent()->setActive(false);
+    }
+    _streamControler->getScene()->update();
 }

@@ -29,7 +29,7 @@ class StreamControler : public QObject ,
     Q_OBJECT
 public:
 	/** @brief Constructor */
-	StreamControler();
+	StreamControler(PropertiesWidget * propertiesWidget);
 	/** @brief Destructor */
 	~StreamControler();
 	/** @brief Load stream */

@@ -24,6 +24,7 @@ class NodeComponents : public SwSimpleComponent_Class {
 	Q_OBJECT
     Q_PROPERTY(QString Name READ Name WRITE setName)
     Q_PROPERTY(QString Description READ Description WRITE setDescription)
+    Q_PROPERTY(bool Executable READ Executable WRITE setExecutable)
 public:
     /*! \brief Property Name */
     QString _name;
@@ -33,6 +34,10 @@ public:
     QString _description;
     void setDescription(QString description) {_description=description;}
     QString Description() const {return _description;}
+    /*! \brief Property Executable */
+    bool _executable;
+    void setExecutable(bool executable) {_executable=executable;}
+    bool Executable() const {return _executable;}
 public:
     /*! \brief Constructeur */
     NodeComponents();

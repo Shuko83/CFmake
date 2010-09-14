@@ -91,6 +91,10 @@ void SwSaver_Class::BuildXMLStream(SwComponent_Class * component,QDomDocument & 
     if (!component->GetDescription().isEmpty()) {
         component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_DESC,component->GetDescription());
     }
+    //Si desactive , ajout
+    if (!component->isActive()) {
+        component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_ACTIVE,"false");
+    }
     //Ajout attribut nom d'usine
     if (!component->GetFactoryComponentName().isEmpty()) 
         component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME,component->GetFactoryComponentName());

@@ -25,6 +25,8 @@ public:
     QPixmap getComponentIcon(StreamWork::SwCore::SwComponent_Class * component);
     /** @brief renvoie l'icone de run */
     QPixmap getRunIcon();
+    /** @brief renvoie l'icone de desactivate */
+    QPixmap getDesactiveIcon();
     /** @brief renvoie l'icone de replay */
     QPixmap getReplayIcon();
     /** @brief renvoie l'icone de run disabled */
@@ -45,6 +47,8 @@ private:
     QPixmap _icone_run_disable;
     /** @brief id icon_replay */
     QPixmap _icone_replay;
+    /** @brief id icon_desactive*/
+    QPixmap _icone_desactive;
     /** @brief id icon_run_disable */
     QGraphicsView * _view;
 

@@ -48,24 +48,16 @@ namespace StreamWork
 	        SwInterfaces_Provider_Class(SwComponent_Class * host);
 	        /*! \brief Destrusteur */
 	        virtual ~SwInterfaces_Provider_Class();
-	        /*! \brief Enregistre une interface a fournir */
-            template<typename T> inline void RegisterProvidedInterface(QString pinterface_name,T * handle_interface) {
-                RegisterProvidedInterfaceWithType(pinterface_name,QString(typeid(handle_interface).name()),(void *)handle_interface);
-            }
 	        /*! \brief Enregistre une interface a fournir préférer le methode precedente*/
-            void RegisterProvidedInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface)  throw(SwException);
+            virtual void RegisterProvidedInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface)  throw(SwException);
 	        /*! \brief Desenregistre une interface fournie */
-            void UnregisterProvidedInterface(QString pinterface_name) throw(SwException);
+            virtual void UnregisterProvidedInterface(QString pinterface_name) throw(SwException);
 	        /*! \brief Rend disponible une interface */
-            void SetInterfaceAvailable(QString pinterface_name,void * new_handle=NULL) throw(SwException);
+            virtual void SetInterfaceAvailable(QString pinterface_name,void * new_handle=NULL) throw(SwException);
 	        /*! \brief Rend undisponible une interface */
-            void SetInterfaceUnavailable(QString pinterface_name) throw(SwException);
- 	        /*! \brief Remplacer une interface (DP strategie capability)*/
-            template<typename T> void SubstituteInterface(QString pinterface_name,T * handle_interface) {
-                SubstituteInterfaceWithType(pinterface_name,QString(typeid(handle_interface).name()),(void *)handle_interface);
-            }
+            virtual void SetInterfaceUnavailable(QString pinterface_name) throw(SwException);
  	        /*! \brief Remplacer une interface (DP strategie capability) préférer le methode precedente*/
-            void SubstituteInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface) throw(SwException);
+            virtual void SubstituteInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface) throw(SwException);
            //---------------------------------------------------------------------
             // Interface ISwInterfaces_Provider
             //---------------------------------------------------------------------

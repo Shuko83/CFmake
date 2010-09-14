@@ -20,7 +20,7 @@ namespace StreamWork
         class ISwAlertRecorder;
         /*!
         \enum T_Alert_Level
-        \brief Etat de connection
+        \brief Niveau d'alerte
         */
         typedef enum {
             AlertLvl_Debug      = 0,
@@ -31,18 +31,28 @@ namespace StreamWork
         } TSw_Alert_Level;
  
         /*!
-        \class ISwAlert
+        \class ISwAlerter
         \brief interface pour les alertes
         */
         class ISwAlerter  {
         public:
-	        /*! \brief Methode de log */
-	        virtual void Alert(TSw_Alert_Level,const char *format,...)=0;
-	        /*! \brief Methode de log */
-	        virtual void Alert(TSw_Alert_Level,QString)=0;
-	        /*! \brief Permet d'attacher un log recorder*/
+	        /*! \brief Methode de log au format printf
+            \param[in] level Niveau d'alerte
+            \param[in] format format printf
+            */
+	        virtual void Alert(TSw_Alert_Level level,const char *format,...)=0;
+	        /*! \brief Methode de log au format Qt
+            \param[in] level Niveau d'alerte
+            \param[in] message message d'alerte
+            */
+	        virtual void Alert(TSw_Alert_Level level,QString message)=0;
+	        /*! \brief Permet d'attacher un enregistreur d'alerte
+            \param[in] alert_recorder enregistreur d'alerte
+            */
 	        virtual void AttachAlertRecorder(ISwAlertRecorder * alert_recorder)=0;
-	        /*! \brief Permet de detacher un log recorder*/
+	        /*! \brief Permet de detacher un enregistreur d'alerte
+            \param[in] alert_recorder enregistreur d'alerte
+            */
 	        virtual void DetachAlertRecorder(ISwAlertRecorder * alert_recorder)=0;
             
         };

@@ -18,12 +18,11 @@ namespace StreamWork
 	{
         /*!
         \class ISwAdminSetup
-        \brief  interface pour la configuration administrateur
-        \note
+        \brief Interface pour la configuration administrateur. Est appel&eacute; par StreamWorkEditor lors de la commande en popup AdminSetup
         */
         class ISwAdminSetup  {
         public:
-	        /*! \brief Permet d'acceder aux preferences d'administration*/
+	        /*! \brief Permet d'acceder aux preferences d'administration via StreamWorkEditor*/
 	        virtual void AdminSetup()=0;
         };
     }

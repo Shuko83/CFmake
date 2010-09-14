@@ -19,7 +19,7 @@ using namespace StreamWork::SwCore;
 NodeSwFactoryEntry::NodeSwFactoryEntry():SwSimpleComponent_Class() {
     _name="NameOfPlugin";
     _author="AuthorOfPlugin";
-    _path="C:\\tmp";
+    _rootRepository="C:\\";
     _isOwnPluginInDistribution=NodeSwFactoryEntry::no;
 }
 /*! \brief Destructeur */

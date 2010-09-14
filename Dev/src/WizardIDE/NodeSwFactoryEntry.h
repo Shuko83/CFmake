@@ -24,7 +24,7 @@ class NodeSwFactoryEntry : public SwSimpleComponent_Class {
 	Q_OBJECT
     Q_PROPERTY(QString Name READ Name WRITE setName)
     Q_PROPERTY(QString Author READ Author WRITE setAuthor)
-    Q_PROPERTY(QString Path READ Path WRITE setPath)
+    Q_PROPERTY(QString RootRepository READ RootRepository WRITE setRootRepository)
     Q_PROPERTY(InDistrib IsOwnPluginInDistribution READ IsOwnPluginInDistribution WRITE setIsOwnPluginInDistribution)
     Q_ENUMS(InDistrib)
 public:
@@ -37,9 +37,9 @@ public:
     void setAuthor(QString author) {_author=author;}
     QString Author() const {return _author;}
     /*! \brief Property Author */
-    QString _path;
-    void setPath(QString path) {_path=path;}
-    QString Path() const {return _path;}
+    QString _rootRepository;
+    void setRootRepository(QString rootRepository) {_rootRepository=rootRepository;}
+    QString RootRepository() const {return _rootRepository;}
     /*! \brief Property Author */
     enum InDistrib {yes,no};
     enum InDistrib _isOwnPluginInDistribution;

@@ -152,9 +152,15 @@ SwComponent_ClassPtr SwLoader_Class::BuildStream(QDomElement & node,SwComponent_
         //Recuperation de la description
         description=node.attribute(CG_SW_XML_COMPONENT_NODE_ATT_DESC);
         //Si description valide
-        if (description.isEmpty()) {
+        if (!description.isEmpty()) {
             component->SetDescription(description);
         }
+        //Recupration de l'activation
+        QString active=node.attribute(CG_SW_XML_COMPONENT_NODE_ATT_ACTIVE);
+        if (!active.isEmpty() && active=="false") {
+            component->setActive(false);
+        }
+
         //Ajout de l'enjant au parent
         if (parent_component!=NULL) {
             parent_component->AddChild(component);

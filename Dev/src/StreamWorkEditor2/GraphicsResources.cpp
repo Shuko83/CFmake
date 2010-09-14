@@ -19,6 +19,7 @@ GraphicsResources::GraphicsResources() {
 	_icone_run=QIcon(":/StreamWorkEditor2/mod_run.png").pixmap(11,14);
     _icone_run_disable=QIcon(":/StreamWorkEditor2/mod_run_disable.png").pixmap(11,14);
     _icone_replay=QIcon(":/StreamWorkEditor2/mod_replay.png").pixmap(11,14);
+    _icone_desactive=QIcon(":/StreamWorkEditor2/editdelete.png").pixmap(14,14);
     _view=0;
 }
 /** @brief ~Destructor */
@@ -49,6 +50,10 @@ QPixmap GraphicsResources::getRunIconDisabled() {
 /** @brief renvoie l'icone de replay */
 QPixmap GraphicsResources::getReplayIcon() {
     return _icone_replay;
+}
+/** @brief renvoie l'icone de desactivate */
+QPixmap GraphicsResources::getDesactiveIcon() {
+    return _icone_desactive;
 }
 
 /** @brief couleur interface par type */
