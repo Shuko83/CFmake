@@ -47,7 +47,7 @@ void Component::InitializeResources() throw(SwException) {
     this->RegisterService(_consumer_service);
     this->RegisterService(_pins_service);
     this->RegisterService(_provider_service);
-    
+    _consumer_service->AttachInterfacesConsumerObserver(this);
     initializeComponent();
 }
 /*! \brief surcharge du setter pour signaler le changement d'activation */

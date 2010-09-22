@@ -35,8 +35,8 @@ namespace StreamWork {
     namespace SwExecution {
     
         /**
-        @class Component
-        @brief Implementation avance d'un composant par defaut
+        @class ExecutableComponent
+        @brief Implementation avance d'un composant executable par defaut
         */
         class SWEXECUTION_EXPORT ExecutableComponent: public StreamWork::SwCore::SwComponent_Class, public StreamWork::SwCore::ISwInterfaces_ConsumerObserver, public StreamWork::SwCore::ISwPin_Listener, public ISwExecutable_Service {
             Q_OBJECT
