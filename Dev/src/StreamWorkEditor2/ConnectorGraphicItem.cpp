@@ -54,13 +54,13 @@ void ConnectorGraphicItem::paint ( QPainter * painter,
             //painter->drawEllipse(QRectF(-CL_CONNECTOR_SIZE/4.0,-CL_CONNECTOR_SIZE/4.0,CL_CONNECTOR_SIZE/2.0,CL_CONNECTOR_SIZE/2.0));
             //painter->setPen(QPen(QColor("#888888")));
             painter->setPen(pendraw);
-            painter->setBrush(QBrush());
+            painter->setBrush(QBrush(QColor("#FF9900")));
             painter->drawEllipse(QRectF(-CL_CONNECTOR_SIZE/2.0,-CL_CONNECTOR_SIZE/2.0,CL_CONNECTOR_SIZE,CL_CONNECTOR_SIZE));
             painter->setPen(QPen(QColor("#888888")));
             break;
         case CONSUMER:
             painter->setPen(QPen(QColor("#888888")));
-            painter->setBrush(QBrush(QColor("#FF9900")));
+            painter->setBrush(QBrush());
             painter->drawEllipse(QRectF(-CL_CONNECTOR_SIZE/2.0,-CL_CONNECTOR_SIZE/2.0,CL_CONNECTOR_SIZE,CL_CONNECTOR_SIZE));
             break;
         case PIN:

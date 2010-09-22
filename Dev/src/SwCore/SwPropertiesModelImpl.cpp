@@ -376,6 +376,9 @@ QModelIndex SwPropertiesModelImpl::index ( int row, int column, const QModelInde
         return createIndex(row,column,(void *)_root_item);
 
     iparent=(PropertyItem *)parent.internalPointer();
+    if (iparent->_showChildrens.size()<=row) {
+        return QModelIndex();
+    }
     return createIndex(row,column,(void *)iparent->_showChildrens.at(row));
 }
 /*! \brief Renvoie l'item parent d'un item index donné */

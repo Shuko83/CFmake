@@ -128,6 +128,7 @@ void SwProperties_Class::CreatePropertiesForQObject(QObject * obj,QString prefix
                     else
                         _map_properties.insert(QString(m_obj->property(i).name()),property);
                     _set_properties.push_back(property);
+                    _OnCreateProperty(this,property);
                     CreateSubProperties(property);
                     property->GetOnControlChangeSignal().iconnect(*this,&SwProperties_Class::OnPropertyControlChange);
                     PropagateFeaturesToSubProperties(property);
