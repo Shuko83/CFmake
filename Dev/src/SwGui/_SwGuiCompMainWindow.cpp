@@ -49,6 +49,58 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): Component(){
 }
 /*! \brief Destructeur */
 _SwGuiCompMainWindow::~_SwGuiCompMainWindow(){
+    QMap<QString,ISwMenu *>::iterator menu_it;
+    QMap<QString,ISwAction *>::iterator action_it;
+    QMap<QString,ISwToolBar *>::iterator toolbar_it;
+    QMap<QString,ISwDockWidget *>::iterator dockwidget_it;
+    
+    //Si c'est un menu
+    menu_it=_menus.begin();
+    while (menu_it!=_menus.end()) {
+        if (menu_it.value()!=NULL) {
+            //Et qu'il etait defini, on le detache de la menubar
+            menu_it.value()->GetMenu().setParent(NULL);   
+            menu_it.value()=NULL;
+        }
+        menu_it++;
+    } 
+    //Si c'est une action
+    action_it=_actions.begin();
+    while (action_it!=_actions.end()) {
+        if (action_it.value()!=NULL) {
+            //Et qu'ellle etait definie, on la detache de la menubar
+            action_it.value()->GetAction().setParent(NULL);    
+            action_it.value()=NULL;
+        }
+        action_it++;
+    } 
+    //Si c'est une toolbar
+    toolbar_it=_toolbars.begin();
+    while (toolbar_it!=_toolbars.end()) {
+        if (toolbar_it.value()!=NULL) {
+            //Et qu'ellle etait definie, on la detache de la main window
+            toolbar_it.value()->GetToolBar().setParent(NULL);    
+            toolbar_it.value()=NULL;
+       }
+       toolbar_it++;
+    } 
+    //Si c'est un dockwidget
+    dockwidget_it=_dockwidgets.begin();
+    if (dockwidget_it!=_dockwidgets.end()) {
+        if (dockwidget_it.value()!=NULL) {
+            //Et qu'ellle etait definie, on la detache de la main window
+            dockwidget_it.value()->GetDockWidget().setParent(NULL);    
+            dockwidget_it.value()=NULL;
+        }
+        dockwidget_it++;
+    } 
+    //Si c'est le widget central
+    if (_handle_central_widget!=NULL) {
+        //Et qu'il est defini, on le detache du parent
+        _handle_central_widget->GetWidget().setParent(NULL);
+    }
+
+
     delete _main_window;
     _main_window=0;
 }
