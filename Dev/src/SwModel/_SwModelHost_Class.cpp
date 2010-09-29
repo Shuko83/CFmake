@@ -35,11 +35,13 @@ using namespace StreamWork::SwCore;
 /*! \brief Constructeur */
 _SwModelHost_Class::_SwModelHost_Class(): SwComponent_Class(){
     _model=NULL;
+    _fakeComponent=new Component();
+    _fakeComponent->InitializeResources();
 }
 /*! \brief Destructeur */
 _SwModelHost_Class::~_SwModelHost_Class(){
 
-    if (_model==this)
+    if (_model==_fakeComponent.get())
         DestroyBinding();
 
     //Desenregistrement des services
@@ -83,7 +85,7 @@ void _SwModelHost_Class::InitializeResources() throw(SwException) {
 
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of _SwModelHost_Class done\n"));
         
-    CreateBinding(this);
+    CreateBinding(_fakeComponent.get());
 
 }
 //----------------------------------------------------
@@ -92,7 +94,7 @@ void _SwModelHost_Class::InitializeResources() throw(SwException) {
 /*! \brief Permet d'acceder aux preferences d'administration*/
 void _SwModelHost_Class::AdminSetup() {
     SwComponent_Class *root;
-    bool isOwner=(_model==this);
+    bool isOwner=(_model==_fakeComponent.get());
 
     if (isOwner)
         DestroyBinding();
@@ -111,7 +113,7 @@ void _SwModelHost_Class::AdminSetup() {
     }
     delete selector;
     if (isOwner)
-        CreateBinding(this);
+        CreateBinding(_fakeComponent.get());
 
 }
 //----------------------------------------------------
@@ -137,9 +139,9 @@ void _SwModelHost_Class::DestroyBinding(){
     for(int i=0;i<_exported_entities.count();i++) {
         _exported_entities[i]->Unbind();    
     }
-    if (_model!=this) {
+    if (_model!=_fakeComponent.get()) {
         _model=NULL;
-        CreateBinding(this);
+        CreateBinding(_fakeComponent.get());
         return;
     }
     _model=NULL;
@@ -253,7 +255,7 @@ void _SwModelHost_Class::Save(QDomElement & elt,QDomDocument &doc) {
 \return false si la finalisation n'a pas eu lieu et true si ok*/
 bool _SwModelHost_Class::Finalize(quint64 historic_index) {
     if (h_index==historic_index) {
-        CreateBinding(this);
+        CreateBinding(_fakeComponent.get());
         return true;
     }
     return false;

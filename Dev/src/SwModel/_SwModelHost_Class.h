@@ -28,6 +28,7 @@
 #include <ISwService.h>
 #include <ISwPersistent.h>
 #include "_SwModelExportedEntity.h"
+#include <Component.h>
 //Nom du service
 #define CG_SW_SERVICE_MODELHOST "MODELHOST"
 
@@ -52,7 +53,9 @@ protected:
     QList<_SwModelExportedEntity *> _exported_entities;
     /* Modele lié */
     SwComponent_Class * _model;
-
+    /* Fake component */
+    SwRefPtr<Component> _fakeComponent;
+    /* Historic index */
     quint64 h_index;
 public:
     /*! \brief Constructeur */
