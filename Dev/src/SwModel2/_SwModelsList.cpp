@@ -22,7 +22,7 @@
 #define CL_MODELS_LIST "models.list"
 
 #define CL_MAIN_NODE "swmodels"
-#define CL_MODEL_NODE "swmodel"
+#define CL_MODEL_NODE "swmodel2"
 #define CL_MODEL_NAME "name"
 #define CL_MODEL_FILE "file"
 #define CL_MODEL_ICO "ico"
@@ -52,7 +52,7 @@ void _SwModelsList::LoadModels() {
     //Test arguments
     QStringList liste_arg=QCoreApplication::instance()->arguments();
     for(int i=0;i<(liste_arg.count()-1);i++) {
-        if (liste_arg[i]=="-models2") {
+        if (liste_arg[i]=="-models") {
             filename=liste_arg[i+1];
             QFileInfo fi(filename);
             dir=QDir(fi.absoluteDir().absolutePath()+QDir::separator()+CL_MODELS_DIRECTORY);

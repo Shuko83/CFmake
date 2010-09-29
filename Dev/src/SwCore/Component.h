@@ -63,9 +63,6 @@ namespace StreamWork {
             /*! \brief Initialisation du composant
                 \note A Surcharger*/
             virtual void initializeComponent() throw(SwException);
-            /*! \brief terminaison du composante
-                \note A Surcharger*/
-            virtual void terminateComponent();
             /*! \brief evenement de changement de propriete
                 \note A Surcharger*/
             virtual void eventPropertyChange(ISwProperty * property);

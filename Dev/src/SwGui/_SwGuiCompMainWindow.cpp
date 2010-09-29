@@ -49,6 +49,8 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): Component(){
 }
 /*! \brief Destructeur */
 _SwGuiCompMainWindow::~_SwGuiCompMainWindow(){
+    delete _main_window;
+    _main_window=0;
 }
 
 /*! \brief Initialisation des ressources
@@ -122,12 +124,6 @@ void _SwGuiCompMainWindow::initializeComponent() throw(SwException) {
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiMainWindow done\n"));
 
 }
-/*! \brief Terminaison du composant */
-void _SwGuiCompMainWindow::terminateComponent() throw(SwException) {
-    delete _main_window;
-    _main_window=0;
-}
-
 /*! \brief Callback sur les changements de propriétés*/
 void _SwGuiCompMainWindow::eventPropertyChange(ISwProperty * property) {
     uint val;

@@ -96,9 +96,6 @@ namespace StreamWork {
             /*! \brief Initialisation du composant
                 \note A Surcharger*/
             virtual void initializeComponent() throw(StreamWork::SwCore::SwException);
-            /*! \brief terminaison du composante
-                \note A Surcharger*/
-            virtual void terminateComponent();
             /*! \brief evenement de changement de propriete
                 \note A Surcharger*/
             virtual void eventPropertyChange(StreamWork::SwCore::ISwProperty * property);

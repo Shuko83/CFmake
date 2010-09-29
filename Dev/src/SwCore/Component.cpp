@@ -23,7 +23,6 @@ Component::Component():SwComponent_Class() {
 /** @brief Destructor */
 Component::~Component() {
     _disable_service=true;
-    terminateComponent();
     //Desenregistrement des services
     this->UnregisterService(_consumer_service->GetServiceName());
     this->UnregisterService(_provider_service->GetServiceName());
@@ -91,11 +90,6 @@ void Component::OnReceiveData(SwPin * src,SwData_Class * data){
 /*! \brief Initialisation du composant
     \note A Surcharger*/
 void Component::initializeComponent() throw(SwException) {
-
-}
-/*! \brief terminaison du composante
-    \note A Surcharger*/
-void Component::terminateComponent(){
 
 }
 /*! \brief evenement de changement de propriete

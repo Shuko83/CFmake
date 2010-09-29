@@ -101,8 +101,6 @@ public:
 
     /*! \brief Initialisation du composant */
     virtual void initializeComponent() throw(SwException);
-    /*! \brief Terminaison du composant */
-    virtual void terminateComponent() throw(SwException);
      /*! \brief Callback sur les changements de propriétés*/
     void eventPropertyChange(ISwProperty * property);
     
