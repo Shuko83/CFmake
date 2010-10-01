@@ -290,13 +290,20 @@ bool SwApplication::IsVerbose() {
 /*! \brief Ajout d'un stream preconstruit
 \param[in] racine du stream*/
 void SwApplication::AddNewStream(SwComponent_Class * stream_root) {
+    static bool autostartInProgress=false;
     _streams.insert(SwComponent_ClassPtr(stream_root));   
+    if (autostartInProgress) {
+        return;
+    }
     QStringList liste_arg=QCoreApplication::instance()->arguments();
     for(int i=0;i<(liste_arg.count()-1);i++) {
         if (liste_arg[i]=="-autostart") {
             i=liste_arg.count();
-            if (_executor!=NULL) 
+            if (_executor!=NULL) {
+                autostartInProgress=true;
                 _executor->StreamExecute();
+                autostartInProgress=false;
+            }
         }
     }
 }
