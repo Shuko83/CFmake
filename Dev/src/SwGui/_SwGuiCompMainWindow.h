@@ -42,6 +42,9 @@ class _SwGuiCompMainWindow : public Component, public ISwMainWindow , public ISw
 protected:
     /* fenetre principale */
     QMainWindow * _main_window;
+    /* show */
+    SwEnum _show_mode;
+    ISwProperty * _show_property;
     // --- Menus ---
     /* nombre de menus */
     uint _menus_nb;
@@ -123,7 +126,8 @@ public:
 	virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);            
 	/*! \brief Apres changement de la disponibilité de l'interface */
 	virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);            
-
+private:
+    void showChanged();
 
 };
 #endif 

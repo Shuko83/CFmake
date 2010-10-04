@@ -5,7 +5,8 @@
  \date 23-août-2006 18:59:26
  \author F.Bighelli
 */
-
+#include <QDesktopWidget>
+#include <QApplication>
 #include <QMenuBar>
 #include <SwApplication.h>
 #include <SwMacros.h>
@@ -20,6 +21,11 @@ using namespace StreamWork::SwGui;
 #define CL_TOOLBAR_INTERFACE_NAME "ToolBar_%1"
 #define CL_DOCKWIDGET_INTERFACE_NAME "DockWidget_%1"
 #define CL_CENTRALWIDGET_INTERFACE_NAME "CentralWidget"
+#define SHOW_NORMAL 0
+#define SHOW_CENTERED 1
+#define SHOW_FULLSCREEN 2
+#define SHOW_MAXIMIZED 3
+#define SHOW_MINIMIZED 4
 
 
 /*! \brief Constructeur */
@@ -45,6 +51,12 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): Component(){
     _default_dockwidget_position.AddKey(Qt::TopDockWidgetArea,"Top");
     _default_dockwidget_position.AddKey(Qt::BottomDockWidgetArea,"Bottom");
     _default_dockwidget_position.FromInt(Qt::LeftDockWidgetArea);
+    _show_mode.AddKey(SHOW_NORMAL,"None");
+    _show_mode.AddKey(SHOW_CENTERED,"Centered");
+    _show_mode.AddKey(SHOW_FULLSCREEN,"FullScreen");
+    _show_mode.AddKey(SHOW_MAXIMIZED,"Maximized");
+    _show_mode.AddKey(SHOW_MINIMIZED,"Minimized");
+    _show_mode.FromInt(SHOW_NORMAL);
     _useAsWidget = false;
 }
 /*! \brief Destructeur */
@@ -171,7 +183,16 @@ void _SwGuiCompMainWindow::initializeComponent() throw(SwException) {
     _use_aswidget_property->SetDescription("Define kind of widget interface this component produces");  
     _use_aswidget_property->SetValue(QVariant(_useAsWidget));
     enableListeningChangeForProperty(_use_aswidget_property);
-    
+
+    _show_property=getPropertiesService().CreateProperty<SwEnum>("ShowMode");
+    if (_show_property!=NULL) {
+        QVariant variant;
+        variant.setValue(_show_mode);
+        _show_property->SetValue(variant);
+        _show_property->SetDescription("Show Mode");  
+        enableListeningChangeForProperty(_show_property);
+    }
+
     //Fin
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiMainWindow done\n"));
 
@@ -295,6 +316,11 @@ void _SwGuiCompMainWindow::eventPropertyChange(ISwProperty * property) {
             }
         }
         _dockwidgets_nb=val;
+    }
+    if (_show_property==property) {
+        SwEnum showmode=_show_property->GetValue().value<SwEnum>();
+        _show_mode=showmode;
+        showChanged();
     }
 }
 
@@ -448,4 +474,34 @@ void _SwGuiCompMainWindow::eventAfterInterfaceAvailability(QString interface_nam
         return;
     }
 
+}
+void _SwGuiCompMainWindow::showChanged() {
+    switch(_show_mode.ToInt()) {
+        case SHOW_CENTERED: {
+            _main_window->showNormal();
+            QDesktopWidget *desktop = QApplication::desktop();
+            QRect screensize= desktop->screenGeometry(desktop->primaryScreen());
+            QRect windowSize= _main_window->frameGeometry();
+            QPoint slefttop(screensize.left(),screensize.top());
+            QPoint wlefttop;
+            slefttop.setX(slefttop.x()+(screensize.width()-windowSize.width())/2);
+            slefttop.setY(slefttop.y()+(screensize.height()-windowSize.height())/2);
+            _main_window->move(slefttop);
+            
+                            }
+            break;
+        case SHOW_FULLSCREEN:
+            _main_window->showFullScreen();
+            break;
+        case SHOW_MAXIMIZED:
+            _main_window->showMaximized();
+            break;
+        case SHOW_MINIMIZED:
+            _main_window->showMinimized();
+            break;
+        case SHOW_NORMAL:
+            _main_window->showNormal();
+        default:
+            break;
+    }
 }
