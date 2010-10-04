@@ -9,12 +9,14 @@
 
 #include <QtGui>
 #include <QtCore>
+#include "ISwReplayManagerListener.h"
 
+using namespace StreamWork::SwRecord;
 /**
 @class _ReplayWidget
 @brief widget de rejeu
 */
-class _ReplayWidget : public QWidget {
+class _ReplayWidget : public QWidget, public virtual ISwReplayManagerListener {
     Q_OBJECT
 public:
 	/** @brief Constructor */

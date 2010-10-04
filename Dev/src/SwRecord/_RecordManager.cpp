@@ -34,7 +34,9 @@ _RecordManager::_RecordManager(_SwServiceRecording * serviceRecord):SwComponent_
     _configuration=SwFileDescriptor(SwFileDescriptor::FileRead,QString(),QString());
     _enableRecording=false;
     _maxRecordSize=100000; //100K
+    _enabledInternalWidget=true;
     _widget=new _RecordWidget();
+    addRecordManagerListener(_widget);
 }
 /** @brief Destructeur */
 _RecordManager::~_RecordManager() {
@@ -54,6 +56,7 @@ _RecordManager::~_RecordManager() {
     delete _properties_service;
 
 	//DETRUIRE LES AUTRES ATTRIBUTS DE LA CLASSE
+    removeRecordManagerListener(_widget);
     delete _widget;
 }
 /** 
@@ -247,6 +250,16 @@ void _RecordManager::saveConfiguration() {
 
 
 }
+/*@brief ajout de listener*/
+void _RecordManager::addRecordManagerListener(ISwRecordManagerListener * listener) {    
+    if (listener!=0)
+        _listeners.push_back(listener);
+}
+/*@brief suppression de listener*/
+void _RecordManager::removeRecordManagerListener(ISwRecordManagerListener * listener){
+    if (listener!=0)
+        _listeners.removeOne(listener);
+}
 
 //---------------------------------------------------------------------
 // Interface ISwExecutable_Service
@@ -255,8 +268,10 @@ void _RecordManager::saveConfiguration() {
 void _RecordManager::Initialize(double start_time,ISwExecution_Service * executor) throw (SwException) {
     _itime=start_time;
     if(_writer!=0) {
-        _widget->setEnableRecordInformation(true);
-        _widget->setStartTime(start_time);
+        foreach(ISwRecordManagerListener * listener,_listeners) {
+            listener->setEnableRecordInformation(true);
+            listener->setStartTime(start_time);
+        }
         _writer->writeStartElement(CG_RECORD_HEADER);
         _writer->writeAttribute(CG_RECORD_TIME,QString("%1").arg(_itime,0,'f',3));
         //Construction et enregistrement du mapping des points d'enregistrement
@@ -282,8 +297,11 @@ void _RecordManager::Start(double current_time) throw (SwException){
 /*! \brief Execution */
 void _RecordManager::Execute(double current_time,bool is_first_call) throw (SwException){
     if(_writer!=0) {
-        _widget->setCurrentTime(current_time);
-        _widget->setDataSize(_totalSize+(unsigned int)_fileWriterData->size());
+        int size=_totalSize+(unsigned int)_fileWriterData->size();
+        foreach(ISwRecordManagerListener * listener,_listeners) {
+            listener->setCurrentTime(current_time);
+            listener->setDataSize(size);
+        }
         if (_maxRecordSize<(int)_fileWriterData->size()) {
             closeWriterData();
             createWriterData();
@@ -300,7 +318,9 @@ void _RecordManager::Stop(double current_time){
         _writer->writeAttribute(CG_RECORD_TIME,QString("%1").arg(current_time-_itime,0,'f',3));
         _writer->writeAttribute(CG_RECORD_STOP_DCOUNT,QString("%1").arg(_dataCounter));
         _writer->writeEndElement();
-        _widget->setEnableRecordInformation(false);
+        foreach(ISwRecordManagerListener * listener,_listeners) {
+            listener->setEnableRecordInformation(false);
+        }
     }
 }            
 //---------------------------------------------------------------------
@@ -379,6 +399,23 @@ void _RecordManager::buildRecordPointMapping() {
         _writer->writeEndElement();
         i++;
         it++;
+    }
+}
+/** @brief enable internal widget */
+bool _RecordManager::getEnableInternalWidget() const {
+    return _enabledInternalWidget;
+}
+void _RecordManager::setEnableInternalWidget(bool val) {
+    if (_enabledInternalWidget==val)
+        return;
+    if (val) {
+        _enabledInternalWidget=true;
+        _listeners.push_back(_widget);
+        _widget->setEnabled(true);
+    } else {
+        _enabledInternalWidget=false;
+        _listeners.removeOne(_widget);
+        _widget->setEnabled(false);
     }
 }
 

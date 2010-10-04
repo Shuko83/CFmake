@@ -17,7 +17,6 @@ _TimeLine::_TimeLine() {
 	_initTime=0;
 	_startTime=0;
 	_stopTime=0;
-    _widget=0;
 }
 /** @brief destruction */
 _TimeLine::~_TimeLine() {
@@ -37,10 +36,6 @@ void _TimeLine::reset() {
     }
     _rpMap.clear();
     _executionKeys.clear();
-}
-/** @brief definition du widget */
-void _TimeLine::setWidget(_ReplayWidget * widget) {
-    _widget=widget;
 }
 /** @brief Chargement du fichier d'enregistrement */
 bool _TimeLine::loadRecordFile(QXmlStreamReader * reader,_SwServiceRecording * serviceRecord,QString repositoryName) {
@@ -130,10 +125,10 @@ bool _TimeLine::loadRecordFile(QXmlStreamReader * reader,_SwServiceRecording * s
         return false;
     }
 
-    if (_widget!=0) {
-        _widget->setStartTime(_initTime);   
-        _widget->setStopTime(_stopTime);   
-        _widget->setCurrentTime(_initTime);   
+    foreach(ISwReplayManagerListener * listener,_listeners) {
+        listener->setStartTime(_initTime);   
+        listener->setStopTime(_stopTime);   
+        listener->setCurrentTime(_initTime);   
     }
     loadDataWriter();
 
@@ -143,8 +138,9 @@ bool _TimeLine::loadRecordFile(QXmlStreamReader * reader,_SwServiceRecording * s
 
 /*! \brief renvoie du temps pour l'initialisation */
 double _TimeLine::queryInitTime() {
-    if (_widget!=0) 
-        _widget->setEnableReplayInformation(true);
+    foreach(ISwReplayManagerListener * listener,_listeners) {
+        listener->setEnableReplayInformation(true);
+    }
     return _initTime;
 }
 /*! \brief renvoie du temps pour le demarrage */
@@ -164,8 +160,8 @@ double _TimeLine::queryExecuteTime(bool * isLast) {
     _executionKeys.pop_front();
     if (_executionKeys.isEmpty()) {
         *isLast=true;
-        if (_widget!=0) {
-            _widget->ForcePauseState();
+        foreach(ISwReplayManagerListener * listener,_listeners) {
+            listener->ForcePauseState();
         }
     }
     double t=ekey->_currentTime;
@@ -181,20 +177,31 @@ double _TimeLine::queryExecuteTime(bool * isLast) {
         itrpcall++;
     }
     delete ekey;
-    if (_widget!=0)
-        _widget->setCurrentTime(t);   
+    foreach(ISwReplayManagerListener * listener,_listeners) {
+        listener->setCurrentTime(t);   
+    }
     return t;
 }
 /*! \brief renvoie du temps pour l'arret */
 double _TimeLine::queryStopTime() {
-    if (_widget!=0) 
-        _widget->setEnableReplayInformation(false);
+    foreach(ISwReplayManagerListener * listener,_listeners) {
+        listener->setEnableReplayInformation(false);
+    }
     return _stopTime;
 }
 /*! \brief pause demandé */
 bool _TimeLine::queryPause() {
-    if (_widget!=0) 
-        return _widget->getPauseState();
+    bool lqueryPause=false;
+    foreach(ISwReplayManagerListener * listener,_listeners) {
+        lqueryPause=lqueryPause || listener->getPauseState();
+    }
+    if (lqueryPause) {
+        foreach(ISwReplayManagerListener * listener,_listeners) {
+            if (listener->getPauseState()!=lqueryPause) {
+                listener->ForcePauseState();  
+            }
+        }
+    }
     return false;
 }
 /*! \brief renvoie du temps pour l'arret */
@@ -273,7 +280,18 @@ bool _TimeLine::loadDataWriter() {
     if (_executionKeyMaxSize==0)
         _executionKeyMaxSize=_executionKeys.count();
 
-    if (_widget!=0) 
-        _widget->setCacheTime(_executionKeys.back()->_currentTime);   
+    foreach(ISwReplayManagerListener * listener,_listeners) { 
+        listener->setCacheTime(_executionKeys.back()->_currentTime);  
+    }
     return true;
+}
+/*@brief ajout de listener*/
+void _TimeLine::addReplayManagerListener(ISwReplayManagerListener * listener) {
+    if (listener!=0)
+        _listeners.push_back(listener);
+}
+/*@brief suppression de listener*/
+void _TimeLine::removeReplayManagerListener(ISwReplayManagerListener * listener) {
+    if (listener!=0)
+        _listeners.removeOne(listener);
 }

@@ -9,11 +9,14 @@
 
 #include <QtGui>
 #include <QtCore>
+#include "ISwRecordManagerListener.h"
+
+
 /**
 @class _RecordWidget
 @brief widget d'enregistremenr
 */
-class _RecordWidget : public QWidget {
+class _RecordWidget : public QWidget, public virtual StreamWork::SwRecord::ISwRecordManagerListener {
     Q_OBJECT
 public:
 	/** @brief Constructor */

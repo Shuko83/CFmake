@@ -22,6 +22,7 @@
 #include "_SwServiceRecording.h"
 #include <SwFileDescriptor.h>
 #include "_TimeLine.h"
+#include "_ReplayWidget.h"
 #include <ISwWidget.h>
 
 //Check namespace needed (for exemple ISwAction need namespace StreamWork::SwGui)
@@ -110,6 +111,10 @@ public:
     virtual void startReplay(StreamWork::SwExecution::ISwExecution_Service * exeService);
     /*@brief arret du rejeu */
     virtual void stopReplay();
+    /*@brief ajout de listener*/
+    virtual void addReplayManagerListener(ISwReplayManagerListener * listener);
+    /*@brief suppression de listener*/
+    virtual void removeReplayManagerListener(ISwReplayManagerListener * listener);
     //---------------------------------------------------------------------
     // Interface ISwWidget
     //---------------------------------------------------------------------

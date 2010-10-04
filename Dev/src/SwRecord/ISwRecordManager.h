@@ -9,6 +9,7 @@
 
 #include <QXmlStreamWriter>
 #include <ISwConfigurationSaver.h>
+#include <ISwRecordManagerListener.h>
 
 namespace StreamWork {
 
@@ -47,6 +48,10 @@ namespace StreamWork {
             virtual QXmlStreamWriter *queryRecordKey(ISwRecordPoint * recordPoint,double currentTime)=0;
             /*@brief finalisation de la clef d'enregistrement*/
             virtual void finalizeRecordKey()=0;
+            /*@brief ajout de listener*/
+            virtual void addRecordManagerListener(ISwRecordManagerListener * listener)=0;
+            /*@brief suppression de listener*/
+            virtual void removeRecordManagerListener(ISwRecordManagerListener * listener)=0;
         };
 
     }

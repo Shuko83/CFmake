@@ -34,7 +34,7 @@ _ReplayManager::_ReplayManager(_SwServiceRecording * serviceRecord):SwComponent_
     _executorPath="";
     _executor=0;
     _widget=new _ReplayWidget();
-    _timeLine.setWidget(_widget);
+    _timeLine.addReplayManagerListener(_widget);
 }
 /** @brief Destructeur */
 _ReplayManager::~_ReplayManager() {
@@ -53,6 +53,7 @@ _ReplayManager::~_ReplayManager() {
     delete _properties_service;
 
 	//DETRUIRE LES AUTRES ATTRIBUTS DE LA CLASSE
+    _timeLine.removeReplayManagerListener(_widget);
     delete _widget;
 }
 /** 
@@ -167,6 +168,15 @@ void _ReplayManager::stopReplay(){
         }
     }
 }
+/*@brief ajout de listener*/
+void _ReplayManager::addReplayManagerListener(ISwReplayManagerListener * listener) {
+    _timeLine.addReplayManagerListener(listener);
+}
+/*@brief suppression de listener*/
+void _ReplayManager::removeReplayManagerListener(ISwReplayManagerListener * listener){
+    _timeLine.removeReplayManagerListener(listener);
+}
+
 //---------------------------------------------------------------------
 // Interface ISwWidget
 //---------------------------------------------------------------------

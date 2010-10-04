@@ -47,6 +47,7 @@ class _RecordManager : public SwComponent_Class,
     Q_PROPERTY(bool record READ getEnableRecording WRITE setEnableRecording)
     Q_PROPERTY(int maxRecordSize READ getMaxRecordSize WRITE setMaxRecordSize)
     Q_PROPERTY(StreamWork::SwCore::SwFileDescriptor recordConfiguration READ getRecordConfiguration WRITE setRecordConfiguration)
+    Q_PROPERTY(bool enableInternalWidget READ getEnableInternalWidget WRITE setEnableInternalWidget)
 protected:
 
 	//--------------------------------------------------------------
@@ -99,7 +100,11 @@ protected:
     _RecordWidget * _widget;
     /* @brief size */
     int _totalSize;
-
+    /* @brief listeners */
+    QList<ISwRecordManagerListener *> _listeners;
+    /* @brief disable internal widget */
+    bool _enabledInternalWidget;
+    /* @brief configuration saver */
     StreamWork::SwConfiguration::ISwConfigurationSaver * _configSaver;
 public:
     /** @brief Constructeur */
@@ -137,6 +142,10 @@ public:
     virtual QXmlStreamWriter *queryRecordKey(ISwRecordPoint * recordPoint,double currentTime);
     /*@brief finalisation de la clef d'enregistrement*/
     virtual void finalizeRecordKey();
+    /*@brief ajout de listener*/
+    virtual void addRecordManagerListener(ISwRecordManagerListener * listener);
+    /*@brief suppression de listener*/
+    virtual void removeRecordManagerListener(ISwRecordManagerListener * listener);
     //---------------------------------------------------------------------
     // Interface ISwExecutable_Service
     //---------------------------------------------------------------------
@@ -180,6 +189,9 @@ public:
     /** @brief recordConfiguration */
     SwFileDescriptor getRecordConfiguration() const;
     void setRecordConfiguration(const SwFileDescriptor & val);
+    /** @brief enable internal widget */
+    bool getEnableInternalWidget() const;
+    void setEnableInternalWidget(bool val);
 
 protected:
     /** @brief  Construction et enregistrement du mapping des points d'enregistrement */

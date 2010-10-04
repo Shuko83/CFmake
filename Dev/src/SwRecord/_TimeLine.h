@@ -7,12 +7,14 @@
 #ifndef __TIMELINE_H
 #define __TIMELINE_H
 
+#include <QList>
 #include <QXmlStreamReader>
 #include "_ExecutionKey.h"
 #include "_SwServiceRecording.h"
 #include <ISwClockProvider.h>
-#include "_ReplayWidget.h"
+#include "ISwReplayManagerListener.h"
 
+using namespace StreamWork::SwRecord;
 using namespace StreamWork::SwExecution;
 /**
 @class _TimeLine
@@ -38,7 +40,7 @@ class _TimeLine : public ISwClockProvider {
     /* @brief executionKeyMaxSize*/
     int _executionKeyMaxSize;
     /* @brief Widget de rejeu */
-    _ReplayWidget * _widget;
+    QList<ISwReplayManagerListener *> _listeners;
 public:
 	/** @brief Constructor */
 	_TimeLine();
@@ -46,8 +48,6 @@ public:
 	~_TimeLine();
 	/** @brief reset */
 	void reset();
-	/** @brief definition du widget */
-	void setWidget(_ReplayWidget * widget);
     /** @brief Chargement du fichier d'enregistrement */
     bool loadRecordFile(QXmlStreamReader * reader,_SwServiceRecording * serviceRecord,QString repositoryName);
     /*! \brief renvoie du temps pour l'initialisation */
@@ -60,6 +60,10 @@ public:
     virtual double queryStopTime();
     /*! \brief pause demandé */
     virtual bool queryPause();
+    /*@brief ajout de listener*/
+    virtual void addReplayManagerListener(ISwReplayManagerListener * listener);
+    /*@brief suppression de listener*/
+    virtual void removeReplayManagerListener(ISwReplayManagerListener * listener);
 protected:
     /*! \brief renvoie du temps pour l'arret */
     virtual bool loadDataWriter();

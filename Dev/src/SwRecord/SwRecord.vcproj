@@ -432,11 +432,19 @@
 				>
 			</File>
 			<File
+				RelativePath="ISwRecordManagerListener.h"
+				>
+			</File>
+			<File
 				RelativePath="ISwRecordPoint.h"
 				>
 			</File>
 			<File
 				RelativePath="ISwReplayManager.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwReplayManagerListener.h"
 				>
 			</File>
 			<File
