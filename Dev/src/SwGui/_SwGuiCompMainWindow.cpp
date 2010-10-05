@@ -500,7 +500,6 @@ void _SwGuiCompMainWindow::showChanged() {
             _main_window->showMinimized();
             break;
         case SHOW_NORMAL:
-            _main_window->showNormal();
         default:
             break;
     }

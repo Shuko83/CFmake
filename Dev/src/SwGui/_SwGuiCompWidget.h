@@ -21,6 +21,7 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
+#include <SwEnum.h>
 #include "ISwLayout.h"
 #include "ISwWidget.h"
 
@@ -37,6 +38,12 @@ class _SwGuiCompWidget : public SwComponent_Class, public ISwInterfaces_Consumer
 protected:
     /* menu */
     QWidget * _widget;
+    /* show */
+    SwEnum _show_mode;
+    ISwProperty * _show_property;
+    /* flags */
+    SwEnum _flags_mode;
+    ISwProperty * _flags_property;
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
@@ -84,6 +91,8 @@ public:
     /*! \brief Renvoie le widget
     \return le widget */
 	virtual QWidget & GetWidget();
+private:
+    void showChanged();
 
 };
 #endif 

@@ -5,7 +5,8 @@
  \date 23-août-2006 18:59:26
  \author F.Bighelli
 */
-
+#include <QDesktopWidget>
+#include <QApplication>
 #include <SwApplication.h>
 #include <SwMacros.h>
 #include "_SwGuiCompWidget.h"
@@ -15,6 +16,11 @@ using namespace StreamWork::SwGui;
 
 
 #define CL_WIDGET_INTERFACE_NAME "Widget_%1"
+#define SHOW_NORMAL 0
+#define SHOW_CENTERED 1
+#define SHOW_FULLSCREEN 2
+#define SHOW_MAXIMIZED 3
+#define SHOW_MINIMIZED 4
 
 
 /*! \brief Constructeur */
@@ -28,6 +34,24 @@ _SwGuiCompWidget::_SwGuiCompWidget(): SwComponent_Class(){
     _registered_widgets_nb=0;
     _handle_layout=NULL;
     _is_layout_mode=false;
+    _show_mode.AddKey(SHOW_NORMAL,"None");
+    _show_mode.AddKey(SHOW_CENTERED,"Centered");
+    _show_mode.AddKey(SHOW_FULLSCREEN,"FullScreen");
+    _show_mode.AddKey(SHOW_MAXIMIZED,"Maximized");
+    _show_mode.AddKey(SHOW_MINIMIZED,"Minimized");
+    _show_mode.FromInt(SHOW_NORMAL);
+
+    _flags_mode.AddKey(Qt::Widget,"Widget");
+    _flags_mode.AddKey(Qt::Window,"Window");
+    _flags_mode.AddKey(Qt::Dialog,"Dialog");
+    _flags_mode.AddKey(Qt::Sheet,"Sheet");
+    _flags_mode.AddKey(Qt::Drawer,"Drawer");
+    _flags_mode.AddKey(Qt::Popup,"Popup");
+    _flags_mode.AddKey(Qt::Tool,"Tool");
+    _flags_mode.AddKey(Qt::ToolTip,"ToolTip");
+    _flags_mode.AddKey(Qt::SplashScreen,"SplashScreen");
+    _flags_mode.AddKey(Qt::FramelessWindowHint,"FramelessWindowHint");
+    _flags_mode.FromInt(Qt::Widget);
 }
 /*! \brief Destructeur */
 _SwGuiCompWidget::~_SwGuiCompWidget(){
@@ -77,6 +101,25 @@ void _SwGuiCompWidget::InitializeResources() throw(SwException) {
     _widgets_nb_property->SetValue(QVariant(_widgets_nb));
     _widgets_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompWidget::OnPropertyChange);
 
+    _show_property=_properties_service->CreateProperty<SwEnum>("ShowMode");
+    if (_show_property!=NULL) {
+        QVariant variant;
+        variant.setValue(_show_mode);
+        _show_property->SetValue(variant);
+        _show_property->SetDescription("Show Mode");  
+        _show_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompWidget::OnPropertyChange);
+    }
+
+
+    _flags_property=_properties_service->CreateProperty<SwEnum>("FlagMode");
+    if (_flags_property!=NULL) {
+        QVariant variant;
+        variant.setValue(_flags_mode);
+        _flags_property->SetValue(variant);
+        _flags_property->SetDescription("Flags Mode");  
+        _flags_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompWidget::OnPropertyChange);
+    }
+
 
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiWidget done\n"));
 
@@ -102,6 +145,16 @@ void _SwGuiCompWidget::OnPropertyChange(ISwProperty * property) {
             }
         }
         _widgets_nb=val;
+    }
+    if (_show_property==property) {
+        SwEnum showmode=_show_property->GetValue().value<SwEnum>();
+        _show_mode=showmode;
+        showChanged();
+    }
+    if (_flags_property==property) {
+        SwEnum flags_mode=_flags_property->GetValue().value<SwEnum>();
+        _flags_mode=flags_mode;
+        _widget->setWindowFlags(Qt::WindowFlags(_flags_mode.ToInt()));
     }
 }
 //---------------------------------------------------------------------
@@ -161,4 +214,34 @@ void _SwGuiCompWidget::AfterInterfaceAvailabilityChange(QString interface_name,S
 QWidget & _SwGuiCompWidget::GetWidget() {
     return *_widget;
 }
+void _SwGuiCompWidget::showChanged() {
+    switch(_show_mode.ToInt()) {
+        case SHOW_CENTERED: {
+            _widget->showNormal();
+            QDesktopWidget *desktop = QApplication::desktop();
+            QRect screensize= desktop->screenGeometry(desktop->primaryScreen());
+            QRect windowSize= _widget->frameGeometry();
+            QPoint slefttop(screensize.left(),screensize.top());
+            QPoint wlefttop;
+            slefttop.setX(slefttop.x()+(screensize.width()-windowSize.width())/2);
+            slefttop.setY(slefttop.y()+(screensize.height()-windowSize.height())/2);
+            _widget->move(slefttop);
+            
+                            }
+            break;
+        case SHOW_FULLSCREEN:
+            _widget->showFullScreen();
+            break;
+        case SHOW_MAXIMIZED:
+            _widget->showMaximized();
+            break;
+        case SHOW_MINIMIZED:
+            _widget->showMinimized();
+            break;
+        case SHOW_NORMAL:
+        default:
+            break;
+    }
+}
 
+    void flagsChanged();

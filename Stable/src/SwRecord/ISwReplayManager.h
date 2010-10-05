@@ -8,6 +8,7 @@
 #define _STREAMWORK_SWRECORD_ISWREPLAYMANAGER_H
 
 #include <ISwExecution_Service.h>
+#include "ISwReplayManagerListener.h"
 
 namespace StreamWork {
 
@@ -36,6 +37,10 @@ namespace StreamWork {
             virtual void startReplay(StreamWork::SwExecution::ISwExecution_Service * exeService)=0;
             /*@brief arret du rejeu */
             virtual void stopReplay()=0;
+            /*@brief ajout de listener*/
+            virtual void addReplayManagerListener(ISwReplayManagerListener * listener)=0;
+            /*@brief suppression de listener*/
+            virtual void removeReplayManagerListener(ISwReplayManagerListener * listener)=0;
 
         };
 
