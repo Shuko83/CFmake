@@ -154,7 +154,9 @@ void _SwGuiCompWidget::OnPropertyChange(ISwProperty * property) {
     if (_flags_property==property) {
         SwEnum flags_mode=_flags_property->GetValue().value<SwEnum>();
         _flags_mode=flags_mode;
+        bool isVisible=_widget->isVisible();
         _widget->setWindowFlags(Qt::WindowFlags(_flags_mode.ToInt()));
+        _widget->setVisible(isVisible);
     }
 }
 //---------------------------------------------------------------------
