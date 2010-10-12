@@ -27,6 +27,9 @@ void ViewNavigator::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
 
     QGraphicsScene * scene=_streamView->scene();
+    if (scene==0) {
+        return;
+    }
     QRectF sceneRect=scene->sceneRect();
     QSizeF ssize=sceneRect.size();
     ssize.scale(QSizeF(width(),height()),Qt::KeepAspectRatio);

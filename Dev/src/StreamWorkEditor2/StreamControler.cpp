@@ -731,8 +731,10 @@ void StreamControler::loadVisualItem(QDomDocument & doc,QDomElement &node,SwComp
         QList<ConnectorGraphicItem *> original_list=(* clist);
         for(int i=0;i<original_list.count();i++) {
             int j=labelConnectors.indexOf(original_list[i]->getName());
-            (*clist)[j]=original_list[i];
-            (*clist)[j]->setParentPosition(labelPositions[j]);
+            if (j>=0) {
+                (*clist)[j]=original_list[i];
+                (*clist)[j]->setParentPosition(labelPositions[j]);
+            }
         }
     }
     cgitem->updateAttributs();
