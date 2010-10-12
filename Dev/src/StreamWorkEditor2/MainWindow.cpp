@@ -77,6 +77,9 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
     connect(treew,SIGNAL(clicked ( const QModelIndex &  )),_iaTreeModel,SLOT(onSelectItem ( const QModelIndex &  )));
     iadock->setWidget(treew);
 
+    tabifyDockWidget(iadock,stdock);
+    tabifyDockWidget(stdock,pdock);
+
 
     QDockWidget * propdock = new QDockWidget(tr("Component Properties"), this);
     propdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);

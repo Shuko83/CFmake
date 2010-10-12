@@ -69,6 +69,7 @@ _SwModel_Class::~_SwModel_Class(){
     if (!_isDefault) {
         _host_entry=NULL;
         SW_APP->DestroyStream(_root_element);
+        _root_element=0;
     }
 }
 

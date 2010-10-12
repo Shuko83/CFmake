@@ -686,6 +686,7 @@ void StreamControler::loadVisualData(QDomDocument & doc){
         ia->setText(node.attribute(CL_IA_ATT_TEXT));
         _streamScene->addItem(ia);
     }
+    _streamScene->setSceneRect(_streamScene->itemsBoundingRect());
 }
 /** @brief chargement d'un item */
 void StreamControler::loadVisualItem(QDomDocument & doc,QDomElement &node,SwComponent_Class * parentComponent,QGraphicsItem * parentItem){
