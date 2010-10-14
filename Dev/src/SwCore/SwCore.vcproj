@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="SwCored"
 	ProjectGUID="{BC87C7A4-3610-36F8-98E7-C6E0FFAD553F}"
-	RootNamespace="SwCored"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -80,7 +79,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="c:\Qt\4.5.0\lib"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=""
+				ProgramDatabaseFile="./../../bin/vc/debug/SwCored.pdb"
 				SubSystem="2"
 				LinkTimeCodeGeneration="0"
 			/>

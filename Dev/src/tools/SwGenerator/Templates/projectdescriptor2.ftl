@@ -76,15 +76,15 @@ INCLUDEPATH += ${sw_dirs_include}/SwGui
 </#if>
 
 CONFIG(debug, debug|release) {
-     DESTDIR = ../../lib/vc/debug/
-     DLLDESTDIR = ../../bin/vc/debug/
-    TARGET = $$join(TARGET,,,d)
-      QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
+    win32:DESTDIR = ./../../lib/vc/debug
+    win32:DLLDESTDIR=  ./../../bin/vc/debug
+    win32:TARGET = $$join(TARGET,,,d)
+    win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
     OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
 <#if doc["/SwFactoryEntry/@IsOwnPluginInDistribution='yes'"]>
-     LIBS += -L"../../lib/vc/debug/" \
+    LIBS += -L"../../lib/vc/debug/" \
 <#else>
-     LIBS += -L"${sw_dirs_lib}/debug" \
+    LIBS += -L"${sw_dirs_lib}/debug" \
 </#if>
     -lSwCored \
     -lSwExecutiond \
@@ -92,10 +92,10 @@ CONFIG(debug, debug|release) {
     TARGET_EXT = .swdld
 } 
 CONFIG(release, debug|release) {
-     DESTDIR = ../../lib/vc/release/
-     DLLDESTDIR = ../../bin/vc/release/
+    win32:DESTDIR = ./../../lib/vc/release
+    win32:DLLDESTDIR=  ./../../bin/vc/release
 <#if doc["/SwFactoryEntry/@IsOwnPluginInDistribution='yes'"]>
-     LIBS += -L"../../lib/vc/release/" \
+    LIBS += -L"../../lib/vc/release/" \
  <#else>
     LIBS += -L"${sw_dirs_lib}/release" \
 </#if>

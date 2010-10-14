@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="SwGuid"
 	ProjectGUID="{AE6B1BB5-6369-3D17-8E41-77157C3E7359}"
-	RootNamespace="SwGuid"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -80,7 +79,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="c:\Qt\4.5.0\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=""
+				ProgramDatabaseFile="./../../bin/vc/debug/SwGuid.pdb"
 				SubSystem="2"
 				LinkTimeCodeGeneration="0"
 			/>
@@ -168,7 +167,7 @@
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
 				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
-				AdditionalDependencies="SwCore.lib c:\Qt\4.5.0\lib\QtXml4.lib c:\Qt\4.5.0\lib\QtGui4.lib c:\Qt\4.5.0\lib\QtNetwork4.lib c:\Qt\4.5.0\lib\QtCore4.lib"
+				AdditionalDependencies="../../lib/vc/release\SwCore.lib c:\Qt\4.5.0\lib\QtXml4.lib c:\Qt\4.5.0\lib\QtGui4.lib c:\Qt\4.5.0\lib\QtNetwork4.lib c:\Qt\4.5.0\lib\QtCore4.lib"
 				OutputFile="..\..\lib\vc\release\SwGui.swdl"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"

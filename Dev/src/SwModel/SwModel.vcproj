@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="SwModeld"
 	ProjectGUID="{084EA747-83E4-3F00-8C05-BBB180B14638}"
-	RootNamespace="SwModeld"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -80,7 +79,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="c:\Qt\4.5.0\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=""
+				ProgramDatabaseFile="./../../bin/vc/debug/SwModeld.pdb"
 				SubSystem="2"
 				LinkTimeCodeGeneration="0"
 			/>

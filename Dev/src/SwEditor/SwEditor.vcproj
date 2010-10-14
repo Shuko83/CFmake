@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="SwEditord"
 	ProjectGUID="{96F25A2D-0648-3977-A3A0-EBFADF263353}"
-	RootNamespace="SwEditord"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -80,7 +79,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="c:\Qt\4.5.0\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=""
+				ProgramDatabaseFile="./../../bin/vc/debug/SwEditord.pdb"
 				SubSystem="2"
 				LinkTimeCodeGeneration="0"
 			/>

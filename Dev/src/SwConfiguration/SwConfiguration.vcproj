@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="SwConfigurationd"
 	ProjectGUID="{A3B19830-7148-3B9F-91AF-23D43422C2FB}"
-	RootNamespace="SwConfigurationd"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -80,7 +79,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="c:\Qt\4.5.0\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=""
+				ProgramDatabaseFile="./../../bin/vc/debug/SwConfigurationd.pdb"
 				SubSystem="2"
 				LinkTimeCodeGeneration="0"
 			/>
@@ -690,7 +689,7 @@
 				>
 			</File>
 			<File
-				RelativePath="._\intermediaire\qrc_SwConfigurationRsc.cpp"
+				RelativePath="_intermediaire\qrc_SwConfigurationRsc.cpp"
 				>
 			</File>
 			<File
@@ -794,9 +793,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="RCC _resources\SwConfigurationRsc.qrc"
-						CommandLine="C:\Qt\4.5.0\bin\rcc.exe -name SwConfigurationRsc _resources\SwConfigurationRsc.qrc -o ._\intermediaire\qrc_SwConfigurationRsc.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.5.0\bin\rcc.exe -name SwConfigurationRsc _resources\SwConfigurationRsc.qrc -o _intermediaire\qrc_SwConfigurationRsc.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.5.0\bin\rcc.exe;_resources\SwConfigurationRsc.qrc;_resources\images\configuration.png;_resources\images\configurationManager.png;_resources\images\executor.png;_resources\images\interface_in.png;_resources\images\interface_out.png;_resources\images\load.png;_resources\images\play.png;_resources\images\property.png;_resources\images\restart.png;_resources\images\save.png;_resources\images\saveas.png;_resources\images\stop.png"
-						Outputs="._\intermediaire\qrc_SwConfigurationRsc.cpp"
+						Outputs="_intermediaire\qrc_SwConfigurationRsc.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -805,9 +804,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="RCC _resources\SwConfigurationRsc.qrc"
-						CommandLine="C:\Qt\4.5.0\bin\rcc.exe -name SwConfigurationRsc _resources\SwConfigurationRsc.qrc -o ._\intermediaire\qrc_SwConfigurationRsc.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.5.0\bin\rcc.exe -name SwConfigurationRsc _resources\SwConfigurationRsc.qrc -o _intermediaire\qrc_SwConfigurationRsc.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.5.0\bin\rcc.exe;_resources\SwConfigurationRsc.qrc;_resources\images\configuration.png;_resources\images\configurationManager.png;_resources\images\executor.png;_resources\images\interface_in.png;_resources\images\interface_out.png;_resources\images\load.png;_resources\images\play.png;_resources\images\property.png;_resources\images\restart.png;_resources\images\save.png;_resources\images\saveas.png;_resources\images\stop.png"
-						Outputs="._\intermediaire\qrc_SwConfigurationRsc.cpp"
+						Outputs="_intermediaire\qrc_SwConfigurationRsc.cpp"
 					/>
 				</FileConfiguration>
 			</File>

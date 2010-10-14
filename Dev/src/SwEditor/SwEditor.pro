@@ -95,14 +95,13 @@ INCLUDEPATH += ./ \
     ../SwGui \
     ../StreamWorkEditor2
     
-win32:DESTDIR = ./../../lib/vc/release/
-win32:DLLDESTDIR=  ./../../bin/vc/release/
     
     
 CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/debug/
-  win32:DLLDESTDIR=  ./../../bin/vc/debug/
-    TARGET = $$join(TARGET,,,d)
+  win32:DESTDIR = ./../../lib/vc/debug
+  win32:DLLDESTDIR=  ./../../bin/vc/debug
+  win32:TARGET = $$join(TARGET,,,d)
+  win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
 	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
 	LIBS += -L"../../lib/vc/debug" \
     -lSwCored \
@@ -111,6 +110,8 @@ CONFIG(debug, debug|release) {
 	TARGET_EXT = .swdld
 } 
 CONFIG(release, debug|release) {
+  win32:DESTDIR = ./../../lib/vc/release
+  win32:DLLDESTDIR=  ./../../bin/vc/release
 	LIBS += -L"../../lib/vc/release" \
     -lSwCore \
     -lSwExecution \

@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="WizardIDEd"
 	ProjectGUID="{943ED0FA-F93A-3886-86DB-0F6E0DC7F296}"
-	RootNamespace="WizardIDEd"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -80,7 +79,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="c:\Qt\4.5.0\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=""
+				ProgramDatabaseFile="./../../bin/vc/debug/WizardIDEd.pdb"
 				SubSystem="2"
 				LinkTimeCodeGeneration="0"
 			/>

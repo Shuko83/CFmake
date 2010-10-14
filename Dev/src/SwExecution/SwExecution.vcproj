@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="SwExecutiond"
 	ProjectGUID="{1149501D-73CC-3103-B814-C6D3BC4B079D}"
-	RootNamespace="SwExecutiond"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -80,7 +79,7 @@
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="c:\Qt\4.5.0\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=""
+				ProgramDatabaseFile="./../../bin/vc/debug/SwExecutiond.pdb"
 				SubSystem="2"
 				LinkTimeCodeGeneration="0"
 			/>
