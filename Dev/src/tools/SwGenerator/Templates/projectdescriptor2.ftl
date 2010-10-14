@@ -79,6 +79,7 @@ CONFIG(debug, debug|release) {
      DESTDIR = ../../lib/vc/debug/
      DLLDESTDIR = ../../bin/vc/debug/
     TARGET = $$join(TARGET,,,d)
+      QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
     OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
 <#if doc["/SwFactoryEntry/@IsOwnPluginInDistribution='yes'"]>
      LIBS += -L"../../lib/vc/debug/" \
