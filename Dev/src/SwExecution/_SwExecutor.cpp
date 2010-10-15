@@ -26,6 +26,8 @@ using namespace StreamWork::SwCore;
 /*! \brief Constructeur */
 _SwExecutor::_SwExecutor(): SwComponent_Class(),_exe_service(this){
 
+    _defaultActivated_property = 0;
+    _executor = 0;
     _time_step=CL_DEFAULT_TIME_STEP;
     _overload.AddKey(0,"No");
     _overload.AddKey(1,"Yes");
@@ -47,6 +49,7 @@ _SwExecutor::_SwExecutor(): SwComponent_Class(),_exe_service(this){
     _priority.AddKey(QThread::InheritPriority,"InheritPriority");
     _priority.FromInt((int)_exe_service.priority());
     _exe_list=NULL;
+    _defaultActivated = true;
     _replayMode=false;
 }
 /*! \brief Destructeur */
@@ -121,6 +124,15 @@ void _SwExecutor::InitializeResources() throw(SwException) {
     _executable_entry_variant.setValue(_executable_entry);
     _executable_entry_property->SetValue(_executable_entry_variant);
     _executable_entry_property->GetOnChangeSignal().iconnect(*this,&_SwExecutor::OnPropertyChange);
+    
+    //Gestion du pas temporel
+    _defaultActivated_property=_properties_service->CreateProperty<bool>("Activation.Default");
+    if (_defaultActivated_property==NULL) {
+        if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register Activation.Default property\n"));
+    }
+    _defaultActivated_property->SetDescription("Component is Activated/Disactivated by default");  
+    _defaultActivated_property->SetValue(QVariant(_defaultActivated));
+    _defaultActivated_property->GetOnChangeSignal().iconnect(*this,&_SwExecutor::OnPropertyChange);
 
     //Configuration par defaut
     _exe_service.Prepare(_time_step,_overload.ToInt()!=0,Timer_exe);
@@ -209,6 +221,12 @@ void _SwExecutor::OnPropertyChange(ISwProperty * property) {
         default:
             break;
     }
+    // gestion de l'activation par defaut
+    if ( property == _defaultActivated_property)
+    {
+        _defaultActivated = _defaultActivated_property->GetValue().value<bool>();
+        setActive(_defaultActivated);
+    }
 }
 //----------------------------------------------------
 // Interface ISwExecutor
@@ -226,60 +244,158 @@ int _SwExecutor::StreamExecute() {
     }
     return 0;
 }
+
+
 //----------------------------------------------------
 // Interface ISwExecutable
 //----------------------------------------------------
 /*! \brief Initialisation */
 void _SwExecutor::Initialize(double start_time,ISwExecution_Service * executor) throw (SwException) {
+
     if (_executable_entry.ToInt()<CL_EXE_FSLAVE && !_replayMode)
         return;
+
+
     _exe_service.ResolveLinks();
-    _exe_list=_exe_service.GetExecutablesList();
-    for (int i=0;i<_exe_list->count();i++) {  
-        if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
-            (*_exe_list)[i]->Initialize(start_time,executor); 
-        else 
-            (*_exe_list)[i]->Initialize(SwTime_ToolBox::GetTime(),executor); 
-        (*_exe_list)[i]->setRunning(true);
+    _exe_list =_exe_service.GetExecutablesList();
+    _executor = executor;
+
+    // parcours de tous les executables (independants de l'activation)
+    for (int i=0;i<_exe_list->count();i++) 
+    {
+        // on vérifie si l'activation de l'executable a changé
+        ISwExecutable_Service * executable = (*_exe_list)[i];
+        if (executable->isActive())
+        {
+            // on initialise le composant
+            if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
+                executable->Initialize(start_time,executor); 
+            else 
+                executable->Initialize(SwTime_ToolBox::GetTime(),executor); 
+            executable->setRunning(true);
+        }
     }
 
 }
 /*! \brief Demarrage */
 void _SwExecutor::Start(double current_time) throw (SwException){
-    if (_exe_list==NULL)
+
+    if (_exe_list==0)
         return;
-    for (int i=0;i<_exe_list->count();i++) {  
-        if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
-            (*_exe_list)[i]->Start(current_time);
-        else 
-            (*_exe_list)[i]->Start(SwTime_ToolBox::GetTime()); 
+
+    // parcours de tous les executables (independants de l'activation)
+    for (int i=0;i<_exe_list->count();i++) 
+    {
+        // on vérifie l'activation de l'executable
+        ISwExecutable_Service * executable = (*_exe_list)[i];
+        if (executable->isActive())
+        {
+            if (!executable->isRunning())
+            {
+                // on initialise le composant
+                if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
+                    executable->Initialize(current_time,_executor); 
+                else 
+                    executable->Initialize(SwTime_ToolBox::GetTime(),_executor); 
+                executable->setRunning(true);
+            }
+            
+            // on start le composant
+            if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
+                    executable->Start(current_time); 
+            else 
+                executable->Start(SwTime_ToolBox::GetTime()); 
+        }
+        else
+        {
+            if (executable->isRunning())
+            {
+                // on arrete le composant
+                if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
+                        executable->Stop(current_time); 
+                else 
+                    executable->Stop(SwTime_ToolBox::GetTime());
+                executable->setRunning(false);
+            }
+        }
     }
-}            
+}        
+
 /*! \brief Execution */
 void _SwExecutor::Execute(double current_time,bool is_first_call) throw (SwException){
-    if (_exe_list==NULL)
+
+    if (_exe_list==0)
         return;
-    for (int i=0;i<_exe_list->count();i++) {  
-        if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
-            (*_exe_list)[i]->Execute(current_time,is_first_call);
-        else 
-            (*_exe_list)[i]->Execute(SwTime_ToolBox::GetTime(),is_first_call); 
+
+    // parcours de tous les executables (independants de l'activation)
+    for (int i=0;i<_exe_list->count();i++) 
+    {
+        // on vérifie l'activation de l'executable
+        ISwExecutable_Service * executable = (*_exe_list)[i];
+        if (executable->isActive())
+        {
+            if (!executable->isRunning())
+            {
+                // on initialise et start le composant
+                if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
+                {
+                    executable->Initialize(current_time,_executor); 
+                    executable->setRunning(true);
+                    executable->Start(current_time); 
+                }
+                else 
+                {
+                    executable->Initialize(SwTime_ToolBox::GetTime(),_executor);
+                    executable->setRunning(true);
+                    executable->Start(SwTime_ToolBox::GetTime()); 
+                }
+            }
+            
+            // on execute le composant
+            if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
+                    executable->Execute(current_time,is_first_call); 
+            else 
+                executable->Execute(SwTime_ToolBox::GetTime(),is_first_call); 
+        }
+        else
+        {
+            if (executable->isRunning())
+            {
+                // on arrete le composant
+                if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
+                        executable->Stop(current_time); 
+                else 
+                    executable->Stop(SwTime_ToolBox::GetTime());
+                executable->setRunning(false);
+            }
+        }
     }
 }            
 /*! \brief Execution */
-void _SwExecutor::Stop(double current_time){
+void _SwExecutor::Stop(double current_time)
+{
+
     if (_exe_list==NULL)
         return;
-    for (int i=0;i<_exe_list->count();i++) {  
-        if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
-            (*_exe_list)[i]->Stop(current_time);
-        else
-            (*_exe_list)[i]->Stop(SwTime_ToolBox::GetTime());
-        (*_exe_list)[i]->setRunning(false);
+    
+    for (int i=0;i<_exe_list->count();i++) 
+    {  
+        ISwExecutable_Service * executable = (*_exe_list)[i];
+        if (executable->isRunning())
+        {
+            if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
+                (*_exe_list)[i]->Stop(current_time);
+            else
+                (*_exe_list)[i]->Stop(SwTime_ToolBox::GetTime());
+            (*_exe_list)[i]->setRunning(false);
+        }
 
     }
     _exe_list->clear();
-    _exe_list=NULL;
+    //_active_exe_list->clear();
+    //_active_exe_list= 0
+    _exe_list=0;
+    _executor = 0;
 }            
 //---------------------------------------------------------------------
 // Interface ISwService
@@ -322,3 +438,4 @@ void _SwExecutor::setReplayMode(bool replayMode) {
 bool _SwExecutor::getReplayMode(){
     return _replayMode;
 }
+

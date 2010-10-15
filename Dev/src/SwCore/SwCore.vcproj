@@ -489,6 +489,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="ISwActivable.h"
+				>
+			</File>
+			<File
 				RelativePath="ISwAdminSetup.h"
 				>
 			</File>

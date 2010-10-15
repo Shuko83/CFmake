@@ -22,6 +22,7 @@
 #include "SwRefPtr.h"
 #include "SwServicesManager_Class.h"
 #include "ISwVisitor.h"
+#include "ISwActivable.h"
 
 namespace StreamWork
 {
@@ -35,7 +36,12 @@ namespace StreamWork
 		 \class SwComponent_Class 
 		 \brief Composant du stream
 		*/
-		class BUILD_SWCORE SwComponent_Class : public QObject,public SwNamed_Class, public SwRef, public SwServicesManager_Class
+		class BUILD_SWCORE SwComponent_Class : 
+            public QObject,
+            public SwNamed_Class, 
+            public SwRef, 
+            public SwServicesManager_Class,
+            virtual public SwCore::ISwActivable 
 		{
             Q_OBJECT
         private:

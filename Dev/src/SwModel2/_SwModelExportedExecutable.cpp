@@ -15,6 +15,7 @@
 _SwModelExportedExecutable::_SwModelExportedExecutable():_SwModelExportedEntity() {
 	_type=Ent_Executable;
     _internal_executable=NULL;
+    _isActive = true;
 }
 /*! \brief Destructeur */
 _SwModelExportedExecutable::~_SwModelExportedExecutable() {
@@ -93,4 +94,21 @@ bool _SwModelExportedExecutable::getReplayMode() {
         return sreplay->getReplayMode();
     }
     return false;
+}
+//---------------------------------------------------------------------
+// Interface ISwActivable
+//---------------------------------------------------------------------
+/*! \brief Permet de changer la valeur d'activation
+\param[in] value d'activation
+*/
+void _SwModelExportedExecutable::setActive(bool value)
+{
+    _isActive = value;
+}
+/*! \brief Permet de lire la valeur d'activation
+\param[out] valeur d'activation
+*/
+bool _SwModelExportedExecutable::isActive()
+{
+    return _isActive;
 }

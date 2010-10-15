@@ -39,7 +39,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwExecutiond.lib ../../lib/vc/debug\SwGuid.lib SwRecordd.lib c:\Qt\4.5.0\lib\QtXmld4.lib c:\Qt\4.5.0\lib\QtGuid4.lib c:\Qt\4.5.0\lib\QtCored4.lib"
+				AdditionalDependencies="../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwExecutiond.lib ../../lib/vc/debug\SwGuid.lib ../../lib/vc/debug\SwRecordd.lib c:\Qt\4.5.0\lib\QtXmld4.lib c:\Qt\4.5.0\lib\QtGuid4.lib c:\Qt\4.5.0\lib\QtCored4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.5.0\lib,../../lib/vc/debug"
 				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
 				GenerateDebugInformation="true"

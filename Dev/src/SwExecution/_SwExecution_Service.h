@@ -36,33 +36,8 @@ typedef enum {Normal_mode,Replay_mode,Both_mode} _SwExecutionMode;
 */
 class _SwExecution_Service: public QThread, public ISwExecution_Service {
     Q_OBJECT
-public:
-	/* List des path des composants executables */
-    QList<QString> _exe_paths;
-	/* List des mode d'execution des composants executables */
-    QList<_SwExecutionMode> _exe_modes;
-    /* List des interfaces d'execution */
-    QList<ISwExecutable_Service *> _exe_servs;
-    /* Hote */
-    SwComponent_Class * _host;
-    /* Est ce la premiere execution */
-    bool _is_first_execute;
-    /* Indique que la boucle d'execution doit être arretée */
-    bool _must_be_stopped;
-    /* Indique que la boucle d'execution est arretée */
-    bool _is_stopped;
-    /* Indique que le stop est necessaire */
-    bool _persistentStopNeeded;
-    /* Overload */
-    bool _overload;
-    /* Pas d'execution */
-    double _time_step;
-    /* Type d'execution */
-    _SwExecutionType _exe_type;
-    /* Timer d'execution */
-    QTimer * _exe_timer;
-    /* fournisseur de temps */
-    ISwClockProvider * _clockProvider;
+
+    
 public:
 	/* Constructeur */
 	_SwExecution_Service(SwComponent_Class * host);
@@ -140,6 +115,38 @@ public:
     //---------------------------------------------------------------------
 	/*! \brief run du thread */
     void run();
+
+
+
+public:
+	/* List des path des composants executables */
+    QList<QString> _exe_paths;
+	/* List des mode d'execution des composants executables */
+    QList<_SwExecutionMode> _exe_modes;
+    /* List des interfaces d'execution */
+    QList<ISwExecutable_Service *> _exe_servs;
+
+    /* Hote */
+    SwComponent_Class * _host;
+    /* Est ce la premiere execution */
+    bool _is_first_execute;
+    /* Indique que la boucle d'execution doit être arretée */
+    bool _must_be_stopped;
+    /* Indique que la boucle d'execution est arretée */
+    bool _is_stopped;
+    /* Indique que le stop est necessaire */
+    bool _persistentStopNeeded;
+    /* Overload */
+    bool _overload;
+    /* Pas d'execution */
+    double _time_step;
+    /* Type d'execution */
+    _SwExecutionType _exe_type;
+    /* Timer d'execution */
+    QTimer * _exe_timer;
+    /* fournisseur de temps */
+    ISwClockProvider * _clockProvider;
+
 };
 
 #endif

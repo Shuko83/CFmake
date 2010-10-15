@@ -19,6 +19,7 @@
 #include "ISwService.h"
 #include "SwException.h"
 #include "ISwExecution_Service.h"
+#include "ISwActivable.h"
 
 //Nom du service
 #define CG_SW_SERVICE_EXECUTABLE "Executable"
@@ -38,10 +39,15 @@ namespace StreamWork
         Execute(temps courant,false)*
         Stop(temps courant)
         */
-        class ISwExecutable_Service: public SwCore::ISwService, public SwCore::ISwHost{
+        class ISwExecutable_Service: 
+            public SwCore::ISwService, 
+            public SwCore::ISwHost, 
+            virtual public SwCore::ISwActivable {
+
         private:
             //Status
             bool _isRunning;
+
         protected:
             virtual void InitializeService(){_isRunning=false;};   
         public:
@@ -56,6 +62,7 @@ namespace StreamWork
 	        /*! \brief status */
             void setRunning(bool running_state) { _isRunning=running_state;}
             bool isRunning() {return _isRunning;}
+
              //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------

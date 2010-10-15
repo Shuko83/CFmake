@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="SwLauncherd"
 	ProjectGUID="{40D0D9E0-F3D1-3608-AAF5-98D6047C8291}"
-	RootNamespace="SwLauncherd"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>

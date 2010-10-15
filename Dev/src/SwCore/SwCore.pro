@@ -11,7 +11,8 @@ HEADERS += LibIndeSig.h \
     ISwComplexeTypeAdaptersFactory.h \
     ISwComponentProvider.h \
     ISwController.h \
-    ISwCreationPostProcessor.h \
+    ISwCreationPostProcessor.h \  
+    ISwActivable.h \
     ISwExecutor.h \
     ISwFinalizer.h \
     ISwFinalizerManager.h \

@@ -20,7 +20,8 @@
 
 #ifdef Q_CC_MSVC
 #pragma warning(disable:4290)
-#pragma warning(disable:4100)
+#pragma warning(disable:4100)  
+#pragma warning(disable:4250)
 #endif
 
 #endif

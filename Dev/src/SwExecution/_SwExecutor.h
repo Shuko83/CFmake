@@ -27,10 +27,10 @@
 #include "_SwExecution_Service.h"
 #include "ISwExecutable_Service.h"
 #include "ISwSupportReplay.h"
+#include "SwExecutionConstantes.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
-
 /*!
 	\class _SwExecutor 
 	\brief Implementation of the Class _SwExecutor generant un router de données basique
@@ -38,35 +38,11 @@ using namespace StreamWork::SwExecution;
 class _SwExecutor : public SwComponent_Class ,
     public ISwExecutor,
     public ISwAdminSetup,
-    public ISwExecutable_Service,
+    virtual public ISwExecutable_Service,
     public ISwSupportReplay
 {
     Q_OBJECT
-protected:
-    /* service de gestion des propriétés */
-    SwProperties_Class * _properties_service;
-    /* Pas temporel en millisecondes */
-    uint _time_step;
-    /* propriété Pas temporel */
-    ISwProperty * _time_step_property;
-    /* overload */
-    SwEnum _overload;
-    /* propriété overload */
-    ISwProperty * _overload_property;
-    /* Priority */
-    SwEnum _priority;
-    /* propriété Priority */
-    ISwProperty * _priority_property;
-    /* est l'entree de l'execution */
-    SwEnum _executable_entry;
-    /* propriété est l'entree de l'execution */
-    ISwProperty * _executable_entry_property;
-    /* service contenant gerant la liste des composants executables */
-    _SwExecution_Service _exe_service;
-    /* liste des executables pour le mode esclave */
-    QList<ISwExecutable_Service *> * _exe_list;
-    /* replay mode */
-    bool _replayMode;
+
 public:
     /*! \brief Constructeur */
     _SwExecutor();
@@ -117,9 +93,45 @@ public:
     virtual void setReplayMode(bool replayMode);
     /*@brief getter replay mode */
     virtual bool getReplayMode();
+
+
+
 public slots:
+
 	/*! \brief sur fin*/
     void onQuit();
+
+protected:
+    /* service de gestion des propriétés */
+    SwProperties_Class * _properties_service;
+    /* Pas temporel en millisecondes */
+    uint _time_step;
+    /* propriété Pas temporel */
+    ISwProperty * _time_step_property;
+    /* overload */
+    SwEnum _overload;
+    /* propriété overload */
+    ISwProperty * _overload_property;
+    /* Priority */
+    SwEnum _priority;
+    /* propriété Priority */
+    ISwProperty * _priority_property;
+    /* est l'entree de l'execution */
+    SwEnum _executable_entry;
+    /* propriété est l'entree de l'execution */
+    ISwProperty * _executable_entry_property;
+    /* service contenant gerant la liste des composants executables */
+    _SwExecution_Service _exe_service;
+    /* liste des executables pour le mode esclave */
+    QList<ISwExecutable_Service *> * _exe_list;
+    /* replay mode */
+    bool _replayMode;
+    /* propriété DefaultActivated */
+    ISwProperty * _defaultActivated_property;
+    /* default _defaultActivated */
+    bool    _defaultActivated;
+
+    ISwExecution_Service * _executor;
     
 };
 #endif 

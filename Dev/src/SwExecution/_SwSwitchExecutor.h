@@ -43,7 +43,7 @@ class _SwSwitchExecutor :
     public SwComponent_Class , 
     public ISwExecutor, 
     public ISwAdminSetup, 
-    public ISwExecutable_Service,
+    virtual public ISwExecutable_Service,
     public ISwSwitchExecutorListProvider,
     public ISwSupportReplay
 {

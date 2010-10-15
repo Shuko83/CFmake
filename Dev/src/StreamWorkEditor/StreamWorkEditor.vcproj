@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="StreamWorkEditord"
 	ProjectGUID="{89F845C9-1C5E-38FC-856A-5BA037BBBB70}"
-	RootNamespace="StreamWorkEditord"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>

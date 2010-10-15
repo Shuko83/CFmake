@@ -147,16 +147,42 @@ QList<ISwExecutable_Service *> * _SwExecution_Service::GetExecutablesList() {
 void _SwExecution_Service::InitializeAll(){
     ResolveLinks();
     double t=_clockProvider!=0?_clockProvider->queryInitTime():SwTime_ToolBox::GetTime();
-    for (int i=0;i<_exe_servs.count();i++) {  
-        _exe_servs[i]->Initialize(t,this);   
-        _exe_servs[i]->setRunning(true);
+    ISwExecutable_Service * service = 0;
+    for (int i=0;i<_exe_servs.count();i++) 
+    {  
+        service = _exe_servs[i];
+        if (service->isActive())
+        {
+            service->Initialize(t,this);   
+            service->setRunning(true);
+        }
     }
 }
 /*! \brief Demarrage de tous les composants */
 void _SwExecution_Service::StartAll(){
     double t=_clockProvider!=0?_clockProvider->queryStartTime():SwTime_ToolBox::GetTime();
-    for (int i=0;i<_exe_servs.count();i++) {  
-        _exe_servs[i]->Start(t);
+    ISwExecutable_Service * service = 0;
+    for (int i=0;i<_exe_servs.count();i++) 
+    {    
+        service = _exe_servs[i];
+        if (service->isActive())
+        {
+            if (!service->isRunning())
+            {
+                service->Initialize(t,this); 
+                service->setRunning(true);
+            }
+            service->Start(t);   
+            
+        }
+        else
+        {
+            if (service->isRunning())
+            {
+                service->Stop(t); 
+                service->setRunning(false);
+            }
+        }
     }
     _is_first_execute=true;
     _persistentStopNeeded=false;
@@ -176,8 +202,30 @@ void _SwExecution_Service::ExecuteAll(){
         return;
     }
     double t=_clockProvider!=0?_clockProvider->queryExecuteTime(&stopNeeded):SwTime_ToolBox::GetTime();
-    for (int i=0;i<_exe_servs.count();i++) {  
-        _exe_servs[i]->Execute(t,_is_first_execute);
+    ISwExecutable_Service * service = 0;
+    for (int i=0;i<_exe_servs.count();i++) 
+    {  
+         
+        service = _exe_servs[i];
+        if (service->isActive())
+        {
+            if (!service->isRunning())
+            {
+                service->Initialize(t,this); 
+                service->setRunning(true);
+                service->Start(t); 
+            }  
+            service->Execute(t,_is_first_execute);
+            
+        }
+        else
+        {
+            if (service->isRunning())
+            {
+                service->Stop(t); 
+                service->setRunning(false);
+            }
+        } 
     }
     _is_first_execute=false;
     //Cas ou le clock provider indique que le stop est necessaire
@@ -197,9 +245,15 @@ void _SwExecution_Service::ExecuteAll(){
 /*! \brief Arret de tous les composants */
 void _SwExecution_Service::StopAll(){
     double t=_clockProvider!=0?_clockProvider->queryStopTime():SwTime_ToolBox::GetTime();
-    for (int i=0;i<_exe_servs.count();i++) {  
-        _exe_servs[i]->Stop(t);
-        _exe_servs[i]->setRunning(false);
+    ISwExecutable_Service * service = 0;
+    for (int i=0;i<_exe_servs.count();i++) 
+    {  
+        service = _exe_servs[i];
+        if (service->isRunning())
+        {
+            service->Stop(t);
+            service->setRunning(false);
+        }
     }
     _exe_servs.clear();
     _clockProvider=0;

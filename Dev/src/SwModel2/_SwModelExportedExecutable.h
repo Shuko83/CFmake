@@ -25,15 +25,11 @@ using namespace StreamWork::SwExecution;
 	\class _SwModelExportedExecutable 
 	\brief Class implementant une entite exportable executable
 */
-class _SwModelExportedExecutable : public _SwModelExportedEntity , public ISwExecutable_Service, public ISwSupportReplay{
-	public:
-		/*! \brief Service d'executable interne*/
-		ISwExecutable_Service * _internal_executable;
-	protected:
-	    /*! \brief Specific bind */
-		virtual void SpecificBind();
-	    /*! \brief Defait la liaison */
-		virtual void SpecificUnbind();
+class _SwModelExportedExecutable : 
+    public _SwModelExportedEntity , 
+    virtual public ISwExecutable_Service, 
+    public ISwSupportReplay{
+
 	public:
 		/*! \brief Constructeur */
 		_SwModelExportedExecutable();
@@ -49,7 +45,19 @@ class _SwModelExportedExecutable : public _SwModelExportedEntity , public ISwExe
 		// Interface ISwHost
 		//---------------------------------------------------------------------
 		/*! \brief acces a son composant hote */
-		SwComponent_Class * GetHostComponent();            
+		SwComponent_Class * GetHostComponent();     
+
+        //---------------------------------------------------------------------
+		// Interface ISwActivable
+		//---------------------------------------------------------------------
+        /*! \brief Permet de changer la valeur d'activation
+        \param[in] value d'activation
+        */
+        virtual void setActive(bool value);
+        /*! \brief Permet de lire la valeur d'activation
+        \param[out] valeur d'activation
+        */
+        virtual bool isActive();
 		//---------------------------------------------------------------------
 		// Interface ISwExecutable_Service
 		//---------------------------------------------------------------------
@@ -70,6 +78,17 @@ class _SwModelExportedExecutable : public _SwModelExportedEntity , public ISwExe
         bool getReplayMode();
 		
 
+		/*! \brief Service d'executable interne*/
+		ISwExecutable_Service * _internal_executable;
+
+	protected:
+
+	    /*! \brief Specific bind */
+		virtual void SpecificBind();
+	    /*! \brief Defait la liaison */
+		virtual void SpecificUnbind();
+
+        bool _isActive;
 };
 
 #endif

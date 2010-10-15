@@ -4,7 +4,6 @@
 	Version="9,00"
 	Name="StreamWorkEditor2d"
 	ProjectGUID="{26A64D0C-CE41-3050-B88E-33494BE5BBA3}"
-	RootNamespace="StreamWorkEditor2d"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>
@@ -167,7 +166,7 @@
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
 				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; &quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
-				AdditionalDependencies="opengl32.lib glu32.lib gdi32.lib user32.lib c:\Qt\4.5.0\lib\qtmain.lib ../../lib/vc/release\SwCore.lib ../../lib/vc/release\WizardIDE.lib c:\Qt\4.5.0\lib\QtXml4.lib c:\Qt\4.5.0\lib\QtOpenGL4.lib c:\Qt\4.5.0\lib\QtGui4.lib c:\Qt\4.5.0\lib\QtCore4.lib"
+				AdditionalDependencies="opengl32.lib glu32.lib gdi32.lib user32.lib c:\Qt\4.5.0\lib\qtmain.lib ../../lib/vc/release\SwCore.lib WizardIDE.lib c:\Qt\4.5.0\lib\QtXml4.lib c:\Qt\4.5.0\lib\QtOpenGL4.lib c:\Qt\4.5.0\lib\QtGui4.lib c:\Qt\4.5.0\lib\QtCore4.lib"
 				OutputFile="..\..\bin\vc\release\StreamWorkEditor2.exe"
 				Version="1.23"
 				LinkIncremental="1"
@@ -892,10 +891,10 @@
 				>
 			</File>
 			<File
-				RelativePath="_objd\StreamWorkEditor2.res"
+				RelativePath="_obj\StreamWorkEditor2.res"
 				>
 				<FileConfiguration
-					Name="Release|Win32"
+					Name="Debug|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -904,10 +903,10 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_obj\StreamWorkEditor2.res"
+				RelativePath="_objd\StreamWorkEditor2.res"
 				>
 				<FileConfiguration
-					Name="Debug|Win32"
+					Name="Release|Win32"
 					ExcludedFromBuild="true"
 					>
 					<Tool
@@ -924,6 +923,10 @@
 			>
 			<File
 				RelativePath="_resources\comp_toolbox.png"
+				>
+			</File>
+			<File
+				RelativePath="_resources\editdelete.png"
 				>
 			</File>
 			<File
@@ -956,7 +959,7 @@
 						Name="VCCustomBuildTool"
 						Description="RCC _resources\StreamWorkEditor2.qrc"
 						CommandLine="C:\Qt\4.5.0\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o _intermediaire\qrc_StreamWorkEditor2.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.5.0\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\splash.png"
+						AdditionalDependencies="C:\Qt\4.5.0\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\splash.png"
 						Outputs="_intermediaire\qrc_StreamWorkEditor2.cpp"
 					/>
 				</FileConfiguration>
@@ -967,7 +970,7 @@
 						Name="VCCustomBuildTool"
 						Description="RCC _resources\StreamWorkEditor2.qrc"
 						CommandLine="C:\Qt\4.5.0\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o _intermediaire\qrc_StreamWorkEditor2.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.5.0\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\splash.png"
+						AdditionalDependencies="C:\Qt\4.5.0\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\splash.png"
 						Outputs="_intermediaire\qrc_StreamWorkEditor2.cpp"
 					/>
 				</FileConfiguration>

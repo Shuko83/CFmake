@@ -15,6 +15,7 @@
 _SwModelExportedExecutable::_SwModelExportedExecutable():_SwModelExportedEntity() {
 	_type=Ent_Executable;
     _internal_executable=NULL;
+    _isActive = true;
 }
 /*! \brief Destructeur */
 _SwModelExportedExecutable::~_SwModelExportedExecutable() {
@@ -50,7 +51,24 @@ void _SwModelExportedExecutable::Liberate() {
 /*! \brief acces a son composant hote */
 SwComponent_Class * _SwModelExportedExecutable::GetHostComponent(){
 	return _model;
-}              
+}     
+//---------------------------------------------------------------------
+// Interface ISwActivable
+//---------------------------------------------------------------------
+/*! \brief Permet de changer la valeur d'activation
+\param[in] value d'activation
+*/
+void _SwModelExportedExecutable::setActive(bool value)
+{
+    _isActive = value;
+}
+/*! \brief Permet de lire la valeur d'activation
+\param[out] valeur d'activation
+*/
+bool _SwModelExportedExecutable::isActive()
+{
+    return _isActive;
+}
 //---------------------------------------------------------------------
 // Interface ISwExecutable_Service
 //---------------------------------------------------------------------
