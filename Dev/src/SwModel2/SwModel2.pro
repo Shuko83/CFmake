@@ -14,6 +14,7 @@ HEADERS += SwModel2Constantes.h \
     _SwModelExportedInterfaceP.h \
     _SwModelExportedPin.h \
     _SwModelExportedProperty.h \
+    _SwModelExportedActivable.h \
     _SwModelHostExportSelector.h \
     _SwModelHostSelector.h \
     _SwModelHost_Class.h \
@@ -32,6 +33,7 @@ SOURCES += _SwExportStreamTreeModel.cpp \
     _SwModelExportedInterfaceP.cpp \
     _SwModelExportedPin.cpp \
     _SwModelExportedProperty.cpp \
+    _SwModelExportedActivable.cpp \
     _SwModelHostExportSelector.cpp \
     _SwModelHostSelector.cpp \
     _SwModelHost_Class.cpp \

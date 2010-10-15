@@ -22,7 +22,8 @@
 #define CL_XML_NODE_INTERFACE_C "iconsume"
 #define CL_XML_NODE_INTERFACE_P "iprovide"
 #define CL_XML_NODE_PIN "pin"
-#define CL_XML_NODE_EXE "executable"
+#define CL_XML_NODE_EXE "executable"    
+#define CL_XML_NODE_ACTIVABLE "activable"
 #define CL_XML_NODE_OWNERCONFIG "ownerConfig"
 #define CL_XML_NODE_ATT_NAME "name"
 #define CL_XML_NODE_ATT_EXP_NAME "ename"
@@ -195,7 +196,9 @@ void _SwModelHost_Class::Load(QDomElement & elt,ISwFinalizerManager & finalizer_
         if (elt_ent.nodeName()==QString(CL_XML_NODE_OWNERCONFIG)) {
             entity=_SwModelExportedEntity::NewEntity(Ent_OwnerConfigurable);
         }      
-
+        if (elt_ent.nodeName()==QString(CL_XML_NODE_ACTIVABLE)) {
+            entity=_SwModelExportedEntity::NewEntity(Ent_Activable);
+        } 
         if (entity!=NULL &&
             elt_ent.hasAttribute(CL_XML_NODE_ATT_NAME) &&
             elt_ent.hasAttribute(CL_XML_NODE_ATT_EXP_NAME) &&
@@ -242,6 +245,9 @@ void _SwModelHost_Class::Save(QDomElement & elt,QDomDocument &doc) {
             case Ent_Executable:
                 elt_ent=doc.createElement(CL_XML_NODE_EXE);
                 break;
+            case Ent_Activable:
+                elt_ent=doc.createElement(CL_XML_NODE_ACTIVABLE);
+                break;                
             default:
                 return;
                 break;

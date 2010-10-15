@@ -60,14 +60,14 @@ SwComponent_Class * _SwModelExportedExecutable::GetHostComponent(){
 */
 void _SwModelExportedExecutable::setActive(bool value)
 {
-    _isActive = value;
+    _internal_executable->setActive(value);
 }
 /*! \brief Permet de lire la valeur d'activation
 \param[out] valeur d'activation
 */
 bool _SwModelExportedExecutable::isActive()
 {
-    return _isActive;
+    return _internal_executable->isActive();
 }
 //---------------------------------------------------------------------
 // Interface ISwExecutable_Service

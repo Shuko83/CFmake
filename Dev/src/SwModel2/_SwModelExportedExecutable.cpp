@@ -95,6 +95,7 @@ bool _SwModelExportedExecutable::getReplayMode() {
     }
     return false;
 }
+
 //---------------------------------------------------------------------
 // Interface ISwActivable
 //---------------------------------------------------------------------
@@ -103,12 +104,13 @@ bool _SwModelExportedExecutable::getReplayMode() {
 */
 void _SwModelExportedExecutable::setActive(bool value)
 {
-    _isActive = value;
+    _internal_executable->setActive(value);
 }
 /*! \brief Permet de lire la valeur d'activation
 \param[out] valeur d'activation
 */
 bool _SwModelExportedExecutable::isActive()
 {
-    return _isActive;
+    return _internal_executable->isActive();
 }
+

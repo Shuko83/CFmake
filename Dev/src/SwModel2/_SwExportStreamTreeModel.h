@@ -34,7 +34,7 @@ class _SwExportStreamTreeModel : public QAbstractItemModel{
 	Q_OBJECT
 public:
     /*! \brief Definition du type d'item */
-    typedef enum {IT_Property,IT_Interface_C,IT_Interface_P,IT_Pin,IT_Host,IT_Executable,IT_OwnerConfigurable} _T_ItemType;
+    typedef enum {IT_Property,IT_Interface_C,IT_Interface_P,IT_Pin,IT_Host,IT_Executable,IT_OwnerConfigurable,IT_Activable} _T_ItemType;
     /*!
 	    \class _Item
 	    \brief Item pour la selection de l'export model

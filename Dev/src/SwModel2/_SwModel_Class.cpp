@@ -23,6 +23,7 @@ _SwModel_Class::_SwModel_Class(): SwComponent_Class(){
     _root_element=NULL;
     _host_entry=NULL;
     _isDefault=true;
+    _activationDelegate=0;;
 }
 /*! \brief Constructeur */
 _SwModel_Class::_SwModel_Class(QString model_name,SwComponent_Class * root_element,QString ipath): SwComponent_Class(){
@@ -152,4 +153,33 @@ void _SwModel_Class::CreateBinding() {
 void _SwModel_Class::DestroyBinding() {
     if (_host_entry!=NULL)
         _host_entry->DestroyBinding();
+}
+
+//----------------------------------------------------
+// ISwActivation
+//----------------------------------------------------
+bool _SwModel_Class::isActive()
+{
+     return SwComponent_Class::isActive();
+}
+
+void _SwModel_Class::setActive(bool value)
+{
+   SwComponent_Class::setActive(value);
+   if (_activationDelegate != 0)
+   {
+        _activationDelegate->setActive(isActive()); 
+   }
+   
+}
+//----------------------------------------------------
+// delegue l activation
+//----------------------------------------------------    
+void _SwModel_Class::setActivationDelegate (ISwActivable * activable)
+{
+   _activationDelegate =  activable;
+   if (_activationDelegate != 0)
+   {
+        _activationDelegate->setActive(isActive()); 
+   }
 }

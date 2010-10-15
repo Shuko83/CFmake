@@ -26,6 +26,7 @@
 #include <ISwPin_Listener.h>
 #include <SwPins_Manager_Class.h>
 #include <ISwVisitor.h>
+#include <ISwActivable.h>
 
 class _SwModelHost_Class;
 
@@ -56,6 +57,8 @@ protected:
     SwProperties_Class * _properties_service;
     /* service de gestion des pins */
     SwPins_Manager_Class * _pins_service;
+    /* activation */
+    ISwActivable * _activationDelegate;
 public:
     /*! \brief Constructeur */
     _SwModel_Class();
@@ -87,5 +90,14 @@ public:
     void CreateBinding();
 	/*! \brief Suppression du pont entre le model et le model host*/
     void DestroyBinding();
+    //----------------------------------------------------
+    // ISwActivation
+    //----------------------------------------------------
+    virtual bool isActive();
+    virtual void setActive(bool value);
+    //----------------------------------------------------
+    // delegue l activation
+    //----------------------------------------------------    
+    void setActivationDelegate (ISwActivable *  activable);
 };
 #endif 

@@ -220,6 +220,10 @@
 				>
 			</File>
 			<File
+				RelativePath="_SwModelExportedActivable.cpp"
+				>
+			</File>
+			<File
 				RelativePath="_SwModelExportedEntitiesModel.cpp"
 				>
 			</File>
@@ -313,6 +317,10 @@
 			</File>
 			<File
 				RelativePath="_SwModel_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="_SwModelExportedActivable.h"
 				>
 			</File>
 			<File

@@ -13,7 +13,8 @@
 #include "_SwModelExportedInterfaceP.h"
 #include "_SwModelExportedPin.h"
 #include "_SwModelExportedExecutable.h"
-#include "_SwModelExportedOwnerConfigurable.h"
+#include "_SwModelExportedOwnerConfigurable.h"    
+#include "_SwModelExportedActivable.h"
 #include "_SwModel_Class.h"
 #include "_SwModelHost_Class.h"
 
@@ -103,7 +104,10 @@ _SwModelExportedEntity * _SwModelExportedEntity::NewEntity(ExportedEntityType ty
             return new _SwModelExportedExecutable;
 
         case Ent_OwnerConfigurable:
-            return new _SwModelExportedOwnerConfigurable;            
+            return new _SwModelExportedOwnerConfigurable;   
+                  
+        case Ent_Activable:
+            return new _SwModelExportedActivable;                  
         default:
             break;
     }

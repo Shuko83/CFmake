@@ -27,7 +27,8 @@ typedef enum {
     Ent_InterfaceP,
     Ent_Pin,
     Ent_Executable,
-    Ent_OwnerConfigurable
+    Ent_OwnerConfigurable,
+    Ent_Activable
     } ExportedEntityType;
 
 class _SwModelExportedEntity {

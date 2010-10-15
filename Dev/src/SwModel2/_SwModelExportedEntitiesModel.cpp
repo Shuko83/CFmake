@@ -51,7 +51,10 @@ void _SwModelExportedEntitiesModel::TransformEntitiesToModel() {
                 break;
             case Ent_OwnerConfigurable:
             	_ownerConfigurables.push_back(new _Item(IT_OwnerConfigurable,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,(*_entities_list)[i]->_host_path,QString()));
-                break;                
+                break;    
+            case Ent_Activable:
+            	_activables.push_back(new _Item(IT_Activable,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,(*_entities_list)[i]->_host_path,QString()));
+                break;                               
             default:
                 break;
         }
@@ -109,6 +112,13 @@ void _SwModelExportedEntitiesModel::TransformModelToEntities() {
         entity->_host_path=_ownerConfigurables[i]->_host_path;
         _entities_list->push_back(entity);
     }    
+    for(int i=0;i<_activables.count();i++) {
+        _SwModelExportedEntity * entity=_SwModelExportedEntity::NewEntity(Ent_Activable);
+        entity->_name=_activables[i]->_name;
+        entity->_exported_name=_activables[i]->_exported_name;
+        entity->_host_path=_activables[i]->_host_path;
+        _entities_list->push_back(entity);
+    }     
 }
 /*! \brief Suppression des elements selectionnées */
 void _SwModelExportedEntitiesModel::RemoveSelectedItems(QModelIndexList list_to_remove) {
@@ -174,7 +184,16 @@ void _SwModelExportedEntitiesModel::RemoveSelectedItems(QModelIndexList list_to_
                         delete item;
                         endRemoveRows();
                     }
-                    break;                    
+                    break;    
+                case IT_Activable:
+                    index=_activables.indexOf(item);
+                    if (index!=-1) {
+                        beginRemoveRows(parent(list_to_remove[i]),index,index);
+                        _activables.removeAt(index);
+                        delete item;
+                        endRemoveRows();
+                    }
+                    break;                                       
                 default:
                     break;
             }
@@ -187,7 +206,7 @@ Qt::ItemFlags _SwModelExportedEntitiesModel::flags ( const QModelIndex & index )
     _Item * item;
     if (index.internalPointer()!=NULL) {
         item=(_Item *)index.internalPointer();
-        if (index.column()==0 && item->_type!=IT_Executable) {
+        if (index.column()==0 && item->_type!=IT_Executable && item->_type!=IT_Activable) {
             return Qt::ItemFlags(Qt::ItemIsEnabled |Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemIsDropEnabled);
         } else {
             return Qt::ItemFlags(Qt::ItemIsEnabled |Qt::ItemIsSelectable | Qt::ItemIsDropEnabled);
@@ -202,7 +221,7 @@ int _SwModelExportedEntitiesModel::columnCount ( const QModelIndex & parent ) co
 /*! \brief Renvoie le nombre de ligne pour un parent donné */
 int _SwModelExportedEntitiesModel::rowCount ( const QModelIndex & parent ) const {
     if (!parent.isValid())
-        return 6;
+        return 7;
     if (parent.isValid() && parent.internalPointer()==NULL) {
         switch(parent.row()) {
             case 0:
@@ -216,7 +235,9 @@ int _SwModelExportedEntitiesModel::rowCount ( const QModelIndex & parent ) const
             case 4:
                 return _executables.count();
             case 5:
-                return _ownerConfigurables.count();                
+                return _ownerConfigurables.count();     
+            case 6:
+                return _activables.count();                                 
             default:
                 break;
         }
@@ -262,7 +283,9 @@ QVariant _SwModelExportedEntitiesModel::data ( const QModelIndex & index, int ro
                 case 4:
                     return QVariant(QString("Executable"));
                 case 5:
-                    return QVariant(QString("OwnerConfigurables"));                    
+                    return QVariant(QString("OwnerConfigurables"));     
+                case 6:
+                    return QVariant(QString("Activable"));                  
                 default:
                     break;
             }
@@ -292,7 +315,9 @@ QVariant _SwModelExportedEntitiesModel::data ( const QModelIndex & index, int ro
                 case IT_Executable:
                     return QVariant(QIcon(":/SwModel/executor.png"));
                 case IT_OwnerConfigurable:
-                    return QVariant(QIcon(":/SwModel/connector.png"));                    
+                    return QVariant(QIcon(":/SwModel/connector.png"));  
+                case IT_Activable:
+                    return QVariant(QIcon(":/SwModel/executor.png"));                  
                 default:
                     break;
             }
@@ -369,7 +394,17 @@ bool _SwModelExportedEntitiesModel::setData ( const QModelIndex & index, const Q
                 }
                 item->_exported_name=value.toString();
                 emit dataChanged(index,index);
-                return true;                
+                return true;   
+            case IT_Activable:
+                for(int i=0;i<_activables.count();i++) {
+                    if (_activables[i]!=item && _activables[i]->_exported_name==value.toString()) {
+                        QMessageBox::warning(0,"Export name edition","This name can't be used because an other activable has this exported name");
+                        return false;
+                    }
+                }
+                item->_exported_name=value.toString();
+                emit dataChanged(index,index);
+                return true;                             
             default:
                 break;
         }
@@ -392,7 +427,9 @@ QModelIndex _SwModelExportedEntitiesModel::index ( int row, int column, const QM
         case 4:
             return createIndex(row,column,(void *)_executables[row]);
         case 5:
-            return createIndex(row,column,(void *)_ownerConfigurables[row]);            
+            return createIndex(row,column,(void *)_ownerConfigurables[row]);        
+        case 6:
+            return createIndex(row,column,(void *)_activables[row]);                    
         default:
             break;
     }
@@ -421,6 +458,8 @@ QModelIndex _SwModelExportedEntitiesModel::parent ( const QModelIndex & index ) 
             return createIndex(4,index.column(),(void *)NULL);
         case IT_OwnerConfigurable:
             return createIndex(5,index.column(),(void *)NULL);            
+        case IT_Activable:
+            return createIndex(6,index.column(),(void *)NULL);               
         default:
             break;
     }
@@ -463,7 +502,10 @@ bool _SwModelExportedEntitiesModel::dropMimeData ( const QMimeData * data, Qt::D
             }
             if (type==QString("CO") && _ownerConfigurables.count()==0) {
                 _ownerConfigurables.push_back(new _Item(IT_OwnerConfigurable,"OwnerConfigurable interface","OwnerConfigurable interface",item_parts[0],QString()));
-            }            
+            }     
+            if (type==QString("AC") && _activables.count()==0) {
+                _activables.push_back(new _Item(IT_Activable,"Activable interface","Activable interface",item_parts[0],QString()));
+            }                   
         }
         emit layoutChanged();
         return true;

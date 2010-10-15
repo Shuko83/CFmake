@@ -20,7 +20,8 @@
 #include <ISwInterfaces_Consumer.h>
 #include <ISwPins_Manager.h>
 #include <ISwExecutable_Service.h>
-#include <ISwServiceOwnerConfigurable.h>
+#include <ISwServiceOwnerConfigurable.h>   
+#include <ISwActivable.h>
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -82,7 +83,10 @@ QMimeData * _SwExportStreamTreeModel::mimeData(const QModelIndexList &indexes) c
                     break;
                 case IT_OwnerConfigurable:
                     text+="CO";
-                    break;                    
+                    break;  
+                case IT_Activable:
+                    text+="AC";
+                    break;                                       
                 default:
                     break;
             }
@@ -148,7 +152,9 @@ QVariant _SwExportStreamTreeModel::data ( const QModelIndex & index, int role ) 
             case IT_Executable:
                 return QVariant(QIcon(":/SwModel/executor.png"));
             case IT_OwnerConfigurable:
-                return QVariant(QIcon(":/SwModel/connector.png"));                
+                return QVariant(QIcon(":/SwModel/connector.png"));  
+            case IT_Activable:
+                return QVariant(QIcon(":/SwModel/executor.png"));              
             case IT_Host:
                 return QVariant(SW_APP->ComponentsBank().GetComponentIcon(item->_host->GetFactoryComponentName()));
             default:
@@ -216,7 +222,11 @@ _SwExportStreamTreeModel::_Item::~_Item() {
 }
 /*! \brief Construction des items */
 void _SwExportStreamTreeModel::BuildItems(SwComponent_Class * comp,_Item * item) {
-
+    //Creation du noeud executable si necessaire
+    if (dynamic_cast<ISwActivable *>(comp)!= 0) 
+    {
+        new _Item(item,comp,IT_Activable,"Activable interface");
+    }   
     //Creation du neoud executable si necessaire
     if (dynamic_cast<ISwExecutable_Service *>(comp->QueryService(CG_SW_SERVICE_EXECUTABLE))!=NULL) {
         new _Item(item,comp,IT_Executable,"Executable interface");
@@ -225,7 +235,7 @@ void _SwExportStreamTreeModel::BuildItems(SwComponent_Class * comp,_Item * item)
     if (dynamic_cast<ISwServiceOwnerConfigurable *>(comp->QueryService(CG_SW_SERVICE_OWNER_CONFIGURABLE))!=NULL) {
         new _Item(item,comp,IT_OwnerConfigurable,"OwnerConfigurable interface");
     }
-    
+ 
     //Creation des neoud propriétés
     ISwProperties *  properties_handle=dynamic_cast<ISwProperties *>(comp->QueryService(CG_SW_SERVICE_PROPERTIES));
     if (properties_handle!=NULL) {

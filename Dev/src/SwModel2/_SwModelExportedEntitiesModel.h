@@ -37,7 +37,7 @@ class _SwModelExportedEntitiesModel : public QAbstractItemModel{
 	Q_OBJECT
 public:
     /*! \brief Definition du type d'item */
-    typedef enum {IT_Property,IT_Interface_C,IT_Interface_P,IT_Pin,IT_Executable,IT_OwnerConfigurable} _T_ItemType;
+    typedef enum {IT_Property,IT_Interface_C,IT_Interface_P,IT_Pin,IT_Executable,IT_OwnerConfigurable,IT_Activable} _T_ItemType;
     /*!
 	    \class _Item
 	    \brief Item pour la selection de l'export model
@@ -74,7 +74,8 @@ private:
     QList<_Item *> _interfacesP;
     QList<_Item *> _pins;
     QList<_Item *> _executables;
-    QList<_Item *> _ownerConfigurables;
+    QList<_Item *> _ownerConfigurables;   
+    QList<_Item *> _activables;
 public:
     /*! \brief Constructeur */
 	_SwModelExportedEntitiesModel(QObject * parent,SwComponent_Class * root_component,QList<_SwModelExportedEntity *> * entities_list);
