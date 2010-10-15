@@ -28,6 +28,7 @@
 #include "ISwExecutable_Service.h"
 #include "ISwSupportReplay.h"
 #include "SwExecutionConstantes.h"
+#include "ISwExecution_Service.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;

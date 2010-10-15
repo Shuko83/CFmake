@@ -125,7 +125,7 @@ void _SwExecutor::InitializeResources() throw(SwException) {
     _executable_entry_property->SetValue(_executable_entry_variant);
     _executable_entry_property->GetOnChangeSignal().iconnect(*this,&_SwExecutor::OnPropertyChange);
     
-    //Gestion du pas temporel
+    //Gestion de l activation par defaut 
     _defaultActivated_property=_properties_service->CreateProperty<bool>("Activation.Default");
     if (_defaultActivated_property==NULL) {
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register Activation.Default property\n"));
