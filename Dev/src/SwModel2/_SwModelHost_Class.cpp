@@ -256,8 +256,6 @@ void _SwModelHost_Class::Save(QDomElement & elt,QDomDocument &doc) {
         elt_ent.setAttribute(CL_XML_NODE_ATT_NAME,_exported_entities[i]->_name);
         elt_ent.setAttribute(CL_XML_NODE_ATT_EXP_NAME,_exported_entities[i]->_exported_name);
         elt_ent.setAttribute(CL_XML_NODE_ATT_PATH,_exported_entities[i]->_host_path);
-        elt_ent.setAttribute(CL_XML_NODE_ATT_PATH,_exported_entities[i]->_host_path);
-        elt_ent.setAttribute(CL_XML_NODE_ATT_PATH,_exported_entities[i]->_host_path);
         elt_ent.setAttribute(CL_XML_NODE_ATT_ITYPE,_exported_entities[i]->_itype);
         //Attachement du neoud au parent
         elt.appendChild(elt_ent);

@@ -104,13 +104,13 @@ bool _SwModelExportedExecutable::getReplayMode() {
 */
 void _SwModelExportedExecutable::setActive(bool value)
 {
-    _internal_executable->setActive(value);
+    _model->setActive(value);
 }
 /*! \brief Permet de lire la valeur d'activation
 \param[out] valeur d'activation
 */
 bool _SwModelExportedExecutable::isActive()
 {
-    return _internal_executable->isActive();
+    return _model->isActive();
 }
 
