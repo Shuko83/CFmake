@@ -23,7 +23,7 @@ _SwModel_Class::_SwModel_Class(): SwComponent_Class(){
     _root_element=NULL;
     _host_entry=NULL;
     _isDefault=true;
-    _activationDelegate=0;;
+    _activationDelegate=0;
 }
 /*! \brief Constructeur */
 _SwModel_Class::_SwModel_Class(QString model_name,SwComponent_Class * root_element,QString ipath): SwComponent_Class(){
@@ -33,6 +33,7 @@ _SwModel_Class::_SwModel_Class(QString model_name,SwComponent_Class * root_eleme
     _root_element=root_element;
     _ipath=ipath;
     _model_name=model_name;
+    _activationDelegate=0;
     //generation du nom
     uuid=QUuid::createUuid();
     s=uuid.toString();
