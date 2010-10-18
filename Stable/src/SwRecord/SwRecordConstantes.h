@@ -17,6 +17,12 @@
 //Export via les DLL
 #include <SwMacros.h>
 
+#ifdef Q_CC_MSVC
+#pragma warning(disable:4290)
+#pragma warning(disable:4100)  
+#pragma warning(disable:4250)
+#endif
+
 
 #ifdef SwRecord_LIB
 #define SwRecord_EXPORT Q_DECL_EXPORT

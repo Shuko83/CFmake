@@ -473,7 +473,7 @@ bool _SwModelExportedEntitiesModel::dropMimeData ( const QMimeData * data, Qt::D
         QString drop_data=QString(data->data("application/model_entity").data());
         QStringList newItems=drop_data.split(";",QString::SkipEmptyParts);
         for(int i=0;i<newItems.count();i++) {
-            QStringList item_parts=newItems[i].split("@",QString::SkipEmptyParts);
+            QStringList item_parts=newItems[i].split("@",QString::KeepEmptyParts);
             QString source=item_parts[0];source.replace('.','_');
             QString type=item_parts[1];
             QString name=item_parts[2];

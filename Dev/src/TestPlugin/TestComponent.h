@@ -21,7 +21,8 @@
 #include <SwInterfaces_Provider_Class.h>
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwFileDescriptor.h>
-
+#include <SwInterfaces_Consumer_Class.h>
+#include <ISwServiceOwnerConfigurable.h>
 
 
 //Check namespace needed (for exemple ISwAction need namespace StreamWork::SwGui)
@@ -33,7 +34,8 @@ using namespace StreamWork::SwCore;
  */
 class TestComponent : public SwComponent_Class,
     public ISwPin_Listener,
-    public ISwInterfaces_ConsumerObserver
+    public ISwInterfaces_ConsumerObserver,
+    public ISwServiceOwnerConfigurable
 {
     Q_OBJECT
     Q_PROPERTY(StreamWork::SwCore::SwEnum test READ getTest WRITE setTest)
@@ -86,7 +88,7 @@ public:
     /** @brief Callback sur les changements de propriétés*/
 	/** @brief Sur reception d'une donnée*/
 	void OnReceiveData(SwPin * src,SwData_Class * data);
-     //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
 	/** @brief Avant changement de la disponibilité de l'interface */
@@ -102,6 +104,13 @@ public:
     /** @brief recordConfiguration */
     SwFileDescriptor getRecordConfiguration() const;
     void setRecordConfiguration(const SwFileDescriptor & val);
+    //---------------------------------------------------------------------
+    // Interface ISwServiceOwnerConfigurable
+    //---------------------------------------------------------------------
+    /*! \brief methode permettant de charger des donnees de configuration*/
+    virtual void LoadConfiguration(QDomElement & parent);
+    /*! \brief methode permettant de sauver des donnees de configuration*/
+    virtual void SaveConfiguration(QDomElement & parent,QDomDocument & doc);
 
 };
 #endif

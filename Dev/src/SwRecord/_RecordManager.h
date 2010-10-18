@@ -22,6 +22,7 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include "ISwRecordManager.h"
 #include <ISwExecutable_Service.h>
+#include "SwRecordConstantes.h"
 #include "_SwServiceRecording.h"
 #include <SwFileDescriptor.h>
 #include <ISwWidget.h>

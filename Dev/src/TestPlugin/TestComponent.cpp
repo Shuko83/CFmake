@@ -41,6 +41,7 @@ TestComponent::~TestComponent() {
 	//Destruction Pins
 
     //Desenregistrement des services
+    this->UnregisterService(GetServiceName());
     this->UnregisterService(_pins_service->GetServiceName());
     this->UnregisterService(_consumer_service->GetServiceName());
     this->UnregisterService(_provider_service->GetServiceName());
@@ -71,6 +72,7 @@ void TestComponent::InitializeResources() throw(SwException) {
     this->RegisterService(_consumer_service);
     this->RegisterService(_provider_service);
     this->RegisterService(_pins_service);
+    this->RegisterService(this);
 
     //--------------------------------------
     //Definition Interfaces fournis
@@ -143,6 +145,23 @@ SwFileDescriptor TestComponent::getRecordConfiguration() const {
 }
 void TestComponent::setRecordConfiguration(const SwFileDescriptor & val) {
     _configuration=val;
+}
+//---------------------------------------------------------------------
+// Interface ISwServiceOwnerConfigurable
+//---------------------------------------------------------------------
+/*! \brief methode permettant de charger des donnees de configuration*/
+void TestComponent::LoadConfiguration(QDomElement & parent) {
+    QDomElement child=parent.firstChildElement("TestNode");
+    if (!child.isNull() && child.hasAttribute("Name")) {
+        qDebug("%s: LoadConfiguration:%s",GetName().toLatin1().data(),child.attribute("Name").toLatin1().data());
+    }
+
+}
+/*! \brief methode permettant de sauver des donnees de configuration*/
+void TestComponent::SaveConfiguration(QDomElement & parent,QDomDocument & doc) {
+    QDomElement child=doc.createElement("TestNode");
+    child.setAttribute("Name",_testString);
+    parent.appendChild(child);
 }
 
 

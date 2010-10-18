@@ -80,7 +80,8 @@ void _SwPropertyPersistent_Toolbox::LoadProperty(QDomElement & property_node,ISw
         if (node.isText()) {
             tmp=node.nodeValue();
             if (tmp.convert(var.type())) {
-                property->SetValue(tmp);    
+                property->SetValue(tmp);
+                return;
             }
         } else {
             //Sinon on va chercher une CDATASection
@@ -90,10 +91,12 @@ void _SwPropertyPersistent_Toolbox::LoadProperty(QDomElement & property_node,ISw
             if (node.isCDATASection()) {
                 tmp=node.nodeValue();
                 if (tmp.convert(var.type())) {
-                    property->SetValue(tmp);    
+                    property->SetValue(tmp);   
+                    return;
                 }
             }
        }
+       property->SetValue(QVariant(QString("")));   
        return;
     }
     //----------------------------------------------------------
