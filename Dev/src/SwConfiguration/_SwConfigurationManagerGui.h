@@ -79,6 +79,8 @@ public:
     /** @brief sur changement d etat*/
     virtual void OnConfigurationEditedChanged(ISwConfigurationController *);
 
+    virtual void setMonoConfiguration(bool value) ;
+
 
 protected:
 bool askForStop();    
@@ -95,7 +97,8 @@ private:
     
     QString                                        _lastOpenedRecordPath;
     QString                                        _lastOpenedConfigPath;
-    
+    bool                                           _monoConfiguration;
+
 private slots:
     void on_checkBoxRecord_clicked();
     void on_checkBoxAutoStart_clicked();

@@ -4,6 +4,7 @@
 	Version="9,00"
 	Name="SwConfigurationd"
 	ProjectGUID="{A3B19830-7148-3B9F-91AF-23D43422C2FB}"
+	RootNamespace="SwConfigurationd"
 	Keyword="Qt4VSv1.0"
 	TargetFrameworkVersion="0"
 	>

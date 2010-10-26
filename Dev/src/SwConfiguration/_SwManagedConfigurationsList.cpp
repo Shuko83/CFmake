@@ -104,6 +104,7 @@ void _SwManagedConfigurationsList::setEditor(ISwConfigurationEditor * editor)
     if (_editor != 0)
     {
         _editor->setManagedConfigurationsModel(this);
+        _editor->setMonoConfiguration(_configurationsCount == 1);
         _editor->onConfigurationListChanged();
     }
 }
@@ -356,6 +357,10 @@ void _SwManagedConfigurationsList::setConfigurationCount(int value)
             }
         }
         _configurationsCount = val;  
+        if (_editor != 0)
+        {
+            _editor->setMonoConfiguration(_configurationsCount == 1);
+        }
         //_editor->setConfigurationsList(_managedConfigurations.values());
 }
 

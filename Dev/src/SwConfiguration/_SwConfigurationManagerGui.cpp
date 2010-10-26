@@ -26,8 +26,22 @@ _SwConfigurationManagerGui::_SwConfigurationManagerGui(QWidget *parent)
     setStopped();
     _lastOpenedRecordPath = "";
     _lastOpenedConfigPath = "";
+    setMonoConfiguration(false);
 }
 
+
+void   _SwConfigurationManagerGui::setMonoConfiguration(bool value)
+{
+    _monoConfiguration = value;
+    ui.GroupBoxMode->setVisible(!_monoConfiguration);
+    ui.pushButtonStart->setVisible(!_monoConfiguration);
+    ui.pushButtonStop->setVisible(!_monoConfiguration);
+    //ui.GroupBoxMode->setMinimumWidth(value?0:450);
+    ui.widget_2->setMinimumWidth(value?0:450);
+    ui.widget_2->setVisible(!_monoConfiguration);
+    this->layout();
+   
+}
 
 _SwConfigurationManagerGui::~_SwConfigurationManagerGui()
 {
