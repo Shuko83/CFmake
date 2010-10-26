@@ -53,6 +53,7 @@ public:
 
     virtual void onCurrentConfigurationSaved()= 0 ;
 
+    virtual void setMonoConfiguration(bool value) = 0 ;
     //virtual void setConfigurationsList(QList<_SwManagedConfiguration *> & configList) = 0;    
             
 protected: 
