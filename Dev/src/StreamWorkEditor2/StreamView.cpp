@@ -10,7 +10,8 @@
 
 /** @brief Constructor */
 StreamView::StreamView(QWidget * parent):QGraphicsView(parent) {
-    setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
+    //setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
+    setStyleSheet("QGraphicsView { background:black }");
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setResizeAnchor(QGraphicsView::AnchorViewCenter);
