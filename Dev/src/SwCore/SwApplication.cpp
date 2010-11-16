@@ -290,22 +290,7 @@ bool SwApplication::IsVerbose() {
 /*! \brief Ajout d'un stream preconstruit
 \param[in] racine du stream*/
 void SwApplication::AddNewStream(SwComponent_Class * stream_root) {
-    static bool autostartInProgress=false;
     _streams.insert(SwComponent_ClassPtr(stream_root));   
-    if (autostartInProgress) {
-        return;
-    }
-    QStringList liste_arg=QCoreApplication::instance()->arguments();
-    for(int i=0;i<(liste_arg.count()-1);i++) {
-        if (liste_arg[i]=="-autostart") {
-            i=liste_arg.count();
-            if (_executor!=NULL) {
-                autostartInProgress=true;
-                _executor->StreamExecute();
-                autostartInProgress=false;
-            }
-        }
-    }
 }
 /*! \brief Creation d'un stream
 \param[in] name_of_stream nom du stream a créer
@@ -366,6 +351,23 @@ SwComponent_Class * SwApplication::GetNextStream(){
     //Renvoie de l'enfant
     return stream;
 }
+//------------------------------------------------------------------------
+// Demarrage externe
+//------------------------------------------------------------------------
+/*! \brief demarre l'execution du stream */
+void SwApplication::LaunchAutoStart() {
+    QStringList liste_arg=QCoreApplication::instance()->arguments();
+    for(int i=0;i<(liste_arg.count()-1);i++) {
+        if (liste_arg[i]=="-autostart") {
+            i=liste_arg.count();
+            if (_executor!=NULL) {
+                _executor->StreamExecute();
+                _executor=0;
+            }
+        }
+    }
+}
+
 /*! \brief Acces au compteur d'historique
 \renvoie un nombre unique depuis le debut de l'execution de l'application*/
 quint64 SwApplication::GetHistoricCpt() {

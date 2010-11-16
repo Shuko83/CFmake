@@ -22,6 +22,9 @@ ComponentGraphicItem::ComponentGraphicItem(SwComponent_Class * component,StreamC
 
     setFlag(ItemIsMovable);
     setFlag(ItemIsSelectable);
+#if QT_VERSION >= 0x040600
+    setFlag(ItemSendsGeometryChanges);
+#endif
     setToolTip(component->GetName());
     _headerBrush=QBrush(QColor(0,0,128));
     _bodyBrush=QBrush(QColor(64,64,64,100));

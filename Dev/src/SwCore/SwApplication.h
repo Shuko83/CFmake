@@ -188,6 +188,11 @@ namespace StreamWork
             /*! \brief Acces au stream suivant */
 			SwComponent_Class * GetNextStream();
             //------------------------------------------------------------------------
+            // Demarrage externe
+            //------------------------------------------------------------------------
+            /*! \brief demarre l'execution du stream */
+            void LaunchAutoStart();
+            //------------------------------------------------------------------------
             //Compteur d'historique (A chaque appel le compteur est incremente de 1)
             //Utile pour connaitre l'ordre de construction des liens entres composants
             //------------------------------------------------------------------------

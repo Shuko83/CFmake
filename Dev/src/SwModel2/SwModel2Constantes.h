@@ -9,7 +9,7 @@
 #ifndef _SwModel2Constantes_H
 #define _SwModel2Constantes_H
 
-#include <Qt/qglobal.h>
+#include <QGlobal.h>
 //Export via les DLL
 
 #ifdef SWMODEL2_LIB

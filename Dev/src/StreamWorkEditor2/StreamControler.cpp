@@ -148,6 +148,8 @@ void StreamControler::loadStream(QString streamFileName){
         buildLinks();
         //Connection au modele
         recursiveConnectToControler(_rootComponent);
+        //Demarrage si necessaire
+        SW_APP->LaunchAutoStart();
     } catch(SwException & e) {
         _enableStreamControlerObservation=true;
         QMessageBox::critical(NULL,"StreamWorkEditor critical",QString("Exception when load %1\n%2").arg(_streamFileName).arg(e.what()));
