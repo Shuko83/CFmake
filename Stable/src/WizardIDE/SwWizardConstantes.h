@@ -9,7 +9,7 @@
 #ifndef _SwWizardConstantes_H
 #define _SwWizardConstantes_H
 
-#include <Qt/qglobal.h>
+#include <QGlobal.h>
 //Export via les DLL
 
 #ifdef WIZARDIDE_LIB

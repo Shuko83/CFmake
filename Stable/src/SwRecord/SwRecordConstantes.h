@@ -13,7 +13,7 @@
   * INCLUDES LOCAUX
   */
 
-#include <Qt/qglobal.h>
+#include <QGlobal.h>
 //Export via les DLL
 #include <SwMacros.h>
 
