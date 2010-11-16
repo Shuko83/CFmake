@@ -214,8 +214,10 @@ void _SwExecution_Service::ExecuteAll(){
                 service->Initialize(t,this); 
                 service->setRunning(true);
                 service->Start(t); 
+				service->Execute(t,true);
             }  
-            service->Execute(t,_is_first_execute);
+			else
+				service->Execute(t,_is_first_execute);
             
         }
         else
