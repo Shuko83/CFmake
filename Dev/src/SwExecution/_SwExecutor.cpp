@@ -326,7 +326,7 @@ void _SwExecutor::Execute(double current_time,bool is_first_call) throw (SwExcep
 
     if (_exe_list==0)
         return;
-
+	bool internalFirstCall = is_first_call;
     // parcours de tous les executables (independants de l'activation)
     for (int i=0;i<_exe_list->count();i++) 
     {
@@ -349,13 +349,14 @@ void _SwExecutor::Execute(double current_time,bool is_first_call) throw (SwExcep
                     executable->setRunning(true);
                     executable->Start(SwTime_ToolBox::GetTime()); 
                 }
+				internalFirstCall = true;
             }
             
             // on execute le composant
             if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
-                    executable->Execute(current_time,is_first_call); 
+                    executable->Execute(current_time,internalFirstCall); 
             else 
-                executable->Execute(SwTime_ToolBox::GetTime(),is_first_call); 
+                executable->Execute(SwTime_ToolBox::GetTime(),internalFirstCall); 
         }
         else
         {
