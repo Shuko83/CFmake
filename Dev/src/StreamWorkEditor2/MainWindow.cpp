@@ -130,8 +130,8 @@ void MainWindow::onLoadStream(){
            delete _streamControler;
         }
         _streamControler=new StreamControler(_propertyWidget);
-        _streamControler->loadStream(*it);
         _streamControler->setView(_streamView);
+        _streamControler->loadStream(*it);
         _streamTreeModel->setStreamControler(_streamControler);
         _iaTreeModel->setStreamControler(_streamControler);
         setWindowTitle(fi.fileName()+ " - " + fi.filePath());
