@@ -5,6 +5,7 @@
  */
 
 #include <QDomElement>
+#include <QMessageBox>
 
 #include <SwApplication.h>
 #include <SwMacros.h>
@@ -286,7 +287,12 @@ void StreamControler::onLinkConnectors(ConnectorGraphicItem * src,ConnectorGraph
         SwComponent_Class * cprovider=((ComponentGraphicItem *)target->parentItem())->getComponent();
         ISwInterfaces_Provider *iprovider=
             dynamic_cast<ISwInterfaces_Provider *>(cprovider->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
-        iconsumer->AttachProvider(iprovider,src->getName(),target->getName());
+        try {
+            iconsumer->AttachProvider(iprovider,src->getName(),target->getName());
+        } catch(SwException & se) {
+            //L'application a levé une exception
+             QMessageBox::warning(0,QString("Warning... "),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
+        }
     } 
     if (src->getConnectorType()==PIN) {
         SwComponent_Class * csource=((ComponentGraphicItem *)src->parentItem())->getComponent();
@@ -294,7 +300,12 @@ void StreamControler::onLinkConnectors(ConnectorGraphicItem * src,ConnectorGraph
         ISwPins_Manager *lpinManager=dynamic_cast<ISwPins_Manager *>(csource->QueryService(CG_SW_SERVICE_PINS_MANAGER));
         ISwPins_Manager *rpinManager=dynamic_cast<ISwPins_Manager *>(ctarget->QueryService(CG_SW_SERVICE_PINS_MANAGER));
         if (lpinManager!=0 && rpinManager!=0 && rpinManager!=lpinManager) {
-            lpinManager->ConnectRemotePinToLocalPin(src->getName(),target->getName(),rpinManager);
+            try {
+                lpinManager->ConnectRemotePinToLocalPin(src->getName(),target->getName(),rpinManager);
+            } catch(SwException & se) {
+                //L'application a levé une exception
+                QMessageBox::warning(0,QString("Warning... "),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
+            }
         }
     }
 }
