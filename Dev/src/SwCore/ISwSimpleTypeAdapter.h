@@ -21,8 +21,10 @@ namespace StreamWork
     {
 		class ISwProperty;
         /*!
-        \class ISwSimpleTypeAdapter
+        \interface ISwSimpleTypeAdapter
         \brief simple type adaptateur
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwSimpleTypeAdapter  {
         public:

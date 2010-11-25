@@ -18,8 +18,10 @@ namespace StreamWork
     namespace SwCore
     {
         /*!
-        \class ISwObservable
+        \interface ISwObservable
         \brief interface de tout Observable (DP Observer)
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwObservable {
         public:

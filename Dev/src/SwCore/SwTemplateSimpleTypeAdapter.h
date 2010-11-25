@@ -20,6 +20,7 @@ namespace StreamWork
         /*!
         \class SwTemplateSimpleTypeAdapter
         \brief SwTemplateSimpleTypeAdapter est un template de simple type adaptateur
+        @ingroup SwCoreGrp
 
         exemple a donné
         */

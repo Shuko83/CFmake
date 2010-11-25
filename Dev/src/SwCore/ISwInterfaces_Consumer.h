@@ -28,9 +28,11 @@ namespace StreamWork
     {
         class ISwInterfaces_Provider;
         /*!
-        \class ISwInterfaces_Consumer
+        \interface ISwInterfaces_Consumer
         \brief service consommateur d'interfaces
-        */
+        @ingroup SwCoreGrp
+        @swinterface
+       */
         class ISwInterfaces_Consumer: public ISwInterfaces_Service, public ISwPersistent {
         public:
 	        /*! \brief Enregistre une interface a fournir */

@@ -15,8 +15,11 @@ namespace StreamWork {
     namespace SwGui {
     
         /**
-        @class ISwPerspective
-        @brief Interface Perspective
+        \interface ISwPerspective
+        \brief interface definissant une perspective
+        \ingroup SwGuiGrp
+        \swinterface
+
         */
         class ISwPerspective {
 

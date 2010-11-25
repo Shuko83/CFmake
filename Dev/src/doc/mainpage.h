@@ -1,5 +1,7 @@
 /*! \mainpage StreamWork Documentation
     
+    Derniere mise a jour 25/11/2010
+    
     \section sec_install Installation
 
 
@@ -12,7 +14,7 @@
 
     \section sec_services Notion de services
     
-    Un service permet la mise en oeuvre de certains m&eacutecanismes.
+    Un service permet la mise en oeuvre de certains m&eacute;canismes.
 
     Tout composant ainsi que le singleton StreamWork::SwCore::SwApplication dispose d'un gestionnaire de service.
     Les services globaux a toute l'application sont enregistr&eacute; au niveau du singleton SwApplication
@@ -37,6 +39,9 @@
 
     \ref impl_fabrique
     
+    \section sec_availables Liste des entit&eacute;s disponibles
+    \ref SwEntry
+    
     
     \section sec_man_log Gestionnaire de log et d'alerte
     
@@ -47,6 +52,8 @@
    
     \todo 
    
+
+    \swinterfaces
     
 */
 //-----------------------------------------------------------------------------------------------------------------

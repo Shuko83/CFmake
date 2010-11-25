@@ -17,8 +17,10 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-        \class ISwAdminSetup
+        \interface ISwAdminSetup
         \brief Interface pour la configuration administrateur. Est appel&eacute; par StreamWorkEditor lors de la commande en popup AdminSetup
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwAdminSetup  {
         public:

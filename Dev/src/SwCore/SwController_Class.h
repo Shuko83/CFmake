@@ -35,6 +35,7 @@ namespace StreamWork
 		/*!
         \class ISwController
         \brief  service controller
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwController_Class: public ISwController, public ISwFinalizer{
 		protected:

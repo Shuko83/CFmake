@@ -22,8 +22,10 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-        \class ISwPersistent
+        \interface ISwPersistent
         \brief  interface de chargement/sauvegarde configuration
+        @ingroup SwCoreGrp
+        @swinterface
         \note
         */
         class ISwPersistentConfigurable  {

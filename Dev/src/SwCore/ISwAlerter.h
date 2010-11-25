@@ -31,8 +31,10 @@ namespace StreamWork
         } TSw_Alert_Level;
  
         /*!
-        \class ISwAlerter
+        \interface ISwAlerter
         \brief interface pour les alertes
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwAlerter  {
         public:

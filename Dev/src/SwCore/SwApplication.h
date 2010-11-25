@@ -27,7 +27,8 @@ namespace StreamWork
 	{
 		/*!
 		\class SwApplication
-		\brief Classe singleton d'une application StreamWork
+		\brief Classe singleton d'une application StreamWork accessible via la macro SW_APP
+        @ingroup SwCoreGrp
 
         Il y a toujours une seule instance de cette classe dans un executable
 

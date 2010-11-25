@@ -18,6 +18,7 @@ namespace StreamWork {
         /**
         @class SwPropertiesPersistentToolbox
         @brief Boite a outils publique pour l'enregistrement des propriétés
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwPropertiesPersistentToolbox {
 

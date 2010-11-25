@@ -21,8 +21,10 @@ namespace StreamWork
 
  
         /*!
-        \class ISwAlerter
-        \brief interface pour les alertes
+        @interface ISwActivable
+        @brief interface pour la gestion de l'activation
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwActivable  
         {

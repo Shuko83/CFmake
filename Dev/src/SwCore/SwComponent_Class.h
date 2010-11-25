@@ -34,7 +34,8 @@ namespace StreamWork
         typedef SwRefPtr<SwComponent_Class> SwComponent_ClassPtr;
         /*!
 		 \class SwComponent_Class 
-		 \brief Composant du stream
+		 \brief Classe de base de tous les composants
+        @ingroup SwCoreGrp
 		*/
 		class BUILD_SWCORE SwComponent_Class : 
             public QObject,

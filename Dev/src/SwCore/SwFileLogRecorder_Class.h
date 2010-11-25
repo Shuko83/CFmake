@@ -26,6 +26,7 @@ namespace StreamWork
         /*!
         \class SwFileLogRecorder_Class
         \brief log recorder basique dans un fichier
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwFileLogRecorder_Class: public ISwLogRecorder  {
         private:

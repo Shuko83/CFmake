@@ -35,6 +35,7 @@ namespace StreamWork
         \brief  Modele QT correspondant a un SwEnum (principal usage -> edition SwEnum par combobox Qt)
         \author  BIG
         \version 1.0
+        @ingroup SwCoreGrp
          */
  
         class BUILD_SWCORE SwEnumModel : public QAbstractItemModel{

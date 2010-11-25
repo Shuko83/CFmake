@@ -18,8 +18,10 @@ namespace StreamWork
     namespace SwCore
     { 
         /*!
-        \class ISwLogRecorder
+        \interface ISwLogRecorder
         \brief interface de tout log recorder
+        @ingroup SwCoreGrp
+        @swinterface
         Pour un exemple voir les sources de SwFileLogRecorder_Class
         */
         class ISwLogRecorder  {

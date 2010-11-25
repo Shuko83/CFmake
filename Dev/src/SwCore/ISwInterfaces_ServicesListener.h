@@ -24,8 +24,10 @@ namespace StreamWork
     { 
         class ISwInterfaces_Service;
         /*!
-        \class ISwInterfaces_ServicesListener
-        \brief observateur des services de gestions des interfaces
+        \interface ISwInterfaces_ServicesListener
+        \brief observateur des services de gestions des interfaces (voir StreamWork::SwCore::ISwInterfaces_Service)
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwInterfaces_ServicesListener  {
         public:

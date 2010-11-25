@@ -19,8 +19,10 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \class ISwWidget 
-		 \brief interface widget
+		@interface ISwWidget 
+		@brief interface definissant un QWidget
+        @ingroup SwGuiGrp
+        @swinterface
 		*/
         class ISwWidget 
 		{   

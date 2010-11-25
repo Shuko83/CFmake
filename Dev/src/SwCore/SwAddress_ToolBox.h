@@ -21,6 +21,7 @@ namespace StreamWork
         /*!
 		 \class SwAddress_ToolBox 
 		 \brief Address d'une cible par rapport a une source travers le stream
+        @ingroup SwCoreGrp
 
          Cette classe n'est pas instanciable. C'est une boite a outils qui contient des
          methodes statiques permettant de gerer le mecanisme d'adresse

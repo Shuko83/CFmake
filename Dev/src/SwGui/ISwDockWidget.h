@@ -18,14 +18,16 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \class ISwDockWidget 
-		 \brief interface dockwidget
+		 \interface ISwDockWidget 
+		 \brief interface definissant un QDockWidget
+         \ingroup SwGuiGrp
+         \swinterface
 		*/
         class ISwDockWidget 
 		{   
 		public:
-            /*! \brief Renvoie le menu
-            \return le menu */
+            /*! \brief Renvoie le dock widget
+            \return le dock widget */
 			virtual QDockWidget & GetDockWidget()=0;
 		};
 	}

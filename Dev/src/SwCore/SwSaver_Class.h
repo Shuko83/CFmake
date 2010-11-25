@@ -38,6 +38,7 @@ namespace StreamWork
         /*!
 		 \class SwSaver_Class 
 		 \brief class de sauvegarde du stream
+        @ingroup SwCoreGrp
 		*/
 		class BUILD_SWCORE SwSaver_Class 
 		{

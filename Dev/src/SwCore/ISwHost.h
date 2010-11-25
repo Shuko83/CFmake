@@ -18,8 +18,10 @@ namespace StreamWork
     namespace SwCore
     {
         /*!
-        \class ISwHost
+        \interface ISwHost
         \brief interface permettant d'acceder a son composant hote
+        @ingroup SwCoreGrp
+        @swinterface
 
         Toute entité implémentant cette interface permet de connaître le composant hôte auquel est rattaché l’interface
         */

@@ -15,8 +15,10 @@ namespace StreamWork {
     namespace SwGui {
     
         /**
-        @class ISwWidget2
-        @brief interface widget observable
+        @interface ISwWidget2
+        @brief interface definissant un QWidget observable (voir StreamWork::SwGui::ISwWidget2_Observer )
+        @ingroup SwGuiGrp
+        @swinterface
         */
         class ISwWidget2 : public ISwWidget{
         public:

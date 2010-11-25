@@ -21,8 +21,10 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \class ISwHttpPart 
-		 \brief interface partie serveur http
+		 \interface ISwHttpPart 
+		 \brief interface definissant un groupe de page http
+         \ingroup SwGuiGrp
+         \swinterface
         
         Mise en oeuvre (page _about du server) 
         @see _SwGuiCompHttpServer

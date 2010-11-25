@@ -32,8 +32,10 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-		 \class ISwPluginFactory
+		 \interface ISwPluginFactory
 		 \brief Interface definissant l'acces a un plugin usine
+        @ingroup SwCoreGrp
+        @swinterface
 		*/
         class ISwPluginFactory : public ISwService
 		{

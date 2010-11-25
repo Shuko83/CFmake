@@ -21,9 +21,11 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-        \class ISwFinalizerManager
+        \interface ISwFinalizerManager
         \brief interface de d'enregistrement des finalisations (pour appel apres le chargement complet)
-        voir ISwFinalizer pour plus d'explication.
+        @ingroup SwCoreGrp
+        @swinterface
+        voir StreamWork::SwCore::ISwFinalizer pour plus d'explication.
         */
 
         class ISwFinalizerManager  {

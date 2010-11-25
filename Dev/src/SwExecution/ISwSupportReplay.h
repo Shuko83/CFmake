@@ -12,8 +12,10 @@ namespace StreamWork {
     namespace SwExecution {
     
         /**
-        @class ISwSupportReplay
+        @interface ISwSupportReplay
         @brief Interface de support de rejeu
+        @ingroup SwExeGrp
+        @swinterface
         */
         class ISwSupportReplay {
 

@@ -20,6 +20,7 @@ namespace StreamWork
 		/*!
 		 \class SwRef
 		 \brief Class compteur de r�f�rence
+        @ingroup SwCoreGrp
 
         Cette classe impl�mente le principe de gestion de vie.
         Toute instance a d�une classe d�rivant de cette classe peut �tre partag� par diff�rentes ressources.

@@ -32,6 +32,7 @@ namespace StreamWork
         /*!
         \class SwInterfaces_Consumer_Class
         \brief implementation du service consommateur d'interfaces
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwInterfaces_Consumer_Class : public ISwInterfaces_Consumer , public ISwFinalizer{
         private:

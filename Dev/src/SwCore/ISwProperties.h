@@ -32,8 +32,10 @@ namespace StreamWork
     {
         class ISwProperty;
         /*!
-        \class ISwProperties
+        \interface ISwProperties
         \brief service propriétés
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwProperties: public ISwService, public ISwHost, public ISwPersistent {
         public:

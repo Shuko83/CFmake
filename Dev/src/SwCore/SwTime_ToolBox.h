@@ -21,6 +21,7 @@ namespace StreamWork
         /*!
 		 \class SwTime_ToolBox 
 		 \brief Gestion du temps en double (unite la seconde)
+        @ingroup SwCoreGrp
 
          Cette classe n'est pas instanciable. C'est une boite a outils qui contient des
          methodes statiques permettant de gerer le temps

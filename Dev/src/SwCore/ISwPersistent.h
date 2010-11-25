@@ -23,8 +23,10 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-        \class ISwPersistent
+        \interface ISwPersistent
         \brief  interface de chargement/sauvegarde admin
+        @ingroup SwCoreGrp
+        @swinterface
         \note
         Toute entité implémentant cette interface peut être enregistrer et charger.
         */

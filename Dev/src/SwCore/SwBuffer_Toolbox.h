@@ -26,6 +26,7 @@ namespace StreamWork
         /*!
         \class SwBuffer_Toolbox
         \brief boite a outil pour la gestion de buffer
+        @ingroup SwCoreGrp
         \note
         */
 

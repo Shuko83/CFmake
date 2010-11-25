@@ -31,8 +31,10 @@ namespace StreamWork
         } TSw_Log_Level;
  
         /*!
-        \class ISwLogger
+        \interface ISwLogger
         \brief interface pour le log
+        @ingroup SwCoreGrp
+        @swinterface
 
         Cette interface definit le mecanisme de log
         Par exemple pour ecrire un log d'info:

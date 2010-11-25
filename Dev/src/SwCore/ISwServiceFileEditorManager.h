@@ -19,8 +19,10 @@ namespace StreamWork {
     namespace SwCore {
     
         /**
-        @class ISwServiceFileEditorManager
+        @interface ISwServiceFileEditorManager
         @brief Manager des editors de fichier
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwServiceFileEditorManager : public ISwService {
         public:

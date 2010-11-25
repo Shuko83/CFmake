@@ -18,8 +18,11 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \class ISwAction 
-		 \brief interface Action
+		 \interface ISwAction 
+		 \brief interface definissant une QAction
+         \ingroup SwGuiGrp
+         \swinterface
+
 		*/
         class ISwAction 
 		{   

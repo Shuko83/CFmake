@@ -26,7 +26,8 @@ namespace StreamWork {
         /**
         @class Component
         @brief Implementation avance d'un composant par defaut
-        */
+        @ingroup SwCoreGrp
+       */
         class BUILD_SWCORE Component: public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwPin_Listener {
             Q_OBJECT
         public:

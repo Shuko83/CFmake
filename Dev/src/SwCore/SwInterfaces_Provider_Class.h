@@ -30,6 +30,7 @@ namespace StreamWork
         /*!
         \class ISwInterfaces_Provider
         \brief implementation du service fournisseur d'interfaces
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwInterfaces_Provider_Class : public ISwInterfaces_Provider {
         private:

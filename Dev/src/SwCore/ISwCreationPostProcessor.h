@@ -16,8 +16,10 @@ namespace StreamWork
     namespace SwCore
     {
         /*!
-        \class ISwCreationPostProcessor
+        \interface ISwCreationPostProcessor
         \brief Interface permettant l'implementation de traitement suite a la cr&eacute; d'un module 
+        @ingroup SwCoreGrp
+        @swinterface
         Mise en oeuvre:
         Soit un objet Foo supportant cette interface, il faut enregistrer Foo aupr&eacute;s de la banque de plugin
         \code

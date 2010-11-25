@@ -25,8 +25,10 @@ namespace StreamWork
     namespace SwCore
     { 
         /*!
-        \class ISwInterfaces_Services
+        \interface ISwInterfaces_Service
         \brief service de gestions des interfaces
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwInterfaces_Service: public ISwService, public ISwHost{
         public:

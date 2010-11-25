@@ -30,6 +30,7 @@ namespace StreamWork
 		/*!
         \class SwPin
         \brief Definition d'un pin simple
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwPin  {
 		protected:

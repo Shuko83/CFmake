@@ -30,8 +30,10 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-		 \class ISwPluginsBank 
+		 \interface ISwPluginsBank 
 		 \brief Interface definissant l'acces a la banque de plugins
+        @ingroup SwCoreGrp
+        @swinterface
          Cette interfaces definit le mecanisme d'acces aux fabriques de composants et de données
          
          L'acces a cet interface se fait grace a la macro SW_FACTORIES

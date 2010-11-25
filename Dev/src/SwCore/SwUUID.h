@@ -23,6 +23,7 @@ namespace StreamWork
 		/*!
         \class SwUUID
         \brief Definition d'un UUID
+        @ingroup SwCoreGrp
         */
         struct BUILD_SWCORE _SwUUID  {
         public:

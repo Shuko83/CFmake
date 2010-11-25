@@ -19,6 +19,7 @@ namespace StreamWork {
         /**
         @class SwIpV4Address
         @brief Adresse IPV4
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwIpV4Address {
         private:

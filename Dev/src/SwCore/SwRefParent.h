@@ -19,6 +19,7 @@ namespace StreamWork
 		/*!
 		 \class SwRefParent
 		 \brief Class compteur de r�f�rence sur un parent reference compté
+        @ingroup SwCoreGrp
 
 
 		*/

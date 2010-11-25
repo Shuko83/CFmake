@@ -20,8 +20,10 @@ namespace StreamWork
 	{
         class SwComponent_Class;
         /*!
-        \class ISwComponentProvider
+        \interface ISwComponentProvider
         \brief  Fournisseur d'instance de composant
+        @ingroup SwCoreGrp
+        @swinterface
         \note
         */
         class ISwComponentProvider  {

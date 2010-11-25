@@ -27,8 +27,10 @@ namespace StreamWork
     namespace SwCore
     {
         /*!
-        \class ISwServiceOwner
+        \interface ISwServiceOwner
         \brief service que doit implementer le composant s'il veut avoir les fonctionnalites de persistence
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwServiceOwner : public ISwService, public ISwPersistent {
         public:
