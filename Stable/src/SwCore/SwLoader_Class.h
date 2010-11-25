@@ -36,6 +36,7 @@ namespace StreamWork
         /*!
 		 \class SwLoader_Class
 		 \brief class de chargement du stream
+        @ingroup SwCoreGrp
 		*/
         class BUILD_SWCORE SwLoader_Class : public ISwFinalizerManager
 		{

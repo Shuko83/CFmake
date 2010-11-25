@@ -30,6 +30,7 @@ namespace StreamWork
 		/*!
         \class SwPins_Manager_Class
         \brief implementation du service  de gestion des pins
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwPins_Manager_Class : public ISwPins_Manager, public ISwFinalizer {
 		protected:

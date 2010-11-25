@@ -27,8 +27,10 @@ namespace StreamWork
     namespace SwCore
     {
         /*!
-        \class ISwCheckService
-        \brief interface service pour la v&eacute;rification de clef logicielle
+        \interface ISwCheckService
+        \brief interface definissant un service pour la v&eacute;rification de clef logicielle
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwCheckService : public ISwService {
         public:

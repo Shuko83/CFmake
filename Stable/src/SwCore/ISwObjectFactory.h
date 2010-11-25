@@ -18,8 +18,10 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-		 \class ISwObjectFactory
+		 \interface ISwObjectFactory
 		 \brief Interface de fabrication d'objet
+        @ingroup SwCoreGrp
+        @swinterface
 		*/
         class ISwObjectFactory 
 		{

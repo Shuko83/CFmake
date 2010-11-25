@@ -26,8 +26,10 @@ namespace StreamWork {
     namespace SwCore {
     
         /**
-        @class ISwServiceOwnerConfigurable
+        @interface ISwServiceOwnerConfigurable
         @brief service que doit implementer le composant s'il veut avoir les fonctionnalites de persistence en configuration
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwServiceOwnerConfigurable : public ISwService, public ISwPersistentConfigurable {
         public:

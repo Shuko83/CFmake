@@ -13,8 +13,10 @@ namespace StreamWork {
     
         class ISwPerspective;
         /**
-        @class ISwPerspectiveObserver
-        @brief Interface Perspective
+        @interface ISwPerspectiveObserver
+        @brief interface definissant un observateur de perspective
+        @ingroup SwGuiGrp
+        @swinterface
         */
         class ISwPerspectiveObserver {
 

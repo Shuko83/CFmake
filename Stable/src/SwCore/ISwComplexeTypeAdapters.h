@@ -21,8 +21,10 @@ namespace StreamWork
         class ISwSimpleTypeAdapter;
         class ISwProperty;
 		/*!
-        \class ISwComplexeTypeAdapters
+        \interface ISwComplexeTypeAdapters
         \brief complexe types adaptateur
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwComplexeTypeAdapters  {
         public:

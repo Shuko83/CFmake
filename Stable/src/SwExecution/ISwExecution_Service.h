@@ -30,8 +30,10 @@ namespace StreamWork
     namespace SwExecution
     { 
         /*!
-        \class ISwExecution_Service
+        \interface ISwExecution_Service
         \brief service de pilotage de l'execution
+        @ingroup SwExeGrp
+        @swinterface
         */
         class ISwExecution_Service: public SwCore::ISwService, public SwCore::ISwPersistent, public SwCore::ISwHost{
         public:

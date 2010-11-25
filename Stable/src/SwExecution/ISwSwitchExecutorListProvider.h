@@ -21,9 +21,11 @@ namespace StreamWork
     namespace SwExecution
     { 
         /*!
-        \class ISwSwitchExecutorListProvider
+        \interface ISwSwitchExecutorListProvider
         \brief interface d acces a la liste en execution
-        */
+         @ingroup SwExeGrp
+        @swinterface
+       */
         class ISwSwitchExecutorListProvider
             {
 

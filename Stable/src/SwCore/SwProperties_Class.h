@@ -32,6 +32,7 @@ namespace StreamWork
         /*!
         \class ISwInterfaces_Provider
         \brief implementation du service fournisseur d'interfaces
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwProperties_Class : public ISwProperties {
         private:

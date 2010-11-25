@@ -19,8 +19,10 @@ namespace StreamWork
     {
         class ISwComplexeTypeAdapters;
 		/*!
-        \class ISwComplexeTypeAdaptersFactory
+        \interface ISwComplexeTypeAdaptersFactory
         \brief fabrique de complexe types adaptateur
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwComplexeTypeAdaptersFactory  {
         public:

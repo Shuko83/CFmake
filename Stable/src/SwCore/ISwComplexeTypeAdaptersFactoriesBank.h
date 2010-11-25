@@ -19,9 +19,11 @@ namespace StreamWork
     {
         class ISwComplexeTypeAdaptersFactory;
 		/*!
-        \class ISwComplexeTypeAdaptersFactoriesBank
+        \interface ISwComplexeTypeAdaptersFactoriesBank
         \brief  banque des fabriques de complexe types adaptateur
-        */
+        @ingroup SwCoreGrp
+        @swinterface
+       */
         class ISwComplexeTypeAdaptersFactoriesBank  {
         public:
 	        /*! \brief Creation d'un adapteur */

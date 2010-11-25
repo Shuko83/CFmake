@@ -19,8 +19,10 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \class ISwMainWindow 
-		 \brief interface fenetre principale
+		 \interface ISwMainWindow 
+		 \brief interface definissant une QMainWindow
+         \ingroup SwGuiGrp
+         \swinterface
 		*/
         class ISwMainWindow 
 		{   

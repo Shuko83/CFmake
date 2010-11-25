@@ -18,8 +18,10 @@ namespace StreamWork
 	{
         class SwComponent_Class;
         /*!
-        \class ISwVisitor
+        \interface ISwVisitor
         \brief  interface visiteur (DP visitor)
+        @ingroup SwCoreGrp
+        @swinterface
         \note
         */
         class ISwVisitor  {

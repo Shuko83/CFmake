@@ -12,8 +12,10 @@ namespace StreamWork {
     namespace SwCore {
     
         /**
-        @class ISwRef
+        @interface ISwRef
         @brief Abstraction d'une entité reference compté
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwRef {
         public:

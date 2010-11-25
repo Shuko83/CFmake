@@ -18,8 +18,11 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \class ISwHttpServer 
+		 \interface ISwHttpServer 
 		 \brief interface serveur http
+         \ingroup SwGuiGrp
+         \swinterface
+
 		*/
         class ISwHttpServer 
 		{   

@@ -20,6 +20,7 @@ namespace StreamWork {
         /**
         @class SwFileDescriptor
         @brief Descripteur de fichier
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwFileDescriptor {
         public:

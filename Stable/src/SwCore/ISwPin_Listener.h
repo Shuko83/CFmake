@@ -23,8 +23,10 @@ namespace StreamWork
     { 
         class SwPin;
         /*!
-        \class ISwPin_Listener
+        \interface ISwPin_Listener
         \brief observateur d'un pin
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwPin_Listener  {
         public:

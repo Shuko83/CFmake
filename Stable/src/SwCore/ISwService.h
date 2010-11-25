@@ -22,8 +22,10 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-		 \class ISwService 
+		 \interface ISwService 
 		 \brief Interface definissant un service
+        @ingroup SwCoreGrp
+        @swinterface
 
          Cette interface doit être implementé par tout service
 

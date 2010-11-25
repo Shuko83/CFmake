@@ -19,8 +19,10 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \class ISwToolBar 
-		 \brief interface toolbar
+		@interface ISwToolBar 
+		@brief interface toolbar
+        @ingroup SwGuiGrp
+        @swinterface
 		*/
         class ISwToolBar 
 		{   

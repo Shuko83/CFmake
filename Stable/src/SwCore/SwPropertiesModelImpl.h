@@ -30,6 +30,7 @@ namespace StreamWork
         /*!
 		 \class SwPropertiesModelImpl 
 		 \brief Definit un modele a partir d'une liste de propriétés d'un composant
+        @ingroup SwCoreGrp
 		*/
         class BUILD_SWCORE SwPropertiesModelImpl : public QAbstractItemModel { 
 			Q_OBJECT

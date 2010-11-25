@@ -27,6 +27,7 @@ namespace StreamWork
 		/*!
 		\class SwNamed_Class
 		\brief Classe dont l'instance est nomm�e
+        @ingroup SwCoreGrp
 		*/
 		class BUILD_SWCORE SwNamed_Class {
 		protected:

@@ -37,6 +37,7 @@ namespace StreamWork {
         /**
         @class ExecutableComponent
         @brief Implementation avance d'un composant executable par defaut
+        @ingroup SwExeGrp
         */
         class SWEXECUTION_EXPORT ExecutableComponent: 
             public StreamWork::SwCore::SwComponent_Class, 

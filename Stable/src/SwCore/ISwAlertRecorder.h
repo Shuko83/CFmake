@@ -18,8 +18,10 @@ namespace StreamWork
     namespace SwCore
     { 
         /*!
-        \class ISwAlertRecorder
+        \interface ISwAlertRecorder
         \brief interface de tout enregistreur d'alerte
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwAlertRecorder  {
         public:

@@ -12,8 +12,10 @@ namespace StreamWork {
     namespace SwExecution {
     
         /**
-        @class ISwClockProvider
+        @interface ISwClockProvider
         @brief fournisseur de temps
+        @ingroup SwExeGrp
+        @swinterface
         */
         class ISwClockProvider {
         public:

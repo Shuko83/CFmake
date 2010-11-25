@@ -18,8 +18,11 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \class ISwMenu 
-		 \brief interface menu
+		 \interface ISwMenu 
+		 \brief interface definissant un QMenu
+         \ingroup SwGuiGrp
+         \swinterface
+
 		*/
         class ISwMenu 
 		{   

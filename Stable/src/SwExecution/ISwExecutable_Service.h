@@ -30,8 +30,10 @@ namespace StreamWork
     namespace SwExecution
     { 
         /*!
-        \class ISwExecutable_Service
+        \interface ISwExecutable_Service
         \brief service de gestion de l'execution
+        @ingroup SwExeGrp
+        @swinterface
         Sequence d'appel
         Initialize(temps courant)
         Start(temps courant)

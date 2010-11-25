@@ -33,8 +33,10 @@ namespace StreamWork
     {
         class SwPin;
 		/*!
-        \class ISwPins_Manager
+        \interface ISwPins_Manager
         \brief service  de gestion des pins
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwPins_Manager : public ISwService, public ISwHost, public ISwPersistent {
 		public:

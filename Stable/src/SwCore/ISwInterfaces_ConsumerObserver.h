@@ -22,8 +22,10 @@ namespace StreamWork
     namespace SwCore
     { 
         /*!
-        \class ISwInterfaces_ConsumerObserver
-        \brief observateur d'un interfaces_consumer
+        \interface ISwInterfaces_ConsumerObserver
+        \brief observateur d'un interfaces_consumer (voir StreamWork::SwCore::ISwInterfaces_Consumer )
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwInterfaces_ConsumerObserver  {
         public:

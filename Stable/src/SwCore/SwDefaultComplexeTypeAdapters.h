@@ -19,8 +19,9 @@ namespace StreamWork
     namespace SwCore
     {
         /*!
-        \class SwTemplateSimpleTypeAdapter
+        \class SwDefaultComplexeTypeAdapters
         \brief complexe types adaptateur par default
+        @ingroup SwCoreGrp
 
         exemple a donné
         */

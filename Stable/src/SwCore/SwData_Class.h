@@ -34,8 +34,8 @@ namespace StreamWork
         typedef SwRefPtr<SwData_Class> SwData_ClassPtr;
         /*!
 		 \class SwData_Class 
-		 \brief classe representant les données echangées
-		 Commentaire a faire
+		 \brief classe de base de toutes les données echangées
+        @ingroup SwCoreGrp
 		*/
         class BUILD_SWCORE SwData_Class: public SwRef
 		{

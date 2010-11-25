@@ -18,8 +18,10 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \class ISwLayout 
-		 \brief interface Layout
+		 \interface ISwLayout 
+		 \brief interface definissant un QLayout
+         \ingroup SwGuiGrp
+         \swinterface
 		*/
         class ISwLayout 
 		{   

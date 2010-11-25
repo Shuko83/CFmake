@@ -36,6 +36,7 @@ namespace StreamWork
         \brief Classe d'enumeration
         \author  BIG
         \version 1.0
+        @ingroup SwCoreGrp
         \note Permet de convertir une propriete Qt enum ou flag en QVariant
         \warning la methode qRegisterMetaType et qRegisterMetaTypeStreamOperators
         doivent etre appelé si usage de SwEnum dans les signals/slots

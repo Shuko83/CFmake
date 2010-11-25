@@ -20,6 +20,7 @@ namespace StreamWork
 		/*!
 		 \class SwException
 		 \brief classe SwException est la mère de toutes les exceptions
+        @ingroup SwCoreGrp
 
          Definit une exception specifique StreamWork
 

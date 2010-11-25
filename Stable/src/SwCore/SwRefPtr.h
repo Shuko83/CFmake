@@ -17,6 +17,7 @@ namespace StreamWork
         \class SwRefPtr
         \date 12/04/2006
         \brief Class pointer sur SwRef
+        @ingroup SwCoreGrp
         \author  BIG
         \note
             Un pointeur correspond a une instance d'une classe derivée de SwRef

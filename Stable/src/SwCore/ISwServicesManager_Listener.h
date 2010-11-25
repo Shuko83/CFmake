@@ -14,8 +14,10 @@ namespace StreamWork {
     namespace SwCore {
     
         /**
-        @class ISwServicesManager_Listener
+        @interface ISwServicesManager_Listener
         @brief Observer d'un manager de service
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwServicesManager_Listener {
 

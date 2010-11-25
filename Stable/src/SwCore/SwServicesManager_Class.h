@@ -30,6 +30,7 @@ namespace StreamWork
         /*!
 		 \class SwServicesManager_Class 
 		 \brief Manager de service
+        @ingroup SwCoreGrp
 
         Permet d'enregistrer des services auprès de l'entité implémentant cette classe
         Cette classe implemente une collection de services.

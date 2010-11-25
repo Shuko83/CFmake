@@ -49,6 +49,7 @@ namespace StreamWork
         /*!
 		 \class SwPluginFactory_Class 
 		 \brief classe definissant un plugin usine
+        @ingroup SwCoreGrp
 		*/
         class BUILD_SWCORE SwPluginFactory_Class: public QAbstractListModel, 
                                                   public ISwPluginFactory,

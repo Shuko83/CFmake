@@ -25,8 +25,10 @@ namespace StreamWork
         class ISwProperties;
         class ISwController;
         /*!
-        \class ISwProperty
+        \interface ISwProperty
         \brief  interface d'une propriete
+        @ingroup SwCoreGrp
+        @swinterface
         \note
         */
 

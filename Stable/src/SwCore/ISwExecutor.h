@@ -23,8 +23,10 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-		 \class ISwExecutor 
+		 \interface ISwExecutor 
 		 \brief Interface definissant une interface d'execution (Application console)
+        @ingroup SwCoreGrp
+        @swinterface
          \todo A revoir
 		*/
 		class ISwExecutor

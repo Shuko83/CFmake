@@ -25,6 +25,7 @@ namespace StreamWork
         /*!
         \class SwLogger_Class
         \brief logger basique
+        @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwLogger_Class : public ISwLogger {
         private:

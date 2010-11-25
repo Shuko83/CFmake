@@ -18,8 +18,10 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*!
-        \class ISwFinalizer
+        \interface ISwFinalizer
         \brief  Interface de finalisation (appel apres le chargement complet)
+        @ingroup SwCoreGrp
+        @swinterface
         Permet de realiser des operations dans le même ordre que lors de la création du stream.
 
         Ce mecanisme est utilisé par le services de consommations d'interfaces (SwInterfaces_Consumer_Class) pour relier les interfaces aux composants

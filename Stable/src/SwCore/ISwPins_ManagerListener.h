@@ -21,8 +21,10 @@ namespace StreamWork
     { 
         class SwPin;
         /*!
-        \class ISwPins_ManagerListener
+        \interface ISwPins_ManagerListener
         \brief observateur du manager des pins
+        @ingroup SwCoreGrp
+        @swinterface
         */
         class ISwPins_ManagerListener  {
         public:
