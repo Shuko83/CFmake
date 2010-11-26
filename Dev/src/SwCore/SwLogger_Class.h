@@ -12,6 +12,7 @@
   * INCLUDES GLOBAUX
  */
 #include <QSet>
+#include <QVector>
 /*
   * INCLUDES LOCAUX
  */
@@ -46,6 +47,13 @@ namespace StreamWork
 	        void DetachLogRecorder(ISwLogRecorder * log_recorder);
 
         };
+
+        class BUILD_SWCORE SwLogPreRecorder {
+        public:
+            static void PreAttachLogRecorder(ISwLogRecorder * log_recorder);
+        };
+
+
     }
 }
 

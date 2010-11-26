@@ -12,10 +12,15 @@
 
 using namespace StreamWork::SwCore;
 
+static QVector<ISwLogRecorder *> recorders;
 
 /*! \brief Constructeur*/
 SwLogger_Class::SwLogger_Class() {
     _log_recorders.clear();
+    for(int i=0;i<recorders.count();i++) {
+        AttachLogRecorder(recorders[i]);    
+    }
+
 }
 /*! \brief Destructeur*/
 SwLogger_Class::~SwLogger_Class() {
@@ -71,4 +76,8 @@ void SwLogger_Class::DetachLogRecorder(ISwLogRecorder * log_recorder){
         //Detachement du recorder
         _log_recorders.erase(it);
     }
+}
+
+void SwLogPreRecorder::PreAttachLogRecorder(ISwLogRecorder * log_recorder) {
+    recorders.push_back(log_recorder);
 }

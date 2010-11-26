@@ -16,7 +16,6 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QDateTime>
-
 #include "_SwPluginsBank_Class.h"
 #include "SwApplication.h"
 #include "SwMacros.h"
@@ -26,12 +25,95 @@
 #ifdef Q_WS_WIN
     //Enregistrement du path dans le path applicatif
 #include <windows.h>
+#include "ImageHlp.h"
 #define WIN32_BUFSIZE 30000
 TCHAR chNewEnv[WIN32_BUFSIZE];
 #define VARNAME_PATH TEXT("PATH")
 #endif
 
 using namespace StreamWork::SwCore;
+
+//--- DLL access 
+template <class T> PIMAGE_SECTION_HEADER GetEnclosingSectionHeader(DWORD rva, T* pNTHeader) // 'T' == PIMAGE_NT_HEADERS 
+{
+    PIMAGE_SECTION_HEADER section = IMAGE_FIRST_SECTION(pNTHeader);
+    unsigned i;
+
+    for ( i=0; i < pNTHeader->FileHeader.NumberOfSections; i++, section++ )
+    {
+        // This 3 line idiocy is because Watcom's linker actually sets the
+        // Misc.VirtualSize field to 0.  (!!! - Retards....!!!)
+        DWORD size = section->Misc.VirtualSize;
+        if ( 0 == size )
+            size = section->SizeOfRawData;
+
+        // Is the RVA within this section?
+        if ( (rva >= section->VirtualAddress) && 
+             (rva < (section->VirtualAddress + size)))
+            return section;
+    }
+
+    return 0;
+}
+
+template <class T> LPVOID GetPtrFromRVA( DWORD rva, T* pNTHeader, PBYTE imageBase ) // 'T' = PIMAGE_NT_HEADERS 
+{
+    PIMAGE_SECTION_HEADER pSectionHdr;
+    INT delta;
+
+    pSectionHdr = GetEnclosingSectionHeader( rva, pNTHeader );
+    if ( !pSectionHdr )
+        return 0;
+
+    delta = (INT)(pSectionHdr->VirtualAddress-pSectionHdr->PointerToRawData);
+    return (PVOID) ( imageBase + rva - delta );
+}
+
+
+void DumpDllFromPath(const wchar_t* path,int depth) {
+    char name[300];
+    wcstombs(name,path,300);
+
+    PLOADED_IMAGE image=ImageLoad(name,0);
+    if (image==0) {
+        qDebug(QString("Unable to find dynamic library :%1").arg(name).toLatin1().data());
+        SW_APP->Logger().Log(LogLvl_Critical,QString("Unable to find dynamic library :%1").arg(name));
+        return;
+    }
+    if (image->FileHeader->OptionalHeader.NumberOfRvaAndSizes>=2) {
+        PIMAGE_IMPORT_DESCRIPTOR importDesc=
+            (PIMAGE_IMPORT_DESCRIPTOR)GetPtrFromRVA(
+                image->FileHeader->OptionalHeader.DataDirectory[1].VirtualAddress,
+                image->FileHeader,image->MappedAddress);
+        while ( 1 )
+        {
+            // See if we've reached an empty IMAGE_IMPORT_DESCRIPTOR
+            if ( (importDesc->TimeDateStamp==0 ) && (importDesc->Name==0) )
+                break;
+
+            QString result=QString((const char *)GetPtrFromRVA(importDesc->Name,
+                                           image->FileHeader,
+                                           image->MappedAddress) );
+            qDebug("Checking %s", result.toLatin1().data());
+            SW_APP->Logger().Log(LogLvl_Info,QString("Checking %1").arg(result));
+            if (0==LoadLibrary(result.utf16())) {
+                     DWORD error=GetLastError();
+                     qDebug(QString("-->LoadLibrary failed for %1:%2)").arg(result).arg(error).toLatin1().data());
+                     SW_APP->Logger().Log(LogLvl_Critical,QString("Check %1 failed :error core:%2").arg(result).arg(error));
+                     if (depth>0) {
+                        DumpDllFromPath(result.utf16(),depth-1);
+                     }
+            }
+            importDesc++;
+        }
+    }
+    ImageUnload(image);
+
+}
+
+//
+
+
 
 
 /*! \brief Constructeur */
@@ -191,6 +273,15 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
                 }
                 //Enregistrement des composants controllers
                 _controllers+=plugin->GetControllersMap();
+            } else {
+                SW_APP->Logger().Log(LogLvl_Critical,lib.errorString());
+                qDebug(QString("QLoadLibrary failed for %1:%2").arg(real_file).arg(lib.errorString()).toLatin1().data()); 
+                DumpDllFromPath(real_file.utf16(),3);
+                /* if (0==LoadLibrary(real_file.utf16())) {
+                    DWORD error=GetLastError();
+                     qDebug(QString("LoadLibrary failed for %1:%2)").arg(real_file).arg(error).toLatin1().data()); 
+                } */
+
             }
         }
     }

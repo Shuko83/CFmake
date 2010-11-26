@@ -13,6 +13,8 @@
 #include <SwFileLogRecorder_Class.h>
 #include "MainWindow.h"
 #include "SwSplash.h"
+#include "LogView.h"
+#include "SwLogger_Class.h"
 
 using namespace StreamWork::SwCore;
 
@@ -52,6 +54,10 @@ int main(int argc, char *argv[])
     //splash.resize(QSize(800,600));
     splash.show();
     app.processEvents();
+    LogView * lView=LogView::getInstance();
+    QVector<ISwLogRecorder *> recorders;
+    SwLogPreRecorder::PreAttachLogRecorder(&splash);
+    SwLogPreRecorder::PreAttachLogRecorder(lView);
     //Test
     //QString test=QString(typeid(un_service).name());
     //QMessageBox::information(0,QString("typeid"),test,QMessageBox::Ok,QMessageBox::NoButton,QMessageBox::NoButton);
@@ -59,7 +65,6 @@ int main(int argc, char *argv[])
 
     try {
         SW_APP->Verbose();
-        SW_APP->Logger().AttachLogRecorder(&splash);
         liste_arg=QCoreApplication::instance()->arguments();
         nb_args=liste_arg.count();
         for(int i=1;i<nb_args;i++) {

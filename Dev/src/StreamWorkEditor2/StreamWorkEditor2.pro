@@ -35,6 +35,7 @@ HEADERS += IStreamViewObserver.h
 HEADERS += InterestArea.h
 HEADERS += IStreamControlerObserver.h
 HEADERS += QInterestAreaTreeModel.h
+HEADERS += LogView.h
 
 SOURCES += SwSplash.cpp
 SOURCES += main.cpp
@@ -62,9 +63,10 @@ SOURCES += QStreamTreeModel.cpp
 SOURCES += ViewNavigator.cpp
 SOURCES += InterestArea.cpp
 SOURCES += QInterestAreaTreeModel.cpp
+SOURCES += LogView.cpp
 
 
-FORMS +=
+FORMS += _resources/LogView.ui
 RESOURCES += _resources/StreamWorkEditor2.qrc
 MOC_DIR += ./_intermediaire
 OBJECTS_DIR += ./_obj

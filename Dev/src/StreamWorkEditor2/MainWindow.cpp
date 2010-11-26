@@ -12,6 +12,7 @@
 #include "Arranger.h" 
 #include "WidgetFactory.h"
 #include "ViewNavigator.h"
+#include "LogView.h"
 
 static int nbWindows=0;
 
@@ -44,6 +45,9 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
     //Acces about
     QMenu * aboutMenu=menuBar()->addMenu("About");
     aboutMenu->addAction("Plugins List",this,SLOT(onDisplayPluginList()));
+
+    //Log
+    menuBar()->addAction("Show Log",LogView::getInstance(),SLOT(show()));
 
     //Definition du widget central
     _streamView=new StreamView(this);
