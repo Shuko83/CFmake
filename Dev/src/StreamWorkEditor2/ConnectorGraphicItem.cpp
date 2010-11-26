@@ -89,7 +89,7 @@ void ConnectorGraphicItem::paint ( QPainter * painter,
             painter->drawEllipse(QRectF(-CL_CONNECTOR_SIZE/2.0,-CL_CONNECTOR_SIZE/2.0,CL_CONNECTOR_SIZE,CL_CONNECTOR_SIZE));
         if(_ctype==PIN)
             painter->drawRect(QRectF(-CL_CONNECTOR_SIZE/2.0,-CL_CONNECTOR_SIZE/2.0,CL_CONNECTOR_SIZE,CL_CONNECTOR_SIZE));
-    } else if (parentItem()->isSelected() || _highlightExtern || _showHover) {
+    } else { //if (parentItem()->isSelected() || _highlightExtern || _showHover) {
         texte=QString("%1").arg(_name);
     }
     painter->setRenderHints(QPainter::Antialiasing,false);

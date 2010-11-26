@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
         app.setQuitOnLastWindowClosed(false);
         //app.connect(&app, SIGNAL(lastWindowClosed()), window, SLOT(onQuit()));
         window->onNewStream();
-        window->showMaximized();
+        window->show();
         result=app.exec();
         //Destruction du log_recorder
         // Le detachement n'est pas utile puisque l'application est detruite

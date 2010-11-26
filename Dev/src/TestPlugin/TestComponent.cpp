@@ -146,6 +146,12 @@ SwFileDescriptor TestComponent::getRecordConfiguration() const {
 void TestComponent::setRecordConfiguration(const SwFileDescriptor & val) {
     _configuration=val;
 }
+QColor TestComponent::getTestColor() const {
+    return testColor;
+}
+void TestComponent::setTestColor(QColor val) {
+    testColor=val;
+}
 //---------------------------------------------------------------------
 // Interface ISwServiceOwnerConfigurable
 //---------------------------------------------------------------------

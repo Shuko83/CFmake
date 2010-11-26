@@ -55,6 +55,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 
     //Ajout dock widget
     QDockWidget *pdock = new QDockWidget(tr("Plugins"), this);
+    pdock->setObjectName("DockPlugins");
     pdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     pdock->setWidget(WidgetFactory::getInstance()->buildPluginsBankView(true));
     addDockWidget(Qt::RightDockWidgetArea, pdock);
@@ -62,6 +63,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 
    
     QDockWidget * stdock = new QDockWidget(tr("Stream Tree"), this);
+    stdock->setObjectName("DockStreamTree");
     stdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     _streamTreeModel=new QStreamTreeModel(this);
     QTreeView * treew=(QTreeView *)WidgetFactory::getInstance()->buildStreamTreeView(_streamTreeModel);
@@ -72,6 +74,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
     tabifyDockWidget(pdock,stdock);
 
     QDockWidget * iadock = new QDockWidget(tr("Interest Areas"), this);
+    iadock->setObjectName("DockInterestArea");
     iadock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     tabifyDockWidget(stdock,iadock);
     treew=new QTreeView();
@@ -86,6 +89,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 
 
     QDockWidget * propdock = new QDockWidget(tr("Component Properties"), this);
+    propdock->setObjectName("DockComponentProperties");
     propdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
     _propertyWidget=WidgetFactory::getInstance()->buildPropertiesWidget();
     propdock->setWidget(_propertyWidget);
@@ -93,9 +97,16 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 
 
     QDockWidget * navdock = new QDockWidget(tr("Navigator"), this);
+    propdock->setObjectName("DockNavigator");
     navdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     navdock->setWidget(new ViewNavigator(_streamView,this));
     addDockWidget(Qt::RightDockWidgetArea, navdock);
+
+
+    QSettings settings;
+    restoreGeometry(settings.value("geometry").toByteArray());
+    restoreState(settings.value("windowState").toByteArray());
+
 }
 /** @brief sur new stream */
 void MainWindow::onNewStream() {
@@ -180,6 +191,9 @@ void MainWindow::onWizard(){
 //}
 /** @brief sur close event */
 void MainWindow::closeEvent(QCloseEvent *event) {   
+    QSettings settings;
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
     _streamTreeModel->setStreamControler(0);
     _iaTreeModel->setStreamControler(0);
     delete _streamControler;

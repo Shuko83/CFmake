@@ -41,6 +41,7 @@ class TestComponent : public SwComponent_Class,
     Q_PROPERTY(StreamWork::SwCore::SwEnum test READ getTest WRITE setTest)
     Q_PROPERTY(QString testString READ getTestText WRITE setTestText)
     Q_PROPERTY(StreamWork::SwCore::SwFileDescriptor recordConfiguration READ getRecordConfiguration WRITE setRecordConfiguration)
+    Q_PROPERTY(QColor testColor READ getTestColor WRITE setTestColor)
 protected:
 
 	//--------------------------------------------------------------
@@ -62,6 +63,8 @@ protected:
     QString _testString;
     /* @brief configuration */
     SwFileDescriptor _configuration;
+
+    QColor testColor;
  	//--------------------------------------------------------------
 	//Handle interfaces
 	//--------------------------------------------------------------
@@ -104,6 +107,8 @@ public:
     /** @brief recordConfiguration */
     SwFileDescriptor getRecordConfiguration() const;
     void setRecordConfiguration(const SwFileDescriptor & val);
+    QColor getTestColor() const;
+    void setTestColor(QColor val);
     //---------------------------------------------------------------------
     // Interface ISwServiceOwnerConfigurable
     //---------------------------------------------------------------------
