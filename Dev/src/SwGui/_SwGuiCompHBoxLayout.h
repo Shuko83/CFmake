@@ -14,6 +14,7 @@
   */
 #include <QMap>
 #include <QHBoxLayout>
+#include <QSpacerItem>
  /*
   * INCLUDES LOCAUX
   */
@@ -35,6 +36,9 @@ using namespace StreamWork::SwGui;
 */
 class _SwGuiCompHBoxLayout : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwLayout
 {
+    Q_OBJECT
+
+    Q_PROPERTY(bool Spacer_enable READ getEnableSpacer WRITE setEnableSpacer)
 protected:
     /* menu */
     QHBoxLayout * _layout;
@@ -69,6 +73,9 @@ protected:
     ISwLayout * _tmp_handle_layout;
     /* map des interfaces widgets*/
     QMap<QString,ISwLayout *> _layouts;
+    //Spacer
+    bool _enableSpacer;
+    QSpacerItem * _spacer;
     // --- Commun ---
     //Ordered building list
     QList<QString> _ordered_childrens;
@@ -85,6 +92,10 @@ public:
     virtual void InitializeResources() throw(SwException);
      /*! \brief Callback sur les changements de propriétés*/
     void OnPropertyChange(ISwProperty * property);
+    /*! \brief getter*/
+    bool getEnableSpacer();
+    /*! \brief setter*/
+    void setEnableSpacer(bool enable);
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------

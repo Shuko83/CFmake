@@ -31,6 +31,8 @@ _SwGuiCompVBoxLayout::_SwGuiCompVBoxLayout(): SwComponent_Class(){
     _nb_childs=0;
     _margin=0;
     _spacing=6;
+    _enableSpacer=false;
+    _spacer=new QSpacerItem(20,20,QSizePolicy::Expanding,QSizePolicy::Expanding);
 }
 /*! \brief Destructeur */
 _SwGuiCompVBoxLayout::~_SwGuiCompVBoxLayout(){
@@ -44,6 +46,8 @@ _SwGuiCompVBoxLayout::~_SwGuiCompVBoxLayout(){
     delete _properties_service;
     if (_layout!=NULL) 
         delete _layout;
+    if (_spacer!=NULL) 
+        delete _spacer;
 }
 
 /*! \brief Initialisation des ressources
@@ -97,6 +101,9 @@ void _SwGuiCompVBoxLayout::InitializeResources() throw(SwException) {
 
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiVBoxLayout done\n"));
 
+    //Spacer
+    _properties_service->CreatePropertiesForQObject(this,QString(),true);
+
 }
 /*! \brief Callback sur les changements de propriétés*/
 void _SwGuiCompVBoxLayout::OnPropertyChange(ISwProperty * property) {
@@ -146,6 +153,24 @@ void _SwGuiCompVBoxLayout::OnPropertyChange(ISwProperty * property) {
     }
 
 }
+/*! \brief getter*/
+bool _SwGuiCompVBoxLayout::getEnableSpacer() {
+    return _enableSpacer;
+}
+/*! \brief setter*/
+void _SwGuiCompVBoxLayout::setEnableSpacer(bool enable) {
+    if (_enableSpacer==enable)
+        return;
+    _enableSpacer=enable; 
+    if (_layout!=NULL) {
+        if (_enableSpacer) {
+            _layout->addSpacerItem(_spacer);
+        } else {
+            _layout->removeItem(_spacer); 
+        }
+    }
+}
+
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
@@ -198,8 +223,13 @@ void _SwGuiCompVBoxLayout::AfterInterfaceAvailabilityChange(QString interface_na
     widget_it=_widgets.find(interface_name);
     if (interface_header==QString("W") && widget_it==_widgets.end()  && _tmp_handle_widget!=NULL) {
         _widgets.insert(interface_name,_tmp_handle_widget);
-        if (_layout!=NULL) 
-            _layout->addWidget(&_tmp_handle_widget->GetWidget());
+        if (_layout!=NULL) {
+            if (_enableSpacer) {
+                _layout->insertWidget(_layout->count()-1,&_tmp_handle_widget->GetWidget());
+            } else {
+                _layout->addWidget(&_tmp_handle_widget->GetWidget());
+            }
+        }
         _nb_childs++;
         _ordered_childrens.push_back(interface_name);
         return;
@@ -208,8 +238,13 @@ void _SwGuiCompVBoxLayout::AfterInterfaceAvailabilityChange(QString interface_na
     layout_it=_layouts.find(interface_name);
     if (interface_header==QString("L") && layout_it==_layouts.end() && _tmp_handle_layout!=NULL) {
         _layouts.insert(interface_name,_tmp_handle_layout);
-        if (_layout!=NULL) 
-            _layout->addLayout(&_tmp_handle_layout->GetLayout());
+        if (_layout!=NULL) {
+            if (_enableSpacer) {
+                _layout->insertLayout(_layout->count()-1,&_tmp_handle_layout->GetLayout());
+            } else {
+                _layout->addLayout(&_tmp_handle_layout->GetLayout());
+            }
+        }
         _nb_childs++;
         _ordered_childrens.push_back(interface_name);
         return;
@@ -249,6 +284,12 @@ QLayout & _SwGuiCompVBoxLayout::GetLayout(){
                 _layout->addLayout(&layout_it.value()->GetLayout());
             } 
         }
+        //Spacer
+        if (_enableSpacer) {
+            _layout->addSpacerItem(_spacer);
+        } else {
+            _layout->removeItem(_spacer); 
+        }
     }
     return *_layout;
 
@@ -259,11 +300,13 @@ void _SwGuiCompVBoxLayout::LiberateLayout(){
     QMap<QString,ISwLayout *>::iterator layout_it;
 
     for(widget_it=_widgets.begin();widget_it!=_widgets.end();widget_it++) {
-        QWidget * widget=&widget_it.value()->GetWidget();
         widget_it.value()->GetWidget().setParent(NULL);     
     }
     for(layout_it=_layouts.begin();layout_it!=_layouts.end();layout_it++) {
         layout_it.value()->LiberateLayout();   
+    }
+    if (_enableSpacer) {
+        _layout->removeItem(_spacer); 
     }
     delete _layout;
     _layout=NULL;
