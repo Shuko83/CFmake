@@ -68,6 +68,8 @@ protected:
     virtual QVariant itemChange ( GraphicsItemChange change, const QVariant & value );
     /** @brief sur release sourie */
     virtual void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+    /** @brief sur double click */
+    virtual void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
     /** @brief arrange des connecteurs */
     void arrangeConnectors();
 private:

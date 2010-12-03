@@ -10,7 +10,7 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 /** @brief Constructor */
-PropertiesWidget::PropertiesWidget():QWidget(0) {
+PropertiesWidget::PropertiesWidget():QWidget(0),_pixmapTextColor(10,10),_pixmapBgColor(10,10) {
     //setWindowOpacity(0.9);
     setEnabled(false);
     setWindowModality(Qt::ApplicationModal);
@@ -18,17 +18,26 @@ PropertiesWidget::PropertiesWidget():QWidget(0) {
     formLayout = new QGridLayout (this);
     formLayout->setSpacing(5);
     formLayout->setMargin(2);
-    formLayout->addWidget(new QLabel("Name:",this),1,0);
+    formLayout->addWidget(new QLabel("Name:",this),1,0,Qt::AlignRight);
     _nameEdit=new QLineEdit(this);
     connect(_nameEdit,SIGNAL(textChanged ( const QString &)),this,SLOT(nameChanged ( const QString &)));
     connect(_nameEdit,SIGNAL(editingFinished ()),this,SLOT(nameChangedAndValid()));
-    formLayout->addWidget(_nameEdit,1,1);
+    formLayout->addWidget(_nameEdit,1,1,1,4);
+    _buttonTextColor=new QPushButton(this);
+    connect(_buttonTextColor,SIGNAL(clicked()),this,SLOT(onTextColorClick()));
+    _buttonBgColor=new QPushButton(this);
+    connect(_buttonBgColor,SIGNAL(clicked()),this,SLOT(onColorClick()));
+    formLayout->addWidget(new QLabel("Text color:",this),2,0,Qt::AlignRight);
+    formLayout->addWidget(_buttonTextColor,2,1);
+    formLayout->addWidget(new QLabel("Header color:",this),2,2,Qt::AlignRight);
+    formLayout->addWidget(_buttonBgColor,2,3);
+    formLayout->addItem(new QSpacerItem(10,10,QSizePolicy::Expanding),2,4);
     _pModel=new SwPropertiesModelImpl(this);
     _pView=new QTreeView(this);
     _pView->setAlternatingRowColors(true);
     _pView->setItemDelegate(new SwGuiDefaultItemDelegate(this));
     _pView->setModel(_pModel);
-    formLayout->addWidget(_pView,2,0,1,2);
+    formLayout->addWidget(_pView,3,0,1,5);
     _cgi=0;
 }
 /** @brief Composant en cours d'edition*/
@@ -43,9 +52,15 @@ void PropertiesWidget::setSelectedGraphicComponent(ComponentGraphicItem * cgi) {
         _pModel->SetProperties(dynamic_cast<ISwProperties *>(cgi->getComponent()->QueryService(CG_SW_SERVICE_PROPERTIES)));
         _pView->expandAll();
         _pView->setColumnWidth(0,200);
+        setTextColorToButton(cgi->getTextColor());
+        setBgColorToButton(cgi->getColor());
         setEnabled(true);
     } else {
         _nameEdit->setText("");
+        _buttonTextColor->setIcon(QIcon());
+        _buttonTextColor->setText("");
+        _buttonBgColor->setIcon(QIcon());
+        _buttonBgColor->setText("");
         setEnabled(false);
     }
     _cgi=cgi;
@@ -80,4 +95,32 @@ void PropertiesWidget::nameChangedAndValid() {
     if (achild==0 && component->CheckNameValidity(_nameEdit->text())) {
         component->SetName(_nameEdit->text());
     }
+}
+/** @brief on color click */
+void PropertiesWidget::onColorClick() {
+    _cgi->setColor(QColorDialog::getColor (_cgi->getColor(),0));
+    setBgColorToButton(_cgi->getColor());
+}
+/** @brief on text color click */
+void PropertiesWidget::onTextColorClick() {
+    _cgi->setTextColor(QColorDialog::getColor (_cgi->getTextColor(),0));
+    setTextColorToButton(_cgi->getTextColor());
+}
+/** @brief change la couleur du bouton */
+void PropertiesWidget::setTextColorToButton(const QColor & color) {
+    _pixmapTextColor.fill(color);
+    QPainter p(&_pixmapTextColor);
+    p.setPen(QPen(QColor(Qt::black)));
+    p.drawRect(QRect(0,0,_pixmapTextColor.width()-1,_pixmapTextColor.height()-1));
+    _buttonTextColor->setIcon(QIcon(_pixmapTextColor));
+    _buttonTextColor->setText(color.name().toUpper());
+}
+/** @brief change la couleur du bouton */
+void PropertiesWidget::setBgColorToButton(const QColor & color) {
+    _pixmapBgColor.fill(color);
+    QPainter p(&_pixmapBgColor);
+    p.setPen(QPen(QColor(Qt::black)));
+    p.drawRect(QRect(0,0,_pixmapBgColor.width()-1,_pixmapBgColor.height()-1));
+    _buttonBgColor->setIcon(QIcon(_pixmapBgColor));
+    _buttonBgColor->setText(color.name().toUpper());
 }

@@ -14,6 +14,9 @@
 #include <ISwExecution_Service.h>
 #include "ConnectorGraphicItem.h"
 
+#define HEADER_COLOR QColor(0,0,128)
+#define TEXT_COLOR QColor(255,255,255)
+
 
 class StreamControler;
 /**
@@ -68,6 +71,8 @@ protected:
     virtual QVariant itemChange ( GraphicsItemChange change, const QVariant & value );
     /** @brief sur release sourie */
     virtual void mouseReleaseEvent ( QGraphicsSceneMouseEvent * event );
+    /** @brief sur double click */
+    virtual void mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event );
     /** @brief arrange des connecteurs */
     void arrangeConnectors();
 private:

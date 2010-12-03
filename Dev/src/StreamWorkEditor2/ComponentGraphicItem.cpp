@@ -8,6 +8,7 @@
 #include "GraphicsResources.h"
 #include "StreamControler.h"
 #include "ISwSupportReplay.h"
+#include "ISwAdminSetup.h"
 
 #define CL_RADUIS 10.0
 
@@ -26,14 +27,14 @@ ComponentGraphicItem::ComponentGraphicItem(SwComponent_Class * component,StreamC
     setFlag(ItemSendsGeometryChanges);
 #endif
     setToolTip(component->GetName());
-    _headerBrush=QBrush(QColor(0,0,128));
+    _headerBrush=QBrush(HEADER_COLOR);
     _bodyBrush=QBrush(QColor(64,64,64,100));
     _pen=QPen(QColor(128,128,128));
     _pen.setJoinStyle(Qt::RoundJoin);
     _selected_pen=QPen(QColor(250,250,0));
     _selected_pen.setWidthF(2.2);
     _selected_pen.setJoinStyle(Qt::RoundJoin);
-    _text_pen=QPen(QColor(255,255,255));
+    _text_pen=QPen(TEXT_COLOR);
     _icone=GraphicsResources::getInstance()->getComponentIcon(component);
     _bbox=QRectF();
     updateAttributs();
@@ -345,6 +346,16 @@ void ComponentGraphicItem::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event 
     QGraphicsItem::mouseReleaseEvent(event);
     _controler->streamControlerChanged();
 }
+/** @brief sur double click */
+void ComponentGraphicItem::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event ) {
+    QGraphicsItem::mouseDoubleClickEvent(event);
+    ISwAdminSetup * admin=
+                dynamic_cast<ISwAdminSetup *>(_component);
+    if(admin!=0) {
+        admin->AdminSetup();    
+    }
+}
+
 /** @brief updateLinks */
 void ComponentGraphicItem::updateLinks() {
     QList<QGraphicsItem *> lchilds=childItems();

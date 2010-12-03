@@ -44,6 +44,8 @@ public slots:
     void onRearrange();
     /** @brief sur nouvelle fenetre */
     void onNewWindow();
+    /** @brief sur print */
+    void onPrint();
 
 protected:
     /** @brief sur close event */

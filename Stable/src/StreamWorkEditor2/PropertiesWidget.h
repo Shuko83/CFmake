@@ -32,6 +32,16 @@ public slots:
     void nameChanged ( const QString & text );
     /** @brief sur fin changement du nom */
     void nameChangedAndValid ();
+    /** @brief on color click */
+    void onColorClick();
+    /** @brief on text color click */
+    void onTextColorClick();
+
+private:
+    /** @brief change la couleur du bouton */
+    void setTextColorToButton(const QColor & color);
+    /** @brief change la couleur du bouton */
+    void setBgColorToButton(const QColor & color);
 private:
     /** @brief Composant en cours d'edition*/
     ComponentGraphicItem * _cgi;
@@ -41,6 +51,14 @@ private:
     QTreeView * _pView;
     /** @brief name editor */
     QLineEdit * _nameEdit;
+    /** @brief text pixmap color*/
+    QPixmap _pixmapTextColor;
+    /** @brief backgroung pixmap color */
+    QPixmap _pixmapBgColor;
+    /** @brief button for text pixmap color*/
+    QPushButton * _buttonTextColor;
+    /** @brief button for backgroung pixmap color */
+    QPushButton * _buttonBgColor;
 };
 
 #endif

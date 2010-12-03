@@ -3,7 +3,8 @@
 @brief Fenetre principale
 @author F.Bighelli
  */
-
+#include <QPrinter>
+#include <QPrintDialog>
 #include <QFileInfo>
 #include <QSettings>
 #include "MainWindow.h" 
@@ -34,6 +35,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
     streamMenu->addAction("Save As",this,SLOT(onSaveAsStream()));
     streamMenu->addSeparator();
     streamMenu->addAction("New Editor",this,SLOT(onNewWindow()));
+    streamMenu->addAction("Print",this,SLOT(onPrint()),Qt::CTRL + Qt::Key_P);
     streamMenu->addAction(&_wizard->GetAction());
     //streamMenu->addSeparator();
     //streamMenu->addAction("Quit",this,SLOT(onQuit()),Qt::CTRL + Qt::Key_Q);
@@ -119,6 +121,8 @@ void MainWindow::onNewStream() {
     _streamControler->setView(_streamView);
     _streamTreeModel->setStreamControler(_streamControler);
     _iaTreeModel->setStreamControler(_streamControler);
+    _streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
+    _streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
     setWindowTitle("StreamWorkEditor V2");
 }
 /** @brief sur load stream */
@@ -149,6 +153,8 @@ void MainWindow::onLoadStream(){
         _streamControler->loadStream(*it);
         _streamTreeModel->setStreamControler(_streamControler);
         _iaTreeModel->setStreamControler(_streamControler);
+        _streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
+        _streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
         setWindowTitle(fi.fileName()+ " - " + fi.filePath());
     }
 }
@@ -221,4 +227,14 @@ void MainWindow::onNewWindow() {
     //qApp->connect(qApp, SIGNAL(lastWindowClosed()), window, SLOT(onQuit()));
     window->onNewStream();
     window->showMaximized();
+}
+/** @brief sur print */
+void MainWindow::onPrint() {
+
+    QPrinter printer;
+    if (QPrintDialog(&printer).exec() == QDialog::Accepted) {
+        QPainter painter(&printer);
+        painter.setRenderHint(QPainter::Antialiasing);
+        _streamControler->getScene()->render(&painter);
+    }
 }

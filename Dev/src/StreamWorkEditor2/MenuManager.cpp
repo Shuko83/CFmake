@@ -6,6 +6,7 @@
 
 #include "MenuManager.h"
 
+#include <QColorDialog>
 #include <SwApplication.h>
 #include <SwMacros.h>
 #include <ISwInterfaces_Consumer.h>
@@ -31,6 +32,9 @@ MenuManager::MenuManager():QObject() {
     _disableSelectionChanged=false;
     _streamControler=0;
     menuNeedBeRebuild=true;
+    _copyTextColor=TEXT_COLOR;
+    _copyBgColor=HEADER_COLOR;
+
 
 }
 /** @brief Destructor */
@@ -103,20 +107,7 @@ void MenuManager::rebuildMenu() {
             }
         }
     }
-    if (_gwList.count()>0 || _iaList.count()>0) {
-        _contextualMenu->addAction("Remove",this,SLOT(onRemove()));
-    }
-    if (_lkList.count()>0) {
-        _contextualMenu->addAction("Disconnect",this,SLOT(onDisconnect()));
-    }
-    if (_exeList.count()>0) {
-        _contextualMenu->addAction("Start",this,SLOT(onStartExecution()));
-        _contextualMenu->addAction("Stop",this,SLOT(onStopExecution()));
-    }
-    if (_adminList.count()>0) {
-        _contextualMenu->addAction("Setup",this,SLOT(onSetup()));
-    }
-    _contextualMenu->addAction("Add interest area",this,SLOT(onAddInterestArea()));
+    buildMenuForContext(_contextualMenu);
     menuNeedBeRebuild=false;
 }
 
@@ -132,26 +123,38 @@ QMenu * MenuManager::buildContextMenu(const QPointF & pos) {
         _contextualMenu=tmp;
         _contextualMenu->clear();
     } 
+    buildMenuForContext(_contextualMenu);
+    return _contextualMenu;
+}
+/** @brief buildMenuForContext() */
+void MenuManager::buildMenuForContext(QMenu * menu) {
     if (_gwList.count()>0 || _iaList.count()>0) {
-        _contextualMenu->addAction("Remove",this,SLOT(onRemove()));
+        menu->addAction("Remove",this,SLOT(onRemove()));
     }
     if (_lkList.count()>0) {
-        _contextualMenu->addAction("Disconnect",this,SLOT(onDisconnect()));
+        menu->addAction("Disconnect",this,SLOT(onDisconnect()));
     }
     if (_exeList.count()>0) {
-        _contextualMenu->addAction("Start",this,SLOT(onStartExecution()));
-        _contextualMenu->addAction("Stop",this,SLOT(onStopExecution()));
+        menu->addAction("Start",this,SLOT(onStartExecution()));
+        menu->addAction("Stop",this,SLOT(onStopExecution()));
     }
     if (_adminList.count()>0) {
-        _contextualMenu->addAction("Setup",this,SLOT(onSetup()));
+        menu->addAction("Setup",this,SLOT(onSetup()));
     }
     if (_gwList.count()>0) {
-        _contextualMenu->addAction("Activate",this,SLOT(onActivated()));
-        _contextualMenu->addAction("DesActivate",this,SLOT(onDeActivated()));
+        menu->addAction("Activate",this,SLOT(onActivated()));
+        menu->addAction("DesActivate",this,SLOT(onDeActivated()));
     }
-
-    _contextualMenu->addAction("Add interest area",this,SLOT(onAddInterestArea()));
-    return _contextualMenu;
+    if (_gwList.count()==1) {
+        menu->addAction("Copy style",this,SLOT(onCopyStyle()));
+    }
+    if (_gwList.count()>0) {
+        menu->addAction("Paste style",this,SLOT(onPasteStyle()));
+    }
+    if (_gwList.count()==0 && _lkList.count()==0) {
+        menu->addAction("Add interest area",this,SLOT(onAddInterestArea()));
+        menu->addAction("Change background",this,SLOT(onChangeBackGroundColor()));
+    }
 }
 /** @brief sur remove */
 void MenuManager::onRemove() {
@@ -254,4 +257,24 @@ void MenuManager::onDeActivated() {
         _gwList[i]->getComponent()->setActive(false);
     }
     _streamControler->getScene()->update();
+}
+/** @brief on copy style */
+void MenuManager::onCopyStyle() {
+    ComponentGraphicItem * cg=_gwList[0];
+    _copyTextColor=cg->getTextColor();
+    _copyBgColor=cg->getColor();
+}
+/** @brief on paste style */
+void MenuManager::onPasteStyle() {
+    for(int i=0;i<_gwList.count();i++) {
+        _gwList[i]->setTextColor(_copyTextColor);
+        _gwList[i]->setColor(_copyBgColor);
+    }
+}
+/** @brief on change background color */
+void MenuManager::onChangeBackGroundColor() {
+    QColor c=_streamControler->getView()->backgroundBrush().color();
+    c=QColorDialog::getColor(c,0,"Select background color");
+    _streamControler->getScene()->setBackgroundBrush(QBrush(c));
+    _streamControler->getView()->setBackgroundBrush(QBrush(c));
 }
