@@ -38,7 +38,7 @@ public slots:
     void onSelectedPluginChanged(const QModelIndex & index);
 private:
     /** @brief Liste des composants */
-    QList<QString> _cList;
+    QStringList _cList;
     /** @brief related plugin */
     StreamWork::SwCore::SwPluginFactory_Class * _plugin;
 };

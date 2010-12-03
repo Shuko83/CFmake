@@ -10,7 +10,18 @@ using namespace StreamWork::SwCore;
 
 /** @brief Constructor */
 PluginsListModel::PluginsListModel(QObject * parent):QAbstractListModel(parent) {
-	_pList=SW_APP->ComponentsBank().GetAllPlugins();
+	QMap<QString,StreamWork::SwCore::SwPluginFactory_Class *> *tmpList=SW_APP->ComponentsBank().GetAllPlugins();
+    _pList=new QMap<QString,StreamWork::SwCore::SwPluginFactory_Class *>();
+    QMap<QString,SwPluginFactory_Class *>::iterator it=tmpList->begin();
+    while(it!=tmpList->end()) {
+        _pList->insert(it.key().toLower(),it.value());
+        it++;
+    }
+
+}
+/** @brief Destructor */
+PluginsListModel::~PluginsListModel() {
+    delete _pList;
 }
 /** @brief rowCount */
 int PluginsListModel::rowCount ( const QModelIndex & parent) const {
@@ -33,6 +44,12 @@ QVariant PluginsListModel::data ( const QModelIndex & index, int role) const {
         if (finsuffix>0) {
             pname.truncate(finsuffix);
         }
+        return QVariant(QString(pname));
+    }
+    if (role == Qt::ToolTipRole) {
+        it=_pList->begin();
+        it+=index.row();
+        QString pname=(*it)->GetPath();
         return QVariant(QString(pname));
     }
     return QVariant();

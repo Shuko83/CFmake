@@ -72,6 +72,7 @@ void ComponentListModel::onSelectedPluginChanged(const QModelIndex & index) {
     if (index.isValid()) {
         _plugin=static_cast<SwPluginFactory_Class *>(index.internalPointer());
         _cList=_plugin->GetComponentsList().toList();
+        _cList.sort();
         reset();
     } else {
         _plugin=0;

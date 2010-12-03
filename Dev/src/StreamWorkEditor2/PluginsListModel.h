@@ -20,6 +20,8 @@ class PluginsListModel : public QAbstractListModel {
 public:
 	/** @brief Constructor */
 	PluginsListModel( QObject * parent = 0);
+	/** @brief Destructor */
+	~PluginsListModel();
     /** @brief rowCount */
     virtual int rowCount ( const QModelIndex & parent = QModelIndex() ) const; 
 	/** @brief index */
@@ -30,6 +32,8 @@ public:
 private:
     /** @brief map des plugins */
     QMap<QString,StreamWork::SwCore::SwPluginFactory_Class *> * _pList;
+    /** @brief list des noms de plugins */
+    QStringList _nList; 
 };
 
 #endif

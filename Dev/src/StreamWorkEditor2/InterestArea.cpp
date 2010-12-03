@@ -18,6 +18,9 @@ InterestArea::InterestArea(StreamControler * controler) {
     _color=QColor(QColor("#888888"));
     _text=new QGraphicsTextItem(this);
     _text->setPlainText("(click to edit)");
+    QFont font=_text->font();
+    font.setPointSize(18);
+    _text->setFont(font);
     _text->setPos(QPointF());
     _text->setTextInteractionFlags(Qt::TextEditable);
     _text->setDefaultTextColor(QColor("#FFFFFF"));
