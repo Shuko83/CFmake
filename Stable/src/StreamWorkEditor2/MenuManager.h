@@ -50,6 +50,12 @@ public slots:
     void onActivated();
 	/** @brief activated */
     void onDeActivated();
+	/** @brief on copy style */
+    void onCopyStyle();
+	/** @brief on paste style */
+    void onPasteStyle();
+	/** @brief on change background color */
+    void onChangeBackGroundColor();
 private:
 	/** @brief Constructor */
 	MenuManager();
@@ -57,7 +63,8 @@ private:
 	~MenuManager();
 	/** @brief rebuildMenu() */
 	void rebuildMenu();
-
+	/** @brief buildMenuForContext() */
+    void buildMenuForContext(QMenu * menu);
 private:
     /** @brief Menu */
     QMenu * _menu;
@@ -83,6 +90,9 @@ private:
     QPointF _menuPosition;
     /** @brief Le menu a besoin d'etre reconstruit*/
     bool menuNeedBeRebuild;
+    /** @brief Color copied*/
+    QColor _copyTextColor;
+    QColor _copyBgColor;
 };
 
 #endif

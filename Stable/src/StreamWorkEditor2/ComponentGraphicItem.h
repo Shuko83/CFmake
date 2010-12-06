@@ -14,6 +14,9 @@
 #include <ISwExecution_Service.h>
 #include "ConnectorGraphicItem.h"
 
+#define HEADER_COLOR QColor(0,0,128)
+#define TEXT_COLOR QColor(255,255,255)
+
 
 class StreamControler;
 /**
