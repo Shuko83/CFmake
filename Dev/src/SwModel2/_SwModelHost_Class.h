@@ -13,6 +13,7 @@
   * INCLUDES GLOBAUX
   */
 #include <QList>
+#include <QMap>
 /*
   * INCLUDES LOCAUX
   */
@@ -32,6 +33,16 @@
 #define CG_SW_SERVICE_MODELHOST "MODELHOST"
 
 using namespace StreamWork::SwCore;
+
+class TargetInterface {
+public:
+    QString provider;
+    QString name;
+    TargetInterface(QString provider,QString name) {
+        this->provider=provider;
+        this->name=name;
+    }
+};
 
 /*!
 	\class _SwModelHost_Class 
@@ -54,6 +65,11 @@ protected:
     SwComponent_Class * _model;
 
     quint64 h_index;
+
+    /* Last Providers */
+    QMap<QString,TargetInterface *> _lastProviders;
+    /* Last Providers */
+    QMap<QString,QList<TargetInterface *>> _lastConsumers;
 public:
     /*! \brief Constructeur */
     _SwModelHost_Class();

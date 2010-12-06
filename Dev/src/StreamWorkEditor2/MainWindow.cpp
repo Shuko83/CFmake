@@ -14,6 +14,7 @@
 #include "WidgetFactory.h"
 #include "ViewNavigator.h"
 #include "LogView.h"
+#include "ISwPluginOverview.h"
 
 static int nbWindows=0;
 
@@ -109,6 +110,10 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
     restoreGeometry(settings.value("geometry").toByteArray());
     restoreState(settings.value("windowState").toByteArray());
 
+    _statusWidget=new QLineEdit(this);
+    _statusWidget->setReadOnly(true);
+    statusBar()->addPermanentWidget(_statusWidget,100);
+    _statusWidget->setText("Ready");
 }
 /** @brief sur new stream */
 void MainWindow::onNewStream() {
@@ -123,6 +128,7 @@ void MainWindow::onNewStream() {
     _iaTreeModel->setStreamControler(_streamControler);
     _streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
     _streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
+    _streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
     setWindowTitle("StreamWorkEditor V2");
 }
 /** @brief sur load stream */
@@ -144,6 +150,7 @@ void MainWindow::onLoadStream(){
         QFileInfo fi(*it);
         settings.setValue("EditorDirectory",QVariant(fi.filePath()));
         if (_streamControler!=0) {
+            _streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
             _streamTreeModel->setStreamControler(0);
             _iaTreeModel->setStreamControler(0);
            delete _streamControler;
@@ -155,6 +162,7 @@ void MainWindow::onLoadStream(){
         _iaTreeModel->setStreamControler(_streamControler);
         _streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
         _streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
+        _streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
         setWindowTitle(fi.fileName()+ " - " + fi.filePath());
     }
 }
@@ -236,5 +244,20 @@ void MainWindow::onPrint() {
         QPainter painter(&printer);
         painter.setRenderHint(QPainter::Antialiasing);
         _streamControler->getScene()->render(&painter);
+    }
+}
+ /** @brief sur selection */
+void MainWindow::setSelection(QList<StreamWork::SwCore::SwComponent_Class *> & sel) {
+    if (sel.count()!=1)
+        return;
+    qDebug(sel[0]->GetFactoryComponentName().toLatin1().data());
+    _statusWidget->setText(sel[0]->GetFactoryComponentName());
+
+    ISwService * service=sel[0]->QueryService(CG_SW_SERVICE_PLUGIN_OVERVIEW);
+    if (service!=NULL && dynamic_cast<ISwPluginOverview *>(service)!=NULL) {
+        ISwPluginOverview * poverview=dynamic_cast<ISwPluginOverview *>(service);
+        QString texte=sel[0]->GetFactoryComponentName()+ " [Factory: "+poverview->GetPath()+"/"+poverview->GetPluginName()+ "] [Version:"+ poverview->GetPluginVersion() +"]";
+        _statusWidget->setText(texte);
+        _statusWidget->repaint();
     }
 }

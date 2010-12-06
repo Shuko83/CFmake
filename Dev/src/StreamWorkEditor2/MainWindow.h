@@ -14,12 +14,12 @@
 #include "QInterestAreaTreeModel.h"
 #include "SwWizardFrontEnd.h"
 #include "PropertiesWidget.h"
-
+#include "ISelectionObserver.h"
 /**
 @class MainWindow
 @brief Fenetre principale
 */
-class MainWindow : public QMainWindow{
+class MainWindow : public QMainWindow , public ISelectionObserver{
     Q_OBJECT
 public:
 	/** @brief Constructor */
@@ -46,7 +46,8 @@ public slots:
     void onNewWindow();
     /** @brief sur print */
     void onPrint();
-
+     /** @brief sur selection */
+    virtual void setSelection(QList<StreamWork::SwCore::SwComponent_Class *> & sel);
 protected:
     /** @brief sur close event */
     virtual void MainWindow::closeEvent(QCloseEvent *event);
@@ -63,6 +64,8 @@ private:
     QInterestAreaTreeModel * _iaTreeModel;
     /** @brief PropertyWidget */
     PropertiesWidget *_propertyWidget;
+    /** @brief status label */
+    QLineEdit *_statusWidget;
 };
 
 #endif

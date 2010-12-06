@@ -9,6 +9,7 @@
 #include "_SwModelExportedInterfaceP.h"
 #include "_SwModel_Class.h"
 #include "_SwModelHost_Class.h"
+#include "SwAddress_ToolBox.h"
 
 /*! \brief Constructeur */
 _SwModelExportedInterfaceP::_SwModelExportedInterfaceP():_SwModelExportedEntity() {
@@ -22,6 +23,23 @@ _SwModelExportedInterfaceP::_SwModelExportedInterfaceP():_SwModelExportedEntity(
 /*! \brief Destructeur */
 _SwModelExportedInterfaceP::~_SwModelExportedInterfaceP() {
 
+}
+/*! \brief acces au path du producteur */
+QString _SwModelExportedInterfaceP::getProviderPath() {
+    return _lastPath;
+}
+/*! \brief acces au nom de l'interface du producteur */
+QString _SwModelExportedInterfaceP::getInterfaceName() {
+    return _lastInterface;
+}
+/*! \brief connectTo a un producteur*/
+void _SwModelExportedInterfaceP::connectInterfaceTo(QString path,QString name) {
+    SwComponent_Class * provider_host=SwAddress_ToolBox::FindTarget(path,_model_host);
+    if (provider_host==NULL) {
+        return;
+    }
+    SwInterfaces_Provider_Class * lprovider=dynamic_cast<SwInterfaces_Provider_Class *>(provider_host->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER)); 
+    _internal_consumer->AttachProvider(lprovider,_exported_name,name);
 }
 /*! \brief Effectue la construction */
 void _SwModelExportedInterfaceP::SpecificBuild() {
@@ -112,6 +130,8 @@ void _SwModelExportedInterfaceP::OnDisconnectInterface(ISwInterfaces_Service * s
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwModelExportedInterfaceP::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     if (interface_name==_exported_name &&  _handle!=NULL) {
+        _lastPath=QString();
+        _lastInterface=QString();
         //Rendre l'interface non disponible
         if (_external_provider!=0) 
             _external_provider->SetInterfaceUnavailable(_exported_name+"_");
@@ -119,7 +139,19 @@ void _SwModelExportedInterfaceP::BeforeInterfaceAvailabilityChange(QString inter
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwModelExportedInterfaceP::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
+
     if (interface_name==_exported_name &&  _handle!=NULL) {
+        _lastPath=SwAddress_ToolBox::BuildRelativePath(_model_host,provider_host);
+        ISwInterfaces_Provider * _provider=NULL;
+        QString provider_name;
+        QString result=_internal_consumer->GetFirstInterface(NULL,&_provider,&provider_name);
+        while (!result.isEmpty() && result!=interface_name) {
+            _provider=NULL;
+            result=_internal_consumer->GetNextInterface(NULL,&_provider,&provider_name);    
+        }
+        if (_provider!=NULL) {
+            _lastInterface=provider_name;
+        }
         //Rendre l'interface non disponible
          if (_external_provider!=0) 
             _external_provider->SetInterfaceAvailable(_exported_name+"_",_handle);

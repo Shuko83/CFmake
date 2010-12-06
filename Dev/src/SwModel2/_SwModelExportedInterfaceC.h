@@ -10,6 +10,7 @@
 #define __SwModelExportedInterfaceC_H
 
 #include <QString>
+#include <QStringList>
 #include <SwComponent_Class.h>
 #include "_SwModelExportedEntity.h"
 #include <SwInterfaces_Provider_Class.h>
@@ -34,6 +35,10 @@ class _SwModelExportedInterfaceC : public _SwModelExportedEntity, public ISwInte
         void * _handle;
         /*! \brief Indique que l'interface est crée*/
         bool _interface_created;
+        /*! brief last path */
+        QStringList _lastPaths;
+        /*! last interface */
+        QStringList _lastInterfaces;
 	protected:
 	    /*! \brief Specific bind */
 		virtual void SpecificBind();
@@ -48,6 +53,12 @@ class _SwModelExportedInterfaceC : public _SwModelExportedEntity, public ISwInte
 		_SwModelExportedInterfaceC();
 	    /*! \brief Destructeur */
 		virtual ~_SwModelExportedInterfaceC();
+        /*! \brief acces au path des consommateurs */
+        QStringList getConsumerPaths();
+        /*! \brief acces au nom des l'interfaces des consommateurs */
+        QStringList getInterfaceNames();
+        /*! \brief connectTo a des consommateurs*/
+        void connectInterfaceTo(QStringList & paths,QStringList & names);
         //-------------------------------------------------------------------------
         //Interface ISwInterfaces_ServicesListener
         //-------------------------------------------------------------------------

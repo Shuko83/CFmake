@@ -9,6 +9,7 @@
 #include "StreamControler.h"
 #include "ISwSupportReplay.h"
 #include "ISwAdminSetup.h"
+#include "ISwPluginOverview.h"
 
 #define CL_RADUIS 10.0
 
@@ -26,7 +27,13 @@ ComponentGraphicItem::ComponentGraphicItem(SwComponent_Class * component,StreamC
 #if QT_VERSION >= 0x040600
     setFlag(ItemSendsGeometryChanges);
 #endif
-    setToolTip(component->GetName());
+    ISwService * service=component->QueryService(CG_SW_SERVICE_PLUGIN_OVERVIEW);
+    if (service!=NULL && dynamic_cast<ISwPluginOverview *>(service)!=NULL) {
+        ISwPluginOverview * poverview=dynamic_cast<ISwPluginOverview *>(service);
+        QString texte=component->GetFactoryComponentName()+ " [Factory: "+poverview->GetPath()+"/"+poverview->GetPluginName()+ "] [Version:"+ poverview->GetPluginVersion() +"]";
+    } else {
+        setToolTip(component->GetFactoryComponentName());
+    }
     _headerBrush=QBrush(HEADER_COLOR);
     _bodyBrush=QBrush(QColor(64,64,64,100));
     _pen=QPen(QColor(128,128,128));

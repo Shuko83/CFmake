@@ -9,6 +9,7 @@
 #include "_SwModelExportedInterfaceC.h"
 #include "_SwModel_Class.h"
 #include "_SwModelHost_Class.h"
+#include "SwAddress_ToolBox.h"
 
 /*! \brief Constructeur */
 _SwModelExportedInterfaceC::_SwModelExportedInterfaceC():_SwModelExportedEntity() {
@@ -33,6 +34,14 @@ void _SwModelExportedInterfaceC::SpecificBuild() {
 }
 /*! \brief Effectue la destruction */
 void _SwModelExportedInterfaceC::SpecificDestroy() {
+    //recuperation des consumer existants
+    QString name;
+    ISwInterfaces_Consumer * consumer=_internal_provider->GetFirstConsumer(_exported_name+"_",&name);
+    while (consumer!=NULL) {
+        _lastPaths.push_back(SwAddress_ToolBox::BuildRelativePath(_model_host,consumer->GetHostComponent()));
+        _lastInterfaces.push_back(name);
+        consumer=_internal_provider->GetNextConsumer(&name);
+    }
     //Destruction du producteur interne
     _internal_provider->UnregisterProvidedInterface(_exported_name+"_");
     //Fin
@@ -63,7 +72,25 @@ void _SwModelExportedInterfaceC::SpecificUnbind(){
     _external_consumer=NULL;
     _handle=NULL;
 }
-
+/*! \brief acces au path des consommateurs */
+QStringList _SwModelExportedInterfaceC::getConsumerPaths() {
+    return _lastPaths;
+}
+/*! \brief acces au nom des l'interfaces des consommateurs */
+QStringList _SwModelExportedInterfaceC::getInterfaceNames() {
+    return _lastInterfaces;
+}
+/*! \brief connectTo a des consommateurs*/
+void _SwModelExportedInterfaceC::connectInterfaceTo(QStringList & paths,QStringList & names) {
+    for(int i=0;i<paths.count();i++) {
+        SwComponent_Class * consumer_host=SwAddress_ToolBox::FindTarget(paths[i],_model_host);
+        if (consumer_host==NULL) {
+            return;
+        }
+        SwInterfaces_Consumer_Class * consumer=dynamic_cast<SwInterfaces_Consumer_Class *>(consumer_host->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));    
+        consumer->AttachProvider(_internal_provider,names[i],_exported_name+"_");
+    }
+}
 //-------------------------------------------------------------------------
 //Interface ISwInterfaces_ServicesListener
 //-------------------------------------------------------------------------

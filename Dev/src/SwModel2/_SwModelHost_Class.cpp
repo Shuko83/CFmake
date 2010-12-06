@@ -17,6 +17,8 @@
 #include "_SwModel_Class.h"
 #include "_SwModelHostExportSelector.h"
 #include "_SwModelExportedExecutable.h"
+#include "_SwModelExportedInterfaceP.h"
+#include "_SwModelExportedInterfaceC.h"
 
 #define CL_XML_NODE_PROPERTY "property"
 #define CL_XML_NODE_INTERFACE_C "iconsume"
@@ -144,16 +146,88 @@ void _SwModelHost_Class::BuildEntities() {
         DestroyBinding();
     }
     for(int i=0;i<_exported_entities.count();i++) {
-        _exported_entities[i]->Build(this);    
+        _exported_entities[i]->Build(this); 
+        if (_exported_entities[i]->_type==Ent_InterfaceP) {
+            QMap<QString,TargetInterface *>::iterator it=_lastProviders.find(_exported_entities[i]->_exported_name);
+            if (it!=_lastProviders.end()) {
+                _SwModelExportedInterfaceP  * p =dynamic_cast<_SwModelExportedInterfaceP *>(_exported_entities[i]); 
+                p->connectInterfaceTo(it.value()->provider,it.value()->name);
+            }
+        } else if (_exported_entities[i]->_type==Ent_InterfaceC) {
+            QMap<QString,QList<TargetInterface *>>::iterator it=_lastConsumers.find(_exported_entities[i]->_exported_name);
+            if (it!=_lastConsumers.end()) {
+                _SwModelExportedInterfaceC  * c =dynamic_cast<_SwModelExportedInterfaceC *>(_exported_entities[i]); 
+                QList<TargetInterface *> liste=it.value();
+                QStringList consumers;
+                QStringList names;
+                for(int j=0;j<liste.count();j++) {
+                    TargetInterface * tif=liste[j];
+                    consumers.push_back(tif->provider);
+                    names.push_back(tif->name);
+                }
+                c->connectInterfaceTo(consumers,names);
+            }
+        }
     }
+    //Nettoyage
+    QMap<QString,QList<TargetInterface *>>::iterator itc=_lastConsumers.begin();
+    while(itc!=_lastConsumers.end()) {
+        QList<TargetInterface *> liste=itc.value();
+        if (liste.count()>0) {
+            for(int j=0;j<liste.count();j++) {
+                TargetInterface * tif=liste[j];
+                delete tif;
+            }
+            liste.clear();
+        }
+        itc++;
+    } 
+    _lastConsumers.clear();
+    QMap<QString,TargetInterface *>::iterator it=_lastProviders.begin();
+    while(it!=_lastProviders.end()) {
+        delete it.value();
+        it++;
+    }
+    _lastProviders.clear();
+
 }
 /*! \brief Suppression reelle des entites*/
 void _SwModelHost_Class::DestroyEntities() {
     if(_model!=NULL) {
         DestroyBinding();
     }
+    
     for(int i=0;i<_exported_entities.count();i++) {
         _exported_entities[i]->Destroy();    
+        switch(_exported_entities[i]->_type) {
+            case Ent_InterfaceC: {
+                    _SwModelExportedInterfaceC * c=dynamic_cast<_SwModelExportedInterfaceC *>(_exported_entities[i]); 
+                    if (c!=NULL) {
+                        QStringList consumers=c->getConsumerPaths();
+                        QStringList names=c->getInterfaceNames();
+                        QList<TargetInterface *> liste;
+                        for(int j=0;j<consumers.count();j++) {
+                            TargetInterface * tif=new TargetInterface(consumers[j],names[j]);
+                            liste.push_back(tif);
+                        }
+                        _lastConsumers.insert(_exported_entities[i]->_exported_name,liste);
+                    }
+                }
+                break;
+            case Ent_InterfaceP: {
+                    _SwModelExportedInterfaceP  * p =dynamic_cast<_SwModelExportedInterfaceP *>(_exported_entities[i]);
+                    if (p!=NULL) {
+                        QString provider=p->getProviderPath();
+                        if (!provider.isEmpty()) {
+                            TargetInterface * tif=new TargetInterface(provider,p->getInterfaceName());
+                            _lastProviders.insert(_exported_entities[i]->_exported_name,tif);
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
 //---------------------------------------------------------------------
@@ -214,7 +288,6 @@ void _SwModelHost_Class::Load(QDomElement & elt,ISwFinalizerManager & finalizer_
             delete entity;
         }
     }
-    bool result;
     BuildEntities();
 }
 /*! \brief methode permettant de sauver des donnees

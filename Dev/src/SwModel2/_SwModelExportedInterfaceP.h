@@ -34,6 +34,10 @@ class _SwModelExportedInterfaceP : public _SwModelExportedEntity, public ISwInte
         void * _handle;
         /*! \brief Indique que l'interface est crée*/
         bool _interface_created;
+        /*! brief last path */
+        QString _lastPath;
+        /*! last interface */
+        QString _lastInterface;
 	protected:
 	    /*! \brief Specific bind */
 		virtual void SpecificBind();
@@ -48,6 +52,12 @@ class _SwModelExportedInterfaceP : public _SwModelExportedEntity, public ISwInte
 		_SwModelExportedInterfaceP();
 	    /*! \brief Destructeur */
 		virtual ~_SwModelExportedInterfaceP();
+        /*! \brief acces au path du producteur */
+        QString getProviderPath();
+        /*! \brief acces au nom de l'interface du producteur */
+        QString getInterfaceName();
+        /*! \brief connectTo a un producteur*/
+        void connectInterfaceTo(QString path,QString name);
         //-------------------------------------------------------------------------
         //Interface ISwInterfaces_ServicesListener
         //-------------------------------------------------------------------------
