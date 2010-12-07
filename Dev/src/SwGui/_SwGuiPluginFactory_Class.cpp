@@ -29,6 +29,7 @@
 #include "_SwGuiVisualUpdater.h"
 #include "_SwPerspectivesManager.h"
 #include "_SwBasicPerspective.h"
+#include "_SwGuiCompGridLayout.h"
 #include "SwMacros.h"
 
 using namespace StreamWork::SwCore;
@@ -64,6 +65,7 @@ void _SwGuiPluginFactory_Class::Initialize() {
     RegisterComponent("SwGuiVisualUpdater","Visual http updater");
     RegisterComponent("SwPerspectivesManager","PerspectiveManager");
     RegisterComponent("SwBasicPerspective","BasicPerspective");
+    RegisterComponent("SwGuiGridLayout","Grid layout (use QGridLayout)");
 }
 /*! \brief Liberation */
 void _SwGuiPluginFactory_Class::Liberate() {
@@ -131,6 +133,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
     if (name=="SwBasicPerspective") {
         return new _SwBasicPerspective;
     }
+    if (name=="SwGuiGridLayout") {
+        return new _SwGuiCompGridLayout;
+    }
     return NULL;
 }
 /*! \brief acces a l'icone d'un composant
@@ -197,6 +202,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
     }
     if (name=="SwBasicPerspective") {
         return QIcon(":/SwGui/Burn.png");
+    }
+    if (name=="SwGuiGridLayout") {
+        return QIcon(":/SwGui/gridlayout.png");
     }
     return ico;
 }

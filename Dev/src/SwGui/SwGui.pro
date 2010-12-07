@@ -48,7 +48,10 @@ HEADERS += ISwAction.h \
     _SwPerspectivesManager.h \
     SwDefaultPerspective.h \
     _SwPerspectiveButton.h \
-    _SwBasicPerspective.h
+    _SwBasicPerspective.h  \
+    _SwGuiCompGridLayout.h  \
+    _SwGuiCompGridLayoutCell.h  
+    
     
     
 SOURCES += SwGuiDefaultItemDelegate.cpp \
@@ -79,7 +82,9 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
     _SwPerspectivesManager.cpp \
     SwDefaultPerspective.cpp \
     _SwPerspectiveButton.cpp \
-    _SwBasicPerspective.cpp
+    _SwBasicPerspective.cpp  \
+     _SwGuiCompGridLayout.cpp  \
+    _SwGuiCompGridLayoutCell.cpp  
 
 
 FORMS +=
