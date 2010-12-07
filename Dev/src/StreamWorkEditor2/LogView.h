@@ -10,6 +10,7 @@
 #include <QDialog>
 #include <QTimer>
 #include <QMutex>
+#include <QRegexp>
 #include "ui_LogView.h"
 #include "ISwLogRecorder.h"
 /**
@@ -30,11 +31,15 @@ public:
 public slots:
     //Update
     void updateLog();
-
+    /** @brief Sur changement du texte de combo */
+    void onRegexpTextChangeOnFly( const QString & text);
+    /** @brief Sur changement du texte de combo */
+    void onRegexpTextChange( const QString & text);
+    //clear
+    void clearLog();
 protected:
     /** @brief Constructor */
     LogView();
-    
 private:
     //Here private members
     Ui_Dialog ui;
@@ -42,6 +47,9 @@ private:
     QTimer _timer;
     QMutex _mutex;
     QStringList _msgs;
+    QRegExp _regexp;
+    QString _regentry;
+    QStringList _content;
 };
 
 #endif
