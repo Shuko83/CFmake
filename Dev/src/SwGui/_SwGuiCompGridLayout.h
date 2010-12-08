@@ -10,6 +10,7 @@
 #include <Component.h>
 
 #include "ISwLayout.h"
+#include "_SwGuiCompGridLayoutCell.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -36,6 +37,12 @@ public:
 	virtual void LiberateLayout();
     /*! \brief Initialisation du composant */
     virtual void initializeComponent() throw(SwException);
+    /*! \brief evenement avant changement de la disponibilité de l'interface
+        \note A Surcharger*/
+    virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
+    /*! \brief evenement apres changement de la disponibilité de l'interface
+        \note A Surcharger*/
+    virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
     //-------------------------------------------------------------------------
     //Getter setter property
     //-------------------------------------------------------------------------
@@ -66,7 +73,9 @@ private:
     int _horizontalSpacing;
     //verticalSpacing
     int _verticalSpacing;
-
+    //Liste des cell widget et layout
+    QList<_SwGuiCompGridLayoutCell *> _widgets;
+    QList<_SwGuiCompGridLayoutCell *> _layouts;
 };
 
 #endif
