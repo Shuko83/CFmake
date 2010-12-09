@@ -24,6 +24,8 @@ class _SwGuiCompGridLayout : public Component , public ISwLayout  {
     Q_PROPERTY(unsigned int Layouts_count READ getNbLayouts WRITE setNbLayouts)
     Q_PROPERTY(int horizontalSpacing READ getHorizontalSpacing WRITE setHorizontalSpacing)
     Q_PROPERTY(int verticalSpacing READ getVerticalSpacing WRITE setVerticalSpacing)
+    Q_PROPERTY(QString columnStretch READ getColumnStretch WRITE setColumnStretch)
+    Q_PROPERTY(QString rowStretch READ getRowStretch WRITE setRowStretch)
 public:
     /** @brief Constructor */
     _SwGuiCompGridLayout();
@@ -54,13 +56,18 @@ public:
     void setHorizontalSpacing(unsigned int horizontalSpacing);
     int getVerticalSpacing();
     void setVerticalSpacing(unsigned int verticalSpacing);
+    QString getColumnStretch();
+    void setColumnStretch(QString columnStretch);
+    QString getRowStretch();
+    void setRowStretch(QString rowStretch);
     //-------------------------------------------------------------------------
     //Fin Getter setter property
     //-------------------------------------------------------------------------
 
 
 protected:
-    //Here protected methods
+    void updateStretchToLayoutStretch();
+    void updateLayoutStretchToStretch();
     
 private:
     //The Grid layout
@@ -73,6 +80,10 @@ private:
     int _horizontalSpacing;
     //verticalSpacing
     int _verticalSpacing;
+    //columnStretch
+    QString _columnStretch;
+    //rowStretch
+    QString _rowStretch;
     //Liste des cell widget et layout
     QList<_SwGuiCompGridLayoutCell *> _widgets;
     QList<_SwGuiCompGridLayoutCell *> _layouts;

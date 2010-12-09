@@ -14,6 +14,8 @@ _SwGuiCompGridLayout::_SwGuiCompGridLayout():Component() {
     _layouts_count=0;
     _horizontalSpacing=6;
     _verticalSpacing=0;
+    _columnStretch="0";
+    _rowStretch="0";
 }
 /** @brief Destructor */
 _SwGuiCompGridLayout::~_SwGuiCompGridLayout() {
@@ -36,12 +38,16 @@ QLayout & _SwGuiCompGridLayout::GetLayout(){
         for(int i=0;i<_layouts.count();i++) {
             _layouts[i]->setGridLayout(_layout); 
         }
+        updateStretchToLayoutStretch();
+        updateLayoutStretchToStretch();
+
     }
     return (*_layout);
 }
 /*! \brief Liberation du layout (doit etre appele lors de la liberation du layout)
 Attention, le layout est (et doit) etre detruit par cette methode*/
 void _SwGuiCompGridLayout::LiberateLayout(){
+    updateLayoutStretchToStretch();
     for(int i=0;i<_widgets.count();i++) {
         _widgets[i]->setGridLayout(0); 
     }
@@ -147,6 +153,56 @@ void _SwGuiCompGridLayout::setVerticalSpacing(unsigned int verticalSpacing){
         _layout->setVerticalSpacing(_verticalSpacing);
     }
 }
+QString _SwGuiCompGridLayout::getColumnStretch() {
+    updateLayoutStretchToStretch();
+    return _columnStretch;
+}
+void _SwGuiCompGridLayout::setColumnStretch(QString columnStretch){
+    _columnStretch=columnStretch;
+    updateStretchToLayoutStretch();
+}
+QString _SwGuiCompGridLayout::getRowStretch(){
+    updateLayoutStretchToStretch();
+    return _rowStretch;
+}
+void _SwGuiCompGridLayout::setRowStretch(QString rowStretch){
+    _rowStretch=rowStretch;
+    updateStretchToLayoutStretch();
+}
+
 //-------------------------------------------------------------------------
 //Fin Getter setter property
 //-------------------------------------------------------------------------
+void _SwGuiCompGridLayout::updateStretchToLayoutStretch(){
+    if (_layout==0) 
+        return;
+    QStringList tmp=_columnStretch.split(",");
+    for(int i=0;i<_layout->columnCount() && i<tmp.size();i++) {
+        _layout->setColumnStretch(i,tmp[i].toInt());
+    }
+    tmp=_rowStretch.split(",");
+    for(int i=0;i<_layout->rowCount() && i<tmp.size();i++) {
+        _layout->setRowStretch(i,tmp[i].toInt());
+    }
+}
+void _SwGuiCompGridLayout::updateLayoutStretchToStretch(){
+    if (_layout==0) 
+        return;
+
+    QString tmp="";
+    for(int i=0;i<_layout->columnCount();i++) {
+        if (i>0) {
+            tmp+=",";
+        }
+        tmp+=QString("%1").arg(_layout->columnStretch(i)); 
+    }
+    _columnStretch=tmp;
+    tmp="";
+    for(int i=0;i<_layout->rowCount();i++) {
+        if (i>0) {
+            tmp+=",";
+        }
+        tmp+=QString("%1").arg(_layout->rowStretch(i)); 
+    }
+    _rowStretch=tmp;
+}
