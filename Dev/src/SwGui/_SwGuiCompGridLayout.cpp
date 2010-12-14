@@ -81,6 +81,7 @@ void _SwGuiCompGridLayout::eventAfterInterfaceAvailability(QString interface_nam
     for(int i=0;i<_layouts.count();i++) {
         _layouts[i]->eventAfterInterfaceAvailability(interface_name,provider_host);    
     }
+    updateStretchToLayoutStretch();
 }
 
 //-------------------------------------------------------------------------
@@ -196,6 +197,15 @@ void _SwGuiCompGridLayout::updateLayoutStretchToStretch(){
         }
         tmp+=QString("%1").arg(_layout->columnStretch(i)); 
     }
+    QStringList tmpi=_columnStretch.split(",");
+    if (tmpi.size()>_layout->columnCount()) {
+        for (int i=_layout->columnCount();i<tmpi.size();i++) {
+            if (i>0) {
+                tmp+=",";
+            }
+            tmp+=tmpi[i]; 
+        }
+    }
     _columnStretch=tmp;
     tmp="";
     for(int i=0;i<_layout->rowCount();i++) {
@@ -203,6 +213,15 @@ void _SwGuiCompGridLayout::updateLayoutStretchToStretch(){
             tmp+=",";
         }
         tmp+=QString("%1").arg(_layout->rowStretch(i)); 
+    }
+    tmpi=_rowStretch.split(",");
+    if (tmpi.size()>_layout->rowCount()) {
+        for (int i=_layout->rowCount();i<tmpi.size();i++) {
+            if (i>0) {
+                tmp+=",";
+            }
+            tmp+=tmpi[i]; 
+        }
     }
     _rowStretch=tmp;
 }
