@@ -165,7 +165,7 @@ void _SwGuiCompActionList::signalListChanged()
     QList<ISwActionListListener *>::iterator it =  _listeners.begin();
     while (it != _listeners.end())
     {
-      (*it)->listChanged();
+      (*it)->listChanged(_actionList);
       it++;
     }
 }
