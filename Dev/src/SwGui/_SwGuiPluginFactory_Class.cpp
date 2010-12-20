@@ -30,6 +30,7 @@
 #include "_SwPerspectivesManager.h"
 #include "_SwBasicPerspective.h"
 #include "_SwGuiCompGridLayout.h"
+#include "_SwGuiCompActionList.h"
 #include "SwMacros.h"
 
 using namespace StreamWork::SwCore;
@@ -46,7 +47,8 @@ _SwGuiPluginFactory_Class::~_SwGuiPluginFactory_Class() {
 /*! \brief Initialisation */
 void _SwGuiPluginFactory_Class::Initialize() {
     RegisterComponent("SwGuiMainWindow","Main application window (QMainWindow)");
-    RegisterComponent("SwGuiMenu","Simple menu (QMenu)");
+    RegisterComponent("SwGuiMenu","Simple menu (QMenu)");       
+    RegisterComponent("SwGuiActionList","Simple action list (Actions)");
     RegisterComponent("SwGuiToolBar","Simple toolbar (QToolBar)");
     RegisterComponent("SwGuiDockWidget","Simple dock widget (QDockWidget)");
     RegisterComponent("SwGuiWidget","Simple widget (QWidget)");
@@ -78,6 +80,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
     }
     if (name=="SwGuiMenu") {
         return new _SwGuiCompMenu;
+    } 
+    if (name=="SwGuiActionList") {
+        return new _SwGuiCompActionList;
     }
     if (name=="SwGuiToolBar") {
         return new _SwGuiCompToolBar;
@@ -147,6 +152,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
         return QIcon(":/SwGui/mainwindow.png");
     }
     if (name=="SwGuiMenu") {
+        return QIcon(":/SwGui/menu.png");
+    }   
+    if (name=="SwGuiActionList") {
         return QIcon(":/SwGui/menu.png");
     }
     if (name=="SwGuiToolBar") {

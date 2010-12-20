@@ -50,7 +50,10 @@ HEADERS += ISwAction.h \
     _SwPerspectiveButton.h \
     _SwBasicPerspective.h  \
     _SwGuiCompGridLayout.h  \
-    _SwGuiCompGridLayoutCell.h  
+    _SwGuiCompGridLayoutCell.h  \
+    ISwActionList.h \
+    ISwActionListListener.h \
+    _SwGuiCompActionList.h
     
     
     
@@ -83,8 +86,9 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
     SwDefaultPerspective.cpp \
     _SwPerspectiveButton.cpp \
     _SwBasicPerspective.cpp  \
-     _SwGuiCompGridLayout.cpp  \
-    _SwGuiCompGridLayoutCell.cpp  
+    _SwGuiCompGridLayout.cpp  \
+    _SwGuiCompGridLayoutCell.cpp \
+    _SwGuiCompActionList.cpp 
 
 
 FORMS +=
