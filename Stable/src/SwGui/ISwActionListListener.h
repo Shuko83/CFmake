@@ -31,7 +31,7 @@ namespace StreamWork
 			
 		  virtual ~ISwActionListListener(){}
 		  
-			virtual void listChanged() = 0;  
+			virtual void listChanged(QList<QAction *> list) = 0;  
        
 		};
 	}
