@@ -157,7 +157,7 @@ UI_DIR += ./_intermediaire
 INCLUDEPATH += ./ \
     ./_intermediaire
 win32:{
-    LIBS += -lPsapi
+    LIBS += -lPsapi -limagehlp
 }    
   
   
