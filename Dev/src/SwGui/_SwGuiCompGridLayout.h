@@ -26,6 +26,11 @@ class _SwGuiCompGridLayout : public Component , public ISwLayout  {
     Q_PROPERTY(int verticalSpacing READ getVerticalSpacing WRITE setVerticalSpacing)
     Q_PROPERTY(QString columnStretch READ getColumnStretch WRITE setColumnStretch)
     Q_PROPERTY(QString rowStretch READ getRowStretch WRITE setRowStretch)
+    Q_PROPERTY(int leftMargin READ getLeftMargin WRITE setLeftMargin)
+    Q_PROPERTY(int topMargin READ getTopMargin WRITE setTopMargin)
+    Q_PROPERTY(int rightMargin READ getRightMargin WRITE setRightMargin)
+    Q_PROPERTY(int bottomMargin READ getBottomMargin WRITE setBottomMargin)
+
 public:
     /** @brief Constructor */
     _SwGuiCompGridLayout();
@@ -60,6 +65,14 @@ public:
     void setColumnStretch(QString columnStretch);
     QString getRowStretch();
     void setRowStretch(QString rowStretch);
+    int getLeftMargin();
+    void setLeftMargin(int value);
+    int getTopMargin();
+    void setTopMargin(int value);
+    int getRightMargin();
+    void setRightMargin(int value);
+    int getBottomMargin();
+    void setBottomMargin(int value);
     //-------------------------------------------------------------------------
     //Fin Getter setter property
     //-------------------------------------------------------------------------
@@ -68,7 +81,8 @@ public:
 protected:
     void updateStretchToLayoutStretch();
     void updateLayoutStretchToStretch();
-    
+    void updateMargins();
+
 private:
     //The Grid layout
     QGridLayout * _layout;
@@ -84,6 +98,12 @@ private:
     QString _columnStretch;
     //rowStretch
     QString _rowStretch;
+    //margins
+    int _leftMargin;
+    int _topMargin;
+    int _rightMargin;
+    int _bottomMargin;
+
     //Liste des cell widget et layout
     QList<_SwGuiCompGridLayoutCell *> _widgets;
     QList<_SwGuiCompGridLayoutCell *> _layouts;

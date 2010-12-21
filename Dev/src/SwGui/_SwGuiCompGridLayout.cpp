@@ -16,6 +16,11 @@ _SwGuiCompGridLayout::_SwGuiCompGridLayout():Component() {
     _verticalSpacing=0;
     _columnStretch="0";
     _rowStretch="0";
+    _leftMargin=0;
+    _topMargin=0;
+    _rightMargin=0;
+    _bottomMargin=0;
+
 }
 /** @brief Destructor */
 _SwGuiCompGridLayout::~_SwGuiCompGridLayout() {
@@ -40,6 +45,7 @@ QLayout & _SwGuiCompGridLayout::GetLayout(){
         }
         updateStretchToLayoutStretch();
         updateLayoutStretchToStretch();
+        _layout->setContentsMargins(_leftMargin,_topMargin,_rightMargin,_bottomMargin);
 
     }
     return (*_layout);
@@ -170,6 +176,34 @@ void _SwGuiCompGridLayout::setRowStretch(QString rowStretch){
     _rowStretch=rowStretch;
     updateStretchToLayoutStretch();
 }
+int _SwGuiCompGridLayout::getLeftMargin() {
+    return _leftMargin;
+}
+void _SwGuiCompGridLayout::setLeftMargin(int value){
+    _leftMargin=value;
+    updateMargins();
+}
+int _SwGuiCompGridLayout::getTopMargin(){
+    return _topMargin;
+}
+void _SwGuiCompGridLayout::setTopMargin(int value){
+    _topMargin=value;
+    updateMargins();
+}
+int _SwGuiCompGridLayout::getRightMargin(){
+    return _rightMargin;
+}
+void _SwGuiCompGridLayout::setRightMargin(int value){
+    _rightMargin=value;
+    updateMargins();
+}
+int _SwGuiCompGridLayout::getBottomMargin(){
+    return _bottomMargin;
+}
+void _SwGuiCompGridLayout::setBottomMargin(int value){
+    _bottomMargin=value;
+    updateMargins();
+}
 
 //-------------------------------------------------------------------------
 //Fin Getter setter property
@@ -224,4 +258,9 @@ void _SwGuiCompGridLayout::updateLayoutStretchToStretch(){
         }
     }
     _rowStretch=tmp;
+}
+void _SwGuiCompGridLayout::updateMargins() {
+    if (_layout==0) 
+        return;
+    _layout->setContentsMargins(_leftMargin,_topMargin,_rightMargin,_bottomMargin);
 }
