@@ -18,7 +18,7 @@ using namespace StreamWork::SwGui;
 @class _SwGuiCompGridLayout
 @brief ComposantGridLayout
 */
-class _SwGuiCompGridLayout : public Component , public ISwLayout  {
+class _SwGuiCompGridLayout : public Component , public virtual ISwLayout  {
     Q_OBJECT
     Q_PROPERTY(unsigned int Widgets_count READ getNbWidgets WRITE setNbWidgets)
     Q_PROPERTY(unsigned int Layouts_count READ getNbLayouts WRITE setNbLayouts)

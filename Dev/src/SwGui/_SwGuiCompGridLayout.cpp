@@ -25,9 +25,11 @@ _SwGuiCompGridLayout::_SwGuiCompGridLayout():Component() {
 /** @brief Destructor */
 _SwGuiCompGridLayout::~_SwGuiCompGridLayout() {
   //TO DO destruction
+    //Desenregistrement des services
 
     if (_layout!=0) {
         delete _layout;
+		_layout = 0;
     }
 }
 /*! \brief Renvoie le Layout
