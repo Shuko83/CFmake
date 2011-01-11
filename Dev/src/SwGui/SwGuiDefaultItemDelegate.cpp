@@ -530,7 +530,14 @@ QString SwGuiDefaultItemDelegate::displayText(const QVariant &value)
     case QVariant::Color:
         {
             QColor color = qvariant_cast<QColor>(value);
-            return color.name();
+            QString text = color.name ().toUpper ();
+            QString alphaS = QString::number (color.alpha (), 16).toUpper ();
+            if (alphaS.length () == 1)
+            {
+                alphaS = QString ("0") + alphaS;
+            }
+            text += alphaS;
+            return text;
         }
     case QVariant::Font:
         {
@@ -593,10 +600,16 @@ void SwGuiDefaultItemDelegate::onFontClick(bool checked) {
     emit closeEditor(currentWidgetFont);
 }
 void SwGuiDefaultItemDelegate::onColorClick(bool checked) {
-    QColor tmpColor=QColorDialog::getColor (currentColor,0);
+    QColor tmpColor=QColorDialog::getColor (currentColor,0,"Select color",QColorDialog::ShowAlphaChannel);
     currentColor=tmpColor;
     if (QLabel *label = qobject_cast<QLabel *>(currentWidgetColor->children().at(1))) {
-        label->setText(currentColor.name());
+        QString colorS = currentColor.name ().toUpper();
+        QString alphaS = QString::number (currentColor.alpha (), 16).toUpper ();
+        if (alphaS.length () == 1)
+        {
+            alphaS = QString ("0") + alphaS;
+        }
+        label->setText(colorS + alphaS);
     }
     commitData(currentWidgetColor);
     emit closeEditor(currentWidgetColor);

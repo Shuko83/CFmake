@@ -73,7 +73,7 @@ void _SwPropertyPersistent_Toolbox::LoadProperty(QDomElement & property_node,ISw
     tmp=QVariant(QString(""));
     var=property->GetValue();
     //Si l'operation de string vers le type est alors alors
-    if (var.canConvert(QVariant::String) && tmp.canConvert(var.type())) {
+    if (var.canConvert(QVariant::String) && tmp.canConvert(var.type()) && var.type() != QVariant::Color) {
         node=property_node.firstChild();
         //On va chercher le text
         while (!node.isNull() && !node.isText()) node=property_node.nextSibling();
@@ -149,6 +149,31 @@ void _SwPropertyPersistent_Toolbox::LoadProperty(QDomElement & property_node,ISw
                     tmp.setValue(val_to_get);
                     property->SetValue(tmp);
                 }    
+            }
+            break;
+        case QVariant::Color:
+            node=property_node.firstChild();
+            //On va chercher le text
+            while (!node.isNull() && !node.isText()) node=property_node.nextSibling();
+            if (node.isText()) 
+            {
+                QString text = node.nodeValue().toUpper ();
+                QString alpha = "";
+                if (text.length () == 9)
+                {
+                    alpha = text.right (2);
+                    text = text.left (7);
+                }
+                QVariant var = text;
+                QColor color = qvariant_cast<QColor>(var);
+                if (alpha.length ())
+                {
+                    bool ok = false;
+                    color.setAlpha (alpha.toInt (&ok, 16));
+                }
+
+                tmp.setValue (color);
+                property->SetValue(tmp);
             }
             break;
         default:
@@ -244,7 +269,7 @@ void _SwPropertyPersistent_Toolbox::SavePropertyExtended(QDomElement & parent_pr
     //----------------------------------------------------------
     tmp=QVariant(QString(""));
     //Si la conversion de l'objet en string et inversement est possible, on le sauvegarde en string
-    if (var.canConvert(QVariant::String) && tmp.canConvert(var.type())) {
+    if (var.canConvert(QVariant::String) && tmp.canConvert(var.type()) && var.type () != QVariant::Color) {
         text_node=doc.createTextNode(var.toString());
         if (!text_node.isNull()) {
             elt.appendChild(text_node);
@@ -296,6 +321,31 @@ void _SwPropertyPersistent_Toolbox::SavePropertyExtended(QDomElement & parent_pr
                 if (!text_node.isNull()) {
                     elt.appendChild(text_node);
                     save_done=true;
+                }
+                break;
+            case QVariant::Color:
+                {
+                    QColor color = qvariant_cast<QColor>(var);
+                    // Couleur sans composante alpha
+                    if (color.alpha () == 255)
+                    {
+                        text_node=doc.createTextNode(color.name ().toUpper ());
+                    }
+                    else
+                    {
+                        QString text = color.name();
+                        QString alphaS = QString::number (color.alpha (), 16).toUpper ();
+                        if (alphaS.length () == 1)
+                        {
+                            alphaS = QString ("0") + alphaS;
+                        }
+                        text += alphaS;
+                        text_node=doc.createTextNode(text);
+                    }
+                    if (!text_node.isNull()) {
+                        elt.appendChild(text_node);
+                        save_done=true;
+                    }
                 }
                 break;
             default:
