@@ -31,7 +31,7 @@ SwComponent_Class::SwComponent_Class():QObject(),SwNamed_Class(),SwRef(),SwServi
 SwComponent_Class::~SwComponent_Class(){
     //Deconnexion des liens
     _SwCleanLinksVisitor cleanVisitor;
-    //AcceptVisitor(&cleanVisitor);
+    AcceptVisitor(&cleanVisitor);
 
     QMap<QString,SwComponent_ClassPtr>::iterator it;
 

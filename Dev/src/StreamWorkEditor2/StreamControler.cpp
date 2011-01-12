@@ -71,9 +71,13 @@ StreamControler::StreamControler(PropertiesWidget * propertiesWidget):QObject() 
     connect(_streamScene,SIGNAL(onLinkConnectors(ConnectorGraphicItem * ,ConnectorGraphicItem *)),
             this,SLOT(onLinkConnectors(ConnectorGraphicItem * ,ConnectorGraphicItem *)));
     _enableStreamControlerObservation=true;
+    _stopExecution=false;
 }
 /** @brief Destructor */
 StreamControler::~StreamControler() {
+    if (_stopExecution==true) {
+        SW_APP->StopLaunch();
+    }
     MenuManager::getInstance()->setControler(0);
     _propertiesWidget->setSelectedGraphicComponent(0);
     if (_streamView!=0) {
@@ -150,7 +154,7 @@ void StreamControler::loadStream(QString streamFileName){
         //Connection au modele
         recursiveConnectToControler(_rootComponent);
         //Demarrage si necessaire
-        SW_APP->LaunchAutoStart();
+        _stopExecution=SW_APP->LaunchAutoStart();
     } catch(SwException & e) {
         _enableStreamControlerObservation=true;
         QMessageBox::critical(NULL,"StreamWorkEditor critical",QString("Exception when load %1\n%2").arg(_streamFileName).arg(e.what()));

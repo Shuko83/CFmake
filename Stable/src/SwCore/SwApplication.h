@@ -15,6 +15,7 @@
 #include "SwCoreConstantes.h"
 #include "SwMacros.h"
 #include "ISwExecutor.h"
+#include "ISwExecutor2.h"
 #include "ISwPluginsBank.h"
 #include "ISwComplexeTypeAdaptersFactoriesBank.h"
 #include "SwServicesManager_Class.h"
@@ -126,6 +127,8 @@ namespace StreamWork
             QString _applicationDirPath;
             /*! \brief Handle sur l'executeur (Que pour les applications consoles)*/
             ISwExecutor * _executor;
+            /*! \brief Handle sur l'executeur2 (Que pour les applications consoles)*/
+            ISwExecutor2 * _executor2;
             /*! \brief QSet des stream */
             QSet<SwComponent_ClassPtr> _streams;
             /*! \brief iterateur de parcours sur la QMap du stream */
@@ -192,7 +195,10 @@ namespace StreamWork
             // Demarrage externe
             //------------------------------------------------------------------------
             /*! \brief demarre l'execution du stream */
-            void LaunchAutoStart();
+            bool LaunchAutoStart();
+            /*! \brief demarre l'execution du stream */
+            void StopLaunch();
+
             //------------------------------------------------------------------------
             //Compteur d'historique (A chaque appel le compteur est incremente de 1)
             //Utile pour connaitre l'ordre de construction des liens entres composants

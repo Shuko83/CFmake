@@ -601,6 +601,9 @@ void SwGuiDefaultItemDelegate::onFontClick(bool checked) {
 }
 void SwGuiDefaultItemDelegate::onColorClick(bool checked) {
     QColor tmpColor=QColorDialog::getColor (currentColor,0,"Select color",QColorDialog::ShowAlphaChannel);
+    if (!tmpColor.isValid()) {
+        return;
+    }
     currentColor=tmpColor;
     if (QLabel *label = qobject_cast<QLabel *>(currentWidgetColor->children().at(1))) {
         QString colorS = currentColor.name ().toUpper();

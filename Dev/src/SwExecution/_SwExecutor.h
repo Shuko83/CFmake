@@ -22,7 +22,7 @@
 #include <SwPins_Manager_Class.h>
 #include <ISwProperty.h>
 #include <ISwPin_Listener.h>
-#include <ISwExecutor.h>
+#include <ISwExecutor2.h>
 #include <ISwAdminSetup.h>
 #include "_SwExecution_Service.h"
 #include "ISwExecutable_Service.h"
@@ -37,7 +37,7 @@ using namespace StreamWork::SwExecution;
 	\brief Implementation of the Class _SwExecutor generant un router de données basique
 */
 class _SwExecutor : public SwComponent_Class ,
-    public ISwExecutor,
+    public ISwExecutor2,
     public ISwAdminSetup,
     virtual public ISwExecutable_Service,
     public ISwSupportReplay
@@ -60,6 +60,12 @@ public:
     /*! \brief Execute le stream
     \return le resultat de l'operation */
 	virtual int StreamExecute();
+    //----------------------------------------------------
+    // Interface ISwExecutor2
+    //----------------------------------------------------
+    /*! \brief Arrete l'execution du stream
+    \return le resultat de l'operation */
+	virtual int StreamStop();
     //----------------------------------------------------
     // Interface ISwExecutable
     //----------------------------------------------------

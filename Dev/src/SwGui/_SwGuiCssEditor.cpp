@@ -22,7 +22,7 @@ using namespace StreamWork::SwGui;
 _SwGuiCssEditor::_SwGuiCssEditor():Component() 
 {
 
-    _styleFile="StyleSheet/style.css";
+    _styleFile="";
 }
 
 /*! \brief Destructeur */

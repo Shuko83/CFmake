@@ -236,15 +236,22 @@ void _SwExecutor::OnPropertyChange(ISwProperty * property) {
 int _SwExecutor::StreamExecute() {
     _exe_service.StartExecution();
     if (_executable_entry.ToInt()==CL_EXE_TIMER_MAINENTRY) {
-        QApplication * gui_app=dynamic_cast<QApplication *>(qApp);
-        gui_app->connect(gui_app, SIGNAL(lastWindowClosed()),this, SLOT(onQuit()));
+        //QApplication * gui_app=dynamic_cast<QApplication *>(qApp);
     } else {
         _exe_service.Execution();
         _exe_service.StopExecution();
     }
     return 0;
 }
-
+//----------------------------------------------------
+// Interface ISwExecutor2
+//----------------------------------------------------
+/*! \brief Arrete l'execution du stream
+\return le resultat de l'operation */
+int _SwExecutor::StreamStop() {
+    onQuit();
+    return 0;
+}
 
 //----------------------------------------------------
 // Interface ISwExecutable

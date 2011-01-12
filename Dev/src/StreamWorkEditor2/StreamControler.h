@@ -173,6 +173,8 @@ private:
     QList<IStreamControlerObserver *> _streamControlerObservers;
     /** @brief boolean d'activation de l'observation du streamControler */
     bool _enableStreamControlerObservation;
+    /** @brief arret de l'execution necessaire lors de l'arret */
+    bool _stopExecution;
 };
 
 #endif

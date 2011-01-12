@@ -14,6 +14,7 @@ HEADERS += LibIndeSig.h \
     ISwCreationPostProcessor.h \  
     ISwActivable.h \
     ISwExecutor.h \
+    ISwExecutor2.h \
     ISwFinalizer.h \
     ISwFinalizerManager.h \
     ISwHost.h \

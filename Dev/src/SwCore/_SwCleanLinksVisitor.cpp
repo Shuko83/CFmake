@@ -18,7 +18,18 @@ _SwCleanLinksVisitor::_SwCleanLinksVisitor() {
 }
 /*! \brief methode de visite */
 void _SwCleanLinksVisitor::Visit(SwComponent_Class * component) {
-    ISwInterfaces_Consumer *iconsumer=dynamic_cast<ISwInterfaces_Consumer *>(component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
+    ISwInterfaces_Provider *iprovider=dynamic_cast<ISwInterfaces_Provider *>(component->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
+    if (iprovider!=0) {
+        QList<QString> list_interfaces;
+        QString iname=iprovider->GetFirstInterface();
+        while (!iname.isEmpty()) {
+            iprovider->SetInterfaceUnavailable(iname);
+            iname=iprovider->GetNextInterface();
+        }
+    }
+
+
+/*    ISwInterfaces_Consumer *iconsumer=dynamic_cast<ISwInterfaces_Consumer *>(component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
     if (iconsumer!=0) {
         QList<QString> list_interfaces;
         QString result=iconsumer->GetFirstInterface(0,0,0);
@@ -30,7 +41,7 @@ void _SwCleanLinksVisitor::Visit(SwComponent_Class * component) {
             iconsumer->DetachProvider(list_interfaces.at(i));
         }
 
-    }
+    } */
     ISwPins_Manager *pinManager=dynamic_cast<ISwPins_Manager *>(component->QueryService(CG_SW_SERVICE_PINS_MANAGER));
     if (pinManager!=0) {
 	    QList<SwPin *> list_pin=pinManager->GetPinList();

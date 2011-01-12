@@ -53,6 +53,7 @@ SwApplication::SwApplication():SwServicesManager_Class() {
     _isVerboseMode=false;
     //Pas d'executeur
     _executor=NULL;
+    _executor2=NULL;
     //Finalisation de l'initialisation
     _initialisationFinalized=false;
     //Creation de la banque de plugin
@@ -224,6 +225,9 @@ int SwApplication::Launch(QString stream_desc) throw(SwException) {
             cout << "No Executor found!!!" <<endl;
         }
     }
+    if (_executor2!=0) {
+        _executor2->StreamStop();
+    }
     //Fin
      if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("Destroying all streams\n"));
    //Destruction des streams
@@ -259,6 +263,7 @@ void SwApplication::FinalizeInitialisation() {
 */
 void SwApplication::RegisterExecutor(ISwExecutor * executor) {
     _executor=executor;
+    _executor2=dynamic_cast<ISwExecutor2 *>(_executor);
 }
 /*! \brief Acces a la banque de gestion des composants (creation composant,ajout path,liste plugins)
 \return banque de plugins
@@ -355,19 +360,27 @@ SwComponent_Class * SwApplication::GetNextStream(){
 // Demarrage externe
 //------------------------------------------------------------------------
 /*! \brief demarre l'execution du stream */
-void SwApplication::LaunchAutoStart() {
+bool SwApplication::LaunchAutoStart() {
     QStringList liste_arg=QCoreApplication::instance()->arguments();
-    for(int i=0;i<(liste_arg.count()-1);i++) {
+    for(int i=0;i<liste_arg.count();i++) {
         if (liste_arg[i]=="-autostart") {
             i=liste_arg.count();
             if (_executor!=NULL) {
                 _executor->StreamExecute();
                 _executor=0;
+                return (_executor2!=0);
             }
         }
     }
+    return false;
 }
-
+/*! \brief demarre l'execution du stream */
+void SwApplication::StopLaunch() {
+    if (_executor2!=0) {
+        _executor2->StreamStop();
+        _executor2=0;
+    }
+}
 /*! \brief Acces au compteur d'historique
 \renvoie un nombre unique depuis le debut de l'execution de l'application*/
 quint64 SwApplication::GetHistoricCpt() {
