@@ -37,5 +37,6 @@
  	 <file alias="Burn.png">images/Burn.png</file>
  	 <file alias="plugins.png">images/plugins.png</file>
  	 <file alias="BurnableFolder.png">images/BurnableFolder.png</file>
+ 	 <file alias="editCSS.png">images/editCSS.png</file>
 </qresource>
 </RCC>
