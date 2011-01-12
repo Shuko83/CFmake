@@ -109,8 +109,6 @@ public:
     virtual ~${component.@Name}();
     /*! \brief Initialisation du composant*/
     virtual void initializeComponent() throw(SwException);
-    /*! \brief terminaison du composante*/
-    virtual void terminateComponent();
     /*! \brief evenement de changement de propriete*/
     virtual void eventPropertyChange(ISwProperty * property);
     /*! \brief evenement avant changement de la disponibilité de l'interface*/

@@ -200,10 +200,6 @@ void ${component.@Name}::initializeComponent() throw(SwException) {
     //--------------------------------------
 
 }
-/*! \brief terminaison du composante*/
-void ${component.@Name}::terminateComponent(){
-
-}
 /*! \brief evenement de changement de propriete*/
 void ${component.@Name}::eventPropertyChange(ISwProperty * property){
 <#list component?children as property>

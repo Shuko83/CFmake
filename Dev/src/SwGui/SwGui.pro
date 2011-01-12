@@ -53,8 +53,10 @@ HEADERS += ISwAction.h \
     _SwGuiCompGridLayoutCell.h  \
     ISwActionList.h \
     ISwActionListListener.h \
-    _SwGuiCompActionList.h
-    
+    _SwGuiCompActionList.h \
+    _SwGUICssDialog.h \
+    _SwGuiCssEditor.h \
+    _SwGuiCssHighlighter.h
     
     
 SOURCES += SwGuiDefaultItemDelegate.cpp \
@@ -88,10 +90,13 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
     _SwBasicPerspective.cpp  \
     _SwGuiCompGridLayout.cpp  \
     _SwGuiCompGridLayoutCell.cpp \
-    _SwGuiCompActionList.cpp 
+    _SwGuiCompActionList.cpp  \
+    _SwGUICssDialog.cpp \
+    _SwGuiCssEditor.cpp \
+    _SwGuiCssHighlighter.cpp
 
 
-FORMS +=
+FORMS += _SwGuiCssDialog.ui
 RESOURCES += _resources/SwGuiRsc.qrc
 DEFINES += SWGUI_LIB
 MOC_DIR += ./_intermediaire
