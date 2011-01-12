@@ -212,6 +212,13 @@ void SwProperties_Class::ChangePropertyControllable(QString name,bool is_control
         _OnAfterChange(this);
     }
 }
+/*! \brief Permet d'indiquer qu'une property a changé */
+void SwProperties_Class::SignalPropertyChange(QString name) {
+    ISwProperty * p=GetProperty(name);
+    if (p!=0) {
+        p->MarkAsChanged();
+    }
+}
 /*! \brief methode d'acces au signal avant changement*/
 LibIndeSig::iSignal1<ISwProperties *> & SwProperties_Class::GetOnBeforePropertiesChange() {
     return _OnBeforeChange;

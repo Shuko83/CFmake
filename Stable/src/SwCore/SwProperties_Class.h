@@ -74,7 +74,9 @@ namespace StreamWork
 	        void ChangePropertyEdition(QString name,bool is_editable);
 	        /*! \brief Change l'aspect controllable de la propriété */
 	        void ChangePropertyControllable(QString name,bool is_controllable);
-            //---------------------------------------------------------------------
+ 	        /*! \brief Permet d'indiquer qu'une property a changé */
+	        void SignalPropertyChange(QString name);
+           //---------------------------------------------------------------------
             // Interface ISwProperties
             //---------------------------------------------------------------------
 	        /*! \brief Permet de crée une propriété */

@@ -60,6 +60,8 @@ namespace StreamWork
 	        virtual ISwController * GetController()=0;
 	        /*! \brief methode permettant de marquer une propri�t� comme si elle n'avait pas changer*/
 	        virtual void MarkAsUnchanged()=0;
+	        /*! \brief methode permettant de marquer une propri�t� comme si elle avait  changer et genere le signal associé*/
+	        virtual void MarkAsChanged()=0;
 	        /*! \brief Definition de la description*/
 	        virtual void SetDescription(QString desc)=0;
 	        /*! \brief Acces a la description*/

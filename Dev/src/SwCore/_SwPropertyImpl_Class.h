@@ -118,6 +118,8 @@ namespace StreamWork
 	        bool HasChanged();
 	        /*! \brief methode permettant de marquer une propri�t� comme si elle n'avait pas changer*/
 	        void MarkAsUnchanged();
+	        /*! \brief methode permettant de marquer une propri�t� comme si elle avait  changer et genere le signal associé*/
+	        void MarkAsChanged();
 	        /*! \brief Definition de la description*/
 	        void SetDescription(QString desc);
 	        /*! \brief Acces a la description*/

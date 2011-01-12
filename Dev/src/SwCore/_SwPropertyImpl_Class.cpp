@@ -142,6 +142,11 @@ bool _SwPropertyImpl_Class::HasChanged() {
 void _SwPropertyImpl_Class::MarkAsUnchanged(){
     _has_changed=false;
 }
+/*! \brief methode permettant de marquer une propri?t? comme si elle avait  changer et genere le signal associé*/
+void _SwPropertyImpl_Class::MarkAsChanged() {
+    _has_changed=true;
+    _OnChangeValue(this);
+}
 /*! \brief Definition de la description*/
 void _SwPropertyImpl_Class::SetDescription(QString desc) {
     _desc=desc;
