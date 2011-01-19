@@ -32,6 +32,9 @@
 #include "_SwGuiCompGridLayout.h"
 #include "_SwGuiCompActionList.h"
 #include "_SwGuiCssEditor.h"
+#include "_SwGuiConsole.h"
+#include "_SwGuiCompStackedWidget.h"
+#include "_SwGuiCompQActionToStackedWidget.h"
 #include "SwMacros.h"
 
 using namespace StreamWork::SwCore;
@@ -69,8 +72,11 @@ void _SwGuiPluginFactory_Class::Initialize() {
     RegisterComponent("SwPerspectivesManager","PerspectiveManager");
     RegisterComponent("SwBasicPerspective","BasicPerspective");
     RegisterComponent("SwGuiGridLayout","Grid layout (use QGridLayout)");
-    RegisterComponent("SwGuiCssEditor","Css Editor");
-    
+	RegisterComponent("SwGuiCssEditor","Css Editor");
+	RegisterComponent("SwGuiConsole","Provide a console to display stdout");
+	RegisterComponent("SwGuiStackedWidget","Simple StackedWidget (QStackedWidget)");
+	RegisterComponent("SwGuiQActionToStackedWidget","Interface de mapping des QActions sur les index d'un QStackedWidget");
+
 }
 /*! \brief Liberation */
 void _SwGuiPluginFactory_Class::Liberate() {
@@ -147,11 +153,20 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
     if (name=="SwGuiCssEditor") {
         return new _SwGuiCssEditor;
     }
+	if (name=="SwGuiConsole") {
+		return new _SwGuiConsole;
+	}
+	if (name=="SwGuiStackedWidget") {
+		return new _SwGuiCompStackedWidget;
+	}
+	if (name=="SwGuiQActionToStackedWidget") {
+		return new _SwGuiCompQActionToStackedWidget;
+	}
     return NULL;
 }
 /*! \brief acces a l'icone d'un composant
 \param[in] name nom du composant
-\return l'incone ou icone vide si non trouv�*/
+\return l'incone ou icone vide si non trouvé*/
 QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
     QIcon ico;
     if (name=="SwGuiMainWindow") {
@@ -222,7 +237,16 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
     }
     if (name=="SwGuiCssEditor") {
        return QIcon(":/SwGui/editCSS.png");
-    }
+	} 
+	if (name=="SwGuiConsole") {
+		return QIcon(":/SwGui/consoleWindows.png");
+	}
+	if (name=="SwGuiStackedWidget") {
+		return QIcon(":/SwGui/widgetstack.png");
+	}
+	if (name=="SwGuiQActionToStackedWidget") {
+		return QIcon(":/SwGui/widgetstack.png");
+	}
     return ico;
 }
 /*! \brief Acces a la version du plugin

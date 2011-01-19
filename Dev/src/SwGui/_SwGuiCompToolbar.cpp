@@ -2,7 +2,7 @@
  \file _SwGuiCompToolBar.cpp
  \brief Implementation of the Class _SwGuiCompToolBar generant une QToolBar
  \version 1.0
- \date 23-ao�t-2006 18:59:26
+ \date 23-aoét-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -41,7 +41,7 @@ _SwGuiCompToolBar::~_SwGuiCompToolBar(){
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent �tre d�clar�s dans cette methodes*/
+\note tous les services du composants doivent étre déclarés dans cette methodes*/
 void _SwGuiCompToolBar::InitializeResources() throw(SwException) {
     //Creation des service
     _consumer_service=new SwInterfaces_Consumer_Class(this) ;
@@ -60,7 +60,7 @@ void _SwGuiCompToolBar::InitializeResources() throw(SwException) {
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver(this);
 
-    //Enregistrement des propri�t�s
+    //Enregistrement des propriétés
     _properties_service->CreatePropertiesForQObject(_toolbar,"QToolBar");
 
     //Gestion des actions
@@ -75,7 +75,7 @@ void _SwGuiCompToolBar::InitializeResources() throw(SwException) {
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiToolBar done\n"));
 
 }
-/*! \brief Callback sur les changements de propri�t�s*/
+/*! \brief Callback sur les changements de propriétés*/
 void _SwGuiCompToolBar::OnPropertyChange(ISwProperty * property) {
     uint val;
     QString interface_name;
@@ -101,7 +101,7 @@ void _SwGuiCompToolBar::OnPropertyChange(ISwProperty * property) {
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilit� de l'interface */
+/*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompToolBar::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     QMap<QString,ISwAction *>::iterator action_it;
     QMap<QString,ISwWidget *>::iterator widget_it;
@@ -117,7 +117,7 @@ void _SwGuiCompToolBar::BeforeInterfaceAvailabilityChange(QString interface_name
         return;
     }
 }
-/*! \brief Apres changement de la disponibilit� de l'interface */
+/*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompToolBar::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     QMap<QString,ISwAction *>::iterator action_it;
     QMap<QString,ISwWidget *>::iterator widget_it;

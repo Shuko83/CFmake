@@ -56,8 +56,13 @@ HEADERS += ISwAction.h \
     _SwGuiCompActionList.h \
     _SwGUICssDialog.h \
     _SwGuiCssEditor.h \
-    _SwGuiCssHighlighter.h
-    
+    _SwGuiCssHighlighter.h \
+	_SwGuiConsole.h \
+	ISwStackedWidget_Controler.h \
+	_SwGuiCompStackedWidget.h \
+	ISwStackedWidget_Observer.h \
+    _SwGuiCompQActionToStackedWidget.h \
+	_SwActionStackedWidget.h
     
 SOURCES += SwGuiDefaultItemDelegate.cpp \
     SwGuiEnumComboBox.cpp \
@@ -93,7 +98,11 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
     _SwGuiCompActionList.cpp  \
     _SwGUICssDialog.cpp \
     _SwGuiCssEditor.cpp \
-    _SwGuiCssHighlighter.cpp
+    _SwGuiCssHighlighter.cpp \
+	_SwGuiConsole.cpp \
+	_SwGuiCompStackedWidget.cpp \
+	_SwGuiCompQActionToStackedWidget.cpp \
+	_SwActionStackedWidget.cpp
 
 
 FORMS += _SwGuiCssDialog.ui
