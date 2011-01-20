@@ -76,6 +76,7 @@ INCLUDEPATH += ./ \
     ../SwCore \
     ../SwExecution \
     ../SwGui \
+    ../SwGui/_intermediaire \
     ../SwModel \
     ../SwRecord
       

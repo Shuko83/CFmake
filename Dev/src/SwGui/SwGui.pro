@@ -62,7 +62,9 @@ HEADERS += ISwAction.h \
 	_SwGuiCompStackedWidget.h \
 	ISwStackedWidget_Observer.h \
     _SwGuiCompQActionToStackedWidget.h \
-	_SwActionStackedWidget.h
+	_SwActionStackedWidget.h \
+		_QRcViewer.h
+
     
 SOURCES += SwGuiDefaultItemDelegate.cpp \
     SwGuiEnumComboBox.cpp \
@@ -102,10 +104,12 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
 	_SwGuiConsole.cpp \
 	_SwGuiCompStackedWidget.cpp \
 	_SwGuiCompQActionToStackedWidget.cpp \
-	_SwActionStackedWidget.cpp
+	_SwActionStackedWidget.cpp \
+	_QRcViewer.cpp
 
 
 FORMS += _SwGuiCssDialog.ui
+FORMS += _QRcViewerUi.ui
 RESOURCES += _resources/SwGuiRsc.qrc
 DEFINES += SWGUI_LIB
 MOC_DIR += ./_intermediaire

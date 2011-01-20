@@ -42,8 +42,11 @@ SwGuiDefaultItemDelegate::SwGuiDefaultItemDelegate(QObject *parent)
     dateTimeExp.setPattern(dateExp.pattern() + "T" + timeExp.pattern());
     _fdialog=new QFileDialog(0,"Select");
     _fdialog->setModal(true);
+    _iconDialog = new _QRcViewer;
+    _iconDialog->setModal(true);
     //_fdialog->setWindowFlags(Qt::WindowStaysOnTopHint);
     QObject::connect(_fdialog,SIGNAL(fileSelected( const QString &)),this,SLOT(onFileLoad(const QString &)));
+    QObject::connect(_iconDialog,SIGNAL(iconSelected( const QString &)),this,SLOT(onIconLoad(const QString &)));
 
 }
 /*! \brief Destructeur */
@@ -230,6 +233,28 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent,
         SwGuiEnumComboBox * cbox=new SwGuiEnumComboBox(venum,parent);
         return cbox;
     }
+
+    if (originalValue.type()==QVariant::Icon) {
+        QWidget * w=new QWidget(parent);
+        QHBoxLayout * hl=new QHBoxLayout(w);
+        hl->setSpacing(0);
+        hl->setMargin(0);
+        QLabel * l=new QLabel(w);
+        l->setAutoFillBackground(true);
+        l->setText(displayText(originalValue));
+        hl->addWidget(l);
+        QPushButton * b=new QPushButton("...",w);
+        b->setMaximumWidth(30);
+        hl->addWidget(b);
+        connect(b,SIGNAL(clicked(bool)),this,SLOT(onIconClick(bool)));
+        currentIcon=originalValue.value<QIcon>();
+        currentWidgetIcon=w;
+        return w;
+    }
+
+
+
+
     QLineEdit *lineEdit = new QLineEdit(parent);
     lineEdit->setFrame(false);
 
@@ -322,6 +347,12 @@ void SwGuiDefaultItemDelegate::setEditorData(QWidget *editor,
         return;
     }
 
+    if (value.type()==QVariant::Icon) {
+        currentIcon=value.value<QIcon>();
+        _iconDialog->setIconName(currentIcon.name());
+        return;
+    }
+
 
 /*    if (qMetaTypeId<SwUUID>()==value.userType()) {
         SwUUID id=value.value<SwUUID>();
@@ -355,6 +386,11 @@ void SwGuiDefaultItemDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 
     if (originalValue.type()==QVariant::Color) {
         model->setData(index, QVariant(currentColor), Qt::EditRole);
+        return;
+    }
+
+    if (originalValue.type()==QVariant::Icon) {
+        model->setData(index, QVariant(currentIcon), Qt::EditRole);
         return;
     }
 
@@ -493,6 +529,7 @@ bool SwGuiDefaultItemDelegate::isSupportedType(QVariant & val)
     case QVariant::Time:
     case QVariant::UInt:
     case QVariant::ULongLong:
+    case QVariant::Icon:
         return true;
     case QVariant::UserType:
         if (qMetaTypeId<SwEnum>()==val.userType()) {
@@ -515,6 +552,8 @@ bool SwGuiDefaultItemDelegate::isSupportedType(QVariant & val)
 /*! \brief Permet d'afficher l'item au format texte */
 QString SwGuiDefaultItemDelegate::displayText(const QVariant &value)
 {
+    QIcon tmpIcon;
+
     switch (value.type()) {
     case QVariant::Bool:
     case QVariant::ByteArray:
@@ -570,6 +609,9 @@ QString SwGuiDefaultItemDelegate::displayText(const QVariant &value)
         return value.toStringList().join(",");
     case QVariant::Time:
         return value.toTime().toString(Qt::ISODate);
+    case QVariant::Icon:
+        tmpIcon=value.value<QIcon>();
+        return tmpIcon.name();
     case QVariant::UserType:
         if (qMetaTypeId<SwEnum>()==value.userType()) {
             SwEnum venum=value.value<SwEnum>();
@@ -647,5 +689,21 @@ void SwGuiDefaultItemDelegate::onFileClick(bool checked) {
         _fdialog->setFileMode(QFileDialog::AnyFile);
     }
     _fdialog->show();
+
+}
+
+void SwGuiDefaultItemDelegate::onIconClick(bool checked)
+{
+    _iconDialog->show();
+}
+
+void SwGuiDefaultItemDelegate::onIconLoad( const QString & filename )
+{
+    currentIcon=QIcon(filename);
+    if (QLineEdit *label = qobject_cast<QLineEdit *>(currentWidgetIcon->children().at(1))) {
+        label->setText(filename);
+    }
+    commitData(currentWidgetIcon);
+    emit closeEditor(currentWidgetIcon);
 
 }

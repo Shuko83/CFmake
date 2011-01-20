@@ -41,6 +41,7 @@ INCLUDEPATH += ./\
     ./_intermediaire \
 	../SwCore \
 	../SwGui \
+    ../SwGui/_intermediaire \
 	../SwDatasBase \
 	../SwExecution
 	

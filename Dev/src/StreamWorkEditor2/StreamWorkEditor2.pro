@@ -26,6 +26,7 @@ HEADERS += PropertiesWidget.h
 HEADERS += ../SwGui/_SwGuiPluginsFrontEnd.h
 HEADERS += ../SwGui/SwGuiDefaultItemDelegate.h
 HEADERS += ../SwGui/SwGuiEnumComboBox.h
+HEADERS += ../SwGui/_QRcViewer.h
 HEADERS += Arranger.h
 HEADERS += GraphicsLoaderV1.h
 HEADERS += QStreamTreeModel.h
@@ -57,6 +58,7 @@ SOURCES += PropertiesWidget.cpp
 SOURCES += ../SwGui/_SwGuiPluginsFrontEnd.cpp
 SOURCES += ../SwGui/SwGuiDefaultItemDelegate.cpp
 SOURCES += ../SwGui/SwGuiEnumComboBox.cpp
+SOURCES += ../SwGui/_QRcViewer.cpp
 SOURCES += Arranger.cpp
 SOURCES += GraphicsLoaderV1.cpp
 SOURCES += QStreamTreeModel.cpp
@@ -67,6 +69,7 @@ SOURCES += LogView.cpp
 
 
 FORMS += _resources/LogView.ui
+FORMS += ../SwGui/_QRcViewerUi.ui
 RESOURCES += _resources/StreamWorkEditor2.qrc
 MOC_DIR += ./_intermediaire
 OBJECTS_DIR += ./_obj
@@ -76,6 +79,7 @@ INCLUDEPATH += ./ \
     ./_intermediaire \
     ../SwCore \
     ../SwGui \
+    ../SwGui/_intermediaire \
     ../WizardIDE \
     ../SwExecution
     
