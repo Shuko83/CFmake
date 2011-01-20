@@ -121,6 +121,13 @@ public:
 	*/
 	virtual QString getWidgetName(int pageIndex);
 
+	/*! \brief Renvoie l'icon du widget pour une page donnée
+	/*  \param l'index de la page contenant le widget
+	/*  \return l'icon du widget
+	*/
+	virtual QIcon getWidgetIcon( int pageIndex );
+
+
 
 	/*! \brief Permet d'enregistrer un observer
 	*! \param pointeur sur l'observer

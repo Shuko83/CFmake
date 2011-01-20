@@ -16,8 +16,12 @@ public:
 	~_QRcViewer();
 	void setIconName(QString name);
 
+public slots:
+	void itemSelected(QListWidgetItem *);
+	void selectItem();
 signals:
     void iconSelected( const QString &);
+	
 
 private:
     QPixmap makeThumbnail(const QPixmap &pix) const;

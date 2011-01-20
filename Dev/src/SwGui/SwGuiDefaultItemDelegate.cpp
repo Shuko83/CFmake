@@ -22,6 +22,7 @@ using namespace StreamWork::SwCore;
 SwGuiDefaultItemDelegate::SwGuiDefaultItemDelegate(QObject *parent)
     : QItemDelegate(parent)
 {
+	currentWidgetIcon = NULL;
     boolExp.setPattern("true|false");
     boolExp.setCaseSensitivity(Qt::CaseInsensitive);
     currentWidgetFileDescriptor=0;
@@ -349,7 +350,7 @@ void SwGuiDefaultItemDelegate::setEditorData(QWidget *editor,
 
     if (value.type()==QVariant::Icon) {
         currentIcon=value.value<QIcon>();
-        _iconDialog->setIconName(currentIcon.name());
+        _iconDialog->setIconName(currentIcon.themeName());
         return;
     }
 
@@ -390,7 +391,7 @@ void SwGuiDefaultItemDelegate::setModelData(QWidget *editor, QAbstractItemModel 
     }
 
     if (originalValue.type()==QVariant::Icon) {
-        model->setData(index, QVariant(currentIcon), Qt::EditRole);
+        model->setData(index, qVariantFromValue(currentIcon), Qt::EditRole);
         return;
     }
 
@@ -611,7 +612,7 @@ QString SwGuiDefaultItemDelegate::displayText(const QVariant &value)
         return value.toTime().toString(Qt::ISODate);
     case QVariant::Icon:
         tmpIcon=value.value<QIcon>();
-        return tmpIcon.name();
+        return tmpIcon.themeName();
     case QVariant::UserType:
         if (qMetaTypeId<SwEnum>()==value.userType()) {
             SwEnum venum=value.value<SwEnum>();
@@ -700,10 +701,9 @@ void SwGuiDefaultItemDelegate::onIconClick(bool checked)
 void SwGuiDefaultItemDelegate::onIconLoad( const QString & filename )
 {
     currentIcon=QIcon(filename);
-    if (QLineEdit *label = qobject_cast<QLineEdit *>(currentWidgetIcon->children().at(1))) {
-        label->setText(filename);
+	currentIcon.setThemeName(filename);
+    if (QLabel *label = qobject_cast<QLabel *>(currentWidgetIcon->children().at(1))) {
+        label->setText(currentIcon.themeName());
     }
     commitData(currentWidgetIcon);
-    emit closeEditor(currentWidgetIcon);
-
 }

@@ -30,7 +30,7 @@ namespace StreamWork
 
 			/*! \brief Renvoie le nombre de page disponible
 			/*	\return un int définissant le nombre de page (0 étant la première)
-			*/
+			*/ 
 			virtual int getNbPage()=0;
 
 			/*! \brief Permet de mettre le StackedWidget sur la page de l'index voulu
@@ -48,6 +48,12 @@ namespace StreamWork
 			/*  \return le nom du widget
 			*/
 			virtual QString getWidgetName(int pageIndex)=0;
+
+			/*! \brief Renvoie l'icon du widget pour une page donnée
+			/*  \param l'index de la page contenant le widget
+			/*  \return l'icon du widget
+			*/
+			virtual QIcon getWidgetIcon( int pageIndex )=0;
 
 			/*! \brief Permet d'enregistrer un observer
 			*! \param pointeur sur l'observer

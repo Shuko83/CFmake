@@ -322,8 +322,25 @@ QString _SwGuiCompStackedWidget::getWidgetName( int pageIndex )
  		}
  	}
 
-	//
 	return QString("Veuillez renseigner un windows title pour l'index  :%1").arg(pageIndex);
-
 }
 
+/*****************************************************************************/
+QIcon _SwGuiCompStackedWidget::getWidgetIcon( int pageIndex )
+{	
+ 	if(_stackedWidget)
+ 	{
+ 		//Try to get the widget from the stackedWidget
+ 		QWidget * t_w = _stackedWidget->widget(pageIndex);
+ 
+ 		if(t_w != NULL)
+ 		{
+			if(!t_w->windowIcon().isNull())
+ 				return t_w->windowIcon();
+			else
+				return QIcon(":/trolltech/styles/commonstyle/images/file-32.png");
+ 		}
+ 	}
+
+	return QIcon(":/trolltech/styles/commonstyle/images/file-32.png");
+}

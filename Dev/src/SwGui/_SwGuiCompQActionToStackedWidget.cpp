@@ -133,6 +133,8 @@ void _SwGuiCompQActionToStackedWidget::notify()
 			if (action_it==_actions.end()) 
 			{
 				_SwActionStackedWidget *handle_action = new _SwActionStackedWidget(_tmp_handle_StackedWidget->getWidgetName(i).replace(" ","_"),i);
+				handle_action->GetAction().setIcon(_tmp_handle_StackedWidget->getWidgetIcon(i));
+
 				QObject::connect(handle_action,SIGNAL(callback(int)),this,SLOT(switchStackedWidget(int)));
 				_provider_service->RegisterProvidedInterface<ISwAction>(interface_name,handle_action);
 				_actions.insert(interface_name,handle_action);
@@ -140,6 +142,7 @@ void _SwGuiCompQActionToStackedWidget::notify()
 			else
 			{
 				_actions[interface_name]->GetAction().setText(_tmp_handle_StackedWidget->getWidgetName(i).replace(" ","_"));
+				_actions[interface_name]->GetAction().setIcon(_tmp_handle_StackedWidget->getWidgetIcon(i));
 			}
 
 		}
