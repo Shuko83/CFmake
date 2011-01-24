@@ -17,7 +17,9 @@
 /*
   * INCLUDES LOCAUX
   */
+#include "SwIconDescriptor.h"
 #include "_SwPropertiesModelImpl.h"
+
 
 
 using namespace StreamWork::SwCore;
@@ -381,12 +383,16 @@ QVariant _SwPropertiesModelImpl::data ( const QModelIndex & index, int role) con
         }
 
     }
-    if (role==Qt::DecorationRole && index.column()==1 && item->_property!=0 && item->_property->GetValue().type()==QVariant::Color) {
-        QPixmap p(18,18);
-        p.fill(item->_property->GetValue().value<QColor>());
-        QPainter pl(&p);
-        pl.drawRect(0,0,17,17);
-        return QVariant(QIcon(p));
+    if (role==Qt::DecorationRole && index.column()==1 && item->_property!=0) {
+        if (item->_property->GetValue().type()==QVariant::Color) {
+            QPixmap p(18,18);
+            p.fill(item->_property->GetValue().value<QColor>());
+            QPainter pl(&p);
+            pl.drawRect(0,0,17,17);
+            return QVariant(QIcon(p));
+        } else if (item->_property->GetValue().userType()==qMetaTypeId<SwIconDescriptor>()) {
+            return QVariant(item->_property->GetValue().value<SwIconDescriptor>().ToIcon());
+        }
     }
     if (role==Qt::DecorationRole && item->_property!=NULL) {
         if (index.column()==0) {
