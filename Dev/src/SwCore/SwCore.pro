@@ -95,7 +95,8 @@ HEADERS += LibIndeSig.h \
     ISwAlertRecorder.h \
     SwPropertiesPersistentToolbox.h \
     _SwCleanLinksVisitor.h \
-    Component.h
+    Component.h \
+    SwIconDescriptor.h
 
 SOURCES += SwAddress_ToolBox.cpp \
     SwApplication.cpp \
@@ -140,7 +141,8 @@ SOURCES += SwAddress_ToolBox.cpp \
     SwAlerter_Class.cpp \
     SwPropertiesPersistentToolbox.cpp \
     _SwCleanLinksVisitor.cpp \
-    Component.cpp
+    Component.cpp \
+    SwIconDescriptor.cpp
 
     
     

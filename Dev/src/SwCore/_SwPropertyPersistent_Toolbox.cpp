@@ -26,6 +26,7 @@
 #include "SwMacros.h"
 #include "SwEnum.h"
 #include "SwFileDescriptor.h"
+#include "SwIconDescriptor.h"
 #include "SwIpV4Address.h"
 #include "SwUUID.h"
 #include "ISwProperty.h"
@@ -43,6 +44,7 @@ using namespace StreamWork::SwCore;
 #define CL_XML_ATT_ENUM "enum"
 #define CL_XML_ATT_ENUM_STRING "enumString"
 #define CL_XML_ATT_FD "fdesc" //ATTENTION IMPACT SUR LES RECORD
+#define CL_XML_ATT_ID "idesc" //ATTENTION IMPACT SUR LES RECORD
 #define CL_XML_ATT_IPV4 "ipv4"
 #define CL_XML_ATT_UUID_H "idh"
 #define CL_XML_ATT_UUID_L "idl"
@@ -201,6 +203,13 @@ void _SwPropertyPersistent_Toolbox::LoadProperty(QDomElement & property_node,ISw
         SwFileDescriptor fd=var.value<SwFileDescriptor>();
         fd.setFileName(property_node.attribute(CL_XML_ATT_FD));
         tmp.setValue(fd);
+        property->SetValue(tmp);
+    }
+    //Type SwIconDescriptor
+    if (var.userType()==qMetaTypeId<SwIconDescriptor>() && property_node.hasAttribute(CL_XML_ATT_ID)) {
+        SwIconDescriptor idesc=var.value<SwIconDescriptor>();
+        idesc.setPath(property_node.attribute(CL_XML_ATT_ID));
+        tmp.setValue(idesc);
         property->SetValue(tmp);
     }
     //Type SwIpV4Address
@@ -367,6 +376,12 @@ void _SwPropertyPersistent_Toolbox::SavePropertyExtended(QDomElement & parent_pr
         if (var.userType()==qMetaTypeId<SwFileDescriptor>()) {
             SwFileDescriptor fd=var.value<SwFileDescriptor>();
             elt.setAttribute(CL_XML_ATT_FD,fd.getFileName());
+            save_done=true;
+        }
+        //Type SwIconDescriptor
+        if (var.userType()==qMetaTypeId<SwIconDescriptor>()) {
+            SwIconDescriptor idesc=var.value<SwIconDescriptor>();
+            elt.setAttribute(CL_XML_ATT_ID,idesc.ToString());
             save_done=true;
         }
         //Type SwIpV4Address

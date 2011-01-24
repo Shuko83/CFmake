@@ -18,6 +18,7 @@
  */
 #include "_SwPropertyImpl_Class.h"
 #include "LibIndeSig.h"
+#include "SwIconDescriptor.h"
 
 namespace StreamWork
 {
@@ -37,6 +38,8 @@ namespace StreamWork
             QObject * _host;
             /*! \brief acces a la metaproperty */
             QMetaProperty _metaproperty;
+            /*! \brief icondesc si necessaire */
+            SwIconDescriptor * _iconDesc;
         public:
             /*! \brief Constructor */
             _SwPropertyImplForQOject_Class(QObject * host,QString name,ISwProperties * hosting_service,QString prefix=QString());

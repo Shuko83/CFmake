@@ -14,6 +14,7 @@
 #include <SwIpv4Address.h>
 #include <SwUUID.h>
 #include "SwGuiEnumComboBox.h"
+#include "_QRcViewer.h"
 
 using namespace StreamWork::SwGui;
 using namespace StreamWork::SwCore;
@@ -235,20 +236,21 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent,
         return cbox;
     }
 
-    if (originalValue.type()==QVariant::Icon) {
+    if (qMetaTypeId<SwIconDescriptor>()==originalValue.userType()) {
         QWidget * w=new QWidget(parent);
         QHBoxLayout * hl=new QHBoxLayout(w);
         hl->setSpacing(0);
         hl->setMargin(0);
-        QLabel * l=new QLabel(w);
-        l->setAutoFillBackground(true);
+        QLineEdit * l=new QLineEdit(w);
+        
+        l->setObjectName("iconText");
         l->setText(displayText(originalValue));
         hl->addWidget(l);
         QPushButton * b=new QPushButton("...",w);
         b->setMaximumWidth(30);
         hl->addWidget(b);
         connect(b,SIGNAL(clicked(bool)),this,SLOT(onIconClick(bool)));
-        currentIcon=originalValue.value<QIcon>();
+        currentIconDesc=originalValue.value<SwIconDescriptor>();
         currentWidgetIcon=w;
         return w;
     }
@@ -348,9 +350,10 @@ void SwGuiDefaultItemDelegate::setEditorData(QWidget *editor,
         return;
     }
 
-    if (value.type()==QVariant::Icon) {
-        currentIcon=value.value<QIcon>();
-        _iconDialog->setIconName(currentIcon.themeName());
+    if (qMetaTypeId<SwIconDescriptor>()==value.userType()) {
+        currentIconDesc=value.value<SwIconDescriptor>();
+        static_cast<_QRcViewer *>(_iconDialog)->setIconName(currentIconDesc.ToString());
+        oldIconDesc=currentIconDesc;
         return;
     }
 
@@ -390,9 +393,16 @@ void SwGuiDefaultItemDelegate::setModelData(QWidget *editor, QAbstractItemModel 
         return;
     }
 
-    if (originalValue.type()==QVariant::Icon) {
-        model->setData(index, qVariantFromValue(currentIcon), Qt::EditRole);
+    if (originalValue.userType()==qMetaTypeId<SwIconDescriptor>()) {
+        QVariant v;
+        QLineEdit * lf=currentWidgetIcon->findChild<QLineEdit *>("iconText");
+        if (lf!=0 && lf->text()!=oldIconDesc.ToString()) {
+            currentIconDesc.setPath(lf->text());
+        }
+        v.setValue<SwIconDescriptor>(currentIconDesc);
+        model->setData(index, v, Qt::EditRole);
         return;
+
     }
 
     if (originalValue.userType()==qMetaTypeId<SwFileDescriptor>()) {
@@ -530,13 +540,15 @@ bool SwGuiDefaultItemDelegate::isSupportedType(QVariant & val)
     case QVariant::Time:
     case QVariant::UInt:
     case QVariant::ULongLong:
-    case QVariant::Icon:
         return true;
     case QVariant::UserType:
         if (qMetaTypeId<SwEnum>()==val.userType()) {
             return true;
         }
         if (qMetaTypeId<SwFileDescriptor>()==val.userType()) {
+            return true;
+        }
+        if (qMetaTypeId<SwIconDescriptor>()==val.userType()) {
             return true;
         }
         if (qMetaTypeId<SwIpV4Address>()==val.userType()) {
@@ -610,9 +622,6 @@ QString SwGuiDefaultItemDelegate::displayText(const QVariant &value)
         return value.toStringList().join(",");
     case QVariant::Time:
         return value.toTime().toString(Qt::ISODate);
-    case QVariant::Icon:
-        tmpIcon=value.value<QIcon>();
-        return tmpIcon.themeName();
     case QVariant::UserType:
         if (qMetaTypeId<SwEnum>()==value.userType()) {
             SwEnum venum=value.value<SwEnum>();
@@ -620,6 +629,9 @@ QString SwGuiDefaultItemDelegate::displayText(const QVariant &value)
         }
         if (qMetaTypeId<SwFileDescriptor>()==value.userType()) {
             return value.value<SwFileDescriptor>().getFileName();
+        }
+        if (qMetaTypeId<SwIconDescriptor>()==value.userType()) {
+            return value.value<SwIconDescriptor>().ToString();
         }
         if (qMetaTypeId<SwIpV4Address>()==value.userType()) {
             return value.value<SwIpV4Address>().ToString();
@@ -700,10 +712,9 @@ void SwGuiDefaultItemDelegate::onIconClick(bool checked)
 
 void SwGuiDefaultItemDelegate::onIconLoad( const QString & filename )
 {
-    currentIcon=QIcon(filename);
-	currentIcon.setThemeName(filename);
-    if (QLabel *label = qobject_cast<QLabel *>(currentWidgetIcon->children().at(1))) {
-        label->setText(currentIcon.themeName());
+	currentIconDesc.setPath(filename);
+    if (QLineEdit *label = qobject_cast<QLineEdit *>(currentWidgetIcon->children().at(1))) {
+        label->setText(currentIconDesc.ToString());
     }
     commitData(currentWidgetIcon);
 }

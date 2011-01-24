@@ -19,7 +19,7 @@
 #include <QFont>
 #include <QFileDialog>
 #include "SwFileDescriptor.h"
-#include "_QRcViewer.h"
+#include "SwIconDescriptor.h"
 #include "SwUUID.h"
 
 namespace StreamWork
@@ -74,7 +74,8 @@ namespace StreamWork
             mutable QRegExp unsignedIntegerExp;
             mutable QFont currentFont;
             mutable QColor currentColor;
-            mutable QIcon currentIcon;
+            mutable SwCore::SwIconDescriptor currentIconDesc;
+            mutable SwCore::SwIconDescriptor oldIconDesc;
             mutable SwCore::SwFileDescriptor currentFileDescriptor;
             mutable SwCore::SwFileDescriptor oldFileDescriptor;
             mutable SwCore::SwUUID currentUUID;
@@ -83,7 +84,7 @@ namespace StreamWork
             mutable QWidget * currentWidgetIcon;
             mutable QWidget * currentWidgetFileDescriptor;
             mutable QFileDialog * _fdialog;
-            mutable _QRcViewer * _iconDialog;
+            mutable QDialog * _iconDialog;
         public slots:
             void onFontClick(bool checked=false);
             void onColorClick(bool checked=false);

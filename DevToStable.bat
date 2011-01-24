@@ -16,4 +16,7 @@ xcopy /Y .\Dev\lib\vc\release\*.lib .\Stable\lib\vc\release\
 xcopy /Y /S  .\Dev\src\*.h .\Stable\src\
 cd .\Stable\src\
 del /F /S /Q  _*.h
+for /f "tokens=* delims= " %%a in ('dir/b/s/ad _*') do (
+rd /S/Q %%a
+)
 cd ..

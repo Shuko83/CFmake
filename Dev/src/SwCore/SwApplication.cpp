@@ -19,6 +19,7 @@
 #include "SwEnum.h"
 #include "SwUUID.h"
 #include "SwFileDescriptor.h"
+#include "SwIconDescriptor.h"
 #include "SwIpV4Address.h"
 #include "SwTime_ToolBox.h"
 #include "ISwCheckService.h"
@@ -404,6 +405,10 @@ void SwApplication::Initialize_Types() {
     qRegisterMetaType<StreamWork::SwCore::SwFileDescriptor>("StreamWork::SwCore::SwFileDescriptor");
     //Et de ses methodes de serialisation
     qRegisterMetaTypeStreamOperators<StreamWork::SwCore::SwFileDescriptor>("StreamWork::SwCore::SwFileDescriptor");
+    //Enregistrement de SwIconDescriptor
+    qRegisterMetaType<StreamWork::SwCore::SwIconDescriptor>("StreamWork::SwCore::SwIconDescriptor");
+    //Et de ses methodes de serialisation
+    qRegisterMetaTypeStreamOperators<StreamWork::SwCore::SwIconDescriptor>("StreamWork::SwCore::SwIconDescriptor");
     //Enregistrement de SwEnum
     qRegisterMetaType<StreamWork::SwCore::SwIpV4Address>("StreamWork::SwCore::SwIpV4Address");
     //Et de ses methodes de serialisation

@@ -156,6 +156,8 @@
 			<File
 				RelativePath="SwFileLogRecorder_Class.cpp" />
 			<File
+				RelativePath="SwIconDescriptor.cpp" />
+			<File
 				RelativePath="SwInterfaces_Consumer_Class.cpp" />
 			<File
 				RelativePath="SwInterfaces_Provider_Class.cpp" />
@@ -403,6 +405,8 @@
 				RelativePath="SwFileDescriptor.h" />
 			<File
 				RelativePath="SwFileLogRecorder_Class.h" />
+			<File
+				RelativePath="SwIconDescriptor.h" />
 			<File
 				RelativePath="SwInterfaces_Consumer_Class.h" />
 			<File
