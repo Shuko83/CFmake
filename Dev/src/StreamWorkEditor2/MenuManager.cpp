@@ -128,9 +128,6 @@ QMenu * MenuManager::buildContextMenu(const QPointF & pos) {
 }
 /** @brief buildMenuForContext() */
 void MenuManager::buildMenuForContext(QMenu * menu) {
-    if (_gwList.count()>0 || _iaList.count()>0) {
-        menu->addAction("Remove",this,SLOT(onRemove()));
-    }
     if (_lkList.count()>0) {
         menu->addAction("Disconnect",this,SLOT(onDisconnect()));
     }
@@ -154,6 +151,9 @@ void MenuManager::buildMenuForContext(QMenu * menu) {
     if (_gwList.count()==0 && _lkList.count()==0) {
         menu->addAction("Add interest area",this,SLOT(onAddInterestArea()));
         menu->addAction("Change background",this,SLOT(onChangeBackGroundColor()));
+    }
+    if (_gwList.count()>0 || _iaList.count()>0) {
+        menu->addAction("Remove",this,SLOT(onRemove()));
     }
 }
 /** @brief sur remove */
