@@ -45,7 +45,7 @@ _SwPropertyImplForQOject_Class::_SwPropertyImplForQOject_Class(QObject * host,QS
         _iconDesc =new SwIconDescriptor();
         //Enregistrement du variant
         _value.setValue(*_iconDesc);
-    }else {
+    } else {
         //Enregistrement du variant
         _value=_metaproperty.read(_host);   
     }
@@ -67,7 +67,7 @@ QVariant _SwPropertyImplForQOject_Class::GetInternalValue() {
         SwEnum tmp_enum=_value.value<SwEnum>();
         tmp_enum.FromInt(_metaproperty.read(_host).toInt());
         _value.setValue(tmp_enum);
-    } if (_metaproperty.type()==QVariant::Icon) {
+    } else if (_metaproperty.type()==QVariant::Icon) {
         //Enregistrement du variant
         _value.setValue(*_iconDesc);
     } else {
@@ -85,7 +85,7 @@ void _SwPropertyImplForQOject_Class::SetInternalValue (const QVariant & val) {
     if (_metaproperty.isEnumType()) {  
         SwEnum tmp_enum=_value.value<SwEnum>();
         _metaproperty.write(_host,QVariant(tmp_enum.ToInt()));
-    } if (_metaproperty.type()==QVariant::Icon && _value.userType()==qMetaTypeId<SwIconDescriptor>()) {
+    } else if (_metaproperty.type()==QVariant::Icon && _value.userType()==qMetaTypeId<SwIconDescriptor>()) {
         *_iconDesc=_value.value<SwIconDescriptor>();
         _metaproperty.write(_host,_iconDesc->ToIcon());      
     } else {
