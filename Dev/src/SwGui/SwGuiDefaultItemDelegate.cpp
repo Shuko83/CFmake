@@ -44,16 +44,17 @@ SwGuiDefaultItemDelegate::SwGuiDefaultItemDelegate(QObject *parent)
     dateTimeExp.setPattern(dateExp.pattern() + "T" + timeExp.pattern());
     _fdialog=new QFileDialog(0,"Select");
     _fdialog->setModal(true);
-    _iconDialog = new _QRcViewer;
-    _iconDialog->setModal(true);
+    _iconDialog = 0;
     //_fdialog->setWindowFlags(Qt::WindowStaysOnTopHint);
     QObject::connect(_fdialog,SIGNAL(fileSelected( const QString &)),this,SLOT(onFileLoad(const QString &)));
-    QObject::connect(_iconDialog,SIGNAL(iconSelected( const QString &)),this,SLOT(onIconLoad(const QString &)));
 
 }
 /*! \brief Destructeur */
 SwGuiDefaultItemDelegate::~SwGuiDefaultItemDelegate() {
     delete _fdialog;
+    if (_iconDialog!=0) {
+        delete _iconDialog;
+    }
 }
 /*! \brief Paint de l'item */
 void SwGuiDefaultItemDelegate::paint(QPainter *painter,
@@ -352,7 +353,8 @@ void SwGuiDefaultItemDelegate::setEditorData(QWidget *editor,
 
     if (qMetaTypeId<SwIconDescriptor>()==value.userType()) {
         currentIconDesc=value.value<SwIconDescriptor>();
-        static_cast<_QRcViewer *>(_iconDialog)->setIconName(currentIconDesc.ToString());
+        QDialog *dialog=getIconDialog();
+        static_cast<_QRcViewer *>(dialog)->setIconName(currentIconDesc.ToString());
         oldIconDesc=currentIconDesc;
         return;
     }
@@ -707,7 +709,7 @@ void SwGuiDefaultItemDelegate::onFileClick(bool checked) {
 
 void SwGuiDefaultItemDelegate::onIconClick(bool checked)
 {
-    _iconDialog->show();
+    getIconDialog()->show();
 }
 
 void SwGuiDefaultItemDelegate::onIconLoad( const QString & filename )
@@ -717,4 +719,13 @@ void SwGuiDefaultItemDelegate::onIconLoad( const QString & filename )
         label->setText(currentIconDesc.ToString());
     }
     commitData(currentWidgetIcon);
+}
+
+QDialog * SwGuiDefaultItemDelegate::getIconDialog() const{
+    if (_iconDialog==0) {
+        _iconDialog = new _QRcViewer;
+        _iconDialog->setModal(true);
+        QObject::connect(_iconDialog,SIGNAL(iconSelected( const QString &)),this,SLOT(onIconLoad(const QString &)));
+    }
+    return _iconDialog;
 }

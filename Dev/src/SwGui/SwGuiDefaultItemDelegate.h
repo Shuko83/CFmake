@@ -85,6 +85,9 @@ namespace StreamWork
             mutable QWidget * currentWidgetFileDescriptor;
             mutable QFileDialog * _fdialog;
             mutable QDialog * _iconDialog;
+
+        private:
+            QDialog * getIconDialog() const;
         public slots:
             void onFontClick(bool checked=false);
             void onColorClick(bool checked=false);
