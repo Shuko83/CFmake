@@ -113,7 +113,8 @@ QWidget * WidgetFactory::buildPluginsBankView(bool isGraphViewHosted) {
     }
     QListView * lviewComponents=new QListView(w);
     ComponentListModel * componentModel=new ComponentListModel(lviewComponents);
-    lviewPlugins->connect(lviewPlugins,SIGNAL(  clicked ( const QModelIndex &)),componentModel,SLOT(onSelectedPluginChanged(const QModelIndex&)));
+	lviewPlugins->connect(lviewPlugins,SIGNAL(  clicked ( const QModelIndex &)),componentModel,SLOT(onSelectedPluginChanged(const QModelIndex&)));
+	lviewPlugins->connect(lviewPlugins->selectionModel(),SIGNAL( currentChanged(const QModelIndex &, const QModelIndex &)),componentModel,SLOT(onSelectedPluginChanged(const QModelIndex&)));
     lviewComponents->setModel(componentModel);
     //lviewComponents->setFixedWidth(200);
     lviewComponents->setFrameShape(QFrame::NoFrame);
