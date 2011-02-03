@@ -35,13 +35,13 @@ namespace StreamWork
 			 * @brief    : Ajout d'un nouveau QDockWidget
 			 * @param	 : QDockWidget * - Pointeur vers le QDockWidget ajouté
 			 */
-			virtual void addWidget(QDockWidget * widget) = 0;  
+			virtual void addQDockWidget(QDockWidget * widget) = 0;  
 
 			/**
 			 * @brief    : Suppression d'un nouveau QDockWidget
 			 * @param	 : QDockWidget * widget - Pointeur vers le QDockWidget supprimé
 			 */
-			virtual void removeWidget(QDockWidget *widget) = 0;  
+			virtual void removeQDockWidget(QDockWidget *widget) = 0;  
 
 		};
 	}
