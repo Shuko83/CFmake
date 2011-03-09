@@ -15,6 +15,7 @@
 #include "InterestArea.h"
 #include "ISwExecution_Service.h"
 #include "ISwAdminSetup.h"
+#include "ISwWidget.h"
 /**
 @class MenuManager
 @brief manager de menu
@@ -44,6 +45,8 @@ public slots:
     void onStopExecution();
 	/** @brief sur setup */
     void onSetup();
+	/** @brief sur show */
+    void onShow();
 	/** @brief sur ajout de la zone d'interet */
     void onAddInterestArea();
 	/** @brief activated */
@@ -84,6 +87,8 @@ private:
     QList<StreamWork::SwExecution::ISwExecution_Service *> _exeList;
     /** @brief Liste des adminSetups */
     QList<StreamWork::SwCore::ISwAdminSetup *> _adminList;
+	/** @brief Liste des composants ayant un ISwWidget*/
+	QList<StreamWork::SwCore::ISwProperty *> _propertyList;
     /** @brief Descativation du changement de selection */
     bool _disableSelectionChanged;
     /** @brief menu position*/

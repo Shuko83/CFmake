@@ -63,9 +63,15 @@ HEADERS += ISwAction.h \
 	ISwStackedWidget_Observer.h \
     _SwGuiCompQActionToStackedWidget.h \
 	_SwActionStackedWidget.h \
-		_QRcViewer.h
+	_QRcViewer.h \
+	ISwShortcut.h \
+	ISwDeviceObserver.h \
+	ISwShortcutObserver.h \
+	ISwServiceShortcuts.h \
+    ISwDevice.h \
+	_SwServiceShortcuts.h 
 
-    
+	
 SOURCES += SwGuiDefaultItemDelegate.cpp \
     SwGuiEnumComboBox.cpp \
     _SwGuiCompDockWidget.cpp \
@@ -105,7 +111,8 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
 	_SwGuiCompStackedWidget.cpp \
 	_SwGuiCompQActionToStackedWidget.cpp \
 	_SwActionStackedWidget.cpp \
-	_QRcViewer.cpp
+	_QRcViewer.cpp \
+	_SwServiceShortcuts.cpp
 
 
 FORMS += _SwGuiCssDialog.ui

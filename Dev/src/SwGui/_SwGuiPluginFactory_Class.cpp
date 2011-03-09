@@ -8,6 +8,8 @@
 
 #include <QRegExp>
 
+#include "SwApplication.h"
+
 #include "_SwGuiPluginFactory_Class.h"
 #include "_SwGuiCompMainWindow.h"
 #include "_SwGuiCompMenu.h"
@@ -265,3 +267,31 @@ QString _SwGuiPluginFactory_Class::GetPluginVersion(){
     return build;
 }
 
+
+
+//---------------------------------------------------------------------
+// Interface ISwServicesManager_Listener
+//---------------------------------------------------------------------
+/*! \brief sur ajout d'un service */
+void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service) 
+{
+	ISwServiceShortcuts * sservice=dynamic_cast<ISwServiceShortcuts *>(service);
+	if (sservice!=0)
+	{
+		//rservice->registerCodecFactory(new _SwRecordDataCodecDefaultFactory());
+	}
+
+}
+/*! \brief sur suppression d'une  interface */
+void _SwGuiPluginFactory_Class::OnUnregisterService(ISwService * service) 
+{
+
+}
+
+//-------------------------------------------------------------------------
+void _SwGuiPluginFactory_Class::FinalizeInitialisation()
+{
+	_serviceShortcuts = new _SwServiceShortcuts();
+	 SW_APP->RegisterService(_serviceShortcuts);
+
+}

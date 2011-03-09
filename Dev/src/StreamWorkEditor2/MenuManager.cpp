@@ -12,6 +12,7 @@
 #include <ISwInterfaces_Consumer.h>
 #include <ISwPins_Manager.h>
 #include <SwTime_ToolBox.h>
+#include "SwProperties_Class.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -60,7 +61,8 @@ void MenuManager::setControler(StreamControler * controler) {
         _contextualMenuSwap->clear();
         _gwList.clear();
         _lkList.clear();
-        _adminList.clear();
+		_adminList.clear();
+		_propertyList.clear();
         _exeList.clear();
     }
     _streamControler=controler;
@@ -79,29 +81,54 @@ void MenuManager::rebuildMenu() {
     _gwList.clear();
     _lkList.clear();
     _adminList.clear();
-    _exeList.clear();
+	_propertyList.clear();
+	_exeList.clear();
     _iaList.clear();
-    for(int i=0;i<list.count();i++) {
+    for(int i=0;i<list.count();i++) 
+	{
         ComponentGraphicItem * gcomponent=dynamic_cast<ComponentGraphicItem *>(list[i]);
-        if (gcomponent!=0) {
+        if (gcomponent!=0)
+		{
             _gwList.push_back(gcomponent);
-            ISwExecution_Service * executor=
-                dynamic_cast<ISwExecution_Service *>(gcomponent->getComponent()->QueryService(CG_SW_SERVICE_EXECUTION));
-            if(executor!=0) {
+            ISwExecution_Service * executor= dynamic_cast<ISwExecution_Service *>(gcomponent->getComponent()->QueryService(CG_SW_SERVICE_EXECUTION));
+            if(executor!=0) 
+			{
                 _exeList.push_back(executor);
             }
-            ISwAdminSetup * admin=
-                dynamic_cast<ISwAdminSetup *>(gcomponent->getComponent());
-            if(admin!=0) {
+            ISwAdminSetup * admin= dynamic_cast<ISwAdminSetup *>(gcomponent->getComponent());
+            if(admin!=0) 
+			{
                 _adminList.push_back(admin);
             }
-        } else {
+
+			//AAY Ajout
+			StreamWork::SwCore::SwComponent_Class* cp = gcomponent->getComponent();
+			if( cp != NULL)
+			{
+				SwProperties_Class *serv = dynamic_cast<SwProperties_Class *>(cp->QueryService(CG_SW_SERVICE_PROPERTIES));
+				if (NULL != serv)
+				{
+					//parcours les propriétés et cherche si "visible est contenu dans le text"
+					QList<ISwProperty*>prop = serv->GetProperties();
+					foreach(ISwProperty *swprop , prop)
+					{
+						if(swprop && swprop->GetName() == "visible")
+							_propertyList.push_back(swprop);
+					}
+				}
+			}
+        } else 
+		{
             LinkGraphicItem *glink=dynamic_cast<LinkGraphicItem *>(list[i]);
-            if (glink!=0) {
+            if (glink!=0) 
+			{
                 _lkList.push_back(glink);
-            } else {
+            } 
+			else 
+			{
                 InterestArea * ia=dynamic_cast<InterestArea *>(list[i]);
-                if (ia!=0) {
+                if (ia!=0)
+				{
                     _iaList.push_back(ia); 
                 }
             }
@@ -155,6 +182,24 @@ void MenuManager::buildMenuForContext(QMenu * menu) {
     if (_gwList.count()>0 || _iaList.count()>0) {
         menu->addAction("Remove",this,SLOT(onRemove()));
     }
+
+	if (_propertyList.count()>0) 
+	{
+		menu->addSeparator();
+
+		//Gestion de show et du hide
+		bool allVisible = true;
+		foreach(ISwProperty* prop, _propertyList)
+		{
+			if(prop->GetValue().toBool() == false)
+				allVisible = false;
+		}
+
+		if(allVisible)
+			menu->addAction("Hide",this,SLOT(onShow()));
+		else
+			menu->addAction("Show",this,SLOT(onShow()));
+	}
 }
 /** @brief sur remove */
 void MenuManager::onRemove() {
@@ -237,6 +282,20 @@ void MenuManager::onSetup(){
     }
     _streamControler->getScene()->update();
 }
+
+//-------------------------------------------------------------------------
+void MenuManager::onShow()
+{
+	QList<StreamWork::SwCore::ISwProperty *>::iterator it;
+	it=_propertyList.begin();
+	while (it!=_propertyList.end()) 
+	{
+		(*it)->SetValue(!((*it)->GetValue().toBool()));
+		it++;
+	}
+	_streamControler->getScene()->update();
+}
+
 /** @brief sur ajout de la zone d'interet */
 void MenuManager::onAddInterestArea() {
     InterestArea * ia=new InterestArea(_streamControler);

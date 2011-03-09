@@ -19,8 +19,11 @@
   */
 #include "SwGuiConstantes.h"
 #include <SwPluginFactory_Class.h>
+#include "_SwServiceShortcuts.h"
+
 
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwGui;
 
 /*!
 	\class SwPluginFactory_Class 
@@ -44,6 +47,20 @@ public:
     void Liberate();
     /*! \brief Acces a la version du plugin */
     QString GetPluginVersion();
+	/*! \brief finalisation de l'initialisation DECLARER LES SERVICES GLOBAUX ICI*/
+	void FinalizeInitialisation();
+
+	//---------------------------------------------------------------------
+	// Interface ISwServicesManager_Listener
+	//---------------------------------------------------------------------
+	/*! \brief sur ajout d'un service */
+	void OnRegisterService(ISwService * service);
+	/*! \brief sur suppression d'une  interface */
+	void OnUnregisterService(ISwService * service);
+
+private:
+	/** @brief service d'enregistrement */
+	_SwServiceShortcuts *_serviceShortcuts;
 };
 
 #ifndef QT_NO_DEBUG
