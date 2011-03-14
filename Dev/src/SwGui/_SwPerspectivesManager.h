@@ -62,6 +62,11 @@ namespace StreamWork {
 			ISwProperty * _buttons_stylesheet_property;
 			/* @brief stylesheet utilise pour les boutons */
 			QString	_buttons_stylesheet;
+			/* @brief propriété title de la perspective */
+			ISwProperty * _perspective_title_property;
+			/* @brief stylesheet utilise pour les boutons */
+			QString	_perspective_title;
+
         public:
 	        /** @brief Constructor */
 	        _SwPerspectivesManager();

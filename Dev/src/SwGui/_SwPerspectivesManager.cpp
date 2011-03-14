@@ -23,6 +23,7 @@ _SwPerspectivesManager::_SwPerspectivesManager() {
     _currentPerspective=0;
 	_buttons_stylesheet="QFrame { border:1px solid black; border-radius: 5px; background:\
 						qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 rgb(60,80,150,80%), stop: 1 rgb(60,80,150,20%)); }";											
+	_perspective_title = "DefaultTitle";
 }
 /*! \brief Destructeur */
 _SwPerspectivesManager::~_SwPerspectivesManager(){
@@ -92,6 +93,14 @@ void _SwPerspectivesManager::InitializeResources() throw(SwException){
     _buttons_stylesheet_property->SetValue(QVariant(_buttons_stylesheet));
     _buttons_stylesheet_property->GetOnChangeSignal().iconnect(*this,&_SwPerspectivesManager::OnPropertyChange);
 
+	//Gestion du titre de la perspective
+    _perspective_title_property=_properties_service->CreateProperty<QString>("Title");
+    if (_perspective_title_property==NULL) {
+        if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register Tilte property\n"));
+    }
+    _perspective_title_property->SetDescription("Define the title of the perspective");  
+    _perspective_title_property->SetValue(QVariant(_perspective_title));
+    _perspective_title_property->GetOnChangeSignal().iconnect(*this,&_SwPerspectivesManager::OnPropertyChange);
 
 }
  /*! \brief Callback sur les changements de propriétés*/
@@ -129,7 +138,15 @@ void _SwPerspectivesManager::OnPropertyChange(ISwProperty * property){
             addButtons(val-_perspectives_nb);
         }
         _perspectives_nb=val;
-    }
+	}else if (_perspective_title_property==property){
+		QString title = property->GetValue().toString();
+		if (title.isEmpty()) {
+			property->SetValue(QVariant(_perspective_title));
+		} else {
+			_perspective_title = title;
+			_mainWidget->setWindowTitle(_perspective_title);
+		}
+	}
 
 }
 //---------------------------------------------------------------------
