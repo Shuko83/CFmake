@@ -62,6 +62,7 @@ HEADERS += ISwAction.h \
 	_SwGuiCompStackedWidget.h \
 	ISwStackedWidget_Observer.h \
     _SwGuiCompQActionToStackedWidget.h \
+	_SwGuiCompFromQActionToStackedWidget.h \
 	_SwActionStackedWidget.h \
 	_QRcViewer.h \
 	ISwShortcut.h \
@@ -112,6 +113,7 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
 	_SwGuiConsole.cpp \
 	_SwGuiCompStackedWidget.cpp \
 	_SwGuiCompQActionToStackedWidget.cpp \
+	_SwGuiCompFromQActionToStackedWidget.cpp \
 	_SwActionStackedWidget.cpp \
 	_QRcViewer.cpp \
 	_SwServiceShortcuts.cpp \

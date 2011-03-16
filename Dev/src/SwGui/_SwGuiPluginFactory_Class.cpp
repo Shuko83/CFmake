@@ -37,6 +37,7 @@
 #include "_SwGuiConsole.h"
 #include "_SwGuiCompStackedWidget.h"
 #include "_SwGuiCompQActionToStackedWidget.h"
+#include "_SwGuiCompFromQActionToStackedWidget.h"
 #include "SwMacros.h"
 #include "_SwGuiQActionToWidget.h"
 
@@ -79,7 +80,8 @@ void _SwGuiPluginFactory_Class::Initialize() {
 	RegisterComponent("SwGuiConsole","Provide a console to display stdout");
 	RegisterComponent("SwGuiStackedWidget","Simple StackedWidget (QStackedWidget)");
 	RegisterComponent("SwGuiQActionToStackedWidget","Interface de mapping des QActions sur les index d'un QStackedWidget");
-	RegisterComponent("SwGuiQActionToWidget","Produit des actions et consomme une widget");
+	RegisterComponent("SwGuiCompFromQActionToStackedWidget","Interface de mapping des QActions sur les index d'un QStackedWidget");
+	RegisterComponent("SwGuiQActionToWidget","Produit un ISwAction permettant de cacher ou d'afficher la widget");
 
 }
 /*! \brief Liberation */
@@ -165,6 +167,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
 	}
 	if (name=="SwGuiQActionToStackedWidget") {
 		return new _SwGuiCompQActionToStackedWidget;
+	}
+	if (name=="SwGuiCompFromQActionToStackedWidget") {
+		return new _SwGuiCompFromQActionToStackedWidget;
 	}
 	if (name=="SwGuiQActionToWidget") {
 		return new _SwGuiQActionToWidget;
@@ -252,6 +257,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
 		return QIcon(":/SwGui/widgetstack.png");
 	}
 	if (name=="SwGuiQActionToStackedWidget") {
+		return QIcon(":/SwGui/widgetstack.png");
+	}
+	if (name=="SwGuiCompFromQActionToStackedWidget") {
 		return QIcon(":/SwGui/widgetstack.png");
 	}
 	if (name=="SwGuiQActionToWidget") {

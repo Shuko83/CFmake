@@ -24,7 +24,12 @@ _SwGuiCompStackedWidget::_SwGuiCompStackedWidget(): SwComponent_Class()
     _consumer_service=NULL;
     _properties_service=NULL;
     _stackedWidget=NULL;
+
+	_stackedWidgets_nb_property = NULL;
     _stackedWidgets_nb=0;
+
+	_stackedWidgets_current_index_page = NULL;
+	_stackedWidgets_page_index = 0;
     _tmp_handle_widget=NULL;
 }
 
@@ -85,6 +90,16 @@ void _SwGuiCompStackedWidget::InitializeResources() throw(SwException)
     _stackedWidgets_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompStackedWidget::OnPropertyChange);
 
 
+	_stackedWidgets_current_index_page=_properties_service->CreateProperty<uint>("default_page_index");
+	if (_stackedWidgets_current_index_page==NULL) 
+	{
+		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register default_page_index property\n"));
+	}
+	_stackedWidgets_current_index_page->SetDescription("Define how many ISwWidget interfaces this component accept");
+	_stackedWidgets_current_index_page->SetValue(QVariant(_stackedWidgets_page_index));
+	_stackedWidgets_current_index_page->GetOnChangeSignal().iconnect(*this,&_SwGuiCompStackedWidget::OnPropertyChange);
+
+
     if (SW_APP->IsVerbose()) 
 		SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwFrameWidget done\n"));
 
@@ -95,6 +110,14 @@ void _SwGuiCompStackedWidget::OnPropertyChange(ISwProperty * property)
 {
     uint val;
     QString interface_name;
+
+	if (_stackedWidgets_current_index_page==property) 
+	{
+		val=property->GetValue().toUInt();
+		_stackedWidgets_page_index = val;
+		setCurrentIndex(_stackedWidgets_page_index);
+	}
+	else
 
     if (_stackedWidgets_nb_property==property) 
 	{
@@ -112,8 +135,6 @@ void _SwGuiCompStackedWidget::OnPropertyChange(ISwProperty * property)
 
 				if(_stackedWidget && _stackedWidget->widget(i))
 					_stackedWidget->removeWidget(_stackedWidget->widget(i));
-				notifyObserver();
-
             }
         } 
 		else 
@@ -125,11 +146,13 @@ void _SwGuiCompStackedWidget::OnPropertyChange(ISwProperty * property)
                 _consumer_service->RegisterConsumedInterface<ISwWidget>(interface_name,&_tmp_handle_widget);
 				if(_stackedWidget)
 					_stackedWidget->addWidget(new QWidget);
-				notifyObserver();
-
             }
         }
-        _stackedWidgets_nb=val;
+
+		_stackedWidgets_nb=val;
+
+		notifyObserver();
+
     }
 }
 
@@ -189,7 +212,7 @@ void _SwGuiCompStackedWidget::AfterInterfaceAvailabilityChange(QString interface
             //Et qu'il etait non defini, on l'enregistre et l'ajoute au stack
             widget_it.value()=_tmp_handle_widget;
 
-			 int indexWidget = interface_name.remove("Widget_").toInt();
+			int indexWidget = interface_name.remove("Widget_").toInt();
 
 			QWidget * temporyW = _stackedWidget->widget(indexWidget);
 			_stackedWidget->removeWidget(temporyW);
@@ -197,6 +220,7 @@ void _SwGuiCompStackedWidget::AfterInterfaceAvailabilityChange(QString interface
 			temporyW = NULL;
 
             _stackedWidget->insertWidget(indexWidget,&_tmp_handle_widget->GetWidget());
+			setCurrentIndex(_stackedWidgets_page_index);
 			notifyObserver();
 
              //Si c'est un widget observable, on se mets en observer
@@ -241,7 +265,9 @@ void _SwGuiCompStackedWidget::OnBringToFrontRequest(ISwWidget * w)
 {
     int index=_stackedWidget->indexOf(&(w->GetWidget()));
     if (index>=0 && _stackedWidget && index <= _stackedWidget->count() )
+	{
         _stackedWidget->setCurrentIndex(index);
+	}
 
     for(int i=0;i<_wObservers.count();i++) 
 	{
@@ -265,12 +291,7 @@ void _SwGuiCompStackedWidget::setCurrentIndex( int pageIndex )
 /*****************************************************************************/
 int _SwGuiCompStackedWidget::getNbPage()
 {
-	if(_stackedWidget)
-	{
-		return _stackedWidget->count();
-	}
-
-	return 0;
+	return _stackedWidgets_nb;
 }
 
 /*****************************************************************************/

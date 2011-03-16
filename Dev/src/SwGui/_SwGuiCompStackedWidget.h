@@ -52,7 +52,12 @@ protected:
     /* nombre de stackedwidget*/
     uint _stackedWidgets_nb;
     /* propriété nombre de widgets */
-    ISwProperty * _stackedWidgets_nb_property;
+	ISwProperty * _stackedWidgets_nb_property;
+
+	uint _stackedWidgets_page_index;
+	/* Sauvegarde de la page courrante */
+	ISwProperty * _stackedWidgets_current_index_page;
+
     /* map des interfaces widgets*/
     QMap<QString,ISwWidget *> _widgets;
 
