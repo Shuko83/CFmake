@@ -205,11 +205,6 @@ void _SwGuiCompHBoxLayout::BeforeInterfaceAvailabilityChange(QString interface_n
             if (index!=-1) _ordered_childrens.removeAt(index);
         }
     } 
-    //unlock properties
-    if (_nb_childs==0) {
-        _properties_service->ChangePropertyEdition("nb_widgets",true);
-        _properties_service->ChangePropertyEdition("nb_layouts",true);
-    }
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompHBoxLayout::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
@@ -248,11 +243,6 @@ void _SwGuiCompHBoxLayout::AfterInterfaceAvailabilityChange(QString interface_na
         _ordered_childrens.push_back(interface_name);
         return;
     } 
-    //lock properties
-    if (_nb_childs>0) {
-        _properties_service->ChangePropertyEdition("nb_widgets",false);
-        _properties_service->ChangePropertyEdition("nb_layouts",false);
-    }
 }
 //---------------------------------------------------------------------
 // Interface ISwLayout
