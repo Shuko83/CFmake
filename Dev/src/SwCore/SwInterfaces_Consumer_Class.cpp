@@ -331,7 +331,14 @@ void SwInterfaces_Consumer_Class::Load(QDomElement &elt,ISwFinalizerManager & fi
                 _finalize_interfaces.insert(index,it.value());
                 //Enregistrement au niveau du finalizer manager
                 finalizer_manager.RegisterFinalization(index,this);
-            }
+			} else {
+				_SwConsumedInterfaceContainer_Class * fake=new _SwConsumedInterfaceContainer_Class(0);
+				fake->Define(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME),QString());
+				fake->DefinePotentialProviderInterfaceDescription(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME),interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH));
+				_finalize_interfaces.insert(index,fake);
+				//Enregistrement au niveau du finalizer manager
+				finalizer_manager.RegisterFinalization(index,this);
+			}
         }
     }            
 }
@@ -382,27 +389,43 @@ bool SwInterfaces_Consumer_Class::Finalize(quint64 historic_index){
 
     itidx=_finalize_interfaces.find(historic_index);
     if (itidx!=_finalize_interfaces.end()) {
-        //On a trouve l'interface concerné
-        //Si elle est deja connecté, on la deconnecte (permet appel multiple du load)
-        if (itidx.value()->GetProvider()!=NULL) {
-            DetachProvider(itidx.value()->GetName());
-        }
-        //Acces au fournisseur
-        host_provider=SwAddress_ToolBox::FindTarget(itidx.value()->GetPotentialProviderPath(),_host_component);
-        //S'il est defini et qu'il est producteur d'interfaces et qu'il produit l'interface qui nous interesse au bon type
-        if (host_provider!=NULL && 
-            (provider=dynamic_cast<ISwInterfaces_Provider *>(host_provider->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER)))!=NULL &&
-            provider->InterfaceExist(itidx.value()->GetPotentialProviderInterfaceName()) ) {
-            //On attache l'interface
-            AttachProvider(provider,itidx.value()->GetName(),itidx.value()->GetPotentialProviderInterfaceName());
-            //Ok la finalization a reussi on libere l'index
-            _finalize_interfaces.erase(itidx);
-            //Et on renvoie ok
-            return true;
-        } else {
-            SW_APP->Logger().Log(LogLvl_Debug,QString("Unable to connect %1 of %2").arg(itidx.value()->GetName()).arg(_host_component->GetName())); 
-        }
-        //Fin sans finalisation possible
-    }
+		_SwConsumedInterfaceContainer_Class * container=itidx.value();
+		//Si c'est un fake on cherche le vrai container
+		if(container->GetType().isEmpty()) {
+			QMap<QString,_SwConsumedInterfaceContainer_Class *>::iterator it;
+			it=_interfaces.find(container->GetName());
+			if (it!=_interfaces.end()) {
+				it.value()->DefinePotentialProviderInterfaceDescription(container->GetPotentialProviderInterfaceName(),container->GetPotentialProviderPath());
+				container=it.value();
+			} else {
+				container=0;
+			}
+		}
+		if (container!=0) {
+			//On a trouve l'interface concerné
+			//Si elle est deja connecté, on la deconnecte (permet appel multiple du load)
+			if (container->GetProvider()!=NULL) {
+				DetachProvider(container->GetName());
+			}
+			//Acces au fournisseur
+			host_provider=SwAddress_ToolBox::FindTarget(container->GetPotentialProviderPath(),_host_component);
+			//S'il est defini et qu'il est producteur d'interfaces et qu'il produit l'interface qui nous interesse au bon type
+			if (host_provider!=NULL && 
+				(provider=dynamic_cast<ISwInterfaces_Provider *>(host_provider->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER)))!=NULL &&
+				provider->InterfaceExist(container->GetPotentialProviderInterfaceName()) ) {
+					//On attache l'interface
+					AttachProvider(provider,container->GetName(),container->GetPotentialProviderInterfaceName());
+					//Ok la finalization a reussi on libere l'index
+					_finalize_interfaces.erase(itidx);
+					//Et on renvoie ok
+					return true;
+			} else {
+				SW_APP->Logger().Log(LogLvl_Debug,QString("Unable to connect %1 of %2").arg(container->GetName()).arg(_host_component->GetName())); 
+			}
+		} else {
+			return true;
+		}
+		//Fin sans finalisation possible
+	}
     return false;
 }
