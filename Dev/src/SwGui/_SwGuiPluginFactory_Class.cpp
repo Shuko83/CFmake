@@ -38,6 +38,7 @@
 #include "_SwGuiCompStackedWidget.h"
 #include "_SwGuiCompQActionToStackedWidget.h"
 #include "SwMacros.h"
+#include "_SwGuiQActionToWidget.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -78,6 +79,7 @@ void _SwGuiPluginFactory_Class::Initialize() {
 	RegisterComponent("SwGuiConsole","Provide a console to display stdout");
 	RegisterComponent("SwGuiStackedWidget","Simple StackedWidget (QStackedWidget)");
 	RegisterComponent("SwGuiQActionToStackedWidget","Interface de mapping des QActions sur les index d'un QStackedWidget");
+	RegisterComponent("SwGuiQActionToWidget","Produit des actions et consomme une widget");
 
 }
 /*! \brief Liberation */
@@ -164,6 +166,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
 	if (name=="SwGuiQActionToStackedWidget") {
 		return new _SwGuiCompQActionToStackedWidget;
 	}
+	if (name=="SwGuiQActionToWidget") {
+		return new _SwGuiQActionToWidget;
+	}
     return NULL;
 }
 /*! \brief acces a l'icone d'un composant
@@ -248,6 +253,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
 	}
 	if (name=="SwGuiQActionToStackedWidget") {
 		return QIcon(":/SwGui/widgetstack.png");
+	}
+	if (name=="SwGuiQActionToWidget") {
+		return QIcon(":/SwGui/widget.png");
 	}
     return ico;
 }
