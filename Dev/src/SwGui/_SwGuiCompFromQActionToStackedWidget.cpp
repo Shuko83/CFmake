@@ -10,7 +10,7 @@
 #include <SwMacros.h>
 #include "_SwGuiCompFromQActionToStackedWidget.h"
 #include "_SwActionStackedWidget.h"
-
+#include <QDebug>
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
@@ -28,6 +28,7 @@ _SwGuiCompFromQActionToStackedWidget::_SwGuiCompFromQActionToStackedWidget(): Sw
     _properties_service=NULL;
 	_tmp_handle_StackedWidget = NULL;
 	_tmp_handle_action = NULL;
+	_typeOfConnection = TOGGLED;
 }
 
 /*****************************************************************************/
@@ -65,7 +66,13 @@ void _SwGuiCompFromQActionToStackedWidget::InitializeResources() throw(SwExcepti
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver(this);
 
+
+
+
 	_consumer_service->RegisterConsumedInterface<ISwStackedWidget_Controler>("StackedWidget_Controler",&_tmp_handle_StackedWidget);
+
+
+
 
     if (SW_APP->IsVerbose()) 
 		SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiCompFromQActionToStackedWidget done\n"));
@@ -107,7 +114,11 @@ void _SwGuiCompFromQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QSt
 			if(it.value() && _tmp_handle_action)
 			{
 				QAction * tmpAction = &(it.value()->GetAction());
-				disconnect(tmpAction,SIGNAL( triggered (bool) ),this,SLOT(switchStackedWidget(bool)));
+				if(_typeOfConnection == TOGGLED)
+					disconnect(tmpAction,SIGNAL( triggered (bool) ),this,SLOT(switchStackedWidget(bool)));
+				else
+					disconnect(tmpAction,SIGNAL( toggled (bool) ),this,SLOT(switchStackedWidget(bool)));
+
 			}
 		}
 
@@ -137,12 +148,13 @@ void _SwGuiCompFromQActionToStackedWidget::AfterInterfaceAvailabilityChange(QStr
 			if(it.value())
 			{
 				QAction * tmpAction = &(it.value()->GetAction());
-				connect(tmpAction,SIGNAL( triggered (bool) ),this,SLOT(switchStackedWidget(bool)));
+				if(_typeOfConnection == TOGGLED)
+					connect(tmpAction,SIGNAL( toggled (bool) ),this,SLOT(switchStackedWidget(bool)));
+				else
+					connect(tmpAction,SIGNAL( triggered (bool) ),this,SLOT(switchStackedWidget(bool)));
 			}
 		}
 	}
-
-	
 }
 
 /*****************************************************************************/
@@ -193,6 +205,5 @@ void _SwGuiCompFromQActionToStackedWidget::switchStackedWidget( bool val )
 			}
 		}
 	}
-
 }
 
