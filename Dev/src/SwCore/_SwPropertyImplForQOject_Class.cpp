@@ -49,6 +49,8 @@ _SwPropertyImplForQOject_Class::_SwPropertyImplForQOject_Class(QObject * host,QS
         //Enregistrement du variant
         _value=_metaproperty.read(_host);   
     }
+    _hasBeenInitialed=true;
+    _initialValue=_value;
     if (!_metaproperty.isWritable()) {
         _is_editable=false;
     }

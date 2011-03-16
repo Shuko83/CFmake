@@ -336,7 +336,7 @@ void ComponentGraphicItem::setTextColor(QColor c) {
 /** @brief sur changement de l'item */
 QVariant ComponentGraphicItem::itemChange ( GraphicsItemChange change, const QVariant & value ) {
     QVariant result=QGraphicsItem::itemChange(change, value);
-    if ((change == ItemPositionChange || change == ItemPositionHasChanged) && scene()) {
+    if ((change == ItemPositionChange || change == ItemPositionHasChanged) && scene()!=0) {
         // value is the new position.
          QRectF irect = mapToScene(_bbox | childrenBoundingRect()).boundingRect();
          QRectF srect = scene()->sceneRect();

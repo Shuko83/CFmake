@@ -5,7 +5,7 @@
  */
 
 #include "PropertiesWidget.h"
-
+#include "ISwProperty2.h"
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
@@ -35,8 +35,10 @@ PropertiesWidget::PropertiesWidget():QWidget(0),_pixmapTextColor(10,10),_pixmapB
     _pModel=new SwPropertiesModelImpl(this);
     _pView=new QTreeView(this);
     _pView->setAlternatingRowColors(true);
-    _pView->setItemDelegate(new SwGuiDefaultItemDelegate(this));
+    _pView->setItemDelegate(new EditorPropertiesItemDelegate(this));
     _pView->setModel(_pModel);
+    _pView->viewport()->setAttribute(Qt::WA_Hover,true);
+    connect(_pView,SIGNAL( clicked  ( const QModelIndex &)),this,SLOT(onReset( const QModelIndex & )));
     formLayout->addWidget(_pView,3,0,1,5);
     _cgi=0;
 }
@@ -98,13 +100,19 @@ void PropertiesWidget::nameChangedAndValid() {
 }
 /** @brief on color click */
 void PropertiesWidget::onColorClick() {
-    _cgi->setColor(QColorDialog::getColor (_cgi->getColor(),0));
-    setBgColorToButton(_cgi->getColor());
+    QColor returnColor=QColorDialog::getColor (_cgi->getColor(),0);
+    if(returnColor.isValid()) {
+        _cgi->setColor(returnColor);
+        setBgColorToButton(_cgi->getColor());
+    }
 }
 /** @brief on text color click */
 void PropertiesWidget::onTextColorClick() {
-    _cgi->setTextColor(QColorDialog::getColor (_cgi->getTextColor(),0));
-    setTextColorToButton(_cgi->getTextColor());
+    QColor returnColor=QColorDialog::getColor (_cgi->getTextColor(),0);
+    if(returnColor.isValid()) {
+        _cgi->setTextColor(returnColor);
+        setTextColorToButton(_cgi->getTextColor());
+    }
 }
 /** @brief change la couleur du bouton */
 void PropertiesWidget::setTextColorToButton(const QColor & color) {
@@ -123,4 +131,21 @@ void PropertiesWidget::setBgColorToButton(const QColor & color) {
     p.drawRect(QRect(0,0,_pixmapBgColor.width()-1,_pixmapBgColor.height()-1));
     _buttonBgColor->setIcon(QIcon(_pixmapBgColor));
     _buttonBgColor->setText(color.name().toUpper());
+}
+/** @brief on text color click */
+void PropertiesWidget::onReset( const QModelIndex & index ) {
+    if (!index.isValid() || index.column()!=0) 
+        return;
+    QVariant value = index.model()->data(index, Qt::UserRole);
+    void * ptr=qVariantValue<void *>(value);
+    if(ptr==0) {
+        return;
+    }
+    ISwProperty * p=(ISwProperty *)ptr;
+    ISwProperty2 * rp=dynamic_cast<ISwProperty2 *>(p);
+    if (rp==0 || !rp->HasChanged() || !rp->isResettable() ) {
+        return;
+    }
+    rp->reset();
+    update();
 }

@@ -290,7 +290,11 @@ QVariant SwPropertiesModelImpl::data ( const QModelIndex & index, int role) cons
     if (role == Qt::ForegroundRole) {
         if (item->_property!=NULL) {
             if (item->_property->IsEditable())
-                return QVariant(QColor(Qt::black));
+                if (item->_property->HasChanged()) {
+                    return QVariant(QColor(Qt::darkBlue));
+                } else {
+                    return QVariant(QColor(Qt::black));
+                }
             else
                 return QVariant(QColor(Qt::lightGray));
         } else {
@@ -308,6 +312,11 @@ QVariant SwPropertiesModelImpl::data ( const QModelIndex & index, int role) cons
                 }
                 return QVariant(font);
             } else {
+                if (item->_property->HasChanged()) {
+                    font.setBold(true);
+                } else {
+                    font.setBold(false);
+                }
                 return QVariant(font);
             }
         } else {
@@ -347,6 +356,9 @@ QVariant SwPropertiesModelImpl::data ( const QModelIndex & index, int role) cons
             if (!desc.isEmpty())
                 return QVariant(desc);
         }
+    }
+    if (role == Qt::UserRole ) {
+        return qVariantFromValue((void *)item->_property);
     }
     return QVariant();
 }

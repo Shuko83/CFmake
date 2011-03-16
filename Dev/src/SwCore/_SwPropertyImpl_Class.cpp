@@ -20,6 +20,8 @@ _SwPropertyImpl_Class::_SwPropertyImpl_Class(QString name,ISwProperties * hostin
     _hosting_service=hosting_service;
     _name=name;
     _value=QVariant();
+    _initialValue=QVariant();
+    _hasBeenInitialed=false;
     _is_visible=true;
     _is_editable=true;
     _has_changed=false;
@@ -53,8 +55,13 @@ void _SwPropertyImpl_Class::SetValue (const QVariant & val){
     if (!_is_editable)
         return;
     SetInternalValue(val);
-    _has_changed=true;
-    _OnChangeValue(this);
+    if (_hasBeenInitialed) {
+        _has_changed=true;
+        _OnChangeValue(this);
+    } else {
+        _initialValue=val;
+        _hasBeenInitialed=true;
+    }
 }
 /*! \brief methode permettant de definir la valeur d'une propriété par son controller*/
 void _SwPropertyImpl_Class::SetValueByController(const QVariant & val) {
@@ -190,4 +197,15 @@ void _SwPropertyImpl_Class::SetComplexeTypeAdapters(ISwComplexeTypeAdapters * ad
 ISwComplexeTypeAdapters * _SwPropertyImpl_Class::GetComplexeTypeAdapters() {
     return _adapters;
 }
+/*! \brief prpriete resettable*/
+bool _SwPropertyImpl_Class::isResettable() {
+    return true;
+}
+/*! \brief reset de la propriété*/
+void _SwPropertyImpl_Class::reset() {
+    SetInternalValue(_initialValue);
+    _has_changed=false;
+    _OnChangeValue(this);
+}
+
 

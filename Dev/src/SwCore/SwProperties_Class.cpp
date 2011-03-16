@@ -58,7 +58,7 @@ ISwProperty * SwProperties_Class::CreatePropertyWithType(int type_id,QString nam
     _OnBeforeChange(this);
     var=QVariant(type_id,_my_objet);
     property=new _SwPropertyImpl_Class(name,this);
-    property->SetValue(var);
+    property->SetInternalValue(var);
     QMetaType::destroy(type_id, _my_objet);
     _map_properties.insert(name,property);
     _set_properties.push_back(property);

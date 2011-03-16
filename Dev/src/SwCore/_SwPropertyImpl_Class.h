@@ -8,6 +8,7 @@
 
 #ifndef __SwPropertyImpl_Class_H
 #define __SwPropertyImpl_Class_H
+
 /*
   * INCLUDES GLOBAUX
   */
@@ -15,11 +16,14 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "ISwProperty.h"
+#include "ISwProperty2.h"
 #include "ISwController.h"
 #include "ISwProperties.h"
 #include "ISwComplexeTypeAdapters.h"
 #include "LibIndeSig.h"
+
+#pragma warning(disable:4250)
+
 
 namespace StreamWork
 {
@@ -31,7 +35,7 @@ namespace StreamWork
         \note
         */
 
-        class _SwPropertyImpl_Class : public ISwProperty {
+        class _SwPropertyImpl_Class : public virtual ISwProperty2 {
         protected:
             /*! \brief service hote */
             ISwProperties * _hosting_service;
@@ -45,6 +49,9 @@ namespace StreamWork
             QIcon _valueIcon;
             /*! \brief Valeur de la propri�t� */
             QVariant _value;
+            /*! \brief Valeur de la propri�t� initiale */
+            QVariant _initialValue;
+            bool _hasBeenInitialed;
             /*! \brief est visible */
             bool _is_visible;
             /*! \brief est editable */
@@ -136,6 +143,10 @@ namespace StreamWork
 	        void SetComplexeTypeAdapters(ISwComplexeTypeAdapters * adapters);
 	        /*! \brief Recuperation d'adapteurs*/
 	        ISwComplexeTypeAdapters * GetComplexeTypeAdapters();
+            /*! \brief prpriete resettable*/
+            virtual bool isResettable();
+            /*! \brief reset de la propriété*/
+            virtual void reset();
        };
     }
 }

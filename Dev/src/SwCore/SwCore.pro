@@ -36,6 +36,7 @@ HEADERS += LibIndeSig.h \
     ISwPluginsBank.h \
     ISwProperties.h \
     ISwProperty.h \
+    ISwProperty2.h \
     ISwService.h \
     ISwServiceOwner.h \
     ISwServiceOwnerConfigurable.h \

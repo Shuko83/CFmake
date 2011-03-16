@@ -318,6 +318,8 @@
 			<File
 				RelativePath="ISwProperty.h" />
 			<File
+				RelativePath="ISwProperty2.h" />
+			<File
 				RelativePath="ISwRef.h" />
 			<File
 				RelativePath="ISwService.h" />

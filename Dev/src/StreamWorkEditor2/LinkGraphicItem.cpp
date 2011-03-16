@@ -108,7 +108,7 @@ QPainterPath LinkGraphicItem::shape () const {
 }
 /** @brief Definition du rectangle englobant */
 QRectF LinkGraphicItem::boundingRect() const {
-    return _path.boundingRect();
+    return _shapePath.controlPointRect ();
 }
 /** @brief mise a jour */
 void LinkGraphicItem::updateLink() {
@@ -148,6 +148,14 @@ void LinkGraphicItem::updateLink() {
     QPainterPathStroker ps;
     ps.setWidth(SELECTED_LINK_WIDTH);
     _shapePath = ps.createStroke(path);
+    QRectF irect = mapToScene(boundingRect()).boundingRect();
+    if (scene()!=0) {
+        QRectF srect = scene()->sceneRect();
+        if (!srect.contains(irect)) {
+            srect = srect | irect;
+            scene()->setSceneRect(srect);
+        }
+    }
     update();
 }
 /** @brief construction du point de controle */

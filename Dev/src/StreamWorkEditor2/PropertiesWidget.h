@@ -11,7 +11,7 @@
 #include <QtGui>
 #include "ComponentGraphicItem.h"
 #include <SwPropertiesModelImpl.h>
-#include <SwGuiDefaultItemDelegate.h>
+#include <EditorPropertiesItemDelegate.h>
 
 /**
 @class PropertiesWidget
@@ -36,7 +36,8 @@ public slots:
     void onColorClick();
     /** @brief on text color click */
     void onTextColorClick();
-
+    /** @brief on text color click */
+    void onReset( const QModelIndex & index );
 private:
     /** @brief change la couleur du bouton */
     void setTextColorToButton(const QColor & color);
