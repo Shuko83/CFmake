@@ -13,6 +13,7 @@
   * INCLUDES GLOBAUX
   */
 #include <QString>
+#include <QFile>
 #include <QMultiMap>
 #include <QHash>
 #include <QSystemTrayIcon>
@@ -63,8 +64,14 @@ namespace StreamWork
             QStringList _updatedFiles;
             /*! \brief trayIcon */
             QSystemTrayIcon * _trayIcon;
+            /*! \brief user */
+            QString userName;
+            /*! \brief list path user */
+            QList<QString> globalUserPathList;
             /*! \brief Reconstruction du modele*/
             void RebuildModel();
+            /*! \brief recuperatoin d'une liste de path d'un fichier descripteur */
+            QList<QString> getPathsFromFile(QFile *f);
 		public:
             /*! \brief Constructeur */
             _SwPluginsBank_Class();

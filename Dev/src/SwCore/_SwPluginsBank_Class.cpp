@@ -29,6 +29,7 @@
 #define WIN32_BUFSIZE 30000
 TCHAR chNewEnv[WIN32_BUFSIZE];
 #define VARNAME_PATH TEXT("PATH")
+#define VARNAME_USER TEXT("USERNAME")
 #endif
 
 using namespace StreamWork::SwCore;
@@ -126,6 +127,16 @@ _SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel() {
     _trayIcon->setIcon(QIcon(":/SwCore/SysTrayUpdate.png"));
     _trayIcon->setVisible(false);
     connect(_trayIcon,SIGNAL(messageClicked ()),this,SLOT(hideDisplayUpdate()));
+    DWORD dwRet;
+    dwRet = GetEnvironmentVariable(VARNAME_USER, chNewEnv, WIN32_BUFSIZE);
+    if (dwRet<=WIN32_BUFSIZE) {
+#ifdef UNICODE
+       userName = QString::fromUtf16(chNewEnv);
+#else
+       userName = QString::fromLocal8Bit(chNewEnv);
+#endif
+    }
+
 }
 /*! \brief Destructeur */
 _SwPluginsBank_Class::~_SwPluginsBank_Class(){
@@ -287,14 +298,14 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
     }
     RebuildModel();
 }
-/*! \brief Ajouter un descripteur de paths */
-void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
+/*! \brief recuperatoin d'une liste de path d'un fichier descripteur */
+QList<QString> _SwPluginsBank_Class::getPathsFromFile(QFile *f) {
     QDomDocument doc;
     QString xml_error;
     int error_line,error_column;
 
-    //Chargement du descriptor
-    QFile * f=new QFile(pathsdescriptor);
+    QList<QString> pathList;
+ 
     f->open(QIODevice::ReadOnly | QIODevice::Text);
     QString desc=QString(f->readAll());
     f->close();
@@ -310,6 +321,7 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
         LAUNCH_SWEXCEPTION("SwPluginsBank_Class",msg)
     }
 
+
     QDomElement pathelt=root.firstChildElement("Path");
     while (!pathelt.isNull()) {
         if (pathelt.hasAttribute("target")) {
@@ -317,16 +329,66 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
             QString usage=pathelt.attribute("use","all"); 
 #ifndef QT_NO_DEBUG
             if (usage=="all" || usage=="debug") {
-                AddPath(path);
+                pathList.push_back(path);
+                //AddPath(path);
             }
 #else
             if (usage=="all" || usage=="release") {
-                AddPath(path);
+                pathList.push_back(path);
+                //AddPath(path);
             }
 #endif
         }
         pathelt=pathelt.nextSiblingElement("Path");
     }
+    return pathList;
+}
+
+/*! \brief Ajouter un descripteur de paths */
+void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
+    QDomDocument doc;
+    QString xml_error;
+    int error_line,error_column;
+
+    QList<QString> pathList;
+    QList<QString> pathListUser;
+
+    //Chargement du descripteur default
+    QFile * f=new QFile(pathsdescriptor);
+    pathList=getPathsFromFile(f);
+    //Chargement du descripteur user
+    f=new QFile(pathsdescriptor+"."+userName);
+    if(f->exists()) {
+        pathListUser=getPathsFromFile(f);
+        QString upath;
+        foreach(upath,pathListUser) {
+            QString tmpupath=upath;
+            tmpupath.replace("\\Stable\\","\\********\\"); 
+            tmpupath.replace("\\Dev\\","\\********\\"); 
+            int count=pathList.size();
+            bool substitution=false;
+            for(int i=0;i<count;i++) {
+                QString tmppath=pathList[i];
+                tmppath.replace("\\Stable\\","\\********\\"); 
+                tmppath.replace("\\Dev\\","\\********\\"); 
+                if(tmpupath==tmppath) {
+                    pathList[i]=upath;
+                    substitution=true;
+                    break;
+                }
+            }
+            if (!substitution) {
+                pathList.push_back(upath);
+            }
+            globalUserPathList.append(pathListUser);
+        }
+
+    }
+    QString path;
+    foreach(path,pathList) {
+        AddPath(path);
+    }
+
 }
 /*! \brief Acces a QMap des paths (le champs bool suivant indique s'il doivent etre enregistré
 \return la QMap des paths*/
@@ -490,8 +552,14 @@ void _SwPluginsBank_Class::RebuildModel() {
         //Remplissage des données
         for(it=_plugins_paths.begin();it!=_plugins_paths.end();it++) {
             buildData.clear();
-            buildData << "Path" << QDir::cleanPath(it.key());
-            path_item=new _SwTreeItem(buildData,QIcon(":/SwCore/path.png"),_tree_items,QColor("black"),f_bold);
+            QColor pathColor=QColor("black");
+            if (globalUserPathList.contains(it.key())) {
+                buildData << "Path (User)" << QDir::cleanPath(it.key());
+                pathColor=QColor("darkRed");
+            } else {
+                buildData << "Path" << QDir::cleanPath(it.key());
+            }
+            path_item=new _SwTreeItem(buildData,QIcon(":/SwCore/path.png"),_tree_items,pathColor,f_bold);
             _tree_items->appendChild(path_item);
             for(itp=it.value().begin();itp!=it.value().end();itp++) {
                 buildData.clear();
