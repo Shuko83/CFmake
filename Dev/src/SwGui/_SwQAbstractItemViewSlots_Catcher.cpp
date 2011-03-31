@@ -9,6 +9,7 @@
   * INCLUDES LOCAUX
   */
 #include "_SwQAbstractItemViewSlots_Catcher.h"
+#include <QTreeView>
 
 
 using namespace StreamWork::SwGui;
@@ -79,4 +80,17 @@ void _SwQAbstractItemViewSlots_Catcher::OnMenuRequested( const QPoint & pos) {
     }
     QPoint globalpos=_host->viewport()->mapToGlobal(pos);
     if (_handle_interface!=NULL) _handle_interface->onMenuRequested(globalpos,index); 
+}
+
+//-------------------------------------------------------------------------
+void _SwQAbstractItemViewSlots_Catcher::resizeColumn( const QModelIndex& )
+{
+	QTreeView * tmpItem = reinterpret_cast<QTreeView*>(_host);
+	if(tmpItem)
+	{
+		tmpItem->resizeColumnToContents(0);
+		int value = tmpItem->columnWidth(0);
+		tmpItem->setColumnWidth(0, value+10);
+	}
+	
 }

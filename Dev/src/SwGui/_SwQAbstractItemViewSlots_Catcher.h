@@ -56,6 +56,8 @@ namespace StreamWork
 			virtual void onViewportEntered ();
             /*! \brief OnMenuRequest*/
             virtual void OnMenuRequested( const QPoint & pos);
+            /*! \brief resizeColumn*/
+			virtual void resizeColumn(const QModelIndex&);
 
 		};
 	}

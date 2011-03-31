@@ -72,6 +72,10 @@ void _SwGuiCompTreeView::InitializeResources() throw(SwException) {
     QObject::connect(_treeview,SIGNAL(pressed(const QModelIndex&)),_signals_catcher,SLOT(onPressed(const QModelIndex&)));
     QObject::connect(_treeview,SIGNAL(viewportEntered()),_signals_catcher,SLOT(onViewportEntered()));
     QObject::connect(_treeview,SIGNAL(customContextMenuRequested(const QPoint &)),_signals_catcher,SLOT(OnMenuRequested(const QPoint &)));
+
+	connect(_treeview,SIGNAL(collapsed ( const QModelIndex &  )),_signals_catcher,SLOT(resizeColumn(const QModelIndex&)));
+	connect(_treeview,SIGNAL(expanded ( const QModelIndex &  )),_signals_catcher,SLOT(resizeColumn(const QModelIndex&)));
+
     //Enregistrement des services
     this->RegisterService(_properties_service);
     this->RegisterService(_consumer_service);
