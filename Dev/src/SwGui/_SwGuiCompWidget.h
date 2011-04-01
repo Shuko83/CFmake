@@ -43,7 +43,12 @@ protected:
     ISwProperty * _show_property;
     /* flags */
     SwEnum _flags_mode;
-    ISwProperty * _flags_property;
+	ISwProperty * _flags_property;
+	ISwProperty * _backgroundTransparency_property;
+
+	/* Set the attributes background transparent */
+	bool _isBackgroundTransparent;
+
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */

@@ -34,6 +34,7 @@ _SwGuiCompWidget::_SwGuiCompWidget(): SwComponent_Class(){
     _registered_widgets_nb=0;
     _handle_layout=NULL;
     _is_layout_mode=false;
+	_isBackgroundTransparent = false;
     _show_mode.AddKey(SHOW_NORMAL,"None");
     _show_mode.AddKey(SHOW_CENTERED,"Centered");
     _show_mode.AddKey(SHOW_FULLSCREEN,"FullScreen");
@@ -120,6 +121,14 @@ void _SwGuiCompWidget::InitializeResources() throw(SwException) {
         _flags_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompWidget::OnPropertyChange);
     }
 
+	_backgroundTransparency_property=_properties_service->CreateProperty<bool>("TranslucentBackground");
+	if (_backgroundTransparency_property!=NULL) {
+		QVariant variant;
+		variant.setValue(_isBackgroundTransparent);
+		_backgroundTransparency_property->SetValue(variant);
+		_backgroundTransparency_property->SetDescription("Set the background of the widget transparent");  
+		_backgroundTransparency_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompWidget::OnPropertyChange);
+	}
 
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiWidget done\n"));
 
@@ -157,7 +166,23 @@ void _SwGuiCompWidget::OnPropertyChange(ISwProperty * property) {
         bool isVisible=_widget->isVisible();
         _widget->setWindowFlags(Qt::WindowFlags(_flags_mode.ToInt()));
         _widget->setVisible(isVisible);
-    }
+	}
+	if (_backgroundTransparency_property==property) {
+		bool transparency =_backgroundTransparency_property->GetValue().toBool();
+		_isBackgroundTransparent = transparency;
+		 bool isVisible=_widget->isVisible();
+		if(_isBackgroundTransparent)
+		{
+			_widget->setAttribute(Qt::WA_TranslucentBackground,true);
+			_widget->setWindowFlags(Qt::FramelessWindowHint);
+		}
+		else
+		{
+			_widget->setAttribute(Qt::WA_TranslucentBackground,false);
+		}
+
+		_widget->setVisible(isVisible);
+	}
 }
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
