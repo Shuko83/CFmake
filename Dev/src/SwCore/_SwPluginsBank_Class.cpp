@@ -195,7 +195,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
         qstrMessage+=";";
         qstrMessage+=tmppath;
 #ifndef QT_NO_DEBUG
-        SW_APP->Logger().Log(LogLvl_Warning,QString(">>>> path size %d\n").arg(qstrMessage.length()));
+        SW_APP->Logger().Log(LogLvl_Warning,QString(">>>> path size %1\n").arg(qstrMessage.length()));
 #endif
         #ifdef UNICODE
         bool result=SetEnvironmentVariable(VARNAME_PATH, (wchar_t*) qstrMessage.utf16());
