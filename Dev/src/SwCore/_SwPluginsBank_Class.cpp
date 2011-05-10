@@ -287,7 +287,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
             } else {
                 SW_APP->Logger().Log(LogLvl_Critical,lib.errorString());
                 qDebug(QString("QLoadLibrary failed for %1:%2").arg(real_file).arg(lib.errorString()).toLatin1().data()); 
-                DumpDllFromPath(real_file.utf16(),3);
+                DumpDllFromPath(real_file.utf16(),5);
                 /* if (0==LoadLibrary(real_file.utf16())) {
                     DWORD error=GetLastError();
                      qDebug(QString("LoadLibrary failed for %1:%2)").arg(real_file).arg(error).toLatin1().data()); 
