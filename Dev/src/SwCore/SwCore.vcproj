@@ -152,6 +152,8 @@
 			<File
 				RelativePath="SwException.cpp" />
 			<File
+				RelativePath="SwExtensionHelper.cpp" />
+			<File
 				RelativePath="SwFileDescriptor.cpp" />
 			<File
 				RelativePath="SwFileLogRecorder_Class.cpp" />
@@ -202,6 +204,10 @@
 			<File
 				RelativePath="_SwEnumKeys_Class.cpp" />
 			<File
+				RelativePath="_SwExtensionImpl.cpp" />
+			<File
+				RelativePath="_SwExtensionPointImpl.cpp" />
+			<File
 				RelativePath="_SwFileEditorManager.cpp" />
 			<File
 				RelativePath="_SwPluginsBank_Class.cpp" />
@@ -215,6 +221,8 @@
 				RelativePath="_SwPropertyPersistent_Toolbox.cpp" />
 			<File
 				RelativePath="_SwProvidedInterfaceContainer_Class.cpp" />
+			<File
+				RelativePath="_SwServiceExtensionsImpl.cpp" />
 			<File
 				RelativePath="_SwTreeItem.cpp" />
 		</Filter>
@@ -272,6 +280,10 @@
 			<File
 				RelativePath="ISwExecutor2.h" />
 			<File
+				RelativePath="ISwExtension.h" />
+			<File
+				RelativePath="ISwExtensionPoint.h" />
+			<File
 				RelativePath="ISwFileEditor.h" />
 			<File
 				RelativePath="ISwFinalizer.h" />
@@ -323,6 +335,8 @@
 				RelativePath="ISwRef.h" />
 			<File
 				RelativePath="ISwService.h" />
+			<File
+				RelativePath="ISwServiceExtensions.h" />
 			<File
 				RelativePath="ISwServiceFileEditorManager.h" />
 			<File
@@ -403,6 +417,8 @@
 			</File>
 			<File
 				RelativePath="SwException.h" />
+			<File
+				RelativePath="SwExtensionHelper.h" />
 			<File
 				RelativePath="SwFileDescriptor.h" />
 			<File
@@ -502,6 +518,10 @@
 			<File
 				RelativePath="_SwEnumKeys_Class.h" />
 			<File
+				RelativePath="_SwExtensionImpl.h" />
+			<File
+				RelativePath="_SwExtensionPointImpl.h" />
+			<File
 				RelativePath="_SwFileEditorManager.h" />
 			<File
 				RelativePath="_SwPluginsBank_Class.h">
@@ -536,6 +556,8 @@
 				RelativePath="_SwPropertyPersistent_Toolbox.h" />
 			<File
 				RelativePath="_SwProvidedInterfaceContainer_Class.h" />
+			<File
+				RelativePath="_SwServiceExtensionsImpl.h" />
 			<File
 				RelativePath="_SwTreeItem.h" />
 		</Filter>

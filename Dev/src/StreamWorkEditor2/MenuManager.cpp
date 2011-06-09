@@ -3,7 +3,6 @@
 @brief manager de menu
 @author F.Bighelli
  */
-
 #include "MenuManager.h"
 
 #include <QColorDialog>
@@ -13,6 +12,7 @@
 #include <ISwPins_Manager.h>
 #include <SwTime_ToolBox.h>
 #include "SwProperties_Class.h"
+#include <ISwServiceExtensions.h>
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -64,6 +64,7 @@ void MenuManager::setControler(StreamControler * controler) {
 		_adminList.clear();
 		_propertyList.clear();
         _exeList.clear();
+        _connectorList.clear();
     }
     _streamControler=controler;
     _menu->clear();
@@ -84,6 +85,7 @@ void MenuManager::rebuildMenu() {
 	_propertyList.clear();
 	_exeList.clear();
     _iaList.clear();
+    _connectorList.clear();
     for(int i=0;i<list.count();i++) 
 	{
         ComponentGraphicItem * gcomponent=dynamic_cast<ComponentGraphicItem *>(list[i]);
@@ -130,6 +132,11 @@ void MenuManager::rebuildMenu() {
                 if (ia!=0)
 				{
                     _iaList.push_back(ia); 
+                } else {
+                    ConnectorGraphicItem * connectorItem=dynamic_cast<ConnectorGraphicItem *>(list[i]);
+                    if (connectorItem!=0) {
+                        _connectorList.push_back(connectorItem);
+                    }
                 }
             }
         }
@@ -175,7 +182,7 @@ void MenuManager::buildMenuForContext(QMenu * menu) {
     if (_gwList.count()>0) {
         menu->addAction("Paste style",this,SLOT(onPasteStyle()));
     }
-    if (_gwList.count()==0 && _lkList.count()==0) {
+    if (_gwList.count()==0 && _lkList.count()==0 && _connectorList.count()==0) {
         menu->addAction("Add interest area",this,SLOT(onAddInterestArea()));
         menu->addAction("Change background",this,SLOT(onChangeBackGroundColor()));
     }
@@ -200,6 +207,11 @@ void MenuManager::buildMenuForContext(QMenu * menu) {
 		else
 			menu->addAction("Show",this,SLOT(onShow()));
 	}
+    if (_gwList.count()==0 && _lkList.count()==0 && _connectorList.count()==1) {
+        buildMenuForConnector(menu,_connectorList[0]);
+    } else {
+        _selectedConnector=0;
+    }
 }
 /** @brief sur remove */
 void MenuManager::onRemove() {
@@ -234,6 +246,9 @@ void MenuManager::onRemove() {
 /** @brief sur deconnection */
 void MenuManager::onDisconnect() {
     SwComponent_Class * component;
+    if (_selectedConnector!=0) {
+        _lkList.append(*(_selectedConnector->getLinks()));
+    }
     for(int i=0;i<_lkList.count();i++) {
         component=((ComponentGraphicItem *)_lkList[i]->getSource()->parentItem())->getComponent();
         if (_lkList[i]->getSource()->getConnectorType()==CONSUMER) {
@@ -247,6 +262,7 @@ void MenuManager::onDisconnect() {
             }
         }
     }
+    menuNeedBeRebuild=true;
 }
 /** @brief sur start execution*/
 void MenuManager::onStartExecution() {
@@ -337,3 +353,109 @@ void MenuManager::onChangeBackGroundColor() {
     _streamControler->getScene()->setBackgroundBrush(QBrush(c));
     _streamControler->getView()->setBackgroundBrush(QBrush(c));
 }
+/** @brief construit le menu pour le connector */
+void MenuManager::buildMenuForConnector(QMenu * menu,ConnectorGraphicItem * connector) {
+    _selectedConnector=connector;
+    QList<LinkGraphicItem *> * links=connector->getLinks();
+    if (links->size()==1) {
+        menu->addAction("Jump to connected",this,SLOT(onJumpToConnected()));
+        menu->addAction("Disconnect",this,SLOT(onDisconnect()));
+        return;
+    }
+    if (links->size()==0 && ( _selectedConnector->getConnectorType()==CONSUMER || _selectedConnector->getConnectorType()==PIN)) {
+        _connectableItems.clear();
+        QMenu *submenu=menu->addMenu(QIcon(),"Connect to");
+        QList<QGraphicsItem *> litems=_streamControler->getScene()->items();
+        QList<QGraphicsItem *>::iterator it=litems.begin();
+        while (it!=litems.end()) {
+            ConnectorGraphicItem *citem=dynamic_cast<ConnectorGraphicItem *>(*it);
+            if (citem!=0 && citem!=_selectedConnector) {
+                bool testConnectable=(_selectedConnector->getConnectorType()==CONSUMER && citem->getConnectorType()==PROVIDER);
+                testConnectable = testConnectable || (_selectedConnector->getConnectorType()==PIN && citem->getConnectorType()==PIN && citem->getLinks()->isEmpty());
+                testConnectable=testConnectable && citem->getModelType()==_selectedConnector->getModelType();
+                testConnectable=testConnectable && citem->parentItem()!=_selectedConnector->parentItem();
+                if (testConnectable) {
+                    _connectableItems.push_back(citem);
+                    ComponentGraphicItem *parentitem=dynamic_cast<ComponentGraphicItem *>(citem->parentItem());
+                    QIcon icon=SW_APP->ComponentsBank().GetComponentIcon(parentitem->getComponent()->GetFactoryComponentName());
+                    QAction * action=submenu->addAction(icon,buildActionNameForConnector(citem),this,SLOT(onConnect()));
+                    action->setToolTip(SW_APP->ComponentsBank().GetComponentDescription(parentitem->getComponent()->GetFactoryComponentName()));
+                } 
+            }
+            it++;
+        }
+    }
+    if (links->size()==0 && _selectedConnector->getConnectorType()==CONSUMER) {
+        ISwServiceExtensions * serviceExtension=dynamic_cast<ISwServiceExtensions *>(SW_APP->QueryService(CG_SW_SERVICE_EXTENSION_MANAGER));
+        QList<ISwExtension *> availableExtensions=serviceExtension->getExtensionWithType(_selectedConnector->getModelType());
+        QMenu *submenu=menu->addMenu(QIcon(),"Create and connect to");
+        foreach(ISwExtension * ext,availableExtensions) {
+            QIcon icon=SW_APP->ComponentsBank().GetComponentIcon(ext->getComponentType());
+            QAction * action=submenu->addAction(icon,ext->getComponentType()+"."+ext->getName(),this,SLOT(onCreateAndConnect()));
+            action->setToolTip(SW_APP->ComponentsBank().GetComponentDescription(ext->getComponentType()));
+        }
+    }
+
+}
+/** @brief on jump */
+void MenuManager::onJumpToConnected() {
+    QList<LinkGraphicItem *> *links=_selectedConnector->getLinks();
+    LinkGraphicItem *lk=links->at(0);
+    ConnectorGraphicItem *target=(lk->getSource()==_selectedConnector?lk->getTarget():lk->getSource());
+    _streamControler->getView()->centerOn(target);
+    _streamControler->getScene()->clearSelection();
+    target->setSelected(true);
+}
+/** @brief sur Connection */
+void MenuManager::onCreateAndConnect() {
+    QObject * object=sender();
+    QAction * action=dynamic_cast<QAction *>(object);
+    if (action!=0) {
+        ISwServiceExtensions * serviceExtension=dynamic_cast<ISwServiceExtensions *>(SW_APP->QueryService(CG_SW_SERVICE_EXTENSION_MANAGER));
+        QList<ISwExtension *> availableExtensions=serviceExtension->getExtensionWithType(_selectedConnector->getModelType());
+        foreach(ISwExtension * ext,availableExtensions) {
+            if ((ext->getComponentType()+"."+ext->getName())==action->text()) {
+                QPointF spos=_selectedConnector->mapToScene(0.0,0.0);
+                spos.setX(spos.x()+200);
+
+                _streamControler->addComponent(ext->getComponentType(),spos);
+                ComponentGraphicItem * gitem=_streamControler->getLastAddedComponent();
+                ConnectorGraphicItem *citem=gitem->getConnector(ext->getName());
+                _streamControler->onLinkConnectors(_selectedConnector,citem);
+                menuNeedBeRebuild=true;
+                return;
+            }
+        }
+    }
+    
+
+}
+
+/** @brief sur Connection */
+void MenuManager::onConnect() {
+    QObject * object=sender();
+    QAction * action=dynamic_cast<QAction *>(object);
+    if (action!=0) {
+        foreach(ConnectorGraphicItem *citem,_connectableItems) {
+            if (buildActionNameForConnector(citem)==action->text()) {
+                _streamControler->onLinkConnectors(_selectedConnector,citem);
+                menuNeedBeRebuild=true;
+                return;
+            }
+        }
+    }
+    
+}
+/** @brief build action name for citem */
+QString MenuManager::buildActionNameForConnector(ConnectorGraphicItem *citem) {
+    ComponentGraphicItem *parentitem=dynamic_cast<ComponentGraphicItem *>(citem->parentItem());
+
+    QString name;
+    if (citem->getLinks()->size()>0) {
+        name=parentitem->getComponent()->GetName()+"."+citem->getName()+" ("+QString("%1").arg(citem->getLinks()->size())+")";
+    } else {
+        name=parentitem->getComponent()->GetName()+"."+citem->getName();
+    }
+    return name;
+}
+

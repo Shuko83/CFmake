@@ -295,7 +295,7 @@ void StreamControler::onLinkConnectors(ConnectorGraphicItem * src,ConnectorGraph
             iconsumer->AttachProvider(iprovider,src->getName(),target->getName());
         } catch(SwException & se) {
             //L'application a levé une exception
-             QMessageBox::warning(0,QString("Warning... "),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
+             //QMessageBox::warning(0,QString("Warning... "),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
         }
     } 
     if (src->getConnectorType()==PIN) {
@@ -327,6 +327,7 @@ void StreamControler::onSceneRectChanged(const QRectF & rect) {
 /** @brief evenement du stream : ajout d'un enfant */
 void StreamControler::childAdded(SwComponent_Class * parent,SwComponent_Class *child) {
     ComponentGraphicItem * c=new ComponentGraphicItem(child,this);
+    _lastAddedComponent=c;
     if (parent!=_rootComponent) {
         QMap<StreamWork::SwCore::SwComponent_Class *,ComponentGraphicItem *>::iterator it;
         it=_mapCompToItem.find(parent);
@@ -346,6 +347,10 @@ void StreamControler::childAdded(SwComponent_Class * parent,SwComponent_Class *c
     c->updateAttributs();
     _streamView->update();
     streamControlerChanged();
+}
+/** @brief Renvoie le dernier composant ajouté */
+ComponentGraphicItem * StreamControler::getLastAddedComponent() {
+    return _lastAddedComponent;    
 }
 /** @brief evenement du stream : suppression d'un enfant */
 void StreamControler::childRemoved(StreamWork::SwCore::SwComponent_Class * parent,

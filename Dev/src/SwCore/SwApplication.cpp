@@ -14,6 +14,7 @@
 #include "SwApplication.h"
 #include "_SwPluginsBank_Class.h"
 #include "_SwFileEditorManager.h"
+#include "_SwServiceExtensionsImpl.h"
 #include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
 #include "SwLoader_Class.h"
 #include "SwEnum.h"
@@ -38,6 +39,7 @@ SwApplication * _singleton=NULL;
 _SwPluginsBank_Class * _bank=NULL;
 _SwComplexeTypeAdaptersFactoriesBankImpl * _ctadaptersbank=NULL;
 _SwFileEditorManager * _feManager=NULL;
+_SwServiceExtensionsImpl * _serviceExtensions=NULL;
 bool            _is_launch=false;
 
 /*! \brief Constructeur*/
@@ -71,6 +73,8 @@ SwApplication::SwApplication():SwServicesManager_Class() {
 SwApplication::~SwApplication() {
     UnregisterService(_feManager->GetServiceName());
     delete _feManager;
+    UnregisterService(_serviceExtensions->GetServiceName());
+    delete _serviceExtensions;
     _singleton=NULL;
     delete _bank;
     _bank=NULL;
@@ -245,6 +249,10 @@ int SwApplication::Launch(QString stream_desc) throw(SwException) {
 void SwApplication::FinalizeInitialisation() {
     if (_initialisationFinalized)
         return;
+
+    //Creation du service d'extension
+    _serviceExtensions=new _SwServiceExtensionsImpl();
+    RegisterService(_serviceExtensions);
 
     //Creation de la bd des file editors lors de la phase de finale de l'initialisation
     _feManager=new _SwFileEditorManager();

@@ -37,7 +37,11 @@ public:
 public slots:
 	/** @brief sur remove */
     void onRemove();
-	/** @brief sur deconnection */
+    /** @brief sur Connection */
+    void onConnect();
+    /** @brief sur Connection */
+    void onCreateAndConnect();
+    /** @brief sur deconnection */
     void onDisconnect();
 	/** @brief sur start execution*/
     void onStartExecution();
@@ -57,8 +61,10 @@ public slots:
     void onCopyStyle();
 	/** @brief on paste style */
     void onPasteStyle();
-	/** @brief on change background color */
+    /** @brief on change background color */
     void onChangeBackGroundColor();
+    /** @brief on jump */
+    void onJumpToConnected();
 private:
 	/** @brief Constructor */
 	MenuManager();
@@ -68,6 +74,10 @@ private:
 	void rebuildMenu();
 	/** @brief buildMenuForContext() */
     void buildMenuForContext(QMenu * menu);
+    /** @brief construit le menu pour le connector */
+    void buildMenuForConnector(QMenu * menu,ConnectorGraphicItem * connector);
+    /** @brief build action name for citem */
+    QString buildActionNameForConnector(ConnectorGraphicItem *citem);
 private:
     /** @brief Menu */
     QMenu * _menu;
@@ -89,6 +99,11 @@ private:
     QList<StreamWork::SwCore::ISwAdminSetup *> _adminList;
 	/** @brief Liste des composants ayant un ISwWidget*/
 	QList<StreamWork::SwCore::ISwProperty *> _propertyList;
+    /** @brief pour un connector */
+    QList<ConnectorGraphicItem *> _connectorList;
+    ConnectorGraphicItem *_selectedConnector;
+
+    QList<ConnectorGraphicItem *> _connectableItems;
     /** @brief Descativation du changement de selection */
     bool _disableSelectionChanged;
     /** @brief menu position*/

@@ -97,7 +97,14 @@ HEADERS += LibIndeSig.h \
     SwPropertiesPersistentToolbox.h \
     _SwCleanLinksVisitor.h \
     Component.h \
-    SwIconDescriptor.h
+    SwIconDescriptor.h \
+    ISwServiceExtensions.h \
+    _SwServiceExtensionsImpl.h \
+    ISwExtension.h \
+    ISwExtensionPoint.h \
+    SwExtensionHelper.h \
+    _SwExtensionImpl.h \
+    _SwExtensionPointImpl.h 
 
 SOURCES += SwAddress_ToolBox.cpp \
     SwApplication.cpp \
@@ -143,8 +150,11 @@ SOURCES += SwAddress_ToolBox.cpp \
     SwPropertiesPersistentToolbox.cpp \
     _SwCleanLinksVisitor.cpp \
     Component.cpp \
-    SwIconDescriptor.cpp
-
+    SwIconDescriptor.cpp \
+    _SwServiceExtensionsImpl.cpp \
+    _SwExtensionImpl.cpp \
+    _SwExtensionPointImpl.cpp \
+    SwExtensionHelper.cpp
     
     
     

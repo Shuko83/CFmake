@@ -9,6 +9,7 @@
 #include <QRegExp>
 
 #include "SwApplication.h"
+#include "ISwServiceExtensions.h"
 
 #include "_SwGuiPluginFactory_Class.h"
 #include "_SwGuiCompMainWindow.h"
@@ -295,8 +296,12 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
 	if (sservice!=0)
 	{
 		//rservice->registerCodecFactory(new _SwRecordDataCodecDefaultFactory());
+        return;
 	}
-
+    ISwServiceExtensions * eservice=dynamic_cast< ISwServiceExtensions *>(service);
+    if (eservice!=0) {
+        eservice->registerExtension<ISwWidget>("Widget","SwGuiWidget");
+    }
 }
 /*! \brief sur suppression d'une  interface */
 void _SwGuiPluginFactory_Class::OnUnregisterService(ISwService * service) 
