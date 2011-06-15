@@ -81,7 +81,7 @@
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile=""
-				SubSystem="2"
+				SubSystem="1"
 				LinkTimeCodeGeneration="0"
 			/>
 			<Tool

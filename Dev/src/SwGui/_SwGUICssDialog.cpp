@@ -18,6 +18,9 @@ _SwGuiCssDialog::_SwGuiCssDialog(QDialog *parent):QDialog(parent),_StyleSheet(""
 {
     ui.setupUi(this);
 
+	setWindowFlags(Qt::WindowMinimizeButtonHint| Qt::WindowMaximizeButtonHint| Qt::WindowCloseButtonHint);
+
+	resize(1000,700);
 	ui.B_Update->hide();
 
 	_CSSHighLighter = new _SwGuiCssHighlighter(ui.textEdit->document());

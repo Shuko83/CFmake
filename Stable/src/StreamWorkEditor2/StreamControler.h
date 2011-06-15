@@ -78,6 +78,8 @@ public slots:
     /** @brief sur sceneRectChanged de la scene */
     void onSceneRectChanged(const QRectF & rect);
 public:
+    /** @brief Renvoie le dernier composant ajouté */
+    ComponentGraphicItem * getLastAddedComponent();
     //--------------------------------------------------------------------------
     // Evenements du modele 
     //--------------------------------------------------------------------------
@@ -152,6 +154,7 @@ private:
     void buildLinks();
     /** @brief destruction des liens */
     void destroyLinks();
+
 private:
 	/** @brief Scene */
     StreamScene * _streamScene;
@@ -175,6 +178,8 @@ private:
     bool _enableStreamControlerObservation;
     /** @brief arret de l'execution necessaire lors de l'arret */
     bool _stopExecution;
+    /** @brief dernier composant ajoute */
+    ComponentGraphicItem * _lastAddedComponent;
 };
 
 #endif
