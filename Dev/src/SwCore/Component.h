@@ -93,6 +93,7 @@ namespace StreamWork {
             void enableListeningChangeForProperty(ISwProperty * property);
             /*! \brief enable listening for pin */
             void enableListeningForPin(SwPin * pin);
+
         private:
             /* service de fourniture d'interface */
             SwInterfaces_Provider_Class * _provider_service;

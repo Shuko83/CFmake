@@ -13,6 +13,7 @@
 //Nom du service
 #define CG_SW_SERVICE_EXTENSION_MANAGER "ServiceExtensions"
 
+#pragma warning(disable:4101)
 
 namespace StreamWork {
 

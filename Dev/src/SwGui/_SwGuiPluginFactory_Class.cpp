@@ -300,7 +300,31 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
 	}
     ISwServiceExtensions * eservice=dynamic_cast< ISwServiceExtensions *>(service);
     if (eservice!=0) {
+        eservice->registerExtension<ISwPerspective>("Perspective","SwBasicPerspective");
+        eservice->registerExtension<ISwActionList>("ActionList","SwGuiActionList");
+        eservice->registerExtension<QAbstractItemModel>("Model","SwGuiCompToPropertiesModel");
+        eservice->registerExtension<ISwQAbstractItemViewSlots>("ViewSlots","SwGuiCompToPropertiesModel");
+        eservice->registerExtension<ISwDockWidget>("DockWidget","SwGuiDockWidget");
+        eservice->registerExtension<ISwWidget>("Widget","SwGuiFrame");
+        eservice->registerExtension<ISwLayout>("GridLayout","SwGuiGridLayout");
+        eservice->registerExtension<ISwWidget>("Widget","SwGuiGroupBox");
+        eservice->registerExtension<ISwLayout>("Layout","SwGuiHorizontalLayout");
+        eservice->registerExtension<ISwHttpServer>("ISwHttpServer","SwGuiHttpServer");
+        eservice->registerExtension<ISwWidget>("Widget","SwGuiLabel");
+        eservice->registerExtension<ISwMainWindow>("MainWindow","SwGuiMainWindow");
+        eservice->registerExtension<ISwMenu>("Menu","SwGuiMenu");
+        eservice->registerExtension<ISwAction>("Action","SwGuiPluginsTree");
+        eservice->registerExtension<ISwAction>("Action","SwGuiQActionToWidget");
+        eservice->registerExtension<ISwWidget>("Widget","SwGuiSplitterWidget");
+        eservice->registerExtension<ISwWidget>("Widget","SwGuiStackedWidget");
+        eservice->registerExtension<ISwStackedWidget_Controler>("StackedWidget_Controler","SwGuiStackedWidget");
+        eservice->registerExtension<ISwWidget>("Widget","SwGuiTabWidget");
+        eservice->registerExtension<ISwToolBar>("ToolBar","SwGuiToolBar");
+        eservice->registerExtension<ISwWidget>("Widget","SwGuiTreeView");
+        eservice->registerExtension<ISwLayout>("Layout","SwGuiVerticalLayout");
+        eservice->registerExtension<ISwWidget>("logConsole","SwGuiVisualLogConsole");
         eservice->registerExtension<ISwWidget>("Widget","SwGuiWidget");
+        eservice->registerExtension<ISwWidget>("Widget","SwPerspectivesManager");
     }
 }
 /*! \brief sur suppression d'une  interface */
