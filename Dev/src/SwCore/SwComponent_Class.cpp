@@ -219,24 +219,27 @@ QString SwComponent_Class::GetSuggestedNameForChild(QString initial_name) {
     QStringList list;
     QRegExp rx("(.*[^0-9])([0-9]+)$");
 
-    it=_child_components.find(initial_name);
+	//Check si le nom contient des caractères interdis et on remplace par "_"
+	QString newName = initial_name.replace(QRegExp(":+"),"_");
+
+    it=_child_components.find(newName);
     if (it==_child_components.end())
-        return initial_name;
+        return newName;
 
     //Si c'est un nom numerote -extraction de la racine
-    rx.indexIn(initial_name);
+    rx.indexIn(newName);
     list = rx.capturedTexts();
     if (list.count()==3) {
         //Matching, on recupere la racine
         racine_nom=list.at(1);
         index=list.at(2).toLong(&result);
         if (!result) {
-            racine_nom=initial_name;
+            racine_nom=newName;
             index=0;
         }
     } else {
         //Not matching on prend le nom de l'element comme racine
-        racine_nom=initial_name;
+        racine_nom=newName;
         index=0;
     }
     new_index=index+1;
