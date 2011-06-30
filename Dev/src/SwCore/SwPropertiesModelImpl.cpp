@@ -17,7 +17,7 @@
   */
 #include "SwPropertiesModelImpl.h"
 #include "SwIconDescriptor.h"
-
+#include "ISwSnapShotPropertiesService.h"
 
 using namespace StreamWork::SwCore;
 
@@ -380,6 +380,10 @@ bool SwPropertiesModelImpl::setData ( const QModelIndex & index, const QVariant 
     } else {
         tmpvalue=value;    
     }
+    ISwSnapShotPropertiesService * snapshotService=dynamic_cast<ISwSnapShotPropertiesService *>(_properties->GetHostComponent()->QueryService(CG_SW_SNAPSHOPPROPERTY_SERVICE));
+    if (snapshotService!=0 && snapshotService->exist(item->_property->GetRealName())) {
+        snapshotService->removeFromSnapShot(item->_property->GetRealName());
+    } 
     item->_property->SetValue(tmpvalue);
     emit dataChanged(index,index);
     return true;

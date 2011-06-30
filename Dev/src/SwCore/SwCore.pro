@@ -104,7 +104,11 @@ HEADERS += LibIndeSig.h \
     ISwExtensionPoint.h \
     SwExtensionHelper.h \
     _SwExtensionImpl.h \
-    _SwExtensionPointImpl.h 
+    _SwExtensionPointImpl.h\
+    ISwSubStream.h \
+    ISwEditionService.h \
+    ISwSnapShotPropertiesService.h \
+    SwSnapShotPropertiesService.h
 
 SOURCES += SwAddress_ToolBox.cpp \
     SwApplication.cpp \
@@ -154,7 +158,8 @@ SOURCES += SwAddress_ToolBox.cpp \
     _SwServiceExtensionsImpl.cpp \
     _SwExtensionImpl.cpp \
     _SwExtensionPointImpl.cpp \
-    SwExtensionHelper.cpp
+    SwExtensionHelper.cpp \
+    SwSnapShotPropertiesService.cpp
     
     
     

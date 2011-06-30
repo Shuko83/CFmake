@@ -27,6 +27,8 @@ public:
     static MenuManager * getInstance();
     /** @brief Definition du controleur */
     void setControler(StreamControler * controler);
+    /** @brief acces au controleur */
+    StreamControler * getControler();
     /** @brief selection changed */
     void selectionChanged();
     /** @brief construction du menu en fonction du contexte */

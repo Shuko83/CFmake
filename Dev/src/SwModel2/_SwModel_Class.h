@@ -27,6 +27,7 @@
 #include <SwPins_Manager_Class.h>
 #include <ISwVisitor.h>
 #include <ISwActivable.h>
+#include <ISwSubStream.h>
 
 class _SwModelHost_Class;
 
@@ -36,13 +37,15 @@ using namespace StreamWork::SwCore;
 	\class _SwModel_Class 
 	\brief Implementation d'un model
 */
-class _SwModel_Class : public SwComponent_Class, public ISwAdminSetup, public ISwVisitor
+class _SwModel_Class : public SwComponent_Class, public ISwAdminSetup, public ISwVisitor, public ISwSubStream
 {
 protected:
     /*! \brief Nom du modele */
     QString _model_name;
     /*! \brief element racine du stream */
     SwComponent_ClassPtr _root_element;
+    /*! \brief  host file path */
+    QString _filepath;
     /*! \brief Model host path */
     QString _ipath;
      /*! \brief Model host entry */   
@@ -63,7 +66,7 @@ public:
     /*! \brief Constructeur */
     _SwModel_Class();
     /*! \brief Constructeur */
-    _SwModel_Class(QString model_name,SwComponent_Class * root_element,QString ipath);
+    _SwModel_Class(QString model_name,SwComponent_Class * root_element,QString ipath,QString filepath);
     /*! \brief Destructeur */
     virtual ~_SwModel_Class();
     /*! \brief Initialisation des ressources
@@ -78,6 +81,13 @@ public:
     //----------------------------------------------------
 	/*! \brief Permet d'acceder aux preferences d'administration*/
 	void AdminSetup();
+    //----------------------------------------------------
+    // Interface ISwSubStream
+    //----------------------------------------------------
+    /*! \brief Permet d'acceder au sous stream*/
+    virtual SwComponent_Class * getSubStream();
+    /*! \brief Permet d'acceder au path du fichier correspondant au sous stream*/
+    virtual QString getSubStreamPath();
     //----------------------------------------------------
     // ISwVisitor
     //----------------------------------------------------

@@ -18,6 +18,8 @@
 #include "_SwModelPluginFactory_Class.h"
 #include "_SwModel_Class.h"
 #include "_SwModelHost_Class.h"
+#include "SwSnapShotPropertiesService.h"
+#include "ISwEditionService.h"
 
 using namespace StreamWork::SwCore;
 
@@ -82,7 +84,11 @@ SwComponent_Class * _SwModelPluginFactory_Class::CreateInstanceOf(QString name) 
         if (root_component==NULL) {
             LAUNCH_SWEXCEPTION("SwCore","Unable to build stream or stream is empty");
         }
-        return new _SwModel_Class(it.key(),root_component,it.value()._model_host_path);
+        if(GET_SW_EDITION_SERVICE!=0) {
+            SwSnapShotPropertiesVisitor v;
+            root_component->AcceptVisitor(&v);
+        }
+        return new _SwModel_Class(it.key(),root_component,it.value()._model_host_path,it.value()._model_source_file);
     }
     
     return NULL;

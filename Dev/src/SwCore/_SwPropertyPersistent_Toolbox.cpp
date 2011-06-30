@@ -33,6 +33,7 @@
 #include "_SwPropertyImpl_Class.h"
 #include "SwApplication.h"
 #include "SwBuffer_Toolbox.h"
+#include "ISwSnapShotPropertiesService.h"
 using namespace StreamWork::SwCore;
 
 #define CL_XML_NODE "property"
@@ -48,6 +49,7 @@ using namespace StreamWork::SwCore;
 #define CL_XML_ATT_IPV4 "ipv4"
 #define CL_XML_ATT_UUID_H "idh"
 #define CL_XML_ATT_UUID_L "idl"
+
 
 /*! \brief methode permettant de charger une propriété
 \param[in] property_node noeud propriete potentiel
@@ -264,12 +266,32 @@ void _SwPropertyPersistent_Toolbox::SavePropertyExtended(QDomElement & parent_pr
         QDomImplementation::setInvalidDataPolicy(QDomImplementation::ReturnNullNode);
     }
 
+    ISwSnapShotPropertiesService * snapshotService=dynamic_cast<ISwSnapShotPropertiesService *>(properties->GetHostComponent()->QueryService(CG_SW_SNAPSHOPPROPERTY_SERVICE));
+
     property=dynamic_cast<_SwPropertyImpl_Class *>(properties->GetProperty(name));
     //Si la propriété n'existe pas et qu'elle n'est pas editable (on ne peut ecrire dedans) ou qu'elle n'a pas changer (valeur usine)
     //ou que c'est un type complexe
-    if (property==NULL || property->GetComplexeTypeAdapters()!=NULL || !property->IsEditable() || (!forceSave && !property->HasChanged()) )
-        return; //Fin
-    var=property->GetValue();
+    if (property==NULL || property->GetComplexeTypeAdapters()!=NULL || !property->IsEditable() || (!forceSave && !property->HasChanged()) ) {
+        if (snapshotService!=0 && snapshotService->exist(name)) {
+            if (!snapshotService->getHasChanged(name)) {
+                return;
+            } else {
+                var=snapshotService->getValue(name);
+            }
+        } else {
+            return;
+        }
+    } else {
+        if (snapshotService!=0 && snapshotService->exist(name)) {
+            if (!snapshotService->getHasChanged(name)) {
+                return;
+            } else {
+                var=snapshotService->getValue(name);
+            }
+        } else {
+            var=property->GetValue();
+        }
+    }
     elt=doc.createElement(CL_XML_NODE);
     elt.setAttribute(CL_XML_ATT_NAME,QString(property->GetRealName()));
 

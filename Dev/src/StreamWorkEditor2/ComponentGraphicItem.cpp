@@ -9,7 +9,9 @@
 #include "StreamControler.h"
 #include "ISwSupportReplay.h"
 #include "ISwAdminSetup.h"
+#include "ISwSubStream.h"
 #include "ISwPluginOverview.h"
+#include "MainWindow.h"
 
 #define CL_RADUIS 10.0
 
@@ -105,7 +107,7 @@ void ComponentGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphic
                           _connectionInsertionPosition.x()+CL_CONNECTOR_BBSIZE/3.0,
                           _connectionInsertionPosition.y());
     }
-    
+    _dbg_cname=_component->GetName();
 }
 /** @brief mise a jour des attributs de l'item */
 void ComponentGraphicItem::updateAttributs() {
@@ -360,6 +362,25 @@ void ComponentGraphicItem::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * ev
                 dynamic_cast<ISwAdminSetup *>(_component);
     if(admin!=0) {
         admin->AdminSetup();    
+    }
+    ISwSubStream * subStream=
+                dynamic_cast<ISwSubStream *>(_component);
+    if(subStream!=0 && !subStream->getSubStreamPath().isEmpty()) {
+        MainWindow *window=MainWindow::getEditors()->value(subStream->getSubStream(),0);
+        if(window==0) {
+            StreamWork::SwCore::SwComponent_Class * rootComponent=_component;
+            while (rootComponent->GetParent()!=0) {
+                rootComponent=rootComponent->GetParent();
+            }
+            window=new MainWindow;
+            window->onLoadExistingStream(subStream->getSubStream(),subStream->getSubStreamPath(),rootComponent);
+            window->showMaximized();
+        } else {
+            if (window->isMinimized()) {
+                window->showMaximized();
+            }
+        }
+        window->activateWindow();
     }
 }
 

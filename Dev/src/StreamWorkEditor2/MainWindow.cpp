@@ -15,11 +15,17 @@
 #include "ViewNavigator.h"
 #include "LogView.h"
 #include "ISwPluginOverview.h"
+#include "SwApplication.h"
+#include "ISwEditionService.h"
+#include "MenuManager.h"
 
 static int nbWindows=0;
+/** @brief qmap */
+static QMap<SwComponent_Class *,MainWindow *> _editors; 
 
 /** @brief Constructor */
 MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
+    _streamSourceOpener=0;
     setWindowTitle("StreamWorkEditor V2");
     setTabPosition(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea,QTabWidget::North);
     setMinimumSize(400,300);
@@ -100,7 +106,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 
 
     QDockWidget * navdock = new QDockWidget(tr("Navigator"), this);
-    propdock->setObjectName("DockNavigator");
+    navdock->setObjectName("DockNavigator");
     navdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
     navdock->setWidget(new ViewNavigator(_streamView,this));
     addDockWidget(Qt::RightDockWidgetArea, navdock);
@@ -120,6 +126,7 @@ void MainWindow::onNewStream() {
     _streamTreeModel->setStreamControler(0);
     _iaTreeModel->setStreamControler(0);
     if (_streamControler!=0) {
+        _streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
         delete _streamControler;
     }
     _streamControler=new StreamControler(_propertyWidget);
@@ -130,6 +137,9 @@ void MainWindow::onNewStream() {
     _streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
     _streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
     setWindowTitle("StreamWorkEditor V2");
+    _editors.insert(_streamControler->getRootItem(),this);
+    _streamSourceOpener=0;
+    _streamControler->getRootItem()->OnDestroy.iconnect(*this,&MainWindow::internalClose);
 }
 /** @brief sur load stream */
 void MainWindow::onLoadStream(){
@@ -150,6 +160,7 @@ void MainWindow::onLoadStream(){
         QFileInfo fi(*it);
         settings.setValue("EditorDirectory",QVariant(fi.filePath()));
         if (_streamControler!=0) {
+            _streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
             _streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
             _streamTreeModel->setStreamControler(0);
             _iaTreeModel->setStreamControler(0);
@@ -164,14 +175,45 @@ void MainWindow::onLoadStream(){
         _streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
         _streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
         setWindowTitle(fi.fileName()+ " - " + fi.filePath());
+        _editors.insert(_streamControler->getRootItem(),this);
+        _streamSourceOpener=0;
+        _streamControler->getRootItem()->OnDestroy.iconnect(*this,&MainWindow::internalClose);
     }
 }
+/** @brief sur load stream existant */
+void MainWindow::onLoadExistingStream(SwComponent_Class * aStream,QString path,SwComponent_Class * aStreamSource) {
+    QFileInfo fi(path);
+   
+    if (_streamControler!=0) {
+        _streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
+        _streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+        _streamTreeModel->setStreamControler(0);
+        _iaTreeModel->setStreamControler(0);
+        delete _streamControler;
+    }
+    _streamControler=new StreamControler(_propertyWidget);
+    _streamControler->setView(_streamView);
+    _streamControler->loadExistingStream(path,aStream);
+    _streamTreeModel->setStreamControler(_streamControler);
+    _iaTreeModel->setStreamControler(_streamControler);
+    _streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
+    _streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
+    _streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+    setWindowTitle(fi.fileName()+ " - " + fi.filePath());
+    _editors.insert(_streamControler->getRootItem(),this);
+    _streamSourceOpener=aStreamSource;
+     _streamControler->getRootItem()->OnDestroy.iconnect(*this,&MainWindow::internalClose);
+
+}
+
 /** @brief sur save stream */
 void MainWindow::onSaveStream(){
     if (_streamControler->getStreamFileName().isEmpty()) {
         onSaveAsStream();
     } else {
+        GET_SW_EDITION_SERVICE->setEditorSavingInProgress(true);
         _streamControler->saveStream();
+        GET_SW_EDITION_SERVICE->setEditorSavingInProgress(false);
     }
 }
 /** @brief sur save as stream */
@@ -188,7 +230,9 @@ void MainWindow::onSaveAsStream() {
         return;
     QFileInfo fi(fileName);
     settings.setValue("EditorDirectory",QVariant(fi.filePath()));
+    GET_SW_EDITION_SERVICE->setEditorSavingInProgress(true);
     _streamControler->saveStreamAs(fileName);
+    GET_SW_EDITION_SERVICE->setEditorSavingInProgress(false);
     setWindowTitle(fi.fileName()+ " - " + fi.filePath());
 }
 /** @brief sur wizard */
@@ -206,12 +250,18 @@ void MainWindow::onWizard(){
 /** @brief sur close event */
 void MainWindow::closeEvent(QCloseEvent *event) {   
     QSettings settings;
+    if (_streamControler->getRootItem()->_getReferencesNb()>0) {
+        _streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
+    }
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
+    _editors.remove(_streamControler->getRootItem());
+    _streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
     _streamTreeModel->setStreamControler(0);
     _iaTreeModel->setStreamControler(0);
     delete _streamControler;
     event->accept();
+
     this->deleteLater();
     nbWindows--;
     if (nbWindows==0)
@@ -260,4 +310,30 @@ void MainWindow::setSelection(QList<StreamWork::SwCore::SwComponent_Class *> & s
         _statusWidget->setText(texte);
         _statusWidget->repaint();
     }
+}
+/** @brief getEditors */
+QMap<SwComponent_Class *,MainWindow *> * MainWindow::getEditors() {
+    return & _editors;
+}
+/** @brief permet de voir l'editeur du stream a l'origine de l'ouverture de nous meme */
+void MainWindow::displayStreamSourceOpener() {
+    if (_streamSourceOpener==0) {
+        return;
+    }
+    MainWindow *window=_editors.value(_streamSourceOpener);
+    if(window!=0) {
+        if (window->isMinimized()) {
+            window->showMaximized();
+        }
+        window->activateWindow();
+    }
+}
+/** @brief fermeture interne */
+void MainWindow::internalClose() {
+    close();
+}
+/** @brief sur close event */
+void MainWindow::focusInEvent ( QFocusEvent * event ) {
+    QMainWindow::focusInEvent(event);
+    MenuManager::getInstance()->setControler(_streamControler);
 }

@@ -26,12 +26,13 @@ _SwModel_Class::_SwModel_Class(): SwComponent_Class(){
     _activationDelegate=0;
 }
 /*! \brief Constructeur */
-_SwModel_Class::_SwModel_Class(QString model_name,SwComponent_Class * root_element,QString ipath): SwComponent_Class(){
+_SwModel_Class::_SwModel_Class(QString model_name,SwComponent_Class * root_element,QString ipath,QString filepath): SwComponent_Class(){
     QString s;
     QUuid uuid;
 
     _root_element=root_element;
     _ipath=ipath;
+    _filepath=filepath;
     _model_name=model_name;
     _activationDelegate=0;
     //generation du nom
@@ -130,7 +131,7 @@ void _SwModel_Class::Visit(SwComponent_Class * visited) {
 /*! \brief Permet d'acceder aux preferences d'administration*/
 void _SwModel_Class::AdminSetup() {
     if (!_isDefault) {
-        QMessageBox::warning(0,"Model alert","This model is fixed model");
+        //QMessageBox::warning(0,"Model alert","This model is fixed model");
         return;
     }
     _SwModelHostSelector * selector=new _SwModelHostSelector(0,_root_element,_host_entry);
@@ -143,6 +144,15 @@ void _SwModel_Class::AdminSetup() {
     }
     delete selector;
 }
+/*! \brief Permet d'acceder au sous stream*/
+SwComponent_Class * _SwModel_Class::getSubStream() {
+    return _root_element.get();
+}
+/*! \brief Permet d'acceder au path du fichier correspondant au sous stream*/
+QString _SwModel_Class::getSubStreamPath() {
+    return _filepath;
+}
+
 //----------------------------------------------------
 // Gestion liaison entre model et model_host
 //----------------------------------------------------

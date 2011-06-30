@@ -72,6 +72,11 @@ void MenuManager::setControler(StreamControler * controler) {
         selectionChanged();
     }
 }
+/** @brief acces au controleur */
+StreamControler * MenuManager::getControler() {
+    return _streamControler;
+}
+
 /** @brief selection changed */
 void MenuManager::selectionChanged() {
     menuNeedBeRebuild=true;

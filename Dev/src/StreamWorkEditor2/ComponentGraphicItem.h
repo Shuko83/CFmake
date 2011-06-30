@@ -119,6 +119,8 @@ private:
     QPointF _connectionInsertionPosition;
     /** @brief connector insertion index */
     int _connectionInsertionIndex;
+    /** @brief Test */
+    QString _dbg_cname;
 };
 
 #endif

@@ -15,6 +15,7 @@
 #include "SwSplash.h"
 #include "LogView.h"
 #include "SwLogger_Class.h"
+#include "EditionService.h"
 
 using namespace StreamWork::SwCore;
 
@@ -90,6 +91,7 @@ int main(int argc, char *argv[])
         }
         //Finalisation de l'initialisation
         SW_APP->FinalizeInitialisation();
+        SW_APP->RegisterService(new EditionService());
         //Lancement
         MainWindow *window=new MainWindow;
         app.setQuitOnLastWindowClosed(false);

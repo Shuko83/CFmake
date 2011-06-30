@@ -32,8 +32,10 @@ public:
 	StreamControler(PropertiesWidget * propertiesWidget);
 	/** @brief Destructor */
 	~StreamControler();
-	/** @brief Load stream */
-	void loadStream(QString streamFileName);
+    /** @brief Load stream */
+    void loadStream(QString streamFileName);
+    /** @brief Load existing stream */
+    void loadExistingStream(QString streamFileName,StreamWork::SwCore::SwComponent_Class * aStream);
 	/** @brief Save stream */
 	void saveStream();
 	/** @brief Save stream as */
@@ -180,6 +182,9 @@ private:
     bool _stopExecution;
     /** @brief dernier composant ajoute */
     ComponentGraphicItem * _lastAddedComponent;
+    /** @brief is existing stream */
+    boolean _isExistingStream;
+
 };
 
 #endif

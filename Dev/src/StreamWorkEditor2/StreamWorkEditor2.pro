@@ -38,6 +38,7 @@ HEADERS += IStreamControlerObserver.h
 HEADERS += QInterestAreaTreeModel.h
 HEADERS += LogView.h
 HEADERS += EditorPropertiesItemDelegate.h
+HEADERS += EditionService.h
 
 SOURCES += SwSplash.cpp
 SOURCES += main.cpp
@@ -68,6 +69,7 @@ SOURCES += InterestArea.cpp
 SOURCES += QInterestAreaTreeModel.cpp
 SOURCES += LogView.cpp
 SOURCES += EditorPropertiesItemDelegate.cpp
+SOURCES += EditionService.cpp
 
 
 FORMS += _resources/LogView.ui

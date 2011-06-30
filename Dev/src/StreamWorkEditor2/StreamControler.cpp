@@ -51,6 +51,7 @@ using namespace StreamWork::SwCore;
 
 /** @brief Constructor */
 StreamControler::StreamControler(PropertiesWidget * propertiesWidget):QObject() {
+    _isExistingStream=false;
     _enableStreamControlerObservation=false;
     _streamView=0;
     _creationPosition=QPointF(0.0f,0.0f);
@@ -78,7 +79,9 @@ StreamControler::~StreamControler() {
     if (_stopExecution==true) {
         SW_APP->StopLaunch();
     }
-    MenuManager::getInstance()->setControler(0);
+    if (MenuManager::getInstance()->getControler()==this){
+        MenuManager::getInstance()->setControler(0);
+    }
     _propertiesWidget->setSelectedGraphicComponent(0);
     if (_streamView!=0) {
         //Deconnexion a la vue
@@ -94,7 +97,9 @@ StreamControler::~StreamControler() {
     //Destruction des liens
     destroyLinks();
     //Destruction du streams
-    SW_APP->DestroyStream(_rootComponent);
+    if (!_isExistingStream) {
+        SW_APP->DestroyStream(_rootComponent);
+    }
     //Destruction de la scene
     delete _streamScene;
 }
@@ -144,7 +149,10 @@ void StreamControler::loadStream(QString streamFileName){
         }
         //Supression de l'ancien
         disconnectFromControler(_rootComponent);
-        SW_APP->DestroyStream(_rootComponent);
+        if (!_isExistingStream) {
+            SW_APP->DestroyStream(_rootComponent);
+        }
+        _isExistingStream=false;
         //Enregistrement du composant
         SW_APP->AddNewStream(root_component);
         _rootComponent=root_component;
@@ -163,6 +171,58 @@ void StreamControler::loadStream(QString streamFileName){
     _enableStreamControlerObservation=true;
     streamControlerChanged();
 }
+
+/** @brief Load existing stream */
+void StreamControler::loadExistingStream(QString streamFileName,StreamWork::SwCore::SwComponent_Class * aStream) {
+    _streamFileName=streamFileName;
+    _enableStreamControlerObservation=false;
+    QFile file;
+    QDomDocument doc;
+    QString xml_error;
+    int error_line,error_column;
+    SwComponent_ClassPtr root_component;
+
+    try {
+        QString stream_desc;
+        file.setFileName(_streamFileName);
+        if (!file.exists() || !file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QMessageBox::warning(NULL,"StreamWorkEditor alert",QString("Fail to open file stream %1").arg(_streamFileName));
+            return;
+        }
+        stream_desc=QString(file.readAll());
+        //parsing xml du document
+        if (!doc.setContent(stream_desc,&xml_error,&error_line,&error_column)) {
+            QString msg=QString("XML Parsing error:%1 at position %2,%3\n%4").arg(xml_error).arg(error_line).arg(error_column).arg(stream_desc);
+            QMessageBox::warning(NULL,"StreamWorkEditor alert",msg);
+            return;
+        }
+        root_component=aStream;
+        if (root_component==NULL) {
+            QMessageBox::warning(NULL,"StreamWorkEditor alert",QString("Unable to load %1").arg(_streamFileName));
+            return;
+        }
+        //Supression de l'ancien
+        disconnectFromControler(_rootComponent);
+        if (!_isExistingStream) {
+            SW_APP->DestroyStream(_rootComponent);
+        }
+        _isExistingStream=true;
+        //Enregistrement du composant
+        _rootComponent=root_component;
+        //Chargement donnees visuelles
+        loadVisualData(doc);
+        buildLinks();
+        //Connection au modele
+        recursiveConnectToControler(_rootComponent);
+    } catch(SwException & e) {
+        _enableStreamControlerObservation=true;
+        QMessageBox::critical(NULL,"StreamWorkEditor critical",QString("Exception when load %1\n%2").arg(_streamFileName).arg(e.what()));
+        return;
+    }
+    _enableStreamControlerObservation=true;
+    streamControlerChanged();
+}
+
 
 /** @brief Save stream */
 void StreamControler::saveStream(){
@@ -576,18 +636,18 @@ void StreamControler::disconnectFromControler(SwComponent_Class * component){
     component->OnRemoveChild.idisconnect(*this,&StreamControler::childRemoved);
     component->OnChangeComponentName.idisconnect(*this,&StreamControler::componentNameChanged);
     //La partie suivante est mise en commentaire pour ctacher les events en cours de destructions
-    //ISwInterfaces_Provider *iprovider=dynamic_cast<ISwInterfaces_Provider *>(component->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
-    //if (iprovider!=0) {
-    //    iprovider->DetachInterfacesServices_Listener(this);
-    //}
-    //ISwInterfaces_Consumer *iconsumer=dynamic_cast<ISwInterfaces_Consumer *>(component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
-    //if (iconsumer!=0) {
-    //    iconsumer->DetachInterfacesServices_Listener(this);
-    //}
-    //ISwPins_Manager *pinManager=dynamic_cast<ISwPins_Manager *>(component->QueryService(CG_SW_SERVICE_PINS_MANAGER));
-    //if (pinManager!=0) {
-    //    pinManager->UnregisterListener(this);
-    //}
+    ISwInterfaces_Provider *iprovider=dynamic_cast<ISwInterfaces_Provider *>(component->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
+    if (iprovider!=0) {
+        iprovider->DetachInterfacesServices_Listener(this);
+    }
+    ISwInterfaces_Consumer *iconsumer=dynamic_cast<ISwInterfaces_Consumer *>(component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
+    if (iconsumer!=0) {
+        iconsumer->DetachInterfacesServices_Listener(this);
+    }
+    ISwPins_Manager *pinManager=dynamic_cast<ISwPins_Manager *>(component->QueryService(CG_SW_SERVICE_PINS_MANAGER));
+    if (pinManager!=0) {
+        pinManager->UnregisterListener(this);
+    }
 }
 /** @brief deconnexion des evenements d'un composant au controleur */ 
 void StreamControler::recursiveDisconnectToControler(SwComponent_Class * component){

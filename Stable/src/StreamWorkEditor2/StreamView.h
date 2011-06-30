@@ -46,6 +46,8 @@ protected:
     void dropEvent( QDropEvent * event ); 
     /** @brief evenement de repaint */
     void paintEvent ( QPaintEvent * event ); 
+    /** @brief evenement de double click */
+    void mouseDoubleClickEvent ( QMouseEvent * event ); 
 
 public slots:
     /** @brief sur demande du menu contextuel */

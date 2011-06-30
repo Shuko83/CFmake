@@ -6,6 +6,7 @@
 
 #include "StreamView.h"
 #include "StreamControler.h"
+#include "MainWindow.h"
  
 
 /** @brief Constructor */
@@ -172,6 +173,16 @@ void StreamView::paintEvent ( QPaintEvent * event ) {
     QGraphicsView::paintEvent(event);
     for(int i=0;i<_observers.count();i++) {
         _observers[i]->viewHasChanged();
+    }
+}
+/** @brief evenement de double click */
+void StreamView::mouseDoubleClickEvent ( QMouseEvent * event ) {
+    QGraphicsView::mouseDoubleClickEvent(event);
+    if (scene()->selectedItems().isEmpty()) {
+        MainWindow *parentMainWindow= dynamic_cast<MainWindow *>(parentWidget());
+        if (parentMainWindow!=0) {
+            parentMainWindow->displayStreamSourceOpener();
+        }
     }
 }
 
