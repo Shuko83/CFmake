@@ -210,15 +210,15 @@ namespace StreamWork {
 
 			/**
 			 * @brief    : Permet de consommer une interface
-			 * @return   : T* return un pointeur de type <T> sur l'interface consommé
 			 * @param	 : QString pinterface_name - Nom de l'interface
 			 */
-			template<typename T> inline T* consummeInterface(QString pinterface_name) 
+			template<typename T> void consummeInterface(QString pinterface_name) 
 			{
 				void ** handle_interface = new void *;
+				*handle_interface = NULL;
 				getIConsumerService().RegisterConsumedInterface<T>(pinterface_name,(T**)handle_interface);
 				_mapIConsummed.insert(pinterface_name,handle_interface);
-				return (T*)(*handle_interface);
+				
 			}
 
 			/**
