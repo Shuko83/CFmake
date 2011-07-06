@@ -66,6 +66,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestPlugind", "src\TestPlug
 		{AE6B1BB5-6369-3D17-8E41-77157C3E7359} = {AE6B1BB5-6369-3D17-8E41-77157C3E7359}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwFoundationd", "src\SwFoundation\SwFoundation.vcproj", "{317C1AC7-992F-3C80-A1D2-A80F453EDA86}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -116,6 +118,10 @@ Global
 		{20C55457-8D35-37BA-BBA2-C2FBD653AF7F}.Debug|Win32.Build.0 = Debug|Win32
 		{20C55457-8D35-37BA-BBA2-C2FBD653AF7F}.Release|Win32.ActiveCfg = Release|Win32
 		{20C55457-8D35-37BA-BBA2-C2FBD653AF7F}.Release|Win32.Build.0 = Release|Win32
+		{317C1AC7-992F-3C80-A1D2-A80F453EDA86}.Debug|Win32.ActiveCfg = Debug|Win32
+		{317C1AC7-992F-3C80-A1D2-A80F453EDA86}.Debug|Win32.Build.0 = Debug|Win32
+		{317C1AC7-992F-3C80-A1D2-A80F453EDA86}.Release|Win32.ActiveCfg = Release|Win32
+		{317C1AC7-992F-3C80-A1D2-A80F453EDA86}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

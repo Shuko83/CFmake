@@ -5,12 +5,13 @@
  */
 
 #include "LinkGraphicItem.h"
- 
+#include <Qdebug>
 #define LINK_WIDTH 2.0
 #define SELECTED_LINK_WIDTH 3.0
 
 /** @brief Constructor */
-LinkGraphicItem::LinkGraphicItem(ConnectorGraphicItem * source):QGraphicsItem() {
+LinkGraphicItem::LinkGraphicItem(ConnectorGraphicItem * source):QGraphicsItem() 
+{
     setFlag(ItemIsSelectable);
     _source=source;
     _tmpTarget=source->mapToScene(QPointF(0.0,0.0));
@@ -20,8 +21,10 @@ LinkGraphicItem::LinkGraphicItem(ConnectorGraphicItem * source):QGraphicsItem() 
     _source->addLink(this);
     updateLink();
 }
+
 /** @brief Constructor */
-LinkGraphicItem::LinkGraphicItem(ConnectorGraphicItem * source,ConnectorGraphicItem * target) {
+LinkGraphicItem::LinkGraphicItem(ConnectorGraphicItem * source,ConnectorGraphicItem * target)
+{
     setFlag(ItemIsSelectable);
     _source=source;
     _target=target;
@@ -30,18 +33,24 @@ LinkGraphicItem::LinkGraphicItem(ConnectorGraphicItem * source,ConnectorGraphicI
     _target->addLink(this);
     updateLink();
 }
+
 /** @brief Constructor */
-LinkGraphicItem::~LinkGraphicItem() {
+LinkGraphicItem::~LinkGraphicItem()
+{
     _source->removeLink(this);
     if (_target!=0)
         _target->removeLink(this);
 }
+
 /** @brief acces a la source */
-ConnectorGraphicItem * LinkGraphicItem::getSource() {
+ConnectorGraphicItem * LinkGraphicItem::getSource() 
+{
     return _source;
 }
+
 /** @brief acces a la target */
-ConnectorGraphicItem * LinkGraphicItem::getTarget() {
+ConnectorGraphicItem * LinkGraphicItem::getTarget() 
+{
     return _target;
 }
 /** @brief definition du point temporaire */
@@ -67,33 +76,65 @@ void LinkGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem
     painter->setRenderHints(QPainter::Antialiasing);
     QPen basePen;
     bool isPin=(_source->getConnectorType()==PIN);
-    if (isSelected()) {
+
+	
+    if (isSelected()) 
+	{
         QPen pen=QPen(QPen(QColor("#FFFF00")));
         pen.setWidthF(SELECTED_LINK_WIDTH);
         painter->setPen(pen);
         painter->drawPath(_path);
-        if (isPin) {
+        if (isPin) 
+		{
             basePen=QPen(QColor("#5555FF"));
-        } else {
-            basePen=QPen(QColor("#FF9900"));
+        } 
+		else 
+		{
+			if(_source->getModelType().contains("ISwWidget"))
+				basePen=QPen(QColor("#9E6DFF"));
+			else
+				basePen=QPen(QColor("#FF9900"));
         }
-    } else {
-        if (_externalHighlight) {
+    } 
+	else 
+	{
+        if (_externalHighlight) 
+		{
             //basePen=QPen(QPen(QColor("#FF9900")));
             QPen pen=QPen(QPen(QColor("#FFFF00")));
             pen.setWidthF(SELECTED_LINK_WIDTH);
             painter->setPen(pen);
             painter->drawPath(_path);
-            if (isPin) {
+            if (isPin) 
+			{
                 basePen=QPen(QColor("#5555FF"));
-            } else {
-                basePen=QPen(QColor("#FF9900"));
+            } 
+			else
+			{
+				if(_source->getModelType().contains("ISwWidget"))
+					basePen=QPen(QColor("#9E6DFF"));
+				else
+					basePen=QPen(QColor("#FF9900"));
             }
-        } else {
-            if (isPin) {
+        }
+		else 
+		{
+            if (isPin) 
+			{
                 basePen=QPen(QColor(0x55,0x55,0xFF,200));
-            } else {
-                basePen=QPen(QColor(0xFF,0x99,0x00,128));
+            }
+			else 
+			{
+				if(_source->getModelType().contains("ISwWidget"))
+					basePen=QPen(QColor(0x9E,0x6D,0xFF,128));
+				else
+					 basePen=QPen(QColor(0xFF,0x99,0x00,128));
+
+// 				if(_source->getModelType().contains("ISwWidget"))
+// 					basePen=QPen(QColor(0x9E,0x6D,0xFF,128)); 
+// 				else
+// 					basePen=QPen(QColor(0xFF,0x99,0x00,128));
+
             }
         }
     }

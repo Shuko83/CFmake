@@ -18,7 +18,9 @@
 #include "ISwServiceRecording.h"
 #include "DataTestCodecITest.h"
 #include "SwRecordDataCodecFactoryTemplate.h"
-
+#include "TestAssistedComponent.h"
+#include "TestComponentEmitterVassisted.h"
+#include "TestComponentReceiverVassisted.h"
 
 using namespace StreamWork::SwExecution;
 /** @brief Constructeur */
@@ -33,8 +35,12 @@ TestPluginPluginFactory_Class::~TestPluginPluginFactory_Class() {
 void TestPluginPluginFactory_Class::Initialize() {
 	//RegisterComponent("TestComponent","NoDescription");
 	RegisterComponent("TestComponentEmitter","TestComponentEmitter");
+	RegisterComponent("TestComponentEmitterVassisted","TestComponentEmitterVassisted");
+	RegisterComponent("TestComponentReceiverVassisted","TestComponentReceiverVassisted");
+	
 	RegisterComponent("TestComponentReceiver","TestComponentReceiver");
 	RegisterComponent("TestComponent","TestComponent");
+	RegisterComponent("TestAssisted::Component","Test Assisted component");
     RegisterData(CG_DATA_TEST_ID,CG_DATA_TEST);
 }
 /** @brief Liberation */
@@ -49,12 +55,21 @@ SwComponent_Class * TestPluginPluginFactory_Class::CreateInstanceOf(QString name
     if (name=="TestComponentEmitter") {
         return new TestComponentEmitter;
     }
+	if (name=="TestComponentEmitterVassisted") {
+		return new TestComponentEmitterVassisted;
+	}
+	if (name=="TestComponentReceiverVassisted") {
+		return new TestComponentReceiverVassisted;
+	}
     if (name=="TestComponentReceiver") {
         return new TestComponentReceiver;
     }
     if (name=="TestComponent") {
         return new TestComponent;
     }
+	if (name=="TestAssisted::Component") {
+		return new TestAssistedComponent;
+	}
     return NULL;
 }
 /** @brief instanciation d'une data */
