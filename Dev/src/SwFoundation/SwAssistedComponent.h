@@ -25,6 +25,8 @@
 #include "ISwServiceShortcuts.h"
 #include "ISwExecutable_Service.h"
 #include "ISwServiceOwnerConfigurable.h"
+#include "ISwPersistentConfigurable.h"
+#include "ISwPersistent.h"
 
 #ifdef SWFOUNDATION_LIB
 # define BUILD_SWFOUNDATION Q_DECL_EXPORT
@@ -55,7 +57,8 @@ namespace StreamWork {
 			virtual public ISwInterfaces_ConsumerObserver,
 			virtual public ISwPin_Listener,
 			virtual public ISwShortcut,
-			virtual public ISwPersistent
+			virtual public ISwPersistent,
+			virtual public ISwPersistentConfigurable
 		{
             Q_OBJECT
         public:
@@ -193,6 +196,23 @@ namespace StreamWork {
 			 * @param	 : double current_time - Temps d'éxecution
 			 */
 			virtual void Stop(double current_time);       
+
+			//---------------------------------------------------------------------
+			// Interface ISwPersistentConfigurable
+			//---------------------------------------------------------------------            
+
+			/**
+			 * @brief    : methode permettant de charger des donnees de configuration
+			 * @param	 : QDomElement & -  Noeud parent
+			 */
+			virtual void LoadConfiguration(QDomElement &elm);
+
+			/**
+			 * @brief    : methode permettant de sauver des donnees de configuration
+			 * @param	 : QDomElement & - Noeud parent
+			 * @param	 : QDomDocument & - Document parent
+			 */
+			virtual void SaveConfiguration(QDomElement &elm,QDomDocument &doc);
 
 			//---------------------------------------------------------------------
 			// Interface ISwService
@@ -337,19 +357,7 @@ namespace StreamWork {
 			 */
 			virtual void interfaceUnavailable(QString interfaceName);
 
-			/**
-			 * @brief    : methode permettant de charger des donnees de configuration
-			 * @param	 : QDomElement & -  Noeud parent
-			 */
-			virtual void loadConfiguration(QDomElement &elm);
-
-			/**
-			 * @brief    : methode permettant de sauver des donnees de configuration
-			 * @param	 : QDomElement & - Noeud parent
-			 * @param	 : QDomDocument & - Document parent
-			 */
-			virtual void saveConfiguration(QDomElement &elm,QDomDocument &doc);
-
+			
 	
 protected:
 			/**
@@ -398,6 +406,13 @@ protected:
 			 * @return   : ISwServiceOwnerConfigurable & - Référence sur le service
 			 */
 			ISwServiceOwnerConfigurable & getOwnerConfigurableService();
+			
+			/**
+			 * @brief    : Acces au service de owner (sauvegarde dans le stream Streamwork)
+			 * @return   : SwOwner_Class & - Référence sur le service
+			 */
+			SwOwner_Class& getOwnerService();
+
 	
 private:
 
@@ -493,7 +508,6 @@ private:
 
 			/* Service de gestion de la conf user*/
 			SwOwner_Class * _owner_service;
-
 
             /* desactivation des services */
             bool _disable_service;

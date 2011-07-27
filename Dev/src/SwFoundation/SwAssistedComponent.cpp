@@ -227,13 +227,13 @@ SwOwnerConfigurable_Class::~SwOwnerConfigurable_Class()
 //-------------------------------------------------------------------------
 void SwOwnerConfigurable_Class::LoadConfiguration( QDomElement & elm)
 {
-	_host_component->loadConfiguration(elm);
+	_host_component->LoadConfiguration(elm);
 }
 
 //-------------------------------------------------------------------------
 void SwOwnerConfigurable_Class::SaveConfiguration( QDomElement &elm ,QDomDocument & doc)
 {
-	_host_component->saveConfiguration(elm,doc);
+	_host_component->SaveConfiguration(elm,doc);
 }
 
 
@@ -619,6 +619,12 @@ ISwExecutable_Service& SwAssistedComponent::getExecutableService()
 }
 
 //-------------------------------------------------------------------------
+SwOwner_Class& StreamWork::SwFoundation::SwAssistedComponent::getOwnerService()
+{
+	return *_owner_service;
+}
+
+//-------------------------------------------------------------------------
 void SwAssistedComponent::processCommand( QString name )
 {
 
@@ -871,13 +877,13 @@ void SwAssistedComponent::setOwnerServiceAvaibility( bool val )
 }
 
 //-------------------------------------------------------------------------
-void SwAssistedComponent::loadConfiguration( QDomElement &elm )
+void SwAssistedComponent::LoadConfiguration( QDomElement &elm )
 {
 
 }
 
 //-------------------------------------------------------------------------
-void SwAssistedComponent::saveConfiguration( QDomElement &elm,QDomDocument &doc )
+void SwAssistedComponent::SaveConfiguration( QDomElement &elm,QDomDocument &doc )
 {
 
 }
