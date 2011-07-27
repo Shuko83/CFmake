@@ -1,7 +1,10 @@
 /**
 @file SwAssistedComponent.h
 @brief Implementation avance d'un composant par defaut pour les assistés
-@author Big
+	   Ce composant est de base Provider/Consumed d'interface & implemente 
+	   l'utilisation des propriétés, pour les autres services, il faut utiliser
+	   les accesseurs.
+@author AAY
  */
 
 #ifndef _STREAMWORK_SWFOUNDATION_ASSISTED_COMPONENT_H
@@ -29,16 +32,14 @@
 # define BUILD_SWFOUNDATION Q_DECL_IMPORT
 #endif
 
-
-
-
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 using namespace StreamWork::SwExecution;
 
-
+//implementation Inline
 class SwExecutable_Class;
 class SwOwnerConfigurable_Class;
+class SwOwner_Class;
 
 namespace StreamWork {
 
@@ -53,7 +54,8 @@ namespace StreamWork {
 			public SwComponent_Class,
 			virtual public ISwInterfaces_ConsumerObserver,
 			virtual public ISwPin_Listener,
-			virtual public ISwShortcut
+			virtual public ISwShortcut,
+			public ISwPersistent
 		{
             Q_OBJECT
         public:
@@ -77,6 +79,7 @@ namespace StreamWork {
 			void setPropertyServiceAvaibility(bool val);
 			void setPinServiceAvaibility(bool val);
 			void setOwnerConfigurableServiceAvaibility(bool val);
+			void setOwnerServiceAvaibility(bool val);
 
             /**
              * @brief    : Initialisation du composant
@@ -114,6 +117,24 @@ namespace StreamWork {
              */
             virtual void eventReceiveData(SwPin * src,SwData_Class * data);
 			
+			//----------------------------------------------------
+			// Interface ISwPersistent
+			//----------------------------------------------------
+
+			/**
+			* @brief    : Methode permettant de charger des donnees
+			* @param	 : QDomElement & elt - Noeud parent
+			* @param	 : ISwFinalizerManager & finalizer_manager - Manager de finalisation
+			*/
+			virtual void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager);
+
+			/**
+			* @brief    : methode permettant de sauver des donnees
+			* @param	 : QDomElement & elt - Noeud parent
+			* @param	 : QDomDocument & doc - Document parent
+			*/
+			virtual void Save(QDomElement & elt,QDomDocument &doc);
+
 
 			//------------------------------------------------------------------
 			// Interface ISwShortcut
@@ -470,6 +491,9 @@ private:
 			/* Service de gestion de la conf user*/
 			SwOwnerConfigurable_Class * _ownerConf_service;
 
+			/* Service de gestion de la conf user*/
+			SwOwner_Class * _owner_service;
+
 
             /* desactivation des services */
             bool _disable_service;
@@ -499,8 +523,8 @@ private:
 			bool _isProvider;
 			bool _isProperty;
 			bool _isPin;
+			bool _isOwnerConf;
 			bool _isOwner;
-
 			bool _isInitialized;
         
         };

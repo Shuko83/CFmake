@@ -12,6 +12,7 @@
 #include <SwPins_Manager_Class.h>
 #include <ISwProperty.h>
 #include "ISwServiceOwnerConfigurable.h"
+#include "ISwServiceOwner.h"
 
 using namespace StreamWork;
 using namespace StreamWork::SwFoundation;
@@ -169,7 +170,6 @@ bool SwExecutable_Class::isActive()
 //							SwOwnerConfigurable_Class
 //-------------------------------------------------------------------------
 
-
 /*!
 \class SwOwnerConfigurable_Class
 \brief implementation du service de owner configurable
@@ -245,6 +245,91 @@ void SwOwnerConfigurable_Class::Liberate()
 
 
 
+
+
+//-------------------------------------------------------------------------
+//							SwOwner_Class
+//-------------------------------------------------------------------------
+
+/*!
+\class SwOwner_Class
+\brief implementation du service de owner configurable
+*/
+class SwOwner_Class : public ISwServiceOwner {
+private:
+
+	/*! \brief composant hote */
+	SwAssistedComponent * _host_component;
+
+public:
+	/*! \brief Construsteur */
+	SwOwner_Class(SwAssistedComponent * host);
+	/*! \brief Destrusteur */
+	virtual ~SwOwner_Class();
+
+	//---------------------------------------------------------------------
+	// Interface ISwPersistent
+	//---------------------------------------------------------------------
+	
+	/**
+	 * @brief    : methode permettant de charger des donnees
+	 * @param	 : QDomElement & elt - Noeud parent
+	 * @param	 : ISwFinalizerManager & finalizer_manager -  manager de finalisation
+	 */
+	virtual void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager);
+
+
+	 /**
+	  * @brief    :  methode permettant de sauver des donnees
+	  * @param	 : QDomElement & elt - Noeud parent
+	  * @param	 : QDomDocument & doc - Document parent
+	  */
+	 virtual void Save(QDomElement & elt,QDomDocument &doc);
+
+
+	//---------------------------------------------------------------------
+	// Interface ISwService
+	//---------------------------------------------------------------------
+	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
+	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+	void Liberate();
+
+};
+
+//-------------------------------------------------------------------------
+SwOwner_Class::SwOwner_Class( SwAssistedComponent * host )
+{
+	_host_component = host;
+}
+
+//-------------------------------------------------------------------------
+SwOwner_Class::~SwOwner_Class()
+{
+	Liberate();
+}
+
+//-------------------------------------------------------------------------
+void SwOwner_Class::Load( QDomElement & elt,ISwFinalizerManager & finalizer_manager )
+{
+	_host_component->Load(elt,finalizer_manager);
+}
+
+//-------------------------------------------------------------------------
+void SwOwner_Class::Save( QDomElement & elt,QDomDocument &doc )
+{
+	_host_component->Save(elt,doc);
+}
+
+
+//-------------------------------------------------------------------------
+void SwOwner_Class::Liberate()
+{
+
+}
+
+
+
+
 //-------------------------------------------------------------------------
 //							SwAssistedComponent
 //-------------------------------------------------------------------------
@@ -256,6 +341,11 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 	_consumer_service			= NULL;
 	_properties_service			= NULL;
 	_shortcuts_service			= NULL;
+	_owner_service				= NULL;
+	_ownerConf_service			= NULL;
+	_executable_service			= NULL;
+	_pins_service				= NULL;
+
 	_componentNameShortcut		= "ERROR";
 	_disable_service			= false;
 
@@ -264,6 +354,7 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 	_isProvider					= true;
 	_isProperty					= true;
 	_isPin						= false;
+	_isOwnerConf				= false;
 	_isOwner					= false;
 	_isInitialized				= false;
 
@@ -329,11 +420,19 @@ SwAssistedComponent::~SwAssistedComponent()
 		_executable_service	= NULL;
 	}
 
-	if(_isOwner&& _ownerConf_service)
+	if(_isOwnerConf && _ownerConf_service)
 	{
 		this->UnregisterService(_ownerConf_service->GetServiceName());
 		delete _ownerConf_service;
 		_ownerConf_service	= NULL;
+	}
+
+	if(_isOwner && _owner_service)
+	{
+
+		this->UnregisterService(_owner_service->GetServiceName());
+		delete _owner_service;
+		_owner_service	= NULL;
 	}
 
 	//Unregister all Shortcuts
@@ -385,10 +484,16 @@ void SwAssistedComponent::InitializeResources() throw(SwException)
 		this->RegisterService(_executable_service);
 	}
 
-	if(_isOwner)
+	if(_isOwnerConf)
 	{
 		_ownerConf_service= new SwOwnerConfigurable_Class(this);
 		this->RegisterService(_ownerConf_service);
+	}
+
+	if(_isOwner)
+	{
+		_owner_service= new SwOwner_Class(this);
+		this->RegisterService(_owner_service);
 	}
 
 	_shortcuts_service		= dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
@@ -755,7 +860,14 @@ void SwAssistedComponent::setPinServiceAvaibility( bool val )
 void SwAssistedComponent::setOwnerConfigurableServiceAvaibility( bool val )
 {
 	Q_ASSERT(!_isInitialized);
-	_isOwner = val;
+	_isOwnerConf = val;
+}
+
+//-------------------------------------------------------------------------
+void SwAssistedComponent::setOwnerServiceAvaibility( bool val )
+{
+	Q_ASSERT(!_isInitialized);
+	_isOwner = val; 
 }
 
 //-------------------------------------------------------------------------
@@ -766,6 +878,19 @@ void SwAssistedComponent::loadConfiguration( QDomElement &elm )
 
 //-------------------------------------------------------------------------
 void SwAssistedComponent::saveConfiguration( QDomElement &elm,QDomDocument &doc )
+{
+
+}
+
+
+//-------------------------------------------------------------------------
+void SwAssistedComponent::Load( QDomElement & elt,ISwFinalizerManager & finalizer_manager )
+{
+
+}
+
+//-------------------------------------------------------------------------
+void SwAssistedComponent::Save( QDomElement & elt,QDomDocument &doc )
 {
 
 }

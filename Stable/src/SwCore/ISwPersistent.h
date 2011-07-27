@@ -34,7 +34,7 @@ namespace StreamWork
         class ISwPersistent  {
         public:
 	        /*! \brief methode permettant de charger des donnees
-            \param[in] elt neoud parent
+            \param[in] 
             \param[in] finalizer_manager manager de finalisation
             */
 	        virtual void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager)=0;
