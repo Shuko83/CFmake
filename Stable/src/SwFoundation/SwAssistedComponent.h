@@ -55,7 +55,7 @@ namespace StreamWork {
 			virtual public ISwInterfaces_ConsumerObserver,
 			virtual public ISwPin_Listener,
 			virtual public ISwShortcut,
-			public ISwPersistent
+			virtual public ISwPersistent
 		{
             Q_OBJECT
         public:
