@@ -204,6 +204,9 @@ namespace StreamWork {
 			 */
 			template<typename T> inline void provideInterface(QString pinterface_name,T * handle_interface) 
 			{
+				if(!_isProvider)
+					return;
+
 				getIProviderService().RegisterProvidedInterface<T>(pinterface_name,(T *)handle_interface);
 				_listIProvided.append(pinterface_name);
 			}
@@ -214,6 +217,9 @@ namespace StreamWork {
 			 */
 			template<typename T> void consummeInterface(QString pinterface_name) 
 			{
+				if(!_isConsumer)
+					return;
+
 				void ** handle_interface = new void *;
 				*handle_interface = NULL;
 				getIConsumerService().RegisterConsumedInterface<T>(pinterface_name,(T**)handle_interface);
@@ -228,6 +234,9 @@ namespace StreamWork {
 			 */
 			template<typename T> inline T* getInterface(QString pinterface_name)
 			{
+				if(!_isConsumer)
+					return NULL;
+
 				if(_mapIConsummed.contains(pinterface_name))
 				{
 					void ** handle_interface = _mapIConsummed.value(pinterface_name);

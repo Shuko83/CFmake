@@ -582,6 +582,9 @@ void SwAssistedComponent::setComponentNameForShortcut( QString name )
 //-------------------------------------------------------------------------
 void SwAssistedComponent::setProvidedInterfaceAvaibility( QString pinterface_name, bool avaibility )
 {
+	if(!_isProvider)
+		return;
+
 	if(avaibility)
 	{
 		getIProviderService().SetInterfaceAvailable(pinterface_name);
@@ -595,6 +598,9 @@ void SwAssistedComponent::setProvidedInterfaceAvaibility( QString pinterface_nam
 //-------------------------------------------------------------------------
 void SwAssistedComponent::unprovideInterface( QString pinterface_name )
 {
+	if(!_isProvider)
+		return;
+
 	getIProviderService().UnregisterProvidedInterface(pinterface_name);
 	_listIProvided.removeOne(pinterface_name);
 }
@@ -602,9 +608,13 @@ void SwAssistedComponent::unprovideInterface( QString pinterface_name )
 //-------------------------------------------------------------------------
 void SwAssistedComponent::unconsummeInterface( QString pinterface_name )
 {
-	getIConsumerService().UnregisterConsumedInterface(pinterface_name);
+	if(!_isConsumer)
+		return;
+
 	if(_mapIConsummed.contains(pinterface_name))
 	{
+		getIConsumerService().UnregisterConsumedInterface(pinterface_name);
+
 		void ** handle_interface = _mapIConsummed.value(pinterface_name);
 		delete handle_interface;
 		_mapIConsummed.remove(pinterface_name);
@@ -659,13 +669,15 @@ void SwAssistedComponent::deactivation()
 //-------------------------------------------------------------------------
 void SwAssistedComponent::createPropertiesForThisObject(QString prefix/*=QString()*/,bool disable_objectName/*=false*/ )
 {
-	createPropertiesForQObject(this,prefix,disable_objectName);
+	if(_isProperty)
+		createPropertiesForQObject(this,prefix,disable_objectName);
 }
 
 //-------------------------------------------------------------------------
 void SwAssistedComponent::createPropertiesForQObject( QObject *obj,QString prefix/*=QString()*/,bool disable_objectName/*=false*/ )
 {
-	getPropertiesService().CreatePropertiesForQObject(obj,prefix,disable_objectName);
+	if(_isProperty)
+		getPropertiesService().CreatePropertiesForQObject(obj,prefix,disable_objectName);
 }
 
 //-------------------------------------------------------------------------
