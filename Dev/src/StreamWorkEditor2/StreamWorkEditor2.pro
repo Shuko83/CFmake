@@ -39,6 +39,7 @@ HEADERS += QInterestAreaTreeModel.h
 HEADERS += LogView.h
 HEADERS += EditorPropertiesItemDelegate.h
 HEADERS += EditionService.h
+HEADERS += ManageLinkColor.h
 
 SOURCES += SwSplash.cpp
 SOURCES += main.cpp
@@ -70,6 +71,7 @@ SOURCES += QInterestAreaTreeModel.cpp
 SOURCES += LogView.cpp
 SOURCES += EditorPropertiesItemDelegate.cpp
 SOURCES += EditionService.cpp
+SOURCES += ManageLinkColor.cpp
 
 
 FORMS += _resources/LogView.ui

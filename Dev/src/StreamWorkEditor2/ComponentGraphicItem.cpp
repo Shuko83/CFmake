@@ -326,6 +326,14 @@ QColor ComponentGraphicItem::getColor() {
 /** @brief acces a la couleur */
 void ComponentGraphicItem::setColor(QColor c) {
     _headerBrush.setColor(c);
+	if(c.red()*0.3 + 0.59 * c.green() + 0.11 * c.blue() >= 100)
+	{
+		_text_pen = QPen(QColor("black"));
+	}
+	else
+	{
+		_text_pen = QPen(QColor("white"));
+	}
 }
 /** @brief definition de la couleur de texte */
 QColor ComponentGraphicItem::getTextColor() {

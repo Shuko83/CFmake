@@ -9,6 +9,8 @@
 #define LINK_WIDTH 2.0
 #define SELECTED_LINK_WIDTH 3.0
 
+#include "ManageLinkColor.h"
+
 /** @brief Constructor */
 LinkGraphicItem::LinkGraphicItem(ConnectorGraphicItem * source):QGraphicsItem() 
 {
@@ -90,10 +92,7 @@ void LinkGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem
         } 
 		else 
 		{
-			if(_source->getModelType().contains("ISwWidget"))
-				basePen=QPen(QColor("#9E6DFF"));
-			else
-				basePen=QPen(QColor("#FF9900"));
+			basePen=QPen(ManageLinkColor::getInstance()->getColorForInterface(_source->getModelType()));
         }
     } 
 	else 
@@ -111,10 +110,7 @@ void LinkGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem
             } 
 			else
 			{
-				if(_source->getModelType().contains("ISwWidget"))
-					basePen=QPen(QColor("#9E6DFF"));
-				else
-					basePen=QPen(QColor("#FF9900"));
+				basePen=QPen(ManageLinkColor::getInstance()->getColorForInterface(_source->getModelType()));
             }
         }
 		else 
@@ -125,16 +121,9 @@ void LinkGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem
             }
 			else 
 			{
-				if(_source->getModelType().contains("ISwWidget"))
-					basePen=QPen(QColor(0x9E,0x6D,0xFF,128));
-				else
-					 basePen=QPen(QColor(0xFF,0x99,0x00,128));
-
-// 				if(_source->getModelType().contains("ISwWidget"))
-// 					basePen=QPen(QColor(0x9E,0x6D,0xFF,128)); 
-// 				else
-// 					basePen=QPen(QColor(0xFF,0x99,0x00,128));
-
+				QColor tmp = ManageLinkColor::getInstance()->getColorForInterface(_source->getModelType());
+				tmp.setAlpha(128);
+				basePen=QPen(tmp);
             }
         }
     }
