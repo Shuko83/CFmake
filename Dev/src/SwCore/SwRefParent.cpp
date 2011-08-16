@@ -6,7 +6,7 @@
 */
 
 #include "SwRefParent.h"
-#include "SwException.h"
+//#include "SwException.h"
 
 using namespace StreamWork::SwCore;
 

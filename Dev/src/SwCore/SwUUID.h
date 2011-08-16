@@ -9,42 +9,15 @@
 #ifndef _SwUUID_H
 #define _SwUUID_H
 
-#include <QtGlobal>
-#include <QVariant>
+
+#include <QMetaType>
+//#include <QVariant>
 #include <QDataStream>
 #include "SwCoreConstantes.h"
-#include "SwMacros.h"
+//#include "SwMacros.h"
+#include "SwUUID_Simplified.h"
 
 
-namespace StreamWork 
-{
-    namespace SwCore
-    {
-		/*!
-        \class SwUUID
-        \brief Definition d'un UUID
-        @ingroup SwCoreGrp
-        */
-        struct BUILD_SWCORE _SwUUID  {
-        public:
-          qint64 mostSigBits;
-          qint64 leastSigBits;
-          
-		  _SwUUID(qint64 m,qint64 l);
-		  _SwUUID();
-          bool operator<(const struct _SwUUID & val) const;
-          bool operator==(const struct _SwUUID & val) const;
-          bool operator!=(const struct _SwUUID & val) const;
-          std::string toString() const;
-          QString toQString() const;
-          void FromQString(const QString & value);
-		  static struct _SwUUID generateUUID();
-        };
-        typedef  struct _SwUUID SwUUID;
-
-        
-    }
-}
 
 BUILD_SWCORE uint qHash(const StreamWork::SwCore::SwUUID & uuid);
 

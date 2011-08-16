@@ -67,6 +67,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestPlugind", "src\TestPlug
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwFoundationd", "src\SwFoundation\SwFoundation.vcproj", "{317C1AC7-992F-3C80-A1D2-A80F453EDA86}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BC87C7A4-3610-36F8-98E7-C6E0FFAD553F} = {BC87C7A4-3610-36F8-98E7-C6E0FFAD553F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

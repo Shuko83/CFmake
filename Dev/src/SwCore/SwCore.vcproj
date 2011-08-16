@@ -520,6 +520,8 @@
 			<File
 				RelativePath="SwUUID.h" />
 			<File
+				RelativePath="SwUUID_Simplified.h" />
+			<File
 				RelativePath="_SwCleanLinksVisitor.h" />
 			<File
 				RelativePath="_SwComplexeTypeAdaptersFactoriesBankImpl.h" />

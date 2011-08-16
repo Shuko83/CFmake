@@ -87,6 +87,7 @@ HEADERS += LibIndeSig.h \
     _SwProvidedInterfaceContainer_Class.h \
     _SwTreeItem.h \
     SwUUID.h \
+    SwUUID_Simplified.h \
     ISwFileEditor.h \
     ISwServiceFileEditorManager.h \
     _SwFileEditorManager.h \

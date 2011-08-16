@@ -14,7 +14,7 @@
 #ifndef _LIB_INDE_SIG_H
 #define _LIB_INDE_SIG_H
 
-#include "SwMacros.h"
+//#include "SwMacros.h"
 
 namespace LibIndeSig {
 //------------------------------------------------------------------------------

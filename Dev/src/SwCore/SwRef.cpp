@@ -6,8 +6,8 @@
 */
 
 #include "SwRef.h"
-#include "SwException.h"
-
+//#include "SwException.h"
+//#include "SwMacros.h"
 using namespace StreamWork::SwCore;
 
 
@@ -38,7 +38,7 @@ void SwRef::_release(){
    _referencesCounter--;
 #ifdef _DEBUG           
    if (_referencesCounter < 0) { //plus de release que de addRef !
-       LAUNCH_SWEXCEPTION("SwRef", "nb de release() != nb de addRef()");
+       //LAUNCH_SWEXCEPTION("SwRef", "nb de release() != nb de addRef()");
    }
 #endif          
    //S'il n'existe plus aucune reference, l'instance se detruit

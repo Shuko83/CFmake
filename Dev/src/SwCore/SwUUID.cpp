@@ -9,6 +9,7 @@
 #include "SwUUID.h"
 #include <QUuid>
 #include <QStringList>
+#include <QDataStream>
 
 using namespace StreamWork::SwCore;
 
