@@ -75,6 +75,8 @@ private:
     QList<_Item *> _perspectives;
     QList<_Item *> _executions;
     QList<_Item *> _ownerConfigurables;
+
+	bool _isLimitedToProperties;
 public:
     /*! \brief Constructeur */
 	_SwConfigurationEntitiesModel(QObject * parent,SwComponent_Class * root_component,QList<_SwConfigurationExportedEntity *> * entities_list);
@@ -86,6 +88,9 @@ public:
 	void TransformModelToEntities();
     /*! \brief Suppression des elements selectionnées */
 	void RemoveSelectedItems(QModelIndexList list_to_remove);
+
+	virtual void limitToProperty();
+
     //-------------------------------------------------------------
     // Interface QAbstractItemModel
     //------------------------------------------------------------

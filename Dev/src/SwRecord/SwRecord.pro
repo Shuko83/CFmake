@@ -53,7 +53,9 @@ INCLUDEPATH += ./
 INCLUDEPATH += ../SwCore
 INCLUDEPATH += ../SwExecution
 INCLUDEPATH += ../SwGui
+INCLUDEPATH += ../SwModel
 INCLUDEPATH += ../SwConfiguration
+INCLUDEPATH += ../SwFoundation
 
 
 CONFIG(debug, debug|release) {
@@ -62,13 +64,13 @@ CONFIG(debug, debug|release) {
   win32:TARGET = $$join(TARGET,,,d)
   win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
 	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
-    LIBS += -L"../../lib/vc/debug" -lSwCored -lSwExecutiond -lSwGuid
+    LIBS += -L"../../lib/vc/debug" -lSwCored -lSwExecutiond -lSwGuid -lSwConfigurationd -lSwFoundationd
     TARGET_EXT = .swdld
 } 
 CONFIG(release, debug|release) {
   win32:DESTDIR = ./../../lib/vc/release
   win32:DLLDESTDIR=  ./../../bin/vc/release
-    LIBS += -L"../../lib/vc/release" -lSwCore -lSwExecution -lSwGui
+    LIBS += -L"../../lib/vc/release" -lSwCore -lSwExecution -lSwGui  -lSwConfiguration -lSwFoundation
     TARGET_EXT = .swdl
 }
 

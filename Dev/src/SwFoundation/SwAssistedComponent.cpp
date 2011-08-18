@@ -457,7 +457,6 @@ void SwAssistedComponent::InitializeResources() throw(SwException)
 		_consumer_service		= new SwInterfaces_Consumer_Class(this) ;
 		this->RegisterService(_consumer_service);
 		_consumer_service->AttachInterfacesConsumerObserver(this);
-
 	}
 	
 	if(_isProvider)
@@ -622,6 +621,18 @@ ISwExecutable_Service& SwAssistedComponent::getExecutableService()
 SwOwner_Class& StreamWork::SwFoundation::SwAssistedComponent::getOwnerService()
 {
 	return *_owner_service;
+}
+
+//-------------------------------------------------------------------------
+ISwProperty* StreamWork::SwFoundation::SwAssistedComponent::getISwProperty( QString name )
+{
+	if(_isProperty)
+	{
+		if(_properties_service)
+			return _properties_service->GetProperty(name);
+	}
+
+	return NULL;
 }
 
 //-------------------------------------------------------------------------

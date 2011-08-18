@@ -485,8 +485,8 @@ bool _SwConfigurationManager::Start()
                 {
                     // demarrage de l enregistrement
                     
-                    _iRecordInterface->setConfigurationFile(getAbsoluteFilePath(_launchManager->getConfigurationFile().getFileName()));
-                    _iRecordInterface->setConfigurationSaver(_managedConfigurations);
+//                    _iRecordInterface->setConfigurationFile(getAbsoluteFilePath(_launchManager->getConfigurationFile().getFileName()));
+                    //_iRecordInterface->setConfigurationSaver(_managedConfigurations);
                     _iRecordInterface->setRecordDirectory(getAbsoluteFilePath(_launchManager->getRecordDirectory().getFileName()));
                     _iRecordInterface->startRecording();
                     

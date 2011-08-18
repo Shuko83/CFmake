@@ -13,67 +13,60 @@
   * INCLUDES LOCAUX
   */
 #include <SwEnum.h>
-#include <SwComponent_Class.h>
-#include <SwProperties_Class.h>
 #include <SwPins_Manager_Class.h>
-#include <ISwProperty.h>
-#include <ISwPin_Listener.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
 #include <SwUUID.h>
 #include <SwEnum.h>
 #include <SwFileDescriptor.h>
-#include <ISwExecutable_Service.h>
 #include "ISwRecordPoint.h"
 #include "ISwRecordDataCodec.h"
+#include "ISwAdminSetup.h"
+#include "_SwConfigurationExportedEntity.h"
+#include "SwAssistedComponent.h"
+#include "ISwFinalizer.h"
 
 //Check namespace needed (for exemple ISwAction need namespace StreamWork::SwGui)
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
 using namespace StreamWork::SwRecord;
+using namespace StreamWork::SwFoundation;
+
+
+/**
+ * Define
+ */
+#define CL_CONFIG_XML_NODE_PROPERTY "property"
+#define CL_CONFIG_XML_NODE_ATT_NAME "name"
+#define CL_CONFIG_XML_NODE_ATT_EXP_NAME "ename"
+#define CL_CONFIG_XML_NODE_ATT_PATH "path"
+#define CL_CONFIG_XML_NODE_ATT_IDX "_idhost"
 
 /**
  *	@class _RecordPoint
  *	@brief Record Point
  */
-class _RecordPoint : public StreamWork::SwCore::SwComponent_Class,
-    public ISwPin_Listener,
-    public ISwInterfaces_ConsumerObserver,
+class _RecordPoint : public SwAssistedComponent,
     public StreamWork::SwRecord::ISwRecordPoint,
-    public ISwExecutable_Service
+	virtual public ISwAdminSetup,
+	virtual public ISwFinalizer
 {
     Q_OBJECT
     Q_PROPERTY(StreamWork::SwCore::SwUUID identifier READ getIdentifier WRITE setIdentifier)
     Q_PROPERTY(StreamWork::SwCore::SwEnum dataType READ getDataType WRITE setDataType)
 protected:
 
-	//--------------------------------------------------------------
-	//Services
-	//--------------------------------------------------------------
-	/** @brief service de gestion des propriétés */
-    SwProperties_Class * _properties_service;
-    /** @brief service de fourniture d'interface */
-    SwInterfaces_Provider_Class * _provider_service;
-    /** @brief service de consommation d'interface */
-    SwInterfaces_Consumer_Class * _consumer_service;
-    /** @brief service de gestion des pins */
-    SwPins_Manager_Class * _pins_service;
-
- 	//--------------------------------------------------------------
-	//Properties
-	//--------------------------------------------------------------
-
- 	//--------------------------------------------------------------
-	//Handle interfaces
-	//--------------------------------------------------------------
-
- 	//--------------------------------------------------------------
 	//Pins
 	//--------------------------------------------------------------
     /** @brief pin entrant */
     SwPin * _pinIn;
     /** @brief pin sortant */
     SwPin * _pinOut;
+
+
+	/** @brief Finalizer index */
+	quint64 h_index;
+
+	bool _isRecording;
+
  	//--------------------------------------------------------------
 	//Properties
 	//--------------------------------------------------------------
@@ -93,77 +86,152 @@ protected:
     QLinkedList<SwData_Class *> _waitingQueue;
     /** @brief queue pour emission de données */
     QLinkedList<SwData_Class *> _sendingQueue;
+
+	/* Liste des entites exportes */
+	QList<_SwConfigurationExportedEntity *> _exported_entities; 
 public:
-    /** @brief Constructeur */
-    _RecordPoint();
-    /** @brief Destructeur */
-    virtual ~_RecordPoint();
-    /** 
-     * @brief Initialisation des ressources
-     * @note tous les services du composants doivent être déclarés dans cette methodes
+
+    /**
+     * @brief    : Constructeur
      */
-    virtual void InitializeResources() throw(SwException);
-    /** @brief Callback sur les changements de propriétés*/
-    void OnPropertyChange(ISwProperty * property);
+    _RecordPoint();
+
+    /**
+     * @brief    : Destructeur
+     */
+    virtual ~_RecordPoint();
+
+	 /**
+     * @brief    : Initialisation du composant
+     * @note	 : A surcharger
+     */
+    virtual void initializeComponent() throw(SwException);
+
     //----------------------------------------------------
     // Interface ISwPin_Listener
     //----------------------------------------------------
-    /** @brief Callback sur les changements de propriétés*/
-	/** @brief Sur reception d'une donnée*/
-	void OnReceiveData(SwPin * src,SwData_Class * data);
-     //---------------------------------------------------------------------
-    // Interface ISwInterfaces_ConsumerObserver
-    //---------------------------------------------------------------------
-	/** @brief Avant changement de la disponibilité de l'interface */
-	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);
-	/** @brief Apres changement de la disponibilité de l'interface */
-	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);
- 	//--------------------------------------------------------------
+               
+    /**
+     * @brief    : Calback sur reception d'une data
+     * @param	 : SwPin * src - Pointeur sur la pin
+     * @param	 : SwData_Class * data - Pointeur sur la data ? (a valider)
+	 * @warning	 : Si vous gardez une reference sur la donnée reçues au dela de la portée de la methode suivante
+	 *			   utiliser un SwRefPtr sur la donnée
+	 *			   Si vous souhaitez modifier une donnée recue il faut d'abord en faire une copy
+     */
+    virtual void eventReceiveData(SwPin * src,SwData_Class * data);
+ 	
+	//--------------------------------------------------------------
 	//Properties ISwRecordPoint
 	//--------------------------------------------------------------
+
     /* @brier identifiant */
     virtual SwUUID getRecordIdentifier();
+
     /* @brier name */
     virtual QString getRecordName();
+
     /* @brief construction d'une clef */
     virtual bool buildKey(QXmlStreamReader * reader);
+
     /* @brief soumission d'une clef pour l'emission*/
     virtual void submitKey();
+
     /* @brief clean des clefs existantes*/
     virtual void cleanKeys();
+
     /* @brief assignation du manager d'enregistrement */
     virtual void setRecordManager(ISwRecordManager * recordManager);
+
  	//--------------------------------------------------------------
 	//Properties getter and setter
 	//--------------------------------------------------------------
     /** @brief dataType */
     SwEnum getDataType() const;
     void setDataType(const SwEnum & val);
+
     /** @brief identifier */
     SwUUID getIdentifier() const;
     void setIdentifier(const SwUUID & id);
-    //---------------------------------------------------------------------
-    // Interface ISwExecutable_Service
-    //---------------------------------------------------------------------
-	/*! \brief Initialisation */
-	void Initialize(double start_time,ISwExecution_Service * executor) throw (SwException);            
-	/*! \brief Demarrage */
-	void Start(double current_time) throw (SwException);            
-	/*! \brief Execution */
-	void Execute(double current_time,bool is_first_call) throw (SwException);            
-	/*! \brief Execution */
-	void Stop(double current_time);            
+
+    //----------------------------------------------------
+	// Interface ISwExecutable_Service
+	//----------------------------------------------------
+	
+	/**
+	 * @brief    : Initialisation du composant executable
+	 * @param	 : double start_time - le temps de début
+	 * @param	 : ISwExecution_Service * executor - Pointeur sur le service d'exécution
+	 */
+	virtual void Initialize(double start_time,ISwExecution_Service * executor) throw (SwException);   
+
+	/**
+	 * @brief    : Démarage (Premier pas d'execution)
+	 * @param	 : double current_time - Temps de début
+	 */
+	virtual void Start(double current_time) throw (SwException);            
+
+	/**
+	 * @brief    : Boucle d'éxecution
+	 * @param	 : double current_time - Temps d'éxecution
+	 * @param	 : bool is_first_call - Si c'est le premier appel
+	 */
+	virtual void Execute(double current_time,bool is_first_call) throw (SwException);  
+
+	/**
+	 * @brief    : Methode appelé au stop
+	 * @param	 : double current_time - Temps d'éxecution
+	 */
+	virtual void Stop(double current_time);         
+
+
 	//---------------------------------------------------------------------
 	// Interface ISwService
 	//---------------------------------------------------------------------            
-	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
-	void Liberate();  
-	//---------------------------------------------------------------------
-	// Interface ISwHost
-	//---------------------------------------------------------------------
-	/*! \brief acces a son composant hote */
-	SwComponent_Class * GetHostComponent();            
+	
+	/**
+	 * @brief    : Methode appelé lors du "Setup" dans l'éditor
+	 */
+	virtual void AdminSetup();
+
+
+	//----------------------------------------------------
+	// Interface ISwPersistent
+	//----------------------------------------------------
+
+	/**
+	* @brief    : Methode permettant de charger des donnees
+	* @param	 : QDomElement & elt - Noeud parent
+	* @param	 : ISwFinalizerManager & finalizer_manager - Manager de finalisation
+	*/
+	virtual void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager);
+
+	/**
+	* @brief    : methode permettant de sauver des donnees
+	* @param	 : QDomElement & elt - Noeud parent
+	* @param	 : QDomDocument & doc - Document parent
+	*/
+	virtual void Save(QDomElement & elt,QDomDocument &doc);
+
+
+	//----------------------------------------------------
+	// Interface ISwPersistent
+	//----------------------------------------------------
+
+	/**
+	 * @brief    : finalize l'operation correspondant a l'index d'historique
+	 * @param	 : quint64 historic_index -  historic_index index d'historique
+	 * @return   : bool false si la finalisation n'a pas eu lieu et true si ok
+	 */
+	virtual bool Finalize(quint64 historic_index);
+
+
+	void OnComponentPropertyChange(ISwProperty * prop);
+
+protected:
+
+	void registerPropertiesListener();
+
 };
 #endif
 //------------------------------------------------------

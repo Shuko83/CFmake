@@ -17,16 +17,31 @@ namespace StreamWork {
 
         utilisation: Vue du record manager
         */
-        class ISwRecordManagerListener {
+        class ISwRecordManagerListener 
+		{
 
         public:
-            /*@brief indique un record en cours si true et false sinon */
-            virtual void setEnableRecordInformation(bool enable)=0;
-            /*@brief definit le temps de demarrage de l'enregistrement en cours */
+            /**
+             * @brief    : Indique un record en cours si true et false sinon
+             * @param	 : bool enable - True si on record
+             */
+            virtual void setRecording(bool enable)=0;
+
+            /**
+             * @brief    : Definit le temps de demarrage de l'enregistrement en cours
+             * @param	 : double stime - temps en double
+             */
             virtual void setStartTime(double stime)=0;
-            /*@brief definit le temps courant de l'enregistrement en cours */
+
+            /**
+             * @brief    : Definit le temps courant de l'enregistrement en cours
+             * @param	 : double ctime - temps en double
+             */
             virtual void setCurrentTime(double ctime)=0;
-            /*@brief definit la taille de l'enregistrement en cours en octet */
+            /**
+             * @brief    : Definit la taille de l'enregistrement en cours en octet
+             * @param	 : int size - la taille en octet
+             */
             virtual void setDataSize(int size)=0;
         };
 

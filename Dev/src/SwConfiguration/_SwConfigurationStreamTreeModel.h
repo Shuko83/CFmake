@@ -74,19 +74,21 @@ private:
     /*! font pour les items deja entrés */
     QFont _font_registered;
 
-   QIcon _icoProperty;
-   QIcon _icoInterfaceOut;
-   QIcon _icoExecutor;
-   QIcon _icoOwnerConfigurable;
-   QIcon _icoModelHost;
-
+	QIcon _icoProperty;
+	QIcon _icoInterfaceOut;
+	QIcon _icoExecutor;
+	QIcon _icoOwnerConfigurable;
+	QIcon _icoModelHost;
+	
+	bool _isLimitedToProperty;
 public:
     /*! \brief Constructeur */
-	_SwConfigurationStreamTreeModel(QObject * parent,SwComponent_Class * root_component);
+	_SwConfigurationStreamTreeModel(QObject * parent,SwComponent_Class * root_component, bool islimitedToProperty=false);
     /*! \brief Constructeur */
 	virtual ~_SwConfigurationStreamTreeModel();
     /*! \brief Construction des items */
 	virtual void BuildItems(SwComponent_Class * comp,_Item * item);
+
     //-------------------------------------------------------------
     // Interface QAbstractItemModel
     //------------------------------------------------------------

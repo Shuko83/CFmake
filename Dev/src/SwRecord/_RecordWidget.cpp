@@ -41,7 +41,7 @@ _RecordWidget::_RecordWidget():QWidget(0) {
     connect(_timer,SIGNAL(timeout()),this,SLOT(onTimeout()));
 }
 /** @brief activation */
-void _RecordWidget::setEnableRecordInformation(bool enable) {
+void _RecordWidget::setRecording(bool enable) {
     if (enable) {
         _lIcon->setPixmap(_rPixmap);
         _isSymbolOn=true;

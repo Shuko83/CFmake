@@ -84,6 +84,15 @@ namespace StreamWork {
 			void setOwnerConfigurableServiceAvaibility(bool val);
 			void setOwnerServiceAvaibility(bool val);
 
+
+			/**
+			 * @brief    : Permet de récuperer un pointerur sur une ISwProperty
+			 * @return   : ISwProperty* - pointeur sur la propriété Stremwork
+			 * @param	 : QString name - Nom de la propriété
+			 */
+			ISwProperty* getISwProperty(QString name);
+
+
             /**
              * @brief    : Initialisation du composant
              * @note	 : A surcharger
@@ -344,7 +353,6 @@ namespace StreamWork {
 			 */
 			virtual void createPropertiesForQObject(QObject *obj,QString prefix=QString(),bool disable_objectName=false);
 			
-
 			/**
 			 * @brief    : Callback appelée lors de la disponibilité de l'interface
 			 * @param	 : QString interfaceName - Nom de l'interface
@@ -357,7 +365,7 @@ namespace StreamWork {
 			 */
 			virtual void interfaceUnavailable(QString interfaceName);
 
-			
+
 	
 protected:
 			/**

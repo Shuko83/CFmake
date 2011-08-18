@@ -11,6 +11,9 @@
 
 #include <QString>
 #include <SwComponent_Class.h>
+#include "SwConfigurationConstantes.h"
+#include <QDebug>
+#include <QMetaType>
 
 using namespace StreamWork::SwCore;
 /*!
@@ -19,7 +22,7 @@ using namespace StreamWork::SwCore;
 */
 
 
-class _SwConfigurationExportedEntity {
+class SWCONFIGURATION_EXPORT _SwConfigurationExportedEntity {
 	public:
 	    typedef enum {
             Ent_Undefined,
@@ -42,14 +45,18 @@ class _SwConfigurationExportedEntity {
 		SwComponent_Class * _model_host;
 		/*! \brief Model */
 		SwComponent_Class * _model;
+
 	protected:
 	    /*! \brief Specific bind */
 		virtual void SpecificBind();
 	    /*! \brief Defait la liaison */
 		virtual void SpecificUnbind();
+    public:
+
+
 		/*! \brief Constructeur */
 		_SwConfigurationExportedEntity();
-    public:
+
 	    /*! \brief Destructeur */
 		virtual ~_SwConfigurationExportedEntity();
 	    /*! \brief Effectue la liaison */
@@ -62,5 +69,12 @@ class _SwConfigurationExportedEntity {
 
 
 };
+
+
+
+Q_DECLARE_METATYPE(_SwConfigurationExportedEntity);
+
+QDebug SWCONFIGURATION_EXPORT operator<<(QDebug dbg, const _SwConfigurationExportedEntity &entity);
+
 
 #endif

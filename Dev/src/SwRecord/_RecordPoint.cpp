@@ -13,311 +13,431 @@
 #include "ISwServiceRecording.h"
 #include <QXmlStreamWriter>
 #include "SwAddress_ToolBox.h"
+#include "_SwConfigurationSelector.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwRecord;
 
-/** @brief Constructeur */
-_RecordPoint::_RecordPoint():SwComponent_Class() {
-    _properties_service=NULL;
-    _provider_service=NULL;
-    _pins_service=NULL;
-	_consumer_service=NULL;
-    _pinIn=0;
-    _pinOut=0;
-    _recordManager=0;
+//-------------------------------------------------------------------------
+_RecordPoint::_RecordPoint():SwAssistedComponent() 
+{
+    _pinIn			= 0;
+    _pinOut			= 0;
+    _recordManager	= 0;
+	_isRecording	= false;
 
-	//RESET Interfaces
-
-	//RESET Pins
-
-	//RESET Properties
-	//INITIALIZER LES AUTRES ATTRIBUTS DE LA CLASSE
-    
+	setExecutableServiceAvaibility(true);
+	setPinServiceAvaibility(true);
 
     ISwServiceRecording * rservice=dynamic_cast<ISwServiceRecording *>(SW_APP->QueryService(CG_SW_SERVICE_RECORDING));
-    if (rservice!=0) {
+
+    if (rservice!=0) 
+	{
         QStringList liste=rservice->getSwDataCodecs();
-        for(int i=0;i<liste.count();i++) {
+
+        for(int i=0;i<liste.count();i++)
+		{
             _dataType.AddKey(i,liste[i]);
         }
+
         _dataType.FromInt(0);
         _codec=rservice->buildCodec(liste[0]);
     }
 
 }
-/** @brief Destructeur */
-_RecordPoint::~_RecordPoint() {
-	//Destruction properties automatiques
-	//Desenregistrement automatiques des interfaces
-	//Destruction Pins
-    _pins_service->UnregisterPin(_pinIn);
-    delete _pinIn;
-    _pins_service->UnregisterPin(_pinOut);
-    delete _pinOut;
-
-    //Desenregistrement des services
-    this->UnregisterService(GetServiceName());
-    this->UnregisterService(_pins_service->GetServiceName());
-    this->UnregisterService(_consumer_service->GetServiceName());
-    this->UnregisterService(_provider_service->GetServiceName());
-    this->UnregisterService(_properties_service->GetServiceName());
-    //Destruction des services
-    delete _pins_service;
-    delete _consumer_service;
-    delete _provider_service;
-    delete _properties_service;
+//-------------------------------------------------------------------------
+_RecordPoint::~_RecordPoint() 
+{
+	unregisterPin(_pinIn);
+	unregisterPin(_pinOut);
 
 	//DETRUIRE LES AUTRES ATTRIBUTS DE LA CLASSE
-    if (_codec!=0) {
+    if ( _codec != 0 ) 
+	{
         _codec->destroy();
     }   
+
     ISwServiceRecording * rservice=dynamic_cast<ISwServiceRecording *>(SW_APP->QueryService(CG_SW_SERVICE_RECORDING));
-    if (rservice!=0) {
+    if ( rservice != 0 ) 
+	{
         rservice->unregisterRecordPoint(this);
     }
 }
-/** 
- * @brief Initialisation des ressources
- * @note tous les services du composants doivent être déclarés dans cette methodes
- */
-void _RecordPoint::InitializeResources() throw(SwException) {
-    QVariant tmp;
 
-    //Creation des services
-    _pins_service=new SwPins_Manager_Class(this) ;
-    _consumer_service=new SwInterfaces_Consumer_Class(this) ;
-    _provider_service=new SwInterfaces_Provider_Class(this) ;
-    _properties_service=new SwProperties_Class(this);
-
-    //Enregistrement des services
-    this->RegisterService(_properties_service);
-    this->RegisterService(_consumer_service);
-    this->RegisterService(_provider_service);
-    this->RegisterService(_pins_service);
-    this->RegisterService(this);
-
-    //--------------------------------------
-    //Definition Interfaces fournis
-    //--------------------------------------
-
-    //--------------------------------------
-    //Definition Interfaces consommés
-    //--------------------------------------
-
-    //S'enregistrer comme observer du consumer
-    _consumer_service->AttachInterfacesConsumerObserver(this);
-
-    //--------------------------------------
-    //Definition Pins
-    //--------------------------------------
-    _pinIn=new SwPin(_pins_service,QString("int"),_dataType.ToString());
-    _pinIn->RegisterListener(this);
-    _pins_service->RegisterPin(_pinIn);
-    _pinOut=new SwPin(_pins_service,QString("out"),_dataType.ToString());
-    _pinOut->RegisterListener(this);
-    _pins_service->RegisterPin(_pinOut);
-    //--------------------------------------
-    //Definition Properties
-    //--------------------------------------
-    _properties_service->CreatePropertiesForQObject(this,QString(),true);
-    ISwProperty * p=_properties_service->GetProperty("identifier");
-    QVariant v;
-    v.setValue(SwUUID::generateUUID());
-    p->SetValue(v);
-}
-
-/** @brief Callback sur les changements de propriétés*/
-void _RecordPoint::OnPropertyChange(ISwProperty * property) {
-}
-
-//----------------------------------------------------
-// Interface ISwPin_Listener
-//----------------------------------------------------
-/** 
- * @brief Sur reception d'une donnée
- * @warning
- *  - Si vous gardez une reference sur la donnée reçues au dela de la portée de la methode suivante
- *utiliser un SwRefPtr sur la donnée
- *  - Si vous souhaitez modifier une donnée recue il faut d'abord en faire une copy
-*/
-void _RecordPoint::OnReceiveData(SwPin * src,SwData_Class * data) {
-    if (src==_pinIn) {
+//-------------------------------------------------------------------------
+void _RecordPoint::eventReceiveData(SwPin * src,SwData_Class * data)
+{
+    if ( src == _pinIn ) 
+	{
         //Enregistrement
         data->_addRef();
         _recordQueue.push_back(data);
-    } else {
+    } 
+	else
+	{
         //Sinon ByPass
         _pinIn->SendData(data);
     }
 }
 
-//---------------------------------------------------------------------
-// Interface ISwInterfaces_ConsumerObserver
-//---------------------------------------------------------------------
-/** @brief Avant changement de la disponibilité de l'interface */
-void _RecordPoint::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
-}
-/** @brief Apres changement de la disponibilité de l'interface */
-void _RecordPoint::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
-}
-//--------------------------------------------------------------
-//Properties ISwRecordPoint
-//--------------------------------------------------------------
-/* @brier identifiant */
-SwUUID _RecordPoint::getRecordIdentifier() {
+//-------------------------------------------------------------------------
+SwUUID _RecordPoint::getRecordIdentifier() 
+{
     return _identifier;
 }
-/* @brier name */
-QString _RecordPoint::getRecordName() {
+
+//-------------------------------------------------------------------------
+QString _RecordPoint::getRecordName() 
+{
     QString goodName=SwAddress_ToolBox::BuildUniversalPath(this);
     goodName.replace(QRegExp("[\\.$]"), "_");
     return goodName;
 }
-/* @brief assignation du manager d'enregistrement */
-void _RecordPoint::setRecordManager(ISwRecordManager * recordManager) {
-    _recordManager=recordManager;
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setRecordManager(ISwRecordManager * recordManager) 
+{
+    _recordManager = recordManager;
 }
-/* @brief construction d'une clef */
-bool _RecordPoint::buildKey(QXmlStreamReader * reader) {
+
+//-------------------------------------------------------------------------
+bool _RecordPoint::buildKey(QXmlStreamReader * reader) 
+{
     SwData_Class * data=new SwData_Class();
     data->_addRef();
-    data=(SwData_Class *)_codec->decode(reader,data);
+    data = (SwData_Class *)_codec->decode(reader,data);
+
     _waitingQueue.push_back(data);
+
     return true;
 }
-/* @brief soumission d'une clef pour l'emission*/
-void _RecordPoint::submitKey(){
+
+//-------------------------------------------------------------------------
+void _RecordPoint::submitKey()
+{
     _sendingQueue.push_back(_waitingQueue.front());
     _waitingQueue.pop_front();
 }
-/* @brief clean des clefs existantes*/
-void _RecordPoint::cleanKeys() {
-    while (!_waitingQueue.isEmpty()) {
+
+//-------------------------------------------------------------------------
+void _RecordPoint::cleanKeys() 
+{
+    while (!_waitingQueue.isEmpty()) 
+	{
         _waitingQueue.front()->_release();
         _waitingQueue.pop_front();
     }
-    while (!_sendingQueue.isEmpty()) {
+
+    while (!_sendingQueue.isEmpty()) 
+	{
         _sendingQueue.front()->_release();
         _sendingQueue.pop_front();
     }
 }
 
-//--------------------------------------------------------------
-//Properties getter and setter
-//--------------------------------------------------------------
-/** @brief dataType */
-SwEnum _RecordPoint::getDataType() const {
+//-------------------------------------------------------------------------
+SwEnum _RecordPoint::getDataType() const 
+{
     return _dataType;
 }
-void _RecordPoint::setDataType(const SwEnum & val) {
-    if(_dataType==val) {
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setDataType(const SwEnum & val) 
+{
+    if(_dataType==val) 
+	{
         return;
     }
-    //Sur changement du type de données, on supprime les connecteurs
-    _pins_service->UnregisterPin(_pinIn);
-    delete _pinIn;
-    _pins_service->UnregisterPin(_pinOut);
-    delete _pinOut;
+
+	//Sur changement du type de données, on supprime les connecteurs
+	unregisterPin(_pinIn);
+	unregisterPin(_pinOut);
+
     //On affecte la valeur
     _dataType=val;
-    //on reconstruit les connecteurs
-    _pinIn=new SwPin(_pins_service,QString("int"),_dataType.ToString());
-    _pinIn->RegisterListener(this);
-    _pins_service->RegisterPin(_pinIn);
-    _pinOut=new SwPin(_pins_service,QString("out"),_dataType.ToString());
-    _pinOut->RegisterListener(this);
-    _pins_service->RegisterPin(_pinOut);
+
+    //on reconstruit les connecteurs (True = Listener, => pinIn Listener = Bidirectionalité)
+	_pinIn=registerPin(QString("in"),_dataType.ToString(),true);
+	_pinOut=registerPin(QString("out"),_dataType.ToString(),true);
+
     //On recupere le codec associé
-    if (_codec!=0) {
+    if (_codec!=0) 
+	{
         _codec->destroy();
     }   
+
     ISwServiceRecording * rservice=dynamic_cast<ISwServiceRecording *>(SW_APP->QueryService(CG_SW_SERVICE_RECORDING));
-    if (rservice!=0) {
+    if (rservice!=0) 
+	{
         _codec=rservice->buildCodec(_dataType.ToString());
-    } else 
-        _codec=0;
+    } 
+	else 
+	{
+		_codec=0;
+	}
 }
-/** @brief identifier */
-SwUUID _RecordPoint::getIdentifier() const{
+
+//-------------------------------------------------------------------------
+SwUUID _RecordPoint::getIdentifier() const
+{
     return _identifier;
 }
-void _RecordPoint::setIdentifier(const SwUUID & id) {
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setIdentifier(const SwUUID & id) 
+{
     ISwServiceRecording * rservice=dynamic_cast<ISwServiceRecording *>(SW_APP->QueryService(CG_SW_SERVICE_RECORDING));
-    if (rservice!=0) {
+    if (rservice!=0) 
+	{
         rservice->unregisterRecordPoint(this);
     }
+
     _identifier=id;
-    if (rservice!=0) {
+
+    if (rservice!=0) 
+	{
         rservice->registerRecordPoint(this);
     }
 }
-//---------------------------------------------------------------------
-// Interface ISwExecutable_Service
-//---------------------------------------------------------------------
-/*! \brief Initialisation */
-void _RecordPoint::Initialize(double start_time,ISwExecution_Service * executor) throw (SwException) {
+
+//-------------------------------------------------------------------------
+void _RecordPoint::Initialize(double start_time,ISwExecution_Service * executor) throw (SwException) 
+{
     _currentTime=start_time;
-    _recordQueue.clear();
+   // _recordQueue.clear();
 }
-/*! \brief Demarrage */
-void _RecordPoint::Start(double current_time) throw (SwException){
+
+//-------------------------------------------------------------------------
+void _RecordPoint::Start(double current_time) throw (SwException)
+{
     _currentTime=current_time;
 
+	//Si enregistrement en cours
+	/*if (_recordManager != 0 && _recordQueue.count()>0) 
+	{
+		registerPropertiesListener();
+	}*/
 }           
-/*! \brief Execution */
-void _RecordPoint::Execute(double current_time,bool is_first_call) throw (SwException){
-    _currentTime=current_time;
-    QXmlStreamWriter *writer=0;
 
+//-------------------------------------------------------------------------
+void _RecordPoint::Execute(double current_time,bool is_first_call) throw (SwException)
+{
+	 QXmlStreamWriter *writer = NULL;
+	 _currentTime = current_time;
+
+	//Si on est en enregist
+	if(_recordManager && _recordManager->isRecording() && !_isRecording)
+	{
+		_isRecording = true;
+		_recordQueue.clear();
+		registerPropertiesListener();
+	}
+
+	if( (_recordManager && !_recordManager->isRecording() && _isRecording ) || !_recordManager )
+	{
+		_isRecording = false;
+	}
+	
     //Si enregistrement en cours
-    if (_recordManager!=0 && _recordQueue.count()>0) {
-        writer=_recordManager->queryRecordKey(this,current_time);
+    if ( _isRecording ) 
+	{
+        writer = _recordManager->queryRecordKey(this,current_time);
     }
 
-    while (!_recordQueue.isEmpty()) {
+    while (!_recordQueue.isEmpty()) 
+	{
         SwData_Class * data=_recordQueue.front();
         _recordQueue.pop_front();
+
         //Si enregistrement en cours
-        if (writer!=0) {
+        if (writer != NULL && _isRecording) 
+		{
             _codec->encode(writer,(void *)data);
         }
+
         //Envoie
         _pinOut->SendData(data);
+
         //Liberation
         data->_release();
     }
-    if (writer!=0) {
+
+    if (writer != NULL && _isRecording && _recordManager) 
+	{
         _recordManager->finalizeRecordKey();
     }
 
+
     //Si données de rejeu a emettre
-    while (!_sendingQueue.isEmpty()) {
+    while (!_sendingQueue.isEmpty()) 
+	{
         SwData_Class * data=_sendingQueue.front();
         _sendingQueue.pop_front();
+
         //Envoie
         _pinOut->SendData(data);
+
         //Liberation
         data->_release();
     }
 }            
-/*! \brief Execution */
-void _RecordPoint::Stop(double current_time){
-    _currentTime=current_time;
 
+//-------------------------------------------------------------------------
+void _RecordPoint::Stop(double current_time)
+{
+    _currentTime=current_time;
 }         
-//---------------------------------------------------------------------
-// Interface ISwService
-//---------------------------------------------------------------------            
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
-void _RecordPoint::Liberate(){
-    //rien a faire
-}  
-//---------------------------------------------------------------------
-// Interface ISwHost
-//---------------------------------------------------------------------
-/*! \brief acces a son composant hote */
-SwComponent_Class * _RecordPoint::GetHostComponent(){
-    return this;
-}            
+
+//-------------------------------------------------------------------------
+void _RecordPoint::AdminSetup()
+{
+
+	SwComponent_Class *root;
+	root=this;
+	while (root->GetParent()!=NULL) root=root->GetParent();
+
+	_SwConfigurationSelector * selector=new _SwConfigurationSelector(0,root,&_exported_entities,true);
+	if (selector->exec()==QDialog::Accepted) 
+	{
+		selector->ValidChange();
+	}
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::initializeComponent() throw(SwException)
+{
+	QVariant tmp;
+
+	//--------------------------------------
+	//Definition Pins
+	//--------------------------------------
+	_pinIn=registerPin(QString("in"),_dataType.ToString(),true);
+	_pinOut=registerPin(QString("out"),_dataType.ToString(),true);
+
+	//--------------------------------------
+	//Definition Properties
+	//--------------------------------------
+	createPropertiesForThisObject("",true);
+
+	ISwProperty * p = getISwProperty("identifier");
+
+	QVariant v;
+	v.setValue(SwUUID::generateUUID());
+	p->SetValue(v);
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::Load( QDomElement & elt,ISwFinalizerManager & finalizer_manager )
+{
+	QDomElement elt_ent;
+	_SwConfigurationExportedEntity *entity;
+
+	for(elt_ent = elt.firstChildElement(); !elt_ent.isNull(); elt_ent = elt_ent.nextSiblingElement())
+	{
+		entity=NULL;
+		if ( elt_ent.nodeName() == QString(CL_CONFIG_XML_NODE_PROPERTY) ) 
+		{
+			entity=_SwConfigurationExportedEntity::NewEntity(_SwConfigurationExportedEntity::Ent_Property);
+		}
+
+		if (entity!=NULL &&
+			elt_ent.hasAttribute(CL_CONFIG_XML_NODE_ATT_NAME) &&
+			elt_ent.hasAttribute(CL_CONFIG_XML_NODE_ATT_EXP_NAME) &&
+			elt_ent.hasAttribute(CL_CONFIG_XML_NODE_ATT_PATH)) 
+		{
+			entity->_name=elt_ent.attribute(CL_CONFIG_XML_NODE_ATT_NAME);    
+			entity->_exported_name=elt_ent.attribute(CL_CONFIG_XML_NODE_ATT_EXP_NAME);    
+			entity->_host_path=elt_ent.attribute(CL_CONFIG_XML_NODE_ATT_PATH);   
+			_exported_entities.push_back(entity);
+		} 
+		else 
+		{
+			delete entity;
+		}
+	}
+
+	bool result;
+	h_index=elt.attribute(CL_CONFIG_XML_NODE_ATT_IDX).toULongLong(&result);
+
+	if ( result == false )
+		h_index=SW_APP->GetHistoricCpt();
+
+	finalizer_manager.RegisterFinalization(h_index,this);
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::Save( QDomElement & elt,QDomDocument &doc )
+{
+	QDomElement elt_ent;
+
+	for( int i=0 ; i < _exported_entities.count() ; i++ ) 
+	{
+		//Creation du noeud
+		if( _exported_entities[i]->_type == _SwConfigurationExportedEntity::Ent_Property )
+		{
+			elt_ent = doc.createElement(CL_CONFIG_XML_NODE_PROPERTY);
+		
+			//Affectation des attributs
+			elt_ent.setAttribute(CL_CONFIG_XML_NODE_ATT_NAME,_exported_entities[i]->_name);
+			elt_ent.setAttribute(CL_CONFIG_XML_NODE_ATT_EXP_NAME,_exported_entities[i]->_exported_name);
+			elt_ent.setAttribute(CL_CONFIG_XML_NODE_ATT_PATH,_exported_entities[i]->_host_path);
+
+			//Attachement du neoud au parent
+			elt.appendChild(elt_ent);
+			elt.setAttribute(CL_CONFIG_XML_NODE_ATT_IDX,h_index);
+		}
+	}
+}
+
+//-------------------------------------------------------------------------
+bool _RecordPoint::Finalize( quint64 historic_index )
+{
+	if ( h_index == historic_index ) 
+	{
+		//Observe all property
+		return true;
+	}
+	return false;
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::registerPropertiesListener()
+{
+	SwComponent_Class * _host;
+	SwComponent_Class * root;
+
+	root=this;
+	while (root->GetParent()!=NULL) 
+		root = root->GetParent();
+
+	for( int i=0 ; i<_exported_entities.count() ; i++) 
+	{
+		//On cherche le composant par rapport au noeuf root du stream
+		_host=SwAddress_ToolBox::FindTarget(_exported_entities[i]->_host_path,root);
+
+		//On récupère le service de propriétés du composant 
+		ISwProperties * _internal_properties=dynamic_cast<ISwProperties *>(_host->QueryService(CG_SW_SERVICE_PROPERTIES));  
+
+		//On récupere la ISwProperty
+		ISwProperty* prop =  _internal_properties->GetProperty(_exported_entities[i]->_name);
+
+		//On s'enregistre en tant que listener de la propriété
+
+		prop->GetOnChangeSignal().iconnect(*this,&_RecordPoint::OnComponentPropertyChange);
+
+#ifdef  _DEBUG
+	//qDebugAA
+	qDebug() << (_SwConfigurationExportedEntity)(*_exported_entities[i]) ;
+#endif
+	}
+
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::OnComponentPropertyChange( ISwProperty * prop )
+{
+	#ifdef  _DEBUG
+	//qDebugAA
+	qDebug() << "je suis notifie";
+#endif
+}

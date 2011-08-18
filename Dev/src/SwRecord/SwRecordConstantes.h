@@ -50,6 +50,11 @@
 #define CG_RECORD_RP_ATT_NAME "rname"
 #define CG_RECORD_TIME "t"
 
+
+#define CG_RECORD_MODE_NORMAL 0
+#define CG_RECORD_MODE_RECORDING 1
+#define CG_RECORD_MODE_REPLAYING 2
+
 #endif
 //------------------------------------------------------
 //DO NOT WRITE ANY CODE AFTER THIS POINT

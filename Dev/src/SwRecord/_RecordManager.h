@@ -15,70 +15,33 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <SwEnum.h>
-#include <SwComponent_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
 #include "ISwRecordManager.h"
-#include <ISwExecutable_Service.h>
 #include "SwRecordConstantes.h"
 #include "_SwServiceRecording.h"
 #include <SwFileDescriptor.h>
-#include <ISwWidget.h>
-#include "_RecordWidget.h"
+#include "SwAssistedComponent.h"
 
-using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
-using namespace StreamWork::SwExecution;
 using namespace StreamWork::SwRecord;
+using namespace StreamWork::SwFoundation;
 
 /**
  *	@class _RecordManager
  *	@brief Record Manager
  */
-class _RecordManager : public SwComponent_Class,
-    public ISwInterfaces_ConsumerObserver,
-    public ISwRecordManager,
-    public ISwExecutable_Service,
-    public ISwWidget
+class _RecordManager : public SwAssistedComponent,
+    public ISwRecordManager
 {
     Q_OBJECT
     Q_PROPERTY(StreamWork::SwCore::SwFileDescriptor recordDirectory READ getRecordDirectory WRITE setRecordDirectory)
     Q_PROPERTY(bool record READ getEnableRecording WRITE setEnableRecording)
     Q_PROPERTY(int maxRecordSize READ getMaxRecordSize WRITE setMaxRecordSize)
-    Q_PROPERTY(StreamWork::SwCore::SwFileDescriptor recordConfiguration READ getRecordConfiguration WRITE setRecordConfiguration)
-    Q_PROPERTY(bool enableInternalWidget READ getEnableInternalWidget WRITE setEnableInternalWidget)
 protected:
 
-	//--------------------------------------------------------------
-	//Services
-	//--------------------------------------------------------------
-	/** @brief service de gestion des propriétés */
-    SwProperties_Class * _properties_service;
-    /** @brief service de fourniture d'interface */
-    SwInterfaces_Provider_Class * _provider_service;
-    /** @brief service de consommation d'interface */
-    SwInterfaces_Consumer_Class * _consumer_service;
-
- 	//--------------------------------------------------------------
-	//Properties
-	//--------------------------------------------------------------
-
- 	//--------------------------------------------------------------
-	//Handle interfaces
-	//--------------------------------------------------------------
-
- 	//--------------------------------------------------------------
-	//Pins
-	//--------------------------------------------------------------
     
     /* @brief service d'enregistrement */
     _SwServiceRecording *_serviceRecord;
     /* @brief repertoire d'enregistrement */
     SwFileDescriptor _repository;
-    /* @brief configuration */
-    SwFileDescriptor _configuration;
     /* @brief activation de l'enregistrement */
     bool _enableRecording;
     /* @brief writer */
@@ -93,116 +56,143 @@ protected:
     int _dataCounter;
     /* @brief initial time */
     double _itime;
+	/* @brief current time */
+	double _currentTime;
+
     /* @brief mapping record_point id */
     QMap<ISwRecordPoint *,int> _recordPointMapping;
     /* @brief taille max du fichier d'enregistrement */
     int _maxRecordSize;
-    /* @brief widget info */
-    _RecordWidget * _widget;
     /* @brief size */
     int _totalSize;
     /* @brief listeners */
     QList<ISwRecordManagerListener *> _listeners;
-    /* @brief disable internal widget */
-    bool _enabledInternalWidget;
-    /* @brief configuration saver */
-    StreamWork::SwConfiguration::ISwConfigurationSaver * _configSaver;
+
+
 public:
-    /** @brief Constructeur */
-    _RecordManager(_SwServiceRecording * serviceRecord);
-    /** @brief Destructeur */
-    virtual ~_RecordManager();
-    /** 
-     * @brief Initialisation des ressources
-     * @note tous les services du composants doivent être déclarés dans cette methodes
+    /**
+     * @brief    : Constructeur
+     * @param	 : _SwServiceRecording * serviceRecord - Pointeur sur le service de recording
      */
-    virtual void InitializeResources() throw(SwException);
-    /** @brief Callback sur les changements de propriétés*/
-    void OnPropertyChange(ISwProperty * property);
-    //---------------------------------------------------------------------
-    // Interface ISwInterfaces_ConsumerObserver
-    //---------------------------------------------------------------------
-	/** @brief Avant changement de la disponibilité de l'interface */
-	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);
-	/** @brief Apres changement de la disponibilité de l'interface */
-	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);
+    _RecordManager(_SwServiceRecording * serviceRecord);
+    
+	/**
+     * @brief    : Destructeur
+     */
+    virtual ~_RecordManager();
+
+	 /**
+     * @brief    : Initialisation du composant
+     * @note	 : A surcharger
+     */
+    virtual void initializeComponent() throw(SwException);
+
+    
     //---------------------------------------------------------------------
     // Interface ISwRecordManager
     //---------------------------------------------------------------------
-    /*@brief definition du repertoire d'enregistrement */
+    /**
+     * @brief    : Definition du repertoire d'enregistrement
+     * @param	 : QString directoryName - Path du répertoire
+     */
     virtual void setRecordDirectory(QString directoryName);
-    /*@brief definition du fichier de configuration */
-    virtual void setConfigurationFile(QString fileName);
-    /*@brief definition de l outil de sauvegarde du fichier de configuration */
-    virtual void setConfigurationSaver(StreamWork::SwConfiguration::ISwConfigurationSaver * configSaver);
-    /*@brief demarrage de l'enregistrement */
+
+    /**
+     * @brief    : Démarre l'enregistrement
+     */
     virtual void startRecording();
-    /*@brief arret de l'enregistrement */
+
+    /**
+     * @brief    : Arret de l'enregistrement
+     */
     virtual void stopRecording();
-    /*@brief demande de creation de clef d'enregistrement*/
+
+    /**
+     * @brief    : Demande de creation de clef d'enregistrement
+     * @return   : QXmlStreamWriter * - Permet d'écrire dans ce writer
+     * @param	 : ISwRecordPoint * recordPoint - Pointeru vers le recordPoint qui veut la clef
+     * @param	 : double currentTime - Le temps courant au moment de la demande
+     */
     virtual QXmlStreamWriter *queryRecordKey(ISwRecordPoint * recordPoint,double currentTime);
-    /*@brief finalisation de la clef d'enregistrement*/
+
+    /**
+     * @brief    : Finalisation de la clef d'enregistrement
+     * @return   : void
+     */
     virtual void finalizeRecordKey();
-    /*@brief ajout de listener*/
+
+    /**
+     * @brief    : Ajout de listener
+     * @param	 : ISwRecordManagerListener * listener - Pointeur sur un listener
+     */
     virtual void addRecordManagerListener(ISwRecordManagerListener * listener);
-    /*@brief suppression de listener*/
+
+    /**
+     * @brief    : Suppression de listener
+     * @param	 : ISwRecordManagerListener * listener -  Pointeur sur un listener
+     */
     virtual void removeRecordManagerListener(ISwRecordManagerListener * listener);
-    //---------------------------------------------------------------------
-    // Interface ISwExecutable_Service
-    //---------------------------------------------------------------------
-	/*! \brief Initialisation */
-	void Initialize(double start_time,ISwExecution_Service * executor) throw (SwException);            
-	/*! \brief Demarrage */
-	void Start(double current_time) throw (SwException);            
-	/*! \brief Execution */
-	void Execute(double current_time,bool is_first_call) throw (SwException);            
-	/*! \brief Execution */
-	void Stop(double current_time);            
-	//---------------------------------------------------------------------
-	// Interface ISwService
-	//---------------------------------------------------------------------            
-	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
-	void Liberate();  
-	//---------------------------------------------------------------------
-	// Interface ISwHost
-	//---------------------------------------------------------------------
-	/*! \brief acces a son composant hote */
-	SwComponent_Class * GetHostComponent();            
-    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-	virtual QWidget & GetWidget();
- 	//--------------------------------------------------------------
+
+	/**
+	 * @brief    : Permet de recupérer l'état du recordManager
+	 * @return   : bool true si l'enregistrement est en cours
+	 */
+	virtual bool isRecording();
+   
+	//----------------------------------------------------
+	// Interface ISwExecutable_Service
+	//----------------------------------------------------
+	
+	/**
+	 * @brief    : Initialisation du composant executable
+	 * @param	 : double start_time - le temps de début
+	 * @param	 : ISwExecution_Service * executor - Pointeur sur le service d'exécution
+	 */
+	virtual void Initialize(double start_time,ISwExecution_Service * executor) throw (SwException);   
+
+	/**
+	 * @brief    : Démarage (Premier pas d'execution)
+	 * @param	 : double current_time - Temps de début
+	 */
+	virtual void Start(double current_time) throw (SwException);            
+
+	/**
+	 * @brief    : Boucle d'éxecution
+	 * @param	 : double current_time - Temps d'éxecution
+	 * @param	 : bool is_first_call - Si c'est le premier appel
+	 */
+	virtual void Execute(double current_time,bool is_first_call) throw (SwException);  
+
+	/**
+	 * @brief    : Methode appelé au stop
+	 * @param	 : double current_time - Temps d'éxecution
+	 */
+	virtual void Stop(double current_time);  
+
+	//--------------------------------------------------------------
 	//Properties getter and setter
 	//--------------------------------------------------------------
-    /** @brief recordDirectory */
+    
+	/** @brief recordDirectory */
     SwFileDescriptor getRecordDirectory() const;
     void setRecordDirectory(const SwFileDescriptor & val);
+
     /** @brief record */
     bool getEnableRecording() const;
     void setEnableRecording(bool val);
+
     /** @brief recordMaxSize */
     int getMaxRecordSize() const;
     void setMaxRecordSize(int val);
-    /** @brief recordConfiguration */
-    SwFileDescriptor getRecordConfiguration() const;
-    void setRecordConfiguration(const SwFileDescriptor & val);
-    /** @brief enable internal widget */
-    bool getEnableInternalWidget() const;
-    void setEnableInternalWidget(bool val);
 
 protected:
+
     /** @brief  Construction et enregistrement du mapping des points d'enregistrement */
     void buildRecordPointMapping();
     /** @brief  creation d'un writer pour les données*/
     void createWriterData();
     /** @brief  fermetude du writer pour les données */
     void closeWriterData();
-    /** @brief  sauvegarde de la configuration */
-    void saveConfiguration();
     
 };
 #endif

@@ -22,7 +22,7 @@ public:
 	/** @brief Constructor */
 	_RecordWidget();
 	/** @brief activation */
-    void setEnableRecordInformation(bool enable);
+    void setRecording(bool enable);
 	/** @brief temps de demarrage */
     void setStartTime(double stime);
 	/** @brief temps courant */

@@ -23,7 +23,7 @@
 using namespace StreamWork::SwCore;
 
 /*! \brief Constructeur */
-_SwConfigurationSelector::_SwConfigurationSelector(QWidget *parent,SwComponent_Class * root_element,QList<_SwConfigurationExportedEntity *> * entities_list)
+_SwConfigurationSelector::_SwConfigurationSelector(QWidget *parent,SwComponent_Class * root_element,QList<_SwConfigurationExportedEntity *> * entities_list,bool isLimitedToProperty)
     : QDialog(parent)
 {
     setWindowTitle("Select entities to export");
@@ -44,13 +44,16 @@ _SwConfigurationSelector::_SwConfigurationSelector(QWidget *parent,SwComponent_C
 
     _SwConfigurationTreeView *view_model=new _SwConfigurationTreeView(this);
     _entities_model=new _SwConfigurationEntitiesModel(view_model,_root_comp,_entities_list);
+	if(isLimitedToProperty)
+		_entities_model->limitToProperty();
+
     view_model->setModel(_entities_model);
     view_model->setAcceptDrops(true);
     view_model->setDragDropMode(QAbstractItemView::DropOnly);
-    //view_model->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    //view_model->setSelectionMode(QAbstractItemView::ExtendedSelection);f
     splitter->addWidget(view_model);
     QTreeView *view=new QTreeView(this);
-    _SwConfigurationStreamTreeModel * model=new _SwConfigurationStreamTreeModel(view,_root_comp);
+    _SwConfigurationStreamTreeModel * model=new _SwConfigurationStreamTreeModel(view,_root_comp,isLimitedToProperty);
     view->setModel(model);
     view->setDragEnabled(true);
     view->setSelectionMode(QAbstractItemView::ExtendedSelection);

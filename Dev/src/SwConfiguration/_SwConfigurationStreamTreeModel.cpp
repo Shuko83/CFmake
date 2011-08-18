@@ -25,8 +25,8 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
 
 /*! \brief Constructeur */
-_SwConfigurationStreamTreeModel::_SwConfigurationStreamTreeModel(QObject * parent,SwComponent_Class * root_component):
-												   QAbstractItemModel(parent){
+_SwConfigurationStreamTreeModel::_SwConfigurationStreamTreeModel(QObject * parent,SwComponent_Class * root_component,bool islimitedToProperty):
+												   QAbstractItemModel(parent),_isLimitedToProperty(islimitedToProperty){
     _root_component=root_component;
     _root_item=new _Item(NULL,_root_component,IT_Host,_root_component->GetName());
     BuildItems(_root_component,_root_item);
@@ -214,11 +214,11 @@ _SwConfigurationStreamTreeModel::_Item::~_Item() {
 void _SwConfigurationStreamTreeModel::BuildItems(SwComponent_Class * comp,_Item * item) {
 
     //Creation du noeud executable si necessaire
-    if (dynamic_cast<ISwExecution_Service *>(comp->QueryService(CG_SW_SERVICE_EXECUTION))!=NULL) {
+    if (dynamic_cast<ISwExecution_Service *>(comp->QueryService(CG_SW_SERVICE_EXECUTION))!=NULL && !_isLimitedToProperty) {
         new _Item(item,comp,IT_Execution,"Execution interface");
     }
     //Creation du noeud ownconf si necessaire
-    if (dynamic_cast<ISwServiceOwnerConfigurable *>(comp->QueryService(CG_SW_SERVICE_OWNER_CONFIGURABLE))!=NULL) {
+    if (dynamic_cast<ISwServiceOwnerConfigurable *>(comp->QueryService(CG_SW_SERVICE_OWNER_CONFIGURABLE))!=NULL  && !_isLimitedToProperty) {
         new _Item(item,comp,IT_OwnerConfigurable,"OwnerConfiguration interface");
     }
     
@@ -234,7 +234,7 @@ void _SwConfigurationStreamTreeModel::BuildItems(SwComponent_Class * comp,_Item 
     }
     //Creation des noeud interface consomme
     ISwInterfaces_Provider *provider_handle=dynamic_cast<ISwInterfaces_Provider *>(comp->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
-    if (provider_handle!=NULL) {
+    if (provider_handle!=NULL  && !_isLimitedToProperty ) {
         QString interface_name;
         interface_name=provider_handle->GetFirstInterface();
         while (!interface_name.isEmpty()) {

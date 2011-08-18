@@ -8,12 +8,13 @@
 #define _STREAMWORK_SWRECORD_ISWRECORDMANAGER_H
 
 #include <QXmlStreamWriter>
-#include <ISwConfigurationSaver.h>
 #include <ISwRecordManagerListener.h>
 
-namespace StreamWork {
+namespace StreamWork 
+{
 
-    namespace SwRecord {
+    namespace SwRecord 
+	{
     
         class ISwRecordPoint;
         /**
@@ -31,27 +32,58 @@ namespace StreamWork {
         arreter l'execution du stream
         appeler stopRecording
         */
-        class ISwRecordManager {
+        class ISwRecordManager 
+		{
 
         public:
-            /*@brief definition du repertoire d'enregistrement */
+
+            /**
+             * @brief    : Definition du repertoire d'enregistrement
+             * @param	 : QString directoryName - Path du répertoire
+             */
             virtual void setRecordDirectory(QString directoryName)=0;
-            /*@brief definition du fichier de configuration */
-            virtual void setConfigurationFile(QString fileName)=0;
-            /*@brief definition du fichier de configuration */
-            virtual void setConfigurationSaver(StreamWork::SwConfiguration::ISwConfigurationSaver * configSaver)=0;
-            /*@brief demarrage de l'enregistrement */
+
+            /**
+             * @brief    : Démarre l'enregistrement
+             */
             virtual void startRecording()=0;
-            /*@brief arret de l'enregistrement */
+
+            /**
+             * @brief    : Arret de l'enregistrement
+             */
             virtual void stopRecording()=0;
-            /*@brief demande de creation de clef d'enregistrement*/
+
+            /**
+             * @brief    : Demande de creation de clef d'enregistrement
+             * @return   : QXmlStreamWriter * - Permet d'écrire dans ce writer
+             * @param	 : ISwRecordPoint * recordPoint - Pointeru vers le recordPoint qui veut la clef
+             * @param	 : double currentTime - Le temps courant au moment de la demande
+             */
             virtual QXmlStreamWriter *queryRecordKey(ISwRecordPoint * recordPoint,double currentTime)=0;
-            /*@brief finalisation de la clef d'enregistrement*/
+
+            /**
+             * @brief    : Finalisation de la clef d'enregistrement
+             * @return   : void
+             */
             virtual void finalizeRecordKey()=0;
-            /*@brief ajout de listener*/
+
+            /**
+             * @brief    : Ajout de listener
+             * @param	 : ISwRecordManagerListener * listener - Pointeur sur un listener
+             */
             virtual void addRecordManagerListener(ISwRecordManagerListener * listener)=0;
-            /*@brief suppression de listener*/
+
+            /**
+             * @brief    : Suppression de listener
+             * @param	 : ISwRecordManagerListener * listener -  Pointeur sur un listener
+             */
             virtual void removeRecordManagerListener(ISwRecordManagerListener * listener)=0;
+
+			/**
+			 * @brief    : Permet de recupérer l'état du recordManager
+			 * @return   : bool true si l'enregistrement est en cours
+			 */
+			virtual bool isRecording()=0;
         };
 
     }

@@ -35,6 +35,8 @@ namespace StreamWork {
             /* @brief clean des clefs existantes*/
             virtual void cleanKeys()=0;
 
+
+
         };
 
     }

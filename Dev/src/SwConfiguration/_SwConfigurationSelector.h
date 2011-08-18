@@ -15,6 +15,7 @@
 #include <QDialog>
 #include <QList>
 #include <QTreeView>
+#include "SwConfigurationConstantes.h"
 /*
   * INCLUDES LOCAUX
   */
@@ -29,7 +30,7 @@ using namespace StreamWork::SwCore;
 	\class _SwConfigurationExportSelector 
 	\brief  Ihm de selection des entites exportées par la configuration
 */
-class _SwConfigurationSelector : public QDialog
+class SWCONFIGURATION_EXPORT _SwConfigurationSelector : public QDialog
 {
     Q_OBJECT
 protected:
@@ -45,7 +46,8 @@ public:
     _SwConfigurationSelector(
           QWidget *parent,
           SwComponent_Class * root_element,
-          QList<_SwConfigurationExportedEntity *> * entities_list);
+          QList<_SwConfigurationExportedEntity *> * entities_list,
+		  bool isLimitedToProperty=false);
           
     /*! \brief Destructeur */
     ~_SwConfigurationSelector();

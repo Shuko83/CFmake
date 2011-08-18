@@ -72,3 +72,34 @@ _SwConfigurationExportedEntity * _SwConfigurationExportedEntity::NewEntity(Expor
     return NULL;
 }
 
+
+//--------------------------------------------------------------------
+QDebug operator<<( QDebug dbg, const _SwConfigurationExportedEntity &entity )
+{
+	QString tmpOutput;
+
+	tmpOutput.append("Type : ");
+	switch (entity._type)
+	{
+		case _SwConfigurationExportedEntity::Ent_Property:
+				tmpOutput.append( "Property" );
+				break;
+		case _SwConfigurationExportedEntity::Ent_Perspective:
+			tmpOutput.append( "Perspective" );
+			break;
+		case _SwConfigurationExportedEntity::Ent_Execution:
+			tmpOutput.append( "Execution" );
+			break;
+		case _SwConfigurationExportedEntity::Ent_OwnerConfigurable:
+			tmpOutput.append( "OwnerConfigurable" ) ;
+			break;
+		default:
+			break;
+	}
+	tmpOutput.append( " - Name : " + entity._name );
+	tmpOutput.append( " - Exported_name : " + entity._exported_name );
+	tmpOutput.append( " - Host_path : " + entity._host_path );
+
+	dbg.nospace()<< QString( "SwConfigurationExportedEntity "+tmpOutput);
+	return dbg.maybeSpace();
+}

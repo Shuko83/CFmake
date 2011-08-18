@@ -12,6 +12,7 @@
 #include "ISwSubStream.h"
 #include "ISwPluginOverview.h"
 #include "MainWindow.h"
+#include "ManageLinkColor.h"
 
 #define CL_RADUIS 10.0
 
@@ -48,6 +49,7 @@ ComponentGraphicItem::ComponentGraphicItem(SwComponent_Class * component,StreamC
     _bbox=QRectF();
     updateAttributs();
     _connectionInsertionPositionDisplay=false;
+
 }
 /** @brief Acces au composant */
 StreamWork::SwCore::SwComponent_Class * ComponentGraphicItem::getComponent() const{
@@ -117,6 +119,16 @@ void ComponentGraphicItem::updateAttributs() {
     qreal height;
     qreal half_width;
     qreal half_height;
+
+
+	foreach(ConnectorGraphicItem * connec, _connectors)
+	{
+		if(connec->getConnectorType() == PROVIDER)
+		{
+			setColor(ManageLinkColor::getInstance()->getColorForInterface(connec->getModelType()));
+			break;
+		}
+	}
 
     arrangeConnectors();
     prepareGeometryChange(); 
@@ -301,7 +313,8 @@ void ComponentGraphicItem::moveConnector(ConnectorGraphicItem *citem) {
     updateAttributs();
 }
 /** @brief acces au connecteurs */
-QList<ConnectorGraphicItem *> * ComponentGraphicItem::getConnectors() {
+QList<ConnectorGraphicItem *> * ComponentGraphicItem::getConnectors() 
+{
     return &_connectors;
 }
 /** @brief acces au composants enfants */

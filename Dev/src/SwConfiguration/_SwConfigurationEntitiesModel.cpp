@@ -25,6 +25,7 @@ _SwConfigurationEntitiesModel::_SwConfigurationEntitiesModel(QObject * parent,Sw
 												   QAbstractItemModel(parent){
     _root_component=root_component;
     _entities_list=entities_list;
+	_isLimitedToProperties = false;
     TransformEntitiesToModel();
 }
 /*! \brief Destructeur*/
@@ -153,7 +154,13 @@ int _SwConfigurationEntitiesModel::columnCount ( const QModelIndex & parent ) co
 /*! \brief Renvoie le nombre de ligne pour un parent donné */
 int _SwConfigurationEntitiesModel::rowCount ( const QModelIndex & parent ) const {
     if (!parent.isValid())
-        return 4;
+	{
+		if(!_isLimitedToProperties)
+			return 4;
+		else
+			return 1;
+	}
+	
     if (parent.isValid() && parent.internalPointer()==NULL) {
         switch(parent.row()) {
             case 0:
@@ -193,9 +200,12 @@ QVariant _SwConfigurationEntitiesModel::data ( const QModelIndex & index, int ro
      if (!index.isValid())
          return QVariant();
     item=(_Item *)index.internalPointer();
-    if (item==NULL)  {
-        if (role == Qt::DisplayRole && index.column()==0) {
-            switch(index.row()) {
+    if (item==NULL)  
+	{
+        if (role == Qt::DisplayRole && index.column()==0) 
+		{
+            switch(index.row()) 
+			{
                 case 0:
                     return QVariant(QString("Properties"));
                 case 1:
@@ -362,5 +372,11 @@ bool _SwConfigurationEntitiesModel::dropMimeData ( const QMimeData * data, Qt::D
         return true;
     }
     return false;
+}
+
+//-------------------------------------------------------------------------
+void _SwConfigurationEntitiesModel::limitToProperty()
+{
+	_isLimitedToProperties = true;
 }
 
