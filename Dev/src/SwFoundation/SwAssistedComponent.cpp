@@ -739,7 +739,7 @@ void SwAssistedComponent::unconsummeInterface( QString pinterface_name )
 
 		void ** handle_interface = _mapIConsummed.value(pinterface_name);
 		delete handle_interface;
-		*handle_interface = NULL;
+		//*handle_interface = NULL;
 		_mapIConsummed.remove(pinterface_name);
 	}
 }

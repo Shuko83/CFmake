@@ -63,7 +63,9 @@ void _RecordManager::startRecording()
 	QDir d=QDir(_repository.getFileName());
 
 	if (!d.exists())
-		return;
+	{
+		QDir::temp().mkpath(_repository.getFileName());
+	}
 
 	//Creation du fichier d'enregistrement
 	_fileWriter = new QFile(d.absolutePath()+QDir::separator()+CG_RECORD_FILE);
