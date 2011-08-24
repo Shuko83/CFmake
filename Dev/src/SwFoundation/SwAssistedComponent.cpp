@@ -373,11 +373,11 @@ SwAssistedComponent::~SwAssistedComponent()
 	}
 
 	//Clear consummed interface
-	QStringList tmpList2 = _mapIConsummed.keys();
+	/*QStringList tmpList2 = _mapIConsummed.keys();
 	foreach(QString key, tmpList2)
-		unconsummeInterface(key);
+		unconsummeInterface(key);*/
 
-	//Clear consummed interface
+	//Clear pin
 	QList<SwPin*> tmpList3 = _listPin;
 	foreach(SwPin *pin ,tmpList3)
 	{
@@ -618,7 +618,7 @@ ISwExecutable_Service& SwAssistedComponent::getExecutableService()
 }
 
 //-------------------------------------------------------------------------
-SwOwner_Class& StreamWork::SwFoundation::SwAssistedComponent::getOwnerService()
+ISwServiceOwner& StreamWork::SwFoundation::SwAssistedComponent::getOwnerService()
 {
 	return *_owner_service;
 }
@@ -739,6 +739,7 @@ void SwAssistedComponent::unconsummeInterface( QString pinterface_name )
 
 		void ** handle_interface = _mapIConsummed.value(pinterface_name);
 		delete handle_interface;
+		*handle_interface = NULL;
 		_mapIConsummed.remove(pinterface_name);
 	}
 }

@@ -10,6 +10,7 @@
 #include <SwApplication.h>
 #include <SwMacros.h>
 #include <QPainter>
+#include <qdebug>
 
 
 /*
@@ -392,7 +393,7 @@ bool SwPropertiesModelImpl::setData ( const QModelIndex & index, const QVariant 
 QModelIndex SwPropertiesModelImpl::index ( int row, int column, const QModelIndex & parent) const{
     PropertyItem * iparent =0 ;
     QMap<QString,PropertyItem *>::const_iterator it;
-
+	
     if (_properties==NULL)
         return QModelIndex();
     if (!parent.isValid()) 

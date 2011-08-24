@@ -239,31 +239,28 @@ void _RecordPoint::Execute(double current_time,bool is_first_call) throw (SwExce
 	}
 	
     //Si enregistrement en cours
-    if ( _isRecording ) 
+    if ( _isRecording && !_recordQueue.isEmpty()) 
 	{
         writer = _recordManager->queryRecordKey(this,current_time);
-    }
 
-    while (!_recordQueue.isEmpty()) 
-	{
-        SwData_Class * data=_recordQueue.front();
-        _recordQueue.pop_front();
-
-        //Si enregistrement en cours
-        if (writer != NULL && _isRecording) 
+		while (!_recordQueue.isEmpty()) 
 		{
-            _codec->encode(writer,(void *)data);
-        }
+			SwData_Class * data=_recordQueue.front();
+			_recordQueue.pop_front();
 
-        //Envoie
-        _pinOut->SendData(data);
+			//Si enregistrement en cours
+			if (writer != NULL && _isRecording) 
+			{
+				_codec->encode(writer,(void *)data);
+			}
 
-        //Liberation
-        data->_release();
-    }
+			//Envoie
+			_pinOut->SendData(data);
 
-    if (writer != NULL && _isRecording && _recordManager) 
-	{
+			//Liberation
+			data->_release();
+		}
+
         _recordManager->finalizeRecordKey();
     }
 

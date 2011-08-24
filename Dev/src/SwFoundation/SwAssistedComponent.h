@@ -27,6 +27,7 @@
 #include "ISwServiceOwnerConfigurable.h"
 #include "ISwPersistentConfigurable.h"
 #include "ISwPersistent.h"
+#include "ISwServiceOwner.h"
 
 #ifdef SWFOUNDATION_LIB
 # define BUILD_SWFOUNDATION Q_DECL_EXPORT
@@ -419,7 +420,7 @@ protected:
 			 * @brief    : Acces au service de owner (sauvegarde dans le stream Streamwork)
 			 * @return   : SwOwner_Class & - Référence sur le service
 			 */
-			SwOwner_Class& getOwnerService();
+			ISwServiceOwner& getOwnerService();
 
 	
 private:

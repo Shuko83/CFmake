@@ -20,6 +20,7 @@ using namespace StreamWork::SwFoundation;
 TestAssistedComponent::TestAssistedComponent():SwAssistedComponent() 
 {
   
+	setPinServiceAvaibility(true);
 
 	_test.AddKey(1,QString("Toto"));
 	_test.AddKey(2,QString("Titi"));

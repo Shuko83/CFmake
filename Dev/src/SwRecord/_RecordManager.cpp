@@ -83,6 +83,7 @@ void _RecordManager::startRecording()
 	_writer->writeStartDocument("1.0");
 	_writer->writeStartElement(CG_RECORD);
 
+	_itime = _currentTime;
 
 	if( _writer != NULL ) 
 	{
@@ -108,8 +109,9 @@ void _RecordManager::startRecording()
 		}
 
 		_writer->writeStartElement(CG_RECORD_START);
-		_writer->writeAttribute(CG_RECORD_TIME,QString("%1").arg(_itime,0,'f',3));
+		_writer->writeAttribute(CG_RECORD_TIME,QString("%1").arg(_currentTime-_itime,0,'f',3));
 		_writer->writeEndElement();
+
 	}
 
 	//Creation du writer data
@@ -129,7 +131,7 @@ void _RecordManager::stopRecording()
 	if (_writer != NULL) 
 	{
 		_writer->writeStartElement(CG_RECORD_STOP);
-		_writer->writeAttribute(CG_RECORD_TIME,QString("%1").arg(_currentTime,0,'f',3));
+		_writer->writeAttribute(CG_RECORD_TIME,QString("%1").arg(_currentTime-_itime,0,'f',3));
 		_writer->writeAttribute(CG_RECORD_STOP_DCOUNT,QString("%1").arg(_dataCounter));
 		_writer->writeEndElement();
 		foreach(ISwRecordManagerListener * listener,_listeners) 
@@ -235,22 +237,24 @@ void _RecordManager::removeRecordManagerListener(ISwRecordManagerListener * list
 //-------------------------------------------------------------------------
 void _RecordManager::Initialize(double start_time,ISwExecution_Service * executor) throw (SwException) 
 {
-	_itime=start_time;
+	_currentTime=start_time;
 
 }
 
 //-------------------------------------------------------------------------
 void _RecordManager::Start(double current_time) throw (SwException)
 {
+	_currentTime=current_time;
 
 }      
 
 //-------------------------------------------------------------------------
 void _RecordManager::Execute(double current_time,bool is_first_call) throw (SwException)
 {
+	_currentTime=current_time;
+
 	if(_writer != NULL) 
 	{
-		_currentTime = current_time;
 		int size=_totalSize+(unsigned int)_fileWriterData->size();
 		foreach(ISwRecordManagerListener * listener,_listeners) 
 		{
@@ -266,6 +270,7 @@ void _RecordManager::Execute(double current_time,bool is_first_call) throw (SwEx
 
 		_writerData->writeStartElement(CG_RECORD_EXE);
 		_writerData->writeAttribute(CG_RECORD_TIME,QString("%1").arg(current_time-_itime,0,'f',3));
+
 		_writerData->writeEndElement();
 	}
 }            
