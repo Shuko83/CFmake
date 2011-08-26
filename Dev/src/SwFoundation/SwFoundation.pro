@@ -28,12 +28,12 @@ CONFIG(debug, debug|release) {
   win32:TARGET = $$join(TARGET,,,d)
   win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
 	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
-	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwGuid -lSwExecutiond
+	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwExecutiond
 	TARGET_EXT = .dlld
 } 
 CONFIG(release, debug|release) {
   win32:DESTDIR = ./../../lib/vc/release
   win32:DLLDESTDIR=  ./../../bin/vc/release
-	LIBS += -L"../../lib/vc/release" -lSwCore -lSwGui -lSwExecution
+	LIBS += -L"../../lib/vc/release" -lSwCore -lSwExecution
 	TARGET_EXT = .dll
 }

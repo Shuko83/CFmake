@@ -19,7 +19,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
 				AssemblerListingLocation="_objd\"
 				BufferSecurityCheck="false"
@@ -39,7 +39,7 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwGuid.lib ../../lib/vc/debug\SwExecutiond.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				AdditionalDependencies="../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwExecutiond.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
@@ -74,7 +74,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
 				AssemblerListingLocation="_obj\"
 				BufferSecurityCheck="false"
@@ -94,7 +94,7 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../lib/vc/release\SwCore.lib ../../lib/vc/release\SwGui.lib ../../lib/vc/release\SwExecution.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
+				AdditionalDependencies="../../lib/vc/release\SwCore.lib ../../lib/vc/release\SwExecution.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/release"
 				GenerateDebugInformation="false"
 				IgnoreImportLibrary="true"
@@ -141,7 +141,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwAssistedComponent.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWFOUNDATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwAssistedComponent.h -o _intermediaire\moc_SwAssistedComponent.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWFOUNDATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwAssistedComponent.h -o _intermediaire\moc_SwAssistedComponent.cpp"
 						Description="MOC SwAssistedComponent.h"
 						Outputs="_intermediaire\moc_SwAssistedComponent.cpp"
 						Path="c:\Qt\4.7.1\bin" />
@@ -151,7 +151,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwAssistedComponent.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWFOUNDATION_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwAssistedComponent.h -o _intermediaire\moc_SwAssistedComponent.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWFOUNDATION_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwAssistedComponent.h -o _intermediaire\moc_SwAssistedComponent.cpp"
 						Description="MOC SwAssistedComponent.h"
 						Outputs="_intermediaire\moc_SwAssistedComponent.cpp"
 						Path="c:\Qt\4.7.1\bin" />
