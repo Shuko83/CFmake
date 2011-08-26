@@ -8,9 +8,9 @@ SUBDIRS += src/SwGui
 SUBDIRS += src/SwRecord 
 SUBDIRS += src/SwDataBase 
 
-SUBDIRS += src/SwModel2
+SUBDIRS += src/SwModel2  
 SUBDIRS += src/SwConfiguration  
-SUBDIRS += src/SwConfiguration
+SUBDIRS += src/SwFoundation
         
 
 SUBDIRS += src/WizardIDE 
