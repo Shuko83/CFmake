@@ -15,6 +15,7 @@
 #include "_SwPluginsBank_Class.h"
 #include "_SwFileEditorManager.h"
 #include "_SwServiceExtensionsImpl.h"
+#include "_SwServiceParametersImpl.h"
 #include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
 #include "SwLoader_Class.h"
 #include "SwEnum.h"
@@ -40,6 +41,7 @@ _SwPluginsBank_Class * _bank=NULL;
 _SwComplexeTypeAdaptersFactoriesBankImpl * _ctadaptersbank=NULL;
 _SwFileEditorManager * _feManager=NULL;
 _SwServiceExtensionsImpl * _serviceExtensions=NULL;
+_SwServiceParametersImpl * _serviceParameters=NULL;
 bool            _is_launch=false;
 
 /*! \brief Constructeur*/
@@ -68,6 +70,9 @@ SwApplication::SwApplication():SwServicesManager_Class() {
     _current_stream=_streams.begin();
     //Compteur d'historique a 1
     _historic_counter=Q_UINT64_C(1);
+    //Creation du service de parametres
+    _serviceParameters = new _SwServiceParametersImpl();
+    RegisterService(_serviceParameters);
 }
 /*! \brief Destructeur*/
 SwApplication::~SwApplication() {
@@ -75,6 +80,8 @@ SwApplication::~SwApplication() {
     delete _feManager;
     UnregisterService(_serviceExtensions->GetServiceName());
     delete _serviceExtensions;
+    UnregisterService(_serviceParameters->GetServiceName());
+    delete _serviceParameters;
     _singleton=NULL;
     delete _bank;
     _bank=NULL;
@@ -117,6 +124,26 @@ void SwApplication::readParameters() {
             if (args[i]=="-d") {
                 this->Verbose();
             }
+            // Parameters
+            if (args[i]=="-P" && i+1<nbArgs && _serviceParameters) 
+			{
+				QStringList tmpList = args[i+1].split("=");
+				if(tmpList.count() > 2)
+				{
+					LAUNCH_SWEXCEPTION("swapplication",QString("Miss match parameters -P with more thant one = (%1)").arg(args[i+1]));
+				}
+				else
+				{
+					if( tmpList.count() == 2)
+					{
+                        _serviceParameters->registerParameter (tmpList.at(0), tmpList.at(1));
+					}
+					else
+					{
+                        _serviceParameters->registerParameter (tmpList.at(0), QString());
+					}
+				}
+			}
 			//Ajout d'un path
             else if (args[i]=="-ppath" && i+1<nbArgs) {
                 QDir dir(args[i+1]);
