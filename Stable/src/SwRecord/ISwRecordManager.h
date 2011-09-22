@@ -42,6 +42,12 @@ namespace StreamWork
              * @param	 : QString directoryName - Path du répertoire
              */
             virtual void setRecordDirectory(QString directoryName)=0;
+			
+			/**
+             * @brief    : Definition du repertoire contenant tout les enregistrements
+             * @param	 : QString directoryName - Path du répertoire
+             */
+            virtual void setMainDir(QString directoryName)=0;
 
             /**
              * @brief    : Démarre l'enregistrement
@@ -66,6 +72,21 @@ namespace StreamWork
              * @return   : void
              */
             virtual void finalizeRecordKey()=0;
+
+
+			/**
+             * @brief    : Demande de creation de clef d'enregistrement pour les propriétés
+             * @return   : QXmlStreamWriter * - Permet d'écrire dans ce writer
+             * @param	 : ISwRecordPoint * recordPoint - Pointeur vers le recordPoint qui veut la clef
+             * @param	 : double currentTime - Le temps courant au moment de la demande
+             */
+            virtual QXmlStreamWriter *queryPropertyKey(ISwRecordPoint * recordPoint,double currentTime)=0;
+
+            /**
+             * @brief    : Finalisation de la clef d'enregistrement
+             * @return   : void
+             */
+            virtual void finalizePropertyKey()=0;
 
             /**
              * @brief    : Ajout de listener

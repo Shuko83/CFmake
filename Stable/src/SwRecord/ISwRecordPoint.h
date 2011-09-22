@@ -10,6 +10,7 @@
 #include <QtCore>
 #include <SwUUID.h>
 #include <ISwRecordManager.h>
+#include <ISwReplayControler.h>
 #include <QXmlStreamReader>
 
 namespace StreamWork {
@@ -34,6 +35,13 @@ namespace StreamWork {
             virtual void submitKey()=0;
             /* @brief clean des clefs existantes*/
             virtual void cleanKeys()=0;
+
+			/* @brief construction d'une clef property */
+			virtual bool buildProperty(QXmlStreamReader * reader)=0;
+			/* @brief soumission d'une clef pour l'emission*/
+			virtual void submitProperty()=0;
+			/* @brief clean des clefs existantes*/
+			virtual void cleanProperty()=0;
 
 
 

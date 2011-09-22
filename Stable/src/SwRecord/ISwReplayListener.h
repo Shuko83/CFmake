@@ -1,12 +1,15 @@
 /**
-@file ISwReplayManagerListener.h
+@file ISwReplayListener.h
 @brief Interface listener du replay manager
 @author F.Bighelli
  */
 
-#ifndef _STREAMWORK_SWRECORD_ISWREPLAYMANAGERLISTENER_H
-#define _STREAMWORK_SWRECORD_ISWREPLAYMANAGERLISTENER_H
+#ifndef _STREAMWORK_SWRECORD_ISWREPLAYLISTENER_H
+#define _STREAMWORK_SWRECORD_ISWREPLAYLISTENER_H
 
+#define STATE_STARTED "Started"
+#define STATE_STOPPED "Stopped"
+#define STATE_PAUSED "Paused"
 
 namespace StreamWork {
 
@@ -18,11 +21,11 @@ namespace StreamWork {
 
         utilisation: Vue du replay manager
         */
-        class ISwReplayManagerListener {
+        class ISwReplayListener {
 
         public:
-            /** @brief ndique un rejeu en cours si true et false sinon */
-            virtual void setEnableReplayInformation(bool enable)=0;
+            /** @brief definit l'état du rejeu */
+            virtual void setState(QString val)=0;
             /** @brief definit le temps de debut du rejeu en cours  */
             virtual void setStartTime(double vtime)=0;
             /** @brief definit le temps de fin du rejeu en cours */
@@ -31,11 +34,10 @@ namespace StreamWork {
             virtual void setCurrentTime(double vtime)=0;
             /** @brief definit le temps courant du cache du rejeu en cours */
             virtual void setCacheTime(double vtime)=0;
-            /** @brief renvoie l'etat de la pause */
-            virtual bool getPauseState()=0;
-            /** @brief force l'etat de la pause */
-            virtual void ForcePauseState()=0;
-
+			/** @brief definit le répertoire de rejeu*/
+			virtual void setCurrentDirectory(QString dir)=0;
+			/** @brief definit la vitesse de rejeu */
+			virtual void setSpeed(int speed)=0;
         };
 
     }

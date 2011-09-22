@@ -29,11 +29,11 @@ using namespace StreamWork::SwFoundation;
  *	@brief Record Manager
  */
 class _RecordManager : public SwAssistedComponent,
-    public ISwRecordManager
+    virtual public ISwRecordManager
 {
     Q_OBJECT
     Q_PROPERTY(StreamWork::SwCore::SwFileDescriptor recordDirectory READ getRecordDirectory WRITE setRecordDirectory)
-    Q_PROPERTY(bool record READ getEnableRecording WRITE setEnableRecording)
+    Q_PROPERTY(bool recording READ getRecordingState WRITE setRecordingState)
     Q_PROPERTY(int maxRecordSize READ getMaxRecordSize WRITE setMaxRecordSize)
 protected:
 
@@ -42,8 +42,10 @@ protected:
     _SwServiceRecording *_serviceRecord;
     /* @brief repertoire d'enregistrement */
     SwFileDescriptor _repository;
+	/* @brief path vers le rep de tous les enregistrements */
+	QString _mainDir;
     /* @brief activation de l'enregistrement */
-    bool _enableRecording;
+    bool _isRecording;
     /* @brief writer */
     QXmlStreamWriter * _writer;
     /* @brief file writer */
@@ -58,6 +60,8 @@ protected:
     double _itime;
 	/* @brief current time */
 	double _currentTime;
+
+	QStringList _recordsDir;
 
     /* @brief mapping record_point id */
     QMap<ISwRecordPoint *,int> _recordPointMapping;
@@ -96,7 +100,11 @@ public:
      * @param	 : QString directoryName - Path du répertoire
      */
     virtual void setRecordDirectory(QString directoryName);
-
+	/**
+	 * @brief    : Definition du repertoire contenant tout les enregistrements
+	 * @param	 : QString directoryName - Path du répertoire
+	 */
+	virtual void setMainDir(QString directoryName);
     /**
      * @brief    : Démarre l'enregistrement
      */
@@ -120,6 +128,20 @@ public:
      * @return   : void
      */
     virtual void finalizeRecordKey();
+
+	/**
+     * @brief    : Demande de creation de clef d'enregistrement pour les propriétés
+     * @return   : QXmlStreamWriter * - Permet d'écrire dans ce writer
+     * @param	 : ISwRecordPoint * recordPoint - Pointeur vers le recordPoint qui veut la clef
+     * @param	 : double currentTime - Le temps courant au moment de la demande
+     */
+    virtual QXmlStreamWriter *queryPropertyKey(ISwRecordPoint * recordPoint,double currentTime);
+
+    /**
+     * @brief    : Finalisation de la clef d'enregistrement
+     * @return   : void
+     */
+    virtual void finalizePropertyKey();
 
     /**
      * @brief    : Ajout de listener
@@ -178,12 +200,13 @@ public:
     void setRecordDirectory(const SwFileDescriptor & val);
 
     /** @brief record */
-    bool getEnableRecording() const;
-    void setEnableRecording(bool val);
+    bool getRecordingState() const;
+    void setRecordingState(bool val);
 
     /** @brief recordMaxSize */
     int getMaxRecordSize() const;
     void setMaxRecordSize(int val);
+
 
 protected:
 

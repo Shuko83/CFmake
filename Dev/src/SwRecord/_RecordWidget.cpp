@@ -56,7 +56,7 @@ void _RecordWidget::setRecording(bool enable) {
     }
 }
 /** @brief temps de demarrage */
-void _RecordWidget::setStartTime(double stime){
+void _RecordWidget::setStartRecTime(double stime){
     QDateTime dt;
     dt.setTime_t((uint)stime);
     QString dateText=dt.toString("hh:mm:ss");
@@ -64,7 +64,7 @@ void _RecordWidget::setStartTime(double stime){
     _lDateStart->setText(dateText);
 }
 /** @brief temps courant */
-void _RecordWidget::setCurrentTime(double ctime){
+void _RecordWidget::setCurrentRecTime(double ctime){
     QDateTime dt;
     dt.setTime_t((uint)ctime);
     QString dateText=dt.toString("hh:mm:ss");

@@ -580,7 +580,7 @@ QString SwGuiDefaultItemDelegate::displayText(const QVariant &value)
     case QVariant::ULongLong:
         return value.toString();
     case QVariant::Double:
-        return QLocale().toString(value.toDouble());
+        return QLocale().toString(value.toDouble(),'f',4);
     case QVariant::Color:
         {
             QColor color = qvariant_cast<QColor>(value);

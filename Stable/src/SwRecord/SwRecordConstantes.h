@@ -39,6 +39,7 @@
 #define CG_RECORD "Record"
 #define CG_RECORD_DATA "RecordData"
 #define CG_RECORD_KEY "Key"
+#define CG_RECORD_KEY_PROPERTY "KeyProperty"
 #define CG_RECORD_EXE "E"
 #define CG_RECORD_START "Start"
 #define CG_RECORD_STOP "Stop"

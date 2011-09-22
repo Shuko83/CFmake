@@ -11,6 +11,7 @@
 #include <SwMacros.h>
 #include "_RecordManager.h"
 #include "SwRecordConstantes.h"
+#include <QDirIterator>
 
 using namespace StreamWork::SwCore;
 
@@ -25,16 +26,18 @@ _RecordManager::_RecordManager(_SwServiceRecording * serviceRecord):SwAssistedCo
 	_fileWriter			= NULL;
 	_itime				= 0.0;
 	_currentTime		= 0.0;
-	_enableRecording	= false;
+	_isRecording		= false;
 	_maxRecordSize		= 100000; //100K
 	_repository			= SwFileDescriptor(SwFileDescriptor::DirectorySelect,QString(),QString());
+
+
 }
 
 //-------------------------------------------------------------------------
 _RecordManager::~_RecordManager() 
 {
 	//Stop record if we are recording
-	if(_enableRecording)
+	if(_isRecording)
 		stopRecording();
 
 	unprovideInterface("RecordManager");
@@ -91,8 +94,7 @@ void _RecordManager::startRecording()
 	{
 		foreach(ISwRecordManagerListener * listener,_listeners) 
 		{
-			listener->setRecording(true);
-			listener->setStartTime(_itime);
+			listener->setStartRecTime(_itime);
 		}
 
 		_writer->writeStartElement(CG_RECORD_HEADER);
@@ -100,6 +102,7 @@ void _RecordManager::startRecording()
 
 		//Construction et enregistrement du mapping des points d'enregistrement
 		buildRecordPointMapping();
+
 		//Fin header
 		_writer->writeEndElement();
 		_writer->writeStartElement(CG_RECORD_BODY);
@@ -119,7 +122,7 @@ void _RecordManager::startRecording()
 	//Creation du writer data
 	createWriterData();
 
-	_enableRecording = true;
+	setRecordingState(true);
 }
 
 //-------------------------------------------------------------------------
@@ -136,11 +139,7 @@ void _RecordManager::stopRecording()
 		_writer->writeAttribute(CG_RECORD_TIME,QString("%1").arg(_currentTime-_itime,0,'f',3));
 		_writer->writeAttribute(CG_RECORD_STOP_DCOUNT,QString("%1").arg(_dataCounter));
 		_writer->writeEndElement();
-		foreach(ISwRecordManagerListener * listener,_listeners) 
-		{
-			listener->setRecording(false);
-		}
-
+		
 		//Desenregistrement du record manager au pres des record points 
 		QList<ISwRecordPoint *> points=_serviceRecord->getRecordPoints();
 		foreach(ISwRecordPoint * rpoint,points) 
@@ -163,8 +162,8 @@ void _RecordManager::stopRecording()
 		_fileWriter=0;
 	}
 
-
-	_enableRecording = false;
+	setRecordingState(false);
+	setMainDir(_mainDir);
 }
 
 //-------------------------------------------------------------------------
@@ -175,6 +174,20 @@ QXmlStreamWriter *_RecordManager::queryRecordKey(ISwRecordPoint * recordPoint,do
 	{
 		_writerData->writeStartElement(CG_RECORD_KEY);
 		//_writer->writeAttribute("t",QString("%1").arg(currentTime-_itime,0,'f',3));
+		_writerData->writeAttribute(CG_RECORD_RP_ATT_NUMBER,QString("%1").arg(it.value()));
+		return _writerData;
+	}
+	return 0;
+}
+
+
+//-------------------------------------------------------------------------
+QXmlStreamWriter * _RecordManager::queryPropertyKey( ISwRecordPoint * recordPoint,double currentTime )
+{
+	QMap<ISwRecordPoint *,int>::iterator it=_recordPointMapping.find(recordPoint);
+	if (it!=_recordPointMapping.end()) 
+	{
+		_writerData->writeStartElement(CG_RECORD_KEY_PROPERTY);
 		_writerData->writeAttribute(CG_RECORD_RP_ATT_NUMBER,QString("%1").arg(it.value()));
 		return _writerData;
 	}
@@ -205,6 +218,11 @@ void _RecordManager::createWriterData()
 	_writerData->writeStartDocument("1.0");
 	_writerData->writeStartElement(CG_RECORD_DATA);
 
+
+	_writerData->writeStartElement(CG_RECORD_EXE);
+	_writerData->writeAttribute(CG_RECORD_TIME,QString("%1").arg(0.0,0,'f',3));
+	_writerData->writeEndElement();
+
 }
 
 //-------------------------------------------------------------------------
@@ -226,7 +244,11 @@ void _RecordManager::closeWriterData()
 void _RecordManager::addRecordManagerListener(ISwRecordManagerListener * listener) 
 {
 	if (listener != NULL)
+	{
 		_listeners.push_back(listener);
+		setMainDir(_mainDir);
+	}
+
 }
 
 //-------------------------------------------------------------------------
@@ -260,7 +282,7 @@ void _RecordManager::Execute(double current_time,bool is_first_call) throw (SwEx
 		int size=_totalSize+(unsigned int)_fileWriterData->size();
 		foreach(ISwRecordManagerListener * listener,_listeners) 
 		{
-			listener->setCurrentTime(current_time);
+			listener->setCurrentRecTime(current_time);
 			listener->setDataSize(size);
 		}
 
@@ -296,16 +318,18 @@ void _RecordManager::setRecordDirectory(const SwFileDescriptor & val)
 }
 
 //-------------------------------------------------------------------------
-bool _RecordManager::getEnableRecording() const
+bool _RecordManager::getRecordingState() const
 {
-	return _enableRecording;
+	return _isRecording;
 }
 
 //-------------------------------------------------------------------------
-void _RecordManager::setEnableRecording(bool val)
+void _RecordManager::setRecordingState(bool val)
 {
-	if ( _enableRecording == val )
+	if ( _isRecording == val )
 		return;
+
+	_isRecording = val;
 
 	if (val) 
 	{
@@ -315,6 +339,14 @@ void _RecordManager::setEnableRecording(bool val)
 	{
 		stopRecording();
 	}
+
+	foreach(ISwRecordManagerListener * listener,_listeners) 
+	{
+		listener->setRecording(val);
+	}
+
+
+
 }
 
 //-------------------------------------------------------------------------
@@ -351,5 +383,41 @@ void _RecordManager::buildRecordPointMapping()
 //-------------------------------------------------------------------------
 bool _RecordManager::isRecording()
 {
-	return _enableRecording;
+	return _isRecording;
+}
+
+//-------------------------------------------------------------------------
+void _RecordManager::finalizePropertyKey()
+{
+	_writerData->writeEndElement();
+}
+
+//-------------------------------------------------------------------------
+void _RecordManager::setMainDir( QString directoryName )
+{
+	_mainDir = directoryName;
+	_recordsDir.clear();
+
+	QDirIterator it(_mainDir,QStringList(),QDir::Dirs | QDir::NoDotAndDotDot);
+	while (it.hasNext()) 
+	{
+		QFileInfo fileInfo (it.next());
+		_recordsDir << fileInfo.fileName();
+	}
+
+	QString emitValue="" ;
+
+	foreach(QString val, _recordsDir)
+	{
+		if(_recordsDir.last() == val)
+			emitValue.append(val);
+		else
+			emitValue.append(val+SEP_REPLAY);
+	}
+	
+	foreach(ISwRecordManagerListener * listener,_listeners) 
+	{
+		listener->setRecordList(emitValue);
+	}
+
 }

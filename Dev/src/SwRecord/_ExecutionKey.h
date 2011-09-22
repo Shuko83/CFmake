@@ -22,6 +22,12 @@ public:
     QList<ISwRecordPoint *> _recordPoints;
 	/** @brief nombre de stimulation a faire sur un record point */
     QList<int> _recordPointsCall;
+
+	/** @brief Points d'enregistrements a stimuler pour les property*/
+	QList<ISwRecordPoint *> _recordPropertyPoints;
+	/** @brief nombre de stimulation a faire sur un record point property*/
+	QList<int> _recordPointsPropertyCall;
+
 	/** @brief Temps courant */
     double _currentTime;
 	/** @brief Constructor */

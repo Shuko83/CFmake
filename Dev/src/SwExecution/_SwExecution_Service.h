@@ -147,6 +147,8 @@ public:
     /* fournisseur de temps */
     ISwClockProvider * _clockProvider;
 
+	bool _time_step_changed;
+
 };
 
 #endif

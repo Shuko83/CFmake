@@ -21,13 +21,16 @@ using namespace StreamWork::SwRecord;
 //-------------------------------------------------------------------------
 _RecordPoint::_RecordPoint():SwAssistedComponent() 
 {
-    _pinIn			= 0;
-    _pinOut			= 0;
-    _recordManager	= 0;
-	_isRecording	= false;
+    _pinIn				= 0;
+    _pinOut				= 0;
+    _recordManager		= 0;
+	_isRecording		= false;
+	_isReplaying		= false;
+	_isReplayInitialize	= false;
 
 	setExecutableServiceAvaibility(true);
 	setPinServiceAvaibility(true);
+	setOwnerServiceAvaibility(true);
 
     ISwServiceRecording * rservice=dynamic_cast<ISwServiceRecording *>(SW_APP->QueryService(CG_SW_SERVICE_RECORDING));
 
@@ -67,11 +70,19 @@ _RecordPoint::~_RecordPoint()
 //-------------------------------------------------------------------------
 void _RecordPoint::eventReceiveData(SwPin * src,SwData_Class * data)
 {
-    if ( src == _pinIn ) 
+	if ( src == _pinIn ) 
 	{
-        //Enregistrement
-        data->_addRef();
-        _recordQueue.push_back(data);
+		if ( _isRecording ) 
+		{
+
+			//Enregistrement
+			data->_addRef();
+			_recordQueue.push_back(data);
+		}
+		else
+		{
+			_pinOut->SendData(data);
+		}
     } 
 	else
 	{
@@ -113,10 +124,41 @@ bool _RecordPoint::buildKey(QXmlStreamReader * reader)
 }
 
 //-------------------------------------------------------------------------
+bool _RecordPoint::buildProperty( QXmlStreamReader * reader )
+{
+
+	if (reader->isStartElement() && reader->name()==CL_SAVE_NODE_PROPERTY_VALUE) 
+	{
+		MaStruct toto;
+
+		QString val=reader->attributes().value(QString(),"val").toString();
+		toto.value = val;
+
+		val=reader->attributes().value(QString(),"name").toString();
+		toto.name=val;
+
+		val=reader->attributes().value(QString(),"type").toString();
+		toto.typeOf = QVariant::Type(val.toInt());
+
+		_propWQueue.push_back(toto);
+	}
+	while(!reader->atEnd() && reader->readNext()==QXmlStreamReader::Characters); 
+	
+	return true;
+}
+
+//-------------------------------------------------------------------------
 void _RecordPoint::submitKey()
 {
     _sendingQueue.push_back(_waitingQueue.front());
     _waitingQueue.pop_front();
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::submitProperty()
+{
+	_propSQueue.push_back(_propWQueue.front());
+	_propWQueue.pop_front();
 }
 
 //-------------------------------------------------------------------------
@@ -134,6 +176,22 @@ void _RecordPoint::cleanKeys()
         _sendingQueue.pop_front();
     }
 }
+
+//-------------------------------------------------------------------------
+void _RecordPoint::cleanProperty()
+{
+
+	while (!_propWQueue.isEmpty()) 
+	{
+		_propWQueue.pop_front();
+	}
+
+	while (!_propSQueue.isEmpty()) 
+	{
+		_propSQueue.pop_front();
+	}
+}
+
 
 //-------------------------------------------------------------------------
 SwEnum _RecordPoint::getDataType() const 
@@ -211,12 +269,6 @@ void _RecordPoint::Initialize(double start_time,ISwExecution_Service * executor)
 void _RecordPoint::Start(double current_time) throw (SwException)
 {
     _currentTime=current_time;
-
-	//Si enregistrement en cours
-	/*if (_recordManager != 0 && _recordQueue.count()>0) 
-	{
-		registerPropertiesListener();
-	}*/
 }           
 
 //-------------------------------------------------------------------------
@@ -225,8 +277,13 @@ void _RecordPoint::Execute(double current_time,bool is_first_call) throw (SwExce
 	 QXmlStreamWriter *writer = NULL;
 	 _currentTime = current_time;
 
-	//Si on est en enregist
-	if(_recordManager && _recordManager->isRecording() && !_isRecording)
+	if(_isReplaying && !_isReplayInitialize)
+	{
+		_isReplayInitialize = true;
+		registerPropertiesListener();
+	}
+	//Si on pass en enregistrement
+	if(_recordManager && _recordManager->isRecording() && !_isRecording )
 	{
 		_isRecording = true;
 		_recordQueue.clear();
@@ -239,29 +296,55 @@ void _RecordPoint::Execute(double current_time,bool is_first_call) throw (SwExce
 	}
 	
     //Si enregistrement en cours
-    if ( _isRecording && !_recordQueue.isEmpty()) 
+    if ( _isRecording ) 
 	{
-        writer = _recordManager->queryRecordKey(this,current_time);
-
-		while (!_recordQueue.isEmpty()) 
+		if(!_recordQueue.isEmpty())
 		{
-			SwData_Class * data=_recordQueue.front();
-			_recordQueue.pop_front();
+			writer = _recordManager->queryRecordKey(this,current_time);
 
-			//Si enregistrement en cours
-			if (writer != NULL && _isRecording) 
+			while (!_recordQueue.isEmpty()) 
 			{
-				_codec->encode(writer,(void *)data);
+				SwData_Class * data=_recordQueue.front();
+				_recordQueue.pop_front();
+
+				//Si enregistrement en cours
+				if (writer != NULL && _isRecording) 
+				{
+					_codec->encode(writer,(void *)data);
+				}
+
+				//Envoie
+				_pinOut->SendData(data);
+
+				//Liberation
+				data->_release();
 			}
 
-			//Envoie
-			_pinOut->SendData(data);
-
-			//Liberation
-			data->_release();
+			_recordManager->finalizeRecordKey();
 		}
 
-        _recordManager->finalizeRecordKey();
+		if(!_propQueue.isEmpty())
+		{
+			writer = _recordManager->queryPropertyKey(this,current_time);
+
+			while (!_propQueue.isEmpty()) 
+			{
+				ISwProperty * prop=_propQueue.front();
+				_propQueue.pop_front();
+
+				//Si enregistrement en cours
+				if (writer != NULL && _isRecording && _mapPropEntities.contains(prop->GetName())) 
+				{
+					writer->writeStartElement(CL_SAVE_NODE_PROPERTY_VALUE);
+					writer->writeAttribute("val",prop->GetValue().toString());
+					writer->writeAttribute("name",prop->GetName());
+					writer->writeAttribute("type",QString::number(prop->GetValue().userType()));
+					writer->writeEndElement();
+				}
+			}
+
+			_recordManager->finalizePropertyKey();
+		}
     }
 
 
@@ -277,6 +360,31 @@ void _RecordPoint::Execute(double current_time,bool is_first_call) throw (SwExce
         //Liberation
         data->_release();
     }
+
+	//Si données de rejeu a emettre
+	while (!_propSQueue.isEmpty()) 
+	{
+		MaStruct test = _propSQueue.front();
+		_propSQueue.pop_front();
+
+		if(_mapPropEntities.contains(test.name))
+		{
+			switch (test.typeOf)
+			{
+			case QVariant::Int:
+				_mapPropEntities.value(test.name)->SetValue(test.value.toInt());
+				break;
+			case QVariant::UInt:
+				_mapPropEntities.value(test.name)->SetValue(test.value.toUInt());
+				break;
+			}
+		}
+		else
+		{
+			qDebug()<< "@*!# ---- MapPropEntities ["<<test.name<<"] doesn't exists. ";
+		}
+
+	}
 }            
 
 //-------------------------------------------------------------------------
@@ -403,6 +511,8 @@ void _RecordPoint::registerPropertiesListener()
 	SwComponent_Class * _host;
 	SwComponent_Class * root;
 
+	_mapPropEntities.clear();
+
 	root=this;
 	while (root->GetParent()!=NULL) 
 		root = root->GetParent();
@@ -414,18 +524,20 @@ void _RecordPoint::registerPropertiesListener()
 
 		//On récupère le service de propriétés du composant 
 		ISwProperties * _internal_properties=dynamic_cast<ISwProperties *>(_host->QueryService(CG_SW_SERVICE_PROPERTIES));  
-
+		
 		//On récupere la ISwProperty
 		ISwProperty* prop =  _internal_properties->GetProperty(_exported_entities[i]->_name);
 
 		//On s'enregistre en tant que listener de la propriété
-
 		prop->GetOnChangeSignal().iconnect(*this,&_RecordPoint::OnComponentPropertyChange);
 
-#ifdef  _DEBUG
-	//qDebugAA
-	qDebug() << (_SwConfigurationExportedEntity)(*_exported_entities[i]) ;
-#endif
+		prop->MarkAsChanged();
+
+		if(!_mapPropEntities.contains(prop->GetName()))
+		{
+			qDebug()<< "MapPropEntities ["<<prop->GetName()<<"] = " << prop;
+			_mapPropEntities.insert(prop->GetName(),prop);
+		}
 	}
 
 }
@@ -433,8 +545,52 @@ void _RecordPoint::registerPropertiesListener()
 //-------------------------------------------------------------------------
 void _RecordPoint::OnComponentPropertyChange( ISwProperty * prop )
 {
-	#ifdef  _DEBUG
-	//qDebugAA
-	qDebug() << "je suis notifie";
-#endif
+	_propQueue.push_back(prop);
 }
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setState( QString val )
+{
+	_isReplaying = (val == STATE_STARTED || val == STATE_PAUSED);
+	if(!_isReplaying)
+	{
+		_isReplayInitialize = false;
+	}
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setStartTime( double vtime )
+{
+
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setStopTime( double vtime )
+{
+
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setCurrentTime( double vtime )
+{
+
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setCacheTime( double vtime )
+{
+
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setCurrentDirectory( QString dir )
+{
+
+}
+
+//-------------------------------------------------------------------------
+void _RecordPoint::setSpeed( int speed )
+{
+
+}
+

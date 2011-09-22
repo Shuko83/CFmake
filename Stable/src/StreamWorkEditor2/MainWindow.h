@@ -43,6 +43,8 @@ public slots:
     void onSaveAsStream();
     /** @brief sur wizard */
     void onWizard();
+	/** @brief sur lancement SwGenerator */
+	void onLaunchSwGenerator();
     /** @brief sur quit */
     //void onQuit();
     /** @brief sur affichage de la liste des plugins */

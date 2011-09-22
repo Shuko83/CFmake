@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/SWGenerator">
+        <file>Resources/start-icon.png</file>
+        <file>Resources/next.png</file>
+        <file>Resources/prev.png</file>
+        <file>Resources/generatevcproj.tpl</file>
+        <file>Resources/libs.xml</file>
+        <file>Resources/plugin.tpl</file>
+        <file>Resources/rsc.tpl</file>
+        <file>Resources/Constantes.tpl</file>
+        <file>Resources/PluginFactory_ClassCPP.tpl</file>
+        <file>Resources/PluginFactory_ClassH.tpl</file>
+        <file>Resources/BaseModelConsumerAssistedCPP.tpl</file>
+        <file>Resources/BaseModelConsumerAssistedH.tpl</file>
+        <file>Resources/pluginPri.tpl</file>
+        <file>Resources/SwAssistedComponentCPP.tpl</file>
+        <file>Resources/SwAssistedComponentH.tpl</file>
+    </qresource>
+    <qresource prefix="/led">
+        <file alias="green">Resources/green_led.png</file>
+        <file alias="orange">Resources/orange_led.png</file>
+        <file alias="red">Resources/red_led.png</file>
+    </qresource>
+</RCC>

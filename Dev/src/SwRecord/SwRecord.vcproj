@@ -140,8 +140,6 @@
 			<File
 				RelativePath="_ReplayManager.cpp" />
 			<File
-				RelativePath="_ReplayWidget.cpp" />
-			<File
 				RelativePath="_SwRecordDataCodecDefault.cpp" />
 			<File
 				RelativePath="_SwRecordDataCodecDefaultFactory.cpp" />
@@ -167,9 +165,9 @@
 			<File
 				RelativePath="ISwRecordPoint.h" />
 			<File
-				RelativePath="ISwReplayManager.h" />
+				RelativePath="ISwReplayControler.h" />
 			<File
-				RelativePath="ISwReplayManagerListener.h" />
+				RelativePath="ISwReplayListener.h" />
 			<File
 				RelativePath="ISwServiceRecording.h" />
 			<File
@@ -273,29 +271,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_ReplayWidget.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_ReplayWidget.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSwRecord_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwConfiguration&quot; -I&quot;..\SwFoundation&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _ReplayWidget.h -o debug\moc__ReplayWidget.cpp"
-						Description="MOC _ReplayWidget.h"
-						Outputs="debug\moc__ReplayWidget.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_ReplayWidget.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSwRecord_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwConfiguration&quot; -I&quot;..\SwFoundation&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _ReplayWidget.h -o release\moc__ReplayWidget.cpp"
-						Description="MOC _ReplayWidget.h"
-						Outputs="release\moc__ReplayWidget.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="_SwRecordDataCodecDefault.h" />
 			<File
 				RelativePath="_SwRecordDataCodecDefaultFactory.h" />
@@ -354,18 +329,6 @@
 			</File>
 			<File
 				RelativePath="release\moc__ReplayManager.cpp">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="debug\moc__ReplayWidget.cpp">
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="release\moc__ReplayWidget.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true" />

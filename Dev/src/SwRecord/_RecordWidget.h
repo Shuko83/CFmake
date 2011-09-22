@@ -24,9 +24,9 @@ public:
 	/** @brief activation */
     void setRecording(bool enable);
 	/** @brief temps de demarrage */
-    void setStartTime(double stime);
+    void setStartRecTime(double stime);
 	/** @brief temps courant */
-    void setCurrentTime(double ctime);
+    void setCurrentRecTime(double ctime);
 	/** @brief write data size */
     void setDataSize(int size);
 public slots:

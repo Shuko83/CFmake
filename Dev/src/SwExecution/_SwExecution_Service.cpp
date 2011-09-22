@@ -29,6 +29,7 @@ _SwExecution_Service::_SwExecution_Service(SwComponent_Class * host):QThread() {
     _persistentStopNeeded=false;
     _exe_timer=NULL;
     _clockProvider=0;
+	_time_step_changed = false;
 
 }
 /* Destructeur */
@@ -193,6 +194,13 @@ void _SwExecution_Service::ExecuteAll(){
     bool stopNeeded=false;
     if (_clockProvider!=0 && _clockProvider->queryPause())
         return;
+
+	if(_time_step_changed)
+	{
+		_exe_timer->setInterval(_time_step);
+		_time_step_changed = false;
+	}
+	
     //Cas ou le clock provider indiquait que le stop est necessaire
     //mais qu'il etait en pause (voir l'affectation du _persistentStopNeeded
     //juste en dessous apres la boucle d'execution)
@@ -306,12 +314,19 @@ void _SwExecution_Service::RunPeriodicWithOverload() {
 // Pilotage de l'execution
 //---------------------------------------------------------------------
 /* Preparation pour l'execution*/
-void _SwExecution_Service::Prepare(int time_step,bool overload,_SwExecutionType exe_type) {
-    if (!_is_stopped)
-        return;
-    _time_step=time_step;
-    _overload=overload;
-    _exe_type=exe_type;
+void _SwExecution_Service::Prepare(int time_step,bool overload,_SwExecutionType exe_type) 
+{
+    if (!_is_stopped && time_step != _time_step )
+	{
+		_time_step_changed = true;
+		_time_step=time_step;
+	}
+	else
+	{
+		_time_step=time_step;
+		_overload=overload;
+		_exe_type=exe_type;
+	}
 }
 /*! \brief Demarrage de l'execution */
 void _SwExecution_Service::StartExecution() {

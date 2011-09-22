@@ -119,7 +119,7 @@ void MenuManager::rebuildMenu() {
 					QList<ISwProperty*>prop = serv->GetProperties();
 					foreach(ISwProperty *swprop , prop)
 					{
-						if(swprop && swprop->GetName() == "visible")
+						if(swprop && swprop->GetName().contains("visible"))
 							_propertyList.push_back(swprop);
 					}
 				}

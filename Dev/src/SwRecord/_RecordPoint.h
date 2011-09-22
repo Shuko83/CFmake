@@ -23,6 +23,8 @@
 #include "_SwConfigurationExportedEntity.h"
 #include "SwAssistedComponent.h"
 #include "ISwFinalizer.h"
+#include "ISwReplayControler.h"
+#include "ISwReplayListener.h"
 
 //Check namespace needed (for exemple ISwAction need namespace StreamWork::SwGui)
 using namespace StreamWork::SwCore;
@@ -40,6 +42,9 @@ using namespace StreamWork::SwFoundation;
 #define CL_CONFIG_XML_NODE_ATT_PATH "path"
 #define CL_CONFIG_XML_NODE_ATT_IDX "_idhost"
 
+#define CL_SAVE_NODE_PROPERTY_VALUE "value"
+
+
 /**
  *	@class _RecordPoint
  *	@brief Record Point
@@ -47,7 +52,8 @@ using namespace StreamWork::SwFoundation;
 class _RecordPoint : public SwAssistedComponent,
     public StreamWork::SwRecord::ISwRecordPoint,
 	virtual public ISwAdminSetup,
-	virtual public ISwFinalizer
+	virtual public ISwFinalizer,
+	virtual public ISwReplayListener
 {
     Q_OBJECT
     Q_PROPERTY(StreamWork::SwCore::SwUUID identifier READ getIdentifier WRITE setIdentifier)
@@ -66,6 +72,7 @@ protected:
 	quint64 h_index;
 
 	bool _isRecording;
+	bool _isReplaying;
 
  	//--------------------------------------------------------------
 	//Properties
@@ -77,15 +84,38 @@ protected:
     /** @brief codec */
     ISwRecordDataCodec * _codec;
     /** @brief recordManager */
-    ISwRecordManager * _recordManager;
+	ISwRecordManager * _recordManager;
+
     /** @brief temps courant */
     double _currentTime;
+
     /** @brief queue d'encodage */
     QLinkedList<SwData_Class *> _recordQueue;
     /** @brief queue en attente de données */
     QLinkedList<SwData_Class *> _waitingQueue;
     /** @brief queue pour emission de données */
     QLinkedList<SwData_Class *> _sendingQueue;
+
+	typedef struct{
+		QString name;
+		QVariant::Type typeOf;
+		QString value;
+		QString host;
+
+	}MaStruct;
+
+	/** @brief queue pour property */
+	QLinkedList<ISwProperty* > _propQueue;
+	/** @brief queue pour property */
+	QLinkedList<MaStruct > _propWQueue;
+	/** @brief queue pour property */
+	QLinkedList<MaStruct > _propSQueue;
+
+	QMap<QString , ISwProperty*> _mapPropEntities;
+
+	bool _isReplayInitialize;
+
+	
 
 	/* Liste des entites exportes */
 	QList<_SwConfigurationExportedEntity *> _exported_entities; 
@@ -139,6 +169,15 @@ public:
 
     /* @brief clean des clefs existantes*/
     virtual void cleanKeys();
+
+	/* @brief construction d'une clef property */
+	virtual bool buildProperty(QXmlStreamReader * reader);
+
+	/* @brief soumission d'une clef pour l'emission*/
+	virtual void submitProperty();
+
+	/* @brief clean des clefs existantes*/
+	virtual void cleanProperty();
 
     /* @brief assignation du manager d'enregistrement */
     virtual void setRecordManager(ISwRecordManager * recordManager);
@@ -228,10 +267,30 @@ public:
 
 	void OnComponentPropertyChange(ISwProperty * prop);
 
+
+
+
+	//---------------------------------------------------
+	//				Interface ISwReplayListener
+	//---------------------------------------------------
+	/** @brief definit l'état du rejeu */
+	virtual void setState(QString val);
+	/** @brief definit le temps de debut du rejeu en cours  */
+	virtual void setStartTime(double vtime);
+	/** @brief definit le temps de fin du rejeu en cours */
+	virtual void setStopTime(double vtime);
+	/** @brief definit le temps courant du rejeu en cours */
+	virtual void setCurrentTime(double vtime);
+	/** @brief definit le temps courant du cache du rejeu en cours */
+	virtual void setCacheTime(double vtime);
+	/** @brief definit le répertoire de rejeu*/
+	virtual void setCurrentDirectory(QString dir);
+	/** @brief definit la vitesse de rejeu */
+	virtual void setSpeed(int speed);
+
 protected:
 
 	void registerPropertiesListener();
-
 };
 #endif
 //------------------------------------------------------

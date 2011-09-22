@@ -145,7 +145,7 @@ void _SwGuiCompGridLayoutCell::build() {
         return;
     if (!_isLayout && _hWidget==0)
         return;
-    qDebug("Build cell");
+    //qDebug("Build cell");
     if (_isLayout) {
         _glayout->addLayout(&_hLayout->GetLayout(),_row, _column,_rowSpan,_columnSpan,_alignment);    
     } else {
@@ -157,7 +157,7 @@ void _SwGuiCompGridLayoutCell::build() {
 void _SwGuiCompGridLayoutCell::destroy() {
     if (!_isBuild)
         return;
-    qDebug("Destroy cell");
+   // qDebug("Destroy cell");
     if (_isLayout) {
         _hLayout->LiberateLayout();    
     } else {

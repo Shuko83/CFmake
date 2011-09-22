@@ -34,7 +34,7 @@ _SwConfigurationManager::_SwConfigurationManager():
     _launchManager = 0;
     _isStarted = false;
 
-    _iReplayInterface = 0;
+//   _iReplayInterface = 0;
     _iRecordInterface = 0;
     _mainWidget=new _SwConfigurationManagerGui(0);
     _actionStart = new _SwControllerActionStart();
@@ -202,7 +202,7 @@ void _SwConfigurationManager::InitializeResources() throw(SwException) {
 										"ConfigurationNameProvider",
 										_managedConfigurations);    
     _consumer_service->RegisterConsumedInterface<StreamWork::SwRecord::ISwRecordManager>("IRecordManager",&_iRecordInterface);
-    _consumer_service->RegisterConsumedInterface<StreamWork::SwRecord::ISwReplayManager>("IReplayManager",&_iReplayInterface);
+    //_consumer_service->RegisterConsumedInterface<StreamWork::SwRecord::ISwReplayManager>("IReplayManager",&_iReplayInterface);
 
 
     //Gestion des configurations
@@ -284,13 +284,13 @@ void _SwConfigurationManager::SetReplayConfiguration()
     if (_launchManager->getStartMode().ToInt() == 0)
         askForSave();
 
-     if (_iReplayInterface != 0)
+     /*if (_iReplayInterface != 0)
     {
 
        _iReplayInterface->setRecordDirectory(getAbsoluteFilePath(_launchManager->getReplayDirectory().getFileName()));
        _managedConfigurations->LoadConfiguration(getAbsoluteFilePath(_iReplayInterface->getConfigurationFile()));
        // chargement de la configuration pour le replay
-    }
+    }*/
 }
 void _SwConfigurationManager::SetNormalConfiguration()
 {
@@ -506,7 +506,7 @@ bool _SwConfigurationManager::Start()
     }
     else if (_launchManager->getStartMode().ToInt() == 1)
     {
-        if (_iReplayInterface != 0)
+        /*if (_iReplayInterface != 0)
         {
 
            // chargement de la configuration pour le replay
@@ -525,7 +525,7 @@ bool _SwConfigurationManager::Start()
                 signalControllerStartChanged();
                 return true;
             }
-        }
+        }*/
     }
      
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Unable to start application\n"));
@@ -575,7 +575,7 @@ bool _SwConfigurationManager::Stop()
     }
     else if (_launchManager->getStartMode().ToInt() == 1)
     {
-        if (_iReplayInterface != 0)
+        /*if (_iReplayInterface != 0)
         {
 
             _iReplayInterface->stopReplay();
@@ -583,7 +583,7 @@ bool _SwConfigurationManager::Stop()
             _isStarted = false;
             signalControllerStartChanged();
             return true;
-        }
+        }*/
     }
     return false;
 }
@@ -674,7 +674,7 @@ void _SwConfigurationManager::BeforeInterfaceAvailabilityChange(
     }
     if (interface_name == "IReplayManager")
     {
-        _iReplayInterface = 0;
+        //_iReplayInterface = 0;
     }
 }
 
@@ -693,7 +693,7 @@ void _SwConfigurationManager::AfterInterfaceAvailabilityChange(
     }
     if (interface_name == "IReplayManager")
     {
-        if (_iReplayInterface != 0)
+        //if (_iReplayInterface != 0)
         {
 
         }

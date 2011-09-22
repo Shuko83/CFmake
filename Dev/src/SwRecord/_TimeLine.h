@@ -12,10 +12,12 @@
 #include "_ExecutionKey.h"
 #include "_SwServiceRecording.h"
 #include <ISwClockProvider.h>
-#include "ISwReplayManagerListener.h"
+#include "ISwReplayListener.h"
 
 using namespace StreamWork::SwRecord;
 using namespace StreamWork::SwExecution;
+
+
 /**
 @class _TimeLine
 @brief Ligne de temps de l'enregistrement
@@ -40,7 +42,11 @@ class _TimeLine : public ISwClockProvider {
     /* @brief executionKeyMaxSize*/
     int _executionKeyMaxSize;
     /* @brief Widget de rejeu */
-    QList<ISwReplayManagerListener *> _listeners;
+    QList<ISwReplayListener *> _listeners;
+
+	bool _pauseState;
+	QString _state;
+
 public:
 	/** @brief Constructor */
 	_TimeLine();
@@ -60,10 +66,21 @@ public:
     virtual double queryStopTime();
     /*! \brief pause demandé */
     virtual bool queryPause();
-    /*@brief ajout de listener*/
-    virtual void addReplayManagerListener(ISwReplayManagerListener * listener);
+	/*@brief ajout de listener*/
+    virtual void addReplayManagerListener(ISwReplayListener * listener);
     /*@brief suppression de listener*/
-    virtual void removeReplayManagerListener(ISwReplayManagerListener * listener);
+    virtual void removeReplayManagerListener(ISwReplayListener * listener);
+
+
+	//---------------------------------------------------------
+	//-							Accesors					  -
+	//---------------------------------------------------------
+	bool getPauseState() const { return _pauseState; }
+	void setPauseState(bool val);
+
+	QString getState() const { return _state; }
+	void setState(QString val);
+
 protected:
     /*! \brief renvoie du temps pour l'arret */
     virtual bool loadDataWriter();

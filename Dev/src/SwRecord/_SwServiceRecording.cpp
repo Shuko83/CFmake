@@ -6,6 +6,7 @@
 
 #include "_SwServiceRecording.h"
 #include <SwApplication.h> 
+#include <QDebug>
 
 /** @brief Constructor */
 _SwServiceRecording::_SwServiceRecording() {
@@ -138,8 +139,12 @@ QList<ISwRecordPoint *> _SwServiceRecording::getRecordPoints() {
 }
 /** @brief Acces au points d'enregistrements */
 ISwRecordPoint * _SwServiceRecording::getRecordPoint(QString name) {
-    foreach(ISwRecordPoint * point,_points) {
-        if (point->getRecordName()==name) {
+    foreach(ISwRecordPoint * point,_points) 
+	{
+		//qDebug()<<point->getRecordName();
+		//qDebug()<<name;
+        if (point->getRecordName()==name) 
+		{
             return point;
         }
     }

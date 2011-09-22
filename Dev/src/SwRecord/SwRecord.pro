@@ -13,8 +13,8 @@ HEADERS += _RecordPoint.h
 HEADERS += _ReplayManager.h 
 HEADERS += ISwRecordManager.h 
 HEADERS += ISwRecordManagerListener.h 
-HEADERS += ISwReplayManager.h 
-HEADERS += ISwReplayManagerListener.h 
+HEADERS += ISwReplayControler.h 
+HEADERS += ISwReplayListener.h 
 HEADERS += ISwRecordPoint.h 
 HEADERS += ISwServiceRecording.h 
 HEADERS += ISwRecordDataCodec.h 
@@ -27,7 +27,7 @@ HEADERS += SwRecordDataCodecFactoryTemplate.h
 HEADERS += _TimeLine.h
 HEADERS += _ExecutionKey.h
 HEADERS += _RecordWidget.h
-HEADERS += _ReplayWidget.h
+#HEADERS += _ReplayWidget.h
 
 SOURCES += _SwRecordPluginFactory_Class.cpp
 SOURCES += _RecordManager.cpp
@@ -40,7 +40,7 @@ SOURCES += _SwRecordDataCodecDefaultFactory.cpp
 SOURCES += _TimeLine.cpp
 SOURCES += _ExecutionKey.cpp
 SOURCES += _RecordWidget.cpp
-SOURCES += _ReplayWidget.cpp
+#SOURCES += _ReplayWidget.cpp
 
 
 OBJECTS_DIR += ./_obj
