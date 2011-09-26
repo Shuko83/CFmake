@@ -174,6 +174,7 @@ void _SwGuiCompWidget::OnPropertyChange(ISwProperty * property) {
 		if(_isBackgroundTransparent)
 		{
 			_widget->setAttribute(Qt::WA_TranslucentBackground,true);
+			_flags_mode.FromInt(Qt::FramelessWindowHint);
 			_widget->setWindowFlags(Qt::FramelessWindowHint);
 		}
 		else

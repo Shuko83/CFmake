@@ -5,6 +5,7 @@ QT += core \
     xml
 HEADERS += LibIndeSig.h \
     ISwRef.h \
+	ISwObject.h \
     ISwAdminSetup.h \
     ISwComplexeTypeAdapters.h \
     ISwComplexeTypeAdaptersFactoriesBank.h \

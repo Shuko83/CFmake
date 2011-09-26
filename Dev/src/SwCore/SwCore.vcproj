@@ -312,6 +312,8 @@
 			<File
 				RelativePath="ISwLogger.h" />
 			<File
+				RelativePath="ISwObject.h" />
+			<File
 				RelativePath="ISwObjectFactory.h" />
 			<File
 				RelativePath="ISwObservable.h" />
