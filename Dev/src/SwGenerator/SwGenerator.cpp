@@ -14,7 +14,6 @@
 #include "Interface.h"
 
 
-
 //-------------------------------------------------------------------------
 SWGenerator::SWGenerator(QWidget *parent, Qt::WFlags flags)
 : QMainWindow(parent, flags)
@@ -1581,256 +1580,6 @@ bool SWGenerator::generateComponentSourcesBaseModelConsumer()
 
 		if(!generateCompontentCommon(cp,componentName,dirComponent,outputFileNameCPP,outputFileNameH,ui.TE_log))
 			return false;
-
-
-// 		ui.TE_log->append(subHeaderLog("Component <b>"+componentName+"</b>"));
-// 
-// 		//Create a directory for each component
-// 		if(!QDir::temp().exists(dirComponent))
-// 		{
-// 			QDir::temp().mkpath(dirComponent);
-// 			ui.TE_log->append(TAB_LOG+INFO_LOG+"Creating directory <b>"+dirComponent+"</b>");
-// 		}
-// 		else
-// 		{
-// 			ui.TE_log->append(TAB_LOG+INFO_LOG+"Directory <b>"+dirComponent+"</b> already exist.");
-// 		}
-// 
-// 		//On efface le fichier si il existe
-// 		if(QFile::exists(dirComponent+outputFileNameCPP))
-// 		{
-// 			if(!QFile::remove(dirComponent+outputFileNameCPP))
-// 			{
-// 				ui.TE_log->append(TAB_LOG+ERROR_LOG+"Unable to remove file <b>"+dirComponent+outputFileNameCPP+"</b>");
-// 				return false;
-// 			}
-// 			else
-// 			{
-// 				ui.TE_log->append(TAB_LOG+INFO_LOG+"Removing file <b>"+dirComponent+outputFileNameCPP+"</b>");
-// 			}
-// 		}
-// 
-// 		//On efface le fichier si il existe
-// 		if(QFile::exists(dirComponent+outputFileNameH))
-// 		{
-// 			if(!QFile::remove(dirComponent+outputFileNameH))
-// 			{
-// 				ui.TE_log->append(TAB_LOG+ERROR_LOG+"Unable to remove file <b>"+dirComponent+outputFileNameH+"</b>");
-// 				return false;
-// 			}
-// 			else
-// 			{
-// 				ui.TE_log->append(TAB_LOG+INFO_LOG+"Removing file <b>"+dirComponent+outputFileNameH+"</b>");
-// 			}
-// 		}
-// 
-// 		currentFileCPP.setFileName(dirComponent+outputFileNameCPP);
-// 		currentFileH.setFileName(dirComponent+outputFileNameH);
-// 		if(currentFileCPP.open(QFile::ReadWrite) && currentFileH.open(QFile::ReadWrite))
-// 		{
-// 			ui.TE_log->append(TAB_LOG+INFO_LOG+"Write class <a href=\""+dirComponent+"\"><b>"+dirComponent+componentName+"</b></a>");
-// 
-// 			QTextStream outCPP(&currentFileCPP);
-// 			QTextStream outH(&currentFileH);
-// 
-// 			if(cp->ui.Le_name->text() == "")
-// 			{
-// 				ui.TE_log->append(TAB_LOG+TAB_LOG+ERROR_LOG+"Component [<b>"+QString::number(_listComponent.indexOf(cp))+"</b>] has no name");
-// 				return false;
-// 			}
-// 
-// 			if(cp->ui.Le_desc->text() == "")
-// 				ui.TE_log->append(TAB_LOG+TAB_LOG+WARNING_LOG+"Component [<b>"+QString::number(_listComponent.indexOf(cp))+"</b>] has no description");
-// 
-// 
-// 			_zTpl[ "COMPONENT_NAME" ] = componentName;          
-// 
-// 			bool inPin = cp->ui.Cb_pinIn->isChecked();
-// 			bool outPin = cp->ui.Cb_pinOut->isChecked();
-// 
-// 			if ( cp->ui.Gb_pins->isChecked() && (inPin || outPin) )
-// 			{
-// 				_zTpl.showSection("SECTION_HAS_PIN"); 
-// 
-// 				if(inPin)
-// 					_zTpl.showSection("SECTION_ISWPIN_LISTENER");
-// 
-// 				if(outPin)
-// 					_zTpl.showSection("SECTION_ISWPIN_OUTPUT");
-// 			}
-// 
-// 			if ( cp->ui.Gb_shortcuts->isChecked() )
-// 			{
-// 				_zTpl.showSection("SECTION_ISWSHORTCUT"); 
-// 				_zTpl["SHORTCUT_COMPONENT_NAME"] = (cp->ui.Le_shortcutComponentName->text() != "" )?cp->ui.Le_shortcutComponentName->text() :componentName;
-// 
-// 				for (int i = 0; i < cp->ui.Sb_shortcuts->value() ; i++)
-// 				{
-// 					QLayoutItem * item = cp->ui.v_shortcuts->itemAt(i);
-// 					if(item)
-// 					{
-// 						QWidget * w = item->widget();
-// 						if(w)
-// 						{
-// 							Shortcut * sc = dynamic_cast<Shortcut*>(w);
-// 							if(sc)
-// 							{
-// 								_zTpl.enterSection( "SECTION_ADD_SHORTCUT" );    
-// 								_zTpl[ "SHORTCUT_NAME" ] = sc->ui.Le_displayName->text();          
-// 								_zTpl.exitSection();	
-// 							}
-// 						}
-// 					}
-// 				}
-// 			}
-// 
-// 			if ( cp->ui.Gb_IConsummed->isChecked() || cp->ui.Gb_IProvided->isChecked())
-// 			{
-// 				_zTpl.showSection("SECTION_HAS_INTERFACES");
-// 			}
-// 
-// 			if ( cp->ui.Gb_IConsummed->isChecked() )
-// 			{
-// 				_zTpl.showSection("SECTION_ISCONSUMED"); 
-// 
-// 				for (int i = 0; i < cp->ui.Sb_cIntefaces->value() ; i++)
-// 				{
-// 					QLayoutItem * item = cp->ui.v_cInterfaces->itemAt(i);
-// 					if(item)
-// 					{
-// 						QWidget * w = item->widget();
-// 						if(w)
-// 						{
-// 							Interface * sc = dynamic_cast<Interface*>(w);
-// 							if(sc)
-// 							{
-// 								QString varName = interfaceToVarName(sc->ui.Le_name->text());
-// 								_zTpl.enterSection( "SECTION_INTERFACECONSUMED" );    
-// 								_zTpl[ "INTERFACE_TYPE" ] = sc->ui.Le_type->text();          
-// 								_zTpl[ "INTERFACE_NAME" ] = sc->ui.Le_name->text();       
-// 								_includeList.append(sc->ui.Le_include->text());
-// 								_zTpl[ "CONSUMED_VAR_NAME" ] = varName;       
-// 								_zTpl.exitSection();	
-// 							}
-// 						}
-// 					}
-// 				}
-// 			}
-// 
-// 
-// 			if ( cp->ui.Gb_IProvided->isChecked() )
-// 			{
-// 				_zTpl.showSection("SECTION_ISCONSUMED"); 
-// 
-// 				for (int i = 0; i < cp->ui.Sb_pIntefaces->value() ; i++)
-// 				{
-// 					QLayoutItem * item = cp->ui.v_pInterfaces->itemAt(i);
-// 					if(item)
-// 					{
-// 						QWidget * w = item->widget();
-// 						if(w)
-// 						{
-// 							Interface * sc = dynamic_cast<Interface*>(w);
-// 							if(sc)
-// 							{
-// 								QString varName = interfaceToVarName(sc->ui.Le_name->text());
-// 								_zTpl.enterSection( "SECTION_INTERFACEPRODUCTED" );    
-// 								_zTpl[ "INTERFACE_TYPE" ] = sc->ui.Le_type->text();       
-// 								_includeList.append(sc->ui.Le_include->text());
-// 								_zTpl[ "INTERFACE_NAME" ] = sc->ui.Le_name->text();       
-// 								_zTpl[ "PRODUCTED_VAR_NAME" ] = varName;       
-// 								_zTpl.exitSection();	
-// 							}
-// 						}
-// 					}
-// 				}
-// 			}
-// 
-// 			if ( cp->ui.Gb_properties->isChecked() )
-// 			{
-// 				_zTpl.showSection("SECTION_HAS_PROPERTIES"); 
-// 				for (int i = 0; i < cp->ui.Sb_properties->value() ; i++)
-// 				{
-// 					QLayoutItem * item = cp->ui.v_properties->itemAt(i);
-// 					if(item)
-// 					{
-// 						QWidget * w = item->widget();
-// 						if(w)
-// 						{
-// 							Property * sc = dynamic_cast<Property*>(w);
-// 							if(sc)
-// 							{
-// 								QString varName = interfaceToVarName(sc->ui.Le_name->text());
-// 								QString tmpName = sc->ui.Le_name->text();
-// 								tmpName = tmpName.mid(0,1).toUpper()+tmpName.mid(1,tmpName.length()-1);
-// 
-// 								_zTpl.enterSection( "FOR_COMPONENT_PROPERTIES" );    
-// 								_zTpl[ "CONTENT" ] = "Q_PROPERTY("+sc->ui.Cb_type->currentText()+" "+sc->ui.Le_name->text()+" READ get"+tmpName+" WRITE set"+tmpName+")\n\t\t\t\t";       
-// 								_zTpl[ "DECLARE" ] = sc->ui.Cb_type->currentText()+" "+varName+";";       
-// 								if(sc->ui.Cb_type->currentText() == "QString")
-// 								{
-// 									_zTpl[ "INIT" ] = varName+" = \""+sc->ui.le_defaultValue->text()+"\";";       
-// 								}
-// 								else
-// 								{
-// 									_zTpl[ "INIT" ] = varName+" = "+sc->ui.le_defaultValue->text()+";";       
-// 								}
-// 								_zTpl.exitSection();
-// 
-// 								QString accessors = "\n\t\t\t\t/** @brief Property value "+sc->ui.Le_name->text()+" */\n";
-// 								accessors += "\t\t\t\t"+sc->ui.Cb_type->currentText()+" get"+tmpName+"(){ return "+varName+";}\n";
-// 								accessors += "\t\t\t\tvoid set"+tmpName+"("+sc->ui.Cb_type->currentText()+" val){ "+varName+" = val;}";
-// 
-// 								_zTpl.enterSection( "SECTION_ACCESSOR" );    
-// 								_zTpl[ "CONTENT" ] = accessors;       
-// 								_zTpl.exitSection();	
-// 
-// 							}
-// 						}
-// 					}
-// 				}
-// 			}
-// 
-// 			_includeList.removeDuplicates();
-// 			foreach(QString val, _includeList)
-// 			{
-// 				_zTpl.enterSection( "SECTION_INCLUDE" );    
-// 				_zTpl[ "INCLUDE_FILE" ] = val;       
-// 				_zTpl.exitSection();	
-// 			}
-// 
-// 			if(cp->ui.Cb_owner->isChecked())
-// 			{
-// 				_zTpl.showSection("SECTION_ISWPERSISTENT"); 
-// 			}
-// 			if(cp->ui.Cb_ownerConfigurable->isChecked())
-// 			{
-// 				_zTpl.showSection("SECTION_ISWPERSISTENTCONFIGURABLE"); 
-// 			}
-// 
-// 			if(cp->ui.Cb_executable->isChecked())
-// 			{
-// 				_zTpl.showSection("SECTION_ISWEXECUTABLE_SERVICE"); 
-// 			}
-// 
-// 			if(cp->ui.Cb_baseClass->currentText() == QString("Composant assisté + ISxModel"))
-// 			{
-// 				outCPP << _zTpl.expandFile(":/SWGenerator/Resources/BaseModelConsumerAssistedCPP.tpl");
-// 				outH << _zTpl.expandFile(":/SWGenerator/Resources/BaseModelConsumerAssistedH.tpl");
-// 			}
-// 			else
-// 			{
-// 				outCPP << _zTpl.expandFile(":/SWGenerator/Resources/SwAssistedComponentCPP.tpl");
-// 				outH << _zTpl.expandFile(":/SWGenerator/Resources/SwAssistedComponentH.tpl");
-// 			}
-// 			currentFileCPP.close();
-// 			currentFileH.close();
-// 		}
-// 		else
-// 		{
-// 			ui.TE_log->append(TAB_LOG+ERROR_LOG+"Unable to write file <b>"+dirComponent+outputFileNameCPP+"</b>");
-// 			return false;
-// 		}
 	}
 
 	return true;
@@ -2091,19 +1840,22 @@ void SWGenerator::appendRessources()
 			if(line.contains(_zTpl[ "NAMESPACE_1" ]+"/"+_zTpl[ "NAMESPACE_2" ]+"/"+_zTpl[ "NAMESPACE_3"],Qt::CaseSensitive) && !includeDone)
 			{
 				QFileInfo fileIcon(cp->getIconPath());
-
-				outF.append("\t\t<file>"+fileIcon.fileName()+"</file>\n");
+				if(fileIcon.exists())
+					outF.append("\t\t<file>"+fileIcon.fileName()+"</file>\n");
 				includeDone = true;
 			}
 
 			if(line.contains("</RCC>",Qt::CaseSensitive) && !includeDone)
 			{
 				QFileInfo fileIcon(cp->getIconPath());
-				outF.remove("</RCC>");
-				outF.append("\t<qresource prefix=\""+_zTpl[ "NAMESPACE_1" ]+"/"+_zTpl[ "NAMESPACE_2" ]+"/"+_zTpl[ "NAMESPACE_3"]+"\">\n");
-				outF.append("\t\t<file>"+fileIcon.fileName()+"</file>\n");
-				outF.append("\t</qresource>\n");
-				outF.append("</RCC>\n");
+				if(fileIcon.exists())
+				{
+					outF.remove("</RCC>");
+					outF.append("\t<qresource prefix=\""+_zTpl[ "NAMESPACE_1" ]+"/"+_zTpl[ "NAMESPACE_2" ]+"/"+_zTpl[ "NAMESPACE_3"]+"\">\n");
+					outF.append("\t\t<file>"+fileIcon.fileName()+"</file>\n");
+					outF.append("\t</qresource>\n");
+					outF.append("</RCC>\n");
+				}
 				includeDone = true;
 			}
 

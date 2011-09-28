@@ -95,8 +95,9 @@ void _RecordManager::startRecording()
 		foreach(ISwRecordManagerListener * listener,_listeners) 
 		{
 			listener->setStartRecTime(_itime);
-		}
+			listener->setDataSize(0); // reset Size
 
+		}
 		_writer->writeStartElement(CG_RECORD_HEADER);
 		_writer->writeAttribute(CG_RECORD_TIME,QString("%1").arg(_itime,0,'f',3));
 
