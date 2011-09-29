@@ -332,6 +332,15 @@ bool SwApplication::IsVerbose() {
 \param[in] racine du stream*/
 void SwApplication::AddNewStream(SwComponent_Class * stream_root) {
     _streams.insert(SwComponent_ClassPtr(stream_root));   
+	QString val="";
+	if(_serviceParameters->getParameter("Check",val))
+	{
+		//Check service
+		ISwCheckService * cservice=dynamic_cast<ISwCheckService *>(QueryService(CG_SW_CHECK_SERVICE));
+		if (cservice!=0) {
+			cservice->check();
+		}
+	}
 }
 /*! \brief Creation d'un stream
 \param[in] name_of_stream nom du stream a créer
