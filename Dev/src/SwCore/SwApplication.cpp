@@ -43,6 +43,7 @@ _SwFileEditorManager * _feManager=NULL;
 _SwServiceExtensionsImpl * _serviceExtensions=NULL;
 _SwServiceParametersImpl * _serviceParameters=NULL;
 bool            _is_launch=false;
+bool            _isCheck=false;
 
 /*! \brief Constructeur*/
 SwApplication::SwApplication():SwServicesManager_Class() {
@@ -335,11 +336,16 @@ void SwApplication::AddNewStream(SwComponent_Class * stream_root) {
 	QString val="";
 	if(_serviceParameters->getParameter("Check",val))
 	{
-		//Check service
-		ISwCheckService * cservice=dynamic_cast<ISwCheckService *>(QueryService(CG_SW_CHECK_SERVICE));
-		if (cservice!=0) {
-			cservice->check();
+		if(!_isCheck)
+		{
+			//Check service
+			ISwCheckService * cservice=dynamic_cast<ISwCheckService *>(QueryService(CG_SW_CHECK_SERVICE));
+			if (cservice!=0) {
+				cservice->check();
+			}
+			_isCheck = true;
 		}
+		
 	}
 }
 /*! \brief Creation d'un stream
