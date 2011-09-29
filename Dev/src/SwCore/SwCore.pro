@@ -112,7 +112,8 @@ HEADERS += LibIndeSig.h \
     ISwSnapShotPropertiesService.h \
     SwSnapShotPropertiesService.h \
     ISwServiceParameters.h \
-    _SwServiceParametersImpl.h
+    _SwServiceParametersImpl.h \
+    ISwServiceProductKey.h
 
 SOURCES += SwAddress_ToolBox.cpp \
     SwApplication.cpp \

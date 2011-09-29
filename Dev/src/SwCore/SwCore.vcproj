@@ -354,6 +354,8 @@
 			<File
 				RelativePath="ISwServiceParameters.h" />
 			<File
+				RelativePath="ISwServiceProductKey.h" />
+			<File
 				RelativePath="ISwServicesManager_Listener.h" />
 			<File
 				RelativePath="ISwSimpleTypeAdapter.h" />
