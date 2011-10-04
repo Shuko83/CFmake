@@ -97,7 +97,7 @@ void _ReplayManager::startReplay(ISwExecution_Service * exeService)
     QXmlStreamReader * reader=new QXmlStreamReader(fileReader);
     _timeLine.reset();
     if(!_timeLine.loadRecordFile(reader,_serviceRecord,_repository.getFileName()))
-		QMessageBox::critical(NULL,"Replay Error","Time line False");
+		QMessageBox::critical(NULL,"Replay Error","Unable to load the record file (File corrupt).");
     delete reader;
     fileReader->close();
     delete fileReader;
@@ -152,6 +152,11 @@ void _ReplayManager::stopReplay()
             _executor->StopExecution();
             _timeLine.queryStopTime();
         }
+		else
+		{
+			//Done to notify listener
+			_timeLine.queryStopTime();
+		}
 
 		SwComponent_Class * component=SwAddress_ToolBox::FindTarget(_activator,this);
 		if(component)

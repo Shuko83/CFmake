@@ -198,7 +198,7 @@ double _TimeLine::queryExecuteTime(bool * isLast)
     if (_executionKeys.isEmpty()) 
 	{
         *isLast=true;
-        setState(STATE_PAUSED);
+        setState(STATE_STOPPED);
     }
     double t=ekey->_currentTime;
     QList<ISwRecordPoint *>::iterator itrp=ekey->_recordPoints.begin();

@@ -535,7 +535,7 @@ void _RecordPoint::registerPropertiesListener()
 
 		if(!_mapPropEntities.contains(prop->GetName()))
 		{
-			qDebug()<< "MapPropEntities ["<<prop->GetName()<<"] = " << prop;
+			//qDebug()<< "MapPropEntities ["<<prop->GetName()<<"] = " << prop;
 			_mapPropEntities.insert(prop->GetName(),prop);
 		}
 	}
