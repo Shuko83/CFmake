@@ -33,8 +33,8 @@ class _RecordManager : public SwAssistedComponent,
 {
     Q_OBJECT
     Q_PROPERTY(StreamWork::SwCore::SwFileDescriptor recordDirectory READ getRecordDirectory WRITE setRecordDirectory)
-    Q_PROPERTY(bool recording READ getRecordingState WRITE setRecordingState)
     Q_PROPERTY(int maxRecordSize READ getMaxRecordSize WRITE setMaxRecordSize)
+
 protected:
 
     

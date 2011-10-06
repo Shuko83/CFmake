@@ -332,22 +332,10 @@ void _RecordManager::setRecordingState(bool val)
 
 	_isRecording = val;
 
-	if (val) 
-	{
-		startRecording();
-	} 
-	else 
-	{
-		stopRecording();
-	}
-
 	foreach(ISwRecordManagerListener * listener,_listeners) 
 	{
 		listener->setRecording(val);
 	}
-
-
-
 }
 
 //-------------------------------------------------------------------------
