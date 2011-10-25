@@ -50,6 +50,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwModel2d", "src\SwModel2\S
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StreamWorkEditor2d", "src\StreamWorkEditor2\StreamWorkEditor2.vcproj", "{26A64D0C-CE41-3050-B88E-33494BE5BBA3}"
 	ProjectSection(ProjectDependencies) = postProject
+		{800AAE5B-2016-3616-A6CE-D0FE00AC572E} = {800AAE5B-2016-3616-A6CE-D0FE00AC572E}
 		{943ED0FA-F93A-3886-86DB-0F6E0DC7F296} = {943ED0FA-F93A-3886-86DB-0F6E0DC7F296}
 	EndProjectSection
 EndProject
@@ -73,6 +74,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwFoundationd", "src\SwFoun
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwGeneratord", "src\SwGenerator\SwGeneratord.vcproj", "{8C5CCF0A-F4DE-3575-B157-C10290410658}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwDocd", "src\SwDoc\SwDocd.vcproj", "{800AAE5B-2016-3616-A6CE-D0FE00AC572E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,6 +135,10 @@ Global
 		{8C5CCF0A-F4DE-3575-B157-C10290410658}.Debug|Win32.Build.0 = Debug|Win32
 		{8C5CCF0A-F4DE-3575-B157-C10290410658}.Release|Win32.ActiveCfg = Release|Win32
 		{8C5CCF0A-F4DE-3575-B157-C10290410658}.Release|Win32.Build.0 = Release|Win32
+		{800AAE5B-2016-3616-A6CE-D0FE00AC572E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{800AAE5B-2016-3616-A6CE-D0FE00AC572E}.Debug|Win32.Build.0 = Debug|Win32
+		{800AAE5B-2016-3616-A6CE-D0FE00AC572E}.Release|Win32.ActiveCfg = Release|Win32
+		{800AAE5B-2016-3616-A6CE-D0FE00AC572E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -65,7 +65,7 @@ void _SwExtensionPointImpl::extends(ISwExtension * ext){
     if (iprovider!=0 && iconsumer!=0) {
         try {
             iconsumer->AttachProvider(iprovider,_name,ext->getName());
-        } catch(SwException & se) {
+        } catch(SwException & /*se*/) {
             //L'application a levé une exception
             //QMessageBox::warning(0,QString("Warning... "),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
         }

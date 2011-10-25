@@ -10,6 +10,8 @@
 #include <QtGui>
 #include "PropertiesWidget.h"
 #include "QStreamTreeModel.h"
+#include "..\SwDoc\EditDoc.h"
+
 /**
 @class WidgetFactory
 @brief Fabrique de widget
@@ -27,6 +29,9 @@ public:
     QWidget * buildStreamTreeView(QStreamTreeModel * model);
     /** @brief Construction widget propriétés*/
     PropertiesWidget * buildPropertiesWidget();
+	/** @brief Construction widget documentation*/
+	QWidget * buildDocBlankView();
+
 private:
 	/** @brief Constructor */
 	WidgetFactory();
@@ -34,10 +39,12 @@ private:
 	~WidgetFactory();
 	/** @brief Modification attribut lorsque le widget est hébergé par un GraphView */
     void setGraphViewMode(QWidget * w);
-
 private:
     /** @brief Palette d'affichage pour la vue graph */
     QPalette _graphPalette;
+
+
+	EditDoc * _doc;
 
 };
 

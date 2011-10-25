@@ -99,7 +99,7 @@ QVariant _SwExecutorStreamTreeModel::headerData ( int section, Qt::Orientation o
 /*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
 QVariant _SwExecutorStreamTreeModel::data ( const QModelIndex & index, int role ) const{
     SwComponent_Class * cparent;
-    SwComponent_Class * cparentparent;
+    /*SwComponent_Class * cparentparent;*/
      if (!index.isValid())
          return QVariant();
     cparent=(SwComponent_Class*)index.internalPointer();
@@ -144,7 +144,7 @@ QModelIndex _SwExecutorStreamTreeModel::parent ( const QModelIndex & index ) con
     SwComponent_Class * cindex;
     SwComponent_Class * parent;
     int index_parent;
-    SwComponent_Class * current_comp;
+    /*SwComponent_Class * current_comp;*/
     if (!index.isValid())
         return QModelIndex();
     cindex=(SwComponent_Class *)index.internalPointer();

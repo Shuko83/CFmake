@@ -16,6 +16,8 @@
 #include "SwWizardFrontEnd.h"
 #include "PropertiesWidget.h"
 #include "ISelectionObserver.h"
+#include "EditDoc.h"
+
 /**
 @class MainWindow
 @brief Fenetre principale
@@ -64,6 +66,10 @@ protected:
     virtual void closeEvent(QCloseEvent *event);
     /** @brief sur close event */
     virtual void focusInEvent ( QFocusEvent * event );
+
+
+signals:
+	void selection (QString&,QString&);
 private:
     /** @brief Graphics view */
     StreamView * _streamView;
@@ -81,6 +87,7 @@ private:
     QLineEdit *_statusWidget;
     /** @brief stream source de l'ouverture de l'editeur */
     SwComponent_Class * _streamSourceOpener;
+
 };
 
 #endif

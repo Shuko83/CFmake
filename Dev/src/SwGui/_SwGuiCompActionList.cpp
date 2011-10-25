@@ -168,4 +168,4 @@ void _SwGuiCompActionList::signalListChanged()
       (*it)->listChanged(_actionList);
       it++;
     }
-}
+}	

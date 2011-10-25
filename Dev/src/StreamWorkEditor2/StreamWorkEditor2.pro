@@ -40,6 +40,7 @@ HEADERS += LogView.h
 HEADERS += EditorPropertiesItemDelegate.h
 HEADERS += EditionService.h
 HEADERS += ManageLinkColor.h
+HEADERS += PluginOverview.h
 
 SOURCES += SwSplash.cpp
 SOURCES += main.cpp
@@ -72,10 +73,11 @@ SOURCES += LogView.cpp
 SOURCES += EditorPropertiesItemDelegate.cpp
 SOURCES += EditionService.cpp
 SOURCES += ManageLinkColor.cpp
-
+SOURCES += PluginOverview.cpp
 
 FORMS += _resources/LogView.ui
 FORMS += ../SwGui/_QRcViewerUi.ui
+FORMS += _resources/PluginOverview.ui
 RESOURCES += _resources/StreamWorkEditor2.qrc
 MOC_DIR += ./_intermediaire
 OBJECTS_DIR += ./_obj
@@ -87,7 +89,8 @@ INCLUDEPATH += ./ \
     ../SwGui \
     ../SwGui/_intermediaire \
     ../WizardIDE \
-    ../SwExecution
+    ../SwExecution \
+	../SwDoc
     
 DEFINES += SW_EDITOR
     
@@ -99,10 +102,11 @@ CONFIG(debug, debug|release) {
   win32:DESTDIR = ./../../bin/vc/debug/
     TARGET = $$join(TARGET,,,d)
 	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
-	LIBS += -L"../../lib/vc/debug" -lSwCored -lWizardIDEd
+	LIBS += -L"../../lib/vc/debug" -lSwCored -lWizardIDEd -lSwDocd
+	CONFIG += console
 } 
 CONFIG(release, debug|release) {
-	LIBS += -L"../../lib/vc/release" -lSwCore -lWizardIDE
+	LIBS += -L"../../lib/vc/release" -lSwCore -lWizardIDE -lSwDoc
 }
 
 #Windows resource file

@@ -4,640 +4,1079 @@
 	Version="9,00"
 	Name="SwCored"
 	ProjectGUID="{BC87C7A4-3610-36F8-98E7-C6E0FFAD553F}"
-	Keyword="Qt4VSv1.0">
+	Keyword="Qt4VSv1.0"
+	TargetFrameworkVersion="0"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32" />
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="."
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			ConfigurationType="2"
 			IntermediateDirectory="objd\"
-			UseOfMfc="0">
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
-				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
-				AssemblerListingLocation="objd\"
-				BufferSecurityCheck="false"
-				DebugInformationFormat="3"
-				ExceptionHandling="1"
-				GeneratePreprocessedFile="0"
-				ObjectFile="objd\"
-				Optimization ="4"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
-				ProgramDataBaseFileName=".\"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="true"
-				SuppressStartupBanner="true"
-				TreatWChar_tAsBuiltInType="false"
-				WarningLevel="3" />
+				Name="VCPreBuildEventTool"
+				CommandLine="taskkill /f /im streamworkeditor2d.exe 2&gt;NUL | set errorlevel=0 "
+			/>
 			<Tool
-				Name="VCCustomBuildTool" />
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="Psapi.lib imagehlp.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib"
-				GenerateDebugInformation="true"
-				IgnoreImportLibrary="true"
-				LinkTimeCodeGeneration="0"
-				OutputFile="..\..\lib\vc\debug\SwCored.dll"
-				ProgramDatabaseFile="./../../bin/vc/debug/SwCored.pdb"
-				SubSystem="0"
-				SuppressStartupBanner="true" />
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
+				WarningLevel="0"
 				DefaultCharType="0"
 				EnableErrorChecks="1"
-				WarningLevel="0" />
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug&quot;"
-				Description="Copy SwCored.dll to ..\..\bin\vc\debug" />
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
+				Optimization="4"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				GeneratePreprocessedFile="0"
+				ExceptionHandling="1"
+				RuntimeLibrary="3"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				AssemblerListingLocation="objd\"
+				ObjectFile="objd\"
+				ProgramDataBaseFileName=".\"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool" />
-			<Tool
-				Name="VCPreLinkEventTool" />
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="Psapi.lib imagehlp.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				OutputFile="..\..\lib\vc\debug\SwCored.dll"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="./../../bin/vc/debug/SwCored.pdb"
+				SubSystem="0"
+				LinkTimeCodeGeneration="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy SwCored.dll to ..\..\bin\vc\debug"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug&quot;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="."
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			ConfigurationType="2"
 			IntermediateDirectory="obj\"
-			UseOfMfc="0">
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
-				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
-				AssemblerListingLocation="obj\"
-				BufferSecurityCheck="false"
-				DebugInformationFormat="0"
-				ExceptionHandling="1"
-				GeneratePreprocessedFile="0"
-				ObjectFile="obj\"
-				Optimization ="2"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
-				ProgramDataBaseFileName=".\"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="true"
-				SuppressStartupBanner="true"
-				TreatWChar_tAsBuiltInType="false"
-				WarningLevel="3" />
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool" />
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="Psapi.lib imagehlp.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib"
-				GenerateDebugInformation="false"
-				IgnoreImportLibrary="true"
-				LinkIncremental="1"
-				LinkTimeCodeGeneration="0"
-				OutputFile="..\..\lib\vc\release\SwCore.dll"
-				ProgramDatabaseFile=""
-				SubSystem="0"
-				SuppressStartupBanner="true" />
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
+				WarningLevel="0"
 				DefaultCharType="0"
 				EnableErrorChecks="1"
-				WarningLevel="0" />
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;"
-				Description="Copy SwCore.dll to ..\..\bin\vc\release" />
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
+				Optimization="2"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				GeneratePreprocessedFile="0"
+				ExceptionHandling="1"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				AssemblerListingLocation="obj\"
+				ObjectFile="obj\"
+				ProgramDataBaseFileName=".\"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="0"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool" />
-			<Tool
-				Name="VCPreLinkEventTool" />
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="Psapi.lib imagehlp.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
+				OutputFile="..\..\lib\vc\release\SwCore.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib"
+				GenerateDebugInformation="false"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				LinkTimeCodeGeneration="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy SwCore.dll to ..\..\bin\vc\release"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath="Component.cpp" />
+				RelativePath="_SwCleanLinksVisitor.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwAddress_ToolBox.cpp" />
+				RelativePath="_SwComplexeTypeAdaptersFactoriesBankImpl.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwAlerter_Class.cpp" />
+				RelativePath="_SwConsumedInterfaceContainer_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwApplication.cpp" />
+				RelativePath="_SwEnumKeys_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwBuffer_Toolbox.cpp" />
+				RelativePath="_SwExtensionImpl.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwComponent_Class.cpp" />
+				RelativePath="_SwExtensionPointImpl.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwController_Class.cpp" />
+				RelativePath="_SwFileEditorManager.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwData_Class.cpp" />
+				RelativePath="_SwPluginsBank_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwDefaultComplexeTypeAdapters.cpp" />
+				RelativePath="_SwPropertyImpl_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwEnum.cpp" />
+				RelativePath="_SwPropertyImplForQOject_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwEnumModel.cpp" />
+				RelativePath="_SwPropertyImplSimpleTypeAdapter_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwException.cpp" />
+				RelativePath="_SwPropertyPersistent_Toolbox.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwExtensionHelper.cpp" />
+				RelativePath="_SwProvidedInterfaceContainer_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwFileDescriptor.cpp" />
+				RelativePath="_SwServiceExtensionsImpl.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwFileLogRecorder_Class.cpp" />
+				RelativePath="_SwServiceParametersImpl.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwIconDescriptor.cpp" />
+				RelativePath="_SwTreeItem.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwInterfaces_Consumer_Class.cpp" />
+				RelativePath="Component.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwInterfaces_Provider_Class.cpp" />
+				RelativePath="SwAddress_ToolBox.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwIpV4Address.cpp" />
+				RelativePath="SwAlerter_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwLoader_Class.cpp" />
+				RelativePath="SwApplication.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwLogger_Class.cpp" />
+				RelativePath="SwBuffer_Toolbox.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwNamed_Class.cpp" />
+				RelativePath="SwComponent_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwPin.cpp" />
+				RelativePath="SwController_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwPins_Manager_Class.cpp" />
+				RelativePath="SwData_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwPluginFactory_Class.cpp" />
+				RelativePath="SwDefaultComplexeTypeAdapters.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwPropertiesModelImpl.cpp" />
+				RelativePath="SwEnum.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwPropertiesPersistentToolbox.cpp" />
+				RelativePath="SwEnumModel.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwProperties_Class.cpp" />
+				RelativePath="SwException.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwRef.cpp" />
+				RelativePath="SwExtensionHelper.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwRefParent.cpp" />
+				RelativePath="SwFileDescriptor.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwSaver_Class.cpp" />
+				RelativePath="SwFileLogRecorder_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwServicesManager_Class.cpp" />
+				RelativePath="SwIconDescriptor.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwSnapShotPropertiesService.cpp" />
+				RelativePath="SwInterfaces_Consumer_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwTime_ToolBox.cpp" />
+				RelativePath="SwInterfaces_Provider_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="SwUUID.cpp" />
+				RelativePath="SwIpV4Address.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwCleanLinksVisitor.cpp" />
+				RelativePath="SwLoader_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwComplexeTypeAdaptersFactoriesBankImpl.cpp" />
+				RelativePath="SwLogger_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwConsumedInterfaceContainer_Class.cpp" />
+				RelativePath="SwNamed_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwEnumKeys_Class.cpp" />
+				RelativePath="SwPin.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwExtensionImpl.cpp" />
+				RelativePath="SwPins_Manager_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwExtensionPointImpl.cpp" />
+				RelativePath="SwPluginFactory_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwFileEditorManager.cpp" />
+				RelativePath="SwProperties_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwPluginsBank_Class.cpp" />
+				RelativePath="SwPropertiesModelImpl.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwPropertyImplForQOject_Class.cpp" />
+				RelativePath="SwPropertiesPersistentToolbox.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwPropertyImplSimpleTypeAdapter_Class.cpp" />
+				RelativePath="SwRef.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwPropertyImpl_Class.cpp" />
+				RelativePath="SwRefParent.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwPropertyPersistent_Toolbox.cpp" />
+				RelativePath="SwSaver_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwProvidedInterfaceContainer_Class.cpp" />
+				RelativePath="SwServicesManager_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwServiceExtensionsImpl.cpp" />
+				RelativePath="SwSnapShotPropertiesService.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwServiceParametersImpl.cpp" />
+				RelativePath="SwTime_ToolBox.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwTreeItem.cpp" />
+				RelativePath="SwUUID.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 			<File
-				RelativePath="Component.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Component.h -o _intermediaire\moc_Component.cpp"
-						Description="MOC Component.h"
-						Outputs="_intermediaire\moc_Component.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Component.h -o _intermediaire\moc_Component.cpp"
-						Description="MOC Component.h"
-						Outputs="_intermediaire\moc_Component.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
+				RelativePath="_SwCleanLinksVisitor.h"
+				>
 			</File>
 			<File
-				RelativePath="ISwActivable.h" />
-			<File
-				RelativePath="ISwAdminSetup.h" />
-			<File
-				RelativePath="ISwAlertRecorder.h" />
-			<File
-				RelativePath="ISwAlerter.h" />
-			<File
-				RelativePath="ISwCheckService.h" />
-			<File
-				RelativePath="ISwComplexeTypeAdapters.h" />
-			<File
-				RelativePath="ISwComplexeTypeAdaptersFactoriesBank.h" />
-			<File
-				RelativePath="ISwComplexeTypeAdaptersFactory.h" />
-			<File
-				RelativePath="ISwComponentProvider.h" />
-			<File
-				RelativePath="ISwController.h" />
-			<File
-				RelativePath="ISwCreationPostProcessor.h" />
-			<File
-				RelativePath="ISwEditionService.h" />
-			<File
-				RelativePath="ISwExecutor.h" />
-			<File
-				RelativePath="ISwExecutor2.h" />
-			<File
-				RelativePath="ISwExtension.h" />
-			<File
-				RelativePath="ISwExtensionPoint.h" />
-			<File
-				RelativePath="ISwFileEditor.h" />
-			<File
-				RelativePath="ISwFinalizer.h" />
-			<File
-				RelativePath="ISwFinalizerManager.h" />
-			<File
-				RelativePath="ISwHost.h" />
-			<File
-				RelativePath="ISwInterfaces_Consumer.h" />
-			<File
-				RelativePath="ISwInterfaces_ConsumerObserver.h" />
-			<File
-				RelativePath="ISwInterfaces_Provider.h" />
-			<File
-				RelativePath="ISwInterfaces_Service.h" />
-			<File
-				RelativePath="ISwInterfaces_ServicesListener.h" />
-			<File
-				RelativePath="ISwLogRecorder.h" />
-			<File
-				RelativePath="ISwLogger.h" />
-			<File
-				RelativePath="ISwObject.h" />
-			<File
-				RelativePath="ISwObjectFactory.h" />
-			<File
-				RelativePath="ISwObservable.h" />
-			<File
-				RelativePath="ISwObserver.h" />
-			<File
-				RelativePath="ISwPersistent.h" />
-			<File
-				RelativePath="ISwPersistentConfigurable.h" />
-			<File
-				RelativePath="ISwPin_Listener.h" />
-			<File
-				RelativePath="ISwPins_Manager.h" />
-			<File
-				RelativePath="ISwPins_ManagerListener.h" />
-			<File
-				RelativePath="ISwPluginFactory.h" />
-			<File
-				RelativePath="ISwPluginsBank.h" />
-			<File
-				RelativePath="ISwProperties.h" />
-			<File
-				RelativePath="ISwProperty.h" />
-			<File
-				RelativePath="ISwProperty2.h" />
-			<File
-				RelativePath="ISwRef.h" />
-			<File
-				RelativePath="ISwService.h" />
-			<File
-				RelativePath="ISwServiceExtensions.h" />
-			<File
-				RelativePath="ISwServiceFileEditorManager.h" />
-			<File
-				RelativePath="ISwServiceOwner.h" />
-			<File
-				RelativePath="ISwServiceOwnerConfigurable.h" />
-			<File
-				RelativePath="ISwServiceParameters.h" />
-			<File
-				RelativePath="ISwServiceProductKey.h" />
-			<File
-				RelativePath="ISwServicesManager_Listener.h" />
-			<File
-				RelativePath="ISwSimpleTypeAdapter.h" />
-			<File
-				RelativePath="ISwSnapShotPropertiesService.h" />
-			<File
-				RelativePath="ISwSubStream.h" />
-			<File
-				RelativePath="ISwVisitor.h" />
-			<File
-				RelativePath="LibIndeSig.h" />
-			<File
-				RelativePath="SwAddress_ToolBox.h" />
-			<File
-				RelativePath="SwAlerter_Class.h" />
-			<File
-				RelativePath="SwApplication.h" />
-			<File
-				RelativePath="SwBuffer_Toolbox.h" />
-			<File
-				RelativePath="SwComponent_Class.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwComponent_Class.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwComponent_Class.h -o _intermediaire\moc_SwComponent_Class.cpp"
-						Description="MOC SwComponent_Class.h"
-						Outputs="_intermediaire\moc_SwComponent_Class.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwComponent_Class.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwComponent_Class.h -o _intermediaire\moc_SwComponent_Class.cpp"
-						Description="MOC SwComponent_Class.h"
-						Outputs="_intermediaire\moc_SwComponent_Class.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
+				RelativePath="_SwComplexeTypeAdaptersFactoriesBankImpl.h"
+				>
 			</File>
 			<File
-				RelativePath="SwController_Class.h" />
-			<File
-				RelativePath="SwCoreConstantes.h" />
-			<File
-				RelativePath="SwData_Class.h" />
-			<File
-				RelativePath="SwDefaultComplexeTypeAdapters.h" />
-			<File
-				RelativePath="SwEnum.h" />
-			<File
-				RelativePath="SwEnumModel.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwEnumModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwEnumModel.h -o _intermediaire\moc_SwEnumModel.cpp"
-						Description="MOC SwEnumModel.h"
-						Outputs="_intermediaire\moc_SwEnumModel.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwEnumModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwEnumModel.h -o _intermediaire\moc_SwEnumModel.cpp"
-						Description="MOC SwEnumModel.h"
-						Outputs="_intermediaire\moc_SwEnumModel.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
+				RelativePath="_SwConsumedInterfaceContainer_Class.h"
+				>
 			</File>
 			<File
-				RelativePath="SwException.h" />
-			<File
-				RelativePath="SwExtensionHelper.h" />
-			<File
-				RelativePath="SwFileDescriptor.h" />
-			<File
-				RelativePath="SwFileLogRecorder_Class.h" />
-			<File
-				RelativePath="SwIconDescriptor.h" />
-			<File
-				RelativePath="SwInterfaces_Consumer_Class.h" />
-			<File
-				RelativePath="SwInterfaces_Provider_Class.h" />
-			<File
-				RelativePath="SwIpV4Address.h" />
-			<File
-				RelativePath="SwLoader_Class.h" />
-			<File
-				RelativePath="SwLogger_Class.h" />
-			<File
-				RelativePath="SwMacros.h" />
-			<File
-				RelativePath="SwNamed_Class.h" />
-			<File
-				RelativePath="SwPin.h" />
-			<File
-				RelativePath="SwPins_Manager_Class.h" />
-			<File
-				RelativePath="SwPluginFactory_Class.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwPluginFactory_Class.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwPluginFactory_Class.h -o _intermediaire\moc_SwPluginFactory_Class.cpp"
-						Description="MOC SwPluginFactory_Class.h"
-						Outputs="_intermediaire\moc_SwPluginFactory_Class.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwPluginFactory_Class.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwPluginFactory_Class.h -o _intermediaire\moc_SwPluginFactory_Class.cpp"
-						Description="MOC SwPluginFactory_Class.h"
-						Outputs="_intermediaire\moc_SwPluginFactory_Class.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
+				RelativePath="_SwEnumKeys_Class.h"
+				>
 			</File>
 			<File
-				RelativePath="SwPropertiesModelImpl.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwPropertiesModelImpl.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwPropertiesModelImpl.h -o _intermediaire\moc_SwPropertiesModelImpl.cpp"
-						Description="MOC SwPropertiesModelImpl.h"
-						Outputs="_intermediaire\moc_SwPropertiesModelImpl.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwPropertiesModelImpl.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwPropertiesModelImpl.h -o _intermediaire\moc_SwPropertiesModelImpl.cpp"
-						Description="MOC SwPropertiesModelImpl.h"
-						Outputs="_intermediaire\moc_SwPropertiesModelImpl.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
+				RelativePath="_SwExtensionImpl.h"
+				>
 			</File>
 			<File
-				RelativePath="SwPropertiesPersistentToolbox.h" />
+				RelativePath="_SwExtensionPointImpl.h"
+				>
+			</File>
 			<File
-				RelativePath="SwProperties_Class.h" />
+				RelativePath="_SwFileEditorManager.h"
+				>
+			</File>
 			<File
-				RelativePath="SwRef.h" />
-			<File
-				RelativePath="SwRefParent.h" />
-			<File
-				RelativePath="SwRefPtr.h" />
-			<File
-				RelativePath="SwSaver_Class.h" />
-			<File
-				RelativePath="SwServicesManager_Class.h" />
-			<File
-				RelativePath="SwSnapShotPropertiesService.h" />
-			<File
-				RelativePath="SwTemplateSimpleTypeAdapter.h" />
-			<File
-				RelativePath="SwTime_ToolBox.h" />
-			<File
-				RelativePath="SwUUID.h" />
-			<File
-				RelativePath="SwUUID_Simplified.h" />
-			<File
-				RelativePath="_SwCleanLinksVisitor.h" />
-			<File
-				RelativePath="_SwComplexeTypeAdaptersFactoriesBankImpl.h" />
-			<File
-				RelativePath="_SwConsumedInterfaceContainer_Class.h" />
-			<File
-				RelativePath="_SwEnumKeys_Class.h" />
-			<File
-				RelativePath="_SwExtensionImpl.h" />
-			<File
-				RelativePath="_SwExtensionPointImpl.h" />
-			<File
-				RelativePath="_SwFileEditorManager.h" />
-			<File
-				RelativePath="_SwPluginsBank_Class.h">
+				RelativePath="_SwPluginsBank_Class.h"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwPluginsBank_Class.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwPluginsBank_Class.h -o _intermediaire\moc__SwPluginsBank_Class.cpp"
 						Description="MOC _SwPluginsBank_Class.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwPluginsBank_Class.h -o _intermediaire\moc__SwPluginsBank_Class.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwPluginsBank_Class.h"
 						Outputs="_intermediaire\moc__SwPluginsBank_Class.cpp"
-						Path="c:\Qt\4.7.1\bin" />
+					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release|Win32"
+					>
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwPluginsBank_Class.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwPluginsBank_Class.h -o _intermediaire\moc__SwPluginsBank_Class.cpp"
 						Description="MOC _SwPluginsBank_Class.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwPluginsBank_Class.h -o _intermediaire\moc__SwPluginsBank_Class.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwPluginsBank_Class.h"
 						Outputs="_intermediaire\moc__SwPluginsBank_Class.cpp"
-						Path="c:\Qt\4.7.1\bin" />
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_SwPropertyImplForQOject_Class.h" />
+				RelativePath="_SwPropertyImpl_Class.h"
+				>
+			</File>
 			<File
-				RelativePath="_SwPropertyImplSimpleTypeAdapter_Class.h" />
+				RelativePath="_SwPropertyImplForQOject_Class.h"
+				>
+			</File>
 			<File
-				RelativePath="_SwPropertyImpl_Class.h" />
+				RelativePath="_SwPropertyImplSimpleTypeAdapter_Class.h"
+				>
+			</File>
 			<File
-				RelativePath="_SwPropertyPersistent_Toolbox.h" />
+				RelativePath="_SwPropertyPersistent_Toolbox.h"
+				>
+			</File>
 			<File
-				RelativePath="_SwProvidedInterfaceContainer_Class.h" />
+				RelativePath="_SwProvidedInterfaceContainer_Class.h"
+				>
+			</File>
 			<File
-				RelativePath="_SwServiceExtensionsImpl.h" />
+				RelativePath="_SwServiceExtensionsImpl.h"
+				>
+			</File>
 			<File
-				RelativePath="_SwServiceParametersImpl.h" />
+				RelativePath="_SwServiceParametersImpl.h"
+				>
+			</File>
 			<File
-				RelativePath="_SwTreeItem.h" />
+				RelativePath="_SwTreeItem.h"
+				>
+			</File>
+			<File
+				RelativePath="Component.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC Component.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Component.h -o _intermediaire\moc_Component.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component.h"
+						Outputs="_intermediaire\moc_Component.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC Component.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Component.h -o _intermediaire\moc_Component.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component.h"
+						Outputs="_intermediaire\moc_Component.cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="ISwActivable.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwAdminSetup.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwAlerter.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwAlertRecorder.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwCheckService.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwComplexeTypeAdapters.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwComplexeTypeAdaptersFactoriesBank.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwComplexeTypeAdaptersFactory.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwComponentProvider.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwController.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwCreationPostProcessor.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwEditionService.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwExecutor.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwExecutor2.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwExtension.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwExtensionPoint.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwFileEditor.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwFinalizer.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwFinalizerManager.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwHost.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwInterfaces_Consumer.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwInterfaces_ConsumerObserver.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwInterfaces_Provider.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwInterfaces_Service.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwInterfaces_ServicesListener.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwLogger.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwLogRecorder.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwObject.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwObjectFactory.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwObservable.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwObserver.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwPersistent.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwPersistentConfigurable.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwPin_Listener.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwPins_Manager.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwPins_ManagerListener.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwPluginFactory.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwPluginsBank.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwProperties.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwProperty.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwProperty2.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwRef.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwService.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwServiceExtensions.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwServiceFileEditorManager.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwServiceOwner.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwServiceOwnerConfigurable.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwServiceParameters.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwServiceProductKey.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwServicesManager_Listener.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwSimpleTypeAdapter.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwSnapShotPropertiesService.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwSubStream.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwVisitor.h"
+				>
+			</File>
+			<File
+				RelativePath="LibIndeSig.h"
+				>
+			</File>
+			<File
+				RelativePath="SwAddress_ToolBox.h"
+				>
+			</File>
+			<File
+				RelativePath="SwAlerter_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwApplication.h"
+				>
+			</File>
+			<File
+				RelativePath="SwBuffer_Toolbox.h"
+				>
+			</File>
+			<File
+				RelativePath="SwComponent_Class.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC SwComponent_Class.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwComponent_Class.h -o _intermediaire\moc_SwComponent_Class.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwComponent_Class.h"
+						Outputs="_intermediaire\moc_SwComponent_Class.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC SwComponent_Class.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwComponent_Class.h -o _intermediaire\moc_SwComponent_Class.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwComponent_Class.h"
+						Outputs="_intermediaire\moc_SwComponent_Class.cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="SwController_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwCoreConstantes.h"
+				>
+			</File>
+			<File
+				RelativePath="SwData_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwDefaultComplexeTypeAdapters.h"
+				>
+			</File>
+			<File
+				RelativePath="SwEnum.h"
+				>
+			</File>
+			<File
+				RelativePath="SwEnumModel.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC SwEnumModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwEnumModel.h -o _intermediaire\moc_SwEnumModel.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwEnumModel.h"
+						Outputs="_intermediaire\moc_SwEnumModel.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC SwEnumModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwEnumModel.h -o _intermediaire\moc_SwEnumModel.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwEnumModel.h"
+						Outputs="_intermediaire\moc_SwEnumModel.cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="SwException.h"
+				>
+			</File>
+			<File
+				RelativePath="SwExtensionHelper.h"
+				>
+			</File>
+			<File
+				RelativePath="SwFileDescriptor.h"
+				>
+			</File>
+			<File
+				RelativePath="SwFileLogRecorder_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwIconDescriptor.h"
+				>
+			</File>
+			<File
+				RelativePath="SwInterfaces_Consumer_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwInterfaces_Provider_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwIpV4Address.h"
+				>
+			</File>
+			<File
+				RelativePath="SwLoader_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwLogger_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwMacros.h"
+				>
+			</File>
+			<File
+				RelativePath="SwNamed_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwPin.h"
+				>
+			</File>
+			<File
+				RelativePath="SwPins_Manager_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwPluginFactory_Class.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC SwPluginFactory_Class.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwPluginFactory_Class.h -o _intermediaire\moc_SwPluginFactory_Class.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwPluginFactory_Class.h"
+						Outputs="_intermediaire\moc_SwPluginFactory_Class.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC SwPluginFactory_Class.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwPluginFactory_Class.h -o _intermediaire\moc_SwPluginFactory_Class.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwPluginFactory_Class.h"
+						Outputs="_intermediaire\moc_SwPluginFactory_Class.cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="SwProperties_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwPropertiesModelImpl.h"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC SwPropertiesModelImpl.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwPropertiesModelImpl.h -o _intermediaire\moc_SwPropertiesModelImpl.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwPropertiesModelImpl.h"
+						Outputs="_intermediaire\moc_SwPropertiesModelImpl.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC SwPropertiesModelImpl.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwPropertiesModelImpl.h -o _intermediaire\moc_SwPropertiesModelImpl.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwPropertiesModelImpl.h"
+						Outputs="_intermediaire\moc_SwPropertiesModelImpl.cpp"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="SwPropertiesPersistentToolbox.h"
+				>
+			</File>
+			<File
+				RelativePath="SwRef.h"
+				>
+			</File>
+			<File
+				RelativePath="SwRefParent.h"
+				>
+			</File>
+			<File
+				RelativePath="SwRefPtr.h"
+				>
+			</File>
+			<File
+				RelativePath="SwSaver_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwServicesManager_Class.h"
+				>
+			</File>
+			<File
+				RelativePath="SwSnapShotPropertiesService.h"
+				>
+			</File>
+			<File
+				RelativePath="SwTemplateSimpleTypeAdapter.h"
+				>
+			</File>
+			<File
+				RelativePath="SwTime_ToolBox.h"
+				>
+			</File>
+			<File
+				RelativePath="SwUUID.h"
+				>
+			</File>
+			<File
+				RelativePath="SwUUID_Simplified.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
-			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
+			>
 			<File
-				RelativePath="_intermediaire\moc_Component.cpp" />
+				RelativePath="_intermediaire\moc__SwPluginsBank_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_intermediaire\moc_SwComponent_Class.cpp" />
+				RelativePath="_intermediaire\moc_Component.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_intermediaire\moc_SwEnumModel.cpp" />
+				RelativePath="_intermediaire\moc_SwComponent_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_intermediaire\moc_SwPluginFactory_Class.cpp" />
+				RelativePath="_intermediaire\moc_SwEnumModel.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_intermediaire\moc_SwPropertiesModelImpl.cpp" />
+				RelativePath="_intermediaire\moc_SwPluginFactory_Class.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_intermediaire\moc__SwPluginsBank_Class.cpp" />
+				RelativePath="_intermediaire\moc_SwPropertiesModelImpl.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_intermediaire\qrc_SwCoreRsc.cpp" />
+				RelativePath="_intermediaire\qrc_SwCoreRsc.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="qrc;*"
 			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
-			ParseFiles="false">
+			ParseFiles="false"
+			>
 			<File
-				RelativePath="_resources\SwCoreRsc.qrc">
+				RelativePath="_resources\images\path.png"
+				>
+			</File>
+			<File
+				RelativePath="_resources\images\plugin.png"
+				>
+			</File>
+			<File
+				RelativePath="_resources\SwCoreRsc.qrc"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwCoreRsc.qrc;_resources\images\SysTrayUpdate.png;_resources\images\path.png;_resources\images\plugin.png;_resources\images\unknown.png"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o _intermediaire\qrc_SwCoreRsc.cpp"
 						Description="RCC _resources\SwCoreRsc.qrc"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o _intermediaire\qrc_SwCoreRsc.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwCoreRsc.qrc;_resources\images\SysTrayUpdate.png;_resources\images\path.png;_resources\images\plugin.png;_resources\images\unknown.png"
 						Outputs="_intermediaire\qrc_SwCoreRsc.cpp"
-						Path="c:\Qt\4.7.1\bin" />
+					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release|Win32"
+					>
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwCoreRsc.qrc;_resources\images\SysTrayUpdate.png;_resources\images\path.png;_resources\images\plugin.png;_resources\images\unknown.png"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o _intermediaire\qrc_SwCoreRsc.cpp"
 						Description="RCC _resources\SwCoreRsc.qrc"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o _intermediaire\qrc_SwCoreRsc.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwCoreRsc.qrc;_resources\images\SysTrayUpdate.png;_resources\images\path.png;_resources\images\plugin.png;_resources\images\unknown.png"
 						Outputs="_intermediaire\qrc_SwCoreRsc.cpp"
-						Path="c:\Qt\4.7.1\bin" />
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_resources\images\SysTrayUpdate.png" />
+				RelativePath="_resources\images\SysTrayUpdate.png"
+				>
+			</File>
 			<File
-				RelativePath="_resources\images\path.png" />
-			<File
-				RelativePath="_resources\images\plugin.png" />
-			<File
-				RelativePath="_resources\images\unknown.png" />
+				RelativePath="_resources\images\unknown.png"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

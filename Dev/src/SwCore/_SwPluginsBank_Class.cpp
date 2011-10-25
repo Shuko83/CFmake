@@ -351,7 +351,7 @@ QList<QString> _SwPluginsBank_Class::getPathsFromFile(QFile *f) {
 void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
     QDomDocument doc;
     QString xml_error;
-    int error_line,error_column;
+    /*int error_line,error_column*/;
 
     QList<QString> pathList;
     QList<QString> pathListUser;

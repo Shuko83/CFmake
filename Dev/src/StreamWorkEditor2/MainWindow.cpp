@@ -29,6 +29,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 	setWindowTitle("StreamWorkEditor V2");
 	setTabPosition(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea,QTabWidget::North);
 	setMinimumSize(400,300);
+	setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowTabbedDocks | QMainWindow::AllowNestedDocks);
 	nbWindows++;
 
 	//Definition du wizard
@@ -70,7 +71,13 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 	pdock->setWidget(WidgetFactory::getInstance()->buildPluginsBankView(true));
 	addDockWidget(Qt::RightDockWidgetArea, pdock);
 
-
+	QDockWidget *ddock = new QDockWidget(tr("Doc"), this);
+	ddock->setObjectName("DockDoc");
+	ddock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+	QWidget * docWid = WidgetFactory::getInstance()->buildDocBlankView();
+	connect(this,SIGNAL(selection(QString&,QString&)),docWid,SLOT(onSelection(QString&,QString&)));
+	ddock->setWidget(docWid);
+	addDockWidget(Qt::RightDockWidgetArea, ddock);
 
 	QDockWidget * stdock = new QDockWidget(tr("Stream Tree"), this);
 	stdock->setObjectName("DockStreamTree");
@@ -298,20 +305,30 @@ void MainWindow::onPrint() {
 	}
 }
 /** @brief sur selection */
-void MainWindow::setSelection(QList<StreamWork::SwCore::SwComponent_Class *> & sel) {
+void MainWindow::setSelection(QList<StreamWork::SwCore::SwComponent_Class *> & sel) 
+{
 	if (sel.count()!=1)
+	{
+		emit selection(QString(""),QString(""));
 		return;
-	qDebug(sel[0]->GetFactoryComponentName().toLatin1().data());
+	}
+
+	//qDebug(sel[0]->GetFactoryComponentName().toLatin1().data());
+
 	_statusWidget->setText(sel[0]->GetFactoryComponentName());
 
 	ISwService * service=sel[0]->QueryService(CG_SW_SERVICE_PLUGIN_OVERVIEW);
-	if (service!=NULL && dynamic_cast<ISwPluginOverview *>(service)!=NULL) {
+	if (service!=NULL && dynamic_cast<ISwPluginOverview *>(service)!=NULL) 
+	{
 		ISwPluginOverview * poverview=dynamic_cast<ISwPluginOverview *>(service);
 		QString texte=sel[0]->GetFactoryComponentName()+ " [Factory: "+poverview->GetPath()+"/"+poverview->GetPluginName()+ "] [Version:"+ poverview->GetPluginVersion() +"]";
 		_statusWidget->setText(texte);
 		_statusWidget->repaint();
+
+		emit selection(sel[0]->GetFactoryComponentName(),poverview->GetPluginName());
 	}
 }
+
 /** @brief getEditors */
 QMap<SwComponent_Class *,MainWindow *> * MainWindow::getEditors() {
 	return & _editors;

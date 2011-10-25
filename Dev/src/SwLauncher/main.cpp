@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 	QString stream_desc;
     SwFileLogRecorder_Class * log_recorder=NULL;
     int result=-1;
-    ISwService * un_service;
+    /*ISwService * un_service;*/
 
     //Test
     //QString test=QString(typeid(un_service).name());

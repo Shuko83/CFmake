@@ -4,1098 +4,850 @@
 	Version="9,00"
 	Name="StreamWorkEditor2d"
 	ProjectGUID="{26A64D0C-CE41-3050-B88E-33494BE5BBA3}"
-	Keyword="Qt4VSv1.0"
-	TargetFrameworkVersion="0"
-	>
+	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
-			Name="Win32"
-		/>
+			Name="Win32" />
 	</Platforms>
-	<ToolFiles>
-	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="."
-			IntermediateDirectory="_objd\"
-			ConfigurationType="1"
-			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				WarningLevel="0"
-				DefaultCharType="0"
-				EnableErrorChecks="1"
-			/>
+			ConfigurationType="1"
+			IntermediateDirectory="_objd\"
+			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtOpenGL&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwGui\_intermediaire&quot;,&quot;..\WizardIDE&quot;,&quot;..\SwExecution&quot;,&quot;..\SwDoc&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
-				Optimization="4"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtOpenGL&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwGui\_intermediaire&quot;,&quot;..\WizardIDE&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SW_EDITOR,QT_DLL,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
-				GeneratePreprocessedFile="0"
-				ExceptionHandling="1"
-				RuntimeLibrary="3"
-				BufferSecurityCheck="false"
-				TreatWChar_tAsBuiltInType="false"
-				RuntimeTypeInfo="true"
 				AssemblerListingLocation="_objd\"
-				ObjectFile="_objd\"
-				ProgramDataBaseFileName=".\"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
+				BufferSecurityCheck="false"
 				DebugInformationFormat="3"
-			/>
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="_objd\"
+				Optimization ="4"
+				PreprocessorDefinitions="UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SW_EDITOR,QT_DLL,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SW_EDITOR,QT_DLL,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
-				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib c:\Qt\4.7.1\lib\qtmaind.lib ../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\WizardIDEd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtOpenGLd4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
-				OutputFile="..\..\bin\vc\debug\StreamWorkEditor2d.exe"
-				Version="1.23"
-				SuppressStartupBanner="true"
+				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib ../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\WizardIDEd.lib ../../lib/vc/debug\SwDocd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtOpenGLd4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
+				IgnoreImportLibrary="true"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\bin\vc\debug\StreamWorkEditor2d.exe"
 				ProgramDatabaseFile=""
 				SubSystem="1"
-				LinkTimeCodeGeneration="0"
-			/>
+				SuppressStartupBanner="true"
+				Version="1.23" />
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCPostBuildEventTool" />
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreBuildEventTool" />
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCPreLinkEventTool" />
 			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SW_EDITOR,QT_DLL,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="."
-			IntermediateDirectory="_obj\"
-			ConfigurationType="1"
-			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				WarningLevel="0"
-				DefaultCharType="0"
-				EnableErrorChecks="1"
-			/>
+			ConfigurationType="1"
+			IntermediateDirectory="_obj\"
+			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtOpenGL&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwGui\_intermediaire&quot;,&quot;..\WizardIDE&quot;,&quot;..\SwExecution&quot;,&quot;..\SwDoc&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
-				Optimization="2"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtOpenGL&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwGui\_intermediaire&quot;,&quot;..\WizardIDE&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SW_EDITOR,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
-				GeneratePreprocessedFile="0"
-				ExceptionHandling="1"
-				RuntimeLibrary="2"
-				BufferSecurityCheck="false"
-				TreatWChar_tAsBuiltInType="false"
-				RuntimeTypeInfo="true"
 				AssemblerListingLocation="_obj\"
-				ObjectFile="_obj\"
-				ProgramDataBaseFileName=".\"
-				WarningLevel="3"
-				SuppressStartupBanner="true"
+				BufferSecurityCheck="false"
 				DebugInformationFormat="0"
-			/>
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="_obj\"
+				Optimization ="2"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SW_EDITOR,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SW_EDITOR,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				IgnoreImportLibrary="true"
-				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
-				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib c:\Qt\4.7.1\lib\qtmain.lib ../../lib/vc/release\SwCore.lib ../../lib/vc/release\WizardIDE.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtOpenGL4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
-				OutputFile="..\..\bin\vc\release\StreamWorkEditor2.exe"
-				Version="1.23"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
+				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib c:\Qt\4.7.1\lib\qtmain.lib ../../lib/vc/release\SwCore.lib ../../lib/vc/release\WizardIDE.lib SwDoc.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtOpenGL4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/release"
+				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
 				GenerateDebugInformation="false"
+				IgnoreImportLibrary="true"
+				LinkIncremental="1"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\bin\vc\release\StreamWorkEditor2.exe"
 				ProgramDatabaseFile=""
 				SubSystem="2"
-				LinkTimeCodeGeneration="0"
-			/>
+				SuppressStartupBanner="true"
+				Version="1.23" />
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCPostBuildEventTool" />
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCPreBuildEventTool" />
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCPreLinkEventTool" />
 			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SW_EDITOR,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_OPENGL_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
 		</Configuration>
 	</Configurations>
-	<References>
-	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
-			>
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath="..\SwGui\_QRcViewer.cpp"
-				>
-			</File>
+				RelativePath="AnchorableContainer.cpp" />
 			<File
-				RelativePath="..\SwGui\_SwGuiPluginsFrontEnd.cpp"
-				>
-			</File>
+				RelativePath="Arranger.cpp" />
 			<File
-				RelativePath="AnchorableContainer.cpp"
-				>
-			</File>
+				RelativePath="ComponentGraphicItem.cpp" />
 			<File
-				RelativePath="Arranger.cpp"
-				>
-			</File>
+				RelativePath="ComponentListModel.cpp" />
 			<File
-				RelativePath="ComponentGraphicItem.cpp"
-				>
-			</File>
+				RelativePath="ConnectorGraphicItem.cpp" />
 			<File
-				RelativePath="ComponentListModel.cpp"
-				>
-			</File>
+				RelativePath="EditionService.cpp" />
 			<File
-				RelativePath="ConnectorGraphicItem.cpp"
-				>
-			</File>
+				RelativePath="EditorPropertiesItemDelegate.cpp" />
 			<File
-				RelativePath="EditionService.cpp"
-				>
-			</File>
+				RelativePath="GraphicsLoaderV1.cpp" />
 			<File
-				RelativePath="EditorPropertiesItemDelegate.cpp"
-				>
-			</File>
+				RelativePath="GraphicsResources.cpp" />
 			<File
-				RelativePath="GraphicsLoaderV1.cpp"
-				>
-			</File>
+				RelativePath="InterestArea.cpp" />
 			<File
-				RelativePath="GraphicsResources.cpp"
-				>
-			</File>
+				RelativePath="LinkGraphicItem.cpp" />
 			<File
-				RelativePath="InterestArea.cpp"
-				>
-			</File>
+				RelativePath="LogView.cpp" />
 			<File
-				RelativePath="LinkGraphicItem.cpp"
-				>
-			</File>
+				RelativePath="MainWindow.cpp" />
 			<File
-				RelativePath="LogView.cpp"
-				>
-			</File>
+				RelativePath="ManageLinkColor.cpp" />
 			<File
-				RelativePath="main.cpp"
-				>
-			</File>
+				RelativePath="MenuManager.cpp" />
 			<File
-				RelativePath="MainWindow.cpp"
-				>
-			</File>
+				RelativePath="PluginOverview.cpp" />
 			<File
-				RelativePath="ManageLinkColor.cpp"
-				>
-			</File>
+				RelativePath="PluginsListModel.cpp" />
 			<File
-				RelativePath="MenuManager.cpp"
-				>
-			</File>
+				RelativePath="PropertiesWidget.cpp" />
 			<File
-				RelativePath="PluginsListModel.cpp"
-				>
-			</File>
+				RelativePath="QInterestAreaTreeModel.cpp" />
 			<File
-				RelativePath="PropertiesWidget.cpp"
-				>
-			</File>
+				RelativePath="QStreamTreeModel.cpp" />
 			<File
-				RelativePath="QInterestAreaTreeModel.cpp"
-				>
-			</File>
+				RelativePath="StreamControler.cpp" />
 			<File
-				RelativePath="QStreamTreeModel.cpp"
-				>
-			</File>
+				RelativePath="StreamScene.cpp" />
 			<File
-				RelativePath="StreamControler.cpp"
-				>
-			</File>
+				RelativePath="StreamView.cpp" />
 			<File
-				RelativePath="StreamScene.cpp"
-				>
-			</File>
+				RelativePath="..\SwGui\SwGuiDefaultItemDelegate.cpp" />
 			<File
-				RelativePath="StreamView.cpp"
-				>
-			</File>
+				RelativePath="..\SwGui\SwGuiEnumComboBox.cpp" />
 			<File
-				RelativePath="..\SwGui\SwGuiDefaultItemDelegate.cpp"
-				>
-			</File>
+				RelativePath="SwSplash.cpp" />
 			<File
-				RelativePath="..\SwGui\SwGuiEnumComboBox.cpp"
-				>
-			</File>
+				RelativePath="VerticalMultiAnchorableContainer.cpp" />
 			<File
-				RelativePath="SwSplash.cpp"
-				>
-			</File>
+				RelativePath="ViewNavigator.cpp" />
 			<File
-				RelativePath="VerticalMultiAnchorableContainer.cpp"
-				>
-			</File>
+				RelativePath="WidgetFactory.cpp" />
 			<File
-				RelativePath="ViewNavigator.cpp"
-				>
-			</File>
+				RelativePath="..\SwGui\_QRcViewer.cpp" />
 			<File
-				RelativePath="WidgetFactory.cpp"
-				>
-			</File>
+				RelativePath="..\SwGui\_SwGuiPluginsFrontEnd.cpp" />
+			<File
+				RelativePath="main.cpp" />
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath="..\SwGui\_QRcViewer.h"
-				>
+				RelativePath="AnchorableContainer.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC ..\SwGui\_QRcViewer.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_QRcViewer.h -o _intermediaire\moc__QRcViewer.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="..\SwGui\_QRcViewer.h;C:\Qt\4.7.1\bin\moc.exe"
-						Outputs="_intermediaire\moc__QRcViewer.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="MOC ..\SwGui\_QRcViewer.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_QRcViewer.h -o _intermediaire\moc__QRcViewer.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="..\SwGui\_QRcViewer.h;C:\Qt\4.7.1\bin\moc.exe"
-						Outputs="_intermediaire\moc__QRcViewer.cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\SwGui\_SwGuiPluginsFrontEnd.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="MOC ..\SwGui\_SwGuiPluginsFrontEnd.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_SwGuiPluginsFrontEnd.h -o _intermediaire\moc__SwGuiPluginsFrontEnd.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="..\SwGui\_SwGuiPluginsFrontEnd.h;C:\Qt\4.7.1\bin\moc.exe"
-						Outputs="_intermediaire\moc__SwGuiPluginsFrontEnd.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="MOC ..\SwGui\_SwGuiPluginsFrontEnd.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_SwGuiPluginsFrontEnd.h -o _intermediaire\moc__SwGuiPluginsFrontEnd.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="..\SwGui\_SwGuiPluginsFrontEnd.h;C:\Qt\4.7.1\bin\moc.exe"
-						Outputs="_intermediaire\moc__SwGuiPluginsFrontEnd.cpp"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="AnchorableContainer.h"
-				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="MOC AnchorableContainer.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 AnchorableContainer.h -o _intermediaire\moc_AnchorableContainer.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="AnchorableContainer.h;C:\Qt\4.7.1\bin\moc.exe"
-						Outputs="_intermediaire\moc_AnchorableContainer.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 AnchorableContainer.h -o _intermediaire\moc_AnchorableContainer.cpp"
 						Description="MOC AnchorableContainer.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 AnchorableContainer.h -o _intermediaire\moc_AnchorableContainer.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="AnchorableContainer.h;C:\Qt\4.7.1\bin\moc.exe"
 						Outputs="_intermediaire\moc_AnchorableContainer.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="AnchorableContainer.h;C:\Qt\4.7.1\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 AnchorableContainer.h -o _intermediaire\moc_AnchorableContainer.cpp"
+						Description="MOC AnchorableContainer.h"
+						Outputs="_intermediaire\moc_AnchorableContainer.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="Arranger.h"
-				>
-			</File>
+				RelativePath="Arranger.h" />
 			<File
-				RelativePath="ComponentGraphicItem.h"
-				>
-			</File>
+				RelativePath="ComponentGraphicItem.h" />
 			<File
-				RelativePath="ComponentListModel.h"
-				>
+				RelativePath="ComponentListModel.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC ComponentListModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ComponentListModel.h -o _intermediaire\moc_ComponentListModel.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;ComponentListModel.h"
-						Outputs="_intermediaire\moc_ComponentListModel.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ComponentListModel.h -o _intermediaire\moc_ComponentListModel.cpp"
 						Description="MOC ComponentListModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ComponentListModel.h -o _intermediaire\moc_ComponentListModel.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;ComponentListModel.h"
 						Outputs="_intermediaire\moc_ComponentListModel.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;ComponentListModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ComponentListModel.h -o _intermediaire\moc_ComponentListModel.cpp"
+						Description="MOC ComponentListModel.h"
+						Outputs="_intermediaire\moc_ComponentListModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="ConnectorGraphicItem.h"
-				>
-			</File>
+				RelativePath="ConnectorGraphicItem.h" />
 			<File
-				RelativePath="EditionService.h"
-				>
-			</File>
+				RelativePath="EditionService.h" />
 			<File
-				RelativePath="EditorPropertiesItemDelegate.h"
-				>
+				RelativePath="EditorPropertiesItemDelegate.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC EditorPropertiesItemDelegate.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 EditorPropertiesItemDelegate.h -o _intermediaire\moc_EditorPropertiesItemDelegate.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;EditorPropertiesItemDelegate.h"
-						Outputs="_intermediaire\moc_EditorPropertiesItemDelegate.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 EditorPropertiesItemDelegate.h -o _intermediaire\moc_EditorPropertiesItemDelegate.cpp"
 						Description="MOC EditorPropertiesItemDelegate.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 EditorPropertiesItemDelegate.h -o _intermediaire\moc_EditorPropertiesItemDelegate.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;EditorPropertiesItemDelegate.h"
 						Outputs="_intermediaire\moc_EditorPropertiesItemDelegate.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;EditorPropertiesItemDelegate.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 EditorPropertiesItemDelegate.h -o _intermediaire\moc_EditorPropertiesItemDelegate.cpp"
+						Description="MOC EditorPropertiesItemDelegate.h"
+						Outputs="_intermediaire\moc_EditorPropertiesItemDelegate.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="GraphicsLoaderV1.h"
-				>
-			</File>
+				RelativePath="GraphicsLoaderV1.h" />
 			<File
-				RelativePath="GraphicsResources.h"
-				>
-			</File>
+				RelativePath="GraphicsResources.h" />
 			<File
-				RelativePath="IAnchorable.h"
-				>
-			</File>
+				RelativePath="IAnchorable.h" />
 			<File
-				RelativePath="IAnchorableObserver.h"
-				>
-			</File>
+				RelativePath="IAnchorableObserver.h" />
 			<File
-				RelativePath="InterestArea.h"
-				>
-			</File>
+				RelativePath="ISelectionObserver.h" />
 			<File
-				RelativePath="ISelectionObserver.h"
-				>
-			</File>
+				RelativePath="IStreamControlerObserver.h" />
 			<File
-				RelativePath="IStreamControlerObserver.h"
-				>
-			</File>
+				RelativePath="IStreamViewObserver.h" />
 			<File
-				RelativePath="IStreamViewObserver.h"
-				>
-			</File>
+				RelativePath="InterestArea.h" />
 			<File
-				RelativePath="LinkGraphicItem.h"
-				>
-			</File>
+				RelativePath="LinkGraphicItem.h" />
 			<File
-				RelativePath="LogView.h"
-				>
+				RelativePath="LogView.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC LogView.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 LogView.h -o _intermediaire\moc_LogView.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;LogView.h"
-						Outputs="_intermediaire\moc_LogView.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 LogView.h -o _intermediaire\moc_LogView.cpp"
 						Description="MOC LogView.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 LogView.h -o _intermediaire\moc_LogView.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;LogView.h"
 						Outputs="_intermediaire\moc_LogView.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;LogView.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 LogView.h -o _intermediaire\moc_LogView.cpp"
+						Description="MOC LogView.h"
+						Outputs="_intermediaire\moc_LogView.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="MainWindow.h"
-				>
+				RelativePath="MainWindow.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC MainWindow.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 MainWindow.h -o _intermediaire\moc_MainWindow.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;MainWindow.h"
-						Outputs="_intermediaire\moc_MainWindow.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 MainWindow.h -o _intermediaire\moc_MainWindow.cpp"
 						Description="MOC MainWindow.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 MainWindow.h -o _intermediaire\moc_MainWindow.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;MainWindow.h"
 						Outputs="_intermediaire\moc_MainWindow.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;MainWindow.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 MainWindow.h -o _intermediaire\moc_MainWindow.cpp"
+						Description="MOC MainWindow.h"
+						Outputs="_intermediaire\moc_MainWindow.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="ManageLinkColor.h"
-				>
-			</File>
+				RelativePath="ManageLinkColor.h" />
 			<File
-				RelativePath="MenuManager.h"
-				>
+				RelativePath="MenuManager.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC MenuManager.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 MenuManager.h -o _intermediaire\moc_MenuManager.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;MenuManager.h"
-						Outputs="_intermediaire\moc_MenuManager.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 MenuManager.h -o _intermediaire\moc_MenuManager.cpp"
 						Description="MOC MenuManager.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 MenuManager.h -o _intermediaire\moc_MenuManager.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;MenuManager.h"
 						Outputs="_intermediaire\moc_MenuManager.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;MenuManager.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 MenuManager.h -o _intermediaire\moc_MenuManager.cpp"
+						Description="MOC MenuManager.h"
+						Outputs="_intermediaire\moc_MenuManager.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="PluginsListModel.h"
-				>
+				RelativePath="PluginOverview.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC PluginsListModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PluginsListModel.h -o _intermediaire\moc_PluginsListModel.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;PluginOverview.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PluginOverview.h -o _intermediaire\moc_PluginOverview.cpp"
+						Description="MOC PluginOverview.h"
+						Outputs="_intermediaire\moc_PluginOverview.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;PluginOverview.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PluginOverview.h -o _intermediaire\moc_PluginOverview.cpp"
+						Description="MOC PluginOverview.h"
+						Outputs="_intermediaire\moc_PluginOverview.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="PluginsListModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;PluginsListModel.h"
-						Outputs="_intermediaire\moc_PluginsListModel.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PluginsListModel.h -o _intermediaire\moc_PluginsListModel.cpp"
 						Description="MOC PluginsListModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PluginsListModel.h -o _intermediaire\moc_PluginsListModel.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;PluginsListModel.h"
 						Outputs="_intermediaire\moc_PluginsListModel.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;PluginsListModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PluginsListModel.h -o _intermediaire\moc_PluginsListModel.cpp"
+						Description="MOC PluginsListModel.h"
+						Outputs="_intermediaire\moc_PluginsListModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="PropertiesWidget.h"
-				>
+				RelativePath="PropertiesWidget.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC PropertiesWidget.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PropertiesWidget.h -o _intermediaire\moc_PropertiesWidget.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;PropertiesWidget.h"
-						Outputs="_intermediaire\moc_PropertiesWidget.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PropertiesWidget.h -o _intermediaire\moc_PropertiesWidget.cpp"
 						Description="MOC PropertiesWidget.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PropertiesWidget.h -o _intermediaire\moc_PropertiesWidget.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;PropertiesWidget.h"
 						Outputs="_intermediaire\moc_PropertiesWidget.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;PropertiesWidget.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 PropertiesWidget.h -o _intermediaire\moc_PropertiesWidget.cpp"
+						Description="MOC PropertiesWidget.h"
+						Outputs="_intermediaire\moc_PropertiesWidget.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="QInterestAreaTreeModel.h"
-				>
+				RelativePath="QInterestAreaTreeModel.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC QInterestAreaTreeModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 QInterestAreaTreeModel.h -o _intermediaire\moc_QInterestAreaTreeModel.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;QInterestAreaTreeModel.h"
-						Outputs="_intermediaire\moc_QInterestAreaTreeModel.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 QInterestAreaTreeModel.h -o _intermediaire\moc_QInterestAreaTreeModel.cpp"
 						Description="MOC QInterestAreaTreeModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 QInterestAreaTreeModel.h -o _intermediaire\moc_QInterestAreaTreeModel.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;QInterestAreaTreeModel.h"
 						Outputs="_intermediaire\moc_QInterestAreaTreeModel.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;QInterestAreaTreeModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 QInterestAreaTreeModel.h -o _intermediaire\moc_QInterestAreaTreeModel.cpp"
+						Description="MOC QInterestAreaTreeModel.h"
+						Outputs="_intermediaire\moc_QInterestAreaTreeModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="QStreamTreeModel.h"
-				>
+				RelativePath="QStreamTreeModel.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC QStreamTreeModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 QStreamTreeModel.h -o _intermediaire\moc_QStreamTreeModel.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;QStreamTreeModel.h"
-						Outputs="_intermediaire\moc_QStreamTreeModel.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 QStreamTreeModel.h -o _intermediaire\moc_QStreamTreeModel.cpp"
 						Description="MOC QStreamTreeModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 QStreamTreeModel.h -o _intermediaire\moc_QStreamTreeModel.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;QStreamTreeModel.h"
 						Outputs="_intermediaire\moc_QStreamTreeModel.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;QStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 QStreamTreeModel.h -o _intermediaire\moc_QStreamTreeModel.cpp"
+						Description="MOC QStreamTreeModel.h"
+						Outputs="_intermediaire\moc_QStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="StreamControler.h"
-				>
+				RelativePath="StreamControler.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC StreamControler.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamControler.h -o _intermediaire\moc_StreamControler.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;StreamControler.h"
-						Outputs="_intermediaire\moc_StreamControler.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamControler.h -o _intermediaire\moc_StreamControler.cpp"
 						Description="MOC StreamControler.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamControler.h -o _intermediaire\moc_StreamControler.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;StreamControler.h"
 						Outputs="_intermediaire\moc_StreamControler.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;StreamControler.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamControler.h -o _intermediaire\moc_StreamControler.cpp"
+						Description="MOC StreamControler.h"
+						Outputs="_intermediaire\moc_StreamControler.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="StreamScene.h"
-				>
+				RelativePath="StreamScene.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC StreamScene.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamScene.h -o _intermediaire\moc_StreamScene.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;StreamScene.h"
-						Outputs="_intermediaire\moc_StreamScene.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamScene.h -o _intermediaire\moc_StreamScene.cpp"
 						Description="MOC StreamScene.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamScene.h -o _intermediaire\moc_StreamScene.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;StreamScene.h"
 						Outputs="_intermediaire\moc_StreamScene.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;StreamScene.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamScene.h -o _intermediaire\moc_StreamScene.cpp"
+						Description="MOC StreamScene.h"
+						Outputs="_intermediaire\moc_StreamScene.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="StreamView.h"
-				>
+				RelativePath="StreamView.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC StreamView.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamView.h -o _intermediaire\moc_StreamView.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;StreamView.h"
-						Outputs="_intermediaire\moc_StreamView.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamView.h -o _intermediaire\moc_StreamView.cpp"
 						Description="MOC StreamView.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamView.h -o _intermediaire\moc_StreamView.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;StreamView.h"
 						Outputs="_intermediaire\moc_StreamView.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;StreamView.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 StreamView.h -o _intermediaire\moc_StreamView.cpp"
+						Description="MOC StreamView.h"
+						Outputs="_intermediaire\moc_StreamView.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\SwGui\SwGuiDefaultItemDelegate.h"
-				>
+				RelativePath="..\SwGui\SwGuiDefaultItemDelegate.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC ..\SwGui\SwGuiDefaultItemDelegate.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiDefaultItemDelegate.h -o _intermediaire\moc_SwGuiDefaultItemDelegate.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="..\SwGui\SwGuiDefaultItemDelegate.h;C:\Qt\4.7.1\bin\moc.exe"
-						Outputs="_intermediaire\moc_SwGuiDefaultItemDelegate.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiDefaultItemDelegate.h -o _intermediaire\moc_SwGuiDefaultItemDelegate.cpp"
 						Description="MOC ..\SwGui\SwGuiDefaultItemDelegate.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiDefaultItemDelegate.h -o _intermediaire\moc_SwGuiDefaultItemDelegate.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="..\SwGui\SwGuiDefaultItemDelegate.h;C:\Qt\4.7.1\bin\moc.exe"
 						Outputs="_intermediaire\moc_SwGuiDefaultItemDelegate.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\SwGui\SwGuiDefaultItemDelegate.h;C:\Qt\4.7.1\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiDefaultItemDelegate.h -o _intermediaire\moc_SwGuiDefaultItemDelegate.cpp"
+						Description="MOC ..\SwGui\SwGuiDefaultItemDelegate.h"
+						Outputs="_intermediaire\moc_SwGuiDefaultItemDelegate.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\SwGui\SwGuiEnumComboBox.h"
-				>
+				RelativePath="..\SwGui\SwGuiEnumComboBox.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC ..\SwGui\SwGuiEnumComboBox.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiEnumComboBox.h -o _intermediaire\moc_SwGuiEnumComboBox.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="..\SwGui\SwGuiEnumComboBox.h;C:\Qt\4.7.1\bin\moc.exe"
-						Outputs="_intermediaire\moc_SwGuiEnumComboBox.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiEnumComboBox.h -o _intermediaire\moc_SwGuiEnumComboBox.cpp"
 						Description="MOC ..\SwGui\SwGuiEnumComboBox.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiEnumComboBox.h -o _intermediaire\moc_SwGuiEnumComboBox.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="..\SwGui\SwGuiEnumComboBox.h;C:\Qt\4.7.1\bin\moc.exe"
 						Outputs="_intermediaire\moc_SwGuiEnumComboBox.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\SwGui\SwGuiEnumComboBox.h;C:\Qt\4.7.1\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiEnumComboBox.h -o _intermediaire\moc_SwGuiEnumComboBox.cpp"
+						Description="MOC ..\SwGui\SwGuiEnumComboBox.h"
+						Outputs="_intermediaire\moc_SwGuiEnumComboBox.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="SwSplash.h"
-				>
+				RelativePath="SwSplash.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC SwSplash.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwSplash.h -o _intermediaire\moc_SwSplash.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwSplash.h"
-						Outputs="_intermediaire\moc_SwSplash.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwSplash.h -o _intermediaire\moc_SwSplash.cpp"
 						Description="MOC SwSplash.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwSplash.h -o _intermediaire\moc_SwSplash.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwSplash.h"
 						Outputs="_intermediaire\moc_SwSplash.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwSplash.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwSplash.h -o _intermediaire\moc_SwSplash.cpp"
+						Description="MOC SwSplash.h"
+						Outputs="_intermediaire\moc_SwSplash.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="VerticalMultiAnchorableContainer.h"
-				>
+				RelativePath="VerticalMultiAnchorableContainer.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC VerticalMultiAnchorableContainer.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 VerticalMultiAnchorableContainer.h -o _intermediaire\moc_VerticalMultiAnchorableContainer.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;VerticalMultiAnchorableContainer.h"
-						Outputs="_intermediaire\moc_VerticalMultiAnchorableContainer.cpp"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 VerticalMultiAnchorableContainer.h -o _intermediaire\moc_VerticalMultiAnchorableContainer.cpp"
 						Description="MOC VerticalMultiAnchorableContainer.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 VerticalMultiAnchorableContainer.h -o _intermediaire\moc_VerticalMultiAnchorableContainer.cpp&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;VerticalMultiAnchorableContainer.h"
 						Outputs="_intermediaire\moc_VerticalMultiAnchorableContainer.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;VerticalMultiAnchorableContainer.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 VerticalMultiAnchorableContainer.h -o _intermediaire\moc_VerticalMultiAnchorableContainer.cpp"
+						Description="MOC VerticalMultiAnchorableContainer.h"
+						Outputs="_intermediaire\moc_VerticalMultiAnchorableContainer.cpp"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="ViewNavigator.h"
-				>
+				RelativePath="ViewNavigator.h">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC ViewNavigator.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ViewNavigator.h -o _intermediaire\moc_ViewNavigator.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;ViewNavigator.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ViewNavigator.h -o _intermediaire\moc_ViewNavigator.cpp"
+						Description="MOC ViewNavigator.h"
 						Outputs="_intermediaire\moc_ViewNavigator.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="MOC ViewNavigator.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ViewNavigator.h -o _intermediaire\moc_ViewNavigator.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;ViewNavigator.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ViewNavigator.h -o _intermediaire\moc_ViewNavigator.cpp"
+						Description="MOC ViewNavigator.h"
 						Outputs="_intermediaire\moc_ViewNavigator.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="WidgetFactory.h"
-				>
+				RelativePath="WidgetFactory.h" />
+			<File
+				RelativePath="..\SwGui\_QRcViewer.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\SwGui\_QRcViewer.h;C:\Qt\4.7.1\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_QRcViewer.h -o _intermediaire\moc__QRcViewer.cpp"
+						Description="MOC ..\SwGui\_QRcViewer.h"
+						Outputs="_intermediaire\moc__QRcViewer.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\SwGui\_QRcViewer.h;C:\Qt\4.7.1\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_QRcViewer.h -o _intermediaire\moc__QRcViewer.cpp"
+						Description="MOC ..\SwGui\_QRcViewer.h"
+						Outputs="_intermediaire\moc__QRcViewer.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\SwGui\_SwGuiPluginsFrontEnd.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\SwGui\_SwGuiPluginsFrontEnd.h;C:\Qt\4.7.1\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_SwGuiPluginsFrontEnd.h -o _intermediaire\moc__SwGuiPluginsFrontEnd.cpp"
+						Description="MOC ..\SwGui\_SwGuiPluginsFrontEnd.h"
+						Outputs="_intermediaire\moc__SwGuiPluginsFrontEnd.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\SwGui\_SwGuiPluginsFrontEnd.h;C:\Qt\4.7.1\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\WizardIDE&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_SwGuiPluginsFrontEnd.h -o _intermediaire\moc__SwGuiPluginsFrontEnd.cpp"
+						Description="MOC ..\SwGui\_SwGuiPluginsFrontEnd.h"
+						Outputs="_intermediaire\moc__SwGuiPluginsFrontEnd.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
-			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
-			>
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
 			<File
-				RelativePath="_intermediaire\moc__QRcViewer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc__SwGuiPluginsFrontEnd.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_AnchorableContainer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_ComponentListModel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_EditorPropertiesItemDelegate.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_LogView.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_MainWindow.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_MenuManager.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_PluginsListModel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_PropertiesWidget.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_QInterestAreaTreeModel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_QStreamTreeModel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_StreamControler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_StreamScene.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_StreamView.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_SwGuiDefaultItemDelegate.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_SwGuiEnumComboBox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_SwSplash.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_VerticalMultiAnchorableContainer.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\moc_ViewNavigator.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_intermediaire\qrc_StreamWorkEditor2.cpp"
-				>
-			</File>
-			<File
-				RelativePath="_obj\StreamWorkEditor2.res"
-				>
+				RelativePath="_obj\StreamWorkEditor2.res">
 				<FileConfiguration
 					Name="Debug|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
+					ExcludedFromBuild="true" />
 			</File>
 			<File
-				RelativePath="_objd\StreamWorkEditor2.res"
-				>
+				RelativePath="_objd\StreamWorkEditor2.res">
 				<FileConfiguration
 					Name="Release|Win32"
-					ExcludedFromBuild="true"
-					>
-					<Tool
-						Name="VCCustomBuildTool"
-					/>
-				</FileConfiguration>
+					ExcludedFromBuild="true" />
 			</File>
 			<File
-				RelativePath="_intermediaire\ui__QRcViewerUi.h"
-				>
-			</File>
+				RelativePath="_intermediaire\moc_AnchorableContainer.cpp" />
 			<File
-				RelativePath="_intermediaire\ui_LogView.h"
-				>
-			</File>
+				RelativePath="_intermediaire\moc_ComponentListModel.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_EditorPropertiesItemDelegate.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_LogView.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_MainWindow.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_MenuManager.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_PluginOverview.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_PluginsListModel.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_PropertiesWidget.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_QInterestAreaTreeModel.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_QStreamTreeModel.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_StreamControler.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_StreamScene.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_StreamView.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_SwGuiDefaultItemDelegate.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_SwGuiEnumComboBox.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_SwSplash.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_VerticalMultiAnchorableContainer.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_ViewNavigator.cpp" />
+			<File
+				RelativePath="_intermediaire\moc__QRcViewer.cpp" />
+			<File
+				RelativePath="_intermediaire\moc__SwGuiPluginsFrontEnd.cpp" />
+			<File
+				RelativePath="_intermediaire\qrc_StreamWorkEditor2.cpp" />
+			<File
+				RelativePath="_intermediaire\ui_LogView.h" />
+			<File
+				RelativePath="_intermediaire\ui_PluginOverview.h" />
+			<File
+				RelativePath="_intermediaire\ui__QRcViewerUi.h" />
 		</Filter>
 		<Filter
 			Name="Form Files"
 			Filter="ui"
 			UniqueIdentifier="{99349809-55BA-4b9d-BF79-8FDBB0286EB3}"
-			ParseFiles="false"
-			>
+			ParseFiles="false">
 			<File
-				RelativePath="..\SwGui\_QRcViewerUi.ui"
-				>
+				RelativePath="_resources\LogView.ui">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="UIC ..\SwGui\_QRcViewerUi.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe ..\SwGui\_QRcViewerUi.ui -o _intermediaire\ui__QRcViewerUi.h&#x0D;&#x0A;"
-						AdditionalDependencies="..\SwGui\_QRcViewerUi.ui;C:\Qt\4.7.1\bin\uic.exe"
-						Outputs="_intermediaire\ui__QRcViewerUi.h"
-					/>
+						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;_resources\LogView.ui"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe _resources\LogView.ui -o _intermediaire\ui_LogView.h"
+						Description="UIC _resources\LogView.ui"
+						Outputs="_intermediaire\ui_LogView.h"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="UIC ..\SwGui\_QRcViewerUi.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe ..\SwGui\_QRcViewerUi.ui -o _intermediaire\ui__QRcViewerUi.h&#x0D;&#x0A;"
-						AdditionalDependencies="..\SwGui\_QRcViewerUi.ui;C:\Qt\4.7.1\bin\uic.exe"
-						Outputs="_intermediaire\ui__QRcViewerUi.h"
-					/>
+						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;_resources\LogView.ui"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe _resources\LogView.ui -o _intermediaire\ui_LogView.h"
+						Description="UIC _resources\LogView.ui"
+						Outputs="_intermediaire\ui_LogView.h"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_resources\LogView.ui"
-				>
+				RelativePath="_resources\PluginOverview.ui">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="UIC _resources\LogView.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe _resources\LogView.ui -o _intermediaire\ui_LogView.h&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;_resources\LogView.ui"
-						Outputs="_intermediaire\ui_LogView.h"
-					/>
+						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;_resources\PluginOverview.ui"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe _resources\PluginOverview.ui -o _intermediaire\ui_PluginOverview.h"
+						Description="UIC _resources\PluginOverview.ui"
+						Outputs="_intermediaire\ui_PluginOverview.h"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="UIC _resources\LogView.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe _resources\LogView.ui -o _intermediaire\ui_LogView.h&#x0D;&#x0A;"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;_resources\LogView.ui"
-						Outputs="_intermediaire\ui_LogView.h"
-					/>
+						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;_resources\PluginOverview.ui"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe _resources\PluginOverview.ui -o _intermediaire\ui_PluginOverview.h"
+						Description="UIC _resources\PluginOverview.ui"
+						Outputs="_intermediaire\ui_PluginOverview.h"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\SwGui\_QRcViewerUi.ui">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\SwGui\_QRcViewerUi.ui;C:\Qt\4.7.1\bin\uic.exe"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe ..\SwGui\_QRcViewerUi.ui -o _intermediaire\ui__QRcViewerUi.h"
+						Description="UIC ..\SwGui\_QRcViewerUi.ui"
+						Outputs="_intermediaire\ui__QRcViewerUi.h"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\SwGui\_QRcViewerUi.ui;C:\Qt\4.7.1\bin\uic.exe"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe ..\SwGui\_QRcViewerUi.ui -o _intermediaire\ui__QRcViewerUi.h"
+						Description="UIC ..\SwGui\_QRcViewerUi.ui"
+						Outputs="_intermediaire\ui__QRcViewerUi.h"
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
 		</Filter>
@@ -1103,71 +855,49 @@
 			Name="Resource Files"
 			Filter="qrc;*"
 			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
-			ParseFiles="false"
-			>
+			ParseFiles="false">
 			<File
-				RelativePath="_resources\comp_toolbox.png"
-				>
-			</File>
-			<File
-				RelativePath="_resources\editdelete.png"
-				>
-			</File>
-			<File
-				RelativePath="_resources\mod_replay.png"
-				>
-			</File>
-			<File
-				RelativePath="_resources\mod_run.png"
-				>
-			</File>
-			<File
-				RelativePath="_resources\mod_run_disable.png"
-				>
-			</File>
-			<File
-				RelativePath="_resources\modellistview.png"
-				>
-			</File>
-			<File
-				RelativePath="_resources\reset.png"
-				>
-			</File>
-			<File
-				RelativePath="_resources\splash.png"
-				>
-			</File>
-			<File
-				RelativePath="_resources\StreamWorkEditor2.qrc"
-				>
+				RelativePath="_resources\StreamWorkEditor2.qrc">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="RCC _resources\StreamWorkEditor2.qrc"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o _intermediaire\qrc_StreamWorkEditor2.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\reset.png;_resources\splash.png"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o _intermediaire\qrc_StreamWorkEditor2.cpp"
+						Description="RCC _resources\StreamWorkEditor2.qrc"
 						Outputs="_intermediaire\qrc_StreamWorkEditor2.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						Description="RCC _resources\StreamWorkEditor2.qrc"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o _intermediaire\qrc_StreamWorkEditor2.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\reset.png;_resources\splash.png"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o _intermediaire\qrc_StreamWorkEditor2.cpp"
+						Description="RCC _resources\StreamWorkEditor2.qrc"
 						Outputs="_intermediaire\qrc_StreamWorkEditor2.cpp"
-					/>
+						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="_resources\comp_toolbox.png" />
+			<File
+				RelativePath="_resources\editdelete.png" />
+			<File
+				RelativePath="_resources\mod_replay.png" />
+			<File
+				RelativePath="_resources\mod_run.png" />
+			<File
+				RelativePath="_resources\mod_run_disable.png" />
+			<File
+				RelativePath="_resources\modellistview.png" />
+			<File
+				RelativePath="_resources\reset.png" />
+			<File
+				RelativePath="_resources\splash.png" />
 		</Filter>
 		<File
-			RelativePath="StreamWorkEditor2.rc"
-			>
-		</File>
+			RelativePath="StreamWorkEditor2.rc" />
 	</Files>
 	<Globals>
 	</Globals>

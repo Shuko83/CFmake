@@ -353,7 +353,7 @@ void StreamControler::onLinkConnectors(ConnectorGraphicItem * src,ConnectorGraph
             dynamic_cast<ISwInterfaces_Provider *>(cprovider->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
         try {
             iconsumer->AttachProvider(iprovider,src->getName(),target->getName());
-        } catch(SwException & se) {
+        } catch(SwException & /*se*/) {
             //L'application a levé une exception
              //QMessageBox::warning(0,QString("Warning... "),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
         }

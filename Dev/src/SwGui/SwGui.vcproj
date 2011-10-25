@@ -25,6 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="taskkill /f /im streamworkeditor2d.exe 2&gt;NUL | set errorlevel=0 "
 			/>
 			<Tool
 				Name="VCCustomBuildTool"

@@ -5,76 +5,15 @@
  */
 
 #include "WidgetFactory.h"
-#include "PluginsListModel.h"
-#include "ComponentListModel.h"
+
 #include "AnchorableContainer.h"
 #include <SwPropertiesModelImpl.h>
 #include <SwGuiDefaultItemDelegate.h>
+#include "PluginOverview.h"
 
 
 static WidgetFactory * _instance=0;
 
-static const char * ScrollBarVerticalStyle = " \
-    QScrollBar:vertical { \
-          border: 0px; \
-          border-color :#111111; \
-          background: #111111; \
-          width: 10px; \
-          padding: 2px 2px 2px 2px; \
-    } \
-\
-    QScrollBar::handle:vertical {\
-        color: #EEEEEE;\
-        background: #EEEEEE;\
-              min-height: 20px;\
-          }\
-      QScrollBar::add-line:vertical {\
-          border: 2px solid grey;\
-          background: solid grey;\
-          height: 20px;\
-          subcontrol-position: bottom;\
-          subcontrol-origin: margin;\
-      }\
-\
-      QScrollBar::sub-line:vertical {\
-          border: 2px solid grey;\
-          background: solid grey;\
-          height: 20px;\
-          subcontrol-position: top;\
-          subcontrol-origin: margin;\
-      }\
-";
-
-static const char * ScrollBarHorizontalStyle = " \
-    QScrollBar:horizontal { \
-          border: 0px; \
-          border-color :#111111; \
-          background: #111111; \
-          width: 10px; \
-          padding: 2px 2px 2px 2px; \
-    } \
-\
-    QScrollBar::handle:horizontal {\
-        color: #EEEEEE;\
-        background: #EEEEEE;\
-              min-height: 20px;\
-          }\
-      QScrollBar::add-line:horizontal {\
-          border: 2px solid grey;\
-          background: solid grey;\
-          height: 20px;\
-          subcontrol-position: right;\
-          subcontrol-origin: margin;\
-      }\
-\
-      QScrollBar::sub-line:horizontal {\
-          border: 2px solid grey;\
-          background: solid grey;\
-          height: 20px;\
-          subcontrol-position: left;\
-          subcontrol-origin: margin;\
-      }\
-";
 
 /** @brief Constructor */
 WidgetFactory::WidgetFactory() {
@@ -86,6 +25,8 @@ WidgetFactory::WidgetFactory() {
 	_graphPalette.setColor(QPalette::Text,QColor(255,255,255,255));
 	_graphPalette.setColor(QPalette::BrightText,QColor(128,128,128,255));
 	_graphPalette.setColor(QPalette::ButtonText,QColor(255,255,255,255));
+
+	_doc = new EditDoc();
 }
 /** @brief ~Destructor */
 WidgetFactory::~WidgetFactory() {
@@ -99,41 +40,71 @@ WidgetFactory * WidgetFactory::getInstance() {
     return _instance;
 }
 
+
+QWidget * WidgetFactory::buildDocBlankView()
+{
+	return _doc;
+}
+
+
 /** @brief Construction widget representant les composants disponibles*/
 QWidget * WidgetFactory::buildPluginsBankView(bool isGraphViewHosted) {
     
-    QWidget * w=new QWidget();
-    QListView * lviewPlugins=new QListView(w);
-    lviewPlugins->setModel(new PluginsListModel(lviewPlugins));
-    //lviewPlugins->setFixedWidth(150);
-    lviewPlugins->setFrameShape(QFrame::NoFrame);
-    if (isGraphViewHosted) {
-        lviewPlugins->verticalScrollBar()->setStyleSheet(ScrollBarVerticalStyle);
-        lviewPlugins->horizontalScrollBar()->setStyleSheet(ScrollBarHorizontalStyle);
-    }
-    QListView * lviewComponents=new QListView(w);
-    ComponentListModel * componentModel=new ComponentListModel(lviewComponents);
-	lviewPlugins->connect(lviewPlugins,SIGNAL(  clicked ( const QModelIndex &)),componentModel,SLOT(onSelectedPluginChanged(const QModelIndex&)));
-	lviewPlugins->connect(lviewPlugins->selectionModel(),SIGNAL( currentChanged(const QModelIndex &, const QModelIndex &)),componentModel,SLOT(onSelectedPluginChanged(const QModelIndex&)));
-    lviewComponents->setModel(componentModel);
-    //lviewComponents->setFixedWidth(200);
-    lviewComponents->setFrameShape(QFrame::NoFrame);
-    lviewComponents->setDragEnabled(true); 
-    if (isGraphViewHosted) {
-        lviewComponents->verticalScrollBar()->setStyleSheet(ScrollBarVerticalStyle);
-        lviewComponents->horizontalScrollBar()->setStyleSheet(ScrollBarHorizontalStyle);
-    }
-    QHBoxLayout * layout=new QHBoxLayout(w);
-    layout->addWidget(lviewComponents);
-    layout->addWidget(lviewPlugins);
-    layout->setMargin(0);
-    layout->setSpacing(2);
+	PluginOverview * w = new PluginOverview(_doc,isGraphViewHosted,_graphPalette);
+    //QWidget * w=new QWidget();
+//     QListView * lviewPlugins=new QListView(w);
+//     lviewPlugins->setModel(new PluginsListModel(lviewPlugins));
+//     //lviewPlugins->setFixedWidth(150);
+//     lviewPlugins->setFrameShape(QFrame::NoFrame);
+//     if (isGraphViewHosted) {
+//         lviewPlugins->verticalScrollBar()->setStyleSheet(ScrollBarVerticalStyle);
+//         lviewPlugins->horizontalScrollBar()->setStyleSheet(ScrollBarHorizontalStyle);
+//     }
+//     QListView * lviewComponents=new QListView(w);
+//     ComponentListModel * componentModel=new ComponentListModel(lviewComponents);
+// 	lviewPlugins->connect(lviewPlugins,SIGNAL(  clicked ( const QModelIndex &)),componentModel,SLOT(onSelectedPluginChanged(const QModelIndex&)));
+// 	lviewPlugins->connect(lviewPlugins->selectionModel(),SIGNAL( currentChanged(const QModelIndex &, const QModelIndex &)),componentModel,SLOT(onSelectedPluginChanged(const QModelIndex&)));
+//     lviewComponents->setModel(componentModel);
+//     //lviewComponents->setFixedWidth(200);
+//     lviewComponents->setFrameShape(QFrame::NoFrame);
+//     lviewComponents->setDragEnabled(true); 
+//     if (isGraphViewHosted) {
+//         lviewComponents->verticalScrollBar()->setStyleSheet(ScrollBarVerticalStyle);
+//         lviewComponents->horizontalScrollBar()->setStyleSheet(ScrollBarHorizontalStyle);
+//     }
+// 
+// 	lviewComponents->connect(lviewComponents->selectionModel(),SIGNAL( currentChanged(const QModelIndex &, const QModelIndex &)),_doc,SLOT(onSelectedComponentChanged(const QModelIndex&)));
+// 	lviewComponents->connect(lviewComponents,SIGNAL(  clicked ( const QModelIndex &)),_doc,SLOT(onSelectedComponentChanged(const QModelIndex&)));
+// 
+// 	//ADD ACTION TO Edit the component documentation
+//  	/*lviewComponents->setContextMenuPolicy(Qt::CustomContextMenu );
+//  	QAction *toot = new QAction("ici",lviewComponents);
+// 	lviewComponents->addAction(toot);*/
+// 	
+// 
+// 		
+// 	QGridLayout * layout=new QGridLayout(w);
+// 	
+// 	QVBoxLayout * searchLayout = new QVBoxLayout();
+// 
+// 	QLineEdit * searchLineEdit = new QLineEdit();
+// 	searchLayout->addWidget(searchLineEdit);
+// 	QPushButton * search = new QPushButton("val");
+// 	searchLayout->addWidget(search);
+// 
+// 
+// 
+// 	layout->addLayout(searchLayout,0,0);
+// 	layout->addWidget(lviewComponents);
+//     layout->addWidget(lviewPlugins);
+//     layout->setMargin(0);
+//     layout->setSpacing(2);
 
     //AnchorableContainer * ac=new AnchorableContainer(0,TOP_RIGHT,QIcon(":/StreamWorkEditor2/comp_toolbox.png"),"Components");
     //ac->setCentralWidget(w,true,false);
     //setGraphViewMode(ac);
     //return ac;
-    setGraphViewMode(w);
+    //setGraphViewMode(w);
     return w;
 }
 /** @brief Construction widget vue en arbre*/
