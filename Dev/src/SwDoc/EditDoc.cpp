@@ -476,6 +476,8 @@ QList<TComponent*> EditDoc::findComponentFromKeyword( QStringList keywordList )
 	//on cherche les id des composants qui ont le keyword
 	QDjangoQuerySet<TKeyComp> query;
 	QDjangoQuerySet<TKeyComp> filteredQuery;
+
+	//Map key : componentId, QList<keyword_id>
 	QMap<int, QList<int>> mapC;
 	foreach(int idkeyword, idKeywordList)
 	{
@@ -506,7 +508,7 @@ QList<TComponent*> EditDoc::findComponentFromKeyword( QStringList keywordList )
 			{
 				if(mapC.contains(comp->pk().toInt()))
 				{
-					mapC[comp->pk().toInt()].append(-5);
+					mapC[comp->pk().toInt()].append(-5); // -5 arbitraire pour dire je match avec le component name
 				}
 				else
 				{
@@ -517,7 +519,6 @@ QList<TComponent*> EditDoc::findComponentFromKeyword( QStringList keywordList )
 			}
 		}
 	}
-	
 
 	//On vérifie que tout les composants sont dans toute les listes
 	QMap<int, QList<int>>::iterator it = mapC.begin();
@@ -526,7 +527,7 @@ QList<TComponent*> EditDoc::findComponentFromKeyword( QStringList keywordList )
 	QList<TComponent*> returnList;
 	for(it ; it != itend; )
 	{
-		if(keywordList.count() > it.value().count()  )
+		if(keywordList.count() != it->count()  )
 			it = mapC.erase(it);
 		else
 			it++;
