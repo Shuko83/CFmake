@@ -23,6 +23,8 @@
 #include "TKeyComp.h"
 #include "TKeyword.h"
 #include "TComponent.h"
+#include "TColor.h"
+#include "SwDocConstantes.h"
 
 /**
  * this class :
@@ -33,7 +35,7 @@
  * @version 1.0
  */
 
-class ManageSQL : public QObject
+class BUILD_SWDOC ManageSQL : public QObject
 {
 	Q_OBJECT
 

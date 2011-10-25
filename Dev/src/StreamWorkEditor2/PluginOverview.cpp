@@ -16,6 +16,7 @@ PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette grap
     ui.lviewPlugins->setModel(new PluginsListModel(ui.lviewPlugins));
     //ui.lviewPlugins->setFixedWidth(150);
     ui.lviewPlugins->setFrameShape(QFrame::Box);
+	ui.lviewPlugins->viewport()->setToolTip("blabla");
     if (isGraphViewHosted) 
 	{
         ui.lviewPlugins->verticalScrollBar()->setStyleSheet(ScrollBarVerticalStyle);

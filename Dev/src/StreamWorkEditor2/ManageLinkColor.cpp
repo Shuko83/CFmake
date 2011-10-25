@@ -1,4 +1,5 @@
 #include "ManageLinkColor.h"
+#include "..\swdoc\ManageColor.h"
 
 ManageLinkColor * ManageLinkColor::_instance = NULL;
 
@@ -26,8 +27,9 @@ ManageLinkColor * ManageLinkColor::getInstance()
 void ManageLinkColor::loadColor()
 {
 	//LoadColor
+	if(ManageColor::getInstance())
+		_mapColor = ManageColor::getInstance()->getColor();
 
-	//To do SQlite
 }
 
 //-------------------------------------------------------------------------
@@ -35,20 +37,28 @@ QColor ManageLinkColor::getColorForInterface( QString interfaceName )
 {
 	QString hexColor = "#FF9900";
 
-	if( interfaceName.contains("ISwWidget") )
-		hexColor = "#9E6DFF";
-	else
-		if(interfaceName.contains( "ISxModel") )
-			hexColor = "#40e1e7";
+	if(_mapColor.isEmpty())
+	{
+		if( interfaceName.contains("ISwWidget") )
+			hexColor = "#9E6DFF";
 		else
-			if(interfaceName.contains( "ISwAction") )
-				hexColor = "#aae740";
+			if(interfaceName.contains( "ISxModel") )
+				hexColor = "#40e1e7";
 			else
-				if(interfaceName.contains("ISwToolBar") )
-					hexColor = "#e7408b";
+				if(interfaceName.contains( "ISwAction") )
+					hexColor = "#aae740";
 				else
-					if(interfaceName.contains("ISwDockWidget") )
-						hexColor = "#fdff55";
+					if(interfaceName.contains("ISwToolBar") )
+						hexColor = "#e7408b";
+					else
+						if(interfaceName.contains("ISwDockWidget") )
+							hexColor = "#fdff55";
 
-	return QColor(hexColor);
+		return QColor(hexColor);
+	}
+	else
+	{
+		return _mapColor.value(interfaceName,hexColor);
+	}
+
 }

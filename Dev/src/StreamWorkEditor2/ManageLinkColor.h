@@ -26,7 +26,7 @@ private :
 	void loadColor();
 
 	static ManageLinkColor * _instance;
-	QMap<QString,QColor> _mapColor;
+	QMap<QString,QString> _mapColor;
 
 };
 

@@ -354,13 +354,13 @@ void EditDoc::clearIhm()
 	ui.LE_addKeyword->setText("");
 	ui.L_pixmap->setPixmap(QPixmap());
 	_map.clear();
+
 	_component = NULL;
 }
 
 //-------------------------------------------------------------------------
 void EditDoc::buildIhm( QString componentName,QString pluginName,QString desc,QIcon icon )
 {
-	setEnabled(true);
 	pluginName = pluginName.mid(0,pluginName.lastIndexOf("."))+"::";
 
 	ui.PB_apply->setEnabled(false);
@@ -369,6 +369,9 @@ void EditDoc::buildIhm( QString componentName,QString pluginName,QString desc,QI
 	ui.L_componentName->setText(componentName);
 	ui.L_pluginName->setText(pluginName);
 	ui.TE_desc->setText(desc);
+
+	if(!ManageSQL::getInstance()->isOpen())
+		return;
 
 	// On check si le composant est en bdd 
 	// si oui on update les infos.

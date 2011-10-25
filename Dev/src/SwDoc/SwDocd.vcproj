@@ -130,6 +130,8 @@
 			<File
 				RelativePath="EditDoc.cpp" />
 			<File
+				RelativePath="ManageColor.cpp" />
+			<File
 				RelativePath="ManageSQL.cpp" />
 			<File
 				RelativePath="MultiTagCompleter.cpp" />
@@ -165,6 +167,8 @@
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="ManageColor.h" />
 			<File
 				RelativePath="ManageSQL.h">
 				<FileConfiguration
@@ -236,6 +240,29 @@
 			</File>
 			<File
 				RelativePath="SwDocConstantes.h" />
+			<File
+				RelativePath="TColor.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;TColor.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWDOC_LIB -DQT_DLL -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtSql&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\..\QDjango\Stable\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 TColor.h -o _intermediaire\moc_TColor.cpp"
+						Description="MOC TColor.h"
+						Outputs="_intermediaire\moc_TColor.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;TColor.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWDOC_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_SQL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtSql&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\..\QDjango\Stable\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 TColor.h -o _intermediaire\moc_TColor.cpp"
+						Description="MOC TColor.h"
+						Outputs="_intermediaire\moc_TColor.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath="TComponent.h">
 				<FileConfiguration
@@ -366,6 +393,8 @@
 				RelativePath="_intermediaire\moc_MultiTagCompleter.cpp" />
 			<File
 				RelativePath="_intermediaire\moc_RicheEdit.cpp" />
+			<File
+				RelativePath="_intermediaire\moc_TColor.cpp" />
 			<File
 				RelativePath="_intermediaire\moc_TComponent.cpp" />
 			<File
