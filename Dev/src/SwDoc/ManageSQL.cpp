@@ -8,6 +8,8 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlRecord>
+#include <QtConcurrentRun>
+#include "DatabaseManager.h"
 
 
 
@@ -17,22 +19,9 @@ ManageSQL *ManageSQL::m_singleton = NULL;
 //-------------------------------------------------------------------
 ManageSQL::ManageSQL( void )
 {
-	m_db = QSqlDatabase::addDatabase("QMYSQL");
-// 	m_db.setHostName("localhost");
-// 	m_db.setDatabaseName("streamworkdoc");
-// 	m_db.setUserName("root");
-// 	m_db.setPassword("");
+	_isOpen = false;
 
-	m_db.setHostName("tt3.aix.diginext.fr");
-	m_db.setDatabaseName("streamworkdoc");
-	m_db.setUserName("streamwork");
-	m_db.setPassword("streamworkdoc");
-
-
-	QDjango::setDatabase(m_db);
-
-	m_isQueryViewable = false;
-
+	QDjango::setDatabase(QSqlDatabase());
 
 	//Register model
 	QDjango::registerModel<TUser>();
@@ -40,12 +29,24 @@ ManageSQL::ManageSQL( void )
 	QDjango::registerModel<TKeyword>();
 	QDjango::registerModel<TComponent>();
 
+	_threadSQL = new DatabaseManager();
+	connect(_threadSQL,SIGNAL(connectionState(bool)),this,SLOT(setDatabaseState(bool)));
+
+	_threadSQL->start();
+
 }
 
 //-------------------------------------------------------------------
 ManageSQL::~ManageSQL(void)
 {
-	m_db.close();
+	if(_threadSQL)
+	{
+		_threadSQL->quit();
+		delete _threadSQL;
+	}
+
+	if(_isOpen)
+		QSqlDatabase::database().close();
 }
 
 //-------------------------------------------------------------------
@@ -53,8 +54,6 @@ ManageSQL* ManageSQL::getInstance ()
 {
 	if (m_singleton  == NULL)
 		m_singleton = new ManageSQL;
-
-	m_singleton->isOpen();
 
 	return m_singleton;
 }
@@ -72,15 +71,36 @@ void ManageSQL::kill()
 //-------------------------------------------------------------------
 bool ManageSQL::isOpen()
 {
-	if (m_db.isOpen())
+	if (_isOpen)
 		return true;
 	else 
 		return false;
 }
 
-//-------------------------------------------------------------------
-QString ManageSQL::getLastTxtLog()
+//-------------------------------------------------------------------------
+void ManageSQL::setDatabaseState(bool val)
 {
-	return m_log;
+	if(val)
+	{
+		_isOpen = true;
+		QDjango::setDatabase(QSqlDatabase::database());
+		QDjango::createTables();
+	}
+	else
+	{
+		_isOpen = false;
+		QDjango::setDatabase(QSqlDatabase());
+	}
+
+	emit connectionStateChange();
+}
+
+//-------------------------------------------------------------------------
+void ManageSQL::tryOpen()
+{
+	if(!_threadSQL->isRunning())
+	{
+		_threadSQL->start();
+	}
 }
 

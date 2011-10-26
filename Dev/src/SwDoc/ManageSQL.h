@@ -15,6 +15,7 @@
 #include <QObject>
 #include <QDjango>
 #include <QDjangoQuerySet>
+#include <QFutureWatcher>
 
 /*
  * Include SQL Class
@@ -25,6 +26,9 @@
 #include "TComponent.h"
 #include "TColor.h"
 #include "SwDocConstantes.h"
+
+
+class DatabaseManager;
 
 /**
  * this class :
@@ -67,14 +71,9 @@ public:
 	 * Close the database and destroy the instance of ManageSQL
 	 */
 	static void kill ();
-	
-	/**
-	 * return the latest log
-	 * After making a query, you can use this method to get the latest log.
-	 * @return a QString of the latest log
-	 */
-	QString getLastTxtLog();
 
+	void tryOpen();
+	
 	/**
 	 *	Return un pointeur sur un element de bdd
 	 *
@@ -82,6 +81,10 @@ public:
 	template<typename T> QList<T*> getOrmObject(QString param="",QVariant val=QVariant(),QDjangoWhere::Operation op=QDjangoWhere::None)
 	 {
 			QList<T*> returnL;
+
+			if(!_isOpen)
+				return returnL;
+
 			QDjangoQuerySet<T> query;
 			if(param != "")
 			{
@@ -97,16 +100,20 @@ public:
 			}
 			return returnL;
 	 }
+public slots:
+	void setDatabaseState(bool);
+
+signals : 
+	void connectionStateChange();
 
 private:
 
 	static ManageSQL *m_singleton; /** the singleton of the class*/
 
-	QString m_log;  /** the latest log for query*/
+	bool _isOpen;
 
-	QSqlDatabase m_db;  /** the database connection*/
+	DatabaseManager *_threadSQL;
 
-	bool m_isQueryViewable; /** if true display all query in debug windows*/
 	
 };
 

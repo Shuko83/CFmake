@@ -12,6 +12,9 @@ class TComponent;
 class TKeyword;
 class WidgetItemDelegate;
 
+
+static int SizeMinWord = 2;
+
 class BUILD_SWDOC EditDoc : public QWidget
 {
 	Q_OBJECT
@@ -19,6 +22,9 @@ class BUILD_SWDOC EditDoc : public QWidget
 public:
 	EditDoc(QWidget *parent = NULL);
 	~EditDoc();
+
+	bool eventFilter(QObject *obj, QEvent *event);
+
 
 public slots:
 
@@ -28,6 +34,7 @@ public slots:
 	void deleteKeyword();
 	void addKeyword();
 	void managePBApply();
+	void changeIcon();
 
 
 	/**

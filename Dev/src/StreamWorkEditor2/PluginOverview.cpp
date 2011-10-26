@@ -80,6 +80,20 @@ void PluginOverview::doSearch( const QString&text )
 {
 	_componentModel->clear();
 
+	//Evol quand on efface pour réafficher la list plugin
+	if(text == "")
+	{
+		//Hide plugin view
+		QList<int> sizeWid;
+		sizeWid << width()/2 << width()/2;
+		ui.splitter->setSizes(sizeWid);
+
+		_componentModel->clear();
+
+		ui.lviewPlugins->clearSelection();
+		return;
+	}
+
 	QStringList keywords = text.split(",",QString::SkipEmptyParts);
 	QStringList::Iterator it = keywords.begin();
 

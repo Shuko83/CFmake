@@ -29,7 +29,7 @@ EditDoc::EditDoc(QWidget *parent)
 	ui.pb_addKeyword->setDisabled(true);
 
 	//On ajoute la toolbar pour le RichText
-	ui.gridLayout_2->addWidget(ui.TE_desc->createToolBar());
+	ui.gridTool->addWidget(ui.TE_desc->createToolBar());
 
 	//Connection des slots
 	connect(ui.pb_addKeyword		,SIGNAL(clicked())							,this, SLOT(addKeyword()));
@@ -41,7 +41,12 @@ EditDoc::EditDoc(QWidget *parent)
 
 	//Disable ihm if the connection to the database is not active
 	if(!ManageSQL::getInstance()->isOpen())
-		this->setEnabled(false);
+		ui.W_enable->setEnabled(false);
+
+
+	connect(ManageSQL::getInstance(),SIGNAL (connectionStateChange())			,this, SLOT(changeIcon()));
+
+	ui.L_Status->installEventFilter(this);
 }
 
 //-------------------------------------------------------------------------
@@ -83,7 +88,7 @@ void EditDoc::updateBDD()
 //-------------------------------------------------------------------------
 void EditDoc::addKeyword()
 {
-	if(_component)
+	if(_component && ui.LE_addKeyword->text().trimmed() != "" && ui.LE_addKeyword->text().size() > SizeMinWord)
 	{
 		//Rechercher si le keyword exist pas
 		TKeyword *  keyword= findKeyword(ui.LE_addKeyword->text());
@@ -300,6 +305,13 @@ void EditDoc::addItemToList(TKeyword * keyword,TKeyComp * keyAssoc)
 //-------------------------------------------------------------------------
 void EditDoc::manageTextKeyword(const QString &text) 
 {
+
+	if(text.trimmed() == "" || text.size() < SizeMinWord+1 )
+	{
+		ui.pb_addKeyword->setDisabled(true);
+		return;
+	}
+
 	ui.pb_addKeyword->setDisabled(false);
 
 	//Coloration de l'item si il est déjà dans la liste
@@ -309,13 +321,17 @@ void EditDoc::manageTextKeyword(const QString &text)
 	{
 		if(it.key()->getText() == text)
 		{
-			it.value()->item->setBackgroundColor(QColor(Qt::red));
-			ui.listWidget->setCurrentItem(it.value()->item,QItemSelectionModel::SelectCurrent);
+			if( it.value() && it.value()->item )
+			{
+				it.value()->item->setBackgroundColor(QColor(Qt::red));
+				ui.listWidget->setCurrentItem(it.value()->item,QItemSelectionModel::SelectCurrent);
+			}
 			ui.pb_addKeyword->setDisabled(true);
 		}
 		else
 		{
-			it.value()->item->setBackgroundColor(QColor(Qt::transparent));
+			if( it.value() && it.value()->item )
+				it.value()->item->setBackgroundColor(QColor(Qt::transparent));
 		}
 	}
 }
@@ -330,7 +346,7 @@ void EditDoc::onSelection( QString&componentName,QString&pluginName)
 
 	if(componentName == "" || pluginName == "")
 	{
-		setEnabled(false);
+		ui.W_enable->setEnabled(false);
 	}
 
 	QMap<QString,SwPluginFactory_Class *> *tmpList=SW_APP->ComponentsBank().GetAllPlugins();
@@ -372,6 +388,8 @@ void EditDoc::buildIhm( QString componentName,QString pluginName,QString desc,QI
 
 	if(!ManageSQL::getInstance()->isOpen())
 		return;
+	else
+		ui.W_enable->setEnabled(true);
 
 	// On check si le composant est en bdd 
 	// si oui on update les infos.
@@ -502,6 +520,9 @@ QList<TComponent*> EditDoc::findComponentFromKeyword( QStringList keywordList )
 	}
 
 	//Si le nom d'un composant est un mot clé
+
+	//Evol : rechercher dans la liste des composants des plugins
+
 	QList<int> idComposantList;;
 	foreach(TComponent*comp, _tmpComponents)
 	{
@@ -543,4 +564,31 @@ QList<TComponent*> EditDoc::findComponentFromKeyword( QStringList keywordList )
 	}
 
 	return returnList;
+}
+
+//-------------------------------------------------------------------------
+void EditDoc::changeIcon()
+{
+	if(ManageSQL::getInstance()->isOpen())
+		ui.L_Status->setPixmap(QString(":/SwDoc/_resources/database_on.png"));
+	else
+		ui.L_Status->setPixmap(QString(":/SwDoc/_resources/database_off.png"));
+}
+
+//-------------------------------------------------------------------------
+bool EditDoc::eventFilter( QObject *obj, QEvent *event )
+{
+
+	bool ret = QObject::eventFilter(obj, event);
+
+	if(obj == ui.L_Status)
+	{
+		if(event->type() == QEvent::MouseButtonRelease)
+		{
+			ManageSQL::getInstance()->tryOpen();
+			ui.L_Status->setPixmap(QString(":/SwDoc/_resources/database_wait.png"));
+		}
+	}
+
+	return ret;
 }
