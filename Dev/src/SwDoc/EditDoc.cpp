@@ -523,25 +523,17 @@ QList<TComponent*> EditDoc::findComponentFromKeyword( QStringList keywordList )
 
 	//Evol : rechercher dans la liste des composants des plugins
 
-	QList<int> idComposantList;;
+	QList<int> idComposantList;
 	foreach(TComponent*comp, _tmpComponents)
 	{
+		bool containAllKeyword = true;
 		foreach(QString keyword, keywordList)
 		{
-			if(comp->getName().contains(keyword,Qt::CaseInsensitive))
-			{
-				if(mapC.contains(comp->pk().toInt()))
-				{
-					mapC[comp->pk().toInt()].append(-5); // -5 arbitraire pour dire je match avec le component name
-				}
-				else
-				{
-					QList<int> tmpList;
-					tmpList << -5;
-					mapC.insert(comp->pk().toInt(),tmpList);
-				}
-			}
+			if(!comp->getName().contains(keyword,Qt::CaseInsensitive))
+				containAllKeyword = false;
 		}
+		if(!idComposantList.contains(comp->pk().toInt()) && containAllKeyword)
+			idComposantList << comp->pk().toInt();
 	}
 
 	//On vérifie que tout les composants sont dans toute les listes
@@ -551,7 +543,7 @@ QList<TComponent*> EditDoc::findComponentFromKeyword( QStringList keywordList )
 	QList<TComponent*> returnList;
 	for(it ; it != itend; )
 	{
-		if(keywordList.count() != it->count()  )
+		if(keywordList.count() != it->count() && !idComposantList.contains(it.key()) )
 			it = mapC.erase(it);
 		else
 			it++;
