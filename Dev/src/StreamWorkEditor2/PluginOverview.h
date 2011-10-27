@@ -71,7 +71,7 @@ static const char * ScrollBarHorizontalStyle = " \
 											   }\
 											   ";
 
-static const char * DefaultSearchText = "Look for tag / component";
+static const char * DefaultSearchText = "Search components by tag or component name";
 
 class PluginOverview : public QWidget
 {

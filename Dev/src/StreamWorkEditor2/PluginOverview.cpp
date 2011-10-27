@@ -13,6 +13,8 @@ PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette grap
 	ui.setupUi(this);
 	_doc = doc;
 
+	ui.LE_search->setText(DefaultSearchText);
+
     ui.lviewPlugins->setModel(new PluginsListModel(ui.lviewPlugins));
     //ui.lviewPlugins->setFixedWidth(150);
     ui.lviewPlugins->setFrameShape(QFrame::Box);
