@@ -9,6 +9,9 @@
 #include "GraphicsResources.h"
 #include "LinkGraphicItem.h"
 
+#include "ManageLinkColor.h"
+
+
 /** @brief Constructor */
 ConnectorGraphicItem::ConnectorGraphicItem(QGraphicsItem * parent,QString name,QString type,TConnectorType ctype):
         QGraphicsItem(parent),
@@ -33,7 +36,7 @@ void ConnectorGraphicItem::paint ( QPainter * painter,
                                    const QStyleOptionGraphicsItem * option,
                                    QWidget * widget) {
     QPoint p;
-    QPen pendraw=QPen(QColor("#FF9900"));
+    QPen pendraw=QPen(ManageLinkColor::getInstance()->getColorForInterface(_type));
     pendraw.setWidth(CL_CONNECTOR_SIZE/5.0);
     QColor color_base=((ComponentGraphicItem *)parentItem())->getColor();                
     QColor color;
@@ -54,12 +57,12 @@ void ConnectorGraphicItem::paint ( QPainter * painter,
             //painter->drawEllipse(QRectF(-CL_CONNECTOR_SIZE/4.0,-CL_CONNECTOR_SIZE/4.0,CL_CONNECTOR_SIZE/2.0,CL_CONNECTOR_SIZE/2.0));
             //painter->setPen(QPen(QColor("#888888")));
             painter->setPen(pendraw);
-            painter->setBrush(QBrush(QColor("#FF9900")));
+			painter->setBrush(QBrush(ManageLinkColor::getInstance()->getColorForInterface(_type)));
             painter->drawEllipse(QRectF(-CL_CONNECTOR_SIZE/2.0,-CL_CONNECTOR_SIZE/2.0,CL_CONNECTOR_SIZE,CL_CONNECTOR_SIZE));
-            painter->setPen(QPen(QColor("#888888")));
+            painter->setPen(pendraw);
             break;
         case CONSUMER:
-            painter->setPen(QPen(QColor("#888888")));
+            painter->setPen(QPen(QColor(ManageLinkColor::getInstance()->getColorForInterface(_type))));
             painter->setBrush(QBrush());
             painter->drawEllipse(QRectF(-CL_CONNECTOR_SIZE/2.0,-CL_CONNECTOR_SIZE/2.0,CL_CONNECTOR_SIZE,CL_CONNECTOR_SIZE));
             break;

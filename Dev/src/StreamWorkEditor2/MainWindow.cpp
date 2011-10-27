@@ -113,6 +113,12 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 	addDockWidget(Qt::RightDockWidgetArea, propdock);
 
 
+	QDockWidget * legendDock = new QDockWidget(tr("Color legend"), this);
+	legendDock->setObjectName("DockColorLegend");
+	legendDock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+	legendDock->setWidget(WidgetFactory::getInstance()->buildLegendView());
+	addDockWidget(Qt::RightDockWidgetArea, legendDock);
+
 	QDockWidget * navdock = new QDockWidget(tr("Navigator"), this);
 	navdock->setObjectName("DockNavigator");
 	navdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);

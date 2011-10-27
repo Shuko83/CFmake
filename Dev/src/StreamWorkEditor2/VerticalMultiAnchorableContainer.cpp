@@ -78,7 +78,7 @@ void VerticalMultiAnchorableContainer::removeObserver(IAnchorableObserver * o){
 // IAnchorableObserver
 //--------------------------------------------------------------------------
 /*@brief indique que l'entité a changé */
-void VerticalMultiAnchorableContainer::anchorableAsChanged(QWidget *w){
+void VerticalMultiAnchorableContainer::anchorableAsChanged(QWidget */*w*/){
     notifyObservers();
 }
 

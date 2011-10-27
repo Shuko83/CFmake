@@ -83,13 +83,13 @@ void AnchorableContainer::notifyObservers() {
     }
 }    
 /** @brief event acces */
-void AnchorableContainer::enterEvent ( QEvent * event ) {
+void AnchorableContainer::enterEvent ( QEvent * /*event*/ ) {
     if (_closeTimer->isActive()) {
         _closeTimer->stop();
     }
 }
 /** @brief event acces */
-void AnchorableContainer::leaveEvent ( QEvent * event ){
+void AnchorableContainer::leaveEvent ( QEvent * /*event*/ ){
     if (!_iconButton->isVisible()) {
         _closeTimer->start(2000); 
     }

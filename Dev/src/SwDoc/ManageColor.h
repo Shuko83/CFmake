@@ -8,11 +8,11 @@
  */
 #include <QMap>
 #include "SwDocConstantes.h"
+#include <QObject>
 
-
-class BUILD_SWDOC ManageColor 
+class BUILD_SWDOC ManageColor  : public QObject
 {
-
+	Q_OBJECT
 public:
 
 	/**
@@ -42,7 +42,11 @@ public:
 	 */
 	QMap<QString,QString> getColor();
 
+public slots:
+	void colorChangeStatus();
 
+signals : 
+	void dbLoaded();
 private:
 
 	static ManageColor *m_singleton; /** the singleton of the class */

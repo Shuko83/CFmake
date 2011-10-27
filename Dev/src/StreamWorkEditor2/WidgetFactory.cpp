@@ -10,6 +10,7 @@
 #include <SwPropertiesModelImpl.h>
 #include <SwGuiDefaultItemDelegate.h>
 #include "PluginOverview.h"
+#include "LegendView.h"
 
 
 static WidgetFactory * _instance=0;
@@ -125,6 +126,13 @@ PropertiesWidget * WidgetFactory::buildPropertiesWidget() {
 void WidgetFactory::setGraphViewMode(QWidget * w) {
     w->setPalette(_graphPalette);
     //w->setAutoFillBackground(true);
+}
+
+//-------------------------------------------------------------------------
+QWidget * WidgetFactory::buildLegendView()
+{
+	LegendView *w = new LegendView;
+	return w;
 }
 
 

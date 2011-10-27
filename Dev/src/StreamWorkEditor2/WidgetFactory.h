@@ -31,6 +31,8 @@ public:
     PropertiesWidget * buildPropertiesWidget();
 	/** @brief Construction widget documentation*/
 	QWidget * buildDocBlankView();
+	/** @brief Construction widget Color legend*/
+	QWidget * buildLegendView();
 
 private:
 	/** @brief Constructor */

@@ -23,7 +23,7 @@ void ViewNavigator::viewHasChanged() {
     repaint();
 }
 /** @breif event de dessin */
-void ViewNavigator::paintEvent(QPaintEvent *event) {
+void ViewNavigator::paintEvent(QPaintEvent */*event*/) {
     QPainter painter(this);
 
     QGraphicsScene * scene=_streamView->scene();
@@ -99,7 +99,7 @@ void ViewNavigator::mouseMoveEvent ( QMouseEvent * e ){
     }
 }
 /* \brief Evenement sourie libere */
-void ViewNavigator::mouseReleaseEvent ( QMouseEvent * e ){
+void ViewNavigator::mouseReleaseEvent ( QMouseEvent * /*e*/ ){
     if (_movingInProgress) {
         setCursor(Qt::ArrowCursor); 
         _movingInProgress=false;

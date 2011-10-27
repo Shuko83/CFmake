@@ -13,7 +13,10 @@ ManageColor *ManageColor::m_singleton = NULL;
 //-------------------------------------------------------------------
 ManageColor::ManageColor( void )
 {
-
+	if(ManageSQL::getInstance())
+	{
+		connect(ManageSQL::getInstance(),SIGNAL(connectionStateChange()),this,SLOT(colorChangeStatus()));
+	}
 }
 
 //-------------------------------------------------------------------
@@ -57,5 +60,11 @@ QMap<QString,QString> ManageColor::getColor()
 	}
 
 	return _map;
+}
+
+//-------------------------------------------------------------------------
+void ManageColor::colorChangeStatus()
+{
+	emit dbLoaded();
 }
 

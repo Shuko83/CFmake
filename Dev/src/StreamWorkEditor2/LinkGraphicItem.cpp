@@ -73,7 +73,7 @@ void LinkGraphicItem::setExternalHighlight(bool highlight) {
     _externalHighlight=highlight;
 }
 /** @brief Fonction de dessin */
-void LinkGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget) {
+void LinkGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/) {
     painter->setBrush(QBrush(Qt::NoBrush));
     painter->setRenderHints(QPainter::Antialiasing);
     QPen basePen;

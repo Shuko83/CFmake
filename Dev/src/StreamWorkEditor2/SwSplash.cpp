@@ -17,7 +17,7 @@ SwSplash::SwSplash(const QPixmap & pixmap)
 {
     //setAttribute(Qt::WA_TranslucentBackground);
     setMask(pixmap.mask());
-    QTimer * timer=new QTimer(this);
+    /*QTimer * timer=new QTimer(this);*/
     QTimer::singleShot(2000,this, SLOT(CloseSplash()));
 }
 /*! \brief Destructeur */

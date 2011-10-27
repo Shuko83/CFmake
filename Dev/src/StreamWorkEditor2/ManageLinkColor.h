@@ -1,4 +1,3 @@
-
 /**
 @file ManageLinkColor.h
 @brief gestion des couleurs des liens
@@ -11,14 +10,33 @@
 #include <QColor>
 #include <QtGui>
 
-
-class ManageLinkColor
+class ManageLinkColor : public QObject
 {
+	Q_OBJECT
 public:
 
 	static ManageLinkColor * getInstance();
+
+	/**
+	 * @brief    : Return QColor of the interfaceName
+	 * @return   : QColor - 
+	 * @param	 : QString interfaceName - The interfaceName
+	 */
 	QColor getColorForInterface(QString interfaceName);
 
+	/**
+	 * @brief    : Get map for drawing legend
+	 * @return   : QMap<QString,QString> - <Interface,ColorHex>
+	 */
+	QMap<QString,QString> getMapColor() const { return _mapColor; }
+
+
+public slots:
+	void onDbStatusChange();
+
+signals:
+	void colorHasChange();
+		
 private :
 	ManageLinkColor();
 	~ManageLinkColor();
@@ -26,8 +44,7 @@ private :
 	void loadColor();
 
 	static ManageLinkColor * _instance;
-	QMap<QString,QString> _mapColor;
-
+	QMap<QString,QString> _mapColor; // <Interface,ColorHex>
 };
 
 

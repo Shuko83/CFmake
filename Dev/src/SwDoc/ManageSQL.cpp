@@ -28,6 +28,7 @@ ManageSQL::ManageSQL( void )
 	QDjango::registerModel<TKeyComp>();
 	QDjango::registerModel<TKeyword>();
 	QDjango::registerModel<TComponent>();
+	QDjango::registerModel<TColor>();
 
 	_threadSQL = new DatabaseManager();
 	connect(_threadSQL,SIGNAL(connectionState(bool)),this,SLOT(setDatabaseState(bool)));

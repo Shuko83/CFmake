@@ -41,6 +41,7 @@ HEADERS += EditorPropertiesItemDelegate.h
 HEADERS += EditionService.h
 HEADERS += ManageLinkColor.h
 HEADERS += PluginOverview.h
+HEADERS += LegendView.h
 
 SOURCES += SwSplash.cpp
 SOURCES += main.cpp
@@ -74,6 +75,7 @@ SOURCES += EditorPropertiesItemDelegate.cpp
 SOURCES += EditionService.cpp
 SOURCES += ManageLinkColor.cpp
 SOURCES += PluginOverview.cpp
+SOURCES += LegendView.cpp
 
 FORMS += _resources/LogView.ui
 FORMS += ../SwGui/_QRcViewerUi.ui
