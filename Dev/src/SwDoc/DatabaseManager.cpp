@@ -35,7 +35,12 @@ void DatabaseManager::run()
 
 			_nbTry++;
 		}
-		//qDebug() << "AA_DEBUG : Thraead " << _nbTry;
+		else
+		{
+			m_db.close();
+			_nbTry = MaxTryConnection;
+			emit connectionState(false);
+		}
 
 		sleep(1);
 	}
