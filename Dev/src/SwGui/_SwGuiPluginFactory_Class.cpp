@@ -41,6 +41,7 @@
 #include "_SwGuiCompFromQActionToStackedWidget.h"
 #include "SwMacros.h"
 #include "_SwGuiQActionToWidget.h"
+#include "_SwGuiCompPushButtonToQAction.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -83,6 +84,7 @@ void _SwGuiPluginFactory_Class::Initialize() {
 	RegisterComponent("SwGuiQActionToStackedWidget","Interface de mapping des QActions sur les index d'un QStackedWidget");
 	RegisterComponent("SwGuiCompFromQActionToStackedWidget","Interface de mapping des QActions sur les index d'un QStackedWidget");
 	RegisterComponent("SwGuiQActionToWidget","Produit un ISwAction permettant de cacher ou d'afficher la widget");
+	RegisterComponent("SwGuiCompPushButtonToQAction","Produit un button widget qui permet d'exécuter des actions");
 
 }
 /*! \brief Liberation */
@@ -175,6 +177,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
 	if (name=="SwGuiQActionToWidget") {
 		return new _SwGuiQActionToWidget;
 	}
+	if (name=="SwGuiCompPushButtonToQAction") {
+		return new _SwGuiCompPushButtonToQAction;
+	}
     return NULL;
 }
 /*! \brief acces a l'icone d'un composant
@@ -266,6 +271,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
 	if (name=="SwGuiQActionToWidget") {
 		return QIcon(":/SwGui/widget.png");
 	}
+	if (name=="SwGuiCompPushButtonToQAction") {
+		return QIcon(":/SwGui/widget.png");
+	}
     return ico;
 }
 /*! \brief Acces a la version du plugin
@@ -325,6 +333,7 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
         eservice->registerExtension<ISwWidget>("logConsole","SwGuiVisualLogConsole");
         eservice->registerExtension<ISwWidget>("Widget","SwGuiWidget");
         eservice->registerExtension<ISwWidget>("Widget","SwPerspectivesManager");
+		eservice->registerExtension<ISwWidget>("Widget","SwGuiCompPushButtonToQAction");
     }
 }
 /*! \brief sur suppression d'une  interface */

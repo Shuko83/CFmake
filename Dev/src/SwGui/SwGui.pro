@@ -72,7 +72,8 @@ HEADERS += ISwAction.h \
     ISwDevice.h \
 	_SwServiceShortcuts.h \
 	_SwGuiQActionToWidget.h \
-	_SwContainerCloseableWidget.h 
+	_SwContainerCloseableWidget.h \
+	_SwGuiCompPushButtonToQAction.h
 
 	
 SOURCES += SwGuiDefaultItemDelegate.cpp \
@@ -118,7 +119,8 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
 	_QRcViewer.cpp \
 	_SwServiceShortcuts.cpp \
 	_SwGuiQActionToWidget.cpp \
-	_SwContainerCloseableWidget.cpp
+	_SwContainerCloseableWidget.cpp \
+	_SwGuiCompPushButtonToQAction.cpp
 
 
 FORMS += _SwGuiCssDialog.ui
