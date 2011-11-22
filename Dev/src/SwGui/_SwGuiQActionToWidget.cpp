@@ -38,9 +38,8 @@ _SwGuiQActionToWidget::_SwGuiQActionToWidget():Component(), _action(0) {
 	if (!connect(&_action,SIGNAL(changed()),this,SLOT(ManageAction()))){
 		qDebug() << "QObject::connect(_action)" << "\t" << "failed";
 	}
-	
-	isMoved = false;
-	
+
+    isMoved = false;	
 }
 /** @brief Destructeur */
 _SwGuiQActionToWidget::~_SwGuiQActionToWidget() {
@@ -83,7 +82,8 @@ void _SwGuiQActionToWidget::initializeComponent() throw(SwException) {
 
 }
 /*! \brief evenement de changement de propriete*/
-void _SwGuiQActionToWidget::eventPropertyChange(ISwProperty * property){
+void _SwGuiQActionToWidget::eventPropertyChange(ISwProperty * property)
+{
 }
 /*! \brief evenement avant changement de la disponibilité de l'interface*/
 void _SwGuiQActionToWidget::eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host){
@@ -126,6 +126,28 @@ void _SwGuiQActionToWidget::setHiddenName (QString name){
 		_action.setText(_hiddenName); 
 	}
 }
+
+_SwGuiQActionToWidget::WindowFlag _SwGuiQActionToWidget::getFlag()
+{
+    if (_hostWidget)
+    {
+        int flag = (_hostWidget->windowFlags () & 0xFFF);
+        return (_SwGuiQActionToWidget::WindowFlag)flag;
+    }
+    else
+    {
+        return WIDGET;
+    }
+}
+
+void _SwGuiQActionToWidget::setFlag (_SwGuiQActionToWidget::WindowFlag flag)
+{
+    if (_hostWidget)
+    {
+        _hostWidget->setWindowFlags ((Qt::WindowFlags)flag);
+    }
+}
+
 
 void _SwGuiQActionToWidget::ManageAction(){
 	if (_widget != 0){

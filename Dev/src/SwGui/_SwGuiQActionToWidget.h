@@ -32,11 +32,33 @@ class _SwGuiQActionToWidget : public Component, virtual ISwAction
 {
 	Q_OBJECT
 public:
+    /**
+    * @brief Type d'orientation pour les pistes dans la carto :
+    * - NUP : North up : la symbologie restera orientée plein nord
+    * - TUP : Track up : la symbologie suivra l'orientation de la piste
+    */ 
+    Q_ENUMS (WindowFlag);
+    typedef enum
+    {
+        WIDGET              = Qt::Widget,
+        WINDOW              = Qt::Window,
+        DIALOG              = Qt::Dialog,
+        SHEET               = Qt::Sheet,
+        DRAWER              = Qt::Drawer,
+        POPUP               = Qt::Popup,
+        TOOL                = Qt::Tool,
+        TOOL_TIP            = Qt::ToolTip,
+        SPLASH_SCREEN       = Qt::SplashScreen,
+        FRAMELESSWINDOWHINT = Qt::FramelessWindowHint
+    } WindowFlag;
+
 	// Properties accessors
 	QString getVisibleName();
     void setVisibleName (QString name);
 	QString getHiddenName();
     void setHiddenName (QString name);	
+	WindowFlag getFlag();
+    void setFlag (WindowFlag flag);	
 	
 public slots:
 		void ManageAction();
@@ -51,6 +73,10 @@ protected:
 	Q_PROPERTY (QString hidden_name
         READ getHiddenName
         WRITE setHiddenName);
+    
+	Q_PROPERTY (WindowFlag flag
+        READ getFlag
+        WRITE setFlag);
     
 protected:
 
