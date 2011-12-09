@@ -49,7 +49,7 @@ _SwGuiQActionToWidget::~_SwGuiQActionToWidget() {
 	//Destruction Pins
 
 	//DETRUIRE LES AUTRES ATTRIBUTS DE LA CLASSE
-	delete _hostWidget;
+	//delete _hostWidget;//fait planter
 }
 /*! \brief Initialisation du composant*/
 void _SwGuiQActionToWidget::initializeComponent() throw(SwException) {
@@ -94,6 +94,9 @@ void _SwGuiQActionToWidget::eventAfterInterfaceAvailability(QString interface_na
 		_widget = &(_i_Widget->GetWidget()); 
 		_hostWidget->setContainedWidget(_widget);			
 	} else {
+		if (_i_Widget == 0){
+			_widget = 0;
+		}
 		_hostWidget->setContainedWidget(0);
 	}
 }
@@ -153,7 +156,8 @@ void _SwGuiQActionToWidget::ManageAction(){
 	if (_widget != 0){
 		bool isChecked = _action.isChecked();//isChecked =  fenetre visible sauf si l'user clique sur la croix de la fenetre 
 		_hostWidget->setVisible(isChecked);
-
+		_widget->setVisible(isChecked);//force l'affichage du sous widget
+		
 		if (!isMoved){//centre la widget si c'est le 1er affichage
 			MoveCenter();
 			isMoved = true;
