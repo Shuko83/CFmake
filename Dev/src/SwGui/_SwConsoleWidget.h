@@ -36,6 +36,7 @@ public:
 	static QWidget * buildScrollableConsole(QWidget *parent,_SwConsoleWidget ** console);
 
 	void addMessage(QString message);
+	void setMaxMessages(int val) { _maxMessages = val; }
 protected:
   virtual void paintEvent ( QPaintEvent * event );
   

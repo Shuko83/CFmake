@@ -33,7 +33,12 @@ _SwGuiVisualLogConsole::_SwGuiVisualLogConsole():SwComponent_Class() {
     page.close();
     _backgroundColor=QColor("black");
     _foregroundColor=QColor("white");
+	_maxLine = 500;
 
+	//--------------------------------------
+	//Autres
+	//--------------------------------------
+	mainWidget=_SwConsoleWidget::buildScrollableConsole(0,&logWidget);
 
 }
 /** @brief Destructeur */
@@ -73,10 +78,7 @@ void _SwGuiVisualLogConsole::InitializeResources() throw(SwException) {
     this->RegisterService(_consumer_service);
     this->RegisterService(_provider_service);
 
-    //--------------------------------------
-    //Autres
-    //--------------------------------------
-    mainWidget=_SwConsoleWidget::buildScrollableConsole(0,&logWidget);
+    
     //--------------------------------------
     //Definition Interfaces fournis
     //--------------------------------------
@@ -164,11 +166,21 @@ void _SwGuiVisualLogConsole::RecordLog(TSw_Log_Level level,QString text) {
             message+="<b class=\"styleE\">E:</b>";break;
         default:
             message+="<b class=\"styleU\">U:</b>";break;
+
+// 		case LogLvl_Info:
+// 			message+="<b style=\"color:#2086ee\">I:</b>";break;
+// 		case LogLvl_Warning:
+// 			message+="<b style=\"color:#ee8120\">W:</b>";break;
+// 		case LogLvl_Critical:
+// 			message+="<b style=\"color:#ce0606\">C:</b>";break;
+// 		case LogLvl_Emergency:
+// 			message+="<b style=\"color:#8d1698\">E:</b>";break;
+// 		default:
     }
     message+=text;
     _mutex.lock();
     _liste.append(message);
-    if (_liste.size()>500) {
+    if (_liste.size()>_maxLine) {
         _liste.clear();
     }
     _mutex.unlock();
@@ -183,13 +195,14 @@ void _SwGuiVisualLogConsole::RecordLog(TSw_Log_Level level,QString text) {
         case LogLvl_Warning:
             message+="W:";break;
         case LogLvl_Critical:
-            message+="C:";break;
+			message+="C:";break;
         case LogLvl_Emergency:
             message+="E:";break;
         default:
             message+="U:";break;
     }
     message+=text;
+	
     logWidget->addMessage(message);
 }
 //---------------------------------------------------------------------
@@ -235,5 +248,13 @@ void _SwGuiVisualLogConsole::processRequest(QHttpRequestHeader * request,
         return;
     }
 
+}
+
+//-------------------------------------------------------------------------
+void _SwGuiVisualLogConsole::setMaxLine( int val )
+{
+	_maxLine = val;
+	if(logWidget)
+		logWidget->setMaxMessages(val);
 }
 

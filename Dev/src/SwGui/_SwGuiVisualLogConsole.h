@@ -48,6 +48,7 @@ class _SwGuiVisualLogConsole : public SwComponent_Class,
     Q_OBJECT
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
     Q_PROPERTY(QColor foregroundColor READ foregroundColor WRITE setForegroundColor)
+	Q_PROPERTY(int	  maxLine		  READ getMaxLine	   WRITE setMaxLine)
 protected:
     
 	//--------------------------------------------------------------
@@ -79,7 +80,10 @@ protected:
     QStringList _liste;
     QColor _backgroundColor;
     QColor _foregroundColor;
-public:
+	int _maxLine;
+	
+
+	public:
     /** @brief Constructeur */
     _SwGuiVisualLogConsole();
     /** @brief Destructeur */
@@ -96,6 +100,8 @@ public:
     void setBackgroundColor(QColor color);
     QColor foregroundColor();
     void setForegroundColor(QColor color);
+	int getMaxLine() const { return _maxLine; }
+	void setMaxLine(int val);
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------

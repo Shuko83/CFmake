@@ -65,8 +65,32 @@ void _SwConsoleWidget::paintEvent ( QPaintEvent * event ) {
 		start_index=stop_index;
 		stop_index=tmp;
 	}
-	for(int i=start_index;i<=stop_index;i++) {
-		p.drawText(QPoint(4,_fHeight+_fHeight*i),_messages.at(i));
+	for(int i=start_index;i<=stop_index;i++) 
+	{
+		QString messageToDisplay = _messages.at(i);
+		p.setPen(QColor("#FFFFFF"));
+		if(_messages.at(i).startsWith("I:"))
+		{
+			p.setPen(QColor("#2086ee"));
+			messageToDisplay = messageToDisplay.mid(2,messageToDisplay.length()-2);
+		}
+		if(_messages.at(i).startsWith("C:"))
+		{
+			p.setPen(QColor("#ce0606"));
+			messageToDisplay =messageToDisplay.mid(2,messageToDisplay.length()-2);
+		}
+		if(_messages.at(i).startsWith("W:"))
+		{
+			p.setPen(QColor("#ee8120"));
+			messageToDisplay =messageToDisplay.mid(2,messageToDisplay.length()-2);
+		}
+		if(_messages.at(i).startsWith("E:"))
+		{
+			p.setPen(QColor("#8d1698"));
+			messageToDisplay =messageToDisplay.mid(2,messageToDisplay.length()-2);
+		}
+
+		p.drawText(QPoint(4,_fHeight+_fHeight*i),messageToDisplay);
 	}
 }
 void _SwConsoleWidget::refreshContent() {
