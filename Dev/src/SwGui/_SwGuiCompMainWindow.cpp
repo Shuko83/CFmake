@@ -11,6 +11,7 @@
 #include <SwApplication.h>
 #include <SwMacros.h>
 #include "_SwGuiCompMainWindow.h"
+#include "..\src\gui\kernel\qevent.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -30,7 +31,7 @@ using namespace StreamWork::SwGui;
 
 /*! \brief Constructeur */
 _SwGuiCompMainWindow::_SwGuiCompMainWindow(): Component(){
-    _main_window=NULL;
+    //_main_window=NULL;
     _use_aswidget_property = 0;
     _menus_nb=0;
     _actions_nb=0;
@@ -113,15 +114,16 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow(){
     }
 
 
-    delete _main_window;
-    _main_window=0;
+    //delete _main_window;
+    //_main_window=0;
 }
 
 /*! \brief Initialisation des ressources
 \note tous les services du composants doivent être déclarés dans cette methodes*/
 void _SwGuiCompMainWindow::initializeComponent() throw(SwException) {
     //Creation de l'interface principale
-    _main_window=new QMainWindow();
+    //_main_window=new QMainWindow();
+
 
     if (!_useAsWidget)
     {
@@ -136,8 +138,12 @@ void _SwGuiCompMainWindow::initializeComponent() throw(SwException) {
     //Importation de l'interface ISwWidget
     getIConsumerService().RegisterConsumedInterface<ISwWidget>(CL_CENTRALWIDGET_INTERFACE_NAME,&_handle_central_widget);
 
+	//Exportation de l'interface ISwWidget
+	getIProviderService().RegisterProvidedInterface<ISwEvent>("ISwEvent",(ISwEvent*)this);
+
     //Enregistrement des propriétés
-    getPropertiesService().CreatePropertiesForQObject(_main_window,"QMainWindow");
+	//getPropertiesService().CreatePropertiesForQObject(_main_window,"QMainWindow");
+	getPropertiesService().CreatePropertiesForQObject((QMainWindow*)this,"QMainWindow");
     
     //Gestion des menus
     _menus_nb_property=getPropertiesService().CreateProperty<uint>("nb_menus");
@@ -330,12 +336,14 @@ void _SwGuiCompMainWindow::eventPropertyChange(ISwProperty * property) {
 /*! \brief Renvoie le nom du service
 \return le nom du service */
 QMainWindow & _SwGuiCompMainWindow::GetMainWindow() {
-    return *_main_window;
+    //return *_main_window;
+	return *this;
 }
   /*! \brief Renvoie le widget
 \return le widget */
 QWidget & _SwGuiCompMainWindow::GetWidget(){
-    return *(dynamic_cast<QWidget *> (_main_window));
+    //return *(dynamic_cast<QWidget *> (_main_window));
+	return *(dynamic_cast<QWidget *> (this));
 }
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
@@ -397,110 +405,159 @@ void _SwGuiCompMainWindow::eventBeforeInterfaceAvailability(QString interface_na
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompMainWindow::eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host) {
-    QMap<QString,ISwMenu *>::iterator menu_it;
-    QMap<QString,ISwAction *>::iterator action_it;
-    QMap<QString,ISwToolBar *>::iterator toolbar_it;
-    QMap<QString,ISwProperty *>::iterator toolbar_position_it;
-    QMap<QString,ISwDockWidget *>::iterator dockwidget_it;
-    QMap<QString,ISwProperty *>::iterator dockwidget_position_it;
-    
-    //Si c'est un menu
-    menu_it=_menus.find(interface_name);
-    if (menu_it!=_menus.end()) {
-        if (menu_it.value()==NULL && _tmp_handle_menu!=NULL) {
-            //Et qu'il etait non defini, on l'enregistre et l'attache a la menubar
-            menu_it.value()=_tmp_handle_menu;  
-            _main_window->menuBar()->addMenu(&(_tmp_handle_menu->GetMenu()));
-        }
-        return;
-    } 
-    //Si c'est une action
-    action_it=_actions.find(interface_name);
-    if (action_it!=_actions.end()) {
-        if (action_it.value()==NULL && _tmp_handle_action!=NULL) {
-            //Et qu'ellle etait non definie,on l'enregistre et l'attache a la menubar
-            action_it.value()=_tmp_handle_action;
-            _main_window->menuBar()->addAction(&(_tmp_handle_action->GetAction()));
-        }
-        return;
-    } 
-    //Si c'est une toolbar
-    toolbar_it=_toolbars.find(interface_name);
-    toolbar_position_it=_toolbar_positions.find(interface_name);
-    if (toolbar_it!=_toolbars.end() && toolbar_position_it!=_toolbar_positions.end()) {
-        if (toolbar_it.value()==NULL && _tmp_handle_toolbar!=NULL) {
-            //Et qu'ellle etait non definie,on l'enregistre et l'attache a la mainwindow
-            SwEnum enum_value=toolbar_position_it.value()->GetValue().value<SwEnum>();
-            toolbar_it.value()=_tmp_handle_toolbar;
-            _main_window->addToolBar((Qt::ToolBarArea)enum_value.ToInt(),&(_tmp_handle_toolbar->GetToolBar()));
-        }
-        return;
-    } 
-    //Si c'est un dockwidget
-    dockwidget_it=_dockwidgets.find(interface_name);
-    dockwidget_position_it=_dockwidget_positions.find(interface_name);
-    if (dockwidget_it!=_dockwidgets.end() && dockwidget_position_it!=_dockwidget_positions.end()) {
+	QMap<QString,ISwMenu *>::iterator menu_it;
+	QMap<QString,ISwAction *>::iterator action_it;
+	QMap<QString,ISwToolBar *>::iterator toolbar_it;
+	QMap<QString,ISwProperty *>::iterator toolbar_position_it;
+	QMap<QString,ISwDockWidget *>::iterator dockwidget_it;
+	QMap<QString,ISwProperty *>::iterator dockwidget_position_it;
 
-        if (dockwidget_it.value()==NULL  && _tmp_handle_dockwidget!=NULL) {
-            //Et qu'ellle etait non definie,on l'enregistre et l'attache a la mainwindow
-            SwEnum enum_value=dockwidget_position_it.value()->GetValue().value<SwEnum>();
-            dockwidget_it.value()=_tmp_handle_dockwidget;
-            //Cas du tabbed mode
-            if (_main_window->dockOptions().testFlag(QMainWindow::ForceTabbedDocks) |
-                _main_window->dockOptions().testFlag(QMainWindow::AllowTabbedDocks)) {
-                QDockWidget *tabbedWidget=0;
-                QObjectList list=_main_window->children();
-                for(int i=0;i<list.count() && tabbedWidget==0;i++) {
-                    QDockWidget *aDockWidget=dynamic_cast<QDockWidget *>(list[i]);
-                    if (aDockWidget!=0 &&  _main_window->dockWidgetArea(aDockWidget)==(Qt::DockWidgetArea)enum_value.ToInt()) {
-                        tabbedWidget=aDockWidget;    
-                    }
-                }
-                _main_window->addDockWidget((Qt::DockWidgetArea)enum_value.ToInt(),&(_tmp_handle_dockwidget->GetDockWidget()));          
-                if (tabbedWidget!=0) {
-                    _main_window->tabifyDockWidget(tabbedWidget,&(_tmp_handle_dockwidget->GetDockWidget()));
-                }
-            } else {
-                _main_window->addDockWidget((Qt::DockWidgetArea)enum_value.ToInt(),&(_tmp_handle_dockwidget->GetDockWidget()));          
-            }
-            
-        }
-       return;
-    } 
-    //Si c'est le widget central
-    if (interface_name==CL_CENTRALWIDGET_INTERFACE_NAME && _handle_central_widget!=NULL) {
-        //Et qu'il est defini, on l'attache a la mainwindow
-        _main_window->setCentralWidget(&(_handle_central_widget->GetWidget()));
-        return;
-    }
+	//Si c'est un menu
+	menu_it=_menus.find(interface_name);
+	if (menu_it!=_menus.end()) {
+		if (menu_it.value()==NULL && _tmp_handle_menu!=NULL) {
+			//Et qu'il etait non defini, on l'enregistre et l'attache a la menubar
+			menu_it.value()=_tmp_handle_menu;  
+			//_main_window->menuBar()->addMenu(&(_tmp_handle_menu->GetMenu()));
+			this->menuBar()->addMenu(&(_tmp_handle_menu->GetMenu()));
+		}
+		return;
+	} 
+	//Si c'est une action
+	action_it=_actions.find(interface_name);
+	if (action_it!=_actions.end()) {
+		if (action_it.value()==NULL && _tmp_handle_action!=NULL) {
+			//Et qu'ellle etait non definie,on l'enregistre et l'attache a la menubar
+			action_it.value()=_tmp_handle_action;
+			//_main_window->menuBar()->addAction(&(_tmp_handle_action->GetAction()));
+			this->menuBar()->addAction(&(_tmp_handle_action->GetAction()));
+		}
+		return;
+	} 
+	//Si c'est une toolbar
+	toolbar_it=_toolbars.find(interface_name);
+	toolbar_position_it=_toolbar_positions.find(interface_name);
+	if (toolbar_it!=_toolbars.end() && toolbar_position_it!=_toolbar_positions.end()) {
+		if (toolbar_it.value()==NULL && _tmp_handle_toolbar!=NULL) {
+			//Et qu'ellle etait non definie,on l'enregistre et l'attache a la mainwindow
+			SwEnum enum_value=toolbar_position_it.value()->GetValue().value<SwEnum>();
+			toolbar_it.value()=_tmp_handle_toolbar;
+			//_main_window->addToolBar((Qt::ToolBarArea)enum_value.ToInt(),&(_tmp_handle_toolbar->GetToolBar()));
+			this->addToolBar((Qt::ToolBarArea)enum_value.ToInt(),&(_tmp_handle_toolbar->GetToolBar()));
+		}
+		return;
+	} 
+	//Si c'est un dockwidget
+	dockwidget_it=_dockwidgets.find(interface_name);
+	dockwidget_position_it=_dockwidget_positions.find(interface_name);
+	if (dockwidget_it!=_dockwidgets.end() && dockwidget_position_it!=_dockwidget_positions.end()) {
+
+		if (dockwidget_it.value()==NULL  && _tmp_handle_dockwidget!=NULL) {
+			//Et qu'ellle etait non definie,on l'enregistre et l'attache a la mainwindow
+			SwEnum enum_value=dockwidget_position_it.value()->GetValue().value<SwEnum>();
+			dockwidget_it.value()=_tmp_handle_dockwidget;
+			//Cas du tabbed mode
+			//if (_main_window->dockOptions().testFlag(QMainWindow::ForceTabbedDocks) |
+			//	_main_window->dockOptions().testFlag(QMainWindow::AllowTabbedDocks)) {
+			if (this->dockOptions().testFlag(QMainWindow::ForceTabbedDocks) |
+				this->dockOptions().testFlag(QMainWindow::AllowTabbedDocks)) {
+					QDockWidget *tabbedWidget=0;
+					//QObjectList list=_main_window->children();
+					QObjectList list=((QMainWindow*)this)->children();
+					for(int i=0;i<list.count() && tabbedWidget==0;i++) {
+						QDockWidget *aDockWidget=dynamic_cast<QDockWidget *>(list[i]);
+						//if (aDockWidget!=0 &&  _main_window->dockWidgetArea(aDockWidget)==(Qt::DockWidgetArea)enum_value.ToInt()) {
+						if (aDockWidget!=0 &&  this->dockWidgetArea(aDockWidget)==(Qt::DockWidgetArea)enum_value.ToInt()) {
+							tabbedWidget=aDockWidget;    
+						}
+					}
+					//_main_window->addDockWidget((Qt::DockWidgetArea)enum_value.ToInt(),&(_tmp_handle_dockwidget->GetDockWidget()));          
+					this->addDockWidget((Qt::DockWidgetArea)enum_value.ToInt(),&(_tmp_handle_dockwidget->GetDockWidget()));          
+					if (tabbedWidget!=0) {
+						//_main_window->tabifyDockWidget(tabbedWidget,&(_tmp_handle_dockwidget->GetDockWidget()));
+						this->tabifyDockWidget(tabbedWidget,&(_tmp_handle_dockwidget->GetDockWidget()));
+					}
+			} else {
+				//_main_window->addDockWidget((Qt::DockWidgetArea)enum_value.ToInt(),&(_tmp_handle_dockwidget->GetDockWidget()));          
+				this->addDockWidget((Qt::DockWidgetArea)enum_value.ToInt(),&(_tmp_handle_dockwidget->GetDockWidget()));          
+			}
+
+		}
+		return;
+	} 
+	//Si c'est le widget central
+	if (interface_name==CL_CENTRALWIDGET_INTERFACE_NAME && _handle_central_widget!=NULL) {
+		//Et qu'il est defini, on l'attache a la mainwindow
+		//_main_window->setCentralWidget(&(_handle_central_widget->GetWidget()));
+		this->setCentralWidget(&(_handle_central_widget->GetWidget()));
+		return;
+	}
 
 }
 void _SwGuiCompMainWindow::showChanged() {
-    switch(_show_mode.ToInt()) {
-        case SHOW_CENTERED: {
-            _main_window->showNormal();
-            QDesktopWidget *desktop = QApplication::desktop();
-            QRect screensize= desktop->screenGeometry(desktop->primaryScreen());
-            QRect windowSize= _main_window->frameGeometry();
-            QPoint slefttop(screensize.left(),screensize.top());
-            QPoint wlefttop;
-            slefttop.setX(slefttop.x()+(screensize.width()-windowSize.width())/2);
-            slefttop.setY(slefttop.y()+(screensize.height()-windowSize.height())/2);
-            _main_window->move(slefttop);
-            
-                            }
-            break;
-        case SHOW_FULLSCREEN:
-            _main_window->showFullScreen();
-            break;
-        case SHOW_MAXIMIZED:
-            _main_window->showMaximized();
-            break;
-        case SHOW_MINIMIZED:
-            _main_window->showMinimized();
-            break;
-        case SHOW_NORMAL:
-        default:
-            break;
-    }
+	switch(_show_mode.ToInt()) {
+		case SHOW_CENTERED: {
+			//_main_window->showNormal();
+			this->showNormal();
+			QDesktopWidget *desktop = QApplication::desktop();
+			QRect screensize= desktop->screenGeometry(desktop->primaryScreen());
+			//QRect windowSize= _main_window->frameGeometry();
+			QRect windowSize= this->frameGeometry();
+			QPoint slefttop(screensize.left(),screensize.top());
+			QPoint wlefttop;
+			slefttop.setX(slefttop.x()+(screensize.width()-windowSize.width())/2);
+			slefttop.setY(slefttop.y()+(screensize.height()-windowSize.height())/2);
+			//_main_window->move(slefttop);
+			this->move(slefttop);
+
+							}
+							break;
+		case SHOW_FULLSCREEN:
+			//_main_window->showFullScreen();
+			this->showFullScreen();
+			break;
+		case SHOW_MAXIMIZED:
+			//_main_window->showMaximized();
+			this->showMaximized();
+			break;
+		case SHOW_MINIMIZED:
+			//_main_window->showMinimized();
+			this->showMinimized();
+			break;
+		case SHOW_NORMAL:
+		default:
+			break;
+	}
 }
+
+//---------------------------------------------------------------------
+// Interface ISwEventObservable
+//---------------------------------------------------------------------
+void _SwGuiCompMainWindow::addObserver(ISwEventObserver * obs)
+{
+	if(obs!=NULL)
+		_iSwEvent.push_back(obs);
+}
+void _SwGuiCompMainWindow::removeObserver(ISwEventObserver * obs)
+{
+	if(obs!=NULL)
+	{
+		if(_iSwEvent.contains(obs))
+			_iSwEvent.removeAt(_iSwEvent.indexOf(obs));
+	}	
+}
+void _SwGuiCompMainWindow::notify(QEvent * event)
+{
+	ISwEventObserver* itObs = NULL;
+	foreach(itObs, _iSwEvent)
+	{
+		itObs->onEvent(event);
+	}
+}
+
+void _SwGuiCompMainWindow::closeEvent(QCloseEvent* event)
+{
+	notify((QEvent*)event);
+}
+
+

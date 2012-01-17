@@ -42,6 +42,7 @@
 #include "SwMacros.h"
 #include "_SwGuiQActionToWidget.h"
 #include "_SwGuiCompPushButtonToQAction.h"
+#include "SwEventToPopup.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -85,6 +86,7 @@ void _SwGuiPluginFactory_Class::Initialize() {
 	RegisterComponent("SwGuiCompFromQActionToStackedWidget","Interface de mapping des QActions sur les index d'un QStackedWidget");
 	RegisterComponent("SwGuiQActionToWidget","Produit un ISwAction permettant de cacher ou d'afficher la widget");
 	RegisterComponent("SwGuiCompPushButtonToQAction","Produit un button widget qui permet d'exécuter des actions");
+	RegisterComponent("SwEventToPopup","Popup sur SwEvent");
 
 }
 /*! \brief Liberation */
@@ -180,6 +182,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
 	if (name=="SwGuiCompPushButtonToQAction") {
 		return new _SwGuiCompPushButtonToQAction;
 	}
+	if (name=="SwEventToPopup") {
+		return new SwEventToPopup;
+	}
     return NULL;
 }
 /*! \brief acces a l'icone d'un composant
@@ -273,6 +278,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
 	}
 	if (name=="SwGuiCompPushButtonToQAction") {
 		return QIcon(":/SwGui/widget.png");
+	}
+	if (name=="SwEventToPopup") {
+		return ico;
 	}
     return ico;
 }

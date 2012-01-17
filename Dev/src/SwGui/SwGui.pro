@@ -73,7 +73,10 @@ HEADERS += ISwAction.h \
 	_SwServiceShortcuts.h \
 	_SwGuiQActionToWidget.h \
 	_SwContainerCloseableWidget.h \
-	_SwGuiCompPushButtonToQAction.h
+	_SwGuiCompPushButtonToQAction.h \
+	ISwEvent.h \
+	ISwEventObserver.h \
+	SwEventToPopup.h \
 
 	
 SOURCES += SwGuiDefaultItemDelegate.cpp \
@@ -120,7 +123,8 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
 	_SwServiceShortcuts.cpp \
 	_SwGuiQActionToWidget.cpp \
 	_SwContainerCloseableWidget.cpp \
-	_SwGuiCompPushButtonToQAction.cpp
+	_SwGuiCompPushButtonToQAction.cpp \
+	SwEventToPopup.cpp \
 
 
 FORMS += _SwGuiCssDialog.ui
@@ -134,7 +138,8 @@ UI_DIR += ./_intermediaire
 INCLUDEPATH += ./\
     ./_intermediaire \
     ../SwCore/ \
-    ../SwExecution/ 
+    ../SwExecution/ \
+	../SwFoundation/ 
     
     
     
@@ -144,12 +149,12 @@ CONFIG(debug, debug|release) {
   win32:TARGET = $$join(TARGET,,,d)
   win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
 	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
-	LIBS += -L"../../lib/vc/debug" -lSwCored
+	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwFoundationd
 	TARGET_EXT = .swdld
 } 
 CONFIG(release, debug|release) {
   win32:DESTDIR = ./../../lib/vc/release
   win32:DLLDESTDIR=  ./../../bin/vc/release
-	LIBS += -L"../../lib/vc/release" -lSwCore
+	LIBS += -L"../../lib/vc/release" -lSwCore -lSwFoundation
 	TARGET_EXT = .swdl
 }

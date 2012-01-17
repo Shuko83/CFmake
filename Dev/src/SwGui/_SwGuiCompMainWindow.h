@@ -29,6 +29,8 @@
   * INCLUDES LOCAUX
   */
 #include "ISwMainWindow.h"
+#include "ISwEvent.h"
+#include "ISwEventObserver.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -37,11 +39,11 @@ using namespace StreamWork::SwGui;
 	\class _SwGuiCompMainWindow 
 	\brief _SwGuiMainWindow generant une QMainWindow
 */
-class _SwGuiCompMainWindow : public Component, public ISwMainWindow , public ISwWidget
+class _SwGuiCompMainWindow : public Component, public QMainWindow, public ISwMainWindow , public ISwWidget, public ISwEvent
 {
 protected:
     /* fenetre principale */
-    QMainWindow * _main_window;
+    //QMainWindow * _main_window;
     /* show */
     SwEnum _show_mode;
     ISwProperty * _show_property;
@@ -95,7 +97,9 @@ protected:
     /* choix du type d'interface Widget ou MainWindow*/
     bool  _useAsWidget;
     /* propriété nombre d'actions*/
-    ISwProperty * _use_aswidget_property;    
+    ISwProperty * _use_aswidget_property;   
+
+	QList<ISwEventObserver*> _iSwEvent;
 public:
     /*! \brief Constructeur */
     _SwGuiCompMainWindow();
@@ -125,9 +129,19 @@ public:
 	/*! \brief Avant changement de la disponibilité de l'interface */
 	virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);            
 	/*! \brief Apres changement de la disponibilité de l'interface */
-	virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);            
+	virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
+
+	//---------------------------------------------------------------------
+	// Interface ISwEvent
+	//---------------------------------------------------------------------
+	void addObserver(ISwEventObserver * obs);
+	void removeObserver(ISwEventObserver * obs);
+private:
+	void notify(QEvent * event);
+
 private:
     void showChanged();
-
+protected:
+	void closeEvent(QCloseEvent* event);
 };
 #endif 
