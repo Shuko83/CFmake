@@ -63,6 +63,7 @@ void SwEventToPopup::onEvent( QEvent * event )
 	if (event->type() == _eventType)
 	{
 		QMessageBox msgBox;
+		msgBox.setWindowIcon(_popupIcon);
 		msgBox.setWindowTitle(_popupTitle);
 		msgBox.setText(_popupText);
 		msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
@@ -115,6 +116,17 @@ void SwEventToPopup::setEventType( const QEvent::Type val )
 {
 	_eventType = val;
 }
+
+QIcon SwEventToPopup::getPopupIcon() const
+{
+	return _popupIcon;
+}
+
+void SwEventToPopup::setPopupIcon( const QIcon val )
+{
+	_popupIcon = val;
+}
+
 //----------------------------------------------------
 // Methode 
 //----------------------------------------------------
