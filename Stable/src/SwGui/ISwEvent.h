@@ -24,7 +24,6 @@ namespace StreamWork
 		public:
 			virtual void addObserver(ISwEventObserver * obs) =0;
 			virtual void removeObserver(ISwEventObserver * obs) =0;
-		private:
 			virtual void notify(QEvent * event) =0;
 		};
 	}

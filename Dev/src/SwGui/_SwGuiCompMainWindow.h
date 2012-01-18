@@ -136,7 +136,6 @@ public:
 	//---------------------------------------------------------------------
 	void addObserver(ISwEventObserver * obs);
 	void removeObserver(ISwEventObserver * obs);
-private:
 	void notify(QEvent * event);
 
 private:
