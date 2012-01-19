@@ -32,6 +32,7 @@ class SwEventToPopup : virtual public SwAssistedComponent, virtual public ISwEve
 	Q_OBJECT
 
 		Q_PROPERTY(QEvent::Type EventType READ getEventType WRITE setEventType)
+		Q_PROPERTY(bool EventButtonCancelVisible READ getEventButtonConcelVisible WRITE setEventButtonConcelVisible)
 		Q_PROPERTY(QIcon PopupIcon READ getPopupIcon WRITE setPopupIcon)
 		Q_PROPERTY(QString PopupTitle READ getPopupTitle WRITE setPopupTitle)
 		Q_PROPERTY(QString PopupText READ getPopupText WRITE setPopupText)
@@ -84,6 +85,8 @@ public:
 	void setEventType(const QEvent::Type val);
 	QIcon getPopupIcon() const;
 	void setPopupIcon(const QIcon val);
+	bool getEventButtonConcelVisible() const;
+	void setEventButtonConcelVisible(const bool val);
 protected:
 
 	//---------------------------------------------------
@@ -96,6 +99,7 @@ private:
 	QString _popupTitle;	
 	QString _popupText;
 	QEvent::Type _eventType;
-
+	bool _eventButtonConcelVisible;
+	
 };
 #endif 

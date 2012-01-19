@@ -13,6 +13,7 @@ SwEventToPopup::SwEventToPopup()
 	//Attribut
 	_popupTitle = "Title";	
 	_popupText = "Text";
+	_eventButtonConcelVisible = true;
 }
 
 SwEventToPopup::~SwEventToPopup()
@@ -66,7 +67,7 @@ void SwEventToPopup::onEvent( QEvent * event )
 		msgBox.setWindowIcon(_popupIcon);
 		msgBox.setWindowTitle(_popupTitle);
 		msgBox.setText(_popupText);
-		msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+		msgBox.setStandardButtons(QMessageBox::Ok | ((_eventButtonConcelVisible)?QMessageBox::Cancel:QMessageBox::Ok));
 		msgBox.setDefaultButton(QMessageBox::Ok);
 
 		switch (msgBox.exec()) 
@@ -125,6 +126,16 @@ QIcon SwEventToPopup::getPopupIcon() const
 void SwEventToPopup::setPopupIcon( const QIcon val )
 {
 	_popupIcon = val;
+}
+
+bool SwEventToPopup::getEventButtonConcelVisible() const
+{
+	return _eventButtonConcelVisible;
+}
+
+void SwEventToPopup::setEventButtonConcelVisible( const bool val )
+{
+	_eventButtonConcelVisible = val;
 }
 
 //----------------------------------------------------
