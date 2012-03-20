@@ -187,6 +187,9 @@ void MenuManager::buildMenuForContext(QMenu * menu) {
     if (_gwList.count()>0) {
         menu->addAction("Paste style",this,SLOT(onPasteStyle()));
     }
+    if (_gwList.count()>1) {
+        menu->addAction("Create new model from selection",this,SLOT(onCreateNewModel()));
+    }
     if (_gwList.count()==0 && _lkList.count()==0 && _connectorList.count()==0) {
         menu->addAction("Add interest area",this,SLOT(onAddInterestArea()));
         menu->addAction("Change background",this,SLOT(onChangeBackGroundColor()));
@@ -464,3 +467,12 @@ QString MenuManager::buildActionNameForConnector(ConnectorGraphicItem *citem) {
     return name;
 }
 
+/** @brief on create new model */
+void MenuManager::onCreateNewModel() {
+    QString modelName="Toto";
+    QList<SwComponent_Class *> clist;
+    for(int i=0;i<_gwList.count();i++) {
+        clist.push_back(_gwList[i]->getComponent());
+    }
+    _streamControler->createModelFromSelection(clist,modelName);
+}

@@ -110,7 +110,9 @@ public:
     /*! \brief Sur connexion d'un pin*/
     void OnConnectPin(StreamWork::SwCore::SwPin * local_pin,StreamWork::SwCore::SwPin * remote_pin);            
     /*! \brief Sur deconnexion d'un pin*/
-    void OnDisconnectPin(StreamWork::SwCore::SwPin * local_pin,StreamWork::SwCore::SwPin * remote_pin);            
+    void OnDisconnectPin(StreamWork::SwCore::SwPin * local_pin,StreamWork::SwCore::SwPin * remote_pin);  
+    /*! \brief Create model from selection*/
+    void createModelFromSelection(QList<StreamWork::SwCore::SwComponent_Class *> & components,QString modelName);
     //--------------------------------------------------------------------------
     //  gestion des observers de selection
     //--------------------------------------------------------------------------

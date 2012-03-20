@@ -657,6 +657,22 @@ void StreamControler::recursiveDisconnectToControler(SwComponent_Class * compone
         recursiveDisconnectToControler(component->GetChild(i));
     }
 }
+/*! \brief Create model from selection*/
+void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & components,QString modelName) {
+    //Ajout model host
+    SwComponent_Class * modelHost=SW_APP->ComponentsBank().CreateComponent("SwModel2Host");
+    modelHost->SetName("host");
+    _rootComponent->AddChild(modelHost);
+    //Ajout des interfaces qui sont externes a la selection dans le model host
+
+    //Sauvegarde de la selection
+
+    //Modification de la liste de model
+
+    //Suppression du modele_host
+    _rootComponent->RemoveChild(modelHost);
+}
+
 //--------------------------------------------------------------------------
 // Gestion persistence des données
 //--------------------------------------------------------------------------
