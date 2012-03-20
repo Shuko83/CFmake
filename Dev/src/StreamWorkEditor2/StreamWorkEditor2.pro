@@ -42,6 +42,8 @@ HEADERS += EditionService.h
 HEADERS += ManageLinkColor.h
 HEADERS += PluginOverview.h
 HEADERS += LegendView.h
+HEADERS += ../SwModel2/ISwModelHostModifier.h
+
 
 SOURCES += SwSplash.cpp
 SOURCES += main.cpp
@@ -92,7 +94,8 @@ INCLUDEPATH += ./ \
     ../SwGui/_intermediaire \
     ../WizardIDE \
     ../SwExecution \
-	../SwDoc
+	  ../SwDoc \
+	  ../SwModel2
     
 DEFINES += SW_EDITOR
     

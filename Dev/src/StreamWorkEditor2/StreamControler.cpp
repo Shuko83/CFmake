@@ -22,8 +22,10 @@
 #include "GraphicsLoaderV1.h"
 #include "Arranger.h"
 #include "InterestArea.h"
+#include "ISwModelHostModifier.h"
 
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwModel;
 
 #define CL_SCENE_NODE "Scene"
 #define CL_SCENE_ATT_X "x"
@@ -664,7 +666,10 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
     modelHost->SetName("host");
     _rootComponent->AddChild(modelHost);
     //Ajout des interfaces qui sont externes a la selection dans le model host
-
+    ISwModelHostModifier * modelModifier=dynamic_cast<ISwModelHostModifier *>(modelHost);
+    if (modelModifier!=0) {
+        modelModifier->addProviderInterface("Test",modelHost);
+    }
     //Sauvegarde de la selection
 
     //Modification de la liste de model

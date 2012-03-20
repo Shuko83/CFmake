@@ -29,10 +29,12 @@
 #include <ISwService.h>
 #include <ISwPersistent.h>
 #include "_SwModelExportedEntity.h"
+#include "ISwModelHostModifier.h"
 //Nom du service
 #define CG_SW_SERVICE_MODELHOST "MODELHOST"
 
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwModel;
 
 class TargetInterface {
 public:
@@ -48,7 +50,7 @@ public:
 	\class _SwModelHost_Class 
 	\brief Implementation d'un hote de model
 */
-class _SwModelHost_Class : public SwComponent_Class, public ISwAdminSetup, public ISwService, public ISwPersistent
+class _SwModelHost_Class : public SwComponent_Class, public ISwAdminSetup, public ISwService, public ISwPersistent, public ISwModelHostModifier
 {
 protected:
     /* service de fourniture d'interface */
@@ -120,5 +122,12 @@ public:
     \param[in] doc document parent
     */
 	void Save(QDomElement & elt,QDomDocument &doc);
+    //---------------------------------------------------------------------
+    // Interface ISwModelHostModifier
+    //---------------------------------------------------------------------
+    /*! \brief Add provider interface*/
+    virtual void addProviderInterface(QString name,SwComponent_Class * component);     
+    /*! \brief Add consumer interface*/
+    virtual void addConsumerInterface(QString name,SwComponent_Class * component);       
 };
 #endif 

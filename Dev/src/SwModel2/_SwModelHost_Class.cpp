@@ -335,3 +335,14 @@ void _SwModelHost_Class::Save(QDomElement & elt,QDomDocument &doc) {
         elt.setAttribute(CL_XML_NODE_ATT_IDX,h_index);
     }
 }
+//---------------------------------------------------------------------
+// Interface ISwModelHostModifier
+//---------------------------------------------------------------------
+/*! \brief Add provider interface*/
+void _SwModelHost_Class::addProviderInterface(QString name,SwComponent_Class * component) {
+    
+}    
+/*! \brief Add consumer interface*/
+void _SwModelHost_Class::addConsumerInterface(QString name,SwComponent_Class * component) {
+
+}       
