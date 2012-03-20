@@ -30,8 +30,6 @@ using namespace StreamWork::SwCore;
 class _SwModelPluginFactory_Class : public SwPluginFactory_Class
 { 
 protected:
-    /*! \brief liste des models */
-    _SwModelsList _mlist;
 
 protected:
     /*! \brief instanciation d'un composant */

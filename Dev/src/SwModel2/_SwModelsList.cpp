@@ -72,10 +72,14 @@ void _SwModelsList::LoadModels() {
         if (!dir.cd(CL_MODELS_DIRECTORY)) 
             return;
         //Chargement de la liste des models
+        dir.cdUp();
         file.setFileName(dir.absoluteFilePath(CL_MODELS_LIST));
     } else {
         file.setFileName(filename);
     }
+
+    modelsPath=dir.absolutePath();
+
     if (!file.exists() || !file.open(QIODevice::ReadOnly | QIODevice::Text)) 
         return;
 
@@ -83,6 +87,7 @@ void _SwModelsList::LoadModels() {
         QString msg=QString("XML Parsing:%1 at position %2,%3 of %4").arg(xml_error).arg(error_line).arg(error_column).arg(CL_MODELS_LIST);
         LAUNCH_SWEXCEPTION("SwModel",msg)
     }
+
 
     //Lecture de la liste des models
     root_elt=doc.documentElement();
@@ -110,4 +115,8 @@ void _SwModelsList::LoadModels() {
 /*! \brief Chargement de la liste des modeles */
 const QMap<QString,_SwModelsList::_ModelDesc> * _SwModelsList::GetModelList() const {
     return &_liste;
+}
+/*! \brief getModelsPath */
+QString _SwModelsList::getModelPaths() {
+    return modelsPath;
 }

@@ -20,8 +20,10 @@
 #include "_SwModelHost_Class.h"
 #include "SwSnapShotPropertiesService.h"
 #include "ISwEditionService.h"
+#include "SwModelsListAccess.h"
 
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwModel;
 
 /*! \brief Constructeur */
 _SwModelPluginFactory_Class::_SwModelPluginFactory_Class():SwPluginFactory_Class() {
@@ -36,13 +38,13 @@ void _SwModelPluginFactory_Class::Initialize() {
     QMap<QString,_SwModelsList::_ModelDesc>::const_iterator it;
 
     //Chargement des modeles
-    _mlist.LoadModels();
+    SwModelsListAccess::getInstance()->getInternal()->LoadModels();
     //Enregistrement du modele host
     RegisterComponent("SwModel2Host","Model host");
     //Enregistrement d'un modele vide
     RegisterComponent("SwModel2","Empty Model");
     //Enregistrement des modeles
-    for (it=_mlist.GetModelList()->begin();it!=_mlist.GetModelList()->end();it++) {
+    for (it=SwModelsListAccess::getInstance()->getInternal()->GetModelList()->begin();it!=SwModelsListAccess::getInstance()->getInternal()->GetModelList()->end();it++) {
         RegisterComponent(it.key(),it.value()._model_description);   
     }
 }
@@ -60,8 +62,8 @@ SwComponent_Class * _SwModelPluginFactory_Class::CreateInstanceOf(QString name) 
     if (name=="SwModel2") {
         return new _SwModel_Class;
     }
-    it=_mlist.GetModelList()->find(name);
-    if (it!=_mlist.GetModelList()->end()) {
+    it=SwModelsListAccess::getInstance()->getInternal()->GetModelList()->find(name);
+    if (it!=SwModelsListAccess::getInstance()->getInternal()->GetModelList()->end()) {
         QFile file; 
         QDomDocument doc;
         QString xml_error;
@@ -109,8 +111,8 @@ QIcon _SwModelPluginFactory_Class::CreateIconOf(QString name) const {
     if (name=="SwModel2") {
         return QIcon(":/SwModel/model.png"); 
     }
-    it=_mlist.GetModelList()->find(name);
-    if (it!=_mlist.GetModelList()->end()) {
+    it=SwModelsListAccess::getInstance()->getInternal()->GetModelList()->find(name);
+    if (it!=SwModelsListAccess::getInstance()->getInternal()->GetModelList()->end()) {
         return it.value()._model_ico;
     }
     return ico;

@@ -22,7 +22,8 @@ HEADERS += SwModel2Constantes.h \
     _SwModelStreamTreeModel.h \
     _SwModel_Class.h \
     _SwModelsList.h  \
-    ISwModelHostModifier.h
+    ISwModelHostModifier.h  \
+    SwModelsListAccess.h
         
 SOURCES += _SwExportStreamTreeModel.cpp \
     _SwModelExportTreeView.cpp \
@@ -41,7 +42,9 @@ SOURCES += _SwExportStreamTreeModel.cpp \
     _SwModelPluginFactory_Class.cpp \
     _SwModelStreamTreeModel.cpp \
     _SwModel_Class.cpp \
-    _SwModelsList.cpp
+    _SwModelsList.cpp \
+    SwModelsListAccess.cpp
+    
 FORMS +=
 RESOURCES += _resources/SwModel2Rsc.qrc
 DEFINES += SWMODEL2_LIB

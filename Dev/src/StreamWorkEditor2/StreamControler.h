@@ -141,6 +141,8 @@ private:
     //--------------------------------------------------------------------------
     /** @brief sauvegarde des données visuelles */
     void saveVisualData(QDomDocument & doc);
+    /** @brief sauvegarde des données visuelles from selection*/
+    void saveVisualDataFromSelection(QDomDocument & doc,QList<StreamWork::SwCore::SwComponent_Class *> & components);
     /** @brief sauvegarde d'un item */
     void saveVisualItem(ComponentGraphicItem * item,QDomDocument & doc,QDomElement &parentNode);
     /** @brief chargement des données visuelles */

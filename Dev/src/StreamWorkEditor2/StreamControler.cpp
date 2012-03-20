@@ -23,6 +23,8 @@
 #include "Arranger.h"
 #include "InterestArea.h"
 #include "ISwModelHostModifier.h"
+#include "SwModelsListAccess.h"
+#include "SwSaver_Class.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwModel;
@@ -663,17 +665,78 @@ void StreamControler::recursiveDisconnectToControler(SwComponent_Class * compone
 void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & components,QString modelName) {
     //Ajout model host
     SwComponent_Class * modelHost=SW_APP->ComponentsBank().CreateComponent("SwModel2Host");
-    modelHost->SetName("host");
+    modelHost->SetName("__host");
     _rootComponent->AddChild(modelHost);
     //Ajout des interfaces qui sont externes a la selection dans le model host
     ISwModelHostModifier * modelModifier=dynamic_cast<ISwModelHostModifier *>(modelHost);
-    if (modelModifier!=0) {
-        modelModifier->addProviderInterface("Test",modelHost);
+    //Pour chaque composant selectionné
+    foreach(SwComponent_Class * comp,components) {
+        //pour chaque interface produite linké a un composant exterieur a la selection
+        //On la rajoute au model host
+        ISwInterfaces_Provider *provider_handle=dynamic_cast<ISwInterfaces_Provider *>(comp->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
+        if (provider_handle!=NULL) {
+            QString interface_name;
+            QString remote_interface_name;
+            interface_name=provider_handle->GetFirstInterface();
+            while (!interface_name.isEmpty()) {
+                ISwInterfaces_Consumer * consumer=provider_handle->GetFirstConsumer(interface_name,&remote_interface_name);
+                while (consumer!=0) {
+                    if (components.indexOf(consumer->GetHostComponent())==-1) {
+                        modelModifier->addProviderInterface(interface_name,comp);
+                    } else {
+                        consumer=provider_handle->GetNextConsumer(&remote_interface_name);
+                    }
+                }
+                interface_name=provider_handle->GetNextInterface();
+            }
+        }
+
+        //pour chaque interface consommé linké a un composant exterieur a la selection
+        //On la rajoute au model host
+        ISwInterfaces_Consumer *consumer_handle=dynamic_cast<ISwInterfaces_Consumer *>(comp->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
+        if (consumer_handle!=NULL) {
+            QString interface_name;
+            ISwInterfaces_Provider * pt_provider;
+            interface_name=consumer_handle->GetFirstInterface(NULL,&pt_provider,NULL);
+            while (!interface_name.isEmpty()) {
+                if (pt_provider!=0) {
+                    if (components.indexOf(pt_provider->GetHostComponent())==-1) {
+                        modelModifier->addConsumerInterface(interface_name,comp);
+                    } 
+                }
+                interface_name=consumer_handle->GetNextInterface(NULL,&pt_provider,NULL);
+            }
+        }
     }
     //Sauvegarde de la selection
+    QList<SwComponent_Class *> components_and_model_host=components;
+    components_and_model_host.push_back(modelHost);
+    QString models_path=SwModelsListAccess::getInstance()->getModelsDirectory();
+    SwSaver_Class saver;
+    QDomDocument doc;
+    QByteArray stream_desc;
+    QFile file;
+    QString _streamFileName=models_path+"/"+modelName+".xml";
 
+    //serialisation du stream
+    saver.SaveModel(components_and_model_host,doc);
+    //Ajout donnees visuelles
+    saveVisualDataFromSelection(doc,components_and_model_host); 
+    //Recuperation du stream
+    stream_desc=doc.toByteArray(4); //Indentation de quatre espace
+    //Ouverture d'un fichier en ecriture
+    file.setFileName(_streamFileName);
+    if (file.open(QIODevice::WriteOnly  | QIODevice::Truncate)==false) {
+        QMessageBox::critical(NULL,"StreamWorkEditor critical",QString("Fail to save stream in file %1").arg(_streamFileName));
+        return;
+    }
+    //Ecriture du fichier
+    file.write(stream_desc);
+    //Fermeture du fichier
+    file.close();    
+    
     //Modification de la liste de model
-
+    SwModelsListAccess::getInstance()->addModel("__host",modelName+".xml");
     //Suppression du modele_host
     _rootComponent->RemoveChild(modelHost);
 }
@@ -723,6 +786,30 @@ void StreamControler::saveVisualData(QDomDocument & doc){
         }
     }
 }
+/** @brief sauvegarde des données visuelles from selection*/
+void StreamControler::saveVisualDataFromSelection(QDomDocument & doc,QList<StreamWork::SwCore::SwComponent_Class *> & components) {
+    QDomElement sceneNode=doc.createElement(CL_SCENE_NODE);
+    QRectF srect=_streamScene->sceneRect();
+    sceneNode.setAttribute(CL_SCENE_ATT_X,srect.topLeft().x());
+    sceneNode.setAttribute(CL_SCENE_ATT_Y,srect.topLeft().y());
+    sceneNode.setAttribute(CL_SCENE_ATT_WIDTH,srect.width());
+    sceneNode.setAttribute(CL_SCENE_ATT_HEIGHT,srect.height());
+    doc.documentElement().appendChild(sceneNode);
+
+    QList<QGraphicsItem *> items=_streamScene->items();
+    int count=items.count();
+    for(int i=0;i<count;i++) {
+        QGraphicsItem * item=items[i];
+        if (item->parentItem()==0) {
+            ComponentGraphicItem * cgitem=dynamic_cast<ComponentGraphicItem *>(item);
+            if (cgitem!=0 && components.indexOf(cgitem->getComponent())!=-1) {
+                saveVisualItem(cgitem,doc,sceneNode);
+            }
+        }
+    }
+
+}
+
 /** @brief sauvegarde d'un item */
 void StreamControler::saveVisualItem(ComponentGraphicItem * item,QDomDocument & doc,QDomElement &parentNode){
     QDomElement itemNode=doc.createElement(CL_CGITEM_NODE);

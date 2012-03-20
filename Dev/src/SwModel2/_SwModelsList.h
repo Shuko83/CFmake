@@ -46,6 +46,8 @@ public:
 protected:
     /*! \brief Map contenant la liste des modeles */
     QMap<QString,_ModelDesc> _liste;
+    /*! \brief Path des models */
+    QString modelsPath;
 public:
     /*! \brief Constructeur */
     _SwModelsList();
@@ -55,6 +57,8 @@ public:
     void LoadModels();
     /*! \brief Chargement de la liste des modeles */
     const QMap<QString,_SwModelsList::_ModelDesc> * GetModelList() const;
+    /*! \brief getModelsPath */
+    QString getModelPaths();
 };
 
 

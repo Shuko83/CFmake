@@ -3,6 +3,8 @@
 @brief manager de menu
 @author F.Bighelli
  */
+#include <QtGui>
+
 #include "MenuManager.h"
 
 #include <QColorDialog>
@@ -469,10 +471,15 @@ QString MenuManager::buildActionNameForConnector(ConnectorGraphicItem *citem) {
 
 /** @brief on create new model */
 void MenuManager::onCreateNewModel() {
-    QString modelName="Toto";
-    QList<SwComponent_Class *> clist;
-    for(int i=0;i<_gwList.count();i++) {
-        clist.push_back(_gwList[i]->getComponent());
+    bool ok;
+    QString modelName= QInputDialog::getText(0, "Enter name of model",
+        "Model name:", QLineEdit::Normal,
+        "Undefined_Model", &ok);
+    if (ok && !modelName.isEmpty()) {
+        QList<SwComponent_Class *> clist;
+        for(int i=0;i<_gwList.count();i++) {
+            clist.push_back(_gwList[i]->getComponent());
+        }
+        _streamControler->createModelFromSelection(clist,modelName);
     }
-    _streamControler->createModelFromSelection(clist,modelName);
 }

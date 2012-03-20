@@ -72,6 +72,44 @@ void SwSaver_Class::SaveGroup(QList<SwComponent_Class *> & components,QDomDocume
     }
 }
 
+/*! Sauvegarde model */
+void SwSaver_Class::SaveModel(QList<SwComponent_Class *> & components,QDomDocument & doc) {
+    QDomElement streamwork_elt;
+    QDomElement path_node;
+    QDomComment comment;
+    QMap<QString,bool> paths;
+    QMap<QString,bool>::const_iterator pathsIt;
+
+    //Ecriture du header
+    streamwork_elt=doc.createElement(CG_SW_XML_DOCUMENT_NODE);
+    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION,CG_STREAMWORK_VERSION);
+    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_DATE,__DATE__);
+    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_TIME,__TIME__);
+    doc.appendChild(streamwork_elt);
+    //Ajout des path
+    paths=SW_APP->ComponentsBank().GetPathList();
+    for (pathsIt=paths.begin();pathsIt!=paths.end();pathsIt++) {
+        if (pathsIt.value()) {
+            path_node=doc.createElement(CG_SW_XML_PATH_NODE);
+            path_node.setAttribute(CG_SW_XML_PATH_NODE_ATT_VALUE,pathsIt.key());
+            streamwork_elt.appendChild(path_node);
+        }
+    }
+    //Ecritures du root
+    QDomElement component_node;
+    //Creation du neoud composant
+    component_node=doc.createElement(CG_SW_XML_COMPONENT_NODE);
+    //Ajout attribut nom
+    component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_NAME,"NoNamed");
+    //Ajout root
+    streamwork_elt.appendChild(component_node);
+    //Ecritures des composants
+    for(int i=0;i<components.count();i++) {
+        BuildXMLStream(components[i],doc,component_node);    
+    }
+}
+
+
 /*! Construction de la definition du stream au format xml */
 void SwSaver_Class::BuildXMLStream(SwComponent_Class * component,QDomDocument & doc,QDomElement & parent_node) {
     QDomElement component_node;

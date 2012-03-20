@@ -107,11 +107,11 @@ CONFIG(debug, debug|release) {
   win32:DESTDIR = ./../../bin/vc/debug/
     TARGET = $$join(TARGET,,,d)
 	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
-	LIBS += -L"../../lib/vc/debug" -lSwCored -lWizardIDEd -lSwDocd
+	LIBS += -L"../../lib/vc/debug" -lSwCored -lWizardIDEd -lSwDocd -lSwModel2d
 	CONFIG += console
 } 
 CONFIG(release, debug|release) {
-	LIBS += -L"../../lib/vc/release" -lSwCore -lWizardIDE -lSwDoc
+	LIBS += -L"../../lib/vc/release" -lSwCore -lWizardIDE -lSwDoc -lSwModel2
 }
 
 #Windows resource file
