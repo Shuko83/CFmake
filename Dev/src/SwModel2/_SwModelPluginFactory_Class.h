@@ -27,7 +27,7 @@ using namespace StreamWork::SwCore;
 	\class SwPluginFactory_Class 
 	\brief classe definissant un plugin usine
 */
-class _SwModelPluginFactory_Class : public SwPluginFactory_Class
+class _SwModelPluginFactory_Class : public SwPluginFactory_Class, public _ISwModelsListListener
 { 
 protected:
 
@@ -49,6 +49,9 @@ public:
     void Liberate();
     /*! \brief Acces a la version du plugin */
     QString GetPluginVersion();
+    //Here public method
+    virtual void modelAdded(QString name,QString description);
+
 };
 
 #ifndef QT_NO_DEBUG

@@ -30,7 +30,7 @@ namespace StreamWork {
             /** @brief internal access (backup compatibility) */
             QString getModelsDirectory();
             /** @brief add model */
-            void addModel(QString hostComponent,QString modelFileName);
+            void addModel(QString hostComponent,QString modelName);
         private:            
             /** @brief Constructor */
             SwModelsListAccess();

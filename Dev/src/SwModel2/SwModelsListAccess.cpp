@@ -38,6 +38,6 @@ QString SwModelsListAccess::getModelsDirectory() {
     return _internalInstance->getModelPaths();
 }
 /** @brief add model */
-void SwModelsListAccess::addModel(QString hostComponent,QString modelFileName) {
-
+void SwModelsListAccess::addModel(QString hostComponent,QString modelName) {
+    _internalInstance->addModel(hostComponent,modelName);
 }

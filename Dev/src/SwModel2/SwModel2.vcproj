@@ -177,6 +177,8 @@
 			<File
 				RelativePath="SwModelsListAccess.h" />
 			<File
+				RelativePath="_ISwModelsListListener.h" />
+			<File
 				RelativePath="_SwExportStreamTreeModel.h">
 				<FileConfiguration
 					Name="Debug|Win32">

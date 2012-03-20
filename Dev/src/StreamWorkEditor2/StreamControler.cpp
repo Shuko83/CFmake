@@ -736,7 +736,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
     file.close();    
     
     //Modification de la liste de model
-    SwModelsListAccess::getInstance()->addModel("__host",modelName+".xml");
+    SwModelsListAccess::getInstance()->addModel("__host",modelName);
     //Suppression du modele_host
     _rootComponent->RemoveChild(modelHost);
 }

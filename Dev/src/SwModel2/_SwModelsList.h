@@ -11,6 +11,8 @@
 
 #include <QMap>
 #include <QIcon>
+#include <QFile>
+#include "_ISwModelsListListener.h"
 
 /*!
 	\class classe conteneur de la liste des models
@@ -48,6 +50,10 @@ protected:
     QMap<QString,_ModelDesc> _liste;
     /*! \brief Path des models */
     QString modelsPath;
+    /*! \brief model list file name */
+    QFile modelsListFile;
+    /*! \brief listener*/
+    _ISwModelsListListener * listener;
 public:
     /*! \brief Constructeur */
     _SwModelsList();
@@ -59,6 +65,10 @@ public:
     const QMap<QString,_SwModelsList::_ModelDesc> * GetModelList() const;
     /*! \brief getModelsPath */
     QString getModelPaths();
+    /** @brief add model */
+    void addModel(QString hostComponent,QString modelName);
+
+    void registerListener(_ISwModelsListListener * listener);
 };
 
 

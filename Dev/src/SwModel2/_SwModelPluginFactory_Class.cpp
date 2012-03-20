@@ -37,6 +37,7 @@ _SwModelPluginFactory_Class::~_SwModelPluginFactory_Class() {
 void _SwModelPluginFactory_Class::Initialize() {
     QMap<QString,_SwModelsList::_ModelDesc>::const_iterator it;
 
+    SwModelsListAccess::getInstance()->getInternal()->registerListener(this);
     //Chargement des modeles
     SwModelsListAccess::getInstance()->getInternal()->LoadModels();
     //Enregistrement du modele host
@@ -48,6 +49,12 @@ void _SwModelPluginFactory_Class::Initialize() {
         RegisterComponent(it.key(),it.value()._model_description);   
     }
 }
+//Here public method
+void _SwModelPluginFactory_Class::modelAdded(QString name,QString description) {
+    RegisterComponent(name,description);
+    SW_APP->ComponentsBank().RereadPluginContent(this);
+}
+
 /*! \brief Liberation */
 void _SwModelPluginFactory_Class::Liberate() {
 
