@@ -54,6 +54,8 @@ namespace StreamWork
             void Save(SwComponent_Class * root_component,QDomDocument & doc);
             /*! Sauvegarde groupe */
             void SaveGroup(QList<SwComponent_Class *> & components,QDomDocument & doc);
+            /*! Sauvegarde model */
+            void SaveModel(QList<SwComponent_Class *> & components,QDomDocument & doc);
 		};
 	}
 }

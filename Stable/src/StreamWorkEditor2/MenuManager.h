@@ -67,6 +67,8 @@ public slots:
     void onChangeBackGroundColor();
     /** @brief on jump */
     void onJumpToConnected();
+    /** @brief on create new model */
+    void onCreateNewModel();
 private:
 	/** @brief Constructor */
 	MenuManager();

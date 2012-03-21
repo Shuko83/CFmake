@@ -134,6 +134,39 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 	_statusWidget->setReadOnly(true);
 	statusBar()->addPermanentWidget(_statusWidget,100);
 	_statusWidget->setText("Ready");
+
+    QStringList liste_arg=QCoreApplication::instance()->arguments();
+    int nb_args=liste_arg.count();
+    for(int i=1;i+1<nb_args;i++) {
+        QString test=liste_arg[i];
+        //aide
+        if (liste_arg[i]=="-stream" ) {
+            QFileInfo fi(liste_arg[i+1]);
+            if (fi.exists()) {
+                if (_streamControler!=0) {
+                    _streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
+                    _streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+                    _streamTreeModel->setStreamControler(0);
+                    _iaTreeModel->setStreamControler(0);
+                    delete _streamControler;
+                }
+                _streamControler=new StreamControler(_propertyWidget);
+                _streamControler->setView(_streamView);
+                _streamControler->loadStream(liste_arg[i+1]);
+                _streamTreeModel->setStreamControler(_streamControler);
+                _iaTreeModel->setStreamControler(_streamControler);
+                _streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
+                _streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
+                _streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+                setWindowTitle(fi.fileName()+ " - " + fi.filePath());
+                _editors.insert(_streamControler->getRootItem(),this);
+                _streamSourceOpener=0;
+                _streamControler->getRootItem()->OnDestroy.iconnect(*this,&MainWindow::internalClose);
+            }
+
+        }
+    }
+
 }
 /** @brief sur new stream */
 void MainWindow::onNewStream() {

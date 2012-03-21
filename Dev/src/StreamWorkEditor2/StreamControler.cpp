@@ -515,11 +515,11 @@ void StreamControler::OnDisconnectInterface(ISwInterfaces_Service * source,QStri
                            ISwInterfaces_Service * remote_source,QString remote_interface_name){
     ISwInterfaces_Service * lsource=source;
     QString iname=interface_name;
-    if (dynamic_cast<ISwInterfaces_Provider *>(source)!=0) {
+    /*if (dynamic_cast<ISwInterfaces_Provider *>(source)!=0) {
         return;
         //lsource=remote_source;  
         //iname=remote_interface_name;
-    }
+    }*/
     QMap<StreamWork::SwCore::SwComponent_Class *,ComponentGraphicItem *>::iterator its;
     its=_mapCompToItem.find(lsource->GetHostComponent()); 
     if (its==_mapCompToItem.end() ) {
@@ -734,11 +734,13 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
         if (pins_manager_handle!=NULL) {
             QList<SwPin *> pins=pins_manager_handle->GetPinList();
             for(int i=0;i<pins.count();i++) {
+                QString m_connector_name;
                 SwPin * rpin=pins[i]->GetConnected();
                 if (rpin!=0) {
                     
                     if (components.indexOf(rpin->GetManager()->GetHostComponent())==-1) {
-                        modelModifier->addConnector(pins[i]->GetName(),comp,pins[i]->GetType());
+                        m_connector_name=modelModifier->addConnector(pins[i]->GetName(),comp,pins[i]->GetType());
+                        modelCreatorHelper.addConnectorLink(pins[i],rpin,m_connector_name);
                     }
                 }
             }
@@ -788,7 +790,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
     
     // Insertion du model final
     SwComponent_Class * model=SW_APP->ComponentsBank().CreateComponent(modelName);
-    
+    model->SetName(modelName+"_instance");
 
     _creationPosition=targetpos;
     _rootComponent->AddChild(model);

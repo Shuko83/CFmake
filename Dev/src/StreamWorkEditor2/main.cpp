@@ -25,6 +25,7 @@ const char * VL_Help="Usage: %1 [options]\n\
     -d                   display core actions\n\
     -ppath path          plugin path\n\
     -pdesc pathdesc      plugin paths descriptor\n\
+    -stream streamfile   stream will be read in the specified path\n\
     -log logfile         logs will be write in the specified file\n\
 \n\
 ";
@@ -48,6 +49,7 @@ int main(int argc, char *argv[])
 	QString stream_desc;
     SwFileLogRecorder_Class * log_recorder=NULL;
     int result=-1;
+    bool doNewStream=true;
     //ISwService * un_service;
     QPixmap pixmap(":/StreamWorkEditor2/splash.png");
     SwSplash splash(pixmap);
@@ -87,6 +89,12 @@ int main(int argc, char *argv[])
         	    log_recorder=new SwFileLogRecorder_Class(liste_arg[i+1]);
                 SW_APP->Logger().AttachLogRecorder(log_recorder);
             }
+            if (liste_arg[i]=="-stream" ) {
+                QFileInfo fi(liste_arg[i+1]);
+                if (fi.exists()) {
+                    doNewStream=false;
+                }
+            }
 
         }
         //Finalisation de l'initialisation
@@ -96,7 +104,9 @@ int main(int argc, char *argv[])
         MainWindow *window=new MainWindow;
         app.setQuitOnLastWindowClosed(false);
         //app.connect(&app, SIGNAL(lastWindowClosed()), window, SLOT(onQuit()));
-        window->onNewStream();
+        if (doNewStream) {
+            window->onNewStream();
+        }
         window->show();
         result=app.exec();
         //Destruction du log_recorder

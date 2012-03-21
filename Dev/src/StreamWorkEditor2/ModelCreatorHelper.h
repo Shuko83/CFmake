@@ -6,6 +6,7 @@
 
 #include <QtCore>
 #include <SwComponent_Class.h>
+#include <SwPin.h>
 #include <ISwInterfaces_Provider.h>
 #include <ISwInterfaces_Consumer.h>
 
@@ -27,6 +28,7 @@ public:
 
     void addProviderLink(ISwInterfaces_Provider * provider,QString p_interface_name,QString m_interface_name,ISwInterfaces_Consumer * consumer,QString c_interface_name);
     void addConsumerLink(ISwInterfaces_Consumer * consumer,QString c_interface_name,QString m_interface_name,ISwInterfaces_Provider * provider,QString p_interface_name);
+    void addConnectorLink(SwPin * source,SwPin * rtarget,QString m_connecteur);
     void connectInternalToModelHost(SwComponent_Class * model_host);
     void connectModelToExternal(SwComponent_Class * model);
 
@@ -91,8 +93,22 @@ private:
         }
     };
 
+    class ConnectorItem {
+    public:
+        SwPin * source;
+        SwPin * rtarget;
+        QString m_connecteur;
+        ConnectorItem(SwPin * source,SwPin * rtarget,QString m_connecteur) {
+            this->source=source;
+            this->rtarget=rtarget;
+            this->m_connecteur=m_connecteur;
+        }
+
+    };
+
     QMultiMap<ProviderKey *,ProviderItem *> providerLinks; 
     QMap<ConsumerKey *,ConsumerItem *> consumerLinks; 
+    QList<ConnectorItem *> connectorLinks;
 
 };
 

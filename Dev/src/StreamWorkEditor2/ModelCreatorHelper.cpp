@@ -5,7 +5,7 @@
  */
 
 #include "ModelCreatorHelper.h"
- 
+#include "ISwPins_Manager.h" 
 
 /** @brief Constructor */
 ModelCreatorHelper::ModelCreatorHelper() {
@@ -21,6 +21,9 @@ void ModelCreatorHelper::addProviderLink(ISwInterfaces_Provider * provider,QStri
 void ModelCreatorHelper::addConsumerLink(ISwInterfaces_Consumer * consumer,QString c_interface_name,QString m_interface_name,ISwInterfaces_Provider * provider,QString p_interface_name) {
     consumerLinks.insert(new ConsumerKey(consumer,c_interface_name), new ConsumerItem(consumer,c_interface_name,m_interface_name,provider,p_interface_name));
 }
+void ModelCreatorHelper::addConnectorLink(SwPin * source,SwPin * rtarget,QString m_connecteur) {
+    connectorLinks.push_back(new ConnectorItem(source,rtarget,m_connecteur));
+}
 void ModelCreatorHelper::connectInternalToModelHost(SwComponent_Class * model_host) {
     //Pour les providers : deconnection
     QMultiMap<ProviderKey *,ProviderItem *>::iterator itp=providerLinks.begin();
@@ -35,6 +38,11 @@ void ModelCreatorHelper::connectInternalToModelHost(SwComponent_Class * model_ho
         ConsumerItem * item=itc.value();
         item->consumer->DetachProvider(item->c_interface_name);
         itc++;
+    }
+
+    //Pour les connectors: deconnexion
+    foreach(ConnectorItem * item,connectorLinks) {
+        item->source->GetManager()->DisconnectPin(item->source->GetName());
     }
 
     //Pour les providers : connexion au model host
@@ -63,7 +71,14 @@ void ModelCreatorHelper::connectInternalToModelHost(SwComponent_Class * model_ho
             itc++;
         }
     }
-    
+    //Pour les connectors: connexion au model host
+    ISwPins_Manager *pins_manager_handle=dynamic_cast<ISwPins_Manager *>(model_host->QueryService(CG_SW_SERVICE_PINS_MANAGER));
+    if (pins_manager_handle!=0) {
+        foreach(ConnectorItem * item,connectorLinks) {
+            item->source->GetManager()->ConnectRemotePinToLocalPin(item->source->GetName(),item->m_connecteur,pins_manager_handle);
+        }
+
+    }
 }
 void ModelCreatorHelper::connectModelToExternal(SwComponent_Class * model) {
     //Pour les providers : connexion du model a l'exterieur
@@ -88,4 +103,13 @@ void ModelCreatorHelper::connectModelToExternal(SwComponent_Class * model) {
             itc++;
         }
     }
+
+    //Pour les connectors: connexion au model host
+    ISwPins_Manager *pins_manager_handle=dynamic_cast<ISwPins_Manager *>(model->QueryService(CG_SW_SERVICE_PINS_MANAGER));
+    if (pins_manager_handle!=0) {
+        foreach(ConnectorItem * item,connectorLinks) {
+            item->rtarget->GetManager()->ConnectRemotePinToLocalPin(item->rtarget->GetName(),item->m_connecteur,pins_manager_handle);
+        }
+    }
+
 }
