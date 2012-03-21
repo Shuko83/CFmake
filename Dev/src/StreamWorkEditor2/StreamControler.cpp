@@ -665,6 +665,17 @@ void StreamControler::recursiveDisconnectToControler(SwComponent_Class * compone
 /*! \brief Create model from selection*/
 void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & components,QString modelName) {
     ModelCreatorHelper modelCreatorHelper;
+ 
+    //Calcul position
+    QMap<StreamWork::SwCore::SwComponent_Class *,ComponentGraphicItem *>::iterator it;
+    QPointF targetpos;
+    foreach(SwComponent_Class * comp,components) {
+        it=_mapCompToItem.find(comp);
+        targetpos+=it.value()->pos();
+    }
+    targetpos/=(qreal)components.count();
+    _creationPosition=targetpos;
+    
     //Ajout model host
     SwComponent_Class * modelHost=SW_APP->ComponentsBank().CreateComponent("SwModel2Host");
     modelHost->SetName("__host");
@@ -778,6 +789,8 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
     // Insertion du model final
     SwComponent_Class * model=SW_APP->ComponentsBank().CreateComponent(modelName);
     
+
+    _creationPosition=targetpos;
     _rootComponent->AddChild(model);
     modelCreatorHelper.connectModelToExternal(model);
 }
