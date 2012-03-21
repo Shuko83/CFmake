@@ -159,6 +159,8 @@
 			<File
 				RelativePath="MenuManager.cpp" />
 			<File
+				RelativePath="ModelCreatorHelper.cpp" />
+			<File
 				RelativePath="PluginOverview.cpp" />
 			<File
 				RelativePath="PluginsListModel.cpp" />
@@ -409,6 +411,8 @@
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="ModelCreatorHelper.h" />
 			<File
 				RelativePath="PluginOverview.h">
 				<FileConfiguration

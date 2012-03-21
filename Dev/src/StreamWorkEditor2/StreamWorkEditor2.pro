@@ -43,6 +43,7 @@ HEADERS += ManageLinkColor.h
 HEADERS += PluginOverview.h
 HEADERS += LegendView.h
 HEADERS += ../SwModel2/ISwModelHostModifier.h
+HEADERS += ModelCreatorHelper.h
 
 
 SOURCES += SwSplash.cpp
@@ -78,6 +79,7 @@ SOURCES += EditionService.cpp
 SOURCES += ManageLinkColor.cpp
 SOURCES += PluginOverview.cpp
 SOURCES += LegendView.cpp
+SOURCES += ModelCreatorHelper.cpp
 
 FORMS += _resources/LogView.ui
 FORMS += ../SwGui/_QRcViewerUi.ui

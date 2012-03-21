@@ -22,9 +22,14 @@ namespace StreamWork {
         class ISwModelHostModifier {
         public:
             /*! \brief Add provider interface*/
-            virtual void addProviderInterface(QString name,SwCore::SwComponent_Class * component)=0;        
+            virtual QString addProviderInterface(QString name,SwCore::SwComponent_Class * component,QString itype)=0;        
             /*! \brief Add consumer interface*/
-            virtual void addConsumerInterface(QString name,SwCore::SwComponent_Class * component)=0;      
+            virtual QString addConsumerInterface(QString name,SwCore::SwComponent_Class * component,QString itype)=0;      
+            /*! \brief Add connector*/
+            virtual QString addConnector(QString name,SwCore::SwComponent_Class * component,QString itype)=0;     
+            /*! \brief update model host*/
+            virtual void updateModelHost()=0;     
+
         };
     
     }

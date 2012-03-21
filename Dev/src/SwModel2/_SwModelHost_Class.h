@@ -126,8 +126,12 @@ public:
     // Interface ISwModelHostModifier
     //---------------------------------------------------------------------
     /*! \brief Add provider interface*/
-    virtual void addProviderInterface(QString name,SwComponent_Class * component);     
+    virtual QString addProviderInterface(QString name,SwComponent_Class * component,QString itype);     
     /*! \brief Add consumer interface*/
-    virtual void addConsumerInterface(QString name,SwComponent_Class * component);       
+    virtual QString addConsumerInterface(QString name,SwComponent_Class * component,QString itype);       
+    /*! \brief Add connector*/
+    virtual QString addConnector(QString name,SwComponent_Class * component,QString itype);      
+    /*! \brief update model host*/
+    virtual void updateModelHost();     
 };
 #endif 

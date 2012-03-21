@@ -38,13 +38,13 @@ void _SwModelExportedEntitiesModel::TransformEntitiesToModel() {
                 _properties.push_back(new _Item(IT_Property,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,(*_entities_list)[i]->_host_path,QString()));
                 break;
             case Ent_InterfaceC:
-                _interfacesC.push_back(new _Item(IT_Interface_C,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,QString(),(*_entities_list)[i]->_itype));
+                _interfacesC.push_back(new _Item(IT_Interface_C,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,(*_entities_list)[i]->_host_path,(*_entities_list)[i]->_itype));
                 break;
             case Ent_InterfaceP:
-                _interfacesP.push_back(new _Item(IT_Interface_P,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,QString(),(*_entities_list)[i]->_itype));
+                _interfacesP.push_back(new _Item(IT_Interface_P,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,(*_entities_list)[i]->_host_path,(*_entities_list)[i]->_itype));
                 break;
             case Ent_Pin:
-                _pins.push_back(new _Item(IT_Pin,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,QString(),(*_entities_list)[i]->_itype));
+                _pins.push_back(new _Item(IT_Pin,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,(*_entities_list)[i]->_host_path,(*_entities_list)[i]->_itype));
                 break;
             case Ent_Executable:
             	_executables.push_back(new _Item(IT_Executable,(*_entities_list)[i]->_name,(*_entities_list)[i]->_exported_name,(*_entities_list)[i]->_host_path,QString()));
@@ -80,6 +80,7 @@ void _SwModelExportedEntitiesModel::TransformModelToEntities() {
         entity->_name=_interfacesC[i]->_name;
         entity->_exported_name=_interfacesC[i]->_exported_name;
         entity->_itype=_interfacesC[i]->_itype;
+        entity->_host_path=_interfacesC[i]->_host_path;
         _entities_list->push_back(entity);
     }
     for(int i=0;i<_interfacesP.count();i++) {
@@ -484,18 +485,18 @@ bool _SwModelExportedEntitiesModel::dropMimeData ( const QMimeData * data, Qt::D
             if (type==QString("IC")) {
                 host=SwAddress_ToolBox::FindTarget(item_parts[0],_root_component);
                 ISwInterfaces_Consumer * host_consumer=dynamic_cast<ISwInterfaces_Consumer *>(host->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
-                _interfacesC.push_back(new _Item(IT_Interface_C,name,exported_name,QString(),host_consumer->GetInterfaceType(name)));
+                _interfacesC.push_back(new _Item(IT_Interface_C,name,exported_name,item_parts[0],host_consumer->GetInterfaceType(name)));
             }
             if (type==QString("IP")) {
                 host=SwAddress_ToolBox::FindTarget(item_parts[0],_root_component);
                 ISwInterfaces_Provider * host_provider=dynamic_cast<ISwInterfaces_Provider *>(host->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
-                _interfacesP.push_back(new _Item(IT_Interface_P,name,exported_name,QString(),host_provider->GetInterfaceType(name)));
+                _interfacesP.push_back(new _Item(IT_Interface_P,name,exported_name,item_parts[0],host_provider->GetInterfaceType(name)));
             }
             if (type==QString("PI")) {
                 host=SwAddress_ToolBox::FindTarget(item_parts[0],_root_component);
                 ISwPins_Manager * host_pin_manager=dynamic_cast<ISwPins_Manager *>(host->QueryService(CG_SW_SERVICE_PINS_MANAGER));  
                 SwPin * host_pin =host_pin_manager->GetPinByName(name);
-                _pins.push_back(new _Item(IT_Pin,name,exported_name,QString(),host_pin->GetType()));
+                _pins.push_back(new _Item(IT_Pin,name,exported_name,item_parts[0],host_pin->GetType()));
             }
             if (type==QString("EX") && _executables.count()==0) {
                 _executables.push_back(new _Item(IT_Executable,"Executable interface","Executable interface",item_parts[0],QString()));

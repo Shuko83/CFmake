@@ -25,6 +25,7 @@
 #include "ISwModelHostModifier.h"
 #include "SwModelsListAccess.h"
 #include "SwSaver_Class.h"
+#include "ModelCreatorHelper.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwModel;
@@ -663,6 +664,7 @@ void StreamControler::recursiveDisconnectToControler(SwComponent_Class * compone
 }
 /*! \brief Create model from selection*/
 void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & components,QString modelName) {
+    ModelCreatorHelper modelCreatorHelper;
     //Ajout model host
     SwComponent_Class * modelHost=SW_APP->ComponentsBank().CreateComponent("SwModel2Host");
     modelHost->SetName("__host");
@@ -676,16 +678,21 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
         ISwInterfaces_Provider *provider_handle=dynamic_cast<ISwInterfaces_Provider *>(comp->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
         if (provider_handle!=NULL) {
             QString interface_name;
+            QString m_interface_name;
             QString remote_interface_name;
             interface_name=provider_handle->GetFirstInterface();
             while (!interface_name.isEmpty()) {
+                m_interface_name="";
                 ISwInterfaces_Consumer * consumer=provider_handle->GetFirstConsumer(interface_name,&remote_interface_name);
                 while (consumer!=0) {
                     if (components.indexOf(consumer->GetHostComponent())==-1) {
-                        modelModifier->addProviderInterface(interface_name,comp);
-                    } else {
-                        consumer=provider_handle->GetNextConsumer(&remote_interface_name);
-                    }
+                        if (m_interface_name.isEmpty()) {
+                            m_interface_name=modelModifier->addProviderInterface(interface_name,comp,provider_handle->GetInterfaceType(interface_name));
+                        }
+                        modelCreatorHelper.addProviderLink(provider_handle,interface_name,m_interface_name,consumer,remote_interface_name);
+                        consumer=0;
+                    } 
+                    consumer=provider_handle->GetNextConsumer(&remote_interface_name);         
                 }
                 interface_name=provider_handle->GetNextInterface();
             }
@@ -696,18 +703,40 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
         ISwInterfaces_Consumer *consumer_handle=dynamic_cast<ISwInterfaces_Consumer *>(comp->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
         if (consumer_handle!=NULL) {
             QString interface_name;
+             QString m_interface_name;
+             QString remote_interface_name;
             ISwInterfaces_Provider * pt_provider;
-            interface_name=consumer_handle->GetFirstInterface(NULL,&pt_provider,NULL);
+            interface_name=consumer_handle->GetFirstInterface(NULL,&pt_provider,&remote_interface_name);
             while (!interface_name.isEmpty()) {
                 if (pt_provider!=0) {
                     if (components.indexOf(pt_provider->GetHostComponent())==-1) {
-                        modelModifier->addConsumerInterface(interface_name,comp);
+                        m_interface_name=modelModifier->addConsumerInterface(interface_name,comp,consumer_handle->GetInterfaceType(interface_name));
+                        modelCreatorHelper.addConsumerLink(consumer_handle,interface_name,m_interface_name,pt_provider,remote_interface_name);
                     } 
                 }
-                interface_name=consumer_handle->GetNextInterface(NULL,&pt_provider,NULL);
+                interface_name=consumer_handle->GetNextInterface(NULL,&pt_provider,&remote_interface_name);
             }
         }
+        //pour chaque connecteur consommé linké a un composant exterieur a la selection
+        //On la rajoute au model host
+        ISwPins_Manager *pins_manager_handle=dynamic_cast<ISwPins_Manager *>(comp->QueryService(CG_SW_SERVICE_PINS_MANAGER));
+        if (pins_manager_handle!=NULL) {
+            QList<SwPin *> pins=pins_manager_handle->GetPinList();
+            for(int i=0;i<pins.count();i++) {
+                SwPin * rpin=pins[i]->GetConnected();
+                if (rpin!=0) {
+                    
+                    if (components.indexOf(rpin->GetManager()->GetHostComponent())==-1) {
+                        modelModifier->addConnector(pins[i]->GetName(),comp,pins[i]->GetType());
+                    }
+                }
+            }
+        }
+
     }
+    modelModifier->updateModelHost();
+    //Link selection to model host
+    modelCreatorHelper.connectInternalToModelHost(modelHost);
     //Sauvegarde de la selection
     QList<SwComponent_Class *> components_and_model_host=components;
     components_and_model_host.push_back(modelHost);
@@ -737,8 +766,20 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
     
     //Modification de la liste de model
     SwModelsListAccess::getInstance()->addModel("__host",modelName);
-    //Suppression du modele_host
-    _rootComponent->RemoveChild(modelHost);
+    //Suppression de la selection
+    for(int i=0;i<components_and_model_host.count();i++) {
+         SwComponent_Class * component=components_and_model_host[i]->GetParent();
+         if (component!=0) {
+             component->RemoveChild(components_and_model_host[i]);
+         }
+    }
+
+    
+    // Insertion du model final
+    SwComponent_Class * model=SW_APP->ComponentsBank().CreateComponent(modelName);
+    
+    _rootComponent->AddChild(model);
+    modelCreatorHelper.connectModelToExternal(model);
 }
 
 //--------------------------------------------------------------------------

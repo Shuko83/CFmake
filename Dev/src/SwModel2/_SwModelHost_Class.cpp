@@ -339,21 +339,40 @@ void _SwModelHost_Class::Save(QDomElement & elt,QDomDocument &doc) {
 // Interface ISwModelHostModifier
 //---------------------------------------------------------------------
 /*! \brief Add provider interface*/
-void _SwModelHost_Class::addProviderInterface(QString name,SwComponent_Class * component) {
+QString _SwModelHost_Class::addProviderInterface(QString name,SwComponent_Class * component,QString itype) {
     _SwModelExportedEntity *entity;
     entity=_SwModelExportedEntity::NewEntity(Ent_InterfaceP);
     entity->_name=name;
     entity->_exported_name=name+"_exported_from_"+component->GetName();
     entity->_host_path=SwAddress_ToolBox::BuildAbsolutePath(component);
+    entity->_itype=itype;
     _exported_entities.push_back(entity);
+    return entity->_exported_name;
 }    
 /*! \brief Add consumer interface*/
-void _SwModelHost_Class::addConsumerInterface(QString name,SwComponent_Class * component) {
+QString _SwModelHost_Class::addConsumerInterface(QString name,SwComponent_Class * component,QString itype) {
     _SwModelExportedEntity *entity;
     entity=_SwModelExportedEntity::NewEntity(Ent_InterfaceC);
     entity->_name=name;
     entity->_exported_name=name+"_exported_from_"+component->GetName();
     entity->_host_path=SwAddress_ToolBox::BuildAbsolutePath(component);
+    entity->_itype=itype;
     _exported_entities.push_back(entity);
+    return entity->_exported_name;
 
 }       
+/*! \brief Add connector*/
+QString _SwModelHost_Class::addConnector(QString name,SwComponent_Class * component,QString itype) {
+    _SwModelExportedEntity *entity;
+    entity=_SwModelExportedEntity::NewEntity(Ent_Pin);
+    entity->_name=name;
+    entity->_exported_name=name+"_exported_from_"+component->GetName();
+    entity->_host_path=SwAddress_ToolBox::BuildAbsolutePath(component);
+    entity->_itype=itype;
+    _exported_entities.push_back(entity);
+    return entity->_exported_name;
+}   
+/*! \brief update model host*/
+void _SwModelHost_Class::updateModelHost() {
+    BuildEntities();
+}   
