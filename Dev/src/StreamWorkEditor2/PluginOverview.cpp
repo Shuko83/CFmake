@@ -11,7 +11,7 @@ PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette grap
 	: QWidget(parent)
 {
 	ui.setupUi(this);
-	_doc = doc;
+	_doc = new EditDoc();
 
 	ui.LE_search->setText(DefaultSearchText);
 

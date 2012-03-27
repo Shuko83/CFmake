@@ -45,9 +45,6 @@ private:
     /** @brief Palette d'affichage pour la vue graph */
     QPalette _graphPalette;
 
-
-	EditDoc * _doc;
-
 };
 
 #endif
