@@ -33,7 +33,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 	nbWindows++;
 
 	//Definition du wizard
-	_wizard=new SwWizardFrontEnd(this);
+	//_wizard=new SwWizardFrontEnd(this);
 
 	//Acces Stream
 	QMenu * streamMenu=menuBar()->addMenu("Streams");
