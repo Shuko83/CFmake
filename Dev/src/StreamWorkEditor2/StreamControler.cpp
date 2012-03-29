@@ -23,7 +23,7 @@
 #include "Arranger.h"
 #include "InterestArea.h"
 #include "ISwModelHostModifier.h"
-#include "SwModelsListAccess.h"
+#include "ISwModelService.h"
 #include "SwSaver_Class.h"
 #include "ModelCreatorHelper.h"
 
@@ -665,6 +665,12 @@ void StreamControler::recursiveDisconnectToControler(SwComponent_Class * compone
 /*! \brief Create model from selection*/
 void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & components,QString modelName) {
     ModelCreatorHelper modelCreatorHelper;
+
+
+    //Recuperation du service
+    ISwModelService * serviceModel=dynamic_cast<ISwModelService *>(SW_APP->QueryService(CG_SW_SERVICE_MODEL));
+    if (serviceModel==0)
+        return;
  
     //Calcul position
     QMap<StreamWork::SwCore::SwComponent_Class *,ComponentGraphicItem *>::iterator it;
@@ -753,7 +759,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
     //Sauvegarde de la selection
     QList<SwComponent_Class *> components_and_model_host=components;
     components_and_model_host.push_back(modelHost);
-    QString models_path=SwModelsListAccess::getInstance()->getModelsDirectory();
+    QString models_path=serviceModel->getModelsDirectory();
     SwSaver_Class saver;
     QDomDocument doc;
     QByteArray stream_desc;
@@ -778,7 +784,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
     file.close();    
     
     //Modification de la liste de model
-    SwModelsListAccess::getInstance()->addModel("__host",modelName);
+    serviceModel->addModel("__host",modelName);
     //Suppression de la selection
     for(int i=0;i<components_and_model_host.count();i++) {
          SwComponent_Class * component=components_and_model_host[i]->GetParent();

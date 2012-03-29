@@ -24,7 +24,8 @@ HEADERS += SwModel2Constantes.h \
     _SwModelsList.h  \
     ISwModelHostModifier.h  \
     SwModelsListAccess.h \
-    _ISwModelsListListener.h
+    _ISwModelsListListener.h  \
+    ISwModelService.h
         
 SOURCES += _SwExportStreamTreeModel.cpp \
     _SwModelExportTreeView.cpp \

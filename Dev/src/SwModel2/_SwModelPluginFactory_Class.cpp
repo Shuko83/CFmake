@@ -49,6 +49,11 @@ void _SwModelPluginFactory_Class::Initialize() {
         RegisterComponent(it.key(),it.value()._model_description);   
     }
 }
+/*! \brief finalisation de l'initialisation DECLARER LES SERVICES GLOBAUX ICI*/
+void _SwModelPluginFactory_Class::FinalizeInitialisation() {
+    SW_APP->RegisterService(SwModelsListAccess::getInstance());
+}
+
 //Here public method
 void _SwModelPluginFactory_Class::modelAdded(QString name,QString description) {
     RegisterComponent(name,description);

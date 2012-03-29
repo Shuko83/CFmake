@@ -173,6 +173,8 @@
 			<File
 				RelativePath="ISwModelHostModifier.h" />
 			<File
+				RelativePath="ISwModelService.h" />
+			<File
 				RelativePath="SwModel2Constantes.h" />
 			<File
 				RelativePath="SwModelsListAccess.h" />

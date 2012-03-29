@@ -8,6 +8,8 @@
 #define _STREAMWORK_SWMODEL_SWMODELSLISTACCESS_H
 
 #include "SwModel2Constantes.h"
+#include "ISwModelService.h"
+
 
 class _SwModelsList;
 
@@ -19,7 +21,7 @@ namespace StreamWork {
         @class SwModelsListAccess
         @brief Simgleton d'access a la liste des models
         */
-        class SWMODEL2_EXPORT SwModelsListAccess {
+        class SwModelsListAccess : public ISwModelService {
         public:
             /** @brief instance access */
             static SwModelsListAccess * getInstance();

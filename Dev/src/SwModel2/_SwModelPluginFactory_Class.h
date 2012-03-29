@@ -45,6 +45,8 @@ public:
     ~_SwModelPluginFactory_Class();
     /*! \brief Initialisation */
     void Initialize();
+    /*! \brief finalisation de l'initialisation DECLARER LES SERVICES GLOBAUX ICI*/
+    void FinalizeInitialisation();
     /*! \brief Liberation */
     void Liberate();
     /*! \brief Acces a la version du plugin */

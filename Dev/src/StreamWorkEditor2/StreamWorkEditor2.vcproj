@@ -39,7 +39,7 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib ../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\WizardIDEd.lib ../../lib/vc/debug\SwDocd.lib ../../lib/vc/debug\SwModel2d.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtOpenGLd4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib ../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\WizardIDEd.lib ../../lib/vc/debug\SwDocd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtOpenGLd4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
@@ -93,7 +93,7 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib c:\Qt\4.7.1\lib\qtmain.lib ../../lib/vc/release\SwCore.lib ../../lib/vc/release\WizardIDE.lib SwDoc.lib ../../lib/vc/release\SwModel2.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtOpenGL4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
+				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib c:\Qt\4.7.1\lib\qtmain.lib ../../lib/vc/release\SwCore.lib ../../lib/vc/release\WizardIDE.lib ../../lib/vc/release\SwDoc.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtOpenGL4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/release"
 				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
 				GenerateDebugInformation="false"
