@@ -66,13 +66,10 @@ void _SwGuiCompFromQActionToStackedWidget::InitializeResources() throw(SwExcepti
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver(this);
 
-
-
-
+	//Publication des Q_Properties
+	_properties_service->CreatePropertiesForQObject(this,"",true);
+	
 	_consumer_service->RegisterConsumedInterface<ISwStackedWidget_Controler>("StackedWidget_Controler",&_tmp_handle_StackedWidget);
-
-
-
 
     if (SW_APP->IsVerbose()) 
 		SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiCompFromQActionToStackedWidget done\n"));
@@ -98,7 +95,6 @@ void _SwGuiCompFromQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QSt
 			_consumer_service->UnregisterConsumedInterface(interfacename);
 			_actions.remove(interfacename);
 		}
-
 	}
 
 	if (_tmp_handle_action!=NULL)
@@ -118,10 +114,8 @@ void _SwGuiCompFromQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QSt
 					disconnect(tmpAction,SIGNAL( triggered (bool) ),this,SLOT(switchStackedWidget(bool)));
 				else
 					disconnect(tmpAction,SIGNAL( toggled (bool) ),this,SLOT(switchStackedWidget(bool)));
-
 			}
 		}
-
 	}
 }
 
