@@ -73,9 +73,7 @@ void SwEventToPopup::onEvent( QEvent * event )
 {
 	if (event->type() == _eventType)
 	{
-		QMessageBox msgBox;
-		if(_iSwMainWindow!=NULL) 
-			msgBox.setParent((QWidget*)&(_iSwMainWindow->GetMainWindow()));
+		QMessageBox msgBox((_iSwMainWindow!=NULL)?(QWidget*)&(_iSwMainWindow->GetMainWindow()):NULL);
 		msgBox.setWindowIcon(_popupIcon);
 		msgBox.setWindowTitle(_popupTitle);
 		msgBox.setText(_popupText);
@@ -91,7 +89,7 @@ void SwEventToPopup::onEvent( QEvent * event )
 		default:
 			event->accept();
 			break;
-		}
+		}		
 	}
 }
 
