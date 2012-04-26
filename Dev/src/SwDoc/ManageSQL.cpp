@@ -32,7 +32,6 @@ ManageSQL::ManageSQL( void )
 
 	_threadSQL = new DatabaseManager();
 	connect(_threadSQL,SIGNAL(connectionState(bool)),this,SLOT(setDatabaseState(bool)));
-
 	_threadSQL->start();
 
 }
