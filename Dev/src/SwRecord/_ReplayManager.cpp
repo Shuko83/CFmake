@@ -301,3 +301,15 @@ void _ReplayManager::setSpeed( int val )
 {
 	setTimerStep(val);
 }
+
+//-----------------------------------------------------------------------
+void _ReplayManager::setJumpTime( int val )
+{
+	_timeLine.setJumpTime(val);
+}
+
+//-----------------------------------------------------------------------
+int _ReplayManager::getJumpTime() const
+{
+	return _timeLine.getJumpTime();
+}

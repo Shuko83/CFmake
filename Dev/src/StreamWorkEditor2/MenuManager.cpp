@@ -194,7 +194,7 @@ void MenuManager::buildMenuForContext(QMenu * menu) {
     }
     if (_gwList.count()==0 && _lkList.count()==0 && _connectorList.count()==0) {
         menu->addAction("Add interest area",this,SLOT(onAddInterestArea()));
-        menu->addAction("Change background",this,SLOT(onChangeBackGroundColor()));
+        //menu->addAction("Change background",this,SLOT(onChangeBackGroundColor()));
     }
     if (_gwList.count()>0 || _iaList.count()>0) {
         menu->addAction("Remove",this,SLOT(onRemove()));
@@ -412,9 +412,12 @@ void MenuManager::onJumpToConnected() {
     QList<LinkGraphicItem *> *links=_selectedConnector->getLinks();
     LinkGraphicItem *lk=links->at(0);
     ConnectorGraphicItem *target=(lk->getSource()==_selectedConnector?lk->getTarget():lk->getSource());
-    _streamControler->getView()->centerOn(target);
-    _streamControler->getScene()->clearSelection();
-    target->setSelected(true);
+	_streamControler->getScene()->clearSelection();
+	if(target)
+	{
+    	_streamControler->getView()->centerOn(target);
+    	target->setSelected(true);
+	}
 }
 /** @brief sur Connection */
 void MenuManager::onCreateAndConnect() {

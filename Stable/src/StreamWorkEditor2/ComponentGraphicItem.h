@@ -121,6 +121,8 @@ private:
     int _connectionInsertionIndex;
     /** @brief Test */
     QString _dbg_cname;
+	/** @brief Gradient */
+	QLinearGradient _grad;
 };
 
 #endif

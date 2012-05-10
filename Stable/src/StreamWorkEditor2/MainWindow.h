@@ -39,6 +39,8 @@ public slots:
     void onNewStream();
     /** @brief sur load stream */
     void onLoadStream();
+	/** @brief sur load stream avec un fichier */
+	void onLoadStreamf();
     /** @brief sur save stream */
     void onSaveStream();
     /** @brief sur save as stream */
@@ -67,6 +69,7 @@ protected:
     /** @brief sur close event */
     virtual void focusInEvent ( QFocusEvent * event );
 
+	void manageHistory(QFileInfo fi);
 
 signals:
 	void selection (QString&,QString&);
@@ -87,6 +90,13 @@ private:
     QLineEdit *_statusWidget;
     /** @brief stream source de l'ouverture de l'editeur */
     SwComponent_Class * _streamSourceOpener;
+	/** @brief History of open files */
+	QStringList _history;
+
+	QList<QAction *> _listOfActions;
+
+	QMenu * _streamMenu;
+
 
 };
 

@@ -40,6 +40,7 @@ class _ReplayManager :
 	Q_PROPERTY(QString executor READ getExecutor WRITE setExecutor)
 	Q_PROPERTY(QString activator READ getActivator WRITE setActivator);
 	Q_PROPERTY(int timerStep READ getTimerStep WRITE setTimerStep)
+	Q_PROPERTY(int jumpTime READ getJumpTime WRITE setJumpTime)
 
 public:
 	/**
@@ -130,6 +131,10 @@ public:
 
 	QString getActivator() const { return _activator; }
 	void setActivator(QString val );
+
+	int getJumpTime() const;
+	void setJumpTime(int val);
+
 protected:
 
 	/*@ service d'enregistrement */
@@ -152,7 +157,7 @@ protected:
 	_TimeLine _timeLine;
 
 	int _timerStep;
-
+	
 	QList<ISwReplayListener *> _listeners;
 };	
 #endif

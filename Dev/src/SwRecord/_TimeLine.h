@@ -45,8 +45,12 @@ class _TimeLine : public ISwClockProvider {
     QList<ISwReplayListener *> _listeners;
 
 	bool _pauseState;
+
 	QString _state;
 
+	/* @brief Time to Jump */
+	int _jumpTime;
+	
 public:
 	/** @brief Constructor */
 	_TimeLine();
@@ -80,6 +84,9 @@ public:
 
 	QString getState() const { return _state; }
 	void setState(QString val);
+
+	int getJumpTime() const { return _jumpTime; }
+	void setJumpTime(int val) { _jumpTime = val; }
 
 protected:
     /*! \brief renvoie du temps pour l'arret */

@@ -27,6 +27,27 @@ StreamScene::StreamScene(QObject * parent):QGraphicsScene(parent) {
 void StreamScene::drawBackground(QPainter *painter, const QRectF &rect) {
     glClearColor(0.1f,0.1f,0.15f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Draw Grid
+	{
+		painter->save();
+		const int gridSize = 100;
+	
+		qreal left = int(rect.left()) - (int(rect.left()) % gridSize);
+		qreal top = int(rect.top()) - (int(rect.top()) % gridSize);
+	
+		QVarLengthArray<QLineF, 100> lines;
+	
+		for (qreal x = left; x < rect.right(); x += gridSize)
+			lines.append(QLineF(x, rect.top(), x, rect.bottom()));
+		for (qreal y = top; y < rect.bottom(); y += gridSize)
+			lines.append(QLineF(rect.left(), y, rect.right(), y));
+	
+		painter->setPen(QPen(QColor("#404040")));
+		painter->drawLines(lines.data(), lines.size());
+		painter->restore();
+	}
+	
 }
 /** @brief Mise a jour de la zone visible */
 void StreamScene::setVisibleArea(QRectF & visibleArea) {

@@ -6,8 +6,9 @@
 
 #include "InterestArea.h"
 #include "StreamControler.h"
+#include <QTextCursor>
 
-#define MARGE 5
+#define MARGE 15
 
 /** @brief Constructor */
 InterestArea::InterestArea(StreamControler * controler) {
@@ -15,15 +16,16 @@ InterestArea::InterestArea(StreamControler * controler) {
     setFlag(ItemIsMovable);
     setFlag(ItemIsSelectable);
     setZValue(-200.0);
-    _color=QColor(QColor("#888888"));
+    _color=QColor(QColor(136,136,136,136));
     _text=new QGraphicsTextItem(this);
-    _text->setPlainText("(click to edit)");
+    _text->setPlainText("Text");
     QFont font=_text->font();
     font.setPointSize(18);
     _text->setFont(font);
     _text->setPos(QPointF());
-    _text->setTextInteractionFlags(Qt::TextEditable);
+    _text->setTextInteractionFlags(Qt::TextEditable | Qt::TextBrowserInteraction);
     _text->setDefaultTextColor(QColor("#FFFFFF"));
+	
     //_text->setFlag(QGraphicsItem::ItemIgnoresTransformations);
     _vResize=false;
     _hResize=false;
@@ -41,20 +43,29 @@ QRectF InterestArea::boundingRect() const {
 }
 /** @brief Fonction de dessin */
 void InterestArea::paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
+    
+	painter->save();
+
     if (option->state.testFlag(QStyle::State_Selected)) {
-        painter->setPen(QPen(QColor(250,250,0)));
+		QPen tmp = QPen(QColor("#fcbd00"));
+		tmp.setWidth(2);
+		painter->setPen(tmp);
+		
     } else {
         painter->setPen(QPen(Qt::NoPen));
     }
     painter->setBrush(QBrush(_color));
     painter->drawRect(_bbox);
-    if (_hover) {
-        painter->setPen(QPen(Qt::NoPen));
-        painter->setBrush(QBrush(Qt::Dense5Pattern));
-        QRectF r=QRectF(_bbox.width()-MARGE,0,MARGE,_bbox.height());
-        painter->drawRect(r);
-        r=QRectF(0,_bbox.height()-MARGE,_bbox.width(),MARGE);
-        painter->drawRect(r);
+
+	painter->restore();
+
+    if (_hover) 
+	{
+        painter->setPen(QPen(Qt::white));
+		painter->drawLine(_bbox.width()-15,_bbox.height()-2,_bbox.width()-2,_bbox.height()-15); 
+		painter->drawLine(_bbox.width()-10,_bbox.height()-2,_bbox.width()-2,_bbox.height()-10); 
+		painter->drawLine(_bbox.width()-5,_bbox.height()-2,_bbox.width()-2,_bbox.height()-5); 
+
     }
 }
 /** @brief mise a jour des attributs de l'item */
@@ -71,7 +82,6 @@ void InterestArea::mouseDoubleClickEvent( QGraphicsSceneMouseEvent * event ) {
         } else {
             _text->setDefaultTextColor(QColor("#FFFFFF"));
         }
-        //
         update();
         _controler->streamControlerChanged();
     }
@@ -107,21 +117,9 @@ void InterestArea::mousePressEvent ( QGraphicsSceneMouseEvent * event ){
         _initialRect=_bbox;
         event->accept();
         prepareGeometryChange (); 
-    } else
-    if (abs(event->pos().x()-_bbox.width())<MARGE) {
-        _hResize=true;
-        _startPos=event->pos();
-        _initialRect=_bbox;
-        event->accept();
-        prepareGeometryChange (); 
-    } else 
-    if (abs(event->pos().y()-_bbox.height())<MARGE) {
-        _vResize=true;
-        _startPos=event->pos();
-        _initialRect=_bbox;
-        event->accept();
-        prepareGeometryChange (); 
-    } else {
+    } 
+	else 
+	{
         QGraphicsItem::mousePressEvent(event);
     }
 

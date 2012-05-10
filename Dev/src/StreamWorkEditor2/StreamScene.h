@@ -21,14 +21,14 @@
 @class StreamScene
 @brief Scene Stream
 */
-class StreamScene : public QGraphicsScene , public IAnchorableObserver {
+class StreamScene : public QGraphicsScene , virtual public IAnchorableObserver {
     Q_OBJECT
 public:
 	/** @brief Constructor */
 	StreamScene(QObject * parent = 0);
 
 	/** @brief Fonction de dessin du fond en opengl */
-    void drawBackground(QPainter *painter, const QRectF &rect);
+    virtual void drawBackground(QPainter *painter, const QRectF &rect);
 
     /** @brief Mise a jour de la zone visible */
     void setVisibleArea(QRectF & visibleArea);

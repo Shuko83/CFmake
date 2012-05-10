@@ -29,13 +29,13 @@ _SwGuiPluginsFrontEnd::_SwGuiPluginsFrontEnd(QWidget *parent)
     setWindowIcon(QIcon(":/SwGui/plugins.png"));
     //Construction de l'ihm
     setSizeGripEnabled(true);
-    resize(QSize(600,600));
+    resize(QSize(1000,700));
 
     //Creation de l'interface principale
     QTreeView * treeview=new QTreeView(this);
 	treeview->setModel(SW_APP->ComponentsBank().GetModel());
-    treeview->setColumnWidth(0,300);
-    treeview->expandAll();
+    treeview->setColumnWidth(0,200);
+    //treeview->expandAll();
     /* Composant de l'ihm */
     QVBoxLayout * main_layout=new QVBoxLayout(this);
     this->setLayout(main_layout);

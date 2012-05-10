@@ -33,15 +33,7 @@ void ManageLinkColor::loadColor()
 		connect(ManageColor::getInstance(),SIGNAL(dbLoaded()),this,SLOT(onDbStatusChange()));
 	}
 
-	if(_mapColor.isEmpty())
-	{
-		_mapColor.insert("ISwWidget","#9E6DFF");
-		_mapColor.insert("ISxModel","#40E1E7");
-		_mapColor.insert("ISwAction","#AAE740");
-		_mapColor.insert("ISwToolBar","#E7408B");
-		_mapColor.insert("ISwDockWidget","#FDFF55");
-		_mapColor.insert("ISwLayout","#032F55");
-	}
+	loadStaticColor();
 }
 
 //-------------------------------------------------------------------------
@@ -67,5 +59,20 @@ QColor ManageLinkColor::getColorForInterface( QString interfaceName )
 void ManageLinkColor::onDbStatusChange()
 {
 	_mapColor = ManageColor::getInstance()->getColor();
+	loadStaticColor();
 	emit colorHasChange();
+}
+
+//-----------------------------------------------------------------------
+void ManageLinkColor::loadStaticColor()
+{
+	if(_mapColor.isEmpty())
+	{
+		_mapColor.insert("ISwWidget","#9E6DFF");
+		_mapColor.insert("ISxModel","#40E1E7");
+		_mapColor.insert("ISwAction","#AAE740");
+		_mapColor.insert("ISwToolBar","#E7408B");
+		_mapColor.insert("ISwDockWidget","#FDFF55");
+		_mapColor.insert("ISwLayout","#032F55");
+	}
 }

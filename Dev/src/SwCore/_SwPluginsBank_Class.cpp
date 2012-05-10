@@ -27,12 +27,16 @@
 #include <windows.h>
 #include "ImageHlp.h"
 #define WIN32_BUFSIZE 30000
+#include <QMessageBox>
 TCHAR chNewEnv[WIN32_BUFSIZE];
 #define VARNAME_PATH TEXT("PATH")
 #define VARNAME_USER TEXT("USERNAME")
 #endif
 
 using namespace StreamWork::SwCore;
+
+/*! \brief list des popups déjà popé pour une DLL pour éviter le flood */
+static QList<QString> _msgBoxAllReadyPopup;
 
 //--- DLL access 
 template <class T> PIMAGE_SECTION_HEADER GetEnclosingSectionHeader(DWORD rva, T* pNTHeader) // 'T' == PIMAGE_NT_HEADERS 
@@ -77,6 +81,13 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
 
     PLOADED_IMAGE image=ImageLoad(name,0);
     if (image==0) {
+
+#ifndef _DEBUG	
+		if(!_msgBoxAllReadyPopup.contains(QString(name))) {
+			QMessageBox::critical(0,"Dynamic load library failed",QString("Unable to find dynamic library %1").arg(name));
+			_msgBoxAllReadyPopup.append(QString(name));
+		}		
+#endif
         qDebug(QString("Unable to find dynamic library :%1").arg(name).toLatin1().data());
         SW_APP->Logger().Log(LogLvl_Critical,QString("Unable to find dynamic library :%1").arg(name));
         return;
@@ -95,11 +106,11 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
             QString result=QString((const char *)GetPtrFromRVA(importDesc->Name,
                                            image->FileHeader,
                                            image->MappedAddress) );
-            qDebug("Checking %s", result.toLatin1().data());
+            //qDebug("Checking %s", result.toLatin1().data());
             SW_APP->Logger().Log(LogLvl_Info,QString("Checking %1").arg(result));
             if (0==LoadLibrary(result.utf16())) {
                      DWORD error=GetLastError();
-                     qDebug(QString("-->LoadLibrary failed for %1:%2)").arg(result).arg(error).toLatin1().data());
+                     //qDebug(QString("-->LoadLibrary failed for %1:%2)").arg(result).arg(error).toLatin1().data());
                      SW_APP->Logger().Log(LogLvl_Critical,QString("Check %1 failed :error core:%2").arg(result).arg(error));
                      if (depth>0) {
                         DumpDllFromPath(result.utf16(),depth-1);
@@ -194,16 +205,16 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
         #endif
         qstrMessage+=";";
         qstrMessage+=tmppath;
-#ifndef QT_NO_DEBUG
+/*#ifndef QT_NO_DEBUG
         SW_APP->Logger().Log(LogLvl_Warning,QString(">>>> path size %1\n").arg(qstrMessage.length()));
-#endif
+#endif*/
         #ifdef UNICODE
         bool result=SetEnvironmentVariable(VARNAME_PATH, (wchar_t*) qstrMessage.utf16());
         #else
         bool result=SetEnvironmentVariable(VARNAME_PATH, qstrMessage.local8Bit().constData());
         #endif
         if (!result) 
-            SW_APP->Logger().Log(LogLvl_Warning,QString("Failed to set PATH environment variable\n"));
+			SW_APP->Logger().Log(LogLvl_Warning,QString("Failed to set PATH environment variable (pathSize : %1)\n").arg(qstrMessage.length()));
         else
             if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("PATH= %1\n").arg(qstrMessage));
 
@@ -213,7 +224,8 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
     }
 #endif
     //Ajout a la liste des path
-    if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("Adding path %1\n").arg(realPath));
+    if (SW_APP->IsVerbose())
+		SW_APP->Logger().Log(LogLvl_Debug,QString("Adding path %1\n").arg(realPath));
     _paths.insert(realPath,registerable);
     _plugins_paths.insert(realPath,set_of_plugins);
     itpp=_plugins_paths.find(realPath);
@@ -288,9 +300,10 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
                 //Enregistrement des composants controllers
                 _controllers+=plugin->GetControllersMap();
             } else {
-                SW_APP->Logger().Log(LogLvl_Critical,lib.errorString());
-                qDebug(QString("QLoadLibrary failed for %1:%2").arg(real_file).arg(lib.errorString()).toLatin1().data()); 
+                SW_APP->Logger().Log(LogLvl_Critical,QString("Unable to load Lib %1").arg(real_file).toAscii(),lib.errorString());
+                qDebug(QString("QLoadLibrary failed for %1").arg(real_file).toLatin1().data()); 
                 DumpDllFromPath(real_file.utf16(),5);
+				_dllWithError.append(realPath.toLower());
                 /* if (0==LoadLibrary(real_file.utf16())) {
                     DWORD error=GetLastError();
                      qDebug(QString("LoadLibrary failed for %1:%2)").arg(real_file).arg(error).toLatin1().data()); 
@@ -366,15 +379,15 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
         QString upath;
         foreach(upath,pathListUser) {
             QString tmpupath=upath;
-            tmpupath.replace("\\Stable\\","\\********\\"); 
-            tmpupath.replace("\\Dev\\","\\********\\"); 
+			tmpupath.replace("\\Stable\\","\\********\\",Qt::CaseInsensitive); 
+            tmpupath.replace("\\Dev\\","\\********\\",Qt::CaseInsensitive); 
             int count=pathList.size();
             bool substitution=false;
             for(int i=0;i<count;i++) {
                 QString tmppath=pathList[i];
-                tmppath.replace("\\Stable\\","\\********\\"); 
-                tmppath.replace("\\Dev\\","\\********\\"); 
-                if(tmpupath==tmppath) {
+                tmppath.replace("\\Stable\\","\\********\\",Qt::CaseInsensitive); 
+                tmppath.replace("\\Dev\\","\\********\\",Qt::CaseInsensitive); 
+                if(tmpupath.toLower()==tmppath.toLower()) {
                     pathList[i]=upath;
                     substitution=true;
                     break;
@@ -558,10 +571,14 @@ void _SwPluginsBank_Class::RebuildModel() {
             QColor pathColor=QColor("black");
             if (globalUserPathList.contains(it.key())) {
                 buildData << "Path (User)" << QDir::cleanPath(it.key());
-                pathColor=QColor("darkRed");
+                pathColor=QColor("green");
             } else {
                 buildData << "Path" << QDir::cleanPath(it.key());
             }
+			if(_dllWithError.contains(it.key().toLower()))
+			{
+				pathColor=QColor("red");
+			}
             path_item=new _SwTreeItem(buildData,QIcon(":/SwCore/path.png"),_tree_items,pathColor,f_bold);
             _tree_items->appendChild(path_item);
             for(itp=it.value().begin();itp!=it.value().end();itp++) {

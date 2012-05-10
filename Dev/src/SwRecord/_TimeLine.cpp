@@ -7,6 +7,7 @@
 #include "_TimeLine.h"
 #include "SwRecordConstantes.h"
 #include <SwUUID.h>
+#include "_RecordPoint.h"
  
 using namespace StreamWork::SwCore;
 
@@ -19,6 +20,7 @@ _TimeLine::_TimeLine()
 	_initTime	= 0;
 	_startTime	= 0;
 	_stopTime	= 0;
+	_jumpTime   = 0;
 	_pauseState = false;
 	_state		= STATE_STOPPED;
 }
@@ -183,6 +185,107 @@ double _TimeLine::queryStartTime()
 //-------------------------------------------------------------------------
 double _TimeLine::queryExecuteTime(bool * isLast) 
 {
+
+	if(_jumpTime != 0)
+	{
+
+		//Todo Stocké dans 30sec avant et les relires rapidement
+		QList<_ExecutionKey *> _tmpList;
+		QList<_ExecutionKey *> _tmpList30;
+		int diff = _executionKeys.front()->_currentTime - _initTime;
+
+		while(diff < _jumpTime)
+		{
+			//Ajout dans la liste
+			_ExecutionKey * ekey1=_executionKeys.front();
+			_executionKeys.pop_front();
+			_tmpList.append(ekey1);
+
+			/*if(diff > 12 && diff < _jumpTime) 
+				_tmpList30.append(ekey1);
+*/
+			if(_executionKeys.count() == 0)
+			{
+				//Clean ceux de la liste
+				foreach(_ExecutionKey *tmp, _tmpList)
+				{	
+					//parcours la liste précédente
+					/*double t=tmp->_currentTime;
+					QList<ISwRecordPoint *>::iterator itrp=tmp->_recordPoints.begin();
+					QList<int>::iterator itrpcall=tmp->_recordPointsCall.begin();
+					while(itrp!=tmp->_recordPoints.end()) 
+					{
+						ISwRecordPoint * rp=(*itrp);
+						_RecordPoint * toto = dynamic_cast<_RecordPoint*>(rp);
+						if(toto)
+						{
+							ISwExecutable_Service *tst = dynamic_cast<ISwExecutable_Service*>(toto->QueryService(CG_SW_SERVICE_EXECUTABLE));
+							
+						
+							int nbCall=(*itrpcall);
+							for(int i=0;i<nbCall;i++) 
+							{
+								rp->submitKey();
+								if (tst)
+									tst->Execute(t,false);
+							}
+						}
+						itrp++;
+						itrpcall++;
+						
+					}*/
+					
+
+					foreach(ISwRecordPoint * tmpRP, tmp->_recordPoints)
+					{
+						tmpRP->cleanKeys();
+					}
+					
+				}
+				loadDataWriter();
+			}
+
+			diff = _executionKeys.front()->_currentTime - _initTime;
+
+		}
+
+		_jumpTime = 0;
+		
+		if(_executionKeys.count() == 0)
+		{
+			//Clean ceux de la liste
+			foreach(_ExecutionKey *tmp, _tmpList)
+			{	
+				foreach(ISwRecordPoint * tmpRP, tmp->_recordPoints)
+				{
+					tmpRP->cleanKeys();
+				}
+			}
+			loadDataWriter();
+		}
+		else
+		{
+			/*foreach(_ExecutionKey *tmp, _tmpList30)
+			{
+				//parcours la liste précédente
+				double t=tmp->_currentTime;
+				QList<ISwRecordPoint *>::iterator itrp=tmp->_recordPoints.begin();
+				QList<int>::iterator itrpcall=tmp->_recordPointsCall.begin();
+				while(itrp!=tmp->_recordPoints.end()) 
+				{
+					ISwRecordPoint * rp=(*itrp);
+					int nbCall=(*itrpcall);
+					for(int i=0;i<nbCall;i++) 
+					{
+						rp->submitKey();
+					}
+					itrp++;
+					itrpcall++;
+				}
+			}*/
+		}
+	}
+
     if (_executionKeyMaxSize/2>_executionKeys.count() && _dataCounter<_maxDataCounter) 
 	{
         loadDataWriter();

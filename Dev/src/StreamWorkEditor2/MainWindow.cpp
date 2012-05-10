@@ -19,7 +19,10 @@
 #include "ISwEditionService.h"
 #include "MenuManager.h"
 #include <qDebug>
+
 static int nbWindows=0;
+
+#define MAX_HISTORY_FILE 4
 /** @brief qmap */
 static QMap<SwComponent_Class *,MainWindow *> _editors; 
 
@@ -34,17 +37,52 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 
 	//Definition du wizard
 	//_wizard=new SwWizardFrontEnd(this);
+	
+	QSettings settings;
+
+	_history = settings.value("history").toStringList();
 
 	//Acces Stream
-	QMenu * streamMenu=menuBar()->addMenu("Streams");
-	streamMenu->addAction("New",this,SLOT(onNewStream()),Qt::CTRL + Qt::Key_N);
-	streamMenu->addAction("Load",this,SLOT(onLoadStream()),Qt::CTRL + Qt::Key_L);
-	streamMenu->addAction("Save",this,SLOT(onSaveStream()),Qt::CTRL + Qt::Key_S);
-	streamMenu->addAction("Save As",this,SLOT(onSaveAsStream()));
-	streamMenu->addSeparator();
-	streamMenu->addAction("New Editor",this,SLOT(onNewWindow()));
-	streamMenu->addAction("Print",this,SLOT(onPrint()),Qt::CTRL + Qt::Key_P);
-	streamMenu->addAction("SwGenerator",this,SLOT(onLaunchSwGenerator()),Qt::CTRL + Qt::Key_G);
+	_streamMenu=menuBar()->addMenu("Streams");
+	_streamMenu->addAction("New",this,SLOT(onNewStream()),Qt::CTRL + Qt::Key_N);
+	_streamMenu->addAction("Load",this,SLOT(onLoadStream()),Qt::CTRL + Qt::Key_L);
+	_streamMenu->addAction("Save",this,SLOT(onSaveStream()),Qt::CTRL + Qt::Key_S);
+	_streamMenu->addAction("Save As",this,SLOT(onSaveAsStream()));
+	_streamMenu->addSeparator();
+	_streamMenu->addAction("New Editor",this,SLOT(onNewWindow()));
+	_streamMenu->addAction("Print",this,SLOT(onPrint()),Qt::CTRL + Qt::Key_P);
+	_streamMenu->addAction("SwGenerator",this,SLOT(onLaunchSwGenerator()),Qt::CTRL + Qt::Key_G);
+
+	_streamMenu->addSeparator();
+	for(int i = 0; i< MAX_HISTORY_FILE ; i++)
+	{
+		QAction *action = new QAction(this);
+		action->setText("");
+		action->setData("");
+		action->setVisible(false);
+		action->setShortcut(Qt::CTRL + Qt::Key_1+i);
+		_streamMenu->addAction(action);
+		connect(action, SIGNAL(triggered()), this, SLOT(onLoadStreamf()));
+		_listOfActions.append(action);
+		_streamMenu->addAction(action);
+
+	}
+	
+	if(_history.count() != 0)
+	{
+		int index = 1;
+		foreach(QString absF, _history)
+		{
+			QFileInfo *test = new QFileInfo(absF);
+			if(test->exists())
+			{
+				_listOfActions.at(_history.indexOf(absF))->setText(QString::number(index)+") "+test->fileName());
+				_listOfActions.at(_history.indexOf(absF))->setData(test->absoluteFilePath());
+				_listOfActions.at(_history.indexOf(absF))->setVisible(true);
+				index++;
+			}
+		}
+	}
 	// streamMenu->addAction(&_wizard->GetAction());
 	//streamMenu->addSeparator();
 	//streamMenu->addAction("Quit",this,SLOT(onQuit()),Qt::CTRL + Qt::Key_Q);
@@ -125,15 +163,13 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 	navdock->setWidget(new ViewNavigator(_streamView,this));
 	addDockWidget(Qt::RightDockWidgetArea, navdock);
 
-
-	QSettings settings;
-	restoreGeometry(settings.value("geometry").toByteArray());
-	restoreState(settings.value("windowState").toByteArray());
-
 	_statusWidget=new QLineEdit(this);
 	_statusWidget->setReadOnly(true);
 	statusBar()->addPermanentWidget(_statusWidget,100);
 	_statusWidget->setText("Ready");
+
+	restoreGeometry(settings.value("geometry").toByteArray());
+	restoreState(settings.value("windowState").toByteArray());
 
     QStringList liste_arg=QCoreApplication::instance()->arguments();
     int nb_args=liste_arg.count();
@@ -155,9 +191,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
                 _streamControler->loadStream(liste_arg[i+1]);
                 _streamTreeModel->setStreamControler(_streamControler);
                 _iaTreeModel->setStreamControler(_streamControler);
-                _streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
-                _streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
-                _streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+				_streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
                 setWindowTitle(fi.fileName()+ " - " + fi.filePath());
                 _editors.insert(_streamControler->getRootItem(),this);
                 _streamSourceOpener=0;
@@ -180,8 +214,6 @@ void MainWindow::onNewStream() {
 	_streamControler->setView(_streamView);
 	_streamTreeModel->setStreamControler(_streamControler);
 	_iaTreeModel->setStreamControler(_streamControler);
-	_streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
-	_streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
 	_streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
 	setWindowTitle("StreamWorkEditor V2");
 	_editors.insert(_streamControler->getRootItem(),this);
@@ -206,20 +238,22 @@ void MainWindow::onLoadStream(){
 	if (it != list.end()) {
 		QFileInfo fi(*it);
 		settings.setValue("EditorDirectory",QVariant(fi.filePath()));
-		if (_streamControler!=0) {
+		if (_streamControler!=0) 
+		{
 			_streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
 			_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
 			_streamTreeModel->setStreamControler(0);
 			_iaTreeModel->setStreamControler(0);
 			delete _streamControler;
 		}
+
+		manageHistory(fi);
+
 		_streamControler=new StreamControler(_propertyWidget);
 		_streamControler->setView(_streamView);
 		_streamControler->loadStream(*it);
 		_streamTreeModel->setStreamControler(_streamControler);
 		_iaTreeModel->setStreamControler(_streamControler);
-		_streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
-		_streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
 		_streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
 		setWindowTitle(fi.fileName()+ " - " + fi.filePath());
 		_editors.insert(_streamControler->getRootItem(),this);
@@ -227,6 +261,41 @@ void MainWindow::onLoadStream(){
 		_streamControler->getRootItem()->OnDestroy.iconnect(*this,&MainWindow::internalClose);
 	}
 }
+
+//-----------------------------------------------------------------------
+void MainWindow::onLoadStreamf()
+{
+	QAction * lsender = qobject_cast<QAction*>(sender());
+
+	if(!lsender)
+		return;
+
+	QFileInfo file(lsender->data().toString());
+
+	if (file.exists()) 
+	{
+		if (_streamControler!=0) 
+		{
+			_streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
+			_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+			_streamTreeModel->setStreamControler(0);
+			_iaTreeModel->setStreamControler(0);
+			delete _streamControler;
+		}
+		manageHistory(file);
+		_streamControler=new StreamControler(_propertyWidget);
+		_streamControler->setView(_streamView);
+		_streamControler->loadStream(file.absoluteFilePath());
+		_streamTreeModel->setStreamControler(_streamControler);
+		_iaTreeModel->setStreamControler(_streamControler);
+		_streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+		setWindowTitle(file.fileName()+ " - " + file.filePath());
+		_editors.insert(_streamControler->getRootItem(),this);
+		_streamSourceOpener=0;
+		_streamControler->getRootItem()->OnDestroy.iconnect(*this,&MainWindow::internalClose);
+	}
+}
+
 /** @brief sur load stream existant */
 void MainWindow::onLoadExistingStream(SwComponent_Class * aStream,QString path,SwComponent_Class * aStreamSource) {
 	QFileInfo fi(path);
@@ -238,13 +307,13 @@ void MainWindow::onLoadExistingStream(SwComponent_Class * aStream,QString path,S
 		_iaTreeModel->setStreamControler(0);
 		delete _streamControler;
 	}
+	manageHistory(fi);
+
 	_streamControler=new StreamControler(_propertyWidget);
 	_streamControler->setView(_streamView);
 	_streamControler->loadExistingStream(path,aStream);
 	_streamTreeModel->setStreamControler(_streamControler);
 	_iaTreeModel->setStreamControler(_streamControler);
-	_streamControler->getScene()->setBackgroundBrush(QBrush(QColor(Qt::black)));
-	_streamControler->getView()->setBackgroundBrush(QBrush(QColor(Qt::black)));
 	_streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
 	setWindowTitle(fi.fileName()+ " - " + fi.filePath());
 	_editors.insert(_streamControler->getRootItem(),this);
@@ -276,6 +345,7 @@ void MainWindow::onSaveAsStream() {
 	if (fileName.isEmpty())
 		return;
 	QFileInfo fi(fileName);
+	manageHistory(fi);
 	settings.setValue("EditorDirectory",QVariant(fi.filePath()));
 	GET_SW_EDITION_SERVICE->setEditorSavingInProgress(true);
 	_streamControler->saveStreamAs(fileName);
@@ -285,15 +355,16 @@ void MainWindow::onSaveAsStream() {
 /** @brief sur wizard */
 void MainWindow::onWizard(){
 }
-///** @brief sur quit */
-//void MainWindow::onQuit(){
-//    delete _streamControler;
-//    qApp->disconnect(qApp, SIGNAL(lastWindowClosed()), this, SLOT(onQuit()));
-//    this->deleteLater();
-//    nbWindows--;
-//    if (nbWindows==0)
-//        qApp->exit(0);
-//}
+// /** @brief sur quit */
+// void MainWindow::onQuit()
+// {
+//     delete _streamControler;
+//     qApp->disconnect(qApp, SIGNAL(lastWindowClosed()), this, SLOT(onQuit()));
+//     this->deleteLater();
+//     nbWindows--;
+//     if (nbWindows==0)
+//         qApp->exit(0);
+// }
 /** @brief sur close event */
 void MainWindow::closeEvent(QCloseEvent *event) {   
 	QSettings settings;
@@ -302,6 +373,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	}
 	settings.setValue("geometry", saveGeometry());
 	settings.setValue("windowState", saveState());
+	settings.setValue("history",_history);
 	_editors.remove(_streamControler->getRootItem());
 	_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
 	_streamTreeModel->setStreamControler(0);
@@ -398,7 +470,6 @@ void MainWindow::focusInEvent ( QFocusEvent * event ) {
 //-------------------------------------------------------------------------
 void MainWindow::onLaunchSwGenerator()
 {
-
 	if(!QFile::exists(qApp->applicationDirPath()+QDir::separator()+"libctemplated.dll") && !QFile::exists(qApp->applicationDirPath()+QDir::separator()+"libctemplated.dll"))
 	{
 		if(QFile::exists(qApp->applicationDirPath()+QDir::separator()+"../../../../import_dependencies.bat"))
@@ -407,7 +478,6 @@ void MainWindow::onLaunchSwGenerator()
 			testP.setWorkingDirectory(qApp->applicationDirPath()+QDir::separator()+"../../../../");
 			testP.start(qApp->applicationDirPath()+QDir::separator()+"../../../../import_dependencies.bat");
 			testP.waitForFinished();
-
 		}
 		else
 		{
@@ -421,4 +491,29 @@ void MainWindow::onLaunchSwGenerator()
 		QProcess::startDetached(qApp->applicationDirPath()+QDir::separator()+"SwGenerator.exe");
 	else
 		QMessageBox::critical(this,"SwGenerator Errors! ","Unable to find the executable SwGenerator.exe");
+}
+
+//-----------------------------------------------------------------------
+void MainWindow::manageHistory( QFileInfo fi )
+{
+	if(_history.count() >= MAX_HISTORY_FILE && !_history.contains(fi.absoluteFilePath()))
+		_history.removeLast();
+
+	if(!_history.contains(fi.absoluteFilePath()))
+	{
+		_history.prepend(fi.absoluteFilePath());
+	}
+	else
+	{
+		_history.swap(0,_history.indexOf(fi.absoluteFilePath()));
+		
+	}
+	//on actualise la liste
+	for(int i = 0; i < _history.count(); i++)
+	{
+		QFileInfo fi(_history.at(i));
+		_listOfActions.at(i)->setData(fi.absoluteFilePath());
+		_listOfActions.at(i)->setText(QString::number(i+1)+") "+fi.fileName());
+		_listOfActions.at(i)->setVisible(true);
+	}
 }

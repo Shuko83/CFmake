@@ -37,9 +37,9 @@ ComponentGraphicItem::ComponentGraphicItem(SwComponent_Class * component,StreamC
     } else {
         setToolTip(component->GetFactoryComponentName());
     }
-    _headerBrush=QBrush(HEADER_COLOR);
-    _bodyBrush=QBrush(QColor(64,64,64,100));
-    _pen=QPen(QColor(128,128,128));
+
+    _bodyBrush=QBrush(QColor(255,255,255,50));
+    _pen=QPen(QColor(0,0,0));
     _pen.setJoinStyle(Qt::RoundJoin);
     _selected_pen=QPen(QColor(255,255,255));
     _selected_pen.setWidthF(3.2);
@@ -48,6 +48,7 @@ ComponentGraphicItem::ComponentGraphicItem(SwComponent_Class * component,StreamC
     _icone=GraphicsResources::getInstance()->getComponentIcon(component);
     _bbox=QRectF();
     updateAttributs();
+	setColor(HEADER_COLOR);
     _connectionInsertionPositionDisplay=false;
 
 }
@@ -142,7 +143,7 @@ void ComponentGraphicItem::updateAttributs() {
     _header_height=qMax(fm.height(),_icone.height())+4.0;
     //Calcul de la hauteur
     int max_count=qMax(_leftCount,_rightCount);
-    height=_header_height+CL_RADUIS+CL_CONNECTOR_BBSIZE*(qreal)(max_count);
+	height=_header_height+((max_count<0.5)?CL_RADUIS:3)+CL_CONNECTOR_BBSIZE*(qreal)(max_count);
     //height=_header_height+CL_RADUIS+CL_CONNECTOR_BBSIZE*2.0;
 
     if (fmod(width,2.0)>0.5) {
@@ -157,6 +158,11 @@ void ComponentGraphicItem::updateAttributs() {
     //Calcul de la bounding box
     _bbox=QRectF(-half_width,-half_height,width,height);
     
+	//Change grandiant size
+	_grad.setStart(0,-half_height);
+	_grad.setFinalStop (0,-half_height+_header_height);
+	setColor(_headerBrush.color());
+
     //Calcul du path de l'entete
     _header_path=QPainterPath();
     _header_path.moveTo(-half_width,-half_height+_header_height);
@@ -339,6 +345,12 @@ QColor ComponentGraphicItem::getColor() {
 /** @brief acces a la couleur */
 void ComponentGraphicItem::setColor(QColor c) {
     _headerBrush.setColor(c);
+	_grad.setColorAt(0, _headerBrush.color());
+	_grad.setColorAt(0.5,_headerBrush.color());
+	_grad.setColorAt(1,_headerBrush.color().darker());
+	_headerBrush=QBrush(_grad);
+	_headerBrush.setColor(c);
+
 	if(c.red()*0.3 + 0.59 * c.green() + 0.11 * c.blue() >= 100)
 	{
 		_text_pen = QPen(QColor("black"));
@@ -347,6 +359,7 @@ void ComponentGraphicItem::setColor(QColor c) {
 	{
 		_text_pen = QPen(QColor("white"));
 	}
+	
 }
 /** @brief definition de la couleur de texte */
 QColor ComponentGraphicItem::getTextColor() {
@@ -359,14 +372,18 @@ void ComponentGraphicItem::setTextColor(QColor c) {
 /** @brief sur changement de l'item */
 QVariant ComponentGraphicItem::itemChange ( GraphicsItemChange change, const QVariant & value ) {
     QVariant result=QGraphicsItem::itemChange(change, value);
-    if ((change == ItemPositionChange || change == ItemPositionHasChanged) && scene()!=0) {
+
+    if ((change == ItemPositionChange || change == ItemPositionHasChanged) && scene()!=0) 
+	{
         // value is the new position.
          QRectF irect = mapToScene(_bbox | childrenBoundingRect()).boundingRect();
          QRectF srect = scene()->sceneRect();
-         if (!srect.contains(irect)) {
+         if (!srect.contains(irect)) 
+		 {
             srect = srect | irect;
             scene()->setSceneRect(srect);
-         }
+		 }
+
          updateLinks();
     }
     return result;
@@ -374,6 +391,28 @@ QVariant ComponentGraphicItem::itemChange ( GraphicsItemChange change, const QVa
 /** @brief sur release sourie */
 void ComponentGraphicItem::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event ) {
     QGraphicsItem::mouseReleaseEvent(event);
+
+	//Try to reparent if the item is over InterestArea
+	{
+		QRectF irect = mapToScene(_bbox | childrenBoundingRect()).boundingRect();
+		bool found = false;
+		foreach (QGraphicsItem *item, scene()->items()) 
+		{
+			if (item != parentItem() && item != this && qgraphicsitem_cast< InterestArea* >(item) && item->mapRectToScene(item->boundingRect()).contains(irect)) 
+			{
+				setParentItem(item);
+				setPos(item->mapFromScene(pos()));
+				found =  true;
+			}
+		}
+
+		if(found == false && parentItem() != NULL)
+		{
+			setPos(parentItem()->mapToScene(pos()));
+			setParentItem(NULL);
+		}
+	}
+	
     _controler->streamControlerChanged();
 }
 /** @brief sur double click */
@@ -384,20 +423,25 @@ void ComponentGraphicItem::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * ev
     if(admin!=0) {
         admin->AdminSetup();    
     }
-    ISwSubStream * subStream=
-                dynamic_cast<ISwSubStream *>(_component);
-    if(subStream!=0 && !subStream->getSubStreamPath().isEmpty()) {
+    ISwSubStream * subStream = dynamic_cast<ISwSubStream *>(_component);
+    if(subStream!=0 && !subStream->getSubStreamPath().isEmpty()) 
+	{
         MainWindow *window=MainWindow::getEditors()->value(subStream->getSubStream(),0);
-        if(window==0) {
+        if(window==0) 
+		{
             StreamWork::SwCore::SwComponent_Class * rootComponent=_component;
-            while (rootComponent->GetParent()!=0) {
+            while (rootComponent->GetParent()!=0) 
+			{
                 rootComponent=rootComponent->GetParent();
             }
             window=new MainWindow;
             window->onLoadExistingStream(subStream->getSubStream(),subStream->getSubStreamPath(),rootComponent);
             window->showMaximized();
-        } else {
-            if (window->isMinimized()) {
+        } 
+		else 
+		{
+            if (window->isMinimized()) 
+			{
                 window->showMaximized();
             }
         }

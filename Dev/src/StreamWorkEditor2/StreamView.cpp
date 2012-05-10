@@ -12,7 +12,7 @@
 /** @brief Constructor */
 StreamView::StreamView(QWidget * parent):QGraphicsView(parent) {
     //setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
-    setStyleSheet("QGraphicsView { background:black }");
+	setStyleSheet("QGraphicsView { background:#323232 }");
     setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setResizeAnchor(QGraphicsView::AnchorViewCenter);
@@ -128,7 +128,19 @@ void StreamView::mousePressEvent ( QMouseEvent * e ){
         e->accept();
         return;
     }
+	
     if (e->buttons().testFlag(Qt::RightButton)) {
+		
+		//Right click on component without left click
+		ComponentGraphicItem* pItemUnderMouse = dynamic_cast<ComponentGraphicItem*>(itemAt(e->pos()));
+		if(pItemUnderMouse )
+		{
+			if (!(e->modifiers() & Qt::ControlModifier)) {
+				scene()->clearSelection();
+			}
+			pItemUnderMouse->setSelected(true);
+		}
+
         displayContextualMenu(e->pos());
         e->accept();
         return;

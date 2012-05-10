@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="SwGeneratord"
 	ProjectGUID="{8C5CCF0A-F4DE-3575-B157-C10290410658}"
 	Keyword="Qt4VSv1.0"

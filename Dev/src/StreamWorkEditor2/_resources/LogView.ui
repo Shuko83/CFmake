@@ -53,11 +53,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QPlainTextEdit" name="logView">
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
+    <widget class="QTextEdit" name="logView"/>
    </item>
    <item>
     <widget class="QPushButton" name="clearButton">
@@ -79,7 +75,6 @@
  </widget>
  <tabstops>
   <tabstop>regExpEntry</tabstop>
-  <tabstop>logView</tabstop>
   <tabstop>clearButton</tabstop>
  </tabstops>
  <resources/>

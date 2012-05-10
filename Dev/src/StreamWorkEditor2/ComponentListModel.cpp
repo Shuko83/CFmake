@@ -91,7 +91,9 @@ void ComponentListModel::onSelectedPluginChanged(const QModelIndex & index)
 		if(_plugin)
 		{
 			int i =0;
-			foreach(QString componentName,_plugin->GetComponentsList().toList())
+			QList<QString> sortedList =  _plugin->GetComponentsList().toList();
+			qSort(sortedList);
+			foreach(QString componentName,sortedList)
 			{
 				InfoCompo tmp;
 				tmp.componentName = componentName;

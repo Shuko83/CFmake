@@ -30,6 +30,12 @@ public:
 	 */
 	QMap<QString,QString> getMapColor() const { return _mapColor; }
 
+private:
+	/**
+	 * @brief	: load static if no color loaded for database
+	 */
+	void loadStaticColor();
+
 
 public slots:
 	void onDbStatusChange();
