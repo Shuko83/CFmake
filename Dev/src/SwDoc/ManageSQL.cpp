@@ -11,8 +11,6 @@
 #include <QtConcurrentRun>
 #include "DatabaseManager.h"
 
-
-
 // Initialisation du singleton à NULL
 ManageSQL *ManageSQL::m_singleton = NULL;
 
@@ -20,11 +18,10 @@ ManageSQL *ManageSQL::m_singleton = NULL;
 ManageSQL::ManageSQL( void )
 {
 	_isOpen = false;
-
+	
 	_threadSQL = new DatabaseManager();
 	connect(_threadSQL,SIGNAL(connectionState(bool)),this,SLOT(setDatabaseState(bool)));
-	_threadSQL->exec();
-
+	_threadSQL->start(QThread::LowestPriority);
 }
 
 //-------------------------------------------------------------------
@@ -100,7 +97,7 @@ void ManageSQL::tryOpen()
 {
 	if(!_threadSQL->isRunning())
 	{
-		_threadSQL->start();
+		_threadSQL->start(QThread::LowestPriority);
 	}
 }
 

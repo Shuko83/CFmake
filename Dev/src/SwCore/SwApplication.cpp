@@ -15,6 +15,7 @@
 #include "_SwPluginsBank_Class.h"
 #include "_SwFileEditorManager.h"
 #include "_SwServiceExtensionsImpl.h"
+#include "_SwServiceCodeTimer.h"
 #include "_SwServiceParametersImpl.h"
 #include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
 #include "SwLoader_Class.h"
@@ -36,14 +37,15 @@ using namespace StreamWork::SwCore;
 using namespace std;
 
 //Instance du singleton
-SwApplication * _singleton=NULL;
-_SwPluginsBank_Class * _bank=NULL;
-_SwComplexeTypeAdaptersFactoriesBankImpl * _ctadaptersbank=NULL;
-_SwFileEditorManager * _feManager=NULL;
-_SwServiceExtensionsImpl * _serviceExtensions=NULL;
-_SwServiceParametersImpl * _serviceParameters=NULL;
-bool            _is_launch=false;
-bool            _isCheck=false;
+SwApplication								* _singleton			= NULL;
+_SwPluginsBank_Class						* _bank					= NULL;
+_SwComplexeTypeAdaptersFactoriesBankImpl	* _ctadaptersbank		= NULL;
+_SwFileEditorManager						* _feManager			= NULL;
+_SwServiceExtensionsImpl					* _serviceExtensions	= NULL;
+_SwServiceParametersImpl					* _serviceParameters	= NULL;
+_SwServiceCodeTimer							* _serviceCodeTimer		= NULL;
+bool										_is_launch				= false;
+bool										_isCheck				= false;
 
 /*! \brief Constructeur*/
 SwApplication::SwApplication():SwServicesManager_Class() {
@@ -74,6 +76,11 @@ SwApplication::SwApplication():SwServicesManager_Class() {
     //Creation du service de parametres
     _serviceParameters = new _SwServiceParametersImpl();
     RegisterService(_serviceParameters);
+
+
+	_serviceCodeTimer = new _SwServiceCodeTimer();
+	RegisterService(_serviceCodeTimer);
+
 }
 /*! \brief Destructeur*/
 SwApplication::~SwApplication() {
@@ -83,6 +90,8 @@ SwApplication::~SwApplication() {
     delete _serviceExtensions;
     UnregisterService(_serviceParameters->GetServiceName());
     delete _serviceParameters;
+	UnregisterService(_serviceCodeTimer->GetServiceName());
+	delete _serviceCodeTimer;
     _singleton=NULL;
     delete _bank;
     _bank=NULL;

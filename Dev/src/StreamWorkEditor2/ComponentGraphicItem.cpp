@@ -398,11 +398,13 @@ void ComponentGraphicItem::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event 
 		bool found = false;
 		foreach (QGraphicsItem *item, scene()->items()) 
 		{
-			if (item != parentItem() && item != this && qgraphicsitem_cast< InterestArea* >(item) && item->mapRectToScene(item->boundingRect()).contains(irect)) 
+			if (item != parentItem() && item != this && dynamic_cast< InterestArea* >(item) && item->mapRectToScene(item->boundingRect()).contains(irect)) 
 			{
 				setParentItem(item);
 				setPos(item->mapFromScene(pos()));
+				qDebug() << "Reparent";
 				found =  true;
+				 updateLinks();
 			}
 		}
 
@@ -410,7 +412,10 @@ void ComponentGraphicItem::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event 
 		{
 			setPos(parentItem()->mapToScene(pos()));
 			setParentItem(NULL);
+			qDebug() << "Set parent NULL";
+			 updateLinks();
 		}
+
 	}
 	
     _controler->streamControlerChanged();

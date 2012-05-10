@@ -15,11 +15,14 @@ public:
 	DatabaseManager();
 	~DatabaseManager();
 
-	void exec();
 
 	bool openDB();
 
 	void initDB();
+
+protected:
+	virtual void run();
+
 
 signals:
 	void connectionState(bool);

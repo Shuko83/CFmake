@@ -113,7 +113,10 @@ HEADERS += LibIndeSig.h \
     SwSnapShotPropertiesService.h \
     ISwServiceParameters.h \
     _SwServiceParametersImpl.h \
-    ISwServiceProductKey.h
+    ISwServiceProductKey.h \
+	ISwServiceCodeTimer.h \
+	_SwServiceCodeTimer.h \
+	_SwPerfChrono.h
 
 SOURCES += SwAddress_ToolBox.cpp \
     SwApplication.cpp \
@@ -165,7 +168,8 @@ SOURCES += SwAddress_ToolBox.cpp \
     _SwExtensionPointImpl.cpp \
     SwExtensionHelper.cpp \
     SwSnapShotPropertiesService.cpp \
-    _SwServiceParametersImpl.cpp
+    _SwServiceParametersImpl.cpp \
+	_SwServiceCodeTimer.cpp
     
     
     

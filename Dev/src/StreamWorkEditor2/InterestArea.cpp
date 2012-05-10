@@ -15,6 +15,8 @@ InterestArea::InterestArea(StreamControler * controler) {
 	_bbox=QRectF(0,0,100,100);
     setFlag(ItemIsMovable);
     setFlag(ItemIsSelectable);
+	setFlag(ItemSendsGeometryChanges);
+
     setZValue(-200.0);
     _color=QColor(QColor(136,136,136,136));
     _text=new QGraphicsTextItem(this);
@@ -105,9 +107,11 @@ void InterestArea::mouseMoveEvent ( QGraphicsSceneMouseEvent * event ) {
                     newHeight=10;
             _bbox.setHeight(newHeight);
         }
+		
         update();
     }
 }
+
 /** @brief sur press sourie */
 void InterestArea::mousePressEvent ( QGraphicsSceneMouseEvent * event ){
     if (abs(event->pos().x()-_bbox.width())<MARGE && abs(event->pos().y()-_bbox.height())<MARGE) {
@@ -192,6 +196,17 @@ QVariant InterestArea::itemChange ( GraphicsItemChange change,
                                    const QVariant & value ) {
     QVariant result=QGraphicsItem::itemChange(change, value);
     if (change == ItemPositionHasChanged) {
+		if(!children().isEmpty())
+		{
+			foreach(QGraphicsItem *item , children())
+			{
+				ComponentGraphicItem * component = dynamic_cast<ComponentGraphicItem*>(item);
+				if(component)
+				{
+					component->updateAttributs();
+				}
+			}
+		}
         //_controler->streamControlerChanged();
     }
     return result;

@@ -54,7 +54,8 @@ protected:
     /** @brief sur hover enter */
     virtual void hoverEnterEvent ( QGraphicsSceneHoverEvent * event );
     /** @brief sur hover leave */
-    virtual void  hoverLeaveEvent  ( QGraphicsSceneHoverEvent * event );
+    virtual void hoverLeaveEvent  ( QGraphicsSceneHoverEvent * event );
+
 private:
     /** @brief Bounding rect */
     mutable QRectF _bbox;
