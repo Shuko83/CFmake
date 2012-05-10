@@ -82,7 +82,7 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
     PLOADED_IMAGE image=ImageLoad(name,0);
     if (image==0) {
 
-#ifndef _DEBUG	
+#ifdef _DEBUG	
 		if(!_msgBoxAllReadyPopup.contains(QString(name))) {
 			QMessageBox::critical(0,"Dynamic load library failed",QString("Unable to find dynamic library %1").arg(name));
 			_msgBoxAllReadyPopup.append(QString(name));

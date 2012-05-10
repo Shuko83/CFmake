@@ -16,7 +16,7 @@ DatabaseManager::~DatabaseManager()
 }
 
 //-------------------------------------------------------------------------
-void DatabaseManager::run()
+void DatabaseManager::exec()
 {
 	while(MaxTryConnection != _nbTry)
 	{
@@ -28,6 +28,7 @@ void DatabaseManager::run()
 			if(openDB())
 			{
 				emit connectionState(true);
+				exit(0);
 				break;
 			}
 			else
@@ -46,6 +47,7 @@ void DatabaseManager::run()
 	}
 
 	_nbTry = 0;
+	exit(0);
 }
 
 //-------------------------------------------------------------------------

@@ -15,7 +15,7 @@ public:
 	DatabaseManager();
 	~DatabaseManager();
 
-	void run();
+	void exec();
 
 	bool openDB();
 

@@ -21,18 +21,9 @@ ManageSQL::ManageSQL( void )
 {
 	_isOpen = false;
 
-	QDjango::setDatabase(QSqlDatabase());
-
-	//Register model
-	QDjango::registerModel<TUser>();
-	QDjango::registerModel<TKeyComp>();
-	QDjango::registerModel<TKeyword>();
-	QDjango::registerModel<TComponent>();
-	QDjango::registerModel<TColor>();
-
 	_threadSQL = new DatabaseManager();
 	connect(_threadSQL,SIGNAL(connectionState(bool)),this,SLOT(setDatabaseState(bool)));
-	_threadSQL->start();
+	_threadSQL->exec();
 
 }
 
@@ -83,13 +74,22 @@ void ManageSQL::setDatabaseState(bool val)
 	if(val)
 	{
 		_isOpen = true;
+		QDjango::setDatabase(QSqlDatabase());
+
+		//Register model
+		QDjango::registerModel<TUser>();
+		QDjango::registerModel<TKeyComp>();
+		QDjango::registerModel<TKeyword>();
+		QDjango::registerModel<TComponent>();
+		QDjango::registerModel<TColor>();
+
 		QDjango::setDatabase(QSqlDatabase::database());
 		QDjango::createTables();
 	}
 	else
 	{
 		_isOpen = false;
-		QDjango::setDatabase(QSqlDatabase());
+		//QDjango::setDatabase(QSqlDatabase());
 	}
 
 	emit connectionStateChange();

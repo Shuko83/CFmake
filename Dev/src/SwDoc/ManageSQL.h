@@ -10,7 +10,6 @@
 /**
  * Include QT
  */
-#include <QtSql/QSqlDatabase>
 #include <QString>
 #include <QObject>
 #include <QDjango>
