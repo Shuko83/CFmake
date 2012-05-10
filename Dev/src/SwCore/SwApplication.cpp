@@ -77,7 +77,6 @@ SwApplication::SwApplication():SwServicesManager_Class() {
     _serviceParameters = new _SwServiceParametersImpl();
     RegisterService(_serviceParameters);
 
-
 	_serviceCodeTimer = new _SwServiceCodeTimer();
 	RegisterService(_serviceCodeTimer);
 

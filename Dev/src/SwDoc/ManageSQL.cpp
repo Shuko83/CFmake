@@ -71,7 +71,7 @@ void ManageSQL::setDatabaseState(bool val)
 	if(val)
 	{
 		_isOpen = true;
-		QDjango::setDatabase(QSqlDatabase());
+		QDjango::setDatabase(QSqlDatabase::database());
 
 		//Register model
 		QDjango::registerModel<TUser>();
@@ -80,7 +80,6 @@ void ManageSQL::setDatabaseState(bool val)
 		QDjango::registerModel<TComponent>();
 		QDjango::registerModel<TColor>();
 
-		QDjango::setDatabase(QSqlDatabase::database());
 		QDjango::createTables();
 	}
 	else
