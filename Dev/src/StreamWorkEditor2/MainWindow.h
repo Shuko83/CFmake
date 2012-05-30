@@ -50,7 +50,7 @@ public slots:
 	/** @brief sur lancement SwGenerator */
 	void onLaunchSwGenerator();
     /** @brief sur quit */
-    //void onQuit();
+    void onQuit();
     /** @brief sur affichage de la liste des plugins */
     void onDisplayPluginList();
     /** @brief rearrange */

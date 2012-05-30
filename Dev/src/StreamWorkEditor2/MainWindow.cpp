@@ -83,9 +83,9 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 			}
 		}
 	}
-	// streamMenu->addAction(&_wizard->GetAction());
-	//streamMenu->addSeparator();
-	//streamMenu->addAction("Quit",this,SLOT(onQuit()),Qt::CTRL + Qt::Key_Q);
+	//_streamMenu->addAction(&_wizard->GetAction());
+	_streamMenu->addSeparator();
+	_streamMenu->addAction("Quit",this,SLOT(onQuit()),Qt::CTRL + Qt::Key_Q);
 
 	//Acces Edition
 	QMenu * editionMenu=menuBar()->addMenu("Edition");
@@ -355,16 +355,23 @@ void MainWindow::onSaveAsStream() {
 /** @brief sur wizard */
 void MainWindow::onWizard(){
 }
-// /** @brief sur quit */
-// void MainWindow::onQuit()
-// {
-//     delete _streamControler;
-//     qApp->disconnect(qApp, SIGNAL(lastWindowClosed()), this, SLOT(onQuit()));
-//     this->deleteLater();
-//     nbWindows--;
-//     if (nbWindows==0)
-//         qApp->exit(0);
-// }
+/** @brief sur quit */
+void MainWindow::onQuit()
+{
+	if (_streamControler->getRootItem()->_getReferencesNb()>0) {
+		_streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
+	}
+	_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+	_streamTreeModel->setStreamControler(0);
+	_iaTreeModel->setStreamControler(0);
+	delete _streamControler;
+
+	qApp->disconnect(qApp, SIGNAL(lastWindowClosed()), this, SLOT(onQuit()));
+	this->deleteLater();
+	nbWindows--;
+	if (nbWindows==0)
+		qApp->exit(0);
+}
 /** @brief sur close event */
 void MainWindow::closeEvent(QCloseEvent *event) {   
 	QSettings settings;

@@ -834,7 +834,8 @@ void StreamControler::saveVisualData(QDomDocument & doc){
                 saveVisualItem(cgitem,doc,sceneNode);
             }
             InterestArea * ia=dynamic_cast<InterestArea *>(item);
-            if (ia!=0) {
+            if (ia!=0) 
+			{
                 QDomElement itemNode=doc.createElement(CL_IA_NODE);
                 itemNode.setAttribute(CL_IA_ATT_X,ia->pos().x());
                 itemNode.setAttribute(CL_IA_ATT_Y,ia->pos().y());
@@ -844,6 +845,16 @@ void StreamControler::saveVisualData(QDomDocument & doc){
                 itemNode.setAttribute(CL_IA_ATT_COLOR,ia->getColor().name());
                 itemNode.setAttribute(CL_IA_ATT_TEXT,ia->getText());
                 sceneNode.appendChild(itemNode);
+
+				QList<QGraphicsItem *> items2=item->childItems();
+				int count2=items2.count();
+				for(int i2=0;i2<count2;i2++) {
+					ComponentGraphicItem * cgitem=dynamic_cast<ComponentGraphicItem *>(items2[i2]);
+					if (cgitem!=0) {
+						saveVisualItem(cgitem,doc,itemNode);
+					}
+				}
+
             }
         }
     }
@@ -937,6 +948,13 @@ void StreamControler::loadVisualData(QDomDocument & doc){
         ia->setColor(QColor(node.attribute(CL_IA_ATT_COLOR)));
         ia->setText(node.attribute(CL_IA_ATT_TEXT));
         _streamScene->addItem(ia);
+
+
+		//Chargement item enfant
+		for(QDomElement cnode = node.firstChildElement(QString(CL_CGITEM_NODE));!cnode.isNull(); cnode = cnode.nextSiblingElement(QString(CL_CGITEM_NODE)))
+		{
+			loadVisualItem(doc,cnode,_rootComponent,ia);
+		}
     }
     //_streamScene->setSceneRect(_streamScene->itemsBoundingRect());
 }
@@ -956,7 +974,9 @@ void StreamControler::loadVisualItem(QDomDocument & doc,QDomElement &node,SwComp
     cgitem->setPos(pos);
     cgitem->setColor(QColor(node.attribute(CL_CGITEM_ATT_COLOR)));
     cgitem->setTextColor(QColor(node.attribute(CL_CGITEM_ATT_TEXT_COLOR)));
-   
+   if(parentItem)
+	   cgitem->setParentItem(parentItem);
+
     if (parentComponent!=_rootComponent) {
         QMap<StreamWork::SwCore::SwComponent_Class *,ComponentGraphicItem *>::iterator it;
         it=_mapCompToItem.find(parentComponent);
