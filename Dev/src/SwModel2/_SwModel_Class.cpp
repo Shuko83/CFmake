@@ -46,10 +46,12 @@ _SwModel_Class::_SwModel_Class(QString model_name,SwComponent_Class * root_eleme
     _root_element->SetName(s);
     //Enregistrement du stream
     SW_APP->AddNewStream(_root_element);
+
     //Recuperation de l'host entry
     _host_entry=dynamic_cast<_SwModelHost_Class *>(SwAddress_ToolBox::FindTarget(ipath,_root_element));
-    if (_host_entry==NULL) {
-        SW_APP->Logger().Log(LogLvl_Info,QString("Fail to found host_entry for model %1\n").arg(_model_name));   
+    if (_host_entry==NULL) 
+	{
+        SW_APP->Logger().Log(LogLvl_Critical,QString("Fail to found host_entry for model %1\n").arg(_model_name));   
     }
     _isDefault=false;
 }
@@ -91,8 +93,11 @@ void _SwModel_Class::InitializeResources() throw(SwException) {
     this->RegisterService(_provider_service);
     this->RegisterService(_pins_service);
 
-    if (!_isDefault)
+    if (!_isDefault && _host_entry)
         CreateBinding();
+	else
+		SW_APP->Logger().Log(LogLvl_Critical,QString("Fail to bind model\n"));   
+
     
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of _SwModel_Class done\n"));
 }
