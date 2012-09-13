@@ -7,6 +7,8 @@
 #ifndef _STREAMWORK_SWCORE_ISWREF_H
 #define _STREAMWORK_SWCORE_ISWREF_H
 
+#include "LibIndeSig.h"
+
 namespace StreamWork {
 
     namespace SwCore {
@@ -25,6 +27,8 @@ namespace StreamWork {
 			virtual void _release()=0;
 			/*! \brief Permet de connaitre le nombre de r?ferences*/
 			virtual unsigned long _getReferencesNb() const=0;
+
+			virtual LibIndeSig::iSignal0 & getOnDestroySignal()=0;
 		protected:
 			/*! \brief Destructeur */
 			virtual ~ISwRef() {};

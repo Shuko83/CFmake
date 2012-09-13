@@ -29,7 +29,7 @@ namespace StreamWork
 	namespace SwCore
 	{
         /*! \brief definition du pointeur securisé sur composant */
-        class SwComponent_Class;
+		class SwComponent_Class;
         class SwPluginFactory_Class;
         typedef SwRefPtr<SwComponent_Class> SwComponent_ClassPtr;
         /*!

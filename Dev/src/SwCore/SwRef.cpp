@@ -54,3 +54,8 @@ void SwRef::_release(){
 unsigned long SwRef::_getReferencesNb() const{
 	return _referencesCounter;
 }
+
+LibIndeSig::iSignal0 & SwRef::getOnDestroySignal()
+{
+	return OnDestroy;
+}

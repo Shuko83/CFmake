@@ -41,6 +41,10 @@ namespace StreamWork
 			virtual ISwRef * getSwRefParent();			
 			/*! \brief set du parent */
 			virtual void setSwRefParent(ISwRef * parent);
+
+			virtual LibIndeSig::iSignal0 & getOnDestroySignal();
+
+			LibIndeSig::iSignal0 OnDestroy;
 		protected:
 			/*! \brief Destructeur */
 			virtual ~SwRefParent();

@@ -130,7 +130,8 @@ void _SwGuiCompWidget::InitializeResources() throw(SwException) {
 		_backgroundTransparency_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompWidget::OnPropertyChange);
 	}
 
-    if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiWidget done\n"));
+    if (SW_APP->IsVerbose()) 
+		SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiWidget done\n"));
 
 }
 /*! \brief Callback sur les changements de propriétés*/

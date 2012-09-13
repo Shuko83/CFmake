@@ -9,6 +9,9 @@
 #ifndef _SwRefPtr_H
 #define _SwRefPtr_H
 
+#include "LibIndeSig.h"
+#include "SwRefPtrTools.h"
+
 namespace StreamWork
 {
 	namespace SwCore
@@ -28,7 +31,7 @@ namespace StreamWork
         */
         template <class T> 
         class SwRefPtr {
-        public:                                        
+        public:
             //Constructuer de base
             SwRefPtr<T>(T *ptr = 0) : _elt(ptr) 
             {                
@@ -36,6 +39,7 @@ namespace StreamWork
                     _elt->_addRef();
                 }
                 enabled=true;
+				
             }
             //Constructeur de copie
             SwRefPtr(const SwRefPtr<T> & source) : _elt(source._elt) 
@@ -43,22 +47,43 @@ namespace StreamWork
                 if (_elt != 0) {
                     _elt->_addRef();
                 }
-                 enabled=true;
+                enabled=true;
+				
            }
             //Destructeur
             ~SwRefPtr() 
             {
-                if (_elt != 0 && enabled) {
-                    _elt->_release();
-                    _elt = 0;
-                }
-            }                                   
+				if (_elt != 0){
+					
+					if(enabled) {
+						_elt->_release();
+						_elt = 0;
+					}else{
+						disconnectDestroyToNull(_elt);
+					}
+				}
+            }  
+
+			inline void connectDestroyToNull(T * elt){
+				if(elt != 0)
+					elt->getOnDestroySignal().iconnect(*this, &SwRefPtr::setNull);
+			}
+
+			inline void disconnectDestroyToNull(T * elt){
+				if(elt != 0)
+					elt->getOnDestroySignal().idisconnect(*this, &SwRefPtr::setNull);
+			}
+
             //Operateur d'affectation
             SwRefPtr<T> & operator=(const SwRefPtr<T> & source) 
             {
                 if (_elt != source._elt) {                    
                     T* old = _elt; //on fait surtout pas release de suite !
                     _elt = source._elt;
+					if(!enabled){
+						connectDestroyToNull(_elt);
+						disconnectDestroyToNull(old);
+					}
                     if (_elt != 0 && enabled) {
                         _elt->_addRef();
                     }
@@ -78,6 +103,10 @@ namespace StreamWork
                 if (_elt != source) {                    
                     T* old = _elt; //on fait surtout pas release de suite !
                     _elt = source;
+					if(!enabled){
+						connectDestroyToNull(_elt);
+						disconnectDestroyToNull(old);
+					}
                     if (_elt != 0 && enabled) {
                         _elt->_addRef();
                     }
@@ -131,11 +160,14 @@ namespace StreamWork
             }
             //Operateur d'indirection
             T* operator->() const {
-                return _elt;
+				if(_elt == 0){
+					_CrtDbgBreak();
+				}
+				return _elt;
             }            
             //acces au pointer
 	        inline T* get() const{
-                return _elt;
+				return _elt;
             }            
             //Permet de savoir s'il est 0
             bool IsNull() {
@@ -150,8 +182,17 @@ namespace StreamWork
             void swap(SwRefPtr<T> & right) 
             { 
                 T* tmp=_elt; 
-                _elt=right._elt; 
+				if(!enabled)
+					disconnectDestroyToNull(_elt);
+				if(!right.enabled)				
+					right.disconnectDestroyToNull(right._elt);
+				
+				_elt=right._elt; 
                 right._elt=tmp; 
+				if(!enabled)
+					connectDestroyToNull(_elt);
+				if(!right.enabled)
+					right.connectDestroyToNull(right._elt);
             }
                         
 	        //Operateur de cast entre pointeur
@@ -172,6 +213,10 @@ namespace StreamWork
 		        if (_elt != source.get()) {                    
                     T* old = _elt; //on fait surtout pas release de suite !
                     _elt = dynamic_cast<T *>(source.get());
+					if(!enabled){
+						connectDestroyToNull(_elt);
+						disconnectDestroyToNull(old);
+					}
                     if (_elt != 0 && enabled) {
                         _elt->_addRef();
                     }
@@ -185,14 +230,26 @@ namespace StreamWork
                 }
                 return *this;                                                                
 	        }
-	        
-        
+
+			void setNull(){
+					SwRefPtrTools::getInstance()->debug("Set weak pointer to null");
+					_elt = 0;
+			}
+
+			void setWeakRef(bool isWeakRef){
+				enabled = (!isWeakRef);
+				if(!enabled){
+					connectDestroyToNull(_elt);
+				}else{
+					disconnectDestroyToNull(_elt);
+				}
+			}        
         private:
             //Instance reference (DOIT HERITE DE SwRef)
             T * _elt;
         public:
             //Action
-            bool enabled;
+            bool enabled;  // false  = WeakReference
         };  //FIN DE LA CLASS SwRefPtr
         
 

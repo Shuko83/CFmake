@@ -49,3 +49,7 @@ ISwRef * SwRefParent::getSwRefParent(){
 void SwRefParent::setSwRefParent(ISwRef * parent) {
     _parent=parent;
 }
+
+LibIndeSig::iSignal0 & SwRefParent::getOnDestroySignal() {
+	return OnDestroy;
+}

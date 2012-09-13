@@ -40,7 +40,7 @@ namespace StreamWork
 		private:
 			/*! \brief Compteur de r�ferences */
 			unsigned long _referencesCounter;
-		public:
+		public: 
 			/*! \brief Constructeur */
 			SwRef();
 			/*! \brief Ajout d'une r�f�rence */
@@ -49,9 +49,12 @@ namespace StreamWork
 			virtual void _release();
 			/*! \brief Permet de connaitre le nombre de r�ferences*/
 			virtual unsigned long _getReferencesNb() const;
+
+			virtual LibIndeSig::iSignal0 & getOnDestroySignal();
 		protected:
 			/*! \brief Destructeur */
 			virtual ~SwRef();
+
 		public:
 			/*! \brief Permet de signaler une destruction de l'objet*/
 			LibIndeSig::iSignal0 OnDestroy;
