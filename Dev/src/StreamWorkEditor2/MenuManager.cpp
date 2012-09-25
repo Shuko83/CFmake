@@ -224,9 +224,11 @@ void MenuManager::buildMenuForContext(QMenu * menu) {
     }
 }
 /** @brief sur remove */
-void MenuManager::onRemove() {
+void MenuManager::onRemove() 
+{
     QList<InterestArea *> ialist=_iaList;
-    for(int i=0;i<ialist.count();i++) {
+    for(int i=0;i<ialist.count();i++) 
+	{
         InterestArea * ia=ialist.at(i);
         ia->setParentItem(0);
         _streamControler->getScene()->removeItem(ia);
@@ -234,22 +236,36 @@ void MenuManager::onRemove() {
     }
 
     QList<SwComponent_Class *> clist;
-    for(int i=0;i<_gwList.count();i++) {
+    for(int i=0;i<_gwList.count();i++) 
+	{
         clist.push_back(_gwList[i]->getComponent());
     }
     SwComponent_Class * component;
-    for(int i=0;i<_gwList.count();i++) {
+    for(int i=0;i<_gwList.count();i++) 
+	{
         component=_gwList[i]->getComponent();
-        while (component->GetParent()!=0 && clist.indexOf(component->GetParent())<0) {
+        while (component->GetParent()!=0 && clist.indexOf(component->GetParent())<0) 
+		{
             component=component->GetParent();
         }
-        if (clist.indexOf(component->GetParent())>=0) {
+
+        if (clist.indexOf(component->GetParent())>=0) 
+		{
             clist.removeAt(clist.indexOf(_gwList[i]->getComponent()));
         }
     }
-    for(int i=0;i<clist.count();i++) {
+    for(int i=0;i<clist.count();i++) 
+	{
         component=clist[i]->GetParent();
-        component->RemoveChild(clist[i]);
+		
+		//Bridage de deconnection d'interface sur un composant exécuté
+		StreamWork::SwExecution::ISwExecutable_Service * execServS = dynamic_cast<StreamWork::SwExecution::ISwExecutable_Service*>(clist[i]->QueryService(CG_SW_SERVICE_EXECUTABLE));
+		if( execServS && execServS->isRunning() ) 
+		{
+			QMessageBox::critical(0,"Forbidden Action","Unable to remove running component");		
+		}
+		else
+			component->RemoveChild(clist[i]);
     }
     _streamControler->streamControlerChanged();
 }
@@ -259,15 +275,29 @@ void MenuManager::onDisconnect() {
     if (_selectedConnector!=0) {
         _lkList.append(*(_selectedConnector->getLinks()));
     }
-    for(int i=0;i<_lkList.count();i++) {
+    for(int i=0;i<_lkList.count();i++) 
+	{
         component=((ComponentGraphicItem *)_lkList[i]->getSource()->parentItem())->getComponent();
-        if (_lkList[i]->getSource()->getConnectorType()==CONSUMER) {
-            ISwInterfaces_Consumer *iconsumer=
-                dynamic_cast<ISwInterfaces_Consumer *>(component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
+
+		//Bridage de deconnection d'interface sur un composant exécuté
+		StreamWork::SwExecution::ISwExecutable_Service * execServS = dynamic_cast<StreamWork::SwExecution::ISwExecutable_Service*>(component->QueryService(CG_SW_SERVICE_EXECUTABLE));
+		if( execServS && execServS->isRunning() ) 
+		{
+			QMessageBox::critical(0,"Forbidden Action","Unable to disconnect interface on running component");
+			menuNeedBeRebuild=true;
+			return;
+		}
+
+        if (_lkList[i]->getSource()->getConnectorType()==CONSUMER) 
+		{
+            ISwInterfaces_Consumer *iconsumer = dynamic_cast<ISwInterfaces_Consumer *>(component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
             iconsumer->DetachProvider(_lkList[i]->getSource()->getName());
-        } else if (_lkList[i]->getSource()->getConnectorType()==PIN) {
+        } 
+		else if (_lkList[i]->getSource()->getConnectorType()==PIN) 
+		{
             ISwPins_Manager *pinManager=dynamic_cast<ISwPins_Manager *>(component->QueryService(CG_SW_SERVICE_PINS_MANAGER));
-            if (pinManager!=0) {
+            if (pinManager!=0) 
+			{
                 pinManager->DisconnectPin(_lkList[i]->getSource()->getName());
             }
         }

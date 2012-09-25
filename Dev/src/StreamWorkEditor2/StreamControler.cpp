@@ -526,12 +526,33 @@ void StreamControler::OnDisconnectInterface(ISwInterfaces_Service * source,QStri
         return;
     }    
     ConnectorGraphicItem *cgis=its.value()->getConnector(iname);
-    if (!cgis->getLinks()->isEmpty()) {
-        LinkGraphicItem *lgi=cgis->getLinks()->front();
-        cgis->getLinks()->pop_front();
-        lgi->setParentItem(0);
-        _streamScene->removeItem(lgi);
-        delete lgi;
+    if (!cgis->getLinks()->isEmpty()) 
+	{
+
+		// Previous code
+		//         LinkGraphicItem *lgi=cgis->getLinks()->front();
+		//         cgis->getLinks()->pop_front();
+		//         lgi->setParentItem(0);
+		//         _streamScene->removeItem(lgi);
+		//         delete lgi;
+
+		// New code
+		QList<LinkGraphicItem*> list = *(cgis->getLinks());
+
+		foreach(LinkGraphicItem * item , list)
+		{
+			StreamWork::SwCore::SwComponent_Class * tmpC = ((ComponentGraphicItem *)item->getSource()->parentItem())->getComponent();
+			StreamWork::SwCore::SwComponent_Class * tmpS = ((ComponentGraphicItem *)item->getTarget()->parentItem())->getComponent();
+
+			if(remote_source == tmpC->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER) 
+			|| remote_source == tmpS->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER) )
+			{
+				item->setParentItem(0);
+				_streamScene->removeItem(item);
+				delete item;
+				item = NULL;
+			}
+		}
     }
 }           
 /*! \brief Sur ajout d'un nouveau pin*/

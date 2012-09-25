@@ -213,7 +213,7 @@ void _SwPerspectivesManager::detachPerspective(ISwPerspective * perspective,int 
 }
 /** @brief ajout bouton*/
 void _SwPerspectivesManager::addButtons(int number) {
-    int count=_buttons.count();
+//    int count=_buttons.count();
     for(int i=0;i<number;i++) {
         _SwPerspectiveButton * button=new _SwPerspectiveButton(_tabWidget,this);
         _vlayout->insertWidget(_vlayout->count()-1,button);
@@ -236,7 +236,7 @@ void _SwPerspectivesManager::removeButtons(int number) {
 }
 /** @brief updateButtonsPosition*/
 void _SwPerspectivesManager::updatePositionButton() {
-    int i=0;
+//    int i=0;
     //foreach(_SwPerspectiveButton * button,_buttons) {
     //    if (button->isVisible()){
     //        button->move(CL_MARGIN,CL_MARGIN+(CG_PERSPECTIVE_BUTTON_SIZE+CL_MARGIN)*i);

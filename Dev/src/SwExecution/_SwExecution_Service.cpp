@@ -367,9 +367,12 @@ void _SwExecution_Service::AskForStopExecution() {
     _must_be_stopped=true;
     switch (_exe_type) {
         case Timer_exe:
-            _exe_timer->stop();
-            delete _exe_timer;
-            _exe_timer=NULL;
+			if(_exe_timer)
+			{
+				_exe_timer->stop();
+				delete _exe_timer;
+				_exe_timer=NULL;
+			}
             _is_stopped=true;
             break;
         case Thread_exe:

@@ -10,6 +10,7 @@
 #include "ConnectorGraphicItem.h"
 #include "LinkGraphicItem.h"
 #include "Arranger.h"
+#include "MenuManager.h"
 #define G_MARGIN 10.0
 
 
@@ -21,6 +22,9 @@ StreamScene::StreamScene(QObject * parent):QGraphicsScene(parent) {
     _linkSrc=0;
     _connectorToMove=0;
     _tmpTargetConnector=0;
+
+	installEventFilter(this);
+
 }
 
 /** @brief Fonction de dessin du fond en opengl */
@@ -382,4 +386,21 @@ QList<InterestArea *> StreamScene::getAllInterestAreas(){
     return lcitems;
 }
 
+//-----------------------------------------------------------------------
+bool StreamScene::eventFilter( QObject *obj, QEvent *event )
+{
+	if(event->type() == QEvent::KeyPress)
+	{
+		QKeyEvent *c = dynamic_cast<QKeyEvent *>(event);
+		//qDebug() << c->key();
+		//qDebug() << Qt::Key_Delete;
+		if(c && c->key() == Qt::Key_Delete)
+		{
+			MenuManager::getInstance()->buildContextMenu(QPointF(0,0));
+			MenuManager::getInstance()->onRemove();
+			return true;
+		}
+	}
+	return QGraphicsScene::eventFilter(obj,event);
+}
 

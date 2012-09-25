@@ -109,7 +109,7 @@ void _SwGuiCompTabWidget::BeforeInterfaceAvailabilityChange(QString interface_na
     if (widget_it!=_widgets.end()) {
         if (widget_it.value()!=NULL) {
             //Et qu'il etait defini, on le detache de la widgetbar
-            int index=_tabWidget->indexOf(&widget_it.value()->GetWidget());
+//            int index=_tabWidget->indexOf(&widget_it.value()->GetWidget());
             //if(index>=0) {
                 //_tabWidget->removeTab(index);
             //} else {

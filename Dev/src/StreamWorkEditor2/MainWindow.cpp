@@ -249,6 +249,9 @@ void MainWindow::onLoadStream(){
 
 		manageHistory(fi);
 
+		QSettings settings;
+		settings.setValue("history",_history);
+
 		_streamControler=new StreamControler(_propertyWidget);
 		_streamControler->setView(_streamView);
 		_streamControler->loadStream(*it);

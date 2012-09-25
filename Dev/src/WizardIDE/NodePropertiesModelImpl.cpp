@@ -283,7 +283,7 @@ QModelIndex NodePropertiesModelImpl::parent ( const QModelIndex & index ) const{
     PropertyItem * iindex;
     PropertyItem * iparent;
     int index_parent;
-    PropertyItem * current_item;
+//    PropertyItem * current_item;
     QMap<QString,PropertyItem *>::const_iterator it;
 
     if (_properties==NULL || !index.isValid())

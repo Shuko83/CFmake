@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="SwConfigurationd"
 	ProjectGUID="{A3B19830-7148-3B9F-91AF-23D43422C2FB}"
 	Keyword="Qt4VSv1.0"
@@ -199,6 +199,98 @@
 				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;"
 			/>
 		</Configuration>
+		<Configuration
+			Name="StarlinxDebug|Win32"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				CommandLine="taskkill /f /im streamworkeditor2d.exe 2&gt;NUL | set errorlevel=0 "
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				WarningLevel="0"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
+				Optimization="4"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;..\SwGui&quot;,&quot;..\SwGui\_intermediaire&quot;,&quot;..\SwModel&quot;,&quot;..\SwRecord&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCONFIGURATION_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				GeneratePreprocessedFile="0"
+				ExceptionHandling="1"
+				RuntimeLibrary="3"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				AssemblerListingLocation="_objd\"
+				ObjectFile="_objd\"
+				ProgramDataBaseFileName=".\"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCONFIGURATION_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwGuid.lib ../../lib/vc/debug\SwExecutiond.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				OutputFile="..\..\lib\vc\debug\SwConfigurationd.swdld"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="./../../bin/vc/debug/SwConfigurationd.pdb"
+				SubSystem="0"
+				LinkTimeCodeGeneration="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy SwConfigurationd.swdld to ..\..\bin\vc\debug"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug&quot;"
+			/>
+		</Configuration>
 	</Configurations>
 	<References>
 	</References>
@@ -343,6 +435,17 @@
 						Outputs="_intermediaire\moc__SwConfiguration.cpp"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC _SwConfiguration.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfiguration.h -o _intermediaire\moc__SwConfiguration.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfiguration.h"
+						Outputs="_intermediaire\moc__SwConfiguration.cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="_SwConfigurationEntitiesModel.h"
@@ -365,6 +468,17 @@
 						Name="VCCustomBuildTool"
 						Description="MOC _SwConfigurationEntitiesModel.h"
 						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfigurationEntitiesModel.h -o _intermediaire\moc__SwConfigurationEntitiesModel.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfigurationEntitiesModel.h"
+						Outputs="_intermediaire\moc__SwConfigurationEntitiesModel.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC _SwConfigurationEntitiesModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfigurationEntitiesModel.h -o _intermediaire\moc__SwConfigurationEntitiesModel.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfigurationEntitiesModel.h"
 						Outputs="_intermediaire\moc__SwConfigurationEntitiesModel.cpp"
 					/>
@@ -415,6 +529,17 @@
 						Outputs="_intermediaire\moc__SwConfigurationManager.cpp"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC _SwConfigurationManager.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfigurationManager.h -o _intermediaire\moc__SwConfigurationManager.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfigurationManager.h"
+						Outputs="_intermediaire\moc__SwConfigurationManager.cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="_SwConfigurationManagerGui.h"
@@ -437,6 +562,17 @@
 						Name="VCCustomBuildTool"
 						Description="MOC _SwConfigurationManagerGui.h"
 						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfigurationManagerGui.h -o _intermediaire\moc__SwConfigurationManagerGui.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfigurationManagerGui.h"
+						Outputs="_intermediaire\moc__SwConfigurationManagerGui.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC _SwConfigurationManagerGui.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfigurationManagerGui.h -o _intermediaire\moc__SwConfigurationManagerGui.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfigurationManagerGui.h"
 						Outputs="_intermediaire\moc__SwConfigurationManagerGui.cpp"
 					/>
@@ -471,6 +607,17 @@
 						Outputs="_intermediaire\moc__SwConfigurationSelector.cpp"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC _SwConfigurationSelector.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfigurationSelector.h -o _intermediaire\moc__SwConfigurationSelector.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfigurationSelector.h"
+						Outputs="_intermediaire\moc__SwConfigurationSelector.cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="_SwConfigurationStreamTreeModel.h"
@@ -493,6 +640,17 @@
 						Name="VCCustomBuildTool"
 						Description="MOC _SwConfigurationStreamTreeModel.h"
 						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfigurationStreamTreeModel.h -o _intermediaire\moc__SwConfigurationStreamTreeModel.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfigurationStreamTreeModel.h"
+						Outputs="_intermediaire\moc__SwConfigurationStreamTreeModel.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC _SwConfigurationStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfigurationStreamTreeModel.h -o _intermediaire\moc__SwConfigurationStreamTreeModel.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfigurationStreamTreeModel.h"
 						Outputs="_intermediaire\moc__SwConfigurationStreamTreeModel.cpp"
 					/>
@@ -523,6 +681,17 @@
 						Outputs="_intermediaire\moc__SwConfigurationTreeView.cpp"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC _SwConfigurationTreeView.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwConfigurationTreeView.h -o _intermediaire\moc__SwConfigurationTreeView.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwConfigurationTreeView.h"
+						Outputs="_intermediaire\moc__SwConfigurationTreeView.cpp"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="_SwControllerAction.h"
@@ -545,6 +714,17 @@
 						Name="VCCustomBuildTool"
 						Description="MOC _SwControllerAction.h"
 						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwControllerAction.h -o _intermediaire\moc__SwControllerAction.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwControllerAction.h"
+						Outputs="_intermediaire\moc__SwControllerAction.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC _SwControllerAction.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwControllerAction.h -o _intermediaire\moc__SwControllerAction.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwControllerAction.h"
 						Outputs="_intermediaire\moc__SwControllerAction.cpp"
 					/>
@@ -595,6 +775,17 @@
 						Name="VCCustomBuildTool"
 						Description="MOC _SwLaunchManager.h"
 						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwLaunchManager.h -o _intermediaire\moc__SwLaunchManager.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwLaunchManager.h"
+						Outputs="_intermediaire\moc__SwLaunchManager.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="MOC _SwLaunchManager.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCONFIGURATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwModel&quot; -I&quot;..\SwRecord&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwLaunchManager.h -o _intermediaire\moc__SwLaunchManager.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwLaunchManager.h"
 						Outputs="_intermediaire\moc__SwLaunchManager.cpp"
 					/>
@@ -726,6 +917,17 @@
 						Outputs="_intermediaire\ui__SwConfigurationManagerGui.h"
 					/>
 				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="UIC _SwConfigurationManagerGui.ui"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe _SwConfigurationManagerGui.ui -o _intermediaire\ui__SwConfigurationManagerGui.h&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;_SwConfigurationManagerGui.ui"
+						Outputs="_intermediaire\ui__SwConfigurationManagerGui.h"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -798,6 +1000,17 @@
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="RCC _resources\SwConfigurationRsc.qrc"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwConfigurationRsc _resources\SwConfigurationRsc.qrc -o _intermediaire\qrc_SwConfigurationRsc.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwConfigurationRsc.qrc;_resources\images\configuration.png;_resources\images\configurationManager.png;_resources\images\executor.png;_resources\images\interface_in.png;_resources\images\interface_out.png;_resources\images\load.png;_resources\images\play.png;_resources\images\property.png;_resources\images\restart.png;_resources\images\save.png;_resources\images\saveas.png;_resources\images\stop.png"
+						Outputs="_intermediaire\qrc_SwConfigurationRsc.cpp"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="StarlinxDebug|Win32"
 					>
 					<Tool
 						Name="VCCustomBuildTool"

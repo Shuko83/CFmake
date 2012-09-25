@@ -77,6 +77,7 @@ private:
     void showOnlyItemsWithSameParent(ConnectorGraphicItem * itemSource);
     /** @brief rends tout visible*/
     void showAllItems(ConnectorGraphicItem * itemSource);
+	bool eventFilter( QObject *obj, QEvent *event );
 private:
     /** @brief Rectangle representant la zone visible de la scene */
     QRectF _visibleArea;

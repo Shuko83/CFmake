@@ -26,6 +26,9 @@ const char * VL_Help="Usage: %1 [options]\n\
     -ppath path          plugin path\n\
     -pdesc pathdesc      plugin paths descriptor\n\
     -stream streamfile   stream will be read in the specified path\n\
+	-models modelFile    file where all models are described\n\
+	-autostart			 Start automatically the executor in the stream witch is in Timer/MainEntry mode\n\
+	-appDirPath			 The application dir path \n\
     -log logfile         logs will be write in the specified file\n\
 \n\
 ";

@@ -111,8 +111,8 @@ void _SwGuiCompToolBar::BeforeInterfaceAvailabilityChange(QString interface_name
     if (action_it!=_actions.end()) {
         if (action_it.value()!=NULL) {
             //Et qu'ellle etait definie, on la detache de la toolbar
-            _toolbar->removeAction(&action_it.value()->GetAction());
-            action_it.value()=NULL;
+            //_toolbar->removeAction(&action_it.value()->GetAction());
+            //action_it.value()=NULL;
         }
         return;
     }

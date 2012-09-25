@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwGeneratord"
-	ProjectGUID="{EEDCB445-29DD-3ADE-97E9-58A044B161CE}"
+	ProjectGUID="{200CC2DA-41EA-3421-8188-357DB7DD7549}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

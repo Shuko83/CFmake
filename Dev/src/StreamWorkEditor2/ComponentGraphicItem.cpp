@@ -402,7 +402,7 @@ void ComponentGraphicItem::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event 
 			{
 				setParentItem(item);
 				setPos(item->mapFromScene(pos()));
-				qDebug() << "Reparent";
+				//qDebug() << "Reparent";
 				found =  true;
 				 updateLinks();
 			}
@@ -412,7 +412,7 @@ void ComponentGraphicItem::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event 
 		{
 			setPos(parentItem()->mapToScene(pos()));
 			setParentItem(NULL);
-			qDebug() << "Set parent NULL";
+			//qDebug() << "Set parent NULL";
 			 updateLinks();
 		}
 
@@ -452,6 +452,8 @@ void ComponentGraphicItem::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * ev
         }
         window->activateWindow();
     }
+
+	//possible ajout de show sur double click sur un composant qui provide un widget
 }
 
 /** @brief updateLinks */

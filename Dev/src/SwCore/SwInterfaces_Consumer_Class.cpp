@@ -132,17 +132,21 @@ void SwInterfaces_Consumer_Class::DetachProvider(QString cinterface_name){
     QString pinterface_name;
 
     it=_interfaces.find(cinterface_name);
-    if (it==_interfaces.end()) {
+    if (it==_interfaces.end()) 
+	{
         QString msg=QString("In component %2\nFail to detach undefined consumed interface %1 ").arg(cinterface_name).arg(_host_component->GetName());
         LAUNCH_SWEXCEPTION("SwCore",msg)        
     }
     //Elle-t-elle connecté
-    if (it.value()->GetProvider()!=NULL) {
+    if (it.value()->GetProvider()!=NULL) 
+	{
         provider=it.value()->GetProvider();
         pinterface_name=it.value()->GetProvidedInterfaceName();
         it.value()->UnregisterProviderInterface();
-        //Signal connection d'interface
-        for (QSet<ISwInterfaces_ServicesListener *>::const_iterator its=_services_observers.begin();its!=_services_observers.end();its++) {
+        
+		//Signal connection d'interface
+        for (QSet<ISwInterfaces_ServicesListener *>::const_iterator its=_services_observers.begin();its!=_services_observers.end();its++) 
+		{
             (*its)->OnDisconnectInterface(this,cinterface_name,provider,pinterface_name);
         }
     }

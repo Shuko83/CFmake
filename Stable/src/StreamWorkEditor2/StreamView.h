@@ -49,6 +49,8 @@ protected:
     /** @brief evenement de double click */
     void mouseDoubleClickEvent ( QMouseEvent * event ); 
 
+	//bool eventFilter(QObject *obj, QEvent *event);
+
 public slots:
     /** @brief sur demande du menu contextuel */
     void displayContextualMenu(const QPoint & pos);

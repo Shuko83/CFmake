@@ -7,7 +7,7 @@
 #include "StreamView.h"
 #include "StreamControler.h"
 #include "MainWindow.h"
- 
+#include "MenuManager.h"
 
 /** @brief Constructor */
 StreamView::StreamView(QWidget * parent):QGraphicsView(parent) {
@@ -21,6 +21,9 @@ StreamView::StreamView(QWidget * parent):QGraphicsView(parent) {
     //connect(this,SIGNAL(customContextMenuRequested ( const QPoint & )),
     //        this,SLOT(displayContextualMenu(const QPoint &)));
     //setContextMenuPolicy(Qt::CustomContextMenu);
+    
+
+
     _controler=0;
 }
 /** @brief Definition du controleur */
@@ -70,7 +73,7 @@ void StreamView::dragLeaveEvent ( QDragLeaveEvent * event ) {
 }
 /** @brief evenement de drop */
 void StreamView::dropEvent( QDropEvent * event ) {
-    qDebug() << event->mimeData()->formats();
+    //qDebug() << event->mimeData()->formats();
     if (event->mimeData()->hasFormat("application/mod")) {
         _controler->addComponent(QString(event->mimeData()->data("application/mod")),
                                  mapToScene(event->pos()));
@@ -197,4 +200,32 @@ void StreamView::mouseDoubleClickEvent ( QMouseEvent * event ) {
         }
     }
 }
+
+//-----------------------------------------------------------------------
+// void StreamView::keyPressEvent( QKeyEvent *event )
+// {
+// 	qDebug() << event->key();
+// 	if(event->key() == Qt::Key_Delete ||event->key() == Qt::Key_F10)
+// 	{
+// 		MenuManager::getInstance()->onRemove();
+// 	}
+// }
+
+// -----------------------------------------------------------------------
+// bool StreamView::eventFilter( QObject *obj, QEvent *event )
+// {
+// 	if(event->type() == QEvent::KeyPress)
+// 	{
+// 		QKeyEvent *c = dynamic_cast<QKeyEvent *>(event);
+// 		qDebug() << c->key();
+// 		qDebug() << Qt::Key_Delete;
+// 		if(c && c->key() == Qt::Key_Delete)
+// 		{
+// 			MenuManager::getInstance()->buildContextMenu(QPointF(0,0));
+// 			MenuManager::getInstance()->onRemove();
+// 
+// 		}
+// 	}
+// 	return QGraphicsView::eventFilter(obj,event);
+// }
 
