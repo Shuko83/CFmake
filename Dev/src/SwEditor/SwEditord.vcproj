@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwEditord"
-	ProjectGUID="{37131ABA-63AF-3E94-AFF0-D2DA64C80E15}"
+	ProjectGUID="{8E3A6A70-9E69-344D-9380-F9070F586FA8}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwModeld"
-	ProjectGUID="{B603EBE0-8226-3449-BA40-5A0D4B0DF06F}"
+	ProjectGUID="{273C6374-8778-30B9-B8D7-A4AB1B744977}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="WizardIDEd"
-	ProjectGUID="{943ED0FA-F93A-3886-86DB-0F6E0DC7F296}"
+	ProjectGUID="{7179A815-39DC-371A-8F58-74F924100812}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

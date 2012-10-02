@@ -1,6 +1,6 @@
 rem xcopy /Y /S .\Dev\bin\vc\debug\jars\* .\Stable\bin\vc\debug\jars\
 xcopy /Y .\Dev\bin\vc\debug\*.exe .\Stable\bin\vc\debug\
-xcopy /Y .\Dev\bin\vc\debug\*.bat .\Stable\bin\vc\debug\
+rem xcopy /Y .\Dev\bin\vc\debug\*.bat .\Stable\bin\vc\debug\
 xcopy /Y .\Dev\bin\vc\debug\*.dll .\Stable\bin\vc\debug\
 xcopy /Y .\Dev\bin\vc\debug\*.swdld .\Stable\bin\vc\debug\
 xcopy /Y .\Dev\bin\vc\debug\*.pdb .\Stable\bin\vc\debug\

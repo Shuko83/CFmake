@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9,00"
+	Name="TestPlugind"
+	ProjectGUID="{39493F21-2B06-3BA9-8BA3-162B813249C2}"
+	Keyword="Qt4VSv1.0">
+	<Platforms>
+		<Platform
+			Name="Win32" />
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="_objd\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;..\SwGui&quot;,&quot;..\SwRecord&quot;,&quot;..\SwConfiguration&quot;,&quot;..\SwFoundation&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;debug&quot;,c:\Qt\4.7.1\mkspecs\default"
+				AdditionalOptions="-Zm200 -w34100 -w34189"
+				AssemblerListingLocation="_objd\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="3"
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="_objd\"
+				Optimization ="4"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,TestPlugin_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwExecutiond.lib ../../lib/vc/debug\SwFoundationd.lib ../../lib/vc/debug\SwGuid.lib ../../lib/vc/debug\SwRecordd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug"
+				GenerateDebugInformation="true"
+				IgnoreImportLibrary="true"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\lib\vc\debug\TestPlugind.swdld"
+				ProgramDatabaseFile="./../../bin/vc/debug/TestPlugind.pdb"
+				SubSystem="0"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug&quot;"
+				Description="Copy TestPlugind.swdld to ..\..\bin\vc\debug" />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,TestPlugin_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="_obj\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;..\SwGui&quot;,&quot;..\SwRecord&quot;,&quot;..\SwConfiguration&quot;,&quot;..\SwFoundation&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;release&quot;,c:\Qt\4.7.1\mkspecs\default"
+				AdditionalOptions="-Zm200 -w34100 -w34189"
+				AssemblerListingLocation="_obj\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="0"
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="_obj\"
+				Optimization ="2"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,TestPlugin_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="../../lib/vc/release\SwCore.lib ../../lib/vc/release\SwExecution.lib ../../lib/vc/release\SwFoundation.lib ../../lib/vc/release\SwGui.lib ../../lib/vc/release\SwRecord.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/release"
+				GenerateDebugInformation="false"
+				IgnoreImportLibrary="true"
+				LinkIncremental="1"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\lib\vc\release\TestPlugin.swdl"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;"
+				Description="Copy TestPlugin.swdl to ..\..\bin\vc\release" />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,TestPlugin_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath="DataTest.cpp" />
+			<File
+				RelativePath="DataTestCodec.cpp" />
+			<File
+				RelativePath="DataTestCodecFactory.cpp" />
+			<File
+				RelativePath="DataTestCodecITest.cpp" />
+			<File
+				RelativePath="TestAssistedComponent.cpp" />
+			<File
+				RelativePath="TestComponent.cpp" />
+			<File
+				RelativePath="TestComponentEmitter.cpp" />
+			<File
+				RelativePath="TestComponentEmitterVassisted.cpp" />
+			<File
+				RelativePath="TestComponentReceiver.cpp" />
+			<File
+				RelativePath="TestComponentReceiverVassisted.cpp" />
+			<File
+				RelativePath="TestPluginPluginFactory_Class.cpp" />
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath="DataTest.h" />
+			<File
+				RelativePath="DataTestCodec.h" />
+			<File
+				RelativePath="DataTestCodecFactory.h" />
+			<File
+				RelativePath="DataTestCodecITest.h" />
+			<File
+				RelativePath="TestAssistedComponent.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;TestAssistedComponent.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DTestPlugin_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwRecord&quot; -I&quot;..\SwConfiguration&quot; -I&quot;..\SwFoundation&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 TestAssistedComponent.h -o debug\moc_TestAssistedComponent.cpp"
+						Description="MOC TestAssistedComponent.h"
+						Outputs="debug\moc_TestAssistedComponent.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;TestAssistedComponent.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DTestPlugin_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwRecord&quot; -I&quot;..\SwConfiguration&quot; -I&quot;..\SwFoundation&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 TestAssistedComponent.h -o release\moc_TestAssistedComponent.cpp"
+						Description="MOC TestAssistedComponent.h"
+						Outputs="release\moc_TestAssistedComponent.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="TestComponent.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;TestComponent.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DTestPlugin_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwRecord&quot; -I&quot;..\SwConfiguration&quot; -I&quot;..\SwFoundation&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 TestComponent.h -o debug\moc_TestComponent.cpp"
+						Description="MOC TestComponent.h"
+						Outputs="debug\moc_TestComponent.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;TestComponent.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DTestPlugin_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwRecord&quot; -I&quot;..\SwConfiguration&quot; -I&quot;..\SwFoundation&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 TestComponent.h -o release\moc_TestComponent.cpp"
+						Description="MOC TestComponent.h"
+						Outputs="release\moc_TestComponent.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="TestComponentEmitter.h" />
+			<File
+				RelativePath="TestComponentEmitterVassisted.h" />
+			<File
+				RelativePath="TestComponentReceiver.h" />
+			<File
+				RelativePath="TestComponentReceiverVassisted.h" />
+			<File
+				RelativePath="TestPluginConstantes.h" />
+			<File
+				RelativePath="TestPluginPluginFactory_Class.h" />
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			<File
+				RelativePath="debug\moc_TestAssistedComponent.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc_TestAssistedComponent.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc_TestComponent.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc_TestComponent.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="_intermediaire\qrc_TestPluginRsc.cpp" />
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="qrc;*"
+			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
+			ParseFiles="false">
+			<File
+				RelativePath="_resources\DefaultContent.txt" />
+			<File
+				RelativePath="_resources\TestPluginRsc.qrc">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\DefaultContent.txt;_resources\TestPluginRsc.qrc"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name TestPluginRsc _resources\TestPluginRsc.qrc -o _intermediaire\qrc_TestPluginRsc.cpp"
+						Description="RCC _resources\TestPluginRsc.qrc"
+						Outputs="_intermediaire\qrc_TestPluginRsc.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\DefaultContent.txt;_resources\TestPluginRsc.qrc"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name TestPluginRsc _resources\TestPluginRsc.qrc -o _intermediaire\qrc_TestPluginRsc.cpp"
+						Description="RCC _resources\TestPluginRsc.qrc"
+						Outputs="_intermediaire\qrc_TestPluginRsc.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="StreamWorkEditor2d"
-	ProjectGUID="{26A64D0C-CE41-3050-B88E-33494BE5BBA3}"
+	ProjectGUID="{31D3ED7A-9466-3F4B-A91E-1C906E9CF15C}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
