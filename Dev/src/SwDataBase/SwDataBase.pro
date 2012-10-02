@@ -1,5 +1,5 @@
 TEMPLATE = lib
-TARGET = SwDatasBase
+TARGET = SwDataBase
 QMAKE_CXXFLAGS += /MP
 QT += core \
     xml
