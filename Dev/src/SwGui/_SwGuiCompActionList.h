@@ -66,9 +66,10 @@ public:
 protected:
 
     void signalListChanged();
-
+	
     /* menu */
-    QList<QAction *> _actionList;
+    QMap<int, QAction *> _actionMap;
+	QList<QAction *> _actionList;
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
