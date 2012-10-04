@@ -35,6 +35,8 @@ public slots:
     void onRegexpTextChangeOnFly( const QString & text);
     /** @brief Sur changement du texte de combo */
     void onRegexpTextChange( const QString & text);
+	/** @brief Sur changement de l'activation du log*/
+	void onCheckBoxChange( int val);
     //clear
     void clearLog();
 protected:
@@ -50,6 +52,7 @@ private:
     QRegExp _regexp;
     QString _regentry;
     QStringList _content;
+	bool _logEnable;
 };
 
 #endif

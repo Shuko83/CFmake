@@ -5,10 +5,13 @@
  */
 
 #include "LogView.h"
+#include <QSettings>
  
 static LogView * lView=0;
 /** @brief Constructor */
-LogView::LogView():QDialog() {
+LogView::LogView():QDialog() 
+{
+
 	ui.setupUi(this);
 	ui.regExpEntry->addItem(".*");
 	ui.regExpEntry->addItem("Debug :.*");
@@ -22,9 +25,16 @@ LogView::LogView():QDialog() {
     connect(ui.clearButton,SIGNAL(clicked()),this,SLOT(clearLog()));
     connect(ui.regExpEntry,SIGNAL(currentIndexChanged ( const QString & )),this,SLOT(onRegexpTextChange( const QString &)));
     connect(ui.regExpEntry,SIGNAL(editTextChanged ( const QString &  )),this,SLOT(onRegexpTextChangeOnFly( const QString &)));
+	connect(ui.cb_enable,SIGNAL(stateChanged ( int )),this,SLOT(onCheckBoxChange( int)));
     ui.regExpEntry->setInsertPolicy(QComboBox::InsertAtTop);
     _regexp.setPatternSyntax(QRegExp::RegExp);
     _regexp.setMinimal(true);
+
+
+	QSettings settings;
+	_logEnable = settings.value("logEnable",true).toBool();
+
+	ui.cb_enable->setChecked(_logEnable);
 }
 /** @brief Destructor */
 LogView::~LogView() {
@@ -39,6 +49,11 @@ LogView * LogView::getInstance() {
 }
 //Implementation ISwLogRecorder 
 void LogView::RecordLog(TSw_Log_Level level,QString msg) {
+
+	if(!_logEnable)
+		return;
+
+
     _mutex.lock();
     QString header;
     switch(level) {
@@ -109,4 +124,24 @@ void LogView::onRegexpTextChange( const QString & text) {
 void  LogView::clearLog() {
     ui.logView->clear();
     _content.clear();
+}
+
+//-----------------------------------------------------------------------
+void LogView::onCheckBoxChange( int val )
+{
+	QSettings settings;
+	settings.setValue("logEnable", val);
+	_logEnable = val;
+
+	if(!_logEnable)
+	{
+		_timer.stop();
+		_msgs.clear();
+		_content.clear();
+	}
+	else
+	{
+		_timer.start(200);
+	}
+	
 }
