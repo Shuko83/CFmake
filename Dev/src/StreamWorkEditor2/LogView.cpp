@@ -30,7 +30,6 @@ LogView::LogView():QDialog()
     _regexp.setPatternSyntax(QRegExp::RegExp);
     _regexp.setMinimal(true);
 
-
 	QSettings settings;
 	_logEnable = settings.value("logEnable",true).toBool();
 
