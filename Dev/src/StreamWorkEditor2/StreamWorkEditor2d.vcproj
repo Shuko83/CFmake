@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="StreamWorkEditor2d"
-	ProjectGUID="{31D3ED7A-9466-3F4B-A91E-1C906E9CF15C}"
+	ProjectGUID="{D489FCE0-03D0-3ED2-81B4-A2AD8A8CEF3B}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
@@ -39,7 +39,7 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib ../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\WizardIDEd.lib ../../lib/vc/debug\SwDocd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtOpenGLd4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib ../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\WizardIDEd.lib SwDocd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtOpenGLd4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"

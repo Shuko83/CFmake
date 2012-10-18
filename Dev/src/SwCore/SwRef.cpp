@@ -6,6 +6,7 @@
 */
 
 #include "SwRef.h"
+#include "SwRefPtrTools.h"
 //#include "SwException.h"
 //#include "SwMacros.h"
 using namespace StreamWork::SwCore;
@@ -14,19 +15,30 @@ using namespace StreamWork::SwCore;
 /*! \brief Constructeur */
 SwRef::SwRef()
 	:_referencesCounter(0)  {
+		
+#ifdef _DEBUG 
+		_badDelete = true;
+		/*SwRefPtrTools::getInstance()->registerSwRef(this);*/
+#endif  
 	//A la construction, il y a 0 instance piisque non reference
 }
 
 
 /*! \brief Destructeur */
 SwRef::~SwRef(){
-
+#ifdef _DEBUG 
+	/*if(_badDelete)
+		SwRefPtrTools::getInstance()->debug("bad delete..");*/
+#endif  
 }
 
 
 /*! \brief Ajout d'une référence */
 void SwRef::_addRef(){
-
+#ifdef _DEBUG 
+	/*if(_referencesCounter == 0)
+		SwRefPtrTools::getInstance()->registerSwRef(this);*/
+#endif 
 	//Incrementation du compteur de référence
 	_referencesCounter++;
 }
@@ -43,7 +55,10 @@ void SwRef::_release(){
 #endif          
    //S'il n'existe plus aucune reference, l'instance se detruit
    if (_referencesCounter <= 0) {           //Destruction de l'instance
-       OnDestroy();
+	   OnDestroy();
+#ifdef _DEBUG   
+	   _badDelete = false;
+#endif  
        delete this;
    }
 }

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwLauncherd"
-	ProjectGUID="{0357B511-CA24-32C0-B0ED-BA8BAD1A6742}"
+	ProjectGUID="{F951BD70-527A-3819-8E16-5399986355BE}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

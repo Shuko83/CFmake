@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwRecordd"
-	ProjectGUID="{3BE2AE6D-8593-3705-BEA2-318B5F396D70}"
+	ProjectGUID="{C78957EA-C032-36FA-B286-D7401D495DAF}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

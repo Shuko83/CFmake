@@ -6,6 +6,7 @@
 */
 
 #include "SwRefParent.h"
+#include "SwRefPtrTools.h"
 //#include "SwException.h"
 
 using namespace StreamWork::SwCore;
@@ -19,7 +20,6 @@ SwRefParent::SwRefParent(ISwRef * parent)
 
 /*! \brief Destructeur */
 SwRefParent::~SwRefParent(){
-
 }
 
 

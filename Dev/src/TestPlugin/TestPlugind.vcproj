@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="TestPlugind"
-	ProjectGUID="{39493F21-2B06-3BA9-8BA3-162B813249C2}"
+	ProjectGUID="{DF04AC3F-8D9A-3560-A45D-69AC1FAAEDF1}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
@@ -136,6 +136,8 @@
 			<File
 				RelativePath="DataTestCodecITest.cpp" />
 			<File
+				RelativePath="SwRefProfilerUI.cpp" />
+			<File
 				RelativePath="TestAssistedComponent.cpp" />
 			<File
 				RelativePath="TestComponent.cpp" />
@@ -162,6 +164,29 @@
 				RelativePath="DataTestCodecFactory.h" />
 			<File
 				RelativePath="DataTestCodecITest.h" />
+			<File
+				RelativePath="SwRefProfilerUI.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwRefProfilerUI.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DTestPlugin_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwRecord&quot; -I&quot;..\SwConfiguration&quot; -I&quot;..\SwFoundation&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwRefProfilerUI.h -o debug\moc_SwRefProfilerUI.cpp"
+						Description="MOC SwRefProfilerUI.h"
+						Outputs="debug\moc_SwRefProfilerUI.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwRefProfilerUI.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DTestPlugin_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwRecord&quot; -I&quot;..\SwConfiguration&quot; -I&quot;..\SwFoundation&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwRefProfilerUI.h -o release\moc_SwRefProfilerUI.cpp"
+						Description="MOC SwRefProfilerUI.h"
+						Outputs="release\moc_SwRefProfilerUI.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath="TestAssistedComponent.h">
 				<FileConfiguration
@@ -225,6 +250,18 @@
 			Name="Generated Files"
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			<File
+				RelativePath="debug\moc_SwRefProfilerUI.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc_SwRefProfilerUI.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
 				RelativePath="debug\moc_TestAssistedComponent.cpp">
 				<FileConfiguration

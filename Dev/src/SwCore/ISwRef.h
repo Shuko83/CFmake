@@ -8,7 +8,6 @@
 #define _STREAMWORK_SWCORE_ISWREF_H
 
 #include "LibIndeSig.h"
-
 namespace StreamWork {
 
     namespace SwCore {

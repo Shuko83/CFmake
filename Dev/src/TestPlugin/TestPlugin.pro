@@ -17,6 +17,7 @@ HEADERS += DataTestCodecFactory.h
 HEADERS += DataTestCodecITest.h 
 HEADERS += TestAssistedComponent.h 
 HEADERS += TestComponentEmitterVassisted.h 
+HEADERS += SwRefProfilerUI.h 
 
 SOURCES += TestPluginPluginFactory_Class.cpp
 SOURCES += TestComponent.cpp
@@ -29,6 +30,7 @@ SOURCES += DataTestCodecFactory.cpp
 SOURCES += DataTestCodecITest.cpp 
 SOURCES += TestAssistedComponent.cpp 
 SOURCES += TestComponentEmitterVassisted.cpp 
+SOURCES += SwRefProfilerUI.cpp 
 
 OBJECTS_DIR += ./_obj
 RCC_DIR += ./_intermediaire

@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwGuid"
-	ProjectGUID="{66069B03-CFCF-39DB-BFE2-2E395F2F525B}"
+	ProjectGUID="{BF69FE89-8F47-3BDE-B66E-9C1B16112ACF}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

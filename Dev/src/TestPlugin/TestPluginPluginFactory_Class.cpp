@@ -21,6 +21,7 @@
 #include "TestAssistedComponent.h"
 #include "TestComponentEmitterVassisted.h"
 #include "TestComponentReceiverVassisted.h"
+#include "SwRefProfilerUI.h"
 
 using namespace StreamWork::SwExecution;
 /** @brief Constructeur */
@@ -42,6 +43,8 @@ void TestPluginPluginFactory_Class::Initialize() {
 	RegisterComponent("TestComponent","TestComponent");
 	RegisterComponent("TestAssisted::Component","Test Assisted component");
     RegisterData(CG_DATA_TEST_ID,CG_DATA_TEST);
+
+	RegisterComponent("SwRefProfiler","Ref profiler");
 }
 /** @brief Liberation */
 void TestPluginPluginFactory_Class::Liberate() {
@@ -69,6 +72,9 @@ SwComponent_Class * TestPluginPluginFactory_Class::CreateInstanceOf(QString name
     }
 	if (name=="TestAssisted::Component") {
 		return new TestAssistedComponent;
+	}
+	if (name=="SwRefProfiler") {
+		return new SwRefProfilerUI;
 	}
     return NULL;
 }

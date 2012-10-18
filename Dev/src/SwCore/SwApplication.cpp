@@ -17,6 +17,7 @@
 #include "_SwServiceExtensionsImpl.h"
 #include "_SwServiceCodeTimer.h"
 #include "_SwServiceParametersImpl.h"
+#include "_SwServiceRefProfiler.h"
 #include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
 #include "SwLoader_Class.h"
 #include "SwEnum.h"
@@ -44,6 +45,7 @@ _SwFileEditorManager						* _feManager			= NULL;
 _SwServiceExtensionsImpl					* _serviceExtensions	= NULL;
 _SwServiceParametersImpl					* _serviceParameters	= NULL;
 _SwServiceCodeTimer							* _serviceCodeTimer		= NULL;
+_SwServiceRefProfiler						* _serviceRefProfiler	= NULL;
 bool										_is_launch				= false;
 bool										_isCheck				= false;
 
@@ -80,6 +82,8 @@ SwApplication::SwApplication():SwServicesManager_Class() {
 	_serviceCodeTimer = new _SwServiceCodeTimer();
 	RegisterService(_serviceCodeTimer);
 
+	_serviceRefProfiler = new _SwServiceRefProfiler();
+	RegisterService(_serviceRefProfiler);
 }
 /*! \brief Destructeur*/
 SwApplication::~SwApplication() {
@@ -91,6 +95,8 @@ SwApplication::~SwApplication() {
     delete _serviceParameters;
 	UnregisterService(_serviceCodeTimer->GetServiceName());
 	delete _serviceCodeTimer;
+	UnregisterService(_serviceRefProfiler->GetServiceName());
+	delete _serviceRefProfiler;
     _singleton=NULL;
     delete _bank;
     _bank=NULL;

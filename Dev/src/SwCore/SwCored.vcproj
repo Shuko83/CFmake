@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwCored"
-	ProjectGUID="{68C62820-F9E8-3072-A984-8F4EB87CF43E}"
+	ProjectGUID="{9DA6C491-BD1B-3E63-AD5A-EB1C166F7D35}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
@@ -232,6 +232,8 @@
 			<File
 				RelativePath="_SwServiceParametersImpl.cpp" />
 			<File
+				RelativePath="_SwServiceRefProfiler.cpp" />
+			<File
 				RelativePath="_SwTreeItem.cpp" />
 		</Filter>
 		<Filter
@@ -361,6 +363,8 @@
 				RelativePath="ISwServiceParameters.h" />
 			<File
 				RelativePath="ISwServiceProductKey.h" />
+			<File
+				RelativePath="ISwServiceRefProfiler.h" />
 			<File
 				RelativePath="ISwServicesManager_Listener.h" />
 			<File
@@ -592,6 +596,8 @@
 				RelativePath="_SwServiceExtensionsImpl.h" />
 			<File
 				RelativePath="_SwServiceParametersImpl.h" />
+			<File
+				RelativePath="_SwServiceRefProfiler.h" />
 			<File
 				RelativePath="_SwTreeItem.h" />
 		</Filter>

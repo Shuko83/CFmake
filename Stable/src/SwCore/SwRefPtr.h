@@ -12,6 +12,7 @@
 #include "LibIndeSig.h"
 #include "SwRefPtrTools.h"
 
+
 namespace StreamWork
 {
 	namespace SwCore
@@ -29,17 +30,17 @@ namespace StreamWork
             Quand il est affecté, le compteur de reference sur l'instance de la 
             classe dérivée est decrémenté
         */
-        template <class T> 
+		template <class T> 
         class SwRefPtr {
         public:
             //Constructuer de base
-            SwRefPtr<T>(T *ptr = 0) : _elt(ptr) 
+            SwRefPtr<T>(T *ptr = 0) : _elt(ptr)
             {                
                 if (_elt != 0) {
                     _elt->_addRef();
                 }
                 enabled=true;
-				
+
             }
             //Constructeur de copie
             SwRefPtr(const SwRefPtr<T> & source) : _elt(source._elt) 
@@ -232,7 +233,6 @@ namespace StreamWork
 	        }
 
 			void setNull(){
-					SwRefPtrTools::getInstance()->debug("Set weak pointer to null");
 					_elt = 0;
 			}
 
