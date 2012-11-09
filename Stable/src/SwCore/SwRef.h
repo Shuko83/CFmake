@@ -58,10 +58,7 @@ namespace StreamWork
 		public:
 			/*! \brief Permet de signaler une destruction de l'objet*/
 			LibIndeSig::iSignal0 OnDestroy; 
-#ifdef _DEBUG   
-			bool _badDelete;
-#endif 
-			
+	
 		};
 	}
 
