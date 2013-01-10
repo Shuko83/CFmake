@@ -26,6 +26,8 @@ signals:
 private:
     QPixmap makeThumbnail(const QPixmap &pix) const;
 
+	QHash<QString,QPixmap> _cached;
+
 };
 
 #endif // QTRESOURCE_H

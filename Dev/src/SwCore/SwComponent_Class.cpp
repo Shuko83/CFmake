@@ -109,6 +109,7 @@ void SwComponent_Class::RemoveChild(SwComponent_Class * child)  throw(SwExceptio
     it.value()->SetParent(NULL);
     //Supression de l'enfant
     _child_components.erase(it);
+
     OnAfterRemoveChild(this);
 }
 

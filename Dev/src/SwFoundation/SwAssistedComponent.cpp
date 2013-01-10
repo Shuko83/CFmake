@@ -260,6 +260,7 @@ private:
 
 	/*! \brief composant hote */
 	SwAssistedComponent * _host_component;
+	quint64				  _historyIndex;
 
 public:
 	/*! \brief Construsteur */
@@ -278,6 +279,11 @@ public:
 	 */
 	virtual void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager);
 
+	/**
+	 * @brief    : retourne l'index "historique" enregistrer à la fermeture du stream
+	 * @return   : l'index history
+	 */
+	quint64 getHistoryIndex();
 
 	 /**
 	  * @brief    :  methode permettant de sauver des donnees
@@ -293,7 +299,6 @@ public:
 	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
 	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
 	void Liberate();
-
 };
 
 //-------------------------------------------------------------------------
@@ -309,14 +314,38 @@ SwOwner_Class::~SwOwner_Class()
 }
 
 //-------------------------------------------------------------------------
+quint64 SwOwner_Class::getHistoryIndex()
+{
+	return _historyIndex;
+}
+
+//-------------------------------------------------------------------------
 void SwOwner_Class::Load( QDomElement & elt,ISwFinalizerManager & finalizer_manager )
 {
+	//On recupere l'index
+	bool result = false;
+	_historyIndex=elt.attribute("historyIndex").toULongLong(&result);
+	if (result==false)
+	{
+		QString msg=QString("Fail to load index");
+	}
+
+	ISwFinalizer * iFinalizer = dynamic_cast<ISwFinalizer*> (_host_component);
+	
+	if(iFinalizer)
+		finalizer_manager.RegisterFinalization(_historyIndex,iFinalizer);   
+
 	_host_component->Load(elt,finalizer_manager);
 }
 
 //-------------------------------------------------------------------------
 void SwOwner_Class::Save( QDomElement & elt,QDomDocument &doc )
 {
+	_historyIndex = SW_APP->GetHistoricCpt();
+
+	//Enregistrement de l'index pour la reconstruction
+	elt.setAttribute("historyIndex",_historyIndex);
+
 	_host_component->Save(elt,doc);
 }
 
@@ -911,4 +940,13 @@ void SwAssistedComponent::Load( QDomElement & elt,ISwFinalizerManager & finalize
 void SwAssistedComponent::Save( QDomElement & elt,QDomDocument &doc )
 {
 
+}
+
+//-------------------------------------------------------------------------
+quint64 SwAssistedComponent::getHistoryIndex()
+{
+	Q_ASSERT(_isOwner != false);
+	Q_ASSERT(_owner_service != NULL);
+	
+	return _owner_service->getHistoryIndex();
 }

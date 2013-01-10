@@ -265,7 +265,9 @@ void MenuManager::onRemove()
 			QMessageBox::critical(0,"Forbidden Action","Unable to remove running component");		
 		}
 		else
+		{
 			component->RemoveChild(clist[i]);
+		}
     }
     _streamControler->streamControlerChanged();
 }

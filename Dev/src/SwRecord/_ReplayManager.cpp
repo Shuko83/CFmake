@@ -38,6 +38,7 @@ _ReplayManager::_ReplayManager(_SwServiceRecording * serviceRecord):SwAssistedCo
 //-------------------------------------------------------------------------
 _ReplayManager::~_ReplayManager() 
 {
+	unprovideInterface("ReplayManager");
 
 }
 

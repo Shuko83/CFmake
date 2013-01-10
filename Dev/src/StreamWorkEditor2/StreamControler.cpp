@@ -1006,7 +1006,9 @@ void StreamControler::loadVisualItem(QDomDocument & doc,QDomElement &node,SwComp
         }
     } 
     _mapCompToItem.insert(component,cgitem);
-    if (parentComponent==_rootComponent) {
+	
+    if ( parentComponent==_rootComponent && !_streamScene->items().contains(cgitem) ) 
+	{
         _streamScene->addItem(cgitem);  
     }
     buildConnectors(component);

@@ -18,11 +18,21 @@ _QRcViewer::_QRcViewer(QDialog *parent): QDialog(parent)
 	{
 		QString currentName = itDir.next();
 
-		if(!QFileInfo(currentName).isDir())
+		if(!QFileInfo(currentName).isDir() && QFileInfo(currentName).suffix() != "html")
 		{
 			QString filename = currentName.mid(currentName.lastIndexOf("/")+1);
 
-			QListWidgetItem * t_item = new QListWidgetItem(QIcon(makeThumbnail(QPixmap(currentName))),filename,LW_icon);
+			QIcon icon;
+			if(_cached.contains(currentName))
+				icon.addPixmap(_cached[currentName]);
+			else
+			{
+				QPixmap pix = makeThumbnail(QPixmap(currentName));
+				icon.addPixmap(pix);
+				_cached.insert(currentName,pix);
+			}
+
+			QListWidgetItem * t_item = new QListWidgetItem(icon,filename,LW_icon);
 			t_item->setData(Qt::UserRole,currentName);
 		}
 	}

@@ -422,6 +422,12 @@ protected:
 			 */
 			ISwServiceOwner& getOwnerService();
 
+			/**
+			 * @brief    : Retourne le compteur d'historique enregistrer par "l'interface ISwPersitent"
+			 *			   /!\ Le Composant doit etre Owner (setOwnerServiceAvaibility)
+			 * @return   : HistoryIndex à utiliser dans le finalizer
+			 */
+			quint64 getHistoryIndex();
 	
 private:
 
@@ -485,7 +491,7 @@ private:
              * @brief    : Active l'observabilité d'une propriété notifié par "eventPropertyChange"
              * @param	 : ISwProperty * property - Pointeur sur une propriété
              */
-            //void enableListeningChangeForProperty(ISwProperty * property);
+            //void enableListeningChangeForProperty(ISwProperty * property);			
 
         private:
 
@@ -549,6 +555,7 @@ private:
 			bool _isOwnerConf;
 			bool _isOwner;
 			bool _isInitialized;
+			quint64				  _historyIndex;
         
         };
     }
