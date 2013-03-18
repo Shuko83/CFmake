@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="TestPlugind"
-	ProjectGUID="{DF04AC3F-8D9A-3560-A45D-69AC1FAAEDF1}"
+	ProjectGUID="{39493F21-2B06-3BA9-8BA3-162B813249C2}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform

@@ -94,7 +94,6 @@ INCLUDEPATH += ./ \
     ../SwCore \
     ../SwGui \
     ../SwGui/_intermediaire \
-    ../WizardIDE \
     ../SwExecution \
 	  ../SwDoc \
 	  ../SwModel2
@@ -109,11 +108,11 @@ CONFIG(debug, debug|release) {
   win32:DESTDIR = ./../../bin/vc/debug/
     TARGET = $$join(TARGET,,,d)
 	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
-	LIBS += -L"../../lib/vc/debug" -lSwCored -lWizardIDEd -lSwDocd
+	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwDocd
 	CONFIG += console
 } 
 CONFIG(release, debug|release) {
-	LIBS += -L"../../lib/vc/release" -lSwCore -lWizardIDE -lSwDoc
+	LIBS += -L"../../lib/vc/release" -lSwCore -lSwDoc
 }
 
 #Windows resource file
