@@ -31,6 +31,7 @@ _SwGuiQActionToWidget::_SwGuiQActionToWidget():Component(), _action(0) {
 	//RESET Properties
 	//INITIALIZER LES AUTRES ATTRIBUTS DE LA CLASSE
 	_isVisible = false;
+	_stayOnTop = false;
 	_visibleName = "Default visible";
 	_hiddenName = "Default hidden";
 
@@ -149,6 +150,35 @@ void _SwGuiQActionToWidget::setFlag (_SwGuiQActionToWidget::WindowFlag flag)
     {
         _hostWidget->setWindowFlags ((Qt::WindowFlags)flag);
     }
+}
+
+//-------------------------------------------------------------------------
+bool _SwGuiQActionToWidget::getStayOnTop() const
+{
+	return _stayOnTop;
+}
+
+//-------------------------------------------------------------------------
+void _SwGuiQActionToWidget::setStayOnTop( bool val )
+{
+	bool visible=_hostWidget->isVisible();
+	_stayOnTop = val;
+	if(_stayOnTop)
+	{
+		if(_hostWidget->windowFlags() /*Qt::WindowFlags(_flags_mode.ToInt())*/ == Qt::FramelessWindowHint)
+			_hostWidget->setWindowFlags(_hostWidget->windowFlags() | Qt::WindowStaysOnTopHint |Qt::Tool);
+		else
+			_hostWidget->setWindowFlags(_hostWidget->windowFlags() | Qt::WindowStaysOnTopHint);
+	}
+	else
+	{
+		if(_hostWidget->windowFlags() == Qt::FramelessWindowHint)
+			_hostWidget->setWindowFlags(_hostWidget->windowFlags()|Qt::Tool);
+		else
+			_hostWidget->setWindowFlags(_hostWidget->windowFlags());
+	}
+
+	_hostWidget->setVisible(visible);
 }
 
 

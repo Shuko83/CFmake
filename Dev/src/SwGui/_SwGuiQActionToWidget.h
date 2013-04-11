@@ -59,6 +59,8 @@ public:
     void setHiddenName (QString name);	
 	WindowFlag getFlag();
     void setFlag (WindowFlag flag);	
+	bool getStayOnTop() const;
+	void setStayOnTop(bool val);
 	
 public slots:
 		void ManageAction();
@@ -77,6 +79,10 @@ protected:
 	Q_PROPERTY (WindowFlag flag
         READ getFlag
         WRITE setFlag);
+
+	Q_PROPERTY(bool stayOnTop						
+		READ getStayOnTop 
+		WRITE setStayOnTop);
     
 protected:
 
@@ -113,6 +119,7 @@ public:
 	\return le Action */
 	virtual QAction & GetAction() ;
 
+
 private:
 	QAction _action;
 	QWidget * _widget;
@@ -120,6 +127,7 @@ private:
 	QString _visibleName;
 	QString _hiddenName;
 	bool _isVisible;
+	bool _stayOnTop;
 
 	bool isMoved;
 	void MoveCenter();//déplace la widget au centre de l'écran
