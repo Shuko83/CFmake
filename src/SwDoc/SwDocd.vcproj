@@ -111,8 +111,8 @@
 				WarningLevel="0" />
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;"
-				Description="Copy SwDoc.dll to ..\..\bin\vc\release" />
+				CommandLine="xcopy /Y .\_resources\libmySQL.dll ..\..\bin\vc\debug\ &amp; xcopy /Y .\_resources\sqldrivers\qsqlmysql4.dll ..\..\bin\vc\debug\sqldrivers\ &amp;&amp; copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;"
+				Description="xcopy /Y .\_resources\libmySQL.dll ..\..\bin\vc\debug\ &amp; xcopy /Y .\_resources\sqldrivers\qsqlmysql4.dll ..\..\bin\vc\debug\sqldrivers\Copy SwDoc.dll to ..\..\bin\vc\release" />
 			<Tool
 				Name="VCPreBuildEventTool" />
 			<Tool

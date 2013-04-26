@@ -13,7 +13,6 @@
 #include "StreamControler.h"
 #include "QStreamTreeModel.h"
 #include "QInterestAreaTreeModel.h"
-#include "SwWizardFrontEnd.h"
 #include "PropertiesWidget.h"
 #include "ISelectionObserver.h"
 #include "EditDoc.h"
@@ -28,11 +27,11 @@ public:
 	/** @brief Constructor */
 	MainWindow();
     /** @brief sur load stream existant */
-    void onLoadExistingStream(SwComponent_Class * aStream,QString path,SwComponent_Class * aStreamSource);
+	void onLoadExistingStream(StreamWork::SwCore::SwComponent_Class * aStream,QString path,StreamWork::SwCore::SwComponent_Class * aStreamSource);
     /** @brief permet de voir l'editeur du stream a l'origine de l'ouverture de nous meme */
     void displayStreamSourceOpener();
     /** @brief getEditors */
-    static QMap<SwComponent_Class *,MainWindow *> * getEditors();
+	static QMap<StreamWork::SwCore::SwComponent_Class *,MainWindow *> * getEditors();
 
 public slots:
     /** @brief sur new stream */
@@ -78,8 +77,6 @@ private:
     StreamView * _streamView;
     /** @brief Stream Controler */
     StreamControler * _streamControler;
-    /** @brief Wizard */
-    SwWizardFrontEnd * _wizard;
     /** @brief Model */
     QStreamTreeModel * _streamTreeModel;
     /** @brief Model */
@@ -89,7 +86,7 @@ private:
     /** @brief status label */
     QLineEdit *_statusWidget;
     /** @brief stream source de l'ouverture de l'editeur */
-    SwComponent_Class * _streamSourceOpener;
+	StreamWork::SwCore::SwComponent_Class * _streamSourceOpener;
 	/** @brief History of open files */
 	QStringList _history;
 

@@ -20,6 +20,8 @@
 #include "MenuManager.h"
 #include <qDebug>
 
+using namespace StreamWork::SwCore;
+
 static int nbWindows=0;
 
 #define MAX_HISTORY_FILE 4
