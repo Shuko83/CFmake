@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwDocd"
-	ProjectGUID="{C4ACCDC3-8EF1-3209-91AE-7F38A6580128}"
+	ProjectGUID="{AAF8EF11-46E3-3863-BAD5-608A7DF1A61E}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
