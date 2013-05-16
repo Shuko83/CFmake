@@ -15,21 +15,21 @@
 			OutputDirectory="."
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			ConfigurationType="1"
-			IntermediateDirectory="_objd\"
+			IntermediateDirectory="GeneratedFiles\objd\"
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\..\..\QCTemplate\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;..\..\..\QCTemplate\src&quot;,&quot;.&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\mocd&quot;,&quot;GeneratedFiles\uid&quot;,c:\Qt\4.7.1\mkspecs\default"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
-				AssemblerListingLocation="_objd\"
+				AssemblerListingLocation="GeneratedFiles\objd\"
 				BufferSecurityCheck="false"
 				DebugInformationFormat="3"
 				ExceptionHandling="1"
 				GeneratePreprocessedFile="0"
-				ObjectFile="_objd\"
+				ObjectFile="GeneratedFiles\objd\"
 				Optimization ="4"
 				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWGENERATOR_EXE,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
-				ProgramDataBaseFileName=".\"
+				ProgramDataBaseFileName="$(IntDir)"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
 				SuppressStartupBanner="true"
@@ -71,21 +71,21 @@
 			OutputDirectory="."
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			ConfigurationType="1"
-			IntermediateDirectory="_obj\"
+			IntermediateDirectory="GeneratedFiles\obj\"
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\..\..\QCTemplate\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;..\..\..\QCTemplate\src&quot;,&quot;.&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,&quot;GeneratedFiles\ui&quot;,c:\Qt\4.7.1\mkspecs\default"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
-				AssemblerListingLocation="_obj\"
+				AssemblerListingLocation="GeneratedFiles\obj\"
 				BufferSecurityCheck="false"
 				DebugInformationFormat="0"
 				ExceptionHandling="1"
 				GeneratePreprocessedFile="0"
-				ObjectFile="_obj\"
+				ObjectFile="GeneratedFiles\obj\"
 				Optimization ="2"
 				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWGENERATOR_EXE,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
-				ProgramDataBaseFileName=".\"
+				ProgramDataBaseFileName="$(IntDir)"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				SuppressStartupBanner="true"
@@ -153,9 +153,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Component.h -o _intermediaire\moc_Component.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Component.h -o GeneratedFiles\mocd\moc_Component.cpp"
 						Description="MOC Component.h"
-						Outputs="_intermediaire\moc_Component.cpp"
+						Outputs="GeneratedFiles\mocd\moc_Component.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -163,9 +163,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Component.h -o _intermediaire\moc_Component.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Component.h -o GeneratedFiles\moc\moc_Component.cpp"
 						Description="MOC Component.h"
-						Outputs="_intermediaire\moc_Component.cpp"
+						Outputs="GeneratedFiles\moc\moc_Component.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -176,9 +176,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Interface.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Interface.h -o _intermediaire\moc_Interface.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Interface.h -o GeneratedFiles\mocd\moc_Interface.cpp"
 						Description="MOC Interface.h"
-						Outputs="_intermediaire\moc_Interface.cpp"
+						Outputs="GeneratedFiles\mocd\moc_Interface.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -186,9 +186,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Interface.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Interface.h -o _intermediaire\moc_Interface.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Interface.h -o GeneratedFiles\moc\moc_Interface.cpp"
 						Description="MOC Interface.h"
-						Outputs="_intermediaire\moc_Interface.cpp"
+						Outputs="GeneratedFiles\moc\moc_Interface.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -199,9 +199,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Property.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Property.h -o _intermediaire\moc_Property.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Property.h -o GeneratedFiles\mocd\moc_Property.cpp"
 						Description="MOC Property.h"
-						Outputs="_intermediaire\moc_Property.cpp"
+						Outputs="GeneratedFiles\mocd\moc_Property.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -209,9 +209,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Property.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Property.h -o _intermediaire\moc_Property.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Property.h -o GeneratedFiles\moc\moc_Property.cpp"
 						Description="MOC Property.h"
-						Outputs="_intermediaire\moc_Property.cpp"
+						Outputs="GeneratedFiles\moc\moc_Property.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -222,9 +222,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Shortcut.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Shortcut.h -o _intermediaire\moc_Shortcut.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Shortcut.h -o GeneratedFiles\mocd\moc_Shortcut.cpp"
 						Description="MOC Shortcut.h"
-						Outputs="_intermediaire\moc_Shortcut.cpp"
+						Outputs="GeneratedFiles\mocd\moc_Shortcut.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -232,9 +232,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Shortcut.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Shortcut.h -o _intermediaire\moc_Shortcut.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 Shortcut.h -o GeneratedFiles\moc\moc_Shortcut.cpp"
 						Description="MOC Shortcut.h"
-						Outputs="_intermediaire\moc_Shortcut.cpp"
+						Outputs="GeneratedFiles\moc\moc_Shortcut.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -245,9 +245,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwGenerator.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwGenerator.h -o _intermediaire\moc_SwGenerator.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwGenerator.h -o GeneratedFiles\mocd\moc_SwGenerator.cpp"
 						Description="MOC SwGenerator.h"
-						Outputs="_intermediaire\moc_SwGenerator.cpp"
+						Outputs="GeneratedFiles\mocd\moc_SwGenerator.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -255,9 +255,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwGenerator.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwGenerator.h -o _intermediaire\moc_SwGenerator.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGENERATOR_EXE -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;..\..\..\QCTemplate\src&quot; -I&quot;.&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwGenerator.h -o GeneratedFiles\moc\moc_SwGenerator.cpp"
 						Description="MOC SwGenerator.h"
-						Outputs="_intermediaire\moc_SwGenerator.cpp"
+						Outputs="GeneratedFiles\moc\moc_SwGenerator.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -267,27 +267,137 @@
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
 			<File
-				RelativePath="_intermediaire\moc_Component.cpp" />
+				RelativePath="GeneratedFiles\moc\moc_Component.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\moc_Interface.cpp" />
+				RelativePath="GeneratedFiles\mocd\moc_Component.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\moc_Property.cpp" />
+				RelativePath="GeneratedFiles\moc\moc_Interface.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\moc_Shortcut.cpp" />
+				RelativePath="GeneratedFiles\mocd\moc_Interface.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\moc_SwGenerator.cpp" />
+				RelativePath="GeneratedFiles\moc\moc_Property.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\qrc_SwGenerator.cpp" />
+				RelativePath="GeneratedFiles\mocd\moc_Property.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\ui_SwGenerator.h" />
+				RelativePath="GeneratedFiles\moc\moc_Shortcut.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\ui_component.h" />
+				RelativePath="GeneratedFiles\mocd\moc_Shortcut.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\ui_interface.h" />
+				RelativePath="GeneratedFiles\moc\moc_SwGenerator.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\ui_property.h" />
+				RelativePath="GeneratedFiles\mocd\moc_SwGenerator.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
-				RelativePath="_intermediaire\ui_shortcut.h" />
+				RelativePath="GeneratedFiles\rcc\qrc_SwGenerator.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\rccd\qrc_SwGenerator.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\ui\ui_SwGenerator.h">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\uid\ui_SwGenerator.h">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\ui\ui_component.h">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\uid\ui_component.h">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\ui\ui_interface.h">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\uid\ui_interface.h">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\ui\ui_property.h">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\uid\ui_property.h">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\ui\ui_shortcut.h">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\uid\ui_shortcut.h">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 		</Filter>
 		<Filter
 			Name="Form Files"
@@ -301,9 +411,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;SwGenerator.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe SwGenerator.ui -o _intermediaire\ui_SwGenerator.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe SwGenerator.ui -o GeneratedFiles\uid\ui_SwGenerator.h"
 						Description="UIC SwGenerator.ui"
-						Outputs="_intermediaire\ui_SwGenerator.h"
+						Outputs="GeneratedFiles\uid\ui_SwGenerator.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -311,9 +421,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;SwGenerator.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe SwGenerator.ui -o _intermediaire\ui_SwGenerator.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe SwGenerator.ui -o GeneratedFiles\ui\ui_SwGenerator.h"
 						Description="UIC SwGenerator.ui"
-						Outputs="_intermediaire\ui_SwGenerator.h"
+						Outputs="GeneratedFiles\ui\ui_SwGenerator.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -324,9 +434,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;component.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe component.ui -o _intermediaire\ui_component.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe component.ui -o GeneratedFiles\uid\ui_component.h"
 						Description="UIC component.ui"
-						Outputs="_intermediaire\ui_component.h"
+						Outputs="GeneratedFiles\uid\ui_component.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -334,9 +444,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;component.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe component.ui -o _intermediaire\ui_component.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe component.ui -o GeneratedFiles\ui\ui_component.h"
 						Description="UIC component.ui"
-						Outputs="_intermediaire\ui_component.h"
+						Outputs="GeneratedFiles\ui\ui_component.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -347,9 +457,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;interface.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe interface.ui -o _intermediaire\ui_interface.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe interface.ui -o GeneratedFiles\uid\ui_interface.h"
 						Description="UIC interface.ui"
-						Outputs="_intermediaire\ui_interface.h"
+						Outputs="GeneratedFiles\uid\ui_interface.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -357,9 +467,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;interface.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe interface.ui -o _intermediaire\ui_interface.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe interface.ui -o GeneratedFiles\ui\ui_interface.h"
 						Description="UIC interface.ui"
-						Outputs="_intermediaire\ui_interface.h"
+						Outputs="GeneratedFiles\ui\ui_interface.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -370,9 +480,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;property.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe property.ui -o _intermediaire\ui_property.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe property.ui -o GeneratedFiles\uid\ui_property.h"
 						Description="UIC property.ui"
-						Outputs="_intermediaire\ui_property.h"
+						Outputs="GeneratedFiles\uid\ui_property.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -380,9 +490,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;property.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe property.ui -o _intermediaire\ui_property.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe property.ui -o GeneratedFiles\ui\ui_property.h"
 						Description="UIC property.ui"
-						Outputs="_intermediaire\ui_property.h"
+						Outputs="GeneratedFiles\ui\ui_property.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -393,9 +503,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;shortcut.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe shortcut.ui -o _intermediaire\ui_shortcut.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe shortcut.ui -o GeneratedFiles\uid\ui_shortcut.h"
 						Description="UIC shortcut.ui"
-						Outputs="_intermediaire\ui_shortcut.h"
+						Outputs="GeneratedFiles\uid\ui_shortcut.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -403,9 +513,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;shortcut.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe shortcut.ui -o _intermediaire\ui_shortcut.h"
+						CommandLine="C:\Qt\4.7.1\bin\uic.exe shortcut.ui -o GeneratedFiles\ui\ui_shortcut.h"
 						Description="UIC shortcut.ui"
-						Outputs="_intermediaire\ui_shortcut.h"
+						Outputs="GeneratedFiles\ui\ui_shortcut.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -436,9 +546,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;Resources\BaseModelConsumerAssistedCPP.tpl;Resources\BaseModelConsumerAssistedH.tpl;Resources\Constantes.tpl;Resources\PluginFactory_ClassCPP.tpl;Resources\PluginFactory_ClassH.tpl;Resources\SwAssistedComponentCPP.tpl;Resources\SwAssistedComponentH.tpl;Resources\generatevcproj.tpl;Resources\green_led.png;Resources\libs.xml;Resources\next.png;Resources\orange_led.png;Resources\plugin.tpl;Resources\pluginPri.tpl;Resources\prev.png;Resources\red_led.png;Resources\rsc.tpl;Resources\start-icon.png;SwGenerator.qrc"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwGenerator SwGenerator.qrc -o _intermediaire\qrc_SwGenerator.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwGenerator SwGenerator.qrc -o GeneratedFiles\rccd\qrc_SwGenerator.cpp"
 						Description="RCC SwGenerator.qrc"
-						Outputs="_intermediaire\qrc_SwGenerator.cpp"
+						Outputs="GeneratedFiles\rccd\qrc_SwGenerator.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 				<FileConfiguration
@@ -446,9 +556,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;Resources\BaseModelConsumerAssistedCPP.tpl;Resources\BaseModelConsumerAssistedH.tpl;Resources\Constantes.tpl;Resources\PluginFactory_ClassCPP.tpl;Resources\PluginFactory_ClassH.tpl;Resources\SwAssistedComponentCPP.tpl;Resources\SwAssistedComponentH.tpl;Resources\generatevcproj.tpl;Resources\green_led.png;Resources\libs.xml;Resources\next.png;Resources\orange_led.png;Resources\plugin.tpl;Resources\pluginPri.tpl;Resources\prev.png;Resources\red_led.png;Resources\rsc.tpl;Resources\start-icon.png;SwGenerator.qrc"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwGenerator SwGenerator.qrc -o _intermediaire\qrc_SwGenerator.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwGenerator SwGenerator.qrc -o GeneratedFiles\rcc\qrc_SwGenerator.cpp"
 						Description="RCC SwGenerator.qrc"
-						Outputs="_intermediaire\qrc_SwGenerator.cpp"
+						Outputs="GeneratedFiles\rcc\qrc_SwGenerator.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>

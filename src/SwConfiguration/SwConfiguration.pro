@@ -1,9 +1,8 @@
 TEMPLATE = lib
 TARGET = SwConfiguration
-QMAKE_CXXFLAGS += /MP
-QT += core \
-    xml \
-    gui
+
+QT += core xml gui
+
 HEADERS += ISwConfiguration.h \
     ISwConfigurationListener.h \
     SwConfigurationConstantes.h \
@@ -65,34 +64,34 @@ SOURCES += _SwConfigurationPluginFactory_Class.cpp \
     _SwConfigurationExportedOwnerConfigurable.cpp
     
 FORMS += _SwConfigurationManagerGui.ui
+
 RESOURCES += _resources/SwConfigurationRsc.qrc
+
 DEFINES += SWCONFIGURATION_LIB
-MOC_DIR += ./_intermediaire
-OBJECTS_DIR += ./_obj
-RCC_DIR += ./_intermediaire
-UI_DIR += ./_intermediaire
+
 INCLUDEPATH += ./ \
-    ./_intermediaire \
     ../SwCore \
     ../SwExecution \
     ../SwGui \
-    ../SwGui/_intermediaire \
     ../SwModel \
     ../SwRecord
-      
-              
+
+#    ../SwGui/_intermediaire \	
+	
 CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/debug
-  win32:DLLDESTDIR=  ./../../bin/vc/debug
-  win32:TARGET = $$join(TARGET,,,d)
-  win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
-	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
+	DESTDIR = ./../../lib/vc/debug
+	DLLDESTDIR=  ./../../bin/vc/debug
+
 	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwGuid -lSwExecutiond
 	TARGET_EXT = .swdld
 } 
+
 CONFIG(release, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/release
-  win32:DLLDESTDIR=  ./../../bin/vc/release
+	DESTDIR = ./../../lib/vc/release
+	DLLDESTDIR=  ./../../bin/vc/release
+  
 	LIBS += -L"../../lib/vc/release" -lSwCore -lSwGui -lSwExecution
 	TARGET_EXT = .swdl
 }
+
+include("C:/Projects/Utilities/QtCommonPri/base.pri")

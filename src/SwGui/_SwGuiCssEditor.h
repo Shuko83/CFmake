@@ -13,6 +13,7 @@
 * INCLUDES LOCAUX
 */
 #include <Component.h>
+#include <QFileSystemWatcher>
 #include <ISwAdminSetup.h>
 
 //Check namespace needed (for exemple ISwAction need namespace StreamWork::SwGui)
@@ -68,11 +69,11 @@ namespace StreamWork
 
 
 			QString getStyle() ; 
-			void setStyle(QString val);
 			
 		public slots:
 				void applyStyle();
-			
+				void setStyle(QString val);
+
 		protected:
 
 			//--------------------------------------------------------------
@@ -89,6 +90,7 @@ namespace StreamWork
 			
 		private:
 			QString _styleFile;
+			QFileSystemWatcher _cssWatcher;	
 			
 		};
 

@@ -1,8 +1,8 @@
 TEMPLATE = lib
 TARGET = SwCore
-QMAKE_CXXFLAGS += /MP
-QT += core \
-    xml
+
+QT += core xml
+
 HEADERS += LibIndeSig.h \
     ISwRef.h \
 	ISwObject.h \
@@ -176,35 +176,29 @@ SOURCES += SwAddress_ToolBox.cpp \
 	SwRefPtrTools.cpp \
 	_SwServiceRefProfiler.cpp 
     
-    
-    
 FORMS +=
+
 RESOURCES += _resources/SwCoreRsc.qrc
+
 DEFINES += SWCORE_LIB
+
 win32:DEFINES += _WIN32_PLATEFORM_ 
 win32:DEFINES +=_CRT_SECURE_NO_WARNINGS
+
 unix:DEFINES += _LINUX_PLATEFORM_
-MOC_DIR += ./_intermediaire
-OBJECTS_DIR += ./obj
-RCC_DIR += ./_intermediaire
-UI_DIR += ./_intermediaire
-INCLUDEPATH += ./ \
-    ./_intermediaire
+
 win32:{
     LIBS += -lPsapi -limagehlp
 }    
-  
-  
-    
-CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/debug
-  win32:DLLDESTDIR=  ./../../bin/vc/debug
-  win32:TARGET = $$join(TARGET,,,d)
-  win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
-	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)	
 
+CONFIG(debug, debug|release) {
+	DESTDIR = ./../../lib/vc/debug
+	DLLDESTDIR=  ./../../bin/vc/debug
 } 
+
 CONFIG(release, debug|release) {
-win32:DESTDIR = ./../../lib/vc/release
-win32:DLLDESTDIR=  ./../../bin/vc/release
+	DESTDIR = ./../../lib/vc/release
+	DLLDESTDIR=  ./../../bin/vc/release
 }
+
+include("C:/Projects/Utilities/QtCommonPri/base.pri")

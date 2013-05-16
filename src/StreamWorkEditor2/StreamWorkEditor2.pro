@@ -1,119 +1,117 @@
 TEMPLATE = app
 TARGET = StreamWorkEditor2
-QMAKE_CXXFLAGS += /MP
-QT += core \
-    gui \
-    xml \
-    opengl
-HEADERS += SwSplash.h
-HEADERS += MainWindow.h
-HEADERS += StreamView.h
-HEADERS += StreamScene.h
-HEADERS += StreamControler.h
-HEADERS += PluginsListModel.h
-HEADERS += ComponentListModel.h
-HEADERS += WidgetFactory.h
-HEADERS += IAnchorable.h
-HEADERS += IAnchorableObserver.h
-HEADERS += AnchorableContainer.h
-HEADERS += VerticalMultiAnchorableContainer.h
-HEADERS += ComponentGraphicItem.h
-HEADERS += ConnectorGraphicItem.h
-HEADERS += LinkGraphicItem.h
-HEADERS += GraphicsResources.h
-HEADERS += MenuManager.h
-HEADERS += PropertiesWidget.h
-HEADERS += ../SwGui/_SwGuiPluginsFrontEnd.h
-HEADERS += ../SwGui/SwGuiDefaultItemDelegate.h
-HEADERS += ../SwGui/SwGuiEnumComboBox.h
-HEADERS += ../SwGui/_QRcViewer.h
-HEADERS += Arranger.h
-HEADERS += GraphicsLoaderV1.h
-HEADERS += QStreamTreeModel.h
-HEADERS += ISelectionObserver.h
-HEADERS += ViewNavigator.h
-HEADERS += IStreamViewObserver.h
-HEADERS += InterestArea.h
-HEADERS += IStreamControlerObserver.h
-HEADERS += QInterestAreaTreeModel.h
-HEADERS += LogView.h
-HEADERS += EditorPropertiesItemDelegate.h
-HEADERS += EditionService.h
-HEADERS += ManageLinkColor.h
-HEADERS += PluginOverview.h
-HEADERS += LegendView.h
-HEADERS += ../SwModel2/ISwModelHostModifier.h
-HEADERS += ModelCreatorHelper.h
+
+QT += core gui xml opengl
+
+HEADERS += SwSplash.h  \
+	MainWindow.h \
+	StreamView.h \
+	StreamScene.h \
+	StreamControler.h \
+	PluginsListModel.h \
+	ComponentListModel.h \
+	WidgetFactory.h \
+	IAnchorable.h \
+	IAnchorableObserver.h \
+	AnchorableContainer.h \
+	VerticalMultiAnchorableContainer.h \
+	ComponentGraphicItem.h \
+	ConnectorGraphicItem.h \
+	LinkGraphicItem.h \
+	GraphicsResources.h \
+	MenuManager.h \
+	PropertiesWidget.h \
+	../SwGui/_SwGuiPluginsFrontEnd.h \
+	../SwGui/SwGuiDefaultItemDelegate.h \
+	../SwGui/SwGuiEnumComboBox.h \
+	../SwGui/_QRcViewer.h \
+	Arranger.h \
+	GraphicsLoaderV1.h \
+	QStreamTreeModel.h \
+	ISelectionObserver.h \
+	ViewNavigator.h \
+	IStreamViewObserver.h \
+	InterestArea.h \
+	IStreamControlerObserver.h \
+	QInterestAreaTreeModel.h \
+	LogView.h \
+	EditorPropertiesItemDelegate.h \
+	EditionService.h \
+	ManageLinkColor.h \
+	PluginOverview.h \
+	LegendView.h \
+	../SwModel2/ISwModelHostModifier.h \
+	ModelCreatorHelper.h
 
 
-SOURCES += SwSplash.cpp
-SOURCES += main.cpp
-SOURCES += MainWindow.cpp
-SOURCES += StreamView.cpp
-SOURCES += StreamScene.cpp
-SOURCES += StreamControler.cpp
-SOURCES += PluginsListModel.cpp
-SOURCES += ComponentListModel.cpp
-SOURCES += WidgetFactory.cpp
-SOURCES += AnchorableContainer.cpp
-SOURCES += VerticalMultiAnchorableContainer.cpp
-SOURCES += ComponentGraphicItem.cpp
-SOURCES += ConnectorGraphicItem.cpp
-SOURCES += LinkGraphicItem.cpp
-SOURCES += GraphicsResources.cpp
-SOURCES += MenuManager.cpp
-SOURCES += PropertiesWidget.cpp
-SOURCES += ../SwGui/_SwGuiPluginsFrontEnd.cpp
-SOURCES += ../SwGui/SwGuiDefaultItemDelegate.cpp
-SOURCES += ../SwGui/SwGuiEnumComboBox.cpp
-SOURCES += ../SwGui/_QRcViewer.cpp
-SOURCES += Arranger.cpp
-SOURCES += GraphicsLoaderV1.cpp
-SOURCES += QStreamTreeModel.cpp
-SOURCES += ViewNavigator.cpp
-SOURCES += InterestArea.cpp
-SOURCES += QInterestAreaTreeModel.cpp
-SOURCES += LogView.cpp
-SOURCES += EditorPropertiesItemDelegate.cpp
-SOURCES += EditionService.cpp
-SOURCES += ManageLinkColor.cpp
-SOURCES += PluginOverview.cpp
-SOURCES += LegendView.cpp
-SOURCES += ModelCreatorHelper.cpp
+SOURCES += SwSplash.cpp \
+	main.cpp \
+	MainWindow.cpp \
+	StreamView.cpp \
+	StreamScene.cpp \
+	StreamControler.cpp \
+	PluginsListModel.cpp \
+	ComponentListModel.cpp \
+	WidgetFactory.cpp \
+	AnchorableContainer.cpp \
+	VerticalMultiAnchorableContainer.cpp \
+	ComponentGraphicItem.cpp \
+	ConnectorGraphicItem.cpp \
+	LinkGraphicItem.cpp \
+	GraphicsResources.cpp \
+	MenuManager.cpp \
+	PropertiesWidget.cpp \
+	../SwGui/_SwGuiPluginsFrontEnd.cpp \
+	../SwGui/SwGuiDefaultItemDelegate.cpp \
+	../SwGui/SwGuiEnumComboBox.cpp \
+	../SwGui/_QRcViewer.cpp \
+	Arranger.cpp \
+	GraphicsLoaderV1.cpp \
+	QStreamTreeModel.cpp \
+	ViewNavigator.cpp \
+	InterestArea.cpp \
+	QInterestAreaTreeModel.cpp \
+	LogView.cpp \
+	EditorPropertiesItemDelegate.cpp \
+	EditionService.cpp \
+	ManageLinkColor.cpp \
+	PluginOverview.cpp \
+	LegendView.cpp \
+	ModelCreatorHelper.cpp 
 
-FORMS += _resources/LogView.ui
-FORMS += ../SwGui/_QRcViewerUi.ui
-FORMS += _resources/PluginOverview.ui
+FORMS += _resources/LogView.ui \
+	../SwGui/_QRcViewerUi.ui \
+	_resources/PluginOverview.ui
+	
 RESOURCES += _resources/StreamWorkEditor2.qrc
-MOC_DIR += ./_intermediaire
-OBJECTS_DIR += ./_obj
-RCC_DIR += ./_intermediaire
-UI_DIR += ./_intermediaire
+
 INCLUDEPATH += ./ \
-    ./_intermediaire \
     ../SwCore \
     ../SwGui \
-    ../SwGui/_intermediaire \
     ../SwExecution \
 	  ../SwDoc \
 	  ../SwModel2
     
+#    ../SwGui/_intermediaire \
+
 DEFINES += SW_EDITOR
     
 VERSION = 1.2.3 
 
-win32:DESTDIR = ./../../bin/vc/release/
+
 
 CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../bin/vc/debug/
-    TARGET = $$join(TARGET,,,d)
-	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
+	DESTDIR = ./../../bin/vc/debug/
+
 	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwDocd
 	CONFIG += console
 } 
+
 CONFIG(release, debug|release) {
+	DESTDIR = ./../../bin/vc/release/
 	LIBS += -L"../../lib/vc/release" -lSwCore -lSwDoc
 }
 
-#Windows resource file
 win32:RC_FILE = StreamWorkEditor2.rc
+
+include("C:/Projects/Utilities/QtCommonPri/base.pri")

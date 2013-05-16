@@ -1,10 +1,8 @@
 TEMPLATE = lib
 TARGET = SwGui
-QMAKE_CXXFLAGS += /MP
-QT += core \
-    gui \
-    xml \
-    network
+
+QT += core gui xml network
+	
 HEADERS += ISwAction.h \
     ISwDockWidget.h \
     ISwLayout.h \
@@ -126,35 +124,32 @@ SOURCES += SwGuiDefaultItemDelegate.cpp \
 	_SwGuiCompPushButtonToQAction.cpp \
 	SwEventToPopup.cpp \
 
-
-FORMS += _SwGuiCssDialog.ui
-FORMS += _QRcViewerUi.ui
+FORMS += _SwGuiCssDialog.ui \
+	_QRcViewerUi.ui
+	
 RESOURCES += _resources/SwGuiRsc.qrc
+
 DEFINES += SWGUI_LIB
-MOC_DIR += ./_intermediaire
-OBJECTS_DIR += ./_obj
-RCC_DIR += ./_intermediaire
-UI_DIR += ./_intermediaire
+
 INCLUDEPATH += ./\
-    ./_intermediaire \
     ../SwCore/ \
     ../SwExecution/ \
 	../SwFoundation/ 
     
-    
-    
 CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/debug
-  win32:DLLDESTDIR=  ./../../bin/vc/debug
-  win32:TARGET = $$join(TARGET,,,d)
-  win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
-	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
+	DESTDIR = ./../../lib/vc/debug
+	DLLDESTDIR=  ./../../bin/vc/debug
+	
 	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwFoundationd
 	TARGET_EXT = .swdld
 } 
+
 CONFIG(release, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/release
-  win32:DLLDESTDIR=  ./../../bin/vc/release
+	DESTDIR = ./../../lib/vc/release
+	DLLDESTDIR=  ./../../bin/vc/release
+	
 	LIBS += -L"../../lib/vc/release" -lSwCore -lSwFoundation
 	TARGET_EXT = .swdl
 }
+
+include("C:/Projects/Utilities/QtCommonPri/base.pri")

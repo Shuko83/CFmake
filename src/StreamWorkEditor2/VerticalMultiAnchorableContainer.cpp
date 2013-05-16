@@ -5,7 +5,6 @@
  */
 
 #include "VerticalMultiAnchorableContainer.h"
- 
 
 /** @brief Constructor */
 VerticalMultiAnchorableContainer::VerticalMultiAnchorableContainer(QWidget * parent,TAnchorPosition aPosition):
@@ -78,7 +77,7 @@ void VerticalMultiAnchorableContainer::removeObserver(IAnchorableObserver * o){
 // IAnchorableObserver
 //--------------------------------------------------------------------------
 /*@brief indique que l'entité a changé */
-void VerticalMultiAnchorableContainer::anchorableAsChanged(QWidget */*w*/){
+void VerticalMultiAnchorableContainer::anchorableAsChanged(QWidget *){
     notifyObservers();
 }
 

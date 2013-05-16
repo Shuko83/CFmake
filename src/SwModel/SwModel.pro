@@ -1,8 +1,8 @@
 TEMPLATE = lib
 TARGET = SwModel
-QMAKE_CXXFLAGS += /MP
-QT += core \
-    xml
+
+QT += core xml
+
 HEADERS += SwModelConstantes.h \
     _SwExportStreamTreeModel.h \
     _SwModelExportTreeView.h \
@@ -39,33 +39,30 @@ SOURCES += _SwExportStreamTreeModel.cpp \
     _SwModelStreamTreeModel.cpp \
     _SwModel_Class.cpp \
     _SwModelsList.cpp
+
 FORMS +=
+
 RESOURCES += _resources/SwModelRsc.qrc
+
 DEFINES += SWMODEL_LIB
-MOC_DIR += ./_intermediaire
-OBJECTS_DIR += ./_obj
-RCC_DIR += ./_intermediaire
-UI_DIR += ./_intermediaire
+
 INCLUDEPATH += ./ \
-    ./_intermediaire \
     ../SwCore \
     ../SwExecution
     
-    
-    
 CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/debug
-  win32:DLLDESTDIR=  ./../../bin/vc/debug
-  win32:TARGET = $$join(TARGET,,,d)
-  win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
-	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
+	DESTDIR = ./../../lib/vc/debug
+	DLLDESTDIR=  ./../../bin/vc/debug
+	
 	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwExecutiond
 	TARGET_EXT = .swdld
 } 
 CONFIG(release, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/release
-  win32:DLLDESTDIR=  ./../../bin/vc/release
+	DESTDIR = ./../../lib/vc/release
+	DLLDESTDIR=  ./../../bin/vc/release
+	
 	LIBS += -L"../../lib/vc/release" -lSwCore -lSwExecution
 	TARGET_EXT = .swdl
-
 }
+
+include("C:/Projects/Utilities/QtCommonPri/base.pri")

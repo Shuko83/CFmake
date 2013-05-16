@@ -5,55 +5,51 @@ TEMPLATE = lib
 TARGET = TestPlugin
 QT += core \
     xml
-HEADERS += TestPluginPluginFactory_Class.h
-HEADERS += TestPluginConstantes.h
-HEADERS += TestComponent.h 
-HEADERS += TestComponentEmitter.h 
-HEADERS += DataTest.h 
-HEADERS += TestComponentReceiver.h
-HEADERS += TestComponentReceiverVassisted.h
-HEADERS += DataTestCodec.h 
-HEADERS += DataTestCodecFactory.h 
-HEADERS += DataTestCodecITest.h 
-HEADERS += TestAssistedComponent.h 
-HEADERS += TestComponentEmitterVassisted.h 
-HEADERS += SwRefProfilerUI.h 
+HEADERS += TestPluginPluginFactory_Class.h \
+	TestPluginConstantes.h \
+	TestComponent.h \
+	TestComponentEmitter.h \
+	DataTest.h \
+	TestComponentReceiver.h \
+	TestComponentReceiverVassisted.h \
+	DataTestCodec.h \
+	DataTestCodecFactory.h \
+	DataTestCodecITest.h \
+	TestAssistedComponent.h \
+	TestComponentEmitterVassisted.h \
+	SwRefProfilerUI.h 
 
-SOURCES += TestPluginPluginFactory_Class.cpp
-SOURCES += TestComponent.cpp
-SOURCES += DataTest.cpp 
-SOURCES += TestComponentEmitter.cpp 
-SOURCES += TestComponentReceiver.cpp
-SOURCES += TestComponentReceiverVassisted.cpp
-SOURCES += DataTestCodec.cpp 
-SOURCES += DataTestCodecFactory.cpp 
-SOURCES += DataTestCodecITest.cpp 
-SOURCES += TestAssistedComponent.cpp 
-SOURCES += TestComponentEmitterVassisted.cpp 
-SOURCES += SwRefProfilerUI.cpp 
+SOURCES += TestPluginPluginFactory_Class.cpp \
+	TestComponent.cpp \
+	DataTest.cpp \
+	TestComponentEmitter.cpp \
+	TestComponentReceiver.cpp \
+	TestComponentReceiverVassisted.cpp \
+	DataTestCodec.cpp \
+	DataTestCodecFactory.cpp \
+	DataTestCodecITest.cpp \
+	TestAssistedComponent.cpp \
+	TestComponentEmitterVassisted.cpp \
+	SwRefProfilerUI.cpp 
 
-OBJECTS_DIR += ./_obj
-RCC_DIR += ./_intermediaire
-UI_DIR += ./_intermediaire
-#Resource file(s)
 RESOURCES += ./_resources/TestPluginRsc.qrc
+
 DEFINES += TestPlugin_LIB
-INCLUDEPATH += ./
-INCLUDEPATH += ../SwCore
-INCLUDEPATH += ../SwExecution
-INCLUDEPATH += ../SwGui
-INCLUDEPATH += ../SwRecord
-INCLUDEPATH += ../SwConfiguration
-INCLUDEPATH += ../SwFoundation
+
+INCLUDEPATH += ./ \
+	../SwCore \
+	../SwExecution \
+	../SwGui \
+	../SwRecord \
+	../SwConfiguration \
+	../SwFoundation
 
 
 
 CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/debug
-  win32:DLLDESTDIR=  ./../../bin/vc/debug
-  win32:TARGET = $$join(TARGET,,,d)
-  win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
-	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
+	DESTDIR = ./../../lib/vc/debug
+	DLLDESTDIR=  ./../../bin/vc/debug
+
     LIBS += -L"../../lib/vc/debug" \
     -lSwCored \
     -lSwExecutiond \
@@ -63,8 +59,9 @@ CONFIG(debug, debug|release) {
     TARGET_EXT = .swdld
 } 
 CONFIG(release, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/release
-  win32:DLLDESTDIR=  ./../../bin/vc/release
+	DESTDIR = ./../../lib/vc/release
+	DLLDESTDIR=  ./../../bin/vc/release
+	
     LIBS += -L"../../lib/vc/release" \
     -lSwCore \
     -lSwExecution \
@@ -74,3 +71,4 @@ CONFIG(release, debug|release) {
     TARGET_EXT = .swdl
 }
 
+include("C:/Projects/Utilities/QtCommonPri/base.pri")

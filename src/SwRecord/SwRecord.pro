@@ -3,74 +3,70 @@
 # -----------------------------------------------------------
 TEMPLATE = lib
 TARGET = SwRecord
-QMAKE_CXXFLAGS += /MP
-QT += core \
-    xml
-HEADERS += _SwRecordPluginFactory_Class.h
-HEADERS += SwRecordConstantes.h
-HEADERS += _RecordManager.h 
-HEADERS += _RecordPoint.h 
-HEADERS += _ReplayManager.h 
-HEADERS += ISwRecordManager.h 
-HEADERS += ISwRecordManagerListener.h 
-HEADERS += ISwReplayControler.h 
-HEADERS += ISwReplayListener.h 
-HEADERS += ISwRecordPoint.h 
-HEADERS += ISwServiceRecording.h 
-HEADERS += ISwRecordDataCodec.h 
-HEADERS += ISwRecordDataCodecFactory.h 
-HEADERS += _SwServiceRecording.h 
-HEADERS += SwRecordDataCodecAdapter.h
-HEADERS += _SwRecordDataCodecDefault.h
-HEADERS += _SwRecordDataCodecDefaultFactory.h
-HEADERS += SwRecordDataCodecFactoryTemplate.h
-HEADERS += _TimeLine.h
-HEADERS += _ExecutionKey.h
-HEADERS += _RecordWidget.h
-#HEADERS += _ReplayWidget.h
 
-SOURCES += _SwRecordPluginFactory_Class.cpp
-SOURCES += _RecordManager.cpp
-SOURCES += _RecordPoint.cpp
-SOURCES += _ReplayManager.cpp
-SOURCES += _SwServiceRecording.cpp
-SOURCES += SwRecordDataCodecAdapter.cpp
-SOURCES += _SwRecordDataCodecDefault.cpp
-SOURCES += _SwRecordDataCodecDefaultFactory.cpp
-SOURCES += _TimeLine.cpp
-SOURCES += _ExecutionKey.cpp
-SOURCES += _RecordWidget.cpp
-#SOURCES += _ReplayWidget.cpp
+QT += core xml
 
+HEADERS += _SwRecordPluginFactory_Class.h \
+	SwRecordConstantes.h \
+	_RecordManager.h \
+	_RecordPoint.h \
+	_ReplayManager.h \
+	ISwRecordManager.h \
+	ISwRecordManagerListener.h \
+	ISwReplayControler.h \
+	ISwReplayListener.h \
+	ISwRecordPoint.h \
+	ISwServiceRecording.h \
+	ISwRecordDataCodec.h \
+	ISwRecordDataCodecFactory.h \
+	_SwServiceRecording.h \
+	SwRecordDataCodecAdapter.h \
+	_SwRecordDataCodecDefault.h \
+	_SwRecordDataCodecDefaultFactory.h \
+	SwRecordDataCodecFactoryTemplate.h \
+	_TimeLine.h \
+	_ExecutionKey.h \
+	_RecordWidget.h
 
-OBJECTS_DIR += ./_obj
-RCC_DIR += ./_intermediaire
-UI_DIR += ./_intermediaire
-#Resource file(s)
+SOURCES += _SwRecordPluginFactory_Class.cpp \
+	_RecordManager.cpp \
+	_RecordPoint.cpp \
+	_ReplayManager.cpp \
+	_SwServiceRecording.cpp \
+	SwRecordDataCodecAdapter.cpp \
+	_SwRecordDataCodecDefault.cpp \
+	_SwRecordDataCodecDefaultFactory.cpp \
+	_TimeLine.cpp \
+	_ExecutionKey.cpp \
+	_RecordWidget.cpp 
+
 RESOURCES += ./_resources/SwRecordRsc.qrc
+
 DEFINES += SwRecord_LIB
-INCLUDEPATH += ./
-INCLUDEPATH += ../SwCore
-INCLUDEPATH += ../SwExecution
-INCLUDEPATH += ../SwGui
-INCLUDEPATH += ../SwModel
-INCLUDEPATH += ../SwConfiguration
-INCLUDEPATH += ../SwFoundation
+
+INCLUDEPATH += ./ \
+	../SwCore \
+	../SwExecution \
+	../SwGui \
+	../SwModel \
+	../SwConfiguration \
+	../SwFoundation
 
 
 CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/debug
-  win32:DLLDESTDIR=  ./../../bin/vc/debug
-  win32:TARGET = $$join(TARGET,,,d)
-  win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
-	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
+	DESTDIR = ./../../lib/vc/debug
+	DLLDESTDIR=  ./../../bin/vc/debug
+	
     LIBS += -L"../../lib/vc/debug" -lSwCored -lSwExecutiond -lSwGuid -lSwConfigurationd -lSwFoundationd
     TARGET_EXT = .swdld
 } 
+
 CONFIG(release, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/release
-  win32:DLLDESTDIR=  ./../../bin/vc/release
+	DESTDIR = ./../../lib/vc/release
+	DLLDESTDIR=  ./../../bin/vc/release
+	
     LIBS += -L"../../lib/vc/release" -lSwCore -lSwExecution -lSwGui  -lSwConfiguration -lSwFoundation
     TARGET_EXT = .swdl
 }
 
+include("C:/Projects/Utilities/QtCommonPri/base.pri")

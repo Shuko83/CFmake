@@ -1,8 +1,8 @@
 TEMPLATE = lib
 TARGET = WizardIDE
-QMAKE_CXXFLAGS += /MP
-QT += core \
-    xml
+
+QT += core xml
+
 HEADERS += NodeComponents.h \
     NodeConnectors.h \
     NodeDescription.h \
@@ -17,6 +17,7 @@ HEADERS += NodeComponents.h \
     SwWizardNodeTreeView.h \
     WizardIDEPluginFactory_Class.h \
     SwWizardConstantes.h
+	
 SOURCES += NodeComponents.cpp \
     NodeConnectors.cpp \
     NodeDescription.cpp \
@@ -30,41 +31,40 @@ SOURCES += NodeComponents.cpp \
     SwWizardNodeModel.cpp \
     SwWizardNodeTreeView.cpp \
     WizardIDEPluginFactory_Class.cpp
+	
 FORMS +=
+
 RESOURCES += _resources/WizardIDERsc.qrc
+
 DEFINES += WIZARDIDE_LIB
-MOC_DIR += ./_intermediaire
-OBJECTS_DIR += ./_obj
-RCC_DIR += ./_intermediaire
-UI_DIR += ./_intermediaire
+
 INCLUDEPATH += ./\
-    ./_intermediaire \
 	../SwCore \
 	../SwGui \
     ../SwGui/_intermediaire \
 	../SwDatasBase \
 	../SwExecution
 	
-
-	
 CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/debug
-  win32:DLLDESTDIR=  ./../../bin/vc/debug
-  win32:TARGET = $$join(TARGET,,,d)
-  win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
-	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
+	DESTDIR = ./../../lib/vc/debug
+	DLLDESTDIR=  ./../../bin/vc/debug
+
 	LIBS += -L"../../lib/vc/debug" \
     -lSwCored \
     -lSwGuid \
     -lSwExecutiond
 	TARGET_EXT = .swdld
 } 
+
 CONFIG(release, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/release
-  win32:DLLDESTDIR=  ./../../bin/vc/release
+	DESTDIR = ./../../lib/vc/release
+	DLLDESTDIR=  ./../../bin/vc/release
+	
 	LIBS += -L"../../lib/vc/release" \
     -lSwCore \
     -lSwGui \
     -lSwExecution
 	TARGET_EXT = .swdl
 }
+
+include("C:/Projects/Utilities/QtCommonPri/base.pri")

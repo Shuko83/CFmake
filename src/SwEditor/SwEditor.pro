@@ -1,9 +1,8 @@
 TEMPLATE = lib
 TARGET = SwEditor
-QMAKE_CXXFLAGS += /MP
-QT += core \
-    gui \
-    xml
+
+QT += core gui xml
+
 HEADERS += ISwEditorGraphicItem.h \
     ISwEditorGraphicScene.h \
     ISwEditorInterfacesGraphicItemManager.h \
@@ -41,12 +40,9 @@ HEADERS += ISwEditorGraphicItem.h \
     _SwStreamNavigationActions.h \
     _SwStreamOperationsActions.h \
     _SwStreamsActions.h \
-    _SwStreamsTabBar.h
-HEADERS += ../StreamWorkEditor2/PluginsListModel.h
-HEADERS += ../StreamWorkEditor2/ComponentListModel.h
-
-    
-    
+    _SwStreamsTabBar.h \
+	../StreamWorkEditor2/PluginsListModel.h \
+	../StreamWorkEditor2/ComponentListModel.h
     
 SOURCES += _SwEditorApplicativeCore.cpp \
     _SwEditorCompStreamTabBar.cpp \
@@ -75,21 +71,18 @@ SOURCES += _SwEditorApplicativeCore.cpp \
     _SwStreamNavigationActions.cpp \
     _SwStreamOperationsActions.cpp \
     _SwStreamsActions.cpp \
-    _SwStreamsTabBar.cpp
-    
-SOURCES += ../StreamWorkEditor2/PluginsListModel.cpp
-SOURCES += ../StreamWorkEditor2/ComponentListModel.cpp
+    _SwStreamsTabBar.cpp \
+	../StreamWorkEditor2/PluginsListModel.cpp \
+	../StreamWorkEditor2/ComponentListModel.cpp
     
     
 FORMS +=
+
 RESOURCES += _resources/SwEditorRsc.qrc
+
 DEFINES += SWEDITOR_LIB
-MOC_DIR += ./_intermediaire
-OBJECTS_DIR += ./_obj
-RCC_DIR += ./_intermediaire
-UI_DIR += ./_intermediaire
+
 INCLUDEPATH += ./ \
-    ./_intermediaire \
     ../SwCore \
     ../SwExecution \
     ../SwGui \
@@ -98,11 +91,9 @@ INCLUDEPATH += ./ \
     
     
 CONFIG(debug, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/debug
-  win32:DLLDESTDIR=  ./../../bin/vc/debug
-  win32:TARGET = $$join(TARGET,,,d)
-  win32:QMAKE_LFLAGS_DEBUG = /PDB:$$DLLDESTDIR/$$join(TARGET,,,.pdb)
-	OBJECTS_DIR = $$join(OBJECTS_DIR,,,d)
+	DESTDIR = ./../../lib/vc/debug
+	DLLDESTDIR=  ./../../bin/vc/debug
+	
 	LIBS += -L"../../lib/vc/debug" \
     -lSwCored \
     -lSwExecutiond \
@@ -110,11 +101,14 @@ CONFIG(debug, debug|release) {
 	TARGET_EXT = .swdld
 } 
 CONFIG(release, debug|release) {
-  win32:DESTDIR = ./../../lib/vc/release
-  win32:DLLDESTDIR=  ./../../bin/vc/release
+	DESTDIR = ./../../lib/vc/release
+	DLLDESTDIR=  ./../../bin/vc/release
+	
 	LIBS += -L"../../lib/vc/release" \
     -lSwCore \
     -lSwExecution \
     -lSwGui
 	TARGET_EXT = .swdl
 }
+
+include("C:/Projects/Utilities/QtCommonPri/base.pri")
