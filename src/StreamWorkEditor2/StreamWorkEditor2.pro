@@ -102,13 +102,18 @@ VERSION = 1.2.3
 
 CONFIG(debug, debug|release) {
 	DESTDIR = ./../../bin/vc/debug/
-
+	DLLDESTDIR = ./../../bin/vc/debug/
+	
+	INCLUDEPATH += ../SwDoc/GeneratedFiles/uid
 	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwDocd
 	CONFIG += console
 } 
 
 CONFIG(release, debug|release) {
 	DESTDIR = ./../../bin/vc/release/
+	DLLDESTDIR = ./../../bin/vc/release/
+
+	INCLUDEPATH += ../SwDoc/GeneratedFiles/ui	
 	LIBS += -L"../../lib/vc/release" -lSwCore -lSwDoc
 }
 

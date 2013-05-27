@@ -4,7 +4,7 @@
 
 #include <QWidget>
 #include "SwDocConstantes.h"
-#include "_intermediaire/ui_editDoc.h"
+#include "ui_editDoc.h"
 #include <QListView>
 
 class TKeyComp;

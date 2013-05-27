@@ -91,13 +91,18 @@ void _SwGuiQActionToWidget::eventBeforeInterfaceAvailability(QString interface_n
 }
 /*! \brief evenement apres changement de la disponibilité de l'interface*/
 void _SwGuiQActionToWidget::eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host){
-	if ((interface_name == "Widget") && (_i_Widget != 0)){			
+	if ((interface_name == "Widget") && (_i_Widget != 0))
+	{			
 		_widget = &(_i_Widget->GetWidget()); 
 		_hostWidget->setContainedWidget(_widget);			
-	} else {
-		if (_i_Widget == 0){
+	} 
+	else 
+	{
+		if (_i_Widget == 0)
+		{
 			_widget = 0;
 		}
+
 		_hostWidget->setContainedWidget(0);
 	}
 }

@@ -8,7 +8,7 @@
 #pragma warning(disable: 4311 4312 4482 4615 ) //  disable warning QT
 #include <QDialog>
 #include <QtGui>
-#include "_intermediaire/ui__SwGuiCssDialog.h"
+#include "ui__SwGuiCssDialog.h"
 #pragma warning(default: 4311 4312 4482 4615 )
 
 /*CSS Highlighter*/
