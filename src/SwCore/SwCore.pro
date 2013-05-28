@@ -119,6 +119,7 @@ HEADERS += LibIndeSig.h \
 	_SwPerfChrono.h \
 	SwRefPtrTools.h \
 	ISwServiceRefProfiler.h \
+	DisabledSwRef.h \
 	_SwServiceRefProfiler.h 
 
 SOURCES += SwAddress_ToolBox.cpp \
@@ -174,6 +175,7 @@ SOURCES += SwAddress_ToolBox.cpp \
     _SwServiceParametersImpl.cpp \
 	_SwServiceCodeTimer.cpp \
 	SwRefPtrTools.cpp \
+	DisabledSwRef.cpp \
 	_SwServiceRefProfiler.cpp 
     
 FORMS +=

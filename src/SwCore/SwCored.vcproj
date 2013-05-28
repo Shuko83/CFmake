@@ -130,6 +130,8 @@
 			<File
 				RelativePath="Component.cpp" />
 			<File
+				RelativePath="DisabledSwRef.cpp" />
+			<File
 				RelativePath="SwAddress_ToolBox.cpp" />
 			<File
 				RelativePath="SwAlerter_Class.cpp" />
@@ -263,6 +265,8 @@
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="DisabledSwRef.h" />
 			<File
 				RelativePath="ISwActivable.h" />
 			<File

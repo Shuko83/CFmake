@@ -30,7 +30,6 @@ void SwRef::_addRef(){
 	_referencesCounter++;
 }
 
-
 /*! \brief Retrait d'une référence */
 void SwRef::_release(){
    //Decrementation du compteur de reference
