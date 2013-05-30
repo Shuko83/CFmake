@@ -29,6 +29,7 @@ namespace StreamWork
           qint64 leastSigBits;
           
 		  _SwUUID(qint64 m,qint64 l);
+		  _SwUUID(qint64 l);
 		  _SwUUID();
           bool operator<(const struct _SwUUID & val) const;
           bool operator==(const struct _SwUUID & val) const;
@@ -38,7 +39,8 @@ namespace StreamWork
           void FromQString(const QString & value);
 		  static struct _SwUUID generateUUID();
         };
-        typedef  struct _SwUUID SwUUID;
+
+		typedef  struct _SwUUID SwUUID;
 
         
     }

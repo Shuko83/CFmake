@@ -19,6 +19,9 @@ class StreamControler;
 class StreamView : public QGraphicsView{
     Q_OBJECT
 public:
+
+	QLineEdit *_searchEdit;
+
 	/** @brief Constructor */
 	StreamView(QWidget * parent=0);
     /** @brief Definition du controleur */
@@ -49,11 +52,16 @@ protected:
     /** @brief evenement de double click */
     void mouseDoubleClickEvent ( QMouseEvent * event ); 
 
-	//bool eventFilter(QObject *obj, QEvent *event);
+	bool eventFilter(QObject *obj, QEvent *event);
 
 public slots:
     /** @brief sur demande du menu contextuel */
     void displayContextualMenu(const QPoint & pos);
+
+	void clearAndHideSearchBox();
+	void showSearchBox();
+	void doSearch();
+	void doSearch(const QString &);
 
 protected:
     /** @brief sur click de la souris */
@@ -73,6 +81,13 @@ private:
     QList<IStreamViewObserver *> _observers;
     /** @brief QPointF last mouse position */
     QPointF _lastMousePos;
+
+	QShortcut *_searchShortCut;
+	QPointF _previousCenter;
+	qreal _previousScaleFactor;
+	qreal _scaleFactor;
+
+QGraphicsRectItem * test;
 };
 
 #endif

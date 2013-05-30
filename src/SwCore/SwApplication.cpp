@@ -259,10 +259,9 @@ int SwApplication::Launch(QString stream_desc) throw(SwException) {
     }
     //Lancement
     if (_isGuiApp) {
-        QApplication * gui_app=dynamic_cast<QApplication *>(qApp);
         if (_executor!=NULL) 
             result=_executor->StreamExecute();
-        result=gui_app->exec();
+        result=qApp->exec();
     } else {
         //Sinon execution du stream
         if (_executor!=NULL) {

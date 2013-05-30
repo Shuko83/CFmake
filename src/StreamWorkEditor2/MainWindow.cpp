@@ -54,8 +54,8 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 	_streamMenu->addAction("New Editor",this,SLOT(onNewWindow()));
 	_streamMenu->addAction("Print",this,SLOT(onPrint()),Qt::CTRL + Qt::Key_P);
 	_streamMenu->addAction("SwGenerator",this,SLOT(onLaunchSwGenerator()),Qt::CTRL + Qt::Key_G);
-
 	_streamMenu->addSeparator();
+
 	for(int i = 0; i< MAX_HISTORY_FILE ; i++)
 	{
 		QAction *action = new QAction(this);
@@ -164,6 +164,7 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
 	navdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
 	navdock->setWidget(new ViewNavigator(_streamView,this));
 	addDockWidget(Qt::RightDockWidgetArea, navdock);
+	_streamView->show();
 
 	_statusWidget=new QLineEdit(this);
 	_statusWidget->setReadOnly(true);

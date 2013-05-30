@@ -23,7 +23,7 @@ void ViewNavigator::viewHasChanged() {
     repaint();
 }
 /** @breif event de dessin */
-void ViewNavigator::paintEvent(QPaintEvent */*event*/) {
+void ViewNavigator::paintEvent(QPaintEvent * /*event*/) {
     QPainter painter(this);
 
     QGraphicsScene * scene=_streamView->scene();

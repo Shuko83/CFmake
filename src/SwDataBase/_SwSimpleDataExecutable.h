@@ -26,7 +26,7 @@ using namespace StreamWork::SwExecution;
 	\class _SwSimpleDataExecutable 
 	\brief Implementation of the Class _SwSimpleDataExecutablepermettant de tester l'executeur
 */
-class _SwSimpleDataExecutable : public SwComponent_Class , public ISwExecutable_Service
+class _SwSimpleDataExecutable : virtual public SwComponent_Class , virtual public ISwExecutable_Service
 {
 protected:
     /*! \brief Start time */

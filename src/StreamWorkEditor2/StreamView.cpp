@@ -22,6 +22,30 @@ StreamView::StreamView(QWidget * parent):QGraphicsView(parent) {
     //        this,SLOT(displayContextualMenu(const QPoint &)));
     //setContextMenuPolicy(Qt::CustomContextMenu);
     
+	test = new QGraphicsRectItem();
+	test->setOpacity(0.5);
+	//Search management
+	QFont font1;
+	font1.setFamily(QString::fromUtf8("Segoe UI"));
+	font1.setPointSize(15);
+
+	_searchShortCut = new QShortcut(QKeySequence(tr("Ctrl+F","Search")),this);
+	connect(_searchShortCut,SIGNAL(activated ()),this,SLOT(showSearchBox()));
+
+	_scaleFactor = 1.0;
+
+	_searchEdit = new QLineEdit();
+	_searchEdit->setWindowFlags(Qt::Tool|Qt::WindowStaysOnTopHint);
+	_searchEdit->hide();
+	_searchEdit->setPlaceholderText("search...");
+	_searchEdit->setFont(font1);
+	_searchEdit->setFixedWidth(250);
+	_searchEdit->setStyleSheet("padding-right:30px;");
+	_searchEdit->installEventFilter(this);
+	_searchEdit->move(mapToGlobal(pos()));
+
+	connect(_searchEdit,SIGNAL(returnPressed ()),this,SLOT(doSearch()));
+	connect(_searchEdit,SIGNAL(textEdited ( const QString &)),this,SLOT(doSearch(const QString &)));
 
 
     _controler=0;
@@ -46,6 +70,10 @@ void StreamView::externalUpdateSceneRect(){
 
 /** @brief evenement de retaillage */
 void StreamView::resizeEvent(QResizeEvent *event){
+
+	_searchEdit->move(mapToGlobal(pos()).x()+width() - _searchEdit->width() - 20,mapToGlobal(pos()).y() - 20);
+
+
     if (scene()) {
         QRectF lsceneRect=scene()->sceneRect();
         if (lsceneRect.width()<(qreal)event->size().width())
@@ -177,8 +205,10 @@ void StreamView::wheelEvent(QWheelEvent *event) {
 /* \brief Retaillage de la vue */
 void StreamView::scaleView(qreal scaleFactor) {
     qreal factor = matrix().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
-    if (factor < 0.1 || factor > 10)
+    if (factor < 0.3 || factor > 10)
         return;
+
+	_scaleFactor *= scaleFactor;
 
     scale(scaleFactor, scaleFactor);
     
@@ -202,6 +232,88 @@ void StreamView::mouseDoubleClickEvent ( QMouseEvent * event ) {
 }
 
 //-----------------------------------------------------------------------
+void StreamView::clearAndHideSearchBox()
+{
+	_searchEdit->hide();
+	_searchEdit->setText("");
+
+	//Reset all states
+	QMatrix mat = matrix();
+	mat.reset();
+	setMatrix(mat);
+	QTransform trans = transform();
+	trans.reset();
+	setTransform(trans);
+
+	centerOn(_previousCenter);
+	_scaleFactor = _previousScaleFactor;
+	scale(_scaleFactor,_scaleFactor);
+}
+
+//-----------------------------------------------------------------------
+void StreamView::showSearchBox()
+{
+	_searchEdit->show();
+	QTimer::singleShot(0,_searchEdit,SLOT(setFocus()));
+
+	_previousCenter = mapToScene(viewport()->rect()).boundingRect().center();
+	_previousScaleFactor = _scaleFactor;
+}
+
+//-----------------------------------------------------------------------
+void StreamView::doSearch()
+{
+	foreach(QGraphicsItem * item, scene()->items())
+	{
+		ComponentGraphicItem * gItem = dynamic_cast<ComponentGraphicItem*>(item);
+		if(gItem &&  gItem->getComponent() )
+		{
+			if( gItem->getComponent()->GetName().contains(_searchEdit->text(),Qt::CaseInsensitive)	)
+			{
+				gItem->setSelected(true);
+			}
+			else
+			{
+				gItem->setSelected(false);
+			}
+		}
+	}
+
+	//Center and zoom to item
+	if(!scene()->selectedItems().isEmpty())
+	{
+		QRectF allItemsBounding;
+
+		foreach(QGraphicsItem * item, scene()->selectedItems())
+		{
+			QRectF tmp = item->boundingRect();
+			tmp.moveTo(item->pos().x() - item->boundingRect().size().width()/2, item->pos().y());
+			allItemsBounding = allItemsBounding.united(tmp); 
+		}
+		QRectF newRect = allItemsBounding;
+		newRect.setTopLeft(QPointF(newRect.topLeft().x()-50,newRect.topLeft().y()-50));
+		newRect.setBottomRight(QPointF(newRect.bottomRight().x()+50,newRect.bottomRight().y()+50));
+		allItemsBounding = allItemsBounding.united(newRect);
+
+		if(scene() && !scene()->items().contains(test))
+			scene()->addItem(test);
+
+		test->setRect(allItemsBounding);
+		centerOn(allItemsBounding.center());
+		fitInView(allItemsBounding,Qt::KeepAspectRatio);
+		_scaleFactor = transform().m11();
+
+	}
+}
+
+//-----------------------------------------------------------------------
+void StreamView::doSearch( const QString & )
+{
+	doSearch();
+
+}
+
+//-----------------------------------------------------------------------
 // void StreamView::keyPressEvent( QKeyEvent *event )
 // {
 // 	qDebug() << event->key();
@@ -212,20 +324,14 @@ void StreamView::mouseDoubleClickEvent ( QMouseEvent * event ) {
 // }
 
 // -----------------------------------------------------------------------
-// bool StreamView::eventFilter( QObject *obj, QEvent *event )
-// {
-// 	if(event->type() == QEvent::KeyPress)
-// 	{
-// 		QKeyEvent *c = dynamic_cast<QKeyEvent *>(event);
-// 		qDebug() << c->key();
-// 		qDebug() << Qt::Key_Delete;
-// 		if(c && c->key() == Qt::Key_Delete)
-// 		{
-// 			MenuManager::getInstance()->buildContextMenu(QPointF(0,0));
-// 			MenuManager::getInstance()->onRemove();
-// 
-// 		}
-// 	}
-// 	return QGraphicsView::eventFilter(obj,event);
-// }
+bool StreamView::eventFilter( QObject *obj, QEvent *event )
+{
+	if(obj == _searchEdit && event->type() == QEvent::Close)
+	{
+		clearAndHideSearchBox();
+		return QGraphicsView::eventFilter(obj,event);
+	}
+	
+	return QGraphicsView::eventFilter(obj,event);
+}
 

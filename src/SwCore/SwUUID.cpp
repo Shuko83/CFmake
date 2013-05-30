@@ -16,6 +16,11 @@ using namespace StreamWork::SwCore;
 _SwUUID::_SwUUID(qint64 m,qint64 l):mostSigBits(m),leastSigBits(l) {
 
 }
+//-----------------------------------------------------------------------
+_SwUUID::_SwUUID( qint64 l ):mostSigBits(Q_INT64_C(0)),leastSigBits(l)
+{
+
+}
 _SwUUID::_SwUUID():mostSigBits(Q_INT64_C(0)),leastSigBits(Q_INT64_C(0)) {
 
 }
