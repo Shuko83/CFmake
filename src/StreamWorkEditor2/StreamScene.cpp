@@ -57,12 +57,12 @@ void StreamScene::drawBackground(QPainter *painter, const QRectF &rect) {
 void StreamScene::setVisibleArea(QRectF & visibleArea) {
     _visibleArea=visibleArea;
 
-	QRectF rect = _visibleArea;
+	/*QRectF rect = _visibleArea;
 	rect.setY(rect.y()-1000);
 	rect.setX(rect.x()-1000);
 	rect.setHeight(rect.height()+2000);
 	rect.setWidth(rect.width()+2000);
-	setSceneRect(rect);
+	setSceneRect(rect);*/
 
     updateWidgets();
 }
