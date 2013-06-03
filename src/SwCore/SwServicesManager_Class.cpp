@@ -7,6 +7,7 @@
 */
 #include <QtGlobal>
 #include "SwServicesManager_Class.h"
+#include <QCoreApplication>
 
 using namespace StreamWork::SwCore;
 
@@ -58,7 +59,11 @@ void SwServicesManager_Class::RegisterService(ISwService * service) throw(SwExce
 
     Q_ASSERT(service!=NULL) ;
     it=_services.find(service->GetServiceName());
-    if (it!=_services.end()) {
+    if (it!=_services.end()) 
+	{
+		//Verru pour desactiver la popup relou pour le service de check licence avec streamworkEditor
+		if((service->GetServiceName() == "CheckLicense"||service->GetServiceName() == "ProductKeyService" ) && QCoreApplication::applicationName() == "StreamWorkEditor2")
+			return;
         QString msg=QString("A service with %1 already registered").arg(service->GetServiceName());
         LAUNCH_SWEXCEPTION("SwCore",msg);
     }
