@@ -360,8 +360,8 @@ void _SwExecutor::Execute(double current_time,bool is_first_call) throw (SwExcep
             }
             
             // on execute le composant
-            if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode) 
-                    executable->Execute(current_time,internalFirstCall); 
+            if (_executable_entry.ToInt()==CL_EXE_FSLAVE || _replayMode)
+				executable->Execute(current_time,internalFirstCall);
             else 
                 executable->Execute(SwTime_ToolBox::GetTime(),internalFirstCall); 
         }

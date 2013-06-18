@@ -3,6 +3,7 @@
 # -----------------------------------------------------------
 TEMPLATE = lib
 TARGET = SwRecord
+PROJECTS_PATH = ../../../..
 
 QT += core xml
 
@@ -69,4 +70,4 @@ CONFIG(release, debug|release) {
     TARGET_EXT = .swdl
 }
 
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

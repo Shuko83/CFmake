@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET = SwGenerator
+PROJECTS_PATH = ../../../..
 
 QT += core xml
 
@@ -31,4 +32,4 @@ CONFIG(release, debug|release) {
 	QMAKE_POST_LINK = "xcopy /Y ..\\..\\..\\QCTemplate\\bin\\vc\\release\\*.dll .\\..\\..\\bin\\vc\\release\\"
 }
 
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

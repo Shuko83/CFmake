@@ -114,18 +114,18 @@ int main(int argc, char *argv[])
         result=app.exec();
         //Destruction du log_recorder
         // Le detachement n'est pas utile puisque l'application est detruite
-        delete log_recorder;
+		delete log_recorder;
     } catch(SwException & se) {
         //L'application a levé une exception
         //Traiter l'exception
         QMessageBox::critical(0,QString("Aborting swlauncher because swexception..."),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
-		result=-1;
+		result  = -1;
    } catch(std::exception & e) {
         //L'application a levé une exception
         //Traiter l'exception
         QMessageBox::critical(0,QString("Aborting swlauncher because exception..."),QString(e.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
-		result=-1;
-   }
-    //Fin
-    return result;
+		result  = -1;
+	}
+	//Fin
+	return result;
 }

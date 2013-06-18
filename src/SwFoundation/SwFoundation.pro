@@ -1,5 +1,6 @@
 TEMPLATE = lib
 TARGET = SwFoundation
+PROJECTS_PATH = ../../../..
 
 QT += core xml
 	
@@ -33,4 +34,4 @@ CONFIG(release, debug|release) {
 	TARGET_EXT = .dll
 }
 
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

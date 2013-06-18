@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET = SwLauncher
+PROJECTS_PATH = ../../../..
 
 QT += core xml
 
@@ -26,4 +27,4 @@ CONFIG(release, debug|release) {
 	LIBS += -L"../../lib/vc/release" -lSwCore 
 }
 
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

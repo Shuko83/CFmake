@@ -10,135 +10,162 @@
 #include <SwProperties_Class.h>
 #include <SwPins_Manager_Class.h>
 #include <ISwProperty.h>
- 
+
 using namespace StreamWork::SwCore;
 
-/** @brief Constructor */
-Component::Component():SwComponent_Class() {
+//-----------------------------------------------------------------------
+Component::Component():SwComponent_Class() 
+{
     _provider_service=NULL;
     _consumer_service=NULL;
     _properties_service=NULL;
     _disable_service=false;
 }
-/** @brief Destructor */
-Component::~Component() {
+
+//-----------------------------------------------------------------------
+Component::~Component() 
+{
     _disable_service=true;
+
     //Desenregistrement des services
     this->UnregisterService(_consumer_service->GetServiceName());
     this->UnregisterService(_provider_service->GetServiceName());
     this->UnregisterService(_pins_service->GetServiceName());
     this->UnregisterService(_properties_service->GetServiceName());
+
     //Destruction des services
     delete _consumer_service;
     delete _provider_service;
     delete _properties_service;
 }
-/*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
-void Component::InitializeResources() throw(SwException) {
+
+//-----------------------------------------------------------------------
+void Component::InitializeResources() throw(SwException) 
+{
+
     //Creation des service
     _consumer_service=new SwInterfaces_Consumer_Class(this) ;
     _provider_service=new SwInterfaces_Provider_Class(this) ;
     _properties_service=new SwProperties_Class(this);
     _pins_service=new SwPins_Manager_Class(this) ;
+
     //Enregistrement des services
     this->RegisterService(_properties_service);
     this->RegisterService(_consumer_service);
     this->RegisterService(_pins_service);
     this->RegisterService(_provider_service);
-    _consumer_service->AttachInterfacesConsumerObserver(this);
-    initializeComponent();
+    
+	_consumer_service->AttachInterfacesConsumerObserver(this);
+    
+	initializeComponent();
+
 }
-/*! \brief surcharge du setter pour signaler le changement d'activation */
-void Component::setActive(bool active) {
+
+//-----------------------------------------------------------------------
+void Component::setActive(bool active) 
+{
     if (isActive()==active)
         return;
     SwComponent_Class::setActive(active);
     eventActivationChanged();
 }
- /*! \brief Callback sur les changements de propriétés
-     \note a surcharger pour ecouter les changements de propriétés*/
-void Component::OnPropertyChange(ISwProperty * property) {
+
+//-----------------------------------------------------------------------
+void Component::OnPropertyChange(ISwProperty * property) 
+{
     if (!_disable_service)
         eventPropertyChange(property);
 }
 
-//---------------------------------------------------------------------
-// Interface ISwInterfaces_ConsumerObserver
-//---------------------------------------------------------------------
-/*! \brief Callback avant changement de la disponibilité de l'interface
-    \note a surcharger si necessaire*/
-void Component::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
+//-----------------------------------------------------------------------
+void Component::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) 
+{
     if (!_disable_service)
         eventBeforeInterfaceAvailability(interface_name,provider_host);
 }
-/*! \brief Callback apres changement de la disponibilité de l'interface
-    \note a surcharger si necessaire*/
-void Component::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host){
+
+//-----------------------------------------------------------------------
+void Component::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host)
+{
     if (!_disable_service)
         eventAfterInterfaceAvailability(interface_name,provider_host);
 }            
-//----------------------------------------------------
-// Interface ISwPin_Listener
-//----------------------------------------------------
-/*! \brief Callback sur reception d'une data
-    \note a surcharger pour receptionner les data*/
-void Component::OnReceiveData(SwPin * src,SwData_Class * data){
+
+//-----------------------------------------------------------------------
+void Component::OnReceiveData(SwPin * src,SwData_Class * data)
+{
     if (!_disable_service)
         eventReceiveData(src,data);
 }           
-/*! \brief Initialisation du composant
-    \note A Surcharger*/
-void Component::initializeComponent() throw(SwException) {
+
+//-----------------------------------------------------------------------
+void Component::initializeComponent() throw(SwException) 
+{
 
 }
-/*! \brief evenement de changement de propriete
-    \note A Surcharger*/
-void Component::eventPropertyChange(ISwProperty * property){
+
+//-----------------------------------------------------------------------
+void Component::eventPropertyChange(ISwProperty * property)
+{
 
 }
-/*! \brief evenement avant changement de la disponibilité de l'interface
-    \note A Surcharger*/
-void Component::eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host){
+
+//-----------------------------------------------------------------------
+void Component::eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host)
+{
 
 }
-/*! \brief evenement apres changement de la disponibilité de l'interface
-    \note A Surcharger*/
-void Component::eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host){
+
+//-----------------------------------------------------------------------
+void Component::eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host)
+{
 
 }
-/*! \brief evenement sur reception d'une data
-    \note A Surcharger*/
-void Component::eventReceiveData(SwPin * src,SwData_Class * data){
+//-----------------------------------------------------------------------
+void Component::eventReceiveData(SwPin * src,SwData_Class * data)
+{
 
 }
-/*! \brief evenement sur changement d'activation
-    \note A Surcharger*/
-void Component::eventActivationChanged(){
+
+//-----------------------------------------------------------------------
+void Component::eventActivationChanged()
+{
 
 }
-/*! \brief Acces au fournisseur d'interface*/
-ISwInterfaces_Provider & Component::getIProviderService() {
+
+//-----------------------------------------------------------------------
+ISwInterfaces_Provider & Component::getIProviderService() 
+{
     return *_provider_service;
 }
-/*! \brief Acces au service consommateur d'interface*/
-ISwInterfaces_Consumer & Component::getIConsumerService() {
+
+//-----------------------------------------------------------------------
+ISwInterfaces_Consumer & Component::getIConsumerService() 
+{
     return *_consumer_service;
 }
-/*! \brief Acces au service  de proprietes*/
-ISwProperties & Component::getPropertiesService() {
+
+//-----------------------------------------------------------------------
+ISwProperties & Component::getPropertiesService() 
+{
     return * _properties_service;
 }
-/*! \brief Acces au service de connexion */
-ISwPins_Manager & Component::getPinsService() {
+
+//-----------------------------------------------------------------------
+ISwPins_Manager & Component::getPinsService() 
+{
     return * _pins_service;
 }
-/*! \brief enable listening change for property */
-void Component::enableListeningChangeForProperty(ISwProperty * property) {
+
+//-----------------------------------------------------------------------
+void Component::enableListeningChangeForProperty(ISwProperty * property) 
+{
     property->GetOnChangeSignal().iconnect(*this,&Component::OnPropertyChange);
 }
-/*! \brief enable listening for pin */
-void Component::enableListeningForPin(SwPin * pin) {
+
+//-----------------------------------------------------------------------
+void Component::enableListeningForPin(SwPin * pin) 
+{
     pin->RegisterListener(this);
 }
 

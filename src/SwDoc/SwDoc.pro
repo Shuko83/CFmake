@@ -1,5 +1,6 @@
 TEMPLATE = lib
 TARGET = SwDoc
+PROJECTS_PATH = ../../../..
 
 QT += core sql
 
@@ -41,4 +42,4 @@ CONFIG(release, debug|release) {
 	QMAKE_POST_LINK += "xcopy /Y .\\_resources\\sqldrivers\\qsqlmysql4.dll ..\\..\\bin\\vc\\debug\\sqldrivers\\"
 }
 
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

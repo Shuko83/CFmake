@@ -3,8 +3,11 @@
 # -----------------------------------------------------------
 TEMPLATE = lib
 TARGET = TestPlugin
+PROJECTS_PATH = ../../../..
+
 QT += core \
     xml
+    
 HEADERS += TestPluginPluginFactory_Class.h \
 	TestPluginConstantes.h \
 	TestComponent.h \
@@ -71,4 +74,4 @@ CONFIG(release, debug|release) {
     TARGET_EXT = .swdl
 }
 
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

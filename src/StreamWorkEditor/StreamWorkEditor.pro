@@ -1,6 +1,7 @@
 TEMPLATE = app
 TARGET = StreamWorkEditor
 QT += core gui xml
+PROJECTS_PATH = ../../../..
 
 HEADERS += SwSplash.h
 SOURCES += SwSplash.cpp \
@@ -25,4 +26,4 @@ CONFIG(release, debug|release) {
 
 #Windows resource file
 RC_FILE = StreamWorkEditor.rc
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

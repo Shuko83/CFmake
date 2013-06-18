@@ -1,6 +1,8 @@
 TEMPLATE = lib
 TARGET = SwCore
 
+PROJECTS_PATH = ../../../..
+
 QT += core xml
 
 HEADERS += LibIndeSig.h \
@@ -203,4 +205,4 @@ CONFIG(release, debug|release) {
 	DLLDESTDIR=  ./../../bin/vc/release
 }
 
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

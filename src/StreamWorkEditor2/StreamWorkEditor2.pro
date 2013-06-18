@@ -1,5 +1,6 @@
 TEMPLATE = app
 TARGET = StreamWorkEditor2
+PROJECTS_PATH = ../../../..
 
 QT += core gui xml opengl
 
@@ -119,4 +120,4 @@ CONFIG(release, debug|release) {
 
 win32:RC_FILE = StreamWorkEditor2.rc
 
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

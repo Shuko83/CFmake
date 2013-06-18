@@ -1,5 +1,7 @@
 TEMPLATE = lib
 TARGET = SwDataBase
+PROJECTS_PATH = ../../../..
+
 QT += core xml
 	
 HEADERS += SwDataBasicBuffer_Class.h \
@@ -38,4 +40,4 @@ CONFIG(release, debug|release) {
 	TARGET_EXT = .swdl
 }
 
-include("C:/Projects/Utilities/QtCommonPri/base.pri")
+include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
