@@ -74,5 +74,10 @@ void ManageLinkColor::loadStaticColor()
 		_mapColor.insert("ISwToolBar","#E7408B");
 		_mapColor.insert("ISwDockWidget","#FDFF55");
 		_mapColor.insert("ISwLayout","#032F55");
+		_mapColor.insert("IPlgGlobalContext","#2d2dff");
+		_mapColor.insert("ITdlDbRootFacade","#6f0cae");
+		_mapColor.insert("IDataLink","#24cd1c");
+		_mapColor.insert("IProtocolProvider","#e52da6");
+		//_mapColor.insert("IPlgContext","#e95a1a"); //rdyToUse
 	}
 }
