@@ -29,7 +29,7 @@ static int nbWindows=0;
 static QMap<SwComponent_Class *,MainWindow *> _editors; 
 
 /** @brief Constructor */
-MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
+MainWindow::MainWindow(bool loadStream /*= true*/):QMainWindow(),_streamControler(0) {
 	_streamSourceOpener=0;
 	setWindowTitle("StreamWorkEditor V2");
 	setTabPosition(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea,QTabWidget::North);
@@ -179,9 +179,11 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
     for(int i=1;i+1<nb_args;i++) {
         QString test=liste_arg[i];
         //aide
-        if (liste_arg[i]=="-stream" ) {
+        if (liste_arg[i]=="-stream" && loadStream ) 
+		{
             QFileInfo fi(liste_arg[i+1]);
-            if (fi.exists()) {
+            if (fi.exists()) 
+			{
                 if (_streamControler!=0) {
                     _streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
                     _streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
@@ -200,7 +202,6 @@ MainWindow::MainWindow():QMainWindow(),_streamControler(0) {
                 _streamSourceOpener=0;
                 _streamControler->getRootItem()->OnDestroy.iconnect(*this,&MainWindow::internalClose);
             }
-
         }
     }
 
@@ -413,8 +414,7 @@ void MainWindow::onRearrange() {
 }
 /** @brief sur nouvelle fenetre */
 void MainWindow::onNewWindow() {
-	MainWindow *window=new MainWindow;
-	//qApp->connect(qApp, SIGNAL(lastWindowClosed()), window, SLOT(onQuit()));
+	MainWindow *window=new MainWindow(false);
 	window->onNewStream();
 	window->showMaximized();
 }

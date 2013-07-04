@@ -439,7 +439,7 @@ void ComponentGraphicItem::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * ev
 			{
                 rootComponent=rootComponent->GetParent();
             }
-            window=new MainWindow;
+            window=new MainWindow(false);
             window->onLoadExistingStream(subStream->getSubStream(),subStream->getSubStreamPath(),rootComponent);
             window->showMaximized();
         } 
