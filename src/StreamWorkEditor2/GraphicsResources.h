@@ -23,6 +23,8 @@ public:
 
     /** @brief renvoie l'icone d'un composant */
     QPixmap getComponentIcon(StreamWork::SwCore::SwComponent_Class * component);
+	/** @brief renvoie l'icone de admin */
+	QPixmap getAdminIcon();
     /** @brief renvoie l'icone de run */
     QPixmap getRunIcon();
     /** @brief renvoie l'icone de desactivate */
@@ -41,6 +43,8 @@ private:
 	~GraphicsResources();
 
 private:
+	/** @brief id icon_admin */
+	QPixmap _icone_admin;
     /** @brief id icon_run */
     QPixmap _icone_run;
     /** @brief id icon_run_disable */

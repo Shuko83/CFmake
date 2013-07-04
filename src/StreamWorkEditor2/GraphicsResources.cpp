@@ -14,49 +14,74 @@ using namespace StreamWork::SwCore;
 
 static GraphicsResources * _instance=0;
 
-/** @brief Constructor */
-GraphicsResources::GraphicsResources() {
+//-----------------------------------------------------------------------
+GraphicsResources::GraphicsResources()
+{
+	_icone_admin=QIcon(":/StreamWorkEditor2/settings.png").pixmap(11,14);
 	_icone_run=QIcon(":/StreamWorkEditor2/mod_run.png").pixmap(11,14);
     _icone_run_disable=QIcon(":/StreamWorkEditor2/mod_run_disable.png").pixmap(11,14);
     _icone_replay=QIcon(":/StreamWorkEditor2/mod_replay.png").pixmap(11,14);
-    _icone_desactive=QIcon(":/StreamWorkEditor2/editdelete.png").pixmap(14,14);
+	_icone_desactive=QIcon(":/StreamWorkEditor2/editdelete.png").pixmap(14,14);
+	_icone_desactive=QIcon(":/StreamWorkEditor2/editdelete.png").pixmap(14,14);
     _view=0;
 }
-/** @brief ~Destructor */
-GraphicsResources::~GraphicsResources() {
+
+//-----------------------------------------------------------------------
+GraphicsResources::~GraphicsResources() 
+{
 
 }
-/** @brief acces singleton */
-GraphicsResources * GraphicsResources::getInstance() {
+
+//-----------------------------------------------------------------------
+GraphicsResources * GraphicsResources::getInstance() 
+{
     if (_instance==0) {
         _instance=new GraphicsResources();
     }
     return _instance;
 }
-/** @brief renvoie l'icone d'un composant */
-QPixmap GraphicsResources::getComponentIcon(StreamWork::SwCore::SwComponent_Class * component) {
+
+//-----------------------------------------------------------------------
+QPixmap GraphicsResources::getComponentIcon(StreamWork::SwCore::SwComponent_Class * component) 
+{
     QIcon ico=SW_APP->ComponentsBank().GetComponentIcon(component->GetFactoryComponentName());
     return ico.pixmap(16,16);
 }
 
-/** @brief renvoie l'icone de run */
-QPixmap GraphicsResources::getRunIcon() {
+//-----------------------------------------------------------------------
+QPixmap GraphicsResources::getRunIcon()
+{
     return _icone_run;
 }
-/** @brief renvoie l'icone de run disabled */
-QPixmap GraphicsResources::getRunIconDisabled() {
+
+//-----------------------------------------------------------------------
+QPixmap GraphicsResources::getAdminIcon()
+{
+	return _icone_admin;
+}
+
+//-----------------------------------------------------------------------
+QPixmap GraphicsResources::getRunIconDisabled() 
+{
     return _icone_run_disable;
 }
-/** @brief renvoie l'icone de replay */
-QPixmap GraphicsResources::getReplayIcon() {
+
+//-----------------------------------------------------------------------
+QPixmap GraphicsResources::getReplayIcon() 
+{
     return _icone_replay;
 }
-/** @brief renvoie l'icone de desactivate */
-QPixmap GraphicsResources::getDesactiveIcon() {
+
+//-----------------------------------------------------------------------
+QPixmap GraphicsResources::getDesactiveIcon() 
+{
     return _icone_desactive;
 }
 
-/** @brief couleur interface par type */
-QColor GraphicsResources::getInterfaceColor(QString type) {
+//-----------------------------------------------------------------------
+QColor GraphicsResources::getInterfaceColor(QString type)
+{
     return QColor("#330066");
 }
+
+

@@ -63,11 +63,12 @@ QRectF ComponentGraphicItem::boundingRect() const{
 }
 /** @brief Fonction de dessin */
 void ComponentGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget ) {
-    if (option->state.testFlag(QStyle::State_Selected)) {
+    
+	if (option->state.testFlag(QStyle::State_Selected)) 
         painter->setPen(_selected_pen);
-    } else {
+     else 
         painter->setPen(_pen);
-    }
+
     painter->setRenderHints(QPainter::Antialiasing);
     painter->setBrush(_headerBrush);
     painter->drawPath(_header_path);
@@ -77,33 +78,47 @@ void ComponentGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphic
     painter->drawPixmap(_bbox.topLeft()+QPointF(CL_RADUIS,2.0),_icone);
     painter->setPen(_text_pen);
     painter->drawText(_bbox.topLeft()+QPointF(CL_RADUIS+_icone.width()+2.0,_header_height-6.0),_component->GetName());
+
     QFontMetrics fm(QApplication::fontMetrics());
-    if (_executable!=0 || _executor!=0) {
-        if ((_executable!=0 &&_executable->isRunning()) ||
-            (_executor!=0 && !_executor->IsExecutionStopped()) 
-            ){
+
+    if (_executable!=0 || _executor!=0) 
+	{
+        if ( (_executable!=0 &&_executable->isRunning()) || (_executor!=0 && !_executor->IsExecutionStopped()) )
+		{
             ISwSupportReplay *sreplay=dynamic_cast<ISwSupportReplay *>(_component);
-            if (sreplay!=0 && sreplay->getReplayMode()) {
-                painter->drawPixmap(
-                    _bbox.topLeft()+QPointF(CL_RADUIS+_icone.width()+4.0+(qreal)fm.width(_component->GetName()),3.0),
-                    GraphicsResources::getInstance()->getReplayIcon());
-            } else {
-                painter->drawPixmap(
-                    _bbox.topLeft()+QPointF(CL_RADUIS+_icone.width()+4.0+(qreal)fm.width(_component->GetName()),3.0),
-                    GraphicsResources::getInstance()->getRunIcon());
+
+            if (sreplay!=0 && sreplay->getReplayMode()) 
+			{
+                painter->drawPixmap(_bbox.topLeft()+QPointF(CL_RADUIS+_icone.width()+4.0+(qreal)fm.width(_component->GetName()),3.0),GraphicsResources::getInstance()->getReplayIcon());
+            } 
+			else 
+			{
+                painter->drawPixmap(_bbox.topLeft()+QPointF(CL_RADUIS+_icone.width()+4.0+(qreal)fm.width(_component->GetName()),3.0),GraphicsResources::getInstance()->getRunIcon());
             }
-        } else {
-            painter->drawPixmap(
-                _bbox.topLeft()+QPointF(CL_RADUIS+_icone.width()+4.0+(qreal)fm.width(_component->GetName()),3.0),
-                GraphicsResources::getInstance()->getRunIconDisabled());
+        } 
+		else 
+		{
+            painter->drawPixmap(_bbox.topLeft()+QPointF(CL_RADUIS+_icone.width()+4.0+(qreal)fm.width(_component->GetName()),3.0),GraphicsResources::getInstance()->getRunIconDisabled());
         }
     } 
-    if (!_component->isActive()) {
-        painter->drawPixmap(
-                    _bbox.topLeft()+QPointF(CL_RADUIS+_icone.width()+5.0+(qreal)fm.width(_component->GetName())+(qreal)GraphicsResources::getInstance()->getRunIcon().width(),4.0),
-                    GraphicsResources::getInstance()->getDesactiveIcon());
+
+	// Gestion icon adminSetup
+	ISwAdminSetup * admin=dynamic_cast<ISwAdminSetup *>(_component);
+	if(admin)
+	{
+		painter->drawPixmap(_bbox.topLeft()+QPointF(CL_RADUIS+_icone.width()+5.0+(qreal)fm.width(_component->GetName())+(qreal)GraphicsResources::getInstance()->getRunIcon().width(),5.0),
+			GraphicsResources::getInstance()->getAdminIcon());
+	}
+
+    if (!_component->isActive()) 
+	{
+        painter->drawPixmap(_bbox.topLeft()+
+			QPointF(CL_RADUIS+_icone.width()+4.+4.0+(qreal)fm.width(_component->GetName())+(qreal)GraphicsResources::getInstance()->getRunIcon().width()+(qreal)GraphicsResources::getInstance()->getAdminIcon().width()
+			,4.0),GraphicsResources::getInstance()->getDesactiveIcon());
     }
-    if (_connectionInsertionPositionDisplay) {
+
+    if (_connectionInsertionPositionDisplay) 
+	{
         painter->setPen(_selected_pen);
         painter->drawLine(_connectionInsertionPosition.x()-CL_CONNECTOR_BBSIZE/3.0,
                           _connectionInsertionPosition.y(),
@@ -112,6 +127,7 @@ void ComponentGraphicItem::paint ( QPainter * painter, const QStyleOptionGraphic
     }
     _dbg_cname=_component->GetName();
 }
+
 /** @brief mise a jour des attributs de l'item */
 void ComponentGraphicItem::updateAttributs() {
     QPointF p;
@@ -137,7 +153,14 @@ void ComponentGraphicItem::updateAttributs() {
     //Calcul de la largeur : raduis+icone_composant+icone_run+name_component+raduis
     // Avec un intervalle de 1
     width=2.0*CL_RADUIS+4.0;
-    width+=(qreal)_icone.width()+(qreal)GraphicsResources::getInstance()->getRunIcon().width()+1+(qreal)GraphicsResources::getInstance()->getDesactiveIcon().width();
+
+    width+= (qreal)_icone.width();
+	width+= (qreal)GraphicsResources::getInstance()->getAdminIcon().width();
+	width+= 1;
+	width+= (qreal)GraphicsResources::getInstance()->getRunIcon().width();
+	width+= 1;
+	width+= (qreal)GraphicsResources::getInstance()->getDesactiveIcon().width();;
+
     width+=(qreal)fm.width(_component->GetName());
     //Calcul de la hauteur de l'entete
     _header_height=qMax(fm.height(),_icone.height())+4.0;
@@ -423,11 +446,13 @@ void ComponentGraphicItem::mouseReleaseEvent ( QGraphicsSceneMouseEvent * event 
 /** @brief sur double click */
 void ComponentGraphicItem::mouseDoubleClickEvent ( QGraphicsSceneMouseEvent * event ) {
     QGraphicsItem::mouseDoubleClickEvent(event);
-    ISwAdminSetup * admin=
-                dynamic_cast<ISwAdminSetup *>(_component);
+    
+	ISwAdminSetup * admin=dynamic_cast<ISwAdminSetup *>(_component);
+
     if(admin!=0) {
         admin->AdminSetup();    
     }
+
     ISwSubStream * subStream = dynamic_cast<ISwSubStream *>(_component);
     if(subStream!=0 && !subStream->getSubStreamPath().isEmpty()) 
 	{
