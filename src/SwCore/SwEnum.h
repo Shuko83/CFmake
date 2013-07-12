@@ -64,6 +64,8 @@ namespace StreamWork
             bool operator==(const SwEnum& source) const;
             /*! \brief Operateur d'affectation par un int*/
             void FromInt(const int source);
+			/*! \brief Operateur d'affectation par un QString (ne fait rien si ne trouve pas la valeur)*/
+			void FromString(const QString val,Qt::CaseSensitivity caseS = Qt::CaseSensitive);
             /*! \brief de recuperation de la valeur par un int*/
             int ToInt() const;
             /*! \brief de recuperation de la valeur par une string*/

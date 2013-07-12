@@ -1188,7 +1188,7 @@
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\reset.png;_resources\splash.png"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\reset.png;_resources\settings.png;_resources\splash.png"
 						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o GeneratedFiles\rccd\qrc_StreamWorkEditor2.cpp"
 						Description="RCC _resources\StreamWorkEditor2.qrc"
 						Outputs="GeneratedFiles\rccd\qrc_StreamWorkEditor2.cpp"
@@ -1198,7 +1198,7 @@
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\reset.png;_resources\splash.png"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\mod_replay.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\modellistview.png;_resources\reset.png;_resources\settings.png;_resources\splash.png"
 						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o GeneratedFiles\rcc\qrc_StreamWorkEditor2.cpp"
 						Description="RCC _resources\StreamWorkEditor2.qrc"
 						Outputs="GeneratedFiles\rcc\qrc_StreamWorkEditor2.cpp"
@@ -1219,6 +1219,8 @@
 				RelativePath="_resources\modellistview.png" />
 			<File
 				RelativePath="_resources\reset.png" />
+			<File
+				RelativePath="_resources\settings.png" />
 			<File
 				RelativePath="_resources\splash.png" />
 		</Filter>
