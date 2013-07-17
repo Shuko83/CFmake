@@ -52,7 +52,7 @@ namespace StreamWork
         @ingroup SwCoreGrp
 		*/
         class BUILD_SWCORE SwPluginFactory_Class: public QAbstractListModel, 
-                                                  public ISwPluginFactory,
+                                                  virtual public ISwPluginFactory,
                                                   public ISwServicesManager_Listener
 		{  
             Q_OBJECT
@@ -126,6 +126,8 @@ namespace StreamWork
             QString GetPluginName();
             /*! \brief Acces a la version du plugin */
             virtual QString GetPluginVersion();
+			/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/
+			virtual double GetPluginCompilationDate();
             /*! \brief Acces a la liste des noms de tous les composants */
             QSet<QString> GetComponentsList();
             /*! \brief Acces a la description d'un composant */

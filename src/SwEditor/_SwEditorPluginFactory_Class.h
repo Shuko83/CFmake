@@ -45,6 +45,8 @@ public:
     void Liberate();
     /*! \brief Acces a la version du plugin */
     QString GetPluginVersion();
+	/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/
+	virtual double GetPluginCompilationDate(){return -1;};
 };
 
 #ifndef QT_NO_DEBUG
