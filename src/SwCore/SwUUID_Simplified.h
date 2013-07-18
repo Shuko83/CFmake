@@ -38,6 +38,7 @@ namespace StreamWork
           QString toQString() const;
           void FromQString(const QString & value);
 		  static struct _SwUUID generateUUID();
+		  static struct _SwUUID CreateFromQString(const QString & value);
         };
 
 		typedef  struct _SwUUID SwUUID;

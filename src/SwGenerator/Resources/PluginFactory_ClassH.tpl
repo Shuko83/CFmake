@@ -73,6 +73,12 @@ public:
 	 * @return version
 	 */
     QString GetPluginVersion();
+    
+    /**
+    * @brief Acces a la date de compilation du plugin depuis le 1er janvier 1970
+    * @return temps ecoulé entre la compilation et le 1er janvier 1970 en seconde
+    */
+	virtual double GetPluginCompilationDate();
 };
 
 #ifndef QT_NO_DEBUG

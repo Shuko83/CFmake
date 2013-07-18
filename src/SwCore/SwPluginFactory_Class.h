@@ -127,7 +127,7 @@ namespace StreamWork
             /*! \brief Acces a la version du plugin */
             virtual QString GetPluginVersion();
 			/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/
-			virtual double GetPluginCompilationDate();
+			virtual double GetPluginCompilationDate()=0;
             /*! \brief Acces a la liste des noms de tous les composants */
             QSet<QString> GetComponentsList();
             /*! \brief Acces a la description d'un composant */

@@ -69,6 +69,15 @@ void _SwUUID::FromQString(const QString & value) {
     mostSigBits=v[0].toLongLong();
     leastSigBits=v[1].toLongLong();
 }
+
+//---------------------------------------------------------------------------------
+struct _SwUUID _SwUUID::CreateFromQString( const QString & value )
+{
+	SwUUID id;
+	id.FromQString(value);
+	return id;
+}
+
 //JS Hash Function
 uint qHash(const StreamWork::SwCore::SwUUID & uuid) {
    char * tmp=(char *)&uuid;

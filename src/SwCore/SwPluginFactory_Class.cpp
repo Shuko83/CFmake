@@ -141,11 +141,6 @@ QString SwPluginFactory_Class::GetPluginVersion(){
     return QString("unknown"); //A surcharger
 }
 
-/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/
-double SwPluginFactory_Class::GetPluginCompilationDate(){	
-	return -1; //A surcharger
-}
-
 /*! \brief Acces a la liste des noms de tous les composants 
 \return liste des noms des composants*/
 QSet<QString> SwPluginFactory_Class::GetComponentsList(){
