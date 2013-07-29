@@ -43,7 +43,7 @@ namespace StreamWork
             SwCore::SwEnum _content;
 		public:
             /*! \brief Constructeur */
-		    SwGuiEnumComboBox(SwCore::SwEnum & source,QWidget *parent = 0);
+		    SwGuiEnumComboBox(SwCore::SwEnum & source, QWidget *parent = 0);
             /*! \brief Destructeur */
 		    virtual ~SwGuiEnumComboBox();
 

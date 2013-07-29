@@ -12,14 +12,10 @@
 #include <QGlobal.h>
 //Export via les DLL
 
-#ifdef SW_EDITOR
-#define SWGUI_EXPORT
-#else
 #ifdef SWGUI_LIB
 # define SWGUI_EXPORT Q_DECL_EXPORT
 #else
 # define SWGUI_EXPORT Q_DECL_IMPORT
-#endif
 #endif
 
 #ifdef Q_CC_MSVC

@@ -39,7 +39,7 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib ../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwDocd.lib ../../../../Libraries/ExceptionManager/lib/vc/debug\ExceptionManagerd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtOpenGLd4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib ../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwGuid.lib ../../lib/vc/debug\SwDocd.lib ../../../../Libraries/ExceptionManager/lib/vc/debug\ExceptionManagerd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtOpenGLd4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug,../../../../Libraries/ExceptionManager/lib/vc/debug"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
@@ -93,7 +93,7 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib c:\Qt\4.7.1\lib\qtmain.lib ../../lib/vc/release\SwCore.lib ../../lib/vc/release\SwDoc.lib ../../../../Libraries/ExceptionManager/lib/vc/release\ExceptionManager.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtOpenGL4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
+				AdditionalDependencies="glu32.lib opengl32.lib gdi32.lib user32.lib c:\Qt\4.7.1\lib\qtmain.lib ../../lib/vc/release\SwCore.lib ../../lib/vc/release\SwGui.lib ../../lib/vc/release\SwDoc.lib ../../../../Libraries/ExceptionManager/lib/vc/release\ExceptionManager.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtOpenGL4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/release,../../../../Libraries/ExceptionManager/lib/vc/release"
 				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
 				GenerateDebugInformation="false"
@@ -177,10 +177,6 @@
 			<File
 				RelativePath="StreamView.cpp" />
 			<File
-				RelativePath="..\SwGui\SwGuiDefaultItemDelegate.cpp" />
-			<File
-				RelativePath="..\SwGui\SwGuiEnumComboBox.cpp" />
-			<File
 				RelativePath="SwSplash.cpp" />
 			<File
 				RelativePath="VerticalMultiAnchorableContainer.cpp" />
@@ -188,10 +184,6 @@
 				RelativePath="ViewNavigator.cpp" />
 			<File
 				RelativePath="WidgetFactory.cpp" />
-			<File
-				RelativePath="..\SwGui\_QRcViewer.cpp" />
-			<File
-				RelativePath="..\SwGui\_SwGuiPluginsFrontEnd.cpp" />
 			<File
 				RelativePath="main.cpp" />
 		</Filter>
@@ -598,52 +590,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="..\SwGui\SwGuiDefaultItemDelegate.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\SwGuiDefaultItemDelegate.h;C:\Qt\4.7.1\bin\moc.exe"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;..\SwModel2&quot; -I&quot;..\SwDoc\GeneratedFiles\uid&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiDefaultItemDelegate.h -o GeneratedFiles\mocd\moc_SwGuiDefaultItemDelegate.cpp"
-						Description="MOC ..\SwGui\SwGuiDefaultItemDelegate.h"
-						Outputs="GeneratedFiles\mocd\moc_SwGuiDefaultItemDelegate.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\SwGuiDefaultItemDelegate.h;C:\Qt\4.7.1\bin\moc.exe"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;..\SwModel2&quot; -I&quot;..\SwDoc\GeneratedFiles\ui&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiDefaultItemDelegate.h -o GeneratedFiles\moc\moc_SwGuiDefaultItemDelegate.cpp"
-						Description="MOC ..\SwGui\SwGuiDefaultItemDelegate.h"
-						Outputs="GeneratedFiles\moc\moc_SwGuiDefaultItemDelegate.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\SwGui\SwGuiEnumComboBox.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\SwGuiEnumComboBox.h;C:\Qt\4.7.1\bin\moc.exe"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;..\SwModel2&quot; -I&quot;..\SwDoc\GeneratedFiles\uid&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiEnumComboBox.h -o GeneratedFiles\mocd\moc_SwGuiEnumComboBox.cpp"
-						Description="MOC ..\SwGui\SwGuiEnumComboBox.h"
-						Outputs="GeneratedFiles\mocd\moc_SwGuiEnumComboBox.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\SwGuiEnumComboBox.h;C:\Qt\4.7.1\bin\moc.exe"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;..\SwModel2&quot; -I&quot;..\SwDoc\GeneratedFiles\ui&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\SwGuiEnumComboBox.h -o GeneratedFiles\moc\moc_SwGuiEnumComboBox.cpp"
-						Description="MOC ..\SwGui\SwGuiEnumComboBox.h"
-						Outputs="GeneratedFiles\moc\moc_SwGuiEnumComboBox.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-			</File>
-			<File
 				RelativePath="SwSplash.h">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -714,52 +660,6 @@
 			</File>
 			<File
 				RelativePath="WidgetFactory.h" />
-			<File
-				RelativePath="..\SwGui\_QRcViewer.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\_QRcViewer.h;C:\Qt\4.7.1\bin\moc.exe"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;..\SwModel2&quot; -I&quot;..\SwDoc\GeneratedFiles\uid&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_QRcViewer.h -o GeneratedFiles\mocd\moc__QRcViewer.cpp"
-						Description="MOC ..\SwGui\_QRcViewer.h"
-						Outputs="GeneratedFiles\mocd\moc__QRcViewer.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\_QRcViewer.h;C:\Qt\4.7.1\bin\moc.exe"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;..\SwModel2&quot; -I&quot;..\SwDoc\GeneratedFiles\ui&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_QRcViewer.h -o GeneratedFiles\moc\moc__QRcViewer.cpp"
-						Description="MOC ..\SwGui\_QRcViewer.h"
-						Outputs="GeneratedFiles\moc\moc__QRcViewer.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\SwGui\_SwGuiPluginsFrontEnd.h">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\_SwGuiPluginsFrontEnd.h;C:\Qt\4.7.1\bin\moc.exe"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DQT_DLL -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;..\SwModel2&quot; -I&quot;..\SwDoc\GeneratedFiles\uid&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_SwGuiPluginsFrontEnd.h -o GeneratedFiles\mocd\moc__SwGuiPluginsFrontEnd.cpp"
-						Description="MOC ..\SwGui\_SwGuiPluginsFrontEnd.h"
-						Outputs="GeneratedFiles\mocd\moc__SwGuiPluginsFrontEnd.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\_SwGuiPluginsFrontEnd.h;C:\Qt\4.7.1\bin\moc.exe"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSW_EDITOR -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtOpenGL&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwDoc&quot; -I&quot;..\SwModel2&quot; -I&quot;..\SwDoc\GeneratedFiles\ui&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 ..\SwGui\_SwGuiPluginsFrontEnd.h -o GeneratedFiles\moc\moc__SwGuiPluginsFrontEnd.cpp"
-						Description="MOC ..\SwGui\_SwGuiPluginsFrontEnd.h"
-						Outputs="GeneratedFiles\moc\moc__SwGuiPluginsFrontEnd.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
@@ -970,30 +870,6 @@
 					ExcludedFromBuild="true" />
 			</File>
 			<File
-				RelativePath="GeneratedFiles\moc\moc_SwGuiDefaultItemDelegate.cpp">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\mocd\moc_SwGuiDefaultItemDelegate.cpp">
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\moc\moc_SwGuiEnumComboBox.cpp">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\mocd\moc_SwGuiEnumComboBox.cpp">
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
 				RelativePath="GeneratedFiles\moc\moc_SwSplash.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -1030,30 +906,6 @@
 					ExcludedFromBuild="true" />
 			</File>
 			<File
-				RelativePath="GeneratedFiles\moc\moc__QRcViewer.cpp">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\mocd\moc__QRcViewer.cpp">
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\moc\moc__SwGuiPluginsFrontEnd.cpp">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\mocd\moc__SwGuiPluginsFrontEnd.cpp">
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
 				RelativePath="GeneratedFiles\rcc\qrc_StreamWorkEditor2.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -1085,18 +937,6 @@
 			</File>
 			<File
 				RelativePath="GeneratedFiles\uid\ui_PluginOverview.h">
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\ui\ui__QRcViewerUi.h">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\uid\ui__QRcViewerUi.h">
 				<FileConfiguration
 					Name="Release|Win32"
 					ExcludedFromBuild="true" />
@@ -1150,29 +990,6 @@
 						CommandLine="C:\Qt\4.7.1\bin\uic.exe _resources\PluginOverview.ui -o GeneratedFiles\ui\ui_PluginOverview.h"
 						Description="UIC _resources\PluginOverview.ui"
 						Outputs="GeneratedFiles\ui\ui_PluginOverview.h"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\SwGui\_QRcViewerUi.ui">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\_QRcViewerUi.ui;C:\Qt\4.7.1\bin\uic.exe"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe ..\SwGui\_QRcViewerUi.ui -o GeneratedFiles\uid\ui__QRcViewerUi.h"
-						Description="UIC ..\SwGui\_QRcViewerUi.ui"
-						Outputs="GeneratedFiles\uid\ui__QRcViewerUi.h"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="..\SwGui\_QRcViewerUi.ui;C:\Qt\4.7.1\bin\uic.exe"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe ..\SwGui\_QRcViewerUi.ui -o GeneratedFiles\ui\ui__QRcViewerUi.h"
-						Description="UIC ..\SwGui\_QRcViewerUi.ui"
-						Outputs="GeneratedFiles\ui\ui__QRcViewerUi.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>

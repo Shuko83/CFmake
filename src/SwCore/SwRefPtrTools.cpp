@@ -1,5 +1,6 @@
 #include "SwRefPtrTools.h"
 #include <QDebug>
+#include <iostream>
 
 using namespace StreamWork::SwCore;
 

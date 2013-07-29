@@ -13,6 +13,7 @@
  */
 #include <QString>
 #include <QMap>
+#include <QSet>
 #include <QList>
 /*
   * INCLUDES LOCAUX
@@ -29,6 +30,7 @@ namespace StreamWork
         class _SwPropertyImpl_Class;
         class ISwProperty;
         class ISwController;
+		class SwProperties_ClassHelper;
         /*!
         \class ISwInterfaces_Provider
         \brief implementation du service fournisseur d'interfaces
@@ -42,6 +44,17 @@ namespace StreamWork
             QMap<QString,_SwPropertyImpl_Class *> _map_properties;
             /*! \brief QList des propriétés */
             QList<ISwProperty *> _set_properties;
+
+			// ------------------------------------------------------------------------
+			//				Gestion des helpers
+			// ------------------------------------------------------------------------							
+			/*! @brief Set des helpers enregistrés */
+			QSet<SwProperties_ClassHelper *> _helpers;
+			/*! @brief enregistre un helper pour qu'il soit notifié de la destruction du service */
+			void registerHelper(SwProperties_ClassHelper *);
+			/*! @brief desenregistre un helper */
+			void unregisterHelper(SwProperties_ClassHelper *);
+
         protected:
             /*! \brief signal de changement de la propriété */
             LibIndeSig::iSignal1<ISwProperties *> _OnBeforeChange;
@@ -117,7 +130,47 @@ namespace StreamWork
 	        void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager);
 	        /*! \brief methode permettant de sauver des donnees */
 	        void Save(QDomElement & elt,QDomDocument & doc);
+
+			friend class SwProperties_ClassHelper;
         };
+
+
+		/**
+		*	@class SwProperties_ClassHelper
+		*	@brief Classe de base pour permettre d'etendre les fonctionalités de la SwProperties_Class (Cf PlgPropertiesHelper dans protolg3)
+		*	Les composants instancient le SwProperties_Class, c'est pour ça qu'il n'est pas possible d'heriter de la SwProperties_Class
+		*/
+		class BUILD_SWCORE SwProperties_ClassHelper
+		{
+		public :
+			/** @brief Construit l'helper et s'enregistre en tant qu'helper du service passé en parametre */
+			SwProperties_ClassHelper(SwProperties_Class *);
+			/** @brief detruit l'helper et se desenregistre en tant qu'helper du service de proprieté*/
+			virtual ~SwProperties_ClassHelper();
+			/** @brief renvoi true si le service de proprieté est setté */
+			bool isValid();	
+		protected :
+			/** @brief Notifie le service de proprieté avant un changement*/
+			void sendOnBeforeChange();
+			/** @brief Notifie le service de proprieté aprés un changement*/
+			void sendOnAfterChange();
+			/** @brief Permet d'ajouter une proprieté au service de proprieté
+			*	@param prefix : prefix de la proprieté
+			*	@param name : nom sans le prefix de la proprieté
+			*	@param property : proprieté à ajouter au service		*/
+			void addProperty(QString prefix, QString name, _SwPropertyImpl_Class * property);
+			/** @brief Permet d'acceder au service de proprieté 
+			*   @return renvoi un pointeur sur le service de proprieté*/
+			ISwProperties * getHost();
+		private : 
+			/** @brief service de proprieté sur lequel le helper agit */
+			SwProperties_Class * _propertiesClass;
+
+			void unValidate();
+			void validate();
+
+			friend class SwProperties_Class;
+		};
     }
 }
 

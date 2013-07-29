@@ -486,7 +486,7 @@ private:
 	         * @note	 : note a surcharger pour receptionner les data
 	         */
 	        void OnReceiveData(SwPin * src,SwData_Class * data);  
-           
+
             /**
              * @brief    : Active l'observabilité d'une propriété notifié par "eventPropertyChange"
              * @param	 : ISwProperty * property - Pointeur sur une propriété

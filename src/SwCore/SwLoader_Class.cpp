@@ -12,6 +12,8 @@
 #include "SwMacros.h"
 #include "SwSaver_Class.h"
 #include "ISwPersistent.h"
+#include "QDebug.h"
+#include "ISwServiceOwner.h"
 
 using namespace StreamWork::SwCore;
 
@@ -19,10 +21,12 @@ using namespace StreamWork::SwCore;
 /*! Constructeur */
 SwLoader_Class::SwLoader_Class() {
     _finalizations.clear();
+	_finalizations2.clear();
 }
 /*! Destructeur */
 SwLoader_Class::~SwLoader_Class(){
     _finalizations.clear();
+	_finalizations2.clear();
 }
 /*! Chargement d'un stream
 \param[in] le document xml decrivant le flux
@@ -215,18 +219,44 @@ void SwLoader_Class::FinalizeUnfinalized() {
         //On passe a la finalization suivante
         itd=it;  
     } while (it!=_finalizations.end());
+
+
+	//finalization des ISwOwnerService :
+	QMap<quint64,ISwFinalizer *>::const_iterator cit = _finalizations2.constBegin();
+	while( cit != _finalizations2.constEnd())
+	{
+		cit.value()->Finalize(cit.key());
+		++cit;
+	}
+
+	_finalizations2.clear();
+
 }
 /*! \brief enregistre une finalisation pour un index d'historique donnée
 \param[in] historic_index index d'historique de finalisation
 \param[in] finaliser a appelé
 \exception SwException Historic index already used*/
 void SwLoader_Class::RegisterFinalization(quint64 historic_index,ISwFinalizer * finalizer) throw(SwException) {
+
+	ISwServiceOwner * owner = dynamic_cast<ISwServiceOwner *>(finalizer);
     QMap<quint64,ISwFinalizer *>::const_iterator it;
 
+	if( !owner )
+	{
     it=_finalizations.find(historic_index);
     if (it!=_finalizations.end()) {
         QString msg=QString("In finalization registration %1 index already registered").arg(historic_index);
-        LAUNCH_SWEXCEPTION("SwCore",msg)
+			qDebug() << "/!\\ Warning SwCore " << msg;
     }
-    _finalizations.insert(historic_index,finalizer);
+		_finalizations.insertMulti(historic_index,finalizer);
+	}
+	else
+	{
+		it=_finalizations2.find(historic_index);
+		if (it!=_finalizations2.end()) {
+			QString msg=QString("In finalization2 registration %1 index already registered").arg(historic_index);
+			qDebug() << "/!\\ Warning SwCore " << msg;
+		}
+		_finalizations2.insertMulti(historic_index,finalizer);
+	}
 }

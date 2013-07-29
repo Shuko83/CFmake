@@ -11,9 +11,17 @@
 #include <QMetaType>
 #include <QFileDialog>
 #include <SwEnum.h>
+#include <SwIntegerEnum.h>
+#include <SwInteger.h>
+#include <SwString.h>
+#include <SwDouble.h>
 #include <SwIpv4Address.h>
 #include <SwUUID.h>
 #include "SwGuiEnumComboBox.h"
+#include "SwGuiIntegerSpinBox.h"
+#include "SwGuiDoubleSpinBox.h"
+#include "SwGuiEnumIntComboBox.h"
+#include "SwGuiStringLineEdit.h"
 #include "_QRcViewer.h"
 
 using namespace StreamWork::SwGui;
@@ -228,14 +236,39 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent,
         cbox->insertItem(1,"true");
         cbox->setCurrentIndex(originalValue.toBool()?1:0);
         cbox->setFrame(false);
+		
         return cbox;
     }
 
-    if (qMetaTypeId<SwEnum>()==originalValue.userType()) {
-        SwEnum venum=originalValue.value<SwEnum>();
-        SwGuiEnumComboBox * cbox=new SwGuiEnumComboBox(venum,parent);
+    if (qMetaTypeId<SwIntegerEnum>()==originalValue.userType()) {
+        SwIntegerEnum venum=originalValue.value<SwIntegerEnum>();
+        SwGuiEnumIntComboBox * cbox=new SwGuiEnumIntComboBox(venum,parent);
         return cbox;
     }
+
+	if (qMetaTypeId<SwEnum>()==originalValue.userType()) {
+		SwEnum venum=originalValue.value<SwEnum>();
+		SwGuiEnumComboBox * cbox=new SwGuiEnumComboBox(venum,parent);
+		return cbox;
+	}
+
+	if (qMetaTypeId<SwInteger>()==originalValue.userType()) {
+		SwInteger vinteger=originalValue.value<SwInteger>();
+		SwGuiIntegerSpinBox * cbox=new SwGuiIntegerSpinBox(vinteger,parent);
+		return cbox;
+	}
+
+	if (qMetaTypeId<SwString>()==originalValue.userType()) {
+		SwString vstring=originalValue.value<SwString>();
+		SwGuiStringLineEdit * cbox=new SwGuiStringLineEdit(vstring,parent);
+		return cbox;
+	}
+
+	if (qMetaTypeId<SwDouble>()==originalValue.userType()) {
+		SwDouble vdouble=originalValue.value<SwDouble>();
+		SwGuiDoubleSpinBox * cbox=new SwGuiDoubleSpinBox(vdouble,parent);
+		return cbox;
+	}
 
     if (qMetaTypeId<SwIconDescriptor>()==originalValue.userType()) {
         QWidget * w=new QWidget(parent);
@@ -337,12 +370,39 @@ void SwGuiDefaultItemDelegate::setEditorData(QWidget *editor,
         return;
     }
 
-    if (qMetaTypeId<SwEnum>()==value.userType()) {
-        SwGuiEnumComboBox * cbox=qobject_cast<SwGuiEnumComboBox *>(editor);
-        SwEnum venum=value.value<SwEnum>();
+    if (qMetaTypeId<SwIntegerEnum>()==value.userType()) {
+        SwGuiEnumIntComboBox * cbox=qobject_cast<SwGuiEnumIntComboBox *>(editor);
+        SwIntegerEnum venum=value.value<SwIntegerEnum>();
         cbox->SetEnum(venum);
         return;
     }
+	if (qMetaTypeId<SwEnum>()==value.userType()) {
+		SwGuiEnumComboBox * cbox=qobject_cast<SwGuiEnumComboBox *>(editor);
+		SwEnum venum=value.value<SwEnum>();
+		cbox->SetEnum(venum);
+		return;
+	}
+
+	if (qMetaTypeId<SwInteger>()==value.userType()) {
+		SwGuiIntegerSpinBox * cbox=qobject_cast<SwGuiIntegerSpinBox *>(editor);
+		SwInteger vInteger=value.value<SwInteger>();
+		cbox->SetInteger(vInteger);
+		return;
+	}
+
+	if (qMetaTypeId<SwString>()==value.userType()) {
+		SwGuiStringLineEdit * cbox=qobject_cast<SwGuiStringLineEdit *>(editor);
+		SwString vstring=value.value<SwString>();
+		cbox->SetString(vstring);
+		return;
+	}
+
+	if (qMetaTypeId<SwDouble>()==value.userType()) {
+		SwGuiDoubleSpinBox * cbox=qobject_cast<SwGuiDoubleSpinBox *>(editor);
+		SwDouble vdouble=value.value<SwDouble>();
+		cbox->SetDouble(vdouble);
+		return;
+	}
 
     if (qMetaTypeId<SwFileDescriptor>()==value.userType()) {
         currentFileDescriptor=value.value<SwFileDescriptor>();
@@ -427,14 +487,44 @@ void SwGuiDefaultItemDelegate::setModelData(QWidget *editor, QAbstractItemModel 
         return;
     }
 
-    if (qMetaTypeId<SwEnum>()==originalValue.userType()) {
-        SwGuiEnumComboBox * cbox=qobject_cast<SwGuiEnumComboBox *>(editor);
-        QVariant new_val;
-        new_val.setValue(cbox->GetEnum());
-        model->setData(index,new_val, Qt::EditRole);
+    if (qMetaTypeId<SwIntegerEnum>()==originalValue.userType()) {
+        SwGuiEnumIntComboBox * cbox=qobject_cast<SwGuiEnumIntComboBox *>(editor);
+		QVariant new_val;
+		new_val.setValue(cbox->GetEnum());
+		model->setData(index,new_val, Qt::EditRole);
         return;
     }
+	if (qMetaTypeId<SwEnum>()==originalValue.userType()) {
+		SwGuiEnumComboBox * cbox=qobject_cast<SwGuiEnumComboBox *>(editor);
+		QVariant new_val;
+		new_val.setValue(cbox->GetEnum());
+		model->setData(index,new_val, Qt::EditRole);
+		return;
+	}
 
+	if (qMetaTypeId<SwInteger>()==originalValue.userType()) {
+		SwGuiIntegerSpinBox * cbox=qobject_cast<SwGuiIntegerSpinBox *>(editor);
+		QVariant new_val;
+		new_val.setValue(cbox->GetInteger());
+		model->setData(index,new_val, Qt::EditRole);
+		return;
+	}
+
+	if (qMetaTypeId<SwString>()==originalValue.userType()) {
+		SwGuiStringLineEdit * cbox=qobject_cast<SwGuiStringLineEdit *>(editor);
+		QVariant new_val;
+		new_val.setValue(cbox->GetString());
+		model->setData(index,new_val, Qt::EditRole);
+		return;
+	}
+
+	if (qMetaTypeId<SwDouble>()==originalValue.userType()) {
+		SwGuiDoubleSpinBox * cbox=qobject_cast<SwGuiDoubleSpinBox *>(editor);
+		QVariant new_val;
+		new_val.setValue(cbox->GetDouble());
+		model->setData(index,new_val, Qt::EditRole);
+		return;
+	}
 
     QLineEdit *lineEdit = qobject_cast<QLineEdit *>(editor);
     if (!lineEdit->isModified())
@@ -547,6 +637,18 @@ bool SwGuiDefaultItemDelegate::isSupportedType(QVariant & val)
         if (qMetaTypeId<SwEnum>()==val.userType()) {
             return true;
         }
+		if (qMetaTypeId<SwIntegerEnum>()==val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwInteger>()==val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwString>()==val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwDouble>()==val.userType()) {
+			return true;
+		}
         if (qMetaTypeId<SwFileDescriptor>()==val.userType()) {
             return true;
         }
@@ -625,10 +727,26 @@ QString SwGuiDefaultItemDelegate::displayText(const QVariant &value)
     case QVariant::Time:
         return value.toTime().toString(Qt::ISODate);
     case QVariant::UserType:
-        if (qMetaTypeId<SwEnum>()==value.userType()) {
-            SwEnum venum=value.value<SwEnum>();
-            return venum.ToString();
+		if (qMetaTypeId<SwEnum>()==value.userType()) {
+			SwEnum venum=value.value<SwEnum>();
+			return venum.ToString();
+		}
+        if (qMetaTypeId<SwIntegerEnum>()==value.userType()) {
+            SwIntegerEnum venum=value.value<SwIntegerEnum>();
+			return venum.toString();
         }
+		if (qMetaTypeId<SwString>()==value.userType()) {
+			SwString vstring=value.value<SwString>();
+			return vstring.toString();
+		}
+		if (qMetaTypeId<SwInteger>()==value.userType()) {
+			SwInteger vinteger=value.value<SwInteger>();
+			return QString::number(vinteger.getValue());
+		}
+		if (qMetaTypeId<SwDouble>()==value.userType()) {
+			SwDouble vdouble=value.value<SwDouble>();
+			return QString::number(vdouble.getValue());
+		}
         if (qMetaTypeId<SwFileDescriptor>()==value.userType()) {
             return value.value<SwFileDescriptor>().getFileName();
         }

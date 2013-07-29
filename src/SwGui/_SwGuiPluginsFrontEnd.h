@@ -17,13 +17,14 @@
 /*
   * INCLUDES LOCAUX
   */
+#include "SwGuiConstantes.h"
 
 
 /*!
 	\class _SwGuiPluginsFrontEnd 
 	\brief Ihm du wizard de generation de plugin
 */
-class _SwGuiPluginsFrontEnd : public QDialog
+class SWGUI_EXPORT _SwGuiPluginsFrontEnd : public QDialog
 {
     Q_OBJECT
 public:

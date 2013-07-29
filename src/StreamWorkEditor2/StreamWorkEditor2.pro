@@ -22,10 +22,10 @@ HEADERS += SwSplash.h  \
 	GraphicsResources.h \
 	MenuManager.h \
 	PropertiesWidget.h \
-	../SwGui/_SwGuiPluginsFrontEnd.h \
-	../SwGui/SwGuiDefaultItemDelegate.h \
-	../SwGui/SwGuiEnumComboBox.h \
-	../SwGui/_QRcViewer.h \
+	#../SwGui/_SwGuiPluginsFrontEnd.h \
+	#../SwGui/SwGuiDefaultItemDelegate.h \
+	#../SwGui/SwGuiEnumComboBox.h \
+	#../SwGui/_QRcViewer.h \
 	Arranger.h \
 	GraphicsLoaderV1.h \
 	QStreamTreeModel.h \
@@ -62,10 +62,10 @@ SOURCES += SwSplash.cpp \
 	GraphicsResources.cpp \
 	MenuManager.cpp \
 	PropertiesWidget.cpp \
-	../SwGui/_SwGuiPluginsFrontEnd.cpp \
-	../SwGui/SwGuiDefaultItemDelegate.cpp \
-	../SwGui/SwGuiEnumComboBox.cpp \
-	../SwGui/_QRcViewer.cpp \
+	#../SwGui/_SwGuiPluginsFrontEnd.cpp \
+	#../SwGui/SwGuiDefaultItemDelegate.cpp \
+	#../SwGui/SwGuiEnumComboBox.cpp \
+	#../SwGui/_QRcViewer.cpp \
 	Arranger.cpp \
 	GraphicsLoaderV1.cpp \
 	QStreamTreeModel.cpp \
@@ -81,7 +81,7 @@ SOURCES += SwSplash.cpp \
 	ModelCreatorHelper.cpp 
 
 FORMS += _resources/LogView.ui \
-	../SwGui/_QRcViewerUi.ui \
+	#../SwGui/_QRcViewerUi.ui \
 	_resources/PluginOverview.ui
 	
 RESOURCES += _resources/StreamWorkEditor2.qrc
@@ -106,7 +106,7 @@ CONFIG(debug, debug|release) {
 	DLLDESTDIR = ./../../bin/vc/debug/
 	
 	INCLUDEPATH += ../SwDoc/GeneratedFiles/uid
-	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwDocd
+	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwGuid -lSwDocd
 	CONFIG += console
 } 
 
@@ -115,7 +115,7 @@ CONFIG(release, debug|release) {
 	DLLDESTDIR = ./../../bin/vc/release/
 
 	INCLUDEPATH += ../SwDoc/GeneratedFiles/ui	
-	LIBS += -L"../../lib/vc/release" -lSwCore -lSwDoc
+	LIBS += -L"../../lib/vc/release" -lSwCore -lSwGui -lSwDoc
 }
 
 win32:RC_FILE = StreamWorkEditor2.rc

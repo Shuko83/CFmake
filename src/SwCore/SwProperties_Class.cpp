@@ -250,6 +250,12 @@ void SwProperties_Class::Liberate(){
     }
     _map_properties.clear();
     _set_properties.clear();
+
+	foreach(SwProperties_ClassHelper * helper, _helpers)
+	{
+		helper->unValidate();	
+	}
+	_helpers.clear();
 }  
 //---------------------------------------------------------------------
 // Interface ISwHost
@@ -379,3 +385,104 @@ void SwProperties_Class::OnPropertyControlChange(ISwProperty * property,ISwContr
     }
 }
 
+
+/*
+*	GEstion des helpers
+*/
+//---------------------------------------------------------------------------------
+void SwProperties_Class::registerHelper( SwProperties_ClassHelper * helper)
+{
+	_helpers.insert(helper);
+	helper->validate();
+}
+
+//---------------------------------------------------------------------------------
+void SwProperties_Class::unregisterHelper( SwProperties_ClassHelper * helper)
+{
+	_helpers.remove(helper);
+	helper->unValidate();
+}
+
+/********************************************************************************************************************/
+/*/		SwProperties_ClassHelper
+/********************************************************************************************************************/
+
+//---------------------------------------------------------------------------------
+SwProperties_ClassHelper::SwProperties_ClassHelper( SwProperties_Class * properties) : _propertiesClass(properties)
+{
+	if(isValid())
+		_propertiesClass->registerHelper(this);
+}
+
+//---------------------------------------------------------------------------------
+SwProperties_ClassHelper::~SwProperties_ClassHelper()
+{
+	if(isValid())
+		_propertiesClass->unregisterHelper(this);
+}
+
+//---------------------------------------------------------------------------------
+bool SwProperties_ClassHelper::isValid()
+{
+	return _propertiesClass == 0 ? false : true;
+}
+
+//---------------------------------------------------------------------------------
+void SwProperties_ClassHelper::sendOnBeforeChange()
+{
+	if(isValid())
+	{
+		_propertiesClass->_OnBeforeChange(_propertiesClass);
+	}
+}
+
+//---------------------------------------------------------------------------------
+void SwProperties_ClassHelper::sendOnAfterChange()
+{
+	if(isValid())
+	{
+		_propertiesClass->_OnAfterChange(_propertiesClass);
+	}
+}
+
+//---------------------------------------------------------------------------------
+void SwProperties_ClassHelper::addProperty( QString prefix, QString name, _SwPropertyImpl_Class * property )
+{
+	if(isValid())
+	{
+		QMap<QString,_SwPropertyImpl_Class *>::iterator it;
+		if (prefix!="") 
+			it=_propertiesClass->_map_properties.find(QString("%1.%2").arg(prefix).arg(name));
+		else
+			it=_propertiesClass->_map_properties.find(QString(name));
+		if (it==_propertiesClass->_map_properties.end()) {
+			if (prefix!="") 
+				_propertiesClass->_map_properties.insert(QString("%1.%2").arg(prefix).arg(name),property);
+			else
+				_propertiesClass->_map_properties.insert(QString(name),property);
+			_propertiesClass->_set_properties.push_back(property);
+			_propertiesClass->_OnCreateProperty(_propertiesClass,property);
+			_propertiesClass->CreateSubProperties(property);
+			property->GetOnControlChangeSignal().iconnect(*_propertiesClass,&SwProperties_Class::OnPropertyControlChange);
+			_propertiesClass->PropagateFeaturesToSubProperties(property);
+		}
+	}
+}
+
+//---------------------------------------------------------------------------------
+void SwProperties_ClassHelper::unValidate()
+{
+	_propertiesClass = 0;
+}
+
+//---------------------------------------------------------------------------------
+void SwProperties_ClassHelper::validate()
+{
+	//useless
+}
+
+//---------------------------------------------------------------------------------
+ISwProperties * SwProperties_ClassHelper::getHost()
+{
+	return _propertiesClass;
+}

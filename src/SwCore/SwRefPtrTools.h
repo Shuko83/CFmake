@@ -2,8 +2,8 @@
 #define _SwRefPtrTools_H
 
 #include "SwCoreConstantes.h"
-#include <iostream>
-#include <QSet>
+//#include <iostream>
+//#include <QSet>
 #include <QString>
 //#include "ISwRef.h"
 

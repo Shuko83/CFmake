@@ -33,6 +33,8 @@ SwGuiEnumComboBox::SwGuiEnumComboBox(SwEnum & source,QWidget *parent)
         setCurrentIndex(emodel->GetIndex(_content.ToInt()));
     
     connect(this, SIGNAL(activated(int)), this, SLOT(slotActivated(int)));
+
+	this->setToolTip("This property is a <SwEnum>");
 }
 /*! \brief Destructeur */
 SwGuiEnumComboBox::~SwGuiEnumComboBox()

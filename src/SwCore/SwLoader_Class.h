@@ -41,8 +41,10 @@ namespace StreamWork
         class BUILD_SWCORE SwLoader_Class : public ISwFinalizerManager
 		{
         private:
-            /*! registre des finalisations */
+            /*! registre des 1ere finalisations (interfaces, pin etc...)*/
             QMap<quint64,ISwFinalizer *> _finalizations;
+			/*! registre des 2eme finalisations (ISwServiceOwner)*/
+			QMap<quint64,ISwFinalizer *> _finalizations2;
             /*! construction du stream */
             SwComponent_ClassPtr BuildStream(QDomElement & node,SwComponent_Class * parent_component,bool create_always=false) throw(SwException);
         public:

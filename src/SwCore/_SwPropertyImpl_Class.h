@@ -35,7 +35,7 @@ namespace StreamWork
         \note
         */
 
-        class _SwPropertyImpl_Class : public virtual ISwProperty2 {
+        class BUILD_SWCORE _SwPropertyImpl_Class : public virtual ISwProperty2 {
         protected:
             /*! \brief service hote */
             ISwProperties * _hosting_service;

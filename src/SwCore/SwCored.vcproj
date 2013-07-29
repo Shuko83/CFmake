@@ -148,6 +148,8 @@
 			<File
 				RelativePath="SwDefaultComplexeTypeAdapters.cpp" />
 			<File
+				RelativePath="SwDouble.cpp" />
+			<File
 				RelativePath="SwEnum.cpp" />
 			<File
 				RelativePath="SwEnumModel.cpp" />
@@ -161,6 +163,10 @@
 				RelativePath="SwFileLogRecorder_Class.cpp" />
 			<File
 				RelativePath="SwIconDescriptor.cpp" />
+			<File
+				RelativePath="SwInteger.cpp" />
+			<File
+				RelativePath="SwIntegerEnum.cpp" />
 			<File
 				RelativePath="SwInterfaces_Consumer_Class.cpp" />
 			<File
@@ -194,9 +200,13 @@
 			<File
 				RelativePath="SwSaver_Class.cpp" />
 			<File
+				RelativePath="SwServiceSaveConfiguration.cpp" />
+			<File
 				RelativePath="SwServicesManager_Class.cpp" />
 			<File
 				RelativePath="SwSnapShotPropertiesService.cpp" />
+			<File
+				RelativePath="SwString.cpp" />
 			<File
 				RelativePath="SwTime_ToolBox.cpp" />
 			<File
@@ -270,6 +280,8 @@
 			<File
 				RelativePath="ISwActivable.h" />
 			<File
+				RelativePath="ISwAdminConfiguration.h" />
+			<File
 				RelativePath="ISwAdminSetup.h" />
 			<File
 				RelativePath="ISwAlertRecorder.h" />
@@ -285,6 +297,12 @@
 				RelativePath="ISwComplexeTypeAdaptersFactory.h" />
 			<File
 				RelativePath="ISwComponentProvider.h" />
+			<File
+				RelativePath="ISwConfCollector.h" />
+			<File
+				RelativePath="ISwConfSaver.h" />
+			<File
+				RelativePath="ISwConfigListener.h" />
 			<File
 				RelativePath="ISwController.h" />
 			<File
@@ -342,6 +360,8 @@
 			<File
 				RelativePath="ISwPluginFactory.h" />
 			<File
+				RelativePath="ISwPluginOverview.h" />
+			<File
 				RelativePath="ISwPluginsBank.h" />
 			<File
 				RelativePath="ISwProperties.h" />
@@ -355,6 +375,8 @@
 				RelativePath="ISwService.h" />
 			<File
 				RelativePath="ISwServiceCodeTimer.h" />
+			<File
+				RelativePath="ISwServiceConfiguration.h" />
 			<File
 				RelativePath="ISwServiceExtensions.h" />
 			<File
@@ -421,6 +443,29 @@
 			<File
 				RelativePath="SwDefaultComplexeTypeAdapters.h" />
 			<File
+				RelativePath="SwDouble.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwDouble.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwDouble.h -o GeneratedFiles\mocd\moc_SwDouble.cpp"
+						Description="MOC SwDouble.h"
+						Outputs="GeneratedFiles\mocd\moc_SwDouble.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwDouble.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwDouble.h -o GeneratedFiles\moc\moc_SwDouble.cpp"
+						Description="MOC SwDouble.h"
+						Outputs="GeneratedFiles\moc\moc_SwDouble.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="SwEnum.h" />
 			<File
 				RelativePath="SwEnumModel.h">
@@ -455,6 +500,31 @@
 				RelativePath="SwFileLogRecorder_Class.h" />
 			<File
 				RelativePath="SwIconDescriptor.h" />
+			<File
+				RelativePath="SwInteger.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwInteger.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwInteger.h -o GeneratedFiles\mocd\moc_SwInteger.cpp"
+						Description="MOC SwInteger.h"
+						Outputs="GeneratedFiles\mocd\moc_SwInteger.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwInteger.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_WIN32_PLATEFORM_ -D_CRT_SECURE_NO_WARNINGS -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwInteger.h -o GeneratedFiles\moc\moc_SwInteger.cpp"
+						Description="MOC SwInteger.h"
+						Outputs="GeneratedFiles\moc\moc_SwInteger.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="SwIntegerEnum.h" />
 			<File
 				RelativePath="SwInterfaces_Consumer_Class.h" />
 			<File
@@ -534,9 +604,13 @@
 			<File
 				RelativePath="SwSaver_Class.h" />
 			<File
+				RelativePath="SwServiceSaveConfiguration.h" />
+			<File
 				RelativePath="SwServicesManager_Class.h" />
 			<File
 				RelativePath="SwSnapShotPropertiesService.h" />
+			<File
+				RelativePath="SwString.h" />
 			<File
 				RelativePath="SwTemplateSimpleTypeAdapter.h" />
 			<File
@@ -634,6 +708,18 @@
 					ExcludedFromBuild="true" />
 			</File>
 			<File
+				RelativePath="GeneratedFiles\moc\moc_SwDouble.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc_SwDouble.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
 				RelativePath="GeneratedFiles\moc\moc_SwEnumModel.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -641,6 +727,18 @@
 			</File>
 			<File
 				RelativePath="GeneratedFiles\mocd\moc_SwEnumModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\moc\moc_SwInteger.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc_SwInteger.cpp">
 				<FileConfiguration
 					Name="Release|Win32"
 					ExcludedFromBuild="true" />

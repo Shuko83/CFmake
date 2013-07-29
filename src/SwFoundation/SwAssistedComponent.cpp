@@ -255,7 +255,7 @@ void SwOwnerConfigurable_Class::Liberate()
 \class SwOwner_Class
 \brief implementation du service de owner configurable
 */
-class SwOwner_Class : public ISwServiceOwner {
+class SwOwner_Class : public ISwServiceOwner, public ISwFinalizer {
 private:
 
 	/*! \brief composant hote */
@@ -285,6 +285,8 @@ public:
 	 */
 	quint64 getHistoryIndex();
 
+	virtual bool Finalize( quint64 historic_index );
+
 	 /**
 	  * @brief    :  methode permettant de sauver des donnees
 	  * @param	 : QDomElement & elt - Noeud parent
@@ -305,6 +307,7 @@ public:
 SwOwner_Class::SwOwner_Class( SwAssistedComponent * host )
 {
 	_host_component = host;
+	_historyIndex = SW_APP->GetHistoricCpt();
 }
 
 //-------------------------------------------------------------------------
@@ -327,13 +330,10 @@ void SwOwner_Class::Load( QDomElement & elt,ISwFinalizerManager & finalizer_mana
 	_historyIndex=elt.attribute("historyIndex").toULongLong(&result);
 	if (result==false)
 	{
-		QString msg=QString("Fail to load index");
+		qDebug() << "Fail to load historyIndex on SwOwnerClass :" << _host_component->GetName();
 	}
 
-	ISwFinalizer * iFinalizer = dynamic_cast<ISwFinalizer*> (_host_component);
-	
-	if(iFinalizer)
-		finalizer_manager.RegisterFinalization(_historyIndex,iFinalizer);   
+	finalizer_manager.RegisterFinalization(_historyIndex,this);
 
 	_host_component->Load(elt,finalizer_manager);
 }
@@ -341,8 +341,6 @@ void SwOwner_Class::Load( QDomElement & elt,ISwFinalizerManager & finalizer_mana
 //-------------------------------------------------------------------------
 void SwOwner_Class::Save( QDomElement & elt,QDomDocument &doc )
 {
-	_historyIndex = SW_APP->GetHistoricCpt();
-
 	//Enregistrement de l'index pour la reconstruction
 	elt.setAttribute("historyIndex",_historyIndex);
 
@@ -356,6 +354,18 @@ void SwOwner_Class::Liberate()
 
 }
 
+//---------------------------------------------------------------------------------
+bool SwOwner_Class::Finalize( quint64 historic_index )
+{
+	_historyIndex = SW_APP->GetHistoricCpt();
+
+	ISwFinalizer * iFinalizer = dynamic_cast<ISwFinalizer*> (_host_component);
+	
+	if(iFinalizer)
+		iFinalizer->Finalize(historic_index);   
+
+	return true;
+}
 
 
 
@@ -950,3 +960,4 @@ quint64 SwAssistedComponent::getHistoryIndex()
 	
 	return _owner_service->getHistoryIndex();
 }
+

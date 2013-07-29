@@ -18,9 +18,14 @@
 #include "_SwServiceCodeTimer.h"
 #include "_SwServiceParametersImpl.h"
 #include "_SwServiceRefProfiler.h"
+#include "SwServiceSaveConfiguration.h"
 #include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
 #include "SwLoader_Class.h"
 #include "SwEnum.h"
+#include "SwInteger.h"
+#include "SwString.h"
+#include "SwIntegerEnum.h"
+#include "SwDouble.h"
 #include "SwUUID.h"
 #include "SwFileDescriptor.h"
 #include "SwIconDescriptor.h"
@@ -46,6 +51,7 @@ _SwServiceExtensionsImpl					* _serviceExtensions	= NULL;
 _SwServiceParametersImpl					* _serviceParameters	= NULL;
 _SwServiceCodeTimer							* _serviceCodeTimer		= NULL;
 _SwServiceRefProfiler						* _serviceRefProfiler	= NULL;
+SwServiceSaveConfiguration					* _serviceSaveConfiguration	= NULL;
 bool										_is_launch				= false;
 bool										_isCheck				= false;
 
@@ -84,6 +90,9 @@ SwApplication::SwApplication():SwServicesManager_Class() {
 
 	_serviceRefProfiler = new _SwServiceRefProfiler();
 	RegisterService(_serviceRefProfiler);
+
+	_serviceSaveConfiguration = new SwServiceSaveConfiguration();
+	RegisterService(_serviceSaveConfiguration);
 }
 /*! \brief Destructeur*/
 SwApplication::~SwApplication() {
@@ -97,6 +106,8 @@ SwApplication::~SwApplication() {
 	delete _serviceCodeTimer;
 	UnregisterService(_serviceRefProfiler->GetServiceName());
 	delete _serviceRefProfiler;
+	UnregisterService(_serviceSaveConfiguration->GetServiceName());
+	delete _serviceSaveConfiguration;
     _singleton=NULL;
     delete _bank;
     _bank=NULL;
@@ -460,6 +471,22 @@ void SwApplication::Initialize_Types() {
     qRegisterMetaType<StreamWork::SwCore::SwEnum>("StreamWork::SwCore::SwEnum");
     //Et de ses methodes de serialisation
     qRegisterMetaTypeStreamOperators<StreamWork::SwCore::SwEnum>("StreamWork::SwCore::SwEnum");
+	//Enregistrement de SwIntegerEnum
+	qRegisterMetaType<StreamWork::SwCore::SwIntegerEnum>("StreamWork::SwCore::SwIntegerEnum");
+	//Et de ses methodes de serialisation
+	qRegisterMetaTypeStreamOperators<StreamWork::SwCore::SwIntegerEnum>("StreamWork::SwCore::SwIntegerEnum");
+	//Enregistrement de SwString
+	qRegisterMetaType<StreamWork::SwCore::SwString>("StreamWork::SwCore::SwString");
+	//Et de ses methodes de serialisation
+	qRegisterMetaTypeStreamOperators<StreamWork::SwCore::SwString>("StreamWork::SwCore::SwString");
+	//Enregistrement de SwInteger
+	qRegisterMetaType<StreamWork::SwCore::SwInteger>("StreamWork::SwCore::SwInteger");
+	//Et de ses methodes de serialisation
+	qRegisterMetaTypeStreamOperators<StreamWork::SwCore::SwInteger>("StreamWork::SwCore::SwInteger");
+	//Enregistrement de SwDouble
+	qRegisterMetaType<StreamWork::SwCore::SwDouble>("StreamWork::SwCore::SwDouble");
+	//Et de ses methodes de serialisation
+	qRegisterMetaTypeStreamOperators<StreamWork::SwCore::SwDouble>("StreamWork::SwCore::SwDouble");
     //Enregistrement de SwUUID
     qRegisterMetaType<StreamWork::SwCore::SwUUID>("StreamWork::SwCore::SwUUID");
     //Et de ses methodes de serialisation
