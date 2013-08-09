@@ -10,17 +10,16 @@
 
 
 #include <QtGlobal>
-#include <QHash>
 #include "ISwProperty.h"
 
 namespace StreamWork
 {
 	namespace SwCore
 	{
-        /*!
-		 \interface ISwConfCollector 
-		 \brief Interface definissant le composant qui permet de collecter 
-		 \		les ISwProperty des streams
+        /**
+		* @brief : interface ISwConfCollector 
+		* Interface definissant le composant qui permet de collecter 
+		* les ISwProperty des streams
         @ingroup SwCoreGrp
         @swinterface
 
@@ -35,29 +34,38 @@ namespace StreamWork
 		- GetProperties() qui permet de retourner toutes les Property collectées dans une QHash.
 		- GetProperty(QString) qui permet de retourner le pointeur vers une Property 
 		  en connaissant son nom.
-
 		*/
+
 		class ISwConfCollector
 		{     
 		public:
-            /*! \brief Renvoie le nom du configurationCollector
-            \return QString : nom du configurationCollector */
-			virtual QString GetConfName() =0;
+            /** @brief Renvoie le nom du configurationCollector
+			*  @return QString : nom du configurationCollector 
+			*/
+			virtual QString getConfName() =0;
 
-			/*! \brief Renvoie le nom du prefix du configurationCollector
-            \return QString : nom du prefix */
-			virtual QString GetPrefix() =0;
-
-            /*! \brief Renvoie les Properties collectée par le configurationCollector
-            \return QHash<QString, ISwProperty> : QHash<nom décoré de la ISwProperty, pointeur sur la ISwProperty>
+			/** @brief Renvoie le nom du prefix du configurationCollector
+            *	@return QString : nom du prefix 
             */
-			virtual QHash<QString, ISwProperty*> GetProperties() =0;
+			virtual QString getPrefix() =0;
 
-
-			/*! \brief Renvoie le pointeur vers l'ISwProperty avant le nom passé en paramètre
-            \return le pointeur vers l'ISwProperty si elle a été trouvée dans le ConfCollector
+            /** @brief Renvoie les Properties collectée par le configurationCollector
+            *	@return QHash<QString, ISwProperty> : QHash<nom décoré de la ISwProperty, pointeur sur la ISwProperty>
             */
-			virtual ISwProperty* GetProperty(QString propertyName) =0;
+			virtual QHash<QString, ISwProperty*> getProperties() =0;
+
+
+			/** @brief Renvoie le pointeur vers l'ISwProperty avant le nom passé en paramètre
+            *	@return le pointeur vers l'ISwProperty si elle a été trouvée dans le ConfCollector
+            */
+			virtual ISwProperty* getProperty(QString decoratedPropertyName) =0;
+
+
+			/** @brief Ajoute une property dans la liste du confCollector
+			*	@param QString : nom décodé de la property
+			*	@param ISwProperty* pointeur sur la property
+            */
+			virtual void addExternalProperty(QString decoratedName, ISwProperty* property ) = 0;
 		};
 	}
 }

@@ -202,10 +202,10 @@ namespace StreamWork
              * @brief	: permet de récupérer un pointeur sur une property
              * @Param	: QString : nom de la configuration concernée
              * @Param	: QString : prefix du composant ConfCollector
-             * @Param	: QString : nom de la property
+             * @Param	: QString : nom décoré de la property
              * @return	: ISwProperty* : pointeur sur la property
              */
-			virtual ISwProperty* getProperty( QString confName, QString prefix, QString propertyName );
+			virtual ISwProperty* getProperty( QString confName, QString prefix, QString decoratedName );
 
 			
 		private:

@@ -170,10 +170,27 @@ void SwServiceSaveConfiguration::registerConfCollector( QString confName, QStrin
 		//checker s'il y a déja un confCollector associé au confName
 		QHash<QString, QHash<QString, ISwConfCollector*>>::iterator it = _confCollectors.find(confName);
 
-		// Si c'est le cas on lui rajoute un confCollector
+		
 		if(it != _confCollectors.end())
 		{
-			it.value().insert(prefix, confCollector);
+			// Si l'entrée existe déja dans la QHash, on fusionne les properties dans les confCollectors
+			if(it.value().contains(prefix))
+			{
+				QHash<QString, ISwProperty*> propertiesToMerge = confCollector->getProperties();
+
+				QHashIterator<QString, ISwProperty*> it_properties(propertiesToMerge);
+				while (it_properties.hasNext()) 
+				{
+					it_properties.next();
+					ISwProperty* propertyToMerge = it_properties.value();
+					it.value().value(prefix)->addExternalProperty(it_properties.key(), propertyToMerge);
+				}				
+			}
+			// Sinon, on lui rajoute un confCollector
+			else
+			{
+				it.value().insert(prefix, confCollector);
+			}
 		}
 		// Sinon on rajoute une entrée dans la liste _confCollectors
 		else
@@ -555,11 +572,11 @@ void SwServiceSaveConfiguration::restoreCancelConfig( QString confName, QString 
 				for(int i=0; i<PropertiesElements.size(); i++)
 				{
 					QString prefix = "";
-					QString propName = "";
+					QString decoratedName = "";
 					QDomElement val;
 
 					prefix = PropertiesElements.at(i).toElement().attribute(CFM_XML_PROPERTY_PREFIX);
-					propName = PropertiesElements.at(i).toElement().attribute(CFM_XML_PROPERTY_NAME);
+					decoratedName = PropertiesElements.at(i).toElement().attribute(CFM_XML_PROPERTY_NAME);
 					val = PropertiesElements.at(i).toElement();
 
 					// On load la valeur de la property uniquement si le prefix 
@@ -576,7 +593,7 @@ void SwServiceSaveConfiguration::restoreCancelConfig( QString confName, QString 
 							QHash<QString, ISwConfCollector*>::const_iterator it2 = it.value().find(prefix);
 							if(it2 != it.value().constEnd())
 							{
-								prop = it2.value()->GetProperty(propName);
+								prop = it2.value()->getProperty(decoratedName);
 
 								// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
 								// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
@@ -753,7 +770,7 @@ ISwAdminConfiguration* SwServiceSaveConfiguration::getAdmin()
 
 
 //-------------------------------------------------------------------------
-ISwProperty* SwServiceSaveConfiguration::getProperty( QString confName, QString prefix, QString propertyName )
+ISwProperty* SwServiceSaveConfiguration::getProperty( QString confName, QString prefix, QString decoratedName )
 {
 	ISwProperty* returnedProp = 0;
 
@@ -766,7 +783,7 @@ ISwProperty* SwServiceSaveConfiguration::getProperty( QString confName, QString 
 		
 		if(it2 != it.value().end())
 		{
-			returnedProp = it2.value()->GetProperty(propertyName);
+			returnedProp = it2.value()->getProperty(decoratedName);
 		}
 	}
 	return returnedProp;
@@ -941,11 +958,11 @@ void SwServiceSaveConfiguration::setPropertiesValues( QString confName, QString 
 	for(int i=0; i<PropertiesElements.size(); i++)
 	{
 		QString prefix = "";
-		QString propName = "";
+		QString decoratedName = "";
 		QDomElement val;
 
 		prefix = PropertiesElements.at(i).toElement().attribute(CFM_XML_PROPERTY_PREFIX);
-		propName = PropertiesElements.at(i).toElement().attribute(CFM_XML_PROPERTY_NAME);
+		decoratedName = PropertiesElements.at(i).toElement().attribute(CFM_XML_PROPERTY_NAME);
 		val = PropertiesElements.at(i).toElement();
 
 		// Avec ces valeurs, on set au fur et à mesure toutes les values des Properties :
@@ -958,7 +975,7 @@ void SwServiceSaveConfiguration::setPropertiesValues( QString confName, QString 
 			QHash<QString, ISwConfCollector*>::const_iterator it2 = it.value().find(prefix);
 			if(it2 != it.value().constEnd())
 			{
-				prop = it2.value()->GetProperty(propName);
+				prop = it2.value()->getProperty(decoratedName);
 
 				// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
 				// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
@@ -986,8 +1003,8 @@ void SwServiceSaveConfiguration::createQDomProfile(QString confName, QDomDocumen
 			// récupérer le pointeur sur l'ISwConfCollector
 			ISwConfCollector *collector = it_prefixes.value();
 
-			// faire un getProperties() et parcourir toutes les properties
-			QHash<QString, ISwProperty*> props = collector->GetProperties();
+			// faire un getProperties() et parcourir toutes les properties (y compris les externals)
+			QHash<QString, ISwProperty*> props = collector->getProperties();
 
 			QHashIterator<QString, ISwProperty*> it_props(props);
 			while (it_props.hasNext()) 
