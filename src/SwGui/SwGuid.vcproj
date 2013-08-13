@@ -186,6 +186,8 @@
 			<File
 				RelativePath="_SwGuiCompQActionToStackedWidget.cpp" />
 			<File
+				RelativePath="_SwGuiCompScrollArea.cpp" />
+			<File
 				RelativePath="_SwGuiCompSplitterWidget.cpp" />
 			<File
 				RelativePath="_SwGuiCompStackedWidget.cpp" />
@@ -613,7 +615,28 @@
 			<File
 				RelativePath="_SwGuiCompActionList.h" />
 			<File
-				RelativePath="_SwGuiCompDockWidget.h" />
+				RelativePath="_SwGuiCompDockWidget.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompDockWidget.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DQT_DLL -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompDockWidget.h -o GeneratedFiles\mocd\moc__SwGuiCompDockWidget.cpp"
+						Description="MOC _SwGuiCompDockWidget.h"
+						Outputs="GeneratedFiles\mocd\moc__SwGuiCompDockWidget.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompDockWidget.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompDockWidget.h -o GeneratedFiles\moc\moc__SwGuiCompDockWidget.cpp"
+						Description="MOC _SwGuiCompDockWidget.h"
+						Outputs="GeneratedFiles\moc\moc__SwGuiCompDockWidget.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath="_SwGuiCompFrame.h" />
 			<File
@@ -805,6 +828,29 @@
 						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompQActionToStackedWidget.h -o GeneratedFiles\moc\moc__SwGuiCompQActionToStackedWidget.cpp"
 						Description="MOC _SwGuiCompQActionToStackedWidget.h"
 						Outputs="GeneratedFiles\moc\moc__SwGuiCompQActionToStackedWidget.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwGuiCompScrollArea.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompScrollArea.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DQT_DLL -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompScrollArea.h -o GeneratedFiles\mocd\moc__SwGuiCompScrollArea.cpp"
+						Description="MOC _SwGuiCompScrollArea.h"
+						Outputs="GeneratedFiles\mocd\moc__SwGuiCompScrollArea.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompScrollArea.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompScrollArea.h -o GeneratedFiles\moc\moc__SwGuiCompScrollArea.cpp"
+						Description="MOC _SwGuiCompScrollArea.h"
+						Outputs="GeneratedFiles\moc\moc__SwGuiCompScrollArea.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -1297,6 +1343,18 @@
 					ExcludedFromBuild="true" />
 			</File>
 			<File
+				RelativePath="GeneratedFiles\moc\moc__SwGuiCompDockWidget.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc__SwGuiCompDockWidget.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
 				RelativePath="GeneratedFiles\moc\moc__SwGuiCompFromQActionToStackedWidget.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -1388,6 +1446,18 @@
 			</File>
 			<File
 				RelativePath="GeneratedFiles\mocd\moc__SwGuiCompQActionToStackedWidget.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\moc\moc__SwGuiCompScrollArea.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc__SwGuiCompScrollArea.cpp">
 				<FileConfiguration
 					Name="Release|Win32"
 					ExcludedFromBuild="true" />

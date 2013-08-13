@@ -1,19 +1,19 @@
 /*!
- \file _SwGuiCompFrame.h
- \brief Implementation of the Class _SwGuiCompFrame generant un QWidget
+ \file _SwGuiCompScrollArea.h
+ \brief Implementation of the Class _SwGuiCompScrollArea generant un QScrollArea
  \version 1.0
- \date 23-août-2006 18:59:26
- \author F.Bighelli
+ \date 08/08/13
+ \author EPO
 */
 
-#ifndef __SwGuiCompFrame_H
-#define __SwGuiCompFrame_H
+#ifndef __SwGuiCompScrollArea_H
+#define __SwGuiCompScrollArea_H
 
 /*
   * INCLUDES GLOBAUX
   */
 #include <QMap>
-#include <QFrame>
+#include <QScrollArea>
 /*
   * INCLUDES LOCAUX
   */
@@ -30,14 +30,18 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 /*!
-	\class _SwGuiCompFrame 
-	\brief _SwGuiCompFrame generant un QWidget
+	\class _SwGuiCompScrollArea
+	\brief _SwGuiCompScrollArea generant un QScrollArea
 */
-class _SwGuiCompFrame : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget
+class _SwGuiCompScrollArea : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget
 {
+	Q_OBJECT
+	Q_PROPERTY(bool fixedWidth READ GetFixedWidth WRITE SetFixedWidth)
+	Q_PROPERTY(bool fixedHeight READ GetFixedHeight WRITE SetFixedHeight)
+
 protected:
     /* menu */
-    QFrame * _frame;
+    QScrollArea * _scrollArea;
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
@@ -61,11 +65,14 @@ protected:
     /* Flag indiquant une gestion par un layout */
     bool _is_layout_mode;
 
+	bool _fixedWidth;
+	bool _fixedHeight;
+	
 public:
     /*! \brief Constructeur */
-    _SwGuiCompFrame();
+    _SwGuiCompScrollArea();
     /*! \brief Destructeur */
-    virtual ~_SwGuiCompFrame();
+    virtual ~_SwGuiCompScrollArea();
 
     /*! \brief Initialisation des ressources
     \note tous les services du composants doivent être déclarés dans cette methodes*/
@@ -86,5 +93,11 @@ public:
     \return le widget */
 	virtual QWidget & GetWidget();
 
+	bool GetFixedWidth() const { return _fixedWidth; }
+	void SetFixedWidth(bool val) { _fixedWidth = val; }
+
+	bool GetFixedHeight() const { return _fixedHeight; }
+	void SetFixedHeight(bool val) { _fixedHeight = val; }
+	bool eventFilter(QObject *o, QEvent *e);
 };
 #endif 

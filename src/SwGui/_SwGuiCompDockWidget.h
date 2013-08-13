@@ -34,6 +34,9 @@ using namespace StreamWork::SwGui;
 */
 class _SwGuiCompDockWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwDockWidget
 {
+	Q_OBJECT
+	Q_PROPERTY(bool forceFloating READ GetForceFloating WRITE SetForceFloating)
+
 protected:
     /* menu */
     QDockWidget * _dockwidget;
@@ -45,6 +48,9 @@ protected:
     SwProperties_Class * _properties_service;
     /* interface widget a consommée */
     ISwWidget * _handle_widget;
+	/* Force floating because in Qt, the floating is true until the dock is parent */
+	bool _forceFloating;
+
 public:
     /*! \brief Constructeur */
     _SwGuiCompDockWidget();
@@ -68,5 +74,8 @@ public:
     \return le dockwidget */
 	virtual QDockWidget & GetDockWidget();
 
+
+	virtual bool GetForceFloating() const { return _forceFloating; }
+	virtual void SetForceFloating(bool val) { _forceFloating = val; }
 };
 #endif 

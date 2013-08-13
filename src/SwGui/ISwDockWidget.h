@@ -29,6 +29,13 @@ namespace StreamWork
             /*! \brief Renvoie le dock widget
             \return le dock widget */
 			virtual QDockWidget & GetDockWidget()=0;
+
+			/**
+			 * @brief	: get Force floating because in Qt, the floating is true until the dock is parent
+			 * @return	: bool 
+			 */
+			virtual bool GetForceFloating() const = 0 ;
+
 		};
 	}
 }

@@ -20,6 +20,7 @@ _SwGuiCompDockWidget::_SwGuiCompDockWidget(): SwComponent_Class(){
     _properties_service=NULL;
     _dockwidget=NULL;
     _handle_widget=NULL;
+	_forceFloating = false;
 }
 /*! \brief Destructeur */
 _SwGuiCompDockWidget::~_SwGuiCompDockWidget(){
@@ -32,6 +33,7 @@ _SwGuiCompDockWidget::~_SwGuiCompDockWidget(){
     delete _provider_service;
     delete _properties_service;
     delete _dockwidget;
+
 }
 
 /*! \brief Initialisation des ressources
@@ -57,9 +59,9 @@ void _SwGuiCompDockWidget::InitializeResources() throw(SwException) {
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver(this);
 
-    //Enregistrement des propriétés
-    _properties_service->CreatePropertiesForQObject(_dockwidget,"QDockWidget");
-
+	//Enregistrement des propriétés
+	_properties_service->CreatePropertiesForQObject(_dockwidget,"QDockWidget");
+	_properties_service->CreatePropertiesForQObject(this,"",true);
 
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiDockWidget done\n"));
 
