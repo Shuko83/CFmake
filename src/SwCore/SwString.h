@@ -1,13 +1,13 @@
 /********************************************************************
-	filename: 	SwString.h
-	author:		QBN
+filename: 	SwString.h
+author:		QBN
 *********************************************************************/
 
 #ifndef STREAMWORK_SWCORE_SWSTRING_H
 #define STREAMWORK_SWCORE_SWSTRING_H
 /*
-  * INCLUDES GLOBAUX
-  */
+* INCLUDES GLOBAUX
+*/
 #include <QMap>
 #include <QString>
 #include <QVariant>
@@ -15,8 +15,8 @@
 #include <QValidator>
 
 /*
-  * INCLUDES LOCAUX
-  */
+* INCLUDES LOCAUX
+*/
 #include "SwCoreConstantes.h"
 #include "SwRefPtr.h"
 
@@ -27,13 +27,13 @@ namespace StreamWork
 		/*!
 		*	@brief Class QVariant encapsulant uen chaine de caractere, contenant un validator
 		*/
-        class BUILD_SWCORE SwString 
+		class BUILD_SWCORE SwString 
 		{
-        private:
+		private:
 			QString _string; /** @brief Valeur interne de la chaine de caractere */
 			QValidator * _validator; /** @brief validateur utiliser pour verifier que la chaine de caractere est valide */
 
-        public:
+		public:
 			/*! \brief Constructeur de base */
 			SwString();
 			/*! \brief Constructeur de copie */
@@ -52,7 +52,7 @@ namespace StreamWork
 			/** @brief Permet de récupérer le QValidator affecté
 			*	@return QValidator * => validator  */			
 			QValidator * getValidator();
-						
+
 			/** @brief Affecte la valeur interne de la chaine de caractere
 			*	@param QString & => utilisé pour affecter à la chaine interne si valide */			
 			void fromString(QString &);
@@ -61,7 +61,7 @@ namespace StreamWork
 			*	@return QString => valeur interne de la chaine de caractere */			
 			QString toString() const;
 
-        };
+		};
 	}
 }
 
@@ -73,5 +73,5 @@ BUILD_SWCORE QDataStream &operator<<(QDataStream &out, const StreamWork::SwCore:
 
 /** @brief operateur de deserialisation */
 BUILD_SWCORE QDataStream &operator>>(QDataStream &in, StreamWork::SwCore::SwString &myObj);
-//---------------------------------------------------------------------------
+
 #endif

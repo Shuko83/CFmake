@@ -61,10 +61,13 @@ QString SwString::toString() const
 	return _string;
 }
 
+//---------------------------------------------------------------------------------
 QDataStream &operator<<(QDataStream &out, const StreamWork::SwCore::SwString &myObj) {
 	out<<myObj.toString();
 	return out;
 }
+
+//---------------------------------------------------------------------------------
 QDataStream &operator>>(QDataStream &in, StreamWork::SwCore::SwString &myObj) {
 	QString tmp;
 	in>>tmp;

@@ -1,20 +1,20 @@
 /*!
- \brief Classe pour la gestion double avec min, max et pas
- \author QBN
+\brief Classe pour la gestion double avec min, max et pas
+\author QBN
 */
 
 #ifndef _STREAMWORK_SWCORE_SWDOUBLE_H
 #define _STREAMWORK_SWCORE_SWDOUBLE_H
 /*
-  * INCLUDES GLOBAUX
-  */
+* INCLUDES GLOBAUX
+*/
 #include <QVariant>
 #include <QDataStream>
 #include <QDoubleValidator>
 
 /*
-  * INCLUDES LOCAUX
-  */
+* INCLUDES LOCAUX
+*/
 #include "SwCoreConstantes.h"
 #include "SwRefPtr.h"
 
@@ -23,40 +23,40 @@ namespace StreamWork
 	namespace SwCore
 	{
 		/*!
- 		*	@brief Class Encapsulant une SwDouble pour la transformer en QDoubleValidator
- 		*/
- 		class SwDoubleQValidatorDecorator : public QDoubleValidator
- 		{
- 			Q_OBJECT
- 		public:
+		*	@brief Class Encapsulant une SwDouble pour la transformer en QDoubleValidator
+		*/
+		class SwDoubleQValidatorDecorator : public QDoubleValidator
+		{
+			Q_OBJECT
+		public:
 			SwDoubleQValidatorDecorator(double min, double max, double step, double currentValue, QObject *parent = 0);
- 			virtual ~SwDoubleQValidatorDecorator();
- 
+			virtual ~SwDoubleQValidatorDecorator();
+
 			/** @brief setter sur le pas */
- 			void setStep(double step);
+			void setStep(double step);
 			/** @brief setter sur la currentValue du Double concerné */
 			void setCurrentValue(double currentValue);
- 
+
 			/** @brief méthode surchargée du validateur */
- 			virtual State 	validate ( QString & input, int & pos ) const;
- 		private:
- 			double _step;				/** @brief valeur du pas */
+			virtual State 	validate ( QString & input, int & pos ) const;
+		private:
+			double _step;				/** @brief valeur du pas */
 			double _currentValue;		/** @brief valeur courrante du Double */
- 		};
+		};
 
 
 		/*!
 		*	@brief Class QVariant encapsulant un double avec borne et pas
 		*/
-        class BUILD_SWCORE SwDouble {
-       
-        public:
-            /*! \brief Constructeur de base */
-            SwDouble();
-            /*! \brief Constructeur de copie, necessaire pour enregistrer en QVariant */
-            SwDouble(const SwDouble & source);
-            /*! \brief Destructeur */
-            virtual ~SwDouble();
+		class BUILD_SWCORE SwDouble {
+
+		public:
+			/*! \brief Constructeur de base */
+			SwDouble();
+			/*! \brief Constructeur de copie, necessaire pour enregistrer en QVariant */
+			SwDouble(const SwDouble & source);
+			/*! \brief Destructeur */
+			virtual ~SwDouble();
 
 			/** @brief mutateur de la valeur interne */
 			void setValue(double);
@@ -90,10 +90,7 @@ namespace StreamWork
 			double _min; /** @brief valeur minimum, init = std::numeric_limits<double>::min() */
 			int _precision; /** @brief valeur de la precision, init = 15 */ 
 			SwDoubleQValidatorDecorator * _doubleValidator; /** @brief validateur utiliser pour verifier que le double est valide */
-        };
-
-
- 		
+		};
 	}
 }
 

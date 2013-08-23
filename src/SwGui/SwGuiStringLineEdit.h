@@ -1,28 +1,23 @@
 /*!
- \file SwGuiStringLineEdit.h
- \author QBN
-
+\file SwGuiStringLineEdit.h
+\author QBN
 */
 
 #ifndef _STREAMWORK_SWGUI_SWGUISTRINGLINEEDIT_H
 #define _STREAMWORK_SWGUI_SWGUISTRINGLINEEDIT_H
 
-
 /*
-  * INCLUDES LOCAUX
-  */
+* INCLUDES LOCAUX
+*/
 
 #include "SwGuiConstantes.h"
 /*
-  * INCLUDES GLOBAUX
-  */
+* INCLUDES GLOBAUX
+*/
 #include <QWidget>
 #include <QLineEdit>
 #include <QValidator>
 #include <SwString.h>
-
-//using namespace StreamWork::SwCore;
-
 
 namespace StreamWork
 {
@@ -51,26 +46,24 @@ namespace StreamWork
 		*/
 		class SWGUI_EXPORT SwGuiStringLineEdit: public QLineEdit
 		{
-		    Q_OBJECT
-       private:
-            //\brief contenu */
-            SwCore::SwString _content;
+			Q_OBJECT
+		private:
+			//\brief contenu */
+			SwCore::SwString _content;
 			SwStringQValidatorDecorator _validator;
 		public:
-            //! \brief Constructeur */
-		   SwGuiStringLineEdit(SwCore::SwString & source,QWidget *parent = 0);
-            //\brief Destructeur */
-		    virtual ~SwGuiStringLineEdit();
+			//! \brief Constructeur */
+			SwGuiStringLineEdit(SwCore::SwString & source,QWidget *parent = 0);
+			//\brief Destructeur */
+			virtual ~SwGuiStringLineEdit();
 
-            //! \brief Definition Enum */
-            void SetString(SwCore::SwString & source);
-            // \brief Definition Enum */
-            SwCore::SwString GetString();
+			void SetString(SwCore::SwString & source);
+			SwCore::SwString GetString();
 
 		public slots:
 			void onEditFinished();
 		};
-		
+
 	}
 }
 

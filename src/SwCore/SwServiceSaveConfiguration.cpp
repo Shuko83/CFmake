@@ -25,20 +25,20 @@ using namespace StreamWork::SwCore;
 //---------------------------------------------------------
 
 // constantes pour les tags
-const QString CFM_XML_TAG_FILE        = "ConfigurationsFile";
-const QString CFM_XML_TAG_CONFIG      = "Config";
-const QString CFM_XML_TAG_PROPERTY    = "property";
+const QString CFM_XML_TAG_FILE				= "ConfigurationsFile";
+const QString CFM_XML_TAG_CONFIG			= "Config";
+const QString CFM_XML_TAG_PROPERTY			= "property";
 
 // nom du fichier XML par défaut
-const QString CFM_DEFAULT_FILENAME = "Factory settings";
+const QString CFM_DEFAULT_FILENAME			= "Factory settings";
 
 // constantes pour les attributs
-const QString CFM_XML_CONFIG_NAME          = "name";
-const QString CFM_XML_CONFIG_CURRENT       = "current";
-const QString CFM_XML_CONFIG_DEFAULT	   = "default";
+const QString CFM_XML_CONFIG_NAME			= "name";
+const QString CFM_XML_CONFIG_CURRENT		= "current";
+const QString CFM_XML_CONFIG_DEFAULT		= "default";
 
-const QString CFM_XML_PROPERTY_PREFIX      = "prefix";
-const QString CFM_XML_PROPERTY_NAME		   = "pname";
+const QString CFM_XML_PROPERTY_PREFIX		= "prefix";
+const QString CFM_XML_PROPERTY_NAME			= "pname";
 
 
 

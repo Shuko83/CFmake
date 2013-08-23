@@ -39,6 +39,7 @@ void SwInteger::setValue( int val)
 	_val = val;
 	_intValidator->setCurrentValue(val);
 }
+
 //---------------------------------------------------------------------------------
 int SwInteger::getValue() const
 {
@@ -85,13 +86,13 @@ void SwInteger::setMinimum( int min)
 }
 
 //---------------------------------------------------------------------------------
-
 QDataStream &operator<<(QDataStream &out, const StreamWork::SwCore::SwInteger &myObj) 
 {
     out<<myObj.getValue();
     return out;
 }
 
+//---------------------------------------------------------------------------------
 QDataStream &operator>>(QDataStream &in, StreamWork::SwCore::SwInteger &myObj) 
 {
     int tmp;
@@ -100,8 +101,6 @@ QDataStream &operator>>(QDataStream &in, StreamWork::SwCore::SwInteger &myObj)
     return in;
 }
 
-
-
 //-------------------------------------------------------------------------
 SwIntegerQValidatorDecorator* SwInteger::getValidator()
 {
@@ -109,14 +108,13 @@ SwIntegerQValidatorDecorator* SwInteger::getValidator()
 }
 
 
-
 /************************************************************************/
 /*        SwIntegerQValidatorDecorator                                   */
 /************************************************************************/
 
- //---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
 SwIntegerQValidatorDecorator::SwIntegerQValidatorDecorator(int min, int max, int step, int currentValue, QObject *parent /*= 0*/)
-	: QIntValidator(parent)
+: QIntValidator(parent)
 {
 	_step = step;
 	_currentValue = currentValue;
@@ -145,20 +143,20 @@ void SwIntegerQValidatorDecorator::setCurrentValue( int currentValue )
 
 
 //---------------------------------------------------------------------------------
- QValidator::State SwIntegerQValidatorDecorator::validate( QString & input, int & pos ) const
- {
-	 //check du validator interne
-	 QValidator::State state = QValidator::Acceptable;
+QValidator::State SwIntegerQValidatorDecorator::validate( QString & input, int & pos ) const
+{
+	//check du validator interne
+	QValidator::State state = QValidator::Acceptable;
 
-	 state =  QIntValidator::validate(input, pos);
+	state =  QIntValidator::validate(input, pos);
 
-	 // Si le modulo est nul, le step est ok par rapport à la valeur de départ
+	// Si le modulo est nul, le step est ok par rapport à la valeur de départ
 	if( (_currentValue - bottom()) % _step != 0 )
 	{
 		state = QValidator::Invalid;
 	}
 
 	return state;
- }
+}
 
 

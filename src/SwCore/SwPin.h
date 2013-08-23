@@ -1,4 +1,4 @@
-/*!
+	/*!
 \file SwPin.h
 \date 12/04/2006
 \brief Definition d'un pin simple

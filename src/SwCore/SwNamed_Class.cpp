@@ -14,7 +14,7 @@
   * INCLUDES LOCAUX
   */
 #include <QRegExp>
-
+#include <QDebug>
 #include "SwNamed_Class.h"
 
 using namespace StreamWork::SwCore;
@@ -44,9 +44,11 @@ QString SwNamed_Class::GetName() const{
 \exception SwException invalid name for instance
 */
 void SwNamed_Class::SetName(const QString & new_name) throw(SwException){
-    if (!CheckNameValidity(new_name)) {
+    if (!CheckNameValidity(new_name)) 
+	{
         QString msg=QString("Invalid name %1 for instance. The name must check the following pattern \"[A-Za-z_][A-Za-z_0-9]*\"").arg(new_name);
-        LAUNCH_SWEXCEPTION("SwCore",msg)
+		qDebug() << " : " << msg;
+       // LAUNCH_SWEXCEPTION("SwCore",msg)
     }
     _instance_name=new_name;
 	//Signal du changement

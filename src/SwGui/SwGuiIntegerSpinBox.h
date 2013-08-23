@@ -38,16 +38,14 @@ namespace StreamWork
             /*! \brief Destructeur */
 		    virtual ~SwGuiIntegerSpinBox();
 
-            /*! \brief Definition Enum */
             void SetInteger(SwCore::SwInteger & source);
-            /*! \brief Definition Enum */
             SwCore::SwInteger GetInteger();
+
         public slots: 
-            /*! \brief cahngement de valeur */
+            /*! \brief changement de valeur */
 		    void onValueChanged(int value);
 
 		};
-		
 	}
 }
 

@@ -6,7 +6,7 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
-/*! \brief Constructeur */
+//---------------------------------------------------------------------------------
 SwGuiEnumIntComboBox::SwGuiEnumIntComboBox(SwIntegerEnum & source,QWidget *parent)
     : QComboBox(parent)
 {
@@ -21,11 +21,13 @@ SwGuiEnumIntComboBox::SwGuiEnumIntComboBox(SwIntegerEnum & source,QWidget *paren
 
 	this->setToolTip("This property is a <SwIntegerEnum>");
 }
-/*! \brief Destructeur */
+
+//---------------------------------------------------------------------------------
 SwGuiEnumIntComboBox::~SwGuiEnumIntComboBox()
 {
 }
-/*! \brief Definition Enum */
+
+//---------------------------------------------------------------------------------
 void SwGuiEnumIntComboBox::SetEnum(SwIntegerEnum & source) 
 {
     _content=source;
@@ -55,12 +57,11 @@ void SwGuiEnumIntComboBox::SetEnum(SwIntegerEnum & source)
 	isPopulating = false;   
 }
 
-/*! \brief Definition Enum */
+//---------------------------------------------------------------------------------
 SwIntegerEnum SwGuiEnumIntComboBox::GetEnum() 
 {
     return _content;
 }
-
 
 //---------------------------------------------------------------------------------
 void SwGuiEnumIntComboBox::onEditFinished()

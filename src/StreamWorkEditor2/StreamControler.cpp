@@ -42,6 +42,7 @@ using namespace StreamWork::SwModel;
 #define CL_IA_ATT_W "W"
 #define CL_IA_ATT_H "H"
 #define CL_IA_ATT_COLOR "color"
+#define CL_IA_ATT_ALPHA "alpha"
 #define CL_IA_ATT_TEXT "text"
 
 #define CL_CGITEM_NODE "CGItem"
@@ -833,6 +834,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 #define CL_IA_ATT_W "W"
 #define CL_IA_ATT_H "H"
 #define CL_IA_ATT_COLOR "color"
+#define CL_IA_ATT_ALPHA "alpha"
 #define CL_IA_ATT_TEXT "text"
 
 /** @brief sauvegarde des données visuelles */
@@ -863,7 +865,8 @@ void StreamControler::saveVisualData(QDomDocument & doc){
                 QRectF r=ia->boundingRect();
                 itemNode.setAttribute(CL_IA_ATT_W,r.width());
                 itemNode.setAttribute(CL_IA_ATT_H,r.height());
-                itemNode.setAttribute(CL_IA_ATT_COLOR,ia->getColor().name());
+				itemNode.setAttribute(CL_IA_ATT_COLOR,ia->getColor().name());
+				itemNode.setAttribute(CL_IA_ATT_ALPHA,ia->getColor().alpha());
                 itemNode.setAttribute(CL_IA_ATT_TEXT,ia->getText());
                 sceneNode.appendChild(itemNode);
 
@@ -966,7 +969,14 @@ void StreamControler::loadVisualData(QDomDocument & doc){
         ia->setPos(p);
         QRectF bbox(0,0,node.attribute(CL_IA_ATT_W).toDouble(),node.attribute(CL_IA_ATT_H).toDouble());
         ia->setBoundingRect(bbox);
-        ia->setColor(QColor(node.attribute(CL_IA_ATT_COLOR)));
+		QColor tmp = QColor(node.attribute(CL_IA_ATT_COLOR));
+		int alpha = node.attribute(CL_IA_ATT_ALPHA).toInt();
+		if(alpha == 0)
+			alpha = 150;
+
+		tmp.setAlpha(alpha);
+        ia->setColor(tmp);
+
         ia->setText(node.attribute(CL_IA_ATT_TEXT));
         _streamScene->addItem(ia);
 

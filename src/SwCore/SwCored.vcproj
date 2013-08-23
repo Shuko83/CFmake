@@ -212,6 +212,8 @@
 			<File
 				RelativePath="SwUUID.cpp" />
 			<File
+				RelativePath="SwWinProcess.cpp" />
+			<File
 				RelativePath="_SwCleanLinksVisitor.cpp" />
 			<File
 				RelativePath="_SwComplexeTypeAdaptersFactoriesBankImpl.cpp" />
@@ -619,6 +621,8 @@
 				RelativePath="SwUUID.h" />
 			<File
 				RelativePath="SwUUID_Simplified.h" />
+			<File
+				RelativePath="SwWinProcess.h" />
 			<File
 				RelativePath="_SwCleanLinksVisitor.h" />
 			<File

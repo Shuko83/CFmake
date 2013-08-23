@@ -1,21 +1,21 @@
 /*!
- \brief Classe pour la gestion entiers avec min, max et pas
- \author QBN
+\brief Classe pour la gestion entiers avec min, max et pas
+\author QBN
 */
 
 #ifndef _STREAMWORK_SWCORE_SWINTEGER_H
 #define _STREAMWORK_SWCORE_SWINTEGER_H
 /*
-  * INCLUDES GLOBAUX
-  */
+* INCLUDES GLOBAUX
+*/
 #include <QVariant>
 #include <QDataStream>
 #include <QIntValidator>
 #include <QValidator>
 
 /*
-  * INCLUDES LOCAUX
-  */
+* INCLUDES LOCAUX
+*/
 #include "SwCoreConstantes.h"
 #include "SwRefPtr.h"
 
@@ -24,40 +24,40 @@ namespace StreamWork
 	namespace SwCore
 	{
 		/*!
- 		*	@brief Class Encapsulant une SwInteger pour la transformer en QIntValidator
- 		*/
-  		class SwIntegerQValidatorDecorator : public QIntValidator
-  		{
-  			Q_OBJECT
-  		public:
+		*	@brief Class Encapsulant une SwInteger pour la transformer en QIntValidator
+		*/
+		class SwIntegerQValidatorDecorator : public QIntValidator
+		{
+			Q_OBJECT
+		public:
 			SwIntegerQValidatorDecorator(int min, int max, int step, int currentValue, QObject *parent = 0);
-  			virtual ~SwIntegerQValidatorDecorator();
-  
+			virtual ~SwIntegerQValidatorDecorator();
+
 			/** @brief setter sur le pas */
 			void setStep(int step);
 			/** @brief setter sur la currentValue du Int concerné */
 			void setCurrentValue(int currentValue);
-  
+
 			/** @brief méthode surchargée du validateur */
-  			virtual State validate ( QString & input, int & pos ) const;
-  		private:
-  			int _step;				/** @brief valeur du pas */
+			virtual State validate ( QString & input, int & pos ) const;
+		private:
+			int _step;				/** @brief valeur du pas */
 			int _currentValue;		/** @brief valeur courrante du Int */
-  		};
-		
+		};
+
 
 		/*!
 		*	@brief Class QVariant encapsulant un entier avec borne et pas
 		*/
-        class BUILD_SWCORE SwInteger {
-       
-        public:
-            /** \brief Constructeur de base */
-            SwInteger();
-            /*! \brief Constructeur de copie, necessaire pour enregistrer en QVariant */
-            SwInteger(const SwInteger & source);
-            /*! \brief Destructeur */
-            virtual ~SwInteger();
+		class BUILD_SWCORE SwInteger {
+
+		public:
+			/** \brief Constructeur de base */
+			SwInteger();
+			/*! \brief Constructeur de copie, necessaire pour enregistrer en QVariant */
+			SwInteger(const SwInteger & source);
+			/*! \brief Destructeur */
+			virtual ~SwInteger();
 
 			/** @brief mutateur de la valeur interne */
 			void setValue(int);
@@ -88,10 +88,7 @@ namespace StreamWork
 			int _min; /** @brief valeur minimum, init = std::numeric_limits<int>::min() */
 			SwIntegerQValidatorDecorator * _intValidator; /** @brief validateur utiliser pour verifier que le int est valide */
 
-        };
-
-		
-
+		};
 	}
 }
 

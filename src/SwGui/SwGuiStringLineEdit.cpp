@@ -5,7 +5,7 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
-// \brief Constructeur */
+//---------------------------------------------------------------------------------
 SwGuiStringLineEdit::SwGuiStringLineEdit(SwString & source,QWidget *parent)
     : QLineEdit(parent), _validator(source)
 {
@@ -18,11 +18,13 @@ SwGuiStringLineEdit::SwGuiStringLineEdit(SwString & source,QWidget *parent)
 	this->setToolTip("This property is a <SwString>");
 
 }
-// \brief Destructeur */
+
+//---------------------------------------------------------------------------------
 SwGuiStringLineEdit::~SwGuiStringLineEdit()
 {
 }
-//\brief Definition Enum */
+
+//---------------------------------------------------------------------------------
 void SwGuiStringLineEdit::SetString(SwString & source) 
 {
      _content=source;
@@ -31,12 +33,11 @@ void SwGuiStringLineEdit::SetString(SwString & source)
  	setText(_content.toString());
 }
 
-// \brief Definition Enum */
+//---------------------------------------------------------------------------------
 SwString SwGuiStringLineEdit::GetString() 
 {
    return _content;
 }
-
 
 //---------------------------------------------------------------------------------
 void SwGuiStringLineEdit::onEditFinished()

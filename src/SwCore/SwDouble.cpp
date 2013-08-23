@@ -4,29 +4,32 @@
 
 using namespace StreamWork::SwCore;
 
-/*! \brief Constructeur de base */
+//---------------------------------------------------------------------------------
 SwDouble::SwDouble() 
 {
 	_max = std::numeric_limits<double>::max();
 	_min = std::numeric_limits<double>::min();
-   _step = 0.1;
-   _val = 0;
-   _precision = 15;
-   _doubleValidator = new SwDoubleQValidatorDecorator(_min, _max, _step, _val);
+	_step = 0.1;
+	_val = 0;
+	_precision = 15;
+	_doubleValidator = new SwDoubleQValidatorDecorator(_min, _max, _step, _val);
 }
-/*! \brief Constructeur de copie */
+
+//---------------------------------------------------------------------------------
 SwDouble::SwDouble(const SwDouble & source)
 {
-    if (&source!=this) {
-        _max = source._max;
+	if (&source!=this) 
+	{
+		_max = source._max;
 		_min = source._min;
 		_step = source._step;
 		_val = source._val;
 		_precision = source._precision;
 		_doubleValidator = new SwDoubleQValidatorDecorator(_min, _max, _step, _val);
-    }
+	}
 }
-/*! \brief Destructeur */
+
+//---------------------------------------------------------------------------------
 SwDouble::~SwDouble() 
 {
     //Nothing to do
@@ -36,9 +39,8 @@ SwDouble::~SwDouble()
 void SwDouble::setValue( double val)
 {
 	_val = val;
-	//_doubleValidator
-
 }
+
 //---------------------------------------------------------------------------------
 double SwDouble::getValue() const
 {
@@ -124,46 +126,46 @@ SwDoubleQValidatorDecorator* SwDouble::getValidator()
 /*        SwDoubleQValidatorDecorator                                   */
 /************************************************************************/
  
-  //---------------------------------------------------------------------------------
-  SwDoubleQValidatorDecorator::SwDoubleQValidatorDecorator(double min, double max, double step, double currentValue, QObject *parent /*= 0*/)
-	 : QDoubleValidator(parent)
- {
-	 _step = step;
-	 _currentValue = currentValue;
-	 setTop(max);
-	 setBottom(min);
- }
+//---------------------------------------------------------------------------------
+SwDoubleQValidatorDecorator::SwDoubleQValidatorDecorator(double min, double max, double step, double currentValue, QObject *parent /*= 0*/)
+: QDoubleValidator(parent)
+{
+	_step = step;
+	_currentValue = currentValue;
+	setTop(max);
+	setBottom(min);
+}
 
- //---------------------------------------------------------------------------------
- SwDoubleQValidatorDecorator::~SwDoubleQValidatorDecorator()
- {
- 
- }
- 
- //---------------------------------------------------------------------------------
- void SwDoubleQValidatorDecorator::setStep( double step)
- {
- 	_step = step;
- }
+//---------------------------------------------------------------------------------
+SwDoubleQValidatorDecorator::~SwDoubleQValidatorDecorator()
+{
 
- //---------------------------------------------------------------------------------
- void SwDoubleQValidatorDecorator::setCurrentValue( double currentValue)
- {
-	 _currentValue = currentValue;
- }
- 
- //---------------------------------------------------------------------------------
- QValidator::State SwDoubleQValidatorDecorator::validate( QString & input, int & pos ) const
- {
-	 //check du validator interne
- 	 QValidator::State state = QValidator::Acceptable;
+}
 
-	 state =  QDoubleValidator::validate(input, pos);
+//---------------------------------------------------------------------------------
+void SwDoubleQValidatorDecorator::setStep( double step)
+{
+	_step = step;
+}
+
+//---------------------------------------------------------------------------------
+void SwDoubleQValidatorDecorator::setCurrentValue( double currentValue)
+{
+	_currentValue = currentValue;
+}
+
+//---------------------------------------------------------------------------------
+QValidator::State SwDoubleQValidatorDecorator::validate( QString & input, int & pos ) const
+{
+	//check du validator interne
+	QValidator::State state = QValidator::Acceptable;
+
+	state =  QDoubleValidator::validate(input, pos);
 
 	// Si le modulo est nul, le step est ok par rapport à la valeur de départ
 	if(fmod( (_currentValue - bottom()), _step) != 0 )
 	{
 		state = QValidator::Invalid;
 	}
- 	return state;
- }
+	return state;
+}

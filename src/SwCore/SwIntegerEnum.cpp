@@ -61,7 +61,7 @@ int SwIntegerEnum::toInt() const
 void SwIntegerEnum::fromInt( int val )
 {
 	if(val <= _max && val >= _min)
-	_currentValue = val;
+		_currentValue = val;
 }
 
 //---------------------------------------------------------------------------------
@@ -87,7 +87,8 @@ void SwIntegerEnum::fromString( QString & string)
 {
 	//on recherche dabord dans la liste des valeurs d'enum
 	QList<QString> values = _enum.values();
-	for (int i = 0; i < values.size(); ++i) {
+	for (int i = 0; i < values.size(); ++i) 
+	{
 		if (values.at(i) == string)
 		{
 			_currentValue = i;
@@ -140,7 +141,6 @@ QString SwIntegerEnum::toString()
 	else 
 		return QString::number(_currentValue);
 }
-
 
 //---------------------------------------------------------------------------------
 bool SwIntegerEnum::isValidEnum( int val )
