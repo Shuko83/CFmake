@@ -35,6 +35,7 @@
 #include "_SwBasicPerspective.h"
 #include "_SwGuiCompGridLayout.h"
 #include "_SwGuiCompActionList.h"
+#include "_SwGuiCompActionProvider.h"
 #include "_SwGuiCssEditor.h"
 #include "_SwGuiConsole.h"
 #include "_SwGuiCompStackedWidget.h"
@@ -60,7 +61,8 @@ _SwGuiPluginFactory_Class::~_SwGuiPluginFactory_Class() {
 void _SwGuiPluginFactory_Class::Initialize() {
     RegisterComponent("SwGuiMainWindow","Main application window (QMainWindow)");
     RegisterComponent("SwGuiMenu","Simple menu (QMenu)");       
-    RegisterComponent("SwGuiActionList","Simple action list (Actions)");
+	RegisterComponent("SwGuiActionList","Simple action list (Actions)");
+	RegisterComponent("SwGuiActionProvider","Simple action provider");
     RegisterComponent("SwGuiToolBar","Simple toolbar (QToolBar)");
     RegisterComponent("SwGuiDockWidget","Simple dock widget (QDockWidget)");
     RegisterComponent("SwGuiWidget","Simple widget (QWidget)");
@@ -105,7 +107,10 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
     } 
     if (name=="SwGuiActionList") {
         return new _SwGuiCompActionList;
-    }
+	} 
+	if (name=="SwGuiActionProvider") {
+		return new _SwGuiCompActionProvider;
+	}
     if (name=="SwGuiToolBar") {
         return new _SwGuiCompToolBar;
     }
@@ -205,7 +210,10 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
     }   
     if (name=="SwGuiActionList") {
         return QIcon(":/SwGui/menu.png");
-    }
+	}
+	if (name=="SwGuiActionProvider") {
+		return QIcon(":/SwGui/menu.png");
+	}
     if (name=="SwGuiToolBar") {
         return QIcon(":/SwGui/toolbar.png");
     }

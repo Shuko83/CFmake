@@ -144,6 +144,8 @@
 			<File
 				RelativePath="SwGuiStringLineEdit.cpp" />
 			<File
+				RelativePath="SwQActionAdapter.cpp" />
+			<File
 				RelativePath="_QRcViewer.cpp" />
 			<File
 				RelativePath="_SwActionStackedWidget.cpp" />
@@ -157,6 +159,8 @@
 				RelativePath="_SwGUICssDialog.cpp" />
 			<File
 				RelativePath="_SwGuiCompActionList.cpp" />
+			<File
+				RelativePath="_SwGuiCompActionProvider.cpp" />
 			<File
 				RelativePath="_SwGuiCompDockWidget.cpp" />
 			<File
@@ -475,6 +479,29 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="SwQActionAdapter.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwQActionAdapter.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DQT_DLL -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwQActionAdapter.h -o GeneratedFiles\mocd\moc_SwQActionAdapter.cpp"
+						Description="MOC SwQActionAdapter.h"
+						Outputs="GeneratedFiles\mocd\moc_SwQActionAdapter.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwQActionAdapter.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwQActionAdapter.h -o GeneratedFiles\moc\moc_SwQActionAdapter.cpp"
+						Description="MOC SwQActionAdapter.h"
+						Outputs="GeneratedFiles\moc\moc_SwQActionAdapter.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="_QRcViewer.h">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -614,6 +641,8 @@
 			</File>
 			<File
 				RelativePath="_SwGuiCompActionList.h" />
+			<File
+				RelativePath="_SwGuiCompActionProvider.h" />
 			<File
 				RelativePath="_SwGuiCompDockWidget.h">
 				<FileConfiguration
@@ -1266,6 +1295,18 @@
 			</File>
 			<File
 				RelativePath="GeneratedFiles\mocd\moc_SwGuiStringLineEdit.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\moc\moc_SwQActionAdapter.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc_SwQActionAdapter.cpp">
 				<FileConfiguration
 					Name="Release|Win32"
 					ExcludedFromBuild="true" />
