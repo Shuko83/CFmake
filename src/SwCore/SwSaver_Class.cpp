@@ -36,8 +36,8 @@ void SwSaver_Class::Save(SwComponent_Class * root_component,QDomDocument & doc) 
     //Ecriture du header
     streamwork_elt=doc.createElement(CG_SW_XML_DOCUMENT_NODE);
     streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION,CG_STREAMWORK_VERSION);
-    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_DATE,__DATE__);
-    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_TIME,__TIME__);
+    //streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_DATE,__DATE__);
+    //streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_TIME,__TIME__);
     doc.appendChild(streamwork_elt);
     //Ajout des path
     paths=SW_APP->ComponentsBank().GetPathList();

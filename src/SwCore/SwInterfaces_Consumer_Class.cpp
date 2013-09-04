@@ -9,10 +9,13 @@
 #include "_SwConsumedInterfaceContainer_Class.h"
 #include "SwAddress_ToolBox.h"
 #include "SwApplication.h"
+#include <QDebug>
+
 
 using namespace StreamWork::SwCore;
 
 
+#define CL_SW_XML_LISTIDX_NODE    "ListIDX"
 #define CL_SW_XML_INTERFACE_NODE    "interface"
 #define CL_SW_XML_INTERFACE_NODE_ATT_NAME    "name"
 #define CL_SW_XML_INTERFACE_NODE_ATT_PNAME    "provider_interface"
@@ -291,6 +294,7 @@ SwComponent_Class * SwInterfaces_Consumer_Class::GetHostComponent(){
 //---------------------------------------------------------------------
 // Interface ISwpersistent
 //---------------------------------------------------------------------            
+#define CL_SW_XML_LISTIDX_NODE    "ListIDX"
 #define CL_SW_XML_INTERFACE_NODE    "interface"
 #define CL_SW_XML_INTERFACE_NODE_ATT_NAME    "name"
 #define CL_SW_XML_INTERFACE_NODE_ATT_PNAME    "provider_interface"
@@ -303,43 +307,82 @@ void SwInterfaces_Consumer_Class::Load(QDomElement &elt,ISwFinalizerManager & fi
     QMap<quint64,_SwConsumedInterfaceContainer_Class *>::iterator itidx;
     quint64 index;
     bool result;
+	QString name;
     
     //RAZ de la table de finalization (load multiples)
     _finalize_interfaces.clear();
 
+	//lire d'abord les IDX
+	QDomElement list = elt.firstChildElement(CL_SW_XML_LISTIDX_NODE);
+	QMap<QString,quint64> _listIndex;
+	if(!list.isNull())
+	{
+		for(QDomElement interface_node = list.firstChildElement(QString(CL_SW_XML_INTERFACE_NODE)); 
+			!interface_node.isNull(); 
+			interface_node = interface_node.nextSiblingElement(QString(CL_SW_XML_INTERFACE_NODE)))
+		{
+			index = interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX).toULongLong(&result);
+			if (result==false) 
+			{
+				QString msg=QString("In component %1\nFail to load index of consumed interface description because it's not a valid index %2").arg(_host_component->GetName()).arg(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX));
+				LAUNCH_SWEXCEPTION("SwCore",msg)        
+			}
+
+			_listIndex.insert(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME),index);
+		}
+	}
+
     //recuperation des interfaces
-    for(QDomElement interface_node = elt.firstChildElement(QString(CL_SW_XML_INTERFACE_NODE)); !interface_node.isNull(); interface_node = interface_node.nextSiblingElement(QString(CL_SW_XML_INTERFACE_NODE)))
+    for(QDomElement interface_node = elt.firstChildElement(QString(CL_SW_XML_INTERFACE_NODE)); 
+		!interface_node.isNull(); 
+		interface_node = interface_node.nextSiblingElement(QString(CL_SW_XML_INTERFACE_NODE)))
     {
         if (interface_node.hasAttribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME) &&
             interface_node.hasAttribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME) &&
-            interface_node.hasAttribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX) &&
-            interface_node.hasAttribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH)) {
+           /* interface_node.hasAttribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX) &&*/
+            interface_node.hasAttribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH)) 
+		{
+			name = interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME);
+
             //On recupere l'index
             index=interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX).toULongLong(&result);
-            if (result==false) {
+            if (result==false && !_listIndex.contains(name)) 
+			{
                 QString msg=QString("In component %1\nFail to load index of consumed interface description because it's not a valid index %2").arg(_host_component->GetName()).arg(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX));
                 LAUNCH_SWEXCEPTION("SwCore",msg)        
             }
-            //On verifie que l'index n'est pas deja utilise (ne doit JAMAIS ARRIVE)
+			if(!result)
+				index = _listIndex.value(name);
+            
+			//On verifie que l'index n'est pas deja utilise (ne doit JAMAIS ARRIVE)
             itidx=_finalize_interfaces.find(index);
-            if (itidx!=_finalize_interfaces.end()) {
+            if (itidx!=_finalize_interfaces.end()) 
+			{
                 QString msg=QString("In component %1\nFail to load consumed interfaces description because two index are equal to %2").arg(_host_component->GetName()).arg(index);
                 LAUNCH_SWEXCEPTION("SwCore",msg)        
             }
-            //recherche de l'interface correspondante
-            it=_interfaces.find(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME));
+            
+			//recherche de l'interface correspondante
+            it=_interfaces.find(name);
+
             //Si elle existe
-            if (it!=_interfaces.end()) {
+            if (it!=_interfaces.end()) 
+			{
                 it.value()->DefinePotentialProviderInterfaceDescription(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME),interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH));        
-                //Enregistrement en interne de l'interface
+                
+				//Enregistrement en interne de l'interface
                 _finalize_interfaces.insert(index,it.value());
-                //Enregistrement au niveau du finalizer manager
+                
+				//Enregistrement au niveau du finalizer manager
                 finalizer_manager.RegisterFinalization(index,this);
-			} else {
+			} 
+			else
+			{
 				_SwConsumedInterfaceContainer_Class * fake=new _SwConsumedInterfaceContainer_Class(0);
 				fake->Define(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME),QString());
 				fake->DefinePotentialProviderInterfaceDescription(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME),interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH));
 				_finalize_interfaces.insert(index,fake);
+				
 				//Enregistrement au niveau du finalizer manager
 				finalizer_manager.RegisterFinalization(index,this);
 			}
@@ -352,34 +395,69 @@ void SwInterfaces_Consumer_Class::Save(QDomElement &elt,QDomDocument &doc){
     QString path;
 
     QMap<QString,_SwConsumedInterfaceContainer_Class *>::iterator it;
-
+	QMap<QString,quint64> _listIndex;
     //pour toutes les interfaces connectés
-    for(it=_interfaces.begin();it!=_interfaces.end();it++) {
+    for(it=_interfaces.begin();it!=_interfaces.end();it++) 
+	{
         //Si l'interface est connecté
-        if (it.value()->GetProvider()!=NULL) {
+        if (it.value()->GetProvider()!=NULL) 
+		{
             //Creation du neoud
             interface_node=doc.createElement(CL_SW_XML_INTERFACE_NODE);
+
             //Enregistrement du nom
             interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME,it.key());
+
             //Enregistrement du nom de l'interface distante
             interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME,it.value()->GetProvidedInterfaceName());
+
             //Enregistrement de l'index pour la reconstruction
-            interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX,it.value()->GetHistoricalIndex());
+            //interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX,it.value()->GetHistoricalIndex());
+
             //Enregistrement du path pour l'acces au parent
-            try {
+            try 
+			{
                 //On tente un lien relatif
                 path=SwAddress_ToolBox::BuildRelativePath(_host_component,it.value()->GetProvider()->GetHostComponent());
-            } catch (SwException &) {
+            } 
+			catch (SwException &) 
+			{
                 //Impossible (pas le meme parent)
                 //On recupere un lien universel
                 path=SwAddress_ToolBox::BuildUniversalPath(it.value()->GetProvider()->GetHostComponent());
             }    
+
             interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH,path);
+
+			_listIndex.insert(it.key(),it.value()->GetHistoricalIndex());
             //Ajout du neoud interface
             elt.appendChild(interface_node);
         }
     }
-    
+	//On append la list des IDX
+	if(!_listIndex.isEmpty())
+	{
+		QMap<QString,quint64>::const_iterator itbegin = _listIndex.constBegin();
+		QMap<QString,quint64>::const_iterator itend = _listIndex.constEnd();
+
+		QDomElement list_node;
+		list_node=doc.createElement(CL_SW_XML_LISTIDX_NODE);
+		for(; itbegin != itend ; ++itbegin)
+		{
+
+			//Creation du neoud
+			interface_node=doc.createElement(CL_SW_XML_INTERFACE_NODE);
+
+			//Enregistrement du nom
+			interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME,itbegin.key());
+			interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX,itbegin.value());
+			list_node.appendChild(interface_node);
+		}
+		elt.appendChild(doc.createComment("Begin : Ignore on merge"));
+		elt.appendChild(list_node);
+		elt.appendChild(doc.createComment("End : Ignore on merge"));
+	}
+	
 }
     //---------------------------------------------------------------------
 // Interface ISwFinalizer
