@@ -62,6 +62,10 @@ public slots:
     virtual void setSelection(QList<StreamWork::SwCore::SwComponent_Class *> & sel);
     /** @brief fermeture interne */
     virtual void internalClose();
+
+	/** @brief clear des différents services */
+	virtual void clearServices();
+
 protected:
     /** @brief sur close event */
     virtual void closeEvent(QCloseEvent *event);

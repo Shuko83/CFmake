@@ -32,8 +32,10 @@ namespace StreamWork
         \brief service de mapping de shortcuts
         @ingroup SwGuiGrp
         */
-        class _SwServiceShortcuts: QObject, virtual public ISwServiceShortcuts, virtual public ISwDeviceObserver{
-
+        class _SwServiceShortcuts: QObject, 
+							virtual public ISwServiceShortcuts, 
+							virtual public ISwDeviceObserver
+		{
 			Q_OBJECT
 
         public:
@@ -95,6 +97,11 @@ namespace StreamWork
 			 * @brief    : Unbind all shortcuts
 			 */
 			virtual void unBindAll();
+
+			/**
+			 * @brief    : clear shortcuts service
+			 */
+			virtual void clearShortcutsService();
 
 			/**
 			 * @brief    : Bind une combinaison de touche sur un SwShortcut

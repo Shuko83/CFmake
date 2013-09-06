@@ -1,13 +1,13 @@
 /*!
-\file _SwGuiCompActionProvider.cpp
-\brief Implementation of the Class _SwGuiCompActionProvider permettant de générer des QAction
+\file SwQActionAdapter.cpp
+\brief Implementation of the Class SwQActionAdapter permettant de générer des QAction
 \version 1.0
 \date 01/09/2013 2:00
 \author AAY
 */
 
-#ifndef __SwQActionAdapter_H
-#define __SwQActionAdapter_H
+#ifndef __SxQActionAdapter_H
+#define __SxQActionAdapter_H
 
 
 #include "ISwAction.h"

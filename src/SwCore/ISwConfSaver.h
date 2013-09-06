@@ -1,7 +1,7 @@
 /**
-@file ISwConfSaver.h
-@brief Interface Interne pour la sauvegarde de la configuration
-@author CGD
+	@file : ISwConfSaver.h
+	@brief : Interface Interne pour la sauvegarde de la configuration
+	@author : CGD
  */
 
 #ifndef _SX_BASICS_ISWCONFSAVER_H
@@ -15,13 +15,13 @@ namespace StreamWork
 	namespace SwCore
 	{
         /**
-        @class ISwConfSaver
-        @brief Interface Interne pour la sauvegarde de la configuration
+          @class : ISwConfSaver
+          @brief : Interface Interne pour la sauvegarde de la configuration
         */
         class ISwConfSaver {
         public:
             
-            /** @brief sauvegarde dans un fichier des données de la QString */
+            /** @brief : sauvegarde dans un fichier des données de la QString */
             virtual bool saveCallBack(QString file)=0;         
             
         };

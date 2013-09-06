@@ -43,6 +43,7 @@
 				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug,../../../../Libraries/ExceptionManager/lib/vc/debug"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
+				LinkIncremental="1"
 				LinkTimeCodeGeneration="0"
 				OutputFile="..\..\bin\vc\debug\StreamWorkEditor2d.exe"
 				ProgramDatabaseFile="./../../bin/vc/debug//StreamWorkEditor2d.pdb"

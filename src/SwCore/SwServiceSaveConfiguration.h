@@ -1,23 +1,17 @@
-
 /**
-@file SwServiceSaveConfiguration.h
-@brief Service permettant de gérer la sauvegarde de la conf
-@author CGD
+  @file : SwServiceSaveConfiguration.h
+  @brief : Service permettant de gérer la sauvegarde de la conf
+  @author : CGD
  */
 
 #ifndef _STREAMWORK_SWCORE__SWSERVICESAVECONFIGURATION_H
 #define _STREAMWORK_SWCORE__SWSERVICESAVECONFIGURATION_H
 
-
-
-// includes locaux
 #include "ISwAdminConfiguration.h"
 #include "ISwServiceConfiguration.h"
 #include "ISwConfigListener.h"
 
-// includes globaux
 #include <QDomElement>
-
 
 
 namespace StreamWork 
@@ -25,7 +19,7 @@ namespace StreamWork
     namespace SwCore 
     {
         /**
-        @class SwServiceSaveConfiguration
+          @class SwServiceSaveConfiguration
         */
         class SwServiceSaveConfiguration :  public ISwAdminConfiguration, 
 											public ISwServiceConfiguration 
@@ -107,6 +101,11 @@ namespace StreamWork
              */
             virtual void unregisterConfigServiceListener (ISwConfigListener *listener);
 
+
+			/**
+             * @brief	: Permet de vider les Maps du service de conf
+             */
+			virtual void clearConfService();
 
 			//---------------------------------------------------------------------
 			// Interface ISwServiceConfiguration
@@ -230,8 +229,6 @@ namespace StreamWork
 
 			/** @brief : Liste des listeners du service pour notif lors de mise à jour d'une conf */
 			QList<ISwConfigListener*>	_configurationServiceListeners;
-
-
 			
 
 			/**
@@ -264,7 +261,9 @@ namespace StreamWork
 			*/
 			void notifyLiteners(QString confName);
 
-        };
+			
+
+		};
     }
 }
 

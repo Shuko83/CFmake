@@ -1,8 +1,8 @@
-/*!
- \file ISwConfCollector.h
- \brief Implementation of the Interface ISwConfCollector
- \date 14/06/2013 16:04:34
- \author CGD
+/**
+ @file : ISwConfCollector.h
+ @brief: Implementation of the Interface ISwConfCollector
+ @date : 14/06/2013 16:04:34
+ @author : CGD
 */
 
 #ifndef _ISwConfCollector_H
@@ -40,19 +40,19 @@ namespace StreamWork
 		{     
 		public:
             /** 
-			 * @brief Renvoie le nom du configurationCollector
-			 * @return QString : nom du configurationCollector 
-		 	 */
+             * @brief Renvoie le nom du configurationCollector
+             * @return QString : nom du configurationCollector 
+			 */
 			virtual QString getConfName() =0;
 
 			/** 
 			 * @brief Renvoie le nom du prefix du configurationCollector
-             * @return QString : nom du prefix 
-             */
+			 * @return QString : nom du prefix 
+			 */
 			virtual QString getPrefix() =0;
 
             /** 
-			 * @brief Renvoie les Properties collectée par le configurationCollector
+             * @brief Renvoie les Properties collectée par le configurationCollector
              * @return QHash<QString, ISwProperty> : QHash<nom décoré de la ISwProperty, pointeur sur la ISwProperty>
              */
 			virtual QHash<QString, ISwProperty*> getProperties() =0;
@@ -60,8 +60,8 @@ namespace StreamWork
 
 			/** 
 			 * @brief Renvoie le pointeur vers l'ISwProperty avant le nom passé en paramètre
-             * @return le pointeur vers l'ISwProperty si elle a été trouvée dans le ConfCollector
-             */
+			 * @return le pointeur vers l'ISwProperty si elle a été trouvée dans le ConfCollector
+			 */
 			virtual ISwProperty* getProperty(QString decoratedPropertyName) =0;
 
 
@@ -69,7 +69,7 @@ namespace StreamWork
 			 * @brief Ajoute une property dans la liste du confCollector
 			 * @param QString : nom décodé de la property
 			 * @param ISwProperty* pointeur sur la property
-             */
+			 */
 			virtual void addExternalProperty(QString decoratedName, ISwProperty* property ) = 0;
 		};
 	}

@@ -96,6 +96,11 @@ namespace StreamWork
 			virtual void unBindAll() = 0;
 
 			/**
+			 * @brief    : clear shortcuts service
+			 */
+			virtual void clearShortcutsService() = 0;
+
+			/**
 			 * @brief    : Bind une combinaison de touche sur un SwShortcut
 			 * @param	 : QString sequence - Sequence de touches
 			 * @param	 : QString shortcut - ShortcutName + SC_SEP + CommandName 

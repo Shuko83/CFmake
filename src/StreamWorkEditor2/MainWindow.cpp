@@ -19,8 +19,11 @@
 #include "ISwEditionService.h"
 #include "MenuManager.h"
 #include <qDebug>
+#include "ISwServiceConfiguration.h"
+#include "ISwServiceShortcuts.h"
 
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwGui;
 
 static int nbWindows=0;
 
@@ -207,12 +210,16 @@ MainWindow::MainWindow(bool loadStream /*= true*/):QMainWindow(),_streamControle
 
 }
 /** @brief sur new stream */
-void MainWindow::onNewStream() {
+void MainWindow::onNewStream() 
+{
 	_streamTreeModel->setStreamControler(0);
 	_iaTreeModel->setStreamControler(0);
-	if (_streamControler!=0) {
+	if (_streamControler!=0) 
+	{
 		_streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
 		delete _streamControler;
+
+		clearServices();
 	}
 	_streamControler=new StreamControler(_propertyWidget);
 	_streamControler->setView(_streamView);
@@ -223,6 +230,8 @@ void MainWindow::onNewStream() {
 	_editors.insert(_streamControler->getRootItem(),this);
 	_streamSourceOpener=0;
 	_streamControler->getRootItem()->OnDestroy.iconnect(*this,&MainWindow::internalClose);
+
+	
 }
 /** @brief sur load stream */
 void MainWindow::onLoadStream(){
@@ -249,6 +258,8 @@ void MainWindow::onLoadStream(){
 			_streamTreeModel->setStreamControler(0);
 			_iaTreeModel->setStreamControler(0);
 			delete _streamControler;
+
+			clearServices();
 		}
 
 		manageHistory(fi);
@@ -288,6 +299,8 @@ void MainWindow::onLoadStreamf()
 			_streamTreeModel->setStreamControler(0);
 			_iaTreeModel->setStreamControler(0);
 			delete _streamControler;
+
+			clearServices();
 		}
 		manageHistory(file);
 		_streamControler=new StreamControler(_propertyWidget);
@@ -519,4 +532,25 @@ void MainWindow::manageHistory( QFileInfo fi )
 		_listOfActions.at(i)->setText(QString::number(i+1)+") "+fi.fileName());
 		_listOfActions.at(i)->setVisible(true);
 	}
+}
+
+//-------------------------------------------------------------------------
+void MainWindow::clearServices()
+{
+	//clear Service conf
+	ISwServiceConfiguration *_serviceSaveConfiguration = dynamic_cast<ISwServiceConfiguration *>(SW_APP->QueryService(CG_SW_SERVICE_SAVECONFIGURATION));
+	if(_serviceSaveConfiguration)
+	{
+		ISwAdminConfiguration *adminConfig = _serviceSaveConfiguration->getAdmin();
+
+		if(adminConfig)
+			adminConfig->clearConfService();
+	}
+
+	// clear Service shortcuts
+ 	ISwServiceShortcuts *_serviceShortcuts = dynamic_cast<ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
+ 	if(_serviceShortcuts)
+ 	{
+ 		_serviceShortcuts->clearShortcutsService();
+ 	}
 }

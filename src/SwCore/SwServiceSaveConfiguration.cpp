@@ -1,18 +1,15 @@
 /**
-@file SwServiceSaveConfiguration.h
-@brief Service permettant de gérer la sauvegarde de la conf
-@author CGD
- */
+	@file : SwServiceSaveConfiguration.h
+	@brief : Service permettant de gérer la sauvegarde de la conf
+	@author : CGD
+*/
 
 
-
-// Include Globaux
 #include <QMessageBox>
-#include <QTextStream>
 #include <QDebug>
-#include <QElapsedTimer>
+//#include <QElapsedTimer>
 
-// Include locaux
+
 #include "SwServiceSaveConfiguration.h"
 #include "_SwPropertyPersistent_Toolbox.h"
 
@@ -25,20 +22,20 @@ using namespace StreamWork::SwCore;
 //---------------------------------------------------------
 
 // constantes pour les tags
-const QString CFM_XML_TAG_FILE				= "ConfigurationsFile";
-const QString CFM_XML_TAG_CONFIG			= "Config";
-const QString CFM_XML_TAG_PROPERTY			= "property";
+const QString CFM_XML_TAG_FILE			= "ConfigurationsFile";
+const QString CFM_XML_TAG_CONFIG		= "Config";
+const QString CFM_XML_TAG_PROPERTY		= "property";
 
 // nom du fichier XML par défaut
-const QString CFM_DEFAULT_FILENAME			= "Factory settings";
+const QString CFM_DEFAULT_FILENAME		= "Factory settings";
 
 // constantes pour les attributs
-const QString CFM_XML_CONFIG_NAME			= "name";
-const QString CFM_XML_CONFIG_CURRENT		= "current";
-const QString CFM_XML_CONFIG_DEFAULT		= "default";
+const QString CFM_XML_CONFIG_NAME       = "name";
+const QString CFM_XML_CONFIG_CURRENT    = "current";
+const QString CFM_XML_CONFIG_DEFAULT	= "default";
 
-const QString CFM_XML_PROPERTY_PREFIX		= "prefix";
-const QString CFM_XML_PROPERTY_NAME			= "pname";
+const QString CFM_XML_PROPERTY_PREFIX   = "prefix";
+const QString CFM_XML_PROPERTY_NAME		= "pname";
 
 
 
@@ -279,6 +276,18 @@ void SwServiceSaveConfiguration::unregisterConfigServiceListener( ISwConfigListe
 }
 
 
+//-------------------------------------------------------------------------
+void SwServiceSaveConfiguration::clearConfService()
+{
+	_confSavers.clear();
+	_confCollectors.clear();
+	_currentConfs.clear();
+	_loadedConfs.clear();
+	_confProfilesDatas.clear();
+	_configsProfilesList.clear();
+	_configurationServiceListeners.clear();
+}
+
 
 
 //-------------------------------------------------------------------------
@@ -453,7 +462,6 @@ void SwServiceSaveConfiguration::renameConfiguration( QString confName, QString 
 	QString	oldCurrentConfigProfileName = "";
 	oldCurrentConfigProfileName = getCurrentConf(confName);
 
-	//QDomElement oldCurrentConfigDatas;
 	QString oldCurrentConfigDatas;
 
 	QHash<QString, QHash<QString, QString>>::iterator it_profiles = _confProfilesDatas.find(confName);
@@ -463,7 +471,6 @@ void SwServiceSaveConfiguration::renameConfiguration( QString confName, QString 
 		if(it != it_profiles.value().end())
 		{
 			// on récupère le QDomElement associé dans confProfilesDatas[confName][oldConfProfileName]
-
 			oldCurrentConfigDatas = it.value();
 
 			// on supprime l'element de la QHash
@@ -486,7 +493,6 @@ void SwServiceSaveConfiguration::renameConfiguration( QString confName, QString 
 			// appel de la méthode saveConfFile[confName]
 			saveConfigurationFile(confName);
 			
-
 			notifyLiteners(confName);
 		}
 	}
@@ -505,25 +511,6 @@ void SwServiceSaveConfiguration::switchConfiguration( QString confName, QString 
 		{
 			// Changement de valeurs de properties
 			setPropertiesValues(confName, confProfileName);
-
-		
-			// Pour chaque autre QDomElement correspondant aux profils de conf, on passe leur value "current" à false ou true
-// 			QHashIterator<QString, QDomElement> it_other_confs(it_profiles.value());
-// 			while (it_other_confs.hasNext()) 
-// 			{
-// 				it_other_confs.next();
-// 
-// 				// Récupération du QDomElement du profil de conf
-// 				QDomElement temp = it_other_confs.value();
-// 
-// 				if(it_other_confs.key() == confProfileName)
-// 					temp.setAttribute(CFM_XML_CONFIG_CURRENT,	"true");
-// 				else
-// 					temp.setAttribute(CFM_XML_CONFIG_CURRENT,	"false");
-// 
-// 				// Remplacement dans _confProfilesDatas[confName]
-// 				it_profiles.value().insert(it_other_confs.key(), temp);
-// 			}
 
 			// On change également le nom du profil courant dans _currentConfs
 			_currentConfs.insert(confName, confProfileName);
@@ -695,9 +682,6 @@ void SwServiceSaveConfiguration::createConfigurationFile( QString confName, QDom
 
 			// Remplacement aussi dans _confProfilesDatas[confName] (MAJ)
 			it_profiles.value().insert(it_config.key(), tempDoc.toString());
-
-			//qDebug()<<tempDoc.toString();
-			//qDebug()<<doc.toString();
 		}
 	}
 }
@@ -706,8 +690,6 @@ void SwServiceSaveConfiguration::createConfigurationFile( QString confName, QDom
 //-------------------------------------------------------------------------
 void SwServiceSaveConfiguration::writeConfigurationFile( QString confName, QDomDocument &doc )
 {
-	//qDebug()<<doc.toString();
-
 	// Transformer le QDomDocument en QString
 	QString confFileContent = "";
 	confFileContent = doc.toString(4);
@@ -783,7 +765,9 @@ ISwProperty* SwServiceSaveConfiguration::getProperty( QString confName, QString 
 		
 		if(it2 != it.value().end())
 		{
-			returnedProp = it2.value()->getProperty(decoratedName);
+			ISwConfCollector *collector = it2.value();
+			if(collector)
+				returnedProp = collector->getProperty(decoratedName);
 		}
 	}
 	return returnedProp;

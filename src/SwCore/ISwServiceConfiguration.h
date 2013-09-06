@@ -1,7 +1,7 @@
 /**
-@file ISwServiceConfiguration.h
-@brief Interface du service permettant la sauvegarde de la configuration Starlinx
-@author CGD
+	@file : ISwServiceConfiguration.h
+	@brief : Interface du service permettant la sauvegarde de la configuration Starlinx
+	@author : CGD
  */
 
 #ifndef _STREAMWORK_SWCORE_ISWSERVICECONFIGURATION_H

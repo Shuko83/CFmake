@@ -38,8 +38,8 @@ _SwServiceShortcuts::~_SwServiceShortcuts()
 	_mapShortcuts.clear();
 
 	_listObs.clear();
-	_listKeyShortcut.clear();
 
+	_listKeyShortcut.clear();
 }
 
 
@@ -212,8 +212,6 @@ void _SwServiceShortcuts::bindKeyboard( QString sequence, QString shortcut, QWid
 
 		_listKeyShortcut.append(lshortcut);
 	}
-	
-
 }
 
 //-------------------------------------------------------------------------
@@ -284,7 +282,7 @@ QString _SwServiceShortcuts::generateCombinedName( QString prefix,QString suffix
 }
 
 //-------------------------------------------------------------------------
-void StreamWork::SwGui::_SwServiceShortcuts::unBindAll()
+void _SwServiceShortcuts::unBindAll()
 {
 	_mapDevicesAssoc.clear();
 	_mapKeyboardAssoc.clear();
@@ -303,18 +301,32 @@ void StreamWork::SwGui::_SwServiceShortcuts::unBindAll()
 }
 
 //-------------------------------------------------------------------------
+void _SwServiceShortcuts::clearShortcutsService()
+{
+	// Le composant SxShortCutConfiguration lors du bindKeyBoard() créé les QShortCuts linké à son widget
+	// Lorsque le clearShortcut() est appelé, tout ancien composant SxShortCutConfiguration a été deleté
+	// et donc le widget et ses fils (des QShortcuts) aussi... pas besoin donc de les deleter à la mano...	
+	_listKeyShortcut.clear();
+
+	_mapDevicesAssoc.clear();
+	_mapKeyboardAssoc.clear();
+
+	_mapShortcuts.clear();
+	_listDevices.clear();
+	_listObs.clear();
+}
+
+//-------------------------------------------------------------------------
 void _SwServiceShortcuts::shortcutSlot()
 {
 	if(_isConfigurationMode)
 		return ;
 
-
 	QShortcut * lShortcut= qobject_cast<QShortcut *> (sender());
 
 	if(lShortcut)
 	{
-		//find all shortcut bind on the QShortcut sequence
-
+		//find all shortcut bind on the QShortcut sequenc
 		QString sequenceAsString = lShortcut->key().toString();
 		QMap<QString,QList<QString>>::iterator it = _mapKeyboardAssoc.begin();
 		QMap<QString,QList<QString>>::iterator end = _mapKeyboardAssoc.end();

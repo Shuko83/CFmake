@@ -1,9 +1,9 @@
 
 /**
-@file ISwAdminConfiguration.h
-@brief Service permettant d'administration du service de gestion de la configuration
-@author CGD
- */
+	@file : ISwAdminConfiguration.h
+	@brief : Service permettant d'administration du service de gestion de la configuration
+	@author : CGD
+*/
 
 #ifndef _STREAMWORK_SWCORE_ISWADMINCONFIGURATION_H
 #define _STREAMWORK_SWCORE_ISWADMINCONFIGURATION_H
@@ -94,8 +94,12 @@ namespace StreamWork
              */
             virtual void unregisterConfigServiceListener (ISwConfigListener *listener) = 0;
   
+			/**
+             * @brief	: Permet de vider les Maps du service de conf
+             */
+			virtual void clearConfService() = 0;
         };
-    }
+}
 }
 
 #endif
