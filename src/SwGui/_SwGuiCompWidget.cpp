@@ -92,6 +92,7 @@ void _SwGuiCompWidget::InitializeResources() throw(SwException) {
     _consumer_service->AttachInterfacesConsumerObserver(this);
 
     _properties_service->CreatePropertiesForQObject(_widget,"QWidget");
+	_properties_service->CreatePropertiesForQObject(this,"",true);
 
     //Gestion des widgets
     _widgets_nb_property=_properties_service->CreateProperty<uint>("nb_widgets");
@@ -273,4 +274,15 @@ void _SwGuiCompWidget::showChanged() {
     }
 }
 
-    void flagsChanged();
+//-----------------------------------------------------------------------
+Qt::WindowFlags _SwGuiCompWidget::windowFlags()
+{
+	return _widget->windowFlags();
+}
+
+//-----------------------------------------------------------------------
+void _SwGuiCompWidget::setWindowFlags( Qt::WindowFlags flag)
+{
+	_widget->setWindowFlags(flag);
+}
+

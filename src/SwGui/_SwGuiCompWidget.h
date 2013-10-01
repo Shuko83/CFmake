@@ -35,6 +35,8 @@ using namespace StreamWork::SwGui;
 */
 class _SwGuiCompWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget
 {
+	Q_OBJECT
+	Q_PROPERTY(Qt::WindowFlags SwWindowFlag READ windowFlags WRITE setWindowFlags);
 protected:
     /* menu */
     QWidget * _widget;
@@ -96,6 +98,10 @@ public:
     /*! \brief Renvoie le widget
     \return le widget */
 	virtual QWidget & GetWidget();
+
+
+	Qt::WindowFlags windowFlags();
+	void setWindowFlags(Qt::WindowFlags );
 private:
     void showChanged();
 
