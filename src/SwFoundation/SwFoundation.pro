@@ -4,9 +4,9 @@ PROJECTS_PATH = ../../../..
 
 QT += core xml
 	
-HEADERS +=  SwAssistedComponent.h 
+HEADERS +=  *.h 
     
-SOURCES +=  SwAssistedComponent.cpp 
+SOURCES +=  *.cpp 
     
 FORMS +=
 

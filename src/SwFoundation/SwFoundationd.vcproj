@@ -19,7 +19,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\mocd&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\mocd&quot;,c:\Qt\4.7.1\mkspecs\default"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
 				AssemblerListingLocation="GeneratedFiles\objd\"
 				BufferSecurityCheck="false"
@@ -74,7 +74,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\default"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
 				AssemblerListingLocation="GeneratedFiles\obj\"
 				BufferSecurityCheck="false"
@@ -128,6 +128,8 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
+				RelativePath="QByteArrayData.cpp" />
+			<File
 				RelativePath="SwAssistedComponent.cpp" />
 		</Filter>
 		<Filter
@@ -135,13 +137,15 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath="QByteArrayData.h" />
+			<File
 				RelativePath="SwAssistedComponent.h">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwAssistedComponent.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWFOUNDATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwAssistedComponent.h -o GeneratedFiles\mocd\moc_SwAssistedComponent.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWFOUNDATION_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwAssistedComponent.h -o GeneratedFiles\mocd\moc_SwAssistedComponent.cpp"
 						Description="MOC SwAssistedComponent.h"
 						Outputs="GeneratedFiles\mocd\moc_SwAssistedComponent.cpp"
 						Path="c:\Qt\4.7.1\bin" />
@@ -151,7 +155,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwAssistedComponent.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWFOUNDATION_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwAssistedComponent.h -o GeneratedFiles\moc\moc_SwAssistedComponent.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWFOUNDATION_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwAssistedComponent.h -o GeneratedFiles\moc\moc_SwAssistedComponent.cpp"
 						Description="MOC SwAssistedComponent.h"
 						Outputs="GeneratedFiles\moc\moc_SwAssistedComponent.cpp"
 						Path="c:\Qt\4.7.1\bin" />
