@@ -25,15 +25,19 @@
 				BufferSecurityCheck="false"
 				DebugInformationFormat="3"
 				ExceptionHandling="2"
+				ForcedIncludeFiles="StdAfx.h"
 				GeneratePreprocessedFile="0"
 				ObjectFile="GeneratedFiles\objd\"
 				Optimization ="4"
+				PrecompiledHeaderFile="$(IntDir)\SwCored.pch"
+				PrecompiledHeaderThrough="StdAfx.h"
 				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
 				ProgramDataBaseFileName="$(IntDir)\SwCore_vc90.pdb"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
 				SuppressStartupBanner="true"
 				TreatWChar_tAsBuiltInType="false"
+				UsePrecompiledHeader="2"
 				WarningLevel="3" />
 			<Tool
 				Name="VCCustomBuildTool" />
@@ -80,15 +84,19 @@
 				BufferSecurityCheck="false"
 				DebugInformationFormat="0"
 				ExceptionHandling="2"
+				ForcedIncludeFiles="StdAfx.h"
 				GeneratePreprocessedFile="0"
 				ObjectFile="GeneratedFiles\obj\"
 				Optimization ="2"
+				PrecompiledHeaderFile="$(IntDir)\SwCore.pch"
+				PrecompiledHeaderThrough="StdAfx.h"
 				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_WIN32_PLATEFORM_,_CRT_SECURE_NO_WARNINGS,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
 				ProgramDataBaseFileName="$(IntDir)\SwCore_vc90.pdb"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				SuppressStartupBanner="true"
 				TreatWChar_tAsBuiltInType="false"
+				UsePrecompiledHeader="2"
 				WarningLevel="3" />
 			<Tool
 				Name="VCCustomBuildTool" />
@@ -131,6 +139,25 @@
 				RelativePath="Component.cpp" />
 			<File
 				RelativePath="DisabledSwRef.cpp" />
+			<File
+				RelativePath="StdAfx.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ForcedIncludeFiles="$(NOINHERIT)"
+						PrecompiledHeaderThrough="$(INHERIT)"
+						UsePrecompiledHeader="1" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ForcedIncludeFiles="$(NOINHERIT)"
+						PrecompiledHeaderThrough="$(INHERIT)"
+						UsePrecompiledHeader="1" />
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath="SwAddress_ToolBox.cpp" />
 			<File
@@ -405,6 +432,8 @@
 				RelativePath="ISwVisitor.h" />
 			<File
 				RelativePath="LibIndeSig.h" />
+			<File
+				RelativePath="StdAfx.h" />
 			<File
 				RelativePath="SwAddress_ToolBox.h" />
 			<File

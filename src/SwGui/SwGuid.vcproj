@@ -25,15 +25,19 @@
 				BufferSecurityCheck="false"
 				DebugInformationFormat="3"
 				ExceptionHandling="2"
+				ForcedIncludeFiles="StdAfx.h"
 				GeneratePreprocessedFile="0"
 				ObjectFile="GeneratedFiles\objd\"
 				Optimization ="4"
+				PrecompiledHeaderFile="$(IntDir)\SwGuid.pch"
+				PrecompiledHeaderThrough="StdAfx.h"
 				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWGUI_LIB,QT_DLL,QT_PLUGIN,QT_SCRIPT_LIB,QT_XML_LIB,QT_GUI_LIB,QT_NETWORK_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QDESIGNER_EXPORT_WIDGETS,QT_THREAD_SUPPORT"
 				ProgramDataBaseFileName="$(IntDir)\SwGui_vc90.pdb"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
 				SuppressStartupBanner="true"
 				TreatWChar_tAsBuiltInType="false"
+				UsePrecompiledHeader="2"
 				WarningLevel="3" />
 			<Tool
 				Name="VCCustomBuildTool" />
@@ -80,15 +84,19 @@
 				BufferSecurityCheck="false"
 				DebugInformationFormat="0"
 				ExceptionHandling="2"
+				ForcedIncludeFiles="StdAfx.h"
 				GeneratePreprocessedFile="0"
 				ObjectFile="GeneratedFiles\obj\"
 				Optimization ="2"
+				PrecompiledHeaderFile="$(IntDir)\SwGui.pch"
+				PrecompiledHeaderThrough="StdAfx.h"
 				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWGUI_LIB,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_PLUGIN,QT_SCRIPT_LIB,QT_XML_LIB,QT_GUI_LIB,QT_NETWORK_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QDESIGNER_EXPORT_WIDGETS,QT_THREAD_SUPPORT,NDEBUG"
 				ProgramDataBaseFileName="$(IntDir)\SwGui_vc90.pdb"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				SuppressStartupBanner="true"
 				TreatWChar_tAsBuiltInType="false"
+				UsePrecompiledHeader="2"
 				WarningLevel="3" />
 			<Tool
 				Name="VCCustomBuildTool" />
@@ -127,6 +135,27 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath="StdAfx.cpp">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ForcedIncludeFiles="$(NOINHERIT)"
+						PrecompiledHeaderThrough="$(INHERIT)"
+						UsePrecompiledHeader="1" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCLCompilerTool"
+						ForcedIncludeFiles="$(NOINHERIT)"
+						PrecompiledHeaderThrough="$(INHERIT)"
+						UsePrecompiledHeader="1" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="SwActivationToQAction.cpp" />
 			<File
 				RelativePath="SwDefaultPerspective.cpp" />
 			<File
@@ -292,6 +321,31 @@
 				RelativePath="ISwWidget2.h" />
 			<File
 				RelativePath="ISwWidget2_Observer.h" />
+			<File
+				RelativePath="StdAfx.h" />
+			<File
+				RelativePath="SwActivationToQAction.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwActivationToQAction.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DQT_DLL -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwActivationToQAction.h -o GeneratedFiles\mocd\moc_SwActivationToQAction.cpp"
+						Description="MOC SwActivationToQAction.h"
+						Outputs="GeneratedFiles\mocd\moc_SwActivationToQAction.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwActivationToQAction.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwActivationToQAction.h -o GeneratedFiles\moc\moc_SwActivationToQAction.cpp"
+						Description="MOC SwActivationToQAction.h"
+						Outputs="GeneratedFiles\moc\moc_SwActivationToQAction.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath="SwDefaultPerspective.h">
 				<FileConfiguration
@@ -1224,6 +1278,18 @@
 			Name="Generated Files"
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			<File
+				RelativePath="GeneratedFiles\moc\moc_SwActivationToQAction.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc_SwActivationToQAction.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
 			<File
 				RelativePath="GeneratedFiles\moc\moc_SwDefaultPerspective.cpp">
 				<FileConfiguration

@@ -45,6 +45,7 @@
 #include "_SwGuiQActionToWidget.h"
 #include "_SwGuiCompPushButtonToQAction.h"
 #include "SwEventToPopup.h"
+#include "SwActivationToQAction.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -91,6 +92,7 @@ void _SwGuiPluginFactory_Class::Initialize() {
 	RegisterComponent("SwGuiQActionToWidget","Produit un ISwAction permettant de cacher ou d'afficher la widget");
 	RegisterComponent("SwGuiCompPushButtonToQAction","Produit un button widget qui permet d'exécuter des actions");
 	RegisterComponent("SwEventToPopup","Popup sur SwEvent");
+	RegisterComponent("SwActivationToQAction","Permet de d'activer un composant via une QAction");
 
 }
 /*! \brief Liberation */
@@ -194,6 +196,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
 	}
 	if (name=="SwEventToPopup") {
 		return new SwEventToPopup;
+	}
+	if (name=="SwActivationToQAction") {
+		return new SwActivationToQAction;
 	}
     return NULL;
 }

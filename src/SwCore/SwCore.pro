@@ -5,6 +5,13 @@ PROJECTS_PATH = ../../../..
 
 QT += core xml
 
+CONFIG += StdAfx.h
+PRECOMPILED_HEADER = StdAfx.h
+win32-msvc* {
+PRECOMPILED_SOURCE = StdAfx.cpp
+}
+
+
 HEADERS += *.h 
 
 SOURCES += *.cpp 

@@ -4,6 +4,12 @@ PROJECTS_PATH = ../../../..
 
 QT += core gui xml network
 CONFIG      += designer plugin
+CONFIG += StdAfx.h
+PRECOMPILED_HEADER = StdAfx.h
+win32-msvc* {
+PRECOMPILED_SOURCE = StdAfx.cpp
+}
+
 	
 HEADERS += *.h 	
 SOURCES += *.cpp 	 
