@@ -36,6 +36,7 @@ class _SwGuiCompDockWidget : public SwComponent_Class, public ISwInterfaces_Cons
 {
 	Q_OBJECT
 	Q_PROPERTY(bool forceFloating READ GetForceFloating WRITE SetForceFloating)
+	Q_PROPERTY (bool showTitleBar READ getShowTitleBar	WRITE setShowTitleBar);
 
 protected:
     /* menu */
@@ -50,12 +51,13 @@ protected:
     ISwWidget * _handle_widget;
 	/* Force floating because in Qt, the floating is true until the dock is parent */
 	bool _forceFloating;
+	bool _showTitleBar;
 
 public:
     /*! \brief Constructeur */
     _SwGuiCompDockWidget();
     /*! \brief Destructeur */
-    virtual ~_SwGuiCompDockWidget();
+    virtual ~_SwGuiCompDockWidget();	
 
     /*! \brief Initialisation des ressources
     \note tous les services du composants doivent être déclarés dans cette methodes*/
@@ -77,5 +79,8 @@ public:
 
 	virtual bool GetForceFloating() const { return _forceFloating; }
 	virtual void SetForceFloating(bool val) { _forceFloating = val; }
+
+	bool getShowTitleBar();
+	void setShowTitleBar(bool val);
 };
 #endif 

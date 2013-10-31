@@ -21,6 +21,7 @@ _SwGuiCompDockWidget::_SwGuiCompDockWidget(): SwComponent_Class(){
     _dockwidget=NULL;
     _handle_widget=NULL;
 	_forceFloating = false;
+	_showTitleBar = true;
 }
 /*! \brief Destructeur */
 _SwGuiCompDockWidget::~_SwGuiCompDockWidget(){
@@ -88,5 +89,25 @@ void _SwGuiCompDockWidget::AfterInterfaceAvailabilityChange(QString interface_na
 \return le menu */
 QDockWidget & _SwGuiCompDockWidget::GetDockWidget() {
     return *_dockwidget;
+}
+
+//---------------------------------------------------------------------
+bool _SwGuiCompDockWidget::getShowTitleBar()
+{
+	return _showTitleBar;
+}
+
+//---------------------------------------------------------------------
+void _SwGuiCompDockWidget::setShowTitleBar( bool val )
+{
+	_showTitleBar = val;
+
+	if (!_showTitleBar)
+	{		
+		QWidget* lTitleBar = GetDockWidget().titleBarWidget();
+		QWidget* lEmptyWidget = new QWidget();
+		GetDockWidget().setTitleBarWidget(lEmptyWidget);
+		delete lTitleBar;
+	}
 }
 
