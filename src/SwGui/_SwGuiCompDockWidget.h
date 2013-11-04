@@ -52,6 +52,7 @@ protected:
 	/* Force floating because in Qt, the floating is true until the dock is parent */
 	bool _forceFloating;
 	bool _showTitleBar;
+	QWidget* _titleBar;
 
 public:
     /*! \brief Constructeur */
