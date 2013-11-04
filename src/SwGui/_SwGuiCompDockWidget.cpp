@@ -45,7 +45,9 @@ void _SwGuiCompDockWidget::InitializeResources() throw(SwException) {
     _consumer_service=new SwInterfaces_Consumer_Class(this) ;
     _provider_service=new SwInterfaces_Provider_Class(this) ;
     //Creation de l'interface principale
-    _dockwidget=new QDockWidget();
+    _dockwidget=new QDockWidget();	
+	_titleBar = GetDockWidget().titleBarWidget();
+
     //Enregistrement des services
     this->RegisterService(_properties_service);
     this->RegisterService(_consumer_service);
@@ -62,10 +64,9 @@ void _SwGuiCompDockWidget::InitializeResources() throw(SwException) {
 
 	//Enregistrement des propriétés
 	_properties_service->CreatePropertiesForQObject(_dockwidget,"QDockWidget");
-	_properties_service->CreatePropertiesForQObject(this,"",true);
+	_properties_service->CreatePropertiesForQObject(this,"",true);	
 
-    if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiDockWidget done\n"));
-
+    if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiDockWidget done\n"));	
 }
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
@@ -103,11 +104,12 @@ void _SwGuiCompDockWidget::setShowTitleBar( bool val )
 	_showTitleBar = val;
 
 	if (!_showTitleBar)
-	{		
-		QWidget* lTitleBar = GetDockWidget().titleBarWidget();
+	{				
 		QWidget* lEmptyWidget = new QWidget();
 		GetDockWidget().setTitleBarWidget(lEmptyWidget);
-		delete lTitleBar;
 	}
+	else
+		GetDockWidget().setTitleBarWidget(_titleBar);
+
 }
 
