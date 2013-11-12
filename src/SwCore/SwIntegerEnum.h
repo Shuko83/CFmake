@@ -44,6 +44,8 @@ namespace StreamWork
 			SwIntegerEnum(const SwIntegerEnum & source);
 			/*! \brief Destructeur */
 			virtual ~SwIntegerEnum();
+			/*! \brief Operateur de comparaison*/
+			bool operator==(const SwIntegerEnum& source) const;
 
 			/** @brief Permet d'affecter le QValidator à utiliser
 			*	@param QValidator * => validator : this ne gere pas la destruction du validator */			

@@ -13,6 +13,16 @@
 #include "SwException.h"
 #include "SwMacros.h"
 
+#include "SwEnum.h"
+#include "SwIntegerEnum.h"
+#include "SwInteger.h"
+#include "SwDouble.h"
+#include "SwString.h"
+#include "SwFileDescriptor.h"
+#include "SwIconDescriptor.h"
+#include "SwIpV4Address.h"
+#include "SwUUID.h"
+
 using namespace StreamWork::SwCore;
 
 /*! \brief Constructor */
@@ -54,15 +64,82 @@ QVariant _SwPropertyImpl_Class::GetValue(){
 void _SwPropertyImpl_Class::SetValue (const QVariant & val){
     if (!_is_editable)
         return;
-    SetInternalValue(val);
-    if (_hasBeenInitialed) {
-        _has_changed=true;
-        _OnChangeValue(this);
-    } else {
-        _initialValue=val;
-        _hasBeenInitialed=true;
-    }
+
+	// Ajout CGD : notif et changement que si la valeur de la property est différente
+	if(val != _value )
+	{
+		//if(!checkForUserType(val))
+		{
+			SetInternalValue(val);
+			if (_hasBeenInitialed) {
+				_has_changed=true;
+				_OnChangeValue(this);
+			} else {
+				_initialValue=val;
+				_hasBeenInitialed=true;
+			}
+		}	
+	}
 }
+
+
+bool _SwPropertyImpl_Class::checkForUserType (const QVariant & val)
+{
+	
+	if (_value.userType()!=QVariant::Invalid && _value.userType()!=val.userType()) 
+	{
+		QString s=QString("Unable to change property %1 because types are different %2!=%3").arg(_name).arg(QString(_value.typeName())).arg(QString(val.typeName()));
+		LAUNCH_SWEXCEPTION("SwCore",s);
+	}
+
+ 	if (val.userType() == qMetaTypeId<SwEnum>()) 
+	{
+		qDebug() << " Check for user Type SwEnum" ;
+ 		return (val.value<SwEnum>() == _value.value<SwEnum>());
+	}
+ 	if (val.userType() == qMetaTypeId<SwIntegerEnum>()) 
+	{
+		qDebug() << " Check for user Type SwIntegerEnum" ;
+ 		return (val.value<SwIntegerEnum>() == _value.value<SwIntegerEnum>());
+	}
+ 	if (val.userType()==qMetaTypeId<SwInteger>()) 
+	{
+		qDebug() << " Check for user Type SwInteger" ;
+ 		return (val.value<SwInteger>() == _value.value<SwInteger>());
+	}
+ 	if (val.userType()==qMetaTypeId<SwString>()) 
+	{
+		qDebug() << " Check for user Type SwString" ;
+ 		return (val.value<SwString>() == _value.value<SwString>());
+ 	}
+	if (val.userType()==qMetaTypeId<SwDouble>()) 
+	{
+		qDebug() << " Check for user Type SwDouble" ;
+ 		return (val.value<SwDouble>() == _value.value<SwDouble>());
+ 	}
+	if (val.userType()==qMetaTypeId<SwFileDescriptor>()) 
+	{
+		qDebug() << " Check for user Type SwFileDescriptor" ;
+ 		return (val.value<SwFileDescriptor>() == _value.value<SwFileDescriptor>());
+ 	}
+	if (val.userType()==qMetaTypeId<SwIconDescriptor>()) 
+	{
+		qDebug() << " Check for user Type SwIconDescriptor" ;
+ 		return (val.value<SwIconDescriptor>() == _value.value<SwIconDescriptor>());
+ 	}
+	if (val.userType()==qMetaTypeId<SwIpV4Address>()) 
+	{
+		qDebug() << " Check for user Type SwIpV4Address" ;
+ 		return (val.value<SwIpV4Address>() == _value.value<SwIpV4Address>());
+ 	}
+	if (val.userType()==qMetaTypeId<SwUUID>()) 
+	{
+		qDebug() << " Check for user Type SwUUID" ;
+ 		return (val.value<SwUUID>() == _value.value<SwUUID>());
+	}
+	return false;
+}
+
 /*! \brief methode permettant de definir la valeur d'une propriété par son controller*/
 void _SwPropertyImpl_Class::SetValueByController(const QVariant & val) {
     SetInternalValue(val);

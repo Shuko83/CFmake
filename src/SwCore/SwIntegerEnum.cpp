@@ -28,6 +28,18 @@ SwIntegerEnum::~SwIntegerEnum()
 {
 }	
 
+//-------------------------------------------------------------------------
+bool SwIntegerEnum::operator==( const SwIntegerEnum& source ) const
+{
+	if (&source==this) return true;
+	if (//   _max == source._max 
+		//&& _min == source._min
+		_currentValue == source._currentValue
+		/*&& _enum == source._enum*/) return true;
+	return false;
+}
+
+
 //---------------------------------------------------------------------------------
 QValidator::State SwIntegerEnum::validate( QString & input, int & pos ) const
 {

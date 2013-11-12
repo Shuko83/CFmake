@@ -301,6 +301,56 @@ void _SwServiceShortcuts::unBindAll()
 }
 
 //-------------------------------------------------------------------------
+void _SwServiceShortcuts::unBindDevices( QMap<QString,QList<QString>> devices )
+{
+	QMap<QString,QList<QString>>::iterator it;
+	for(it = devices.begin(); it != devices.end(); it ++)
+	{
+		QString key = it.key();
+
+		if(_mapDevicesAssoc.contains(key))
+			_mapDevicesAssoc.remove(key);
+	}
+}
+
+//-------------------------------------------------------------------------
+void _SwServiceShortcuts::unBindShortcuts( QMap<QString,QList<QString>> shortcuts )
+{
+	// On disconnecte et supprime que les shortcuts de la liste passée en paramètre
+	foreach(QShortcut* tshortcut, _listKeyShortcut )
+	{
+		QString StringSeq = tshortcut->key().toString();
+
+		QMap<QString,QList<QString>>::iterator it;
+		for(it = shortcuts.begin(); it != shortcuts.end(); it ++)
+		{
+			QList<QString> sequences = it.value();
+			QString StringSeq2 = sequences.at(0);
+			for(int i = 1; i<sequences.size(); i++)
+			{
+				StringSeq2 = StringSeq2+","+sequences.at(i);
+			}
+			// Pour les retrouver, on se base sur leur séquence associée
+ 			if (StringSeq == StringSeq2)
+ 			{
+				if(_mapKeyboardAssoc.contains(it.key()))
+					_mapKeyboardAssoc.remove(it.key());
+
+				_listKeyShortcut.removeOne(tshortcut);
+
+				shortcuts.remove(it.key());
+
+ 				disconnect(tshortcut, SIGNAL(activated()), this, SLOT(shortcutSlot()));
+ 				delete tshortcut;
+ 				tshortcut = NULL;
+				break;
+ 			}
+		}
+	}
+}
+
+
+//-------------------------------------------------------------------------
 void _SwServiceShortcuts::clearShortcutsService()
 {
 	// Le composant SxShortCutConfiguration lors du bindKeyBoard() créé les QShortCuts linké à son widget

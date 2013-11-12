@@ -96,6 +96,16 @@ namespace StreamWork
 			virtual void unBindAll() = 0;
 
 			/**
+			 * @brief    : Unbind designed Devices shortcuts
+			 */
+			virtual void unBindDevices(QMap<QString,QList<QString>> devices) = 0;
+
+			/**
+			 * @brief    : Unbind designed Shortcuts shortcuts
+			 */
+			virtual void unBindShortcuts(QMap<QString,QList<QString>> shortcuts) = 0;
+
+			/**
 			 * @brief    : clear shortcuts service
 			 */
 			virtual void clearShortcutsService() = 0;

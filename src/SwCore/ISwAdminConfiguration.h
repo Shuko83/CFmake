@@ -12,6 +12,8 @@
 #include "ISwConfSaver.h"
 #include "ISwConfCollector.h"
 #include "ISwConfigListener.h"
+#include "ISwConfPropertiesObserver.h"
+
 
 namespace StreamWork 
 {
@@ -52,21 +54,21 @@ namespace StreamWork
              * @Param	: QString, prefix du confCollector
              * @Param	: ISwConfCollector* pointeur vers le confCollector à registered
              */
-            virtual void registerConfCollector (QString confName, QString prefix, ISwConfCollector* confCollector) = 0;
+            virtual bool registerConfCollector (QString confName, QString prefix, ISwConfCollector* confCollector, bool autoSave) = 0;
 
 			/**
              * @brief	: Permet désenregistrer un ConfCollector
              * @Param	: QString, nom de la configuration concernée
              * @Param	: ISwConfCollector* pointeur vers le confCollector à désenregistrer
              */
-            virtual void unregisterConfCollector (QString confName) = 0;
+            virtual void unregisterConfCollector (QString confName, QString prefix, ISwConfCollector* confCollector) = 0;
 
 			/**
              * @brief	: Permet d'enregistrer un IConfSaver (confLoader)
              * @Param	: QString, nom de la configuration concernée
              * @Param	: IConfSaver* pointeur vers le confSaver à registered
              */
-            virtual void registerConfSaver (QString confName, ISwConfSaver* confSaver) = 0;
+            virtual bool registerConfSaver (QString confName, ISwConfSaver* confSaver) = 0;
 
 			/**
              * @brief	: Permet désenregistrer un IConfSaver (confLoader)
@@ -86,13 +88,26 @@ namespace StreamWork
              * @brief	: Permet register les listener pour les notifier par la suite
              * @Param	: ISwConfigListener, listener du service    
              */
-            virtual void registerConfigServiceListener (ISwConfigListener *listener) = 0;
+            virtual bool registerConfigServiceListener (ISwConfigListener *listener) = 0;
 
 			/**
              * @brief	: Permet de désenregister les listeners
              * @Param	: ISwConfigListener, listener du service    
              */
             virtual void unregisterConfigServiceListener (ISwConfigListener *listener) = 0;
+  
+			/**
+             * @brief	: Permet d'enregistrer un ConfPropertiesObserver
+             * @Param	: ISwConfPropertiesObserver* observer des properties
+             */
+            virtual bool registerConfPropertiesObserver ( ISwConfPropertiesObserver * observer  ) = 0;
+
+			/**
+             * @brief	: Permet désenregistrer un ConfPropertiesObserver
+             * @Param	: ISwConfPropertiesObserver* observer des properties
+             */
+            virtual void unregisterConfPropertiesObserver ( ISwConfPropertiesObserver * observer  ) = 0;
+
   
 			/**
              * @brief	: Permet de vider les Maps du service de conf

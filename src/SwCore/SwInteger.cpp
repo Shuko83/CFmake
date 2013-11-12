@@ -33,6 +33,17 @@ SwInteger::~SwInteger()
     //Nothing to do
 }
 
+//-------------------------------------------------------------------------
+bool SwInteger::operator==( const SwInteger& source ) const
+{
+	if (&source==this) return true;
+	if (//   _max == source._max 
+		//&& _min == source._min
+		//&& _step == source._step
+		_val == source._val) return true;
+	return false;
+}
+
 //---------------------------------------------------------------------------------
 void SwInteger::setValue( int val)
 {

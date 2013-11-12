@@ -35,6 +35,19 @@ SwDouble::~SwDouble()
     //Nothing to do
 }
 
+//-------------------------------------------------------------------------
+bool SwDouble::operator==( const SwDouble& source ) const
+{
+	if (&source==this) return true;
+	if (   _val == source._val 
+		&& _max == source._max 
+		&& _min == source._min 
+		&& _step == source._step 
+		&& _precision == source._precision) return true;
+	return false;
+}
+
+
 //---------------------------------------------------------------------------------
 void SwDouble::setValue( double val)
 {

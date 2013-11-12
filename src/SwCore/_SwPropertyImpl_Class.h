@@ -116,7 +116,7 @@ namespace StreamWork
  	        /*! \brief methode permettant de changer la visibilite de la propri�t�*/
 	        void SetIsVisible(bool is_visible);
 	        /*! \brief methode permettant de changer l'edition de la propri�t�*/
-	        void SetIsEditable(bool is_editable);
+	        virtual void SetIsEditable(bool is_editable);
 	        /*! \brief methode permettant de changer l'aspect controlable de la propri�t�*/
 	        void SetControllable(bool is_controllable);
 	        /*! \brief methode permettant de definir le controller*/
@@ -147,6 +147,8 @@ namespace StreamWork
             virtual bool isResettable();
             /*! \brief reset de la propriété*/
             virtual void reset();
+
+			bool checkForUserType (const QVariant & val);
        };
     }
 }

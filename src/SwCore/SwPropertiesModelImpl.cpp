@@ -1,8 +1,9 @@
-/*!
- \file _SwPropertiesModelImpl.h
- \brief Definit un modele a partir d'une liste de propriétés d'un composant
- \date 02-octobre-2006 16:04:34
- \author F.Bighelli
+/**
+ * file : SwPropertiesModelImpl.h
+ * brief : Definit un modele a partir d'une liste de propriétés d'un composant
+ *			(pour l'affichage dans un QTreeView)
+ * date : 02-octobre-2006 16:04:34
+ * author : F.Bighelli - modified by CGD (12/09/2013)
 */
 
 #include <QStringList>
@@ -19,38 +20,61 @@
 #include "SwPropertiesModelImpl.h"
 #include "SwIconDescriptor.h"
 #include "ISwSnapShotPropertiesService.h"
+#include "ISwServiceConfiguration.h"
 
 using namespace StreamWork::SwCore;
 
-/*! \brief constructeur */
-SwPropertiesModelImpl::SwPropertiesModelImpl(QObject * parent):QAbstractItemModel(parent) {
+//-------------------------------------------------------------------------
+SwPropertiesModelImpl::SwPropertiesModelImpl(QObject * parent):QAbstractItemModel(parent) 
+{
     _root_item=NULL;
     _properties=NULL;
     _action_item=NULL;
     _change_in_progress=false;
 }
-/*! \brief destructeur */
-SwPropertiesModelImpl::~SwPropertiesModelImpl() {
+
+
+//-------------------------------------------------------------------------
+SwPropertiesModelImpl::~SwPropertiesModelImpl() 
+{
     //Si l'ancienne collection de propriétés est definie
-    if (_properties!=NULL) {
-        //Desenregistrement des signaux
+    if (_properties != 0) 
+	{
+		//Desenregistrement des signaux
         _properties->GetOnBeforePropertiesChange().idisconnect(*this,&SwPropertiesModelImpl::OnBeforeChange);
         _properties->GetOnAfterPropertiesChange().idisconnect(*this,&SwPropertiesModelImpl::OnAfterChange);
         _properties->GetOnCreateProperty().idisconnect(*this,&SwPropertiesModelImpl::OnCreateProperty);
         _properties->GetOnDestroyProperty().idisconnect(*this,&SwPropertiesModelImpl::OnDestroyProperty);
-        //Destruction des items
-        delete _root_item;
+
+		//Destruction des items
+		delete _root_item;
     }
+	
     _map_properties_to_item.clear();
+
+	ISwServiceConfiguration *_saveConfigurationService = dynamic_cast<ISwServiceConfiguration *>(SW_APP->QueryService(CG_SW_SERVICE_SAVECONFIGURATION));
+	if(_saveConfigurationService)
+	{
+		_saveConfigurationService->getAdmin()->unregisterConfPropertiesObserver(this);
+	}
 }
-/*! \brief creation d'un item */
-void  SwPropertiesModelImpl::CreateItem(ISwProperty * property) {
+
+//-------------------------------------------------------------------------
+void  SwPropertiesModelImpl::CreateItem(ISwProperty * property, QString customConstructedPropertyName) 
+{
     PropertyItem * item =0;
     PropertyItem * c_item =0;
-    QStringList liste=property->GetRealName().split(".");
-    if (liste.count()<=1) {
-        liste=property->GetRealName().split("_");
-    }
+	QStringList liste;
+	QString propertyName = property->GetRealName(); 
+
+	if(customConstructedPropertyName != "")
+		propertyName = customConstructedPropertyName;
+
+	liste = propertyName.split(".");
+
+    if (liste.count()<=1) 
+		liste=propertyName.split("_");
+    
     int liste_size=liste.count();
     QMap<QString,PropertyItem *>::iterator it;
     int insert_index;
@@ -81,15 +105,24 @@ void  SwPropertiesModelImpl::CreateItem(ISwProperty * property) {
         item=c_item;
     }
 }
-/*! \brief destruction d'un item */
-void SwPropertiesModelImpl::DestroyItem(ISwProperty * property) {
+
+//-------------------------------------------------------------------------
+void SwPropertiesModelImpl::DestroyItem(ISwProperty * property, QString customConstructedPropertyName) 
+{
     PropertyItem * item=0;
     PropertyItem * c_item=0;
     PropertyItem * d_item=0;
-    QStringList liste=property->GetRealName().split(".");
-    if (liste.count()<=1) {
-        liste=property->GetRealName().split("_");
-    }
+	QStringList liste;
+	QString propertyName = property->GetRealName(); 
+
+	if(customConstructedPropertyName != "")
+		propertyName = customConstructedPropertyName;
+
+	liste = propertyName.split(".");
+
+	if (liste.count()<=1) 
+		liste=propertyName.split("_");
+
     int liste_size=liste.count();
     QMap<QString,PropertyItem *>::iterator it;
     QMap<QString,PropertyItem *>::iterator its;
@@ -98,55 +131,61 @@ void SwPropertiesModelImpl::DestroyItem(ISwProperty * property) {
     bool signalEndRemove;
 
     QMap<SwCore::ISwProperties *,PropertyItem *>::iterator itp;
-
-    itp=_map_properties_to_item.find(property->GetHostingService());
-    if (itp==_map_properties_to_item.end())
-        return;
-    item=itp.value();
-    for (int i=0;i<liste_size;i++) {
-        it=item->_childrens.find(liste[i]);
-        if (it!=item->_childrens.end()) {
-            c_item=it.value();  
-            if (i==liste_size-1) {
-                d_item=c_item;
-                if (d_item->_childrens.count()>0) {
-                    d_item->_property=NULL;
-                    return;
-                }
-                c_item=c_item->_parent;
-                //Change
-                while (c_item!=_root_item && c_item->_property==NULL && c_item->_childrens.count()==1) {
-                    d_item=c_item;
-                    c_item=c_item->_parent;
-                }
-                signalEndRemove=false;
-                remove_index=c_item->_showChildrens.indexOf(d_item);
-                its=c_item->_childrens.begin();
-                while (its.value()!=d_item) {
-                    //remove_index++;
-                    its++;
-                }
-                if (_change_in_progress) {
-                    parent_qindex=parent(createIndex(remove_index,0,(void *)its.value()));
-                    beginRemoveRows(parent_qindex,remove_index,remove_index);
-                    signalEndRemove=true;
-                }
-                delete d_item;
-                c_item->_childrens.erase(its);
-                c_item->_showChildrens.removeAt(remove_index);
-                if (signalEndRemove && parent_qindex.isValid()) {
+	
+	itp=_map_properties_to_item.find(property->GetHostingService());
+	if (itp==_map_properties_to_item.end())
+		return;
+	item=itp.value();
+	for (int i=0;i<liste_size;i++) 
+	{
+		it=item->_childrens.find(liste[i]);
+		if (it!=item->_childrens.end()) 
+		{
+			c_item=it.value();  
+			if (i==liste_size-1) 
+			{
+				d_item=c_item;
+				if (d_item->_childrens.count()>0) {
+					d_item->_property=NULL;
+					return;
+				}
+				c_item=c_item->_parent;
+				//Change
+				while (c_item!=_root_item && c_item->_property==NULL && c_item->_childrens.count()==1) {
+					d_item=c_item;
+					c_item=c_item->_parent;
+				}
+				signalEndRemove=false;
+				remove_index=c_item->_showChildrens.indexOf(d_item);
+				its=c_item->_childrens.begin();
+				while (its.value()!=d_item) {
+					//remove_index++;
+					its++;
+				}
+				if (_change_in_progress) {
+					parent_qindex=parent(createIndex(remove_index,0,(void *)its.value()));
+					beginRemoveRows(parent_qindex,remove_index,remove_index);
+					signalEndRemove=true;
+				}
+				delete d_item;
+				c_item->_childrens.erase(its);
+				c_item->_showChildrens.removeAt(remove_index);
+				if (signalEndRemove && parent_qindex.isValid()) {
                     
-                    endRemoveRows();
-                }
-                return;
-            }
-        } 
-        Q_ASSERT(c_item!=0);
-        item=c_item;
-    }
+					endRemoveRows();
+				}
+				return;
+			}
+		} 
+	    Q_ASSERT(c_item!=0);
+		item=c_item;
+	}
 }
-/*! \brief definit les propriétés */
-void SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString rootName,QString rootLabel) {
+
+
+//-------------------------------------------------------------------------
+void SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString rootName,QString rootLabel) 
+{
     QList<ISwProperty *> properties_list;
     QMap<SwCore::ISwProperties *,PropertyItem *>::iterator itp;
 
@@ -189,36 +228,118 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString roo
         reset();
     }
 }
-/*! \brief callback avant changement */
-void SwPropertiesModelImpl::OnBeforeChange(ISwProperties * properties) {
+
+
+
+//-------------------------------------------------------------------------
+void SwPropertiesModelImpl::SetProperties(QHash<ISwProperty*, QString> inProperties_list, QString rootName, QString rootLabel) 
+{
+	// Pointeur sur la property et nom construit (prefix+"."+nom décoré) de la property
+	QHash<ISwProperty*, QString> properties_list = inProperties_list;
+	
+	_map_properties_to_item.clear();
+
+	if (_root_item)
+		delete _root_item;
+	_root_item=new PropertyItem(this,rootName);
+	_rootLabel=rootLabel;
+
+
+	QHashIterator<ISwProperty*, QString> it_prop(properties_list);
+	while (it_prop.hasNext())
+	{
+		it_prop.next();
+
+		ISwProperty* prop = it_prop.key();
+		ISwProperties * properties = prop->GetHostingService();
+		QString constructedPropertyName = it_prop.value();
+
+
+		bool takeCareOfDebugProperties = false;
+		#if _DEBUG	
+			takeCareOfDebugProperties = true;
+		#endif
+
+		// Si on est PAS en débug et que la propery contient le mot clé, on NE l'ajoute PAS dans le TreeView
+		if(!takeCareOfDebugProperties && constructedPropertyName.contains("_DebugMode", Qt::CaseInsensitive))
+		{
+			// ne rien faire
+		}
+		else
+		{
+			// Pour chaque property, on cherche si le hostService  est déja dans la Map ou non
+			QMap<ISwProperties *,PropertyItem *>::iterator it;
+			it = _map_properties_to_item.find(properties);
+
+			// S'il ne l'est pas, on l'ajoute et on connecte les signaux
+			if (it == _map_properties_to_item.end()) 
+			{
+				_map_properties_to_item.insert(properties,_root_item);
+			}
+
+			if(prop->IsVisible())
+			{
+				if(constructedPropertyName.contains("_DebugMode", Qt::CaseInsensitive))
+					constructedPropertyName.remove("_DebugMode", Qt::CaseInsensitive);
+
+				CreateItem(prop, constructedPropertyName);
+			}
+		}
+ 	}
+
+	//Register auprès du service de conf pour la notification des properties supprimées
+	ISwServiceConfiguration *_saveConfigurationService = dynamic_cast<ISwServiceConfiguration *>(SW_APP->QueryService(CG_SW_SERVICE_SAVECONFIGURATION));
+	if(_saveConfigurationService)
+	{
+		_saveConfigurationService->getAdmin()->registerConfPropertiesObserver(this);
+	}
+
+	//Signal apres changement
+	reset();
+}
+
+
+//-------------------------------------------------------------------------
+void SwPropertiesModelImpl::OnBeforeChange(ISwProperties * properties) 
+{
     //A Revoir pour la destrcution
     //emit layoutAboutToBeChanged();
     //modelAboutToBeReset();
     //reset();
     _change_in_progress=true;
 }
-/*! \brief callback apres changement */
-void SwPropertiesModelImpl::OnAfterChange(ISwProperties * properties) {
+
+//-------------------------------------------------------------------------
+void SwPropertiesModelImpl::OnAfterChange(ISwProperties * properties) 
+{
     //emit layoutChanged();
     //modelReset();
     _change_in_progress=false;
 }
-/*! \brief callback sur creation de propriétés */
-void SwPropertiesModelImpl::OnCreateProperty(ISwProperties * properties,ISwProperty * property) {
+
+//-------------------------------------------------------------------------
+void SwPropertiesModelImpl::OnCreateProperty(ISwProperties * properties,ISwProperty * property) 
+{
     CreateItem(property);    
 }
-/*! \brief ccallback sur destruction de propriétés*/
-void SwPropertiesModelImpl::OnDestroyProperty(ISwProperties * properties,ISwProperty * property) {
+
+//-------------------------------------------------------------------------
+void SwPropertiesModelImpl::OnDestroyProperty(ISwProperties * properties,ISwProperty * property) 
+{
     DestroyItem(property);
 }
+
+
 //-------------------------------------------------------------
 // Interface QAbstractItemModel
 //------------------------------------------------------------
-/*! \brief Renvoie les capacites du modèle */
-Qt::ItemFlags SwPropertiesModelImpl::flags ( const QModelIndex & index ) const {
+
+//-------------------------------------------------------------------------
+Qt::ItemFlags SwPropertiesModelImpl::flags ( const QModelIndex & index ) const 
+{
     PropertyItem *item =0;
 
-    if (_properties==NULL || !index.isValid()) 
+    if ((_properties == 0 && _map_properties_to_item.size() == 0) || !index.isValid()) 
         return Qt::ItemFlags(Qt::ItemIsEnabled);
     item=(PropertyItem *)index.internalPointer();
     if (item->_property==NULL) {
@@ -229,23 +350,29 @@ Qt::ItemFlags SwPropertiesModelImpl::flags ( const QModelIndex & index ) const {
 
     return Qt::ItemFlags(Qt::ItemIsEnabled);
 }
-/*! \brief Renvoie le nombre de colonnes pour les enfants d'un parent donné */
-int SwPropertiesModelImpl::columnCount ( const QModelIndex & parent) const{
+
+//-------------------------------------------------------------------------
+int SwPropertiesModelImpl::columnCount ( const QModelIndex & parent) const
+{
     return 2;
 }			
-    /*! \brief Renvoie le nombre de ligne pour un parent donné */
-int SwPropertiesModelImpl::rowCount ( const QModelIndex & parent ) const{
+
+//-------------------------------------------------------------------------
+int SwPropertiesModelImpl::rowCount ( const QModelIndex & parent ) const
+{
     PropertyItem *iparent;
 
-    if (_properties==NULL) 
+    if ((_properties == 0 && _map_properties_to_item.size() == 0)) 
         return 0;
     if (!parent.isValid())
         return 1;
     iparent=(PropertyItem *)parent.internalPointer();
     return iparent->_childrens.count(); 
 }
-/*! \brief Renvoie les données d'entete */
-QVariant SwPropertiesModelImpl::headerData ( int section, Qt::Orientation orientation, int role) const{
+
+//-------------------------------------------------------------------------
+QVariant SwPropertiesModelImpl::headerData ( int section, Qt::Orientation orientation, int role) const
+{
     if (role == Qt::DisplayRole) {
         switch(section) {
             case 0:
@@ -260,11 +387,13 @@ QVariant SwPropertiesModelImpl::headerData ( int section, Qt::Orientation orient
     }
     return QVariant();
 }
-/*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
-QVariant SwPropertiesModelImpl::data ( const QModelIndex & index, int role) const {
+
+//-------------------------------------------------------------------------
+QVariant SwPropertiesModelImpl::data ( const QModelIndex & index, int role) const 
+{
     PropertyItem *item =0;
 
-    if (_properties==NULL || !index.isValid()) 
+    if ((_properties == 0 && _map_properties_to_item.size() == 0) || !index.isValid()) 
         return QVariant();
     item=(PropertyItem *)index.internalPointer();
     if (item==_root_item) {
@@ -363,12 +492,14 @@ QVariant SwPropertiesModelImpl::data ( const QModelIndex & index, int role) cons
     }
     return QVariant();
 }
-/*! \brief Permet de definir la valeur d'un item*/
-bool SwPropertiesModelImpl::setData ( const QModelIndex & index, const QVariant & value, int role) {
+
+//-------------------------------------------------------------------------
+bool SwPropertiesModelImpl::setData ( const QModelIndex & index, const QVariant & value, int role) 
+{
     PropertyItem *item =0;
     QVariant ivalue,tmpvalue;
 
-    if (_properties==NULL || !index.isValid() || role!=Qt::EditRole) 
+    if ((_properties == 0 && _map_properties_to_item.size() == 0) || !index.isValid() || role!=Qt::EditRole) 
         return false;
     item=(PropertyItem *)index.internalPointer();
     if (item->_property==NULL)
@@ -381,20 +512,27 @@ bool SwPropertiesModelImpl::setData ( const QModelIndex & index, const QVariant 
     } else {
         tmpvalue=value;    
     }
-    ISwSnapShotPropertiesService * snapshotService=dynamic_cast<ISwSnapShotPropertiesService *>(_properties->GetHostComponent()->QueryService(CG_SW_SNAPSHOPPROPERTY_SERVICE));
-    if (snapshotService!=0 && snapshotService->exist(item->_property->GetRealName())) {
-        snapshotService->removeFromSnapShot(item->_property->GetRealName());
-    } 
+	
+	if(_properties != 0 )
+	{
+		ISwSnapShotPropertiesService * snapshotService=dynamic_cast<ISwSnapShotPropertiesService *>(_properties->GetHostComponent()->QueryService(CG_SW_SNAPSHOPPROPERTY_SERVICE));
+		if (snapshotService!=0 && snapshotService->exist(item->_property->GetRealName())) {
+			snapshotService->removeFromSnapShot(item->_property->GetRealName());
+		} 
+	}
+	
     item->_property->SetValue(tmpvalue);
     emit dataChanged(index,index);
     return true;
 }
-/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donné*/
-QModelIndex SwPropertiesModelImpl::index ( int row, int column, const QModelIndex & parent) const{
+
+//-------------------------------------------------------------------------
+QModelIndex SwPropertiesModelImpl::index ( int row, int column, const QModelIndex & parent) const
+{
     PropertyItem * iparent =0 ;
     QMap<QString,PropertyItem *>::const_iterator it;
 	
-    if (_properties==NULL)
+    if ((_properties == 0 && _map_properties_to_item.size() == 0) )
         return QModelIndex();
     if (!parent.isValid()) 
         return createIndex(row,column,(void *)_root_item);
@@ -405,14 +543,16 @@ QModelIndex SwPropertiesModelImpl::index ( int row, int column, const QModelInde
     }
     return createIndex(row,column,(void *)iparent->_showChildrens.at(row));
 }
-/*! \brief Renvoie l'item parent d'un item index donné */
-QModelIndex SwPropertiesModelImpl::parent ( const QModelIndex & index ) const{
+
+//-------------------------------------------------------------------------
+QModelIndex SwPropertiesModelImpl::parent ( const QModelIndex & index ) const
+{
     PropertyItem * iindex =0;
     PropertyItem * iparent =0;
     int index_parent;
     QMap<QString,PropertyItem *>::const_iterator it;
 
-    if (_properties==NULL || !index.isValid())
+    if ((_properties == 0 && _map_properties_to_item.size() == 0)  || !index.isValid())
         return QModelIndex();
     iindex=(PropertyItem *)index.internalPointer();
     iparent=iindex->_parent;
@@ -429,27 +569,33 @@ QModelIndex SwPropertiesModelImpl::parent ( const QModelIndex & index ) const{
     index_parent=iparent->_showChildrens.indexOf(iindex);
     return createIndex(index_parent,index.column(),(void *)iindex);   
 }
+
 //---------------------------------------------------------------------
 // PropertyItem
 //---------------------------------------------------------------------
-/*! \brief constructeur par interface*/
-SwPropertiesModelImpl::PropertyItem::PropertyItem(SwPropertiesModelImpl * host,QString label,ISwProperty * property) {
+
+//-------------------------------------------------------------------------
+SwPropertiesModelImpl::PropertyItem::PropertyItem(SwPropertiesModelImpl * host,QString label,ISwProperty * property) 
+{
     _host=host; 
     _parent=NULL;
     _property=property;
     _property->GetOnChangeSignal().iconnect(*this,&SwPropertiesModelImpl::PropertyItem::OnPropertyChange);
     _label=label;
 }
-/*! \brief constructeur par nom*/
-SwPropertiesModelImpl::PropertyItem::PropertyItem(SwPropertiesModelImpl * host,QString label) {
+
+//-------------------------------------------------------------------------
+SwPropertiesModelImpl::PropertyItem::PropertyItem(SwPropertiesModelImpl * host,QString label) 
+{
     _host=host; 
     _parent=NULL;
     _property=NULL;
     _label=label;
 }
 
-/*! \brief Destructeur */
-SwPropertiesModelImpl::PropertyItem::~PropertyItem(){
+//-------------------------------------------------------------------------
+SwPropertiesModelImpl::PropertyItem::~PropertyItem()
+{
     QMap<QString,PropertyItem *>::iterator it;
     QMap<ISwProperties *,PropertyItem *>::iterator itp;
 
@@ -461,8 +607,10 @@ SwPropertiesModelImpl::PropertyItem::~PropertyItem(){
     }
     _childrens.clear();
 }
-/*! \brief Sur changement de la propriété */
-void SwPropertiesModelImpl::PropertyItem::OnPropertyChange(ISwProperty * property){
+
+//-------------------------------------------------------------------------
+void SwPropertiesModelImpl::PropertyItem::OnPropertyChange(ISwProperty * property)
+{
     QMap<QString,PropertyItem *>::const_iterator it;
     int index;
     QModelIndex mindex;
@@ -474,4 +622,11 @@ void SwPropertiesModelImpl::PropertyItem::OnPropertyChange(ISwProperty * propert
         mindex=_host->createIndex(0,index,(void *)this);
     }
     _host->dataChanged(mindex,mindex);
+}
+
+//-------------------------------------------------------------------------
+void SwPropertiesModelImpl::onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName )
+{
+	DestroyItem(propertyDeleted, propertyDecoratedName);
+	
 }

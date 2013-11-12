@@ -21,6 +21,14 @@ SwString::~SwString()
 
 }	
 
+//-------------------------------------------------------------------------
+bool SwString::operator==( const SwString& source ) const
+{
+	if (&source==this) return true;
+	if (_string == source._string) return true;
+	return false;
+}
+
 //---------------------------------------------------------------------------------
 QValidator::State SwString::validate( QString & input, int & pos ) const
 {

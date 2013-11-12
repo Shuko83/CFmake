@@ -64,6 +64,11 @@ namespace StreamWork
 			 */
 			virtual ISwProperty* getProperty(QString decoratedPropertyName) =0;
 
+			/** 
+			 * @brief Renvoie le nom de la property dont le pointeur est passé en paramètre
+			 * @return le nom de la property avec l'arborescence
+			 */
+			virtual QString getConstructedPropertyName(ISwProperty* inProperty ) = 0;
 
 			/** 
 			 * @brief Ajoute une property dans la liste du confCollector

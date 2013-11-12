@@ -246,6 +246,7 @@ void SwProperties_Class::Liberate(){
     for (it=_map_properties.begin();it!=_map_properties.end();it++) {
         it.value()->GetOnControlChangeSignal().idisconnect(*this,&SwProperties_Class::OnPropertyControlChange);
         DestroySubProperties(it.value());
+		_OnDestroyProperty(this,(ISwProperty *)it.value());
         delete it.value();
     }
     _map_properties.clear();

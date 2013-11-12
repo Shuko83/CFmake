@@ -9,6 +9,7 @@
 
 #include "ISwService.h"
 #include "ISwAdminConfiguration.h"
+#include "ISwConfPropertiesObserver.h"
 #include <QDomDocument>
 
 //Nom du service
@@ -36,27 +37,27 @@ namespace StreamWork
              * @Param	: QString : nom du nouveau profil de conf
              * @Param	: bool : nouvelle config par défaut ou depuis la config courante
              */
-			virtual void createNewConfiguration (QString confName, QString confProfileName, bool fromCurrent) = 0;
+			virtual bool createNewConfiguration (QString confName, QString confProfileName, bool fromCurrent) = 0;
 
             /**
              * @brief	: permet de supprimer la configuration courante
              * @Param	: QString : nom de la configuration concernée
              */
-			virtual void deleteConfiguration (QString confName) = 0;
+			virtual bool deleteConfiguration (QString confName) = 0;
 
 			/**
              * @brief	: permet de renomer le profil de configuration courant
              * @Param	: QString : nom de la configuration concernée
              * @Param	: QString : nouveau nom du profil de conf
              */
-			virtual void renameConfiguration (QString confName, QString newConfProfileName) = 0;
+			virtual bool renameConfiguration (QString confName, QString newConfProfileName) = 0;
 
 			/**
              * @brief	: permet de changer de configuration courante
              * @Param	: QString : nom de la configuration concernée
              * @Param	: QString : nom du profil de conf à charger
              */
-			virtual void switchConfiguration( QString confName, QString confProfileName) = 0;
+			virtual bool switchConfiguration( QString confName, QString confProfileName) = 0;
 
 			
 
@@ -67,7 +68,7 @@ namespace StreamWork
              * @Param	: QString : Groupe de paramètre (préfix) concerné par le restore
              * @Param	: bool : restauration des valeurs par défaut ou courantes?
              */
-			virtual void restoreCancelConfig( QString confName, QString parametersConcerned, bool fromDefault) = 0;
+			virtual bool restoreCancelConfig( QString confName, QString parametersConcerned, bool fromDefault) = 0;
 
 			
 
@@ -77,7 +78,7 @@ namespace StreamWork
              * @Param	: QString : nom de la configuration concernée
              * @Param	: QDomDocument : document de conf à sauvegarder
              */
-			virtual void saveConfigurationFile( QString confName ) = 0;
+			virtual bool saveConfigurationFile( QString confName ) = 0;
 
 
 			/**
@@ -85,14 +86,14 @@ namespace StreamWork
              *			  récupère les valeurs de la conf courante et concatène avec les autres confs
              * @Param	: QString : nom de la configuration concernée
              */
-			virtual void createConfigurationFile( QString confName, QDomDocument &doc) = 0;
+			virtual bool createConfigurationFile( QString confName, QDomDocument &doc) = 0;
 
 
 			/**
              * @brief	: permet de sauvegarder les profils de configuration
              * @Param	: QString : nom de la configuration concernée
              */
-			virtual void writeConfigurationFile (QString confName, QDomDocument &doc ) = 0;
+			virtual bool writeConfigurationFile (QString confName, QDomDocument &doc ) = 0;
 
 
 			/**
@@ -115,6 +116,12 @@ namespace StreamWork
              */
 			virtual ISwAdminConfiguration* getAdmin () = 0;
 
+			/**
+             * @brief	: permet de récupérer l'interface de gestion des properties de la conf
+             * @return	: ISwConfPropertiesObserver : pointeur sur l'interface de gestion des properties de la conf
+             */
+			virtual ISwConfPropertiesObserver* getConfPropertiesObserver () = 0;
+
 			
 			/**
              * @brief	: permet de récupérer un pointeur sur une property
@@ -124,7 +131,22 @@ namespace StreamWork
              * @return	: ISwProperty* : pointeur sur la property
              */
 			virtual ISwProperty* getProperty (QString confName, QString prefix, QString propertyName) = 0;
+
+			/**
+             * @brief	: permet de récupérer les pointeurs de toutes les properties d'une conf
+             * @Param	: QString : nom de la configuration concernée
+             * @return	: QHash<ISwProperty*, QString> : liste des pointeurs sur les properties et leur prefix associé
+             */
+			virtual QHash<ISwProperty*, QString> getAllProperties (QString confName) = 0;
             
+
+			/**
+             * @brief	: permet de récupérer l'arborescence d'une property d'après son pointeur
+             * @Param	: ISwProperty* : pointeur sur la propery concernée
+             * @return	: QString : Nom de la property concernée
+             */
+			//virtual QString getConstructedNameForProperty( ISwProperty* property) = 0;
+
 
             //---------------------------------------------------------------------
             // Interface ISwService

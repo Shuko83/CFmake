@@ -58,6 +58,8 @@ namespace StreamWork
 			SwInteger(const SwInteger & source);
 			/*! \brief Destructeur */
 			virtual ~SwInteger();
+			/*! \brief Operateur de comparaison*/
+			bool operator==(const SwInteger& source) const;
 
 			/** @brief mutateur de la valeur interne */
 			void setValue(int);

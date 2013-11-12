@@ -57,6 +57,8 @@ namespace StreamWork
 			SwDouble(const SwDouble & source);
 			/*! \brief Destructeur */
 			virtual ~SwDouble();
+			/*! \brief Operateur de comparaison*/
+			bool operator==(const SwDouble& source) const;
 
 			/** @brief mutateur de la valeur interne */
 			void setValue(double);

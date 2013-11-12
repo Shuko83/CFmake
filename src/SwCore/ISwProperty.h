@@ -82,6 +82,11 @@ namespace StreamWork
 	        virtual LibIndeSig::iSignal1<ISwProperty *> & GetOnEditableChangeSignal()=0;
 	        /*! \brief methode d'acces au signal de changement de controle*/
 	        virtual LibIndeSig::iSignal3<ISwProperty *,ISwController *,ISwController *> & GetOnControlChangeSignal()=0;
+
+		private :
+			virtual void SetIsEditable(bool is_editable) = 0;
+
+		friend class SwServiceSaveConfiguration;
         };
     }
 }
