@@ -138,6 +138,13 @@ namespace StreamWork
              * @return	: QHash<ISwProperty*, QString> : liste des pointeurs sur les properties et leur prefix associé
              */
 			virtual QHash<ISwProperty*, QString> getAllProperties (QString confName) = 0;
+
+			/**
+             * @brief	: permet de récupérer l'ordre de toutes les properties d'une conf pour les classer dans un treeview
+             * @Param	: QString : nom de la configuration concernée
+             * @return	: QHash<QString, int> : liste des noms décorés des properties et leur ordre dans le treeview
+             */
+			virtual QHash<QString, int> getAllPropertiesOrder (QString confName) = 0;
             
 
 			/**

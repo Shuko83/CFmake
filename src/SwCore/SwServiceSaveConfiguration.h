@@ -239,6 +239,13 @@ namespace StreamWork
 			virtual QHash<ISwProperty*, QString> getAllProperties (QString confName);
 			
 			/**
+             * @brief	: permet de récupérer l'ordre de toutes les properties d'une conf pour les classer dans un treeview
+             * @Param	: QString : nom de la configuration concernée
+             * @return	: QHash<QString, int> : liste des noms décorés des properties et leur ordre dans le treeview
+             */
+			virtual QHash<QString, int> getAllPropertiesOrder (QString confName);
+
+			/**
              * @brief	: permet de récupérer l'arborescence d'une property d'après son pointeur
              * @Param	: ISwProperty* : pointeur sur la propery concernée
              * @return	: QString : Nom de la property concernée
@@ -249,7 +256,8 @@ namespace StreamWork
 			//---------------------------------------------------------------------
 			// Interface ISwConfPropertiesObserver
 			//---------------------------------------------------------------------
-			virtual void onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName );
+			/** @brief : Fonction appelée par les confcollectors lors du delete d'une property */
+			virtual void onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName );
 
 		
 		private:
@@ -279,7 +287,7 @@ namespace StreamWork
 			QList<ISwConfigListener*>	_configurationServiceListeners;
 
 			/** @brief : Liste des observers du service pour notif lors d'une suppression de property */
-			QList<ISwConfPropertiesObserver*>	_confPropertiesObservers;
+			QList<ISwConfPropertiesObserver*>	_configurationPropertiesListeners;
 			
 
 			/**
@@ -310,8 +318,7 @@ namespace StreamWork
 			* @brief : notifie les listeners du service de configuration
 			* @Param : QString : nom de la configuration concernée
 			*/
-			void notifyLiteners(QString confName);
-
+			void notifyServiceListeners(QString confName);
 
 		};
     }

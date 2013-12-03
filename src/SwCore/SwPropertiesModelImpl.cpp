@@ -52,6 +52,7 @@ SwPropertiesModelImpl::~SwPropertiesModelImpl()
 	
     _map_properties_to_item.clear();
 
+	// Le property model n'est plus listener des properties de la conf
 	ISwServiceConfiguration *_saveConfigurationService = dynamic_cast<ISwServiceConfiguration *>(SW_APP->QueryService(CG_SW_SERVICE_SAVECONFIGURATION));
 	if(_saveConfigurationService)
 	{
@@ -229,14 +230,9 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString roo
     }
 }
 
-
-
 //-------------------------------------------------------------------------
-void SwPropertiesModelImpl::SetProperties(QHash<ISwProperty*, QString> inProperties_list, QString rootName, QString rootLabel) 
+void SwPropertiesModelImpl::SetProperties(QList<StarlinxProperty> inProperties_list, QString rootName, QString rootLabel )
 {
-	// Pointeur sur la property et nom construit (prefix+"."+nom décoré) de la property
-	QHash<ISwProperty*, QString> properties_list = inProperties_list;
-	
 	_map_properties_to_item.clear();
 
 	if (_root_item)
@@ -245,16 +241,17 @@ void SwPropertiesModelImpl::SetProperties(QHash<ISwProperty*, QString> inPropert
 	_rootLabel=rootLabel;
 
 
-	QHashIterator<ISwProperty*, QString> it_prop(properties_list);
+	QListIterator<StarlinxProperty> it_prop(inProperties_list);
 	while (it_prop.hasNext())
 	{
-		it_prop.next();
-
-		ISwProperty* prop = it_prop.key();
+		StarlinxProperty sxProperty = it_prop.next();
+		
+		// Pointeur sur la property et nom construit (prefix+"."+nom décoré) de la property
+		ISwProperty* prop = sxProperty.property;
 		ISwProperties * properties = prop->GetHostingService();
-		QString constructedPropertyName = it_prop.value();
+		QString constructedPropertyName = QString(sxProperty.prefix+"."+sxProperty.propertyName);
 
-
+	
 		bool takeCareOfDebugProperties = false;
 		#if _DEBUG	
 			takeCareOfDebugProperties = true;
@@ -625,8 +622,10 @@ void SwPropertiesModelImpl::PropertyItem::OnPropertyChange(ISwProperty * propert
 }
 
 //-------------------------------------------------------------------------
-void SwPropertiesModelImpl::onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName )
+void SwPropertiesModelImpl::onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName )
 {
-	DestroyItem(propertyDeleted, propertyDecoratedName);
+	// On traite uniquement les Listeners concernés par la confName
+	if(confName == _rootLabel)
+		DestroyItem(propertyDeleted, propertyDecoratedName);
 	
 }

@@ -39,6 +39,28 @@ namespace StreamWork
 		{ 
 			Q_OBJECT
 
+		public:
+			/** @brief : Structure pour chaque proerty Starlinx, opérateur == réimplémenté pour pouvoir utiliser indexOf() de QList.
+			 **			structure utilisée dans la classe ConfigurationToTreeViewWidget de la conf 
+			 */
+			typedef struct StarlinxProperty{
+				QString prefix;
+				QString propertyName;
+				int order;
+				ISwProperty* property;
+ 
+ 				bool operator==( const StarlinxProperty& source) const
+  				{
+  					if(source.order == order
+  						&& source.prefix == prefix
+  						&& source.property == property
+  						&& source.propertyName == propertyName)
+  						return true;
+  					else
+  						return false;
+  				}
+			};
+
         protected:
             /** @brief : Item representant une propriété */
             class PropertyItem {
@@ -96,7 +118,7 @@ namespace StreamWork
             void SetProperties(SwCore::ISwProperties * properties,QString rootName=QString(),QString rootLabel=QString());
 
 			/** @brief : definit les propriétés via une QHash<ISwProperty*, QString> , le QString étant l'arborescence de la property */
-			void SetProperties(QHash<ISwProperty*, QString> inProperties_list, QString rootName, QString rootLabel) ;
+			void SetProperties(QList<StarlinxProperty> inProperties_list, QString rootName, QString rootLabel) ;
 
 			/** @brief : callback avant changement */
             void OnBeforeChange(SwCore::ISwProperties * properties);
@@ -130,8 +152,7 @@ namespace StreamWork
 			//-------------------------------------------------------------
 			// Interface ISwConfPropertiesObserver
 			//------------------------------------------------------------
-			virtual void onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName );
-
+			virtual void onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName );
 
 		};
 	}

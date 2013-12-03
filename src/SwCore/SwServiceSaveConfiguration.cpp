@@ -90,7 +90,7 @@ void SwServiceSaveConfiguration::loadConfigurationFile( QString confName, QStrin
 		it.value() = true; 
 	}
 
-	notifyLiteners(confName);
+	notifyServiceListeners(confName);
 }
 
 
@@ -208,7 +208,7 @@ void SwServiceSaveConfiguration::unregisterConfCollector( QString confName, QStr
 	if(_autoSaveConfs.indexOf(confName) >= 0)
 	{
 		if(saveConfigurationFile(confName))
-			qDebug() << "Conf "<<confName <<" automatically saved at ConfCollector destruction/unregister";
+			qDebug() << "Conf service: "<<confName <<" automatically saved at ConfCollector destruction/unregister";
 	}
 
 
@@ -219,7 +219,7 @@ void SwServiceSaveConfiguration::unregisterConfCollector( QString confName, QStr
 		if(it2 != it.value().end())
 		{
 			// Notification de tous les observeurs que les properties vont être deleted
-			if(_confPropertiesObservers.size() > 0)
+			if(_configurationPropertiesListeners.size() > 0)
 			{
 				// récupérer le pointeur sur l'ISwConfCollector
 				ISwConfCollector *collector = it2.value();
@@ -229,7 +229,6 @@ void SwServiceSaveConfiguration::unregisterConfCollector( QString confName, QStr
 				if(collector)
 				{
 					props = collector->getProperties();
-					
 				}
 
 				// Pour chaque property qui va etre deletée
@@ -239,10 +238,10 @@ void SwServiceSaveConfiguration::unregisterConfCollector( QString confName, QStr
 					it_prop.next();
 					QString construcedDecoratedName = collector->getConstructedPropertyName(it_prop.value());
 
-					// On notifie tous les observeurs
-					for(int i=0; i<_confPropertiesObservers.size(); i++)
+					// On notifie tous les observeurs (SwPropertiesModelImpl) 
+					for(int i=0; i<_configurationPropertiesListeners.size(); i++)
 					{
-						_confPropertiesObservers.at(i)->onPropertyDeleted(it_prop.value(), construcedDecoratedName);
+						_configurationPropertiesListeners.at(i)->onPropertyDeleted(it_prop.value(), construcedDecoratedName, confName);
 					}
 				}
 			}
@@ -302,14 +301,14 @@ bool SwServiceSaveConfiguration::registerConfPropertiesObserver( ISwConfProperti
 {
 	bool ret = false;
 
-	if(_confPropertiesObservers.indexOf(observer) < 0)
+	if(_configurationPropertiesListeners.indexOf(observer) < 0)
 	{
-		_confPropertiesObservers.append(observer);
+		_configurationPropertiesListeners.append(observer);
 		ret = true;
 	}
 	else
 	{
-		qDebug() << "Conf service : Cannot register this ConfPropertiesObserver because it is already registered";
+		//qDebug() << "Conf service : Cannot register this ConfPropertiesObserver because it is already registered";
 	}
 	return ret;
 }
@@ -317,7 +316,7 @@ bool SwServiceSaveConfiguration::registerConfPropertiesObserver( ISwConfProperti
 //-------------------------------------------------------------------------
 void SwServiceSaveConfiguration::unregisterConfPropertiesObserver( ISwConfPropertiesObserver * observer )
 {
-	_confPropertiesObservers.removeOne(observer);
+	_configurationPropertiesListeners.removeOne(observer);
 }
 
 
@@ -353,7 +352,7 @@ bool SwServiceSaveConfiguration::registerConfigServiceListener( ISwConfigListene
 			if(it_loaded.value() == true)
 			{
 				listener->notifyConfiguration(_listenerConfName);
-				qDebug() << "Conf service : Conf already loaded, notify listener :" << _listenerConfName;
+				//qDebug() << "Conf service : Conf already loaded, notify listener :" << _listenerConfName;
 			}
 		}
 	}
@@ -381,7 +380,7 @@ void SwServiceSaveConfiguration::clearConfService()
 	_confProfilesDatas.clear();
 	_configsProfilesList.clear();
 	_configurationServiceListeners.clear();
-	_confPropertiesObservers.clear();
+	_configurationPropertiesListeners.clear();
 	_autoSaveConfs.clear();
 }
 
@@ -507,7 +506,7 @@ bool SwServiceSaveConfiguration::createNewConfiguration( QString confName, QStri
 			// appel de la méthode writeConfigurationFile[confName]
 			ret = writeConfigurationFile(confName, doc);
 
-			notifyLiteners(confName);
+			notifyServiceListeners(confName);
 		}	
 	}
 	return ret;
@@ -551,7 +550,7 @@ bool SwServiceSaveConfiguration::deleteConfiguration( QString confName )
 					// appel de la méthode saveConfFile[confName]
 					ret = saveConfigurationFile(confName);
 
-					notifyLiteners(confName);
+					notifyServiceListeners(confName);
 				}
 			}
 		}
@@ -599,7 +598,7 @@ bool SwServiceSaveConfiguration::renameConfiguration( QString confName, QString 
 			// appel de la méthode saveConfFile[confName]
 			ret = saveConfigurationFile(confName);
 			
-			notifyLiteners(confName);
+			notifyServiceListeners(confName);
 		}
 	}
 	return ret;
@@ -955,18 +954,56 @@ QHash<ISwProperty*, QString> SwServiceSaveConfiguration::getAllProperties( QStri
 }
 
 
+//-------------------------------------------------------------------------
+QHash<QString, int> SwServiceSaveConfiguration::getAllPropertiesOrder( QString confName )
+{
+	QHash<QString, int> allPropertiesOrder;
+
+	QHash<QString, QHash<QString, ISwConfCollector*>>::const_iterator it = _confCollectors.find(confName);
+
+	if(it != _confCollectors.end())
+	{
+		// pour chaque préfixe de confCollector[confName]  :
+		QHashIterator<QString, ISwConfCollector*> it_prefixes(it.value());
+		while (it_prefixes.hasNext()) 
+		{
+			it_prefixes.next();
+
+			// récupérer le pointeur sur l'ISwConfCollector
+			ISwConfCollector *collector = it_prefixes.value();
+
+			// faire un getProperties() et parcourir toutes les properties (y compris les externals)
+			QHash<QString, int> propsOrder = collector->getPropertiesOrder();
+
+			// On ajoute les properties à la liste
+			QString construtedPropertyName = "";
+			QHashIterator<QString, int> it_props(propsOrder);
+			while (it_props.hasNext()) 
+			{
+				it_props.next();
+
+				construtedPropertyName = ((collector->getPrefix() == "")? "" : collector->getPrefix()+".")+it_props.key();
+				allPropertiesOrder.insert(construtedPropertyName, it_props.value());
+			}
+		}
+	}
+
+	return allPropertiesOrder;
+}
+
+
 //---------------------------------------------------------------------
 // Interface ISwConfPropertiesObserver
 //---------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-void SwServiceSaveConfiguration::onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName )
+void SwServiceSaveConfiguration::onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName )
 {
-	// Notification de tous les observers que la property a été supprimée
 	// Fonction appelée par les collectors lorsque une property est destroyed
-	for (int i = 0; i < _confPropertiesObservers.size(); ++i) 
+	// Notification de tous les observers (SwPropertiesModelImpl) que la property a été supprimée
+	for (int i = 0; i < _configurationPropertiesListeners.size(); ++i) 
 	{
-		_confPropertiesObservers.at(i)->onPropertyDeleted(propertyDeleted, propertyDecoratedName);
+		_configurationPropertiesListeners.at(i)->onPropertyDeleted(propertyDeleted, propertyDecoratedName, confName);
 	}
 }
 
@@ -1158,19 +1195,30 @@ bool SwServiceSaveConfiguration::setPropertiesValuesFromProfile( QString confNam
 					{
 						prop = it2.value()->getProperty(decoratedName);
 
-						// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
-						// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
-						
-						bool OldEditableValue = prop->IsEditable();
-						if(!OldEditableValue)
-							prop->SetIsEditable(true);
+						// Si la property n'est pas valide c'est que les collector ont été modifiés par rapport au fichier de conf
+						// Des properties ont été supprimées ou ajoutées
+						if(prop)
+						{
+							bool OldEditableValue = prop->IsEditable();
+							if(!OldEditableValue)
+								prop->SetIsEditable(true);
 
-						_SwPropertyPersistent_Toolbox::LoadProperty(val, prop);
+							// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
+							// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
+							_SwPropertyPersistent_Toolbox::LoadProperty(val, prop);
 
-						prop->SetIsEditable(OldEditableValue);
+							prop->SetIsEditable(OldEditableValue);
 
-						if(!ret)
-							ret = true;
+							// Pour que la property ne soit plus marquée comme "modififée"
+							prop->MarkAsUnchanged();
+
+							if(!ret)
+								ret = true;
+						}
+						else
+						{
+							// TO DO CGD effacer la ligne du fichier de conf et de sauvegarder à nouveau
+						}
 					}
 				}
 			}
@@ -1213,7 +1261,7 @@ void SwServiceSaveConfiguration::createQDomProfile(QString confName, QDomDocumen
 
 
 //-------------------------------------------------------------------------
-void SwServiceSaveConfiguration::notifyLiteners(QString confName)
+void SwServiceSaveConfiguration::notifyServiceListeners(QString confName)
 {
 	for(int i=0; i<_configurationServiceListeners.size(); i++)
 	{
@@ -1222,4 +1270,3 @@ void SwServiceSaveConfiguration::notifyLiteners(QString confName)
 			_configurationServiceListeners.at(i)->notifyConfiguration(confName);
 	}
 }
-

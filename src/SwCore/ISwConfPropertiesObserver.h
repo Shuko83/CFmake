@@ -27,7 +27,7 @@ namespace StreamWork
 			/**
              * @brief	: 
              */
-			virtual void onPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName ) = 0;
+			virtual void onPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName = "" ) = 0;
         };
 }
 }

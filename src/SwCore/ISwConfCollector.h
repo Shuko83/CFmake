@@ -57,6 +57,11 @@ namespace StreamWork
              */
 			virtual QHash<QString, ISwProperty*> getProperties() =0;
 
+			/** 
+             * @brief Renvoie l'ordre des Properties collectée par le configurationCollector
+             * @return QHash<QString, int> : QHash<nom décoré de la ISwProperty, order de la property>
+             */
+			virtual QHash<QString, int> getPropertiesOrder() =0;
 
 			/** 
 			 * @brief Renvoie le pointeur vers l'ISwProperty avant le nom passé en paramètre

@@ -68,9 +68,27 @@ void _SwPropertyImpl_Class::SetValue (const QVariant & val){
 	// Ajout CGD : notif et changement que si la valeur de la property est différente
 	if(val != _value )
 	{
-		//if(!checkForUserType(val))
+		// on check si le type est UserType et que si la variable a déja été loadée une fois
+  		if(_hasBeenInitialed && _value.userType()!=QVariant::Invalid)
+  		{
+  			bool ret = checkForUserType(val);
+  			if(!ret) // si les valeurs des 2 types custom sont différents
+  			{
+  				SetInternalValue(val);
+  				if (_hasBeenInitialed) {
+  					_has_changed=true;
+  					_OnChangeValue(this);
+  				} else {
+  					_initialValue=val;
+  					_hasBeenInitialed=true;
+  				}
+			}
+  		}
+		// Première initialisation de la variable
+  		else
 		{
 			SetInternalValue(val);
+
 			if (_hasBeenInitialed) {
 				_has_changed=true;
 				_OnChangeValue(this);
@@ -78,7 +96,7 @@ void _SwPropertyImpl_Class::SetValue (const QVariant & val){
 				_initialValue=val;
 				_hasBeenInitialed=true;
 			}
-		}	
+		}
 	}
 }
 
@@ -94,48 +112,39 @@ bool _SwPropertyImpl_Class::checkForUserType (const QVariant & val)
 
  	if (val.userType() == qMetaTypeId<SwEnum>()) 
 	{
-		qDebug() << " Check for user Type SwEnum" ;
  		return (val.value<SwEnum>() == _value.value<SwEnum>());
 	}
  	if (val.userType() == qMetaTypeId<SwIntegerEnum>()) 
 	{
-		qDebug() << " Check for user Type SwIntegerEnum" ;
- 		return (val.value<SwIntegerEnum>() == _value.value<SwIntegerEnum>());
+		return (val.value<SwIntegerEnum>() == _value.value<SwIntegerEnum>());
 	}
  	if (val.userType()==qMetaTypeId<SwInteger>()) 
 	{
-		qDebug() << " Check for user Type SwInteger" ;
- 		return (val.value<SwInteger>() == _value.value<SwInteger>());
+		return (val.value<SwInteger>() == _value.value<SwInteger>());
 	}
  	if (val.userType()==qMetaTypeId<SwString>()) 
 	{
-		qDebug() << " Check for user Type SwString" ;
- 		return (val.value<SwString>() == _value.value<SwString>());
+		return (val.value<SwString>() == _value.value<SwString>());
  	}
 	if (val.userType()==qMetaTypeId<SwDouble>()) 
 	{
-		qDebug() << " Check for user Type SwDouble" ;
- 		return (val.value<SwDouble>() == _value.value<SwDouble>());
+		return (val.value<SwDouble>() == _value.value<SwDouble>());
  	}
 	if (val.userType()==qMetaTypeId<SwFileDescriptor>()) 
 	{
-		qDebug() << " Check for user Type SwFileDescriptor" ;
- 		return (val.value<SwFileDescriptor>() == _value.value<SwFileDescriptor>());
+		return (val.value<SwFileDescriptor>() == _value.value<SwFileDescriptor>());
  	}
 	if (val.userType()==qMetaTypeId<SwIconDescriptor>()) 
 	{
-		qDebug() << " Check for user Type SwIconDescriptor" ;
- 		return (val.value<SwIconDescriptor>() == _value.value<SwIconDescriptor>());
+		return (val.value<SwIconDescriptor>() == _value.value<SwIconDescriptor>());
  	}
 	if (val.userType()==qMetaTypeId<SwIpV4Address>()) 
 	{
-		qDebug() << " Check for user Type SwIpV4Address" ;
- 		return (val.value<SwIpV4Address>() == _value.value<SwIpV4Address>());
+		return (val.value<SwIpV4Address>() == _value.value<SwIpV4Address>());
  	}
 	if (val.userType()==qMetaTypeId<SwUUID>()) 
 	{
-		qDebug() << " Check for user Type SwUUID" ;
- 		return (val.value<SwUUID>() == _value.value<SwUUID>());
+		return (val.value<SwUUID>() == _value.value<SwUUID>());
 	}
 	return false;
 }
