@@ -630,7 +630,7 @@ bool SwServiceSaveConfiguration::switchConfiguration( QString confName, QString 
 // On recharge les valeurs de celle de la conf courante ou de celle de 
 // la conf par défaut selon la valeur de "fromDefault"
 //-------------------------------------------------------------------------
-bool SwServiceSaveConfiguration::restoreCancelConfig( QString confName, QString parametersConcerned, bool fromDefault )
+bool SwServiceSaveConfiguration::restoreCancelConfiguration( QString confName, QString parametersConcerned, bool fromDefault, bool isStarlinxRunning )
 {
 	bool ret = false;
 	// Récupération de la confCourante 
@@ -642,17 +642,25 @@ bool SwServiceSaveConfiguration::restoreCancelConfig( QString confName, QString 
  	if(!fromDefault)
 	{
 		// On reload les properties de la conf courante
-		if(!switchConfiguration(confName, currentConfigProfile))
-			qDebug() << "Conf service : Erreur while switching config "<<confName;
+		if(setPropertiesValuesFromProfile(confName, currentConfigProfile, isStarlinxRunning, parametersConcerned))
+		{
+			// On change également le nom du profil courant dans _currentConfs
+			_currentConfs.insert(confName, currentConfigProfile);
+
+			// appel de la méthode saveConfFile[confName] (on a changé les valeurs de l'attribut "current" dans les QDomElements)
+			ret = saveConfigurationFile(confName);
+		}
 		else
-			ret = true;
+		{
+			qDebug() << "Conf service : Failed to setPropertiesValuesFromProfile in restoreCancelConfig() method";
+		}
 	}
 	// Si on veut une restauration de la conf par défaut (reset properties) de TOUS LES PARAMETRES
 	else if(parametersConcerned == "all")
 	{
 		// On reload les properties de la conf par défault
 		// /!\ attention : pas de switch de conf courante ici !
-		if(!setPropertiesValuesFromProfile(confName, CFM_DEFAULT_FILENAME))
+		if(!setPropertiesValuesFromProfile(confName, CFM_DEFAULT_FILENAME, isStarlinxRunning))
 			qDebug() << "Conf service : Failed to setPropertiesValuesFromProfile() in restoreCancelConfig(all parameters) method";
 		else 
 			ret = true;
@@ -702,7 +710,20 @@ bool SwServiceSaveConfiguration::restoreCancelConfig( QString confName, QString 
 
 								// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
 								// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
-								_SwPropertyPersistent_Toolbox::LoadProperty(val, prop);
+								if(prop)
+								{
+									// Si on est en jeu, on Load la property uniquement si elle est active
+									if((isStarlinxRunning && prop->IsEditable()) || !isStarlinxRunning)
+									{
+										// Il faut notifier les listeners du changement de la property pour que la valeur 
+										// par défaut de celle-ci soit mise à jour (OnPropertyChange dans CPropertyTowidget)
+										if(decoratedName.contains("_readOnly", Qt::CaseInsensitive))
+											prop->MarkAsChanged();
+										else
+											_SwPropertyPersistent_Toolbox::LoadProperty(val, prop);
+
+									}
+								}
 							}
 						}
 					}
@@ -1150,7 +1171,7 @@ QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QSt
 
 
 //-------------------------------------------------------------------------
-bool SwServiceSaveConfiguration::setPropertiesValuesFromProfile( QString confName, QString confProfileName )
+bool SwServiceSaveConfiguration::setPropertiesValuesFromProfile( QString confName, QString confProfileName, bool isStarlinxRunning, QString parametersConcerned )
 {
 	bool ret = false;
 
@@ -1183,41 +1204,55 @@ bool SwServiceSaveConfiguration::setPropertiesValuesFromProfile( QString confNam
 				decoratedName = PropertiesElements.at(i).toElement().attribute(CFM_XML_PROPERTY_NAME);
 				val = PropertiesElements.at(i).toElement();
 
-				// Avec ces valeurs, on set au fur et à mesure toutes les values des Properties :
-				// Le *ISwProperty est récupéré via confCollectors[confName][prefix]->getProperty(name)
-				ISwProperty* prop = 0;
-
-				QHash<QString, QHash<QString, ISwConfCollector*>>::const_iterator it = _confCollectors.find(confName);
-				if(it != _confCollectors.constEnd())
+				// On load la valeur de la property uniquement si le prefix 
+				// est celui du groupe de paramètres que l'on veut restaurer
+				if(parametersConcerned == "all" || prefix == parametersConcerned)
 				{
-					QHash<QString, ISwConfCollector*>::const_iterator it2 = it.value().find(prefix);
-					if(it2 != it.value().constEnd())
+					// Avec ces valeurs, on set au fur et à mesure toutes les values des Properties :
+					// Le *ISwProperty est récupéré via confCollectors[confName][prefix]->getProperty(name)
+					ISwProperty* prop = 0;
+
+					QHash<QString, QHash<QString, ISwConfCollector*>>::const_iterator it = _confCollectors.find(confName);
+					if(it != _confCollectors.constEnd())
 					{
-						prop = it2.value()->getProperty(decoratedName);
-
-						// Si la property n'est pas valide c'est que les collector ont été modifiés par rapport au fichier de conf
-						// Des properties ont été supprimées ou ajoutées
-						if(prop)
+						QHash<QString, ISwConfCollector*>::const_iterator it2 = it.value().find(prefix);
+						if(it2 != it.value().constEnd())
 						{
-							bool OldEditableValue = prop->IsEditable();
-							if(!OldEditableValue)
-								prop->SetIsEditable(true);
+							prop = it2.value()->getProperty(decoratedName);
 
-							// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
-							// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
-							_SwPropertyPersistent_Toolbox::LoadProperty(val, prop);
+							// Si la property n'est pas valide c'est que les collector ont été modifiés par rapport au fichier de conf
+							// Des properties ont été supprimées ou ajoutées
+							if(prop)
+							{
+								bool OldEditableValue = prop->IsEditable();
 
-							prop->SetIsEditable(OldEditableValue);
+								// Si l'on n'est pas en jeu et que la property n'était pas éditable, on l'active
+								if(!OldEditableValue && !isStarlinxRunning)
+									prop->SetIsEditable(true);
 
-							// Pour que la property ne soit plus marquée comme "modififée"
-							prop->MarkAsUnchanged();
+								// Si l'on est en jeu et que la property n'était pas éditable, on NE l'active PAS
 
-							if(!ret)
-								ret = true;
-						}
-						else
-						{
-							// TO DO CGD effacer la ligne du fichier de conf et de sauvegarder à nouveau
+								// Il faut notifier les listeners du changement de la property pour que la valeur 
+								// par défaut de celle-ci soit mise à jour (OnPropertyChange dans CPropertyTowidget)
+								if(decoratedName.contains("_readOnly", Qt::CaseInsensitive))
+									prop->MarkAsChanged();
+								// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
+								// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
+								else
+									_SwPropertyPersistent_Toolbox::LoadProperty(val, prop);
+
+								prop->SetIsEditable(OldEditableValue);
+
+								// Pour que la property ne soit plus marquée comme "modififée"
+								prop->MarkAsUnchanged();
+
+								if(!ret)
+									ret = true;
+							}
+							else
+							{
+								// TO DO CGD effacer la ligne du fichier de conf et de sauvegarder à nouveau
+							}
 						}
 					}
 				}

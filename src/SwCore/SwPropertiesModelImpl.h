@@ -59,9 +59,17 @@ namespace StreamWork
   					else
   						return false;
   				}
+				bool operator<( const StarlinxProperty& source) const
+				{
+					if(source.prefix.compare(prefix) > 0)
+						return true;
+					else
+						return false;
+				}
 			};
 
-        protected:
+//        protected:
+
             /** @brief : Item representant une propriété */
             class PropertyItem {
             public:

@@ -165,7 +165,7 @@ namespace StreamWork
              * @Param	: QString : Groupe de paramètre (préfix) concerné par le restore
              * @Param	: bool : restauration des valeurs par défaut ou courantes?
              */
-			virtual bool restoreCancelConfig( QString confName, QString parametersConcerned, bool fromDefault);
+			virtual bool restoreCancelConfiguration( QString confName, QString parametersConcerned, bool fromDefault, bool isStarlinxRunning);
 
 
 			/**
@@ -303,8 +303,9 @@ namespace StreamWork
 			* @brief : permets de parser le fichier des confs
 			* @Param : QString : nom de la configuration concernée
 			* @Param : QString : nom du profil de conf pour lequel setter les valeurs des properties
+			* @Param : bool : valeur de play du système
 			*/
-			bool setPropertiesValuesFromProfile( QString confName, QString confProfileName );
+			bool setPropertiesValuesFromProfile( QString confName, QString confProfileName, bool isStarlinxRunning = false, QString parametersConcerned = "all");
 
 			/**
 			* @brief : permets de créer un QDom avec les valeurs des properties correspondant à un profil de conf 

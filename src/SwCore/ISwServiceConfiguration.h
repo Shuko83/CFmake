@@ -68,7 +68,7 @@ namespace StreamWork
              * @Param	: QString : Groupe de paramètre (préfix) concerné par le restore
              * @Param	: bool : restauration des valeurs par défaut ou courantes?
              */
-			virtual bool restoreCancelConfig( QString confName, QString parametersConcerned, bool fromDefault) = 0;
+			virtual bool restoreCancelConfiguration( QString confName, QString parametersConcerned, bool fromDefault, bool isStarlinxRunning) = 0;
 
 			
 

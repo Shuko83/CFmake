@@ -554,7 +554,7 @@ void _SwPropertyPersistent_Toolbox::setProperty(QDomElement & property_node, ISw
         inProperty->SetValue(tmp);
     }
 	//Type SwIntegerEnum
-	if (var.userType()==qMetaTypeId<SwIntegerEnum>() && property_node.hasAttribute(CL_XML_ATT_ENUM_INTEGER)) {
+	else if (var.userType()==qMetaTypeId<SwIntegerEnum>() && property_node.hasAttribute(CL_XML_ATT_ENUM_INTEGER)) {
 		int evalue=property_node.attribute(CL_XML_ATT_ENUM_INTEGER).toInt();
 		SwIntegerEnum enum_value=var.value<SwIntegerEnum>();            
 		enum_value.fromInt(evalue);
@@ -562,7 +562,7 @@ void _SwPropertyPersistent_Toolbox::setProperty(QDomElement & property_node, ISw
 		inProperty->SetValue(tmp);
 	}
 	//Type SwInteger
-	if (var.userType()==qMetaTypeId<SwInteger>() && property_node.hasAttribute(CL_XML_ATT_INTEGER)) {
+	else if (var.userType()==qMetaTypeId<SwInteger>() && property_node.hasAttribute(CL_XML_ATT_INTEGER)) {
 		int evalue=property_node.attribute(CL_XML_ATT_INTEGER).toInt();
 		SwInteger int_value=var.value<SwInteger>();        
 		int_value.setValue(evalue);
@@ -570,7 +570,7 @@ void _SwPropertyPersistent_Toolbox::setProperty(QDomElement & property_node, ISw
 		inProperty->SetValue(tmp);
 	}
 	//Type SwString
-	if (var.userType()==qMetaTypeId<SwString>() && property_node.hasAttribute(CL_XML_ATT_STRING)) {
+	else if (var.userType()==qMetaTypeId<SwString>() && property_node.hasAttribute(CL_XML_ATT_STRING)) {
 		QString s=property_node.attribute(CL_XML_ATT_STRING);
 		SwString string_value=var.value<SwString>();        
 		string_value.fromString(s);
@@ -578,7 +578,7 @@ void _SwPropertyPersistent_Toolbox::setProperty(QDomElement & property_node, ISw
 		inProperty->SetValue(tmp);
 	}
 	//Type SwDouble
-	if (var.userType()==qMetaTypeId<SwDouble>() && property_node.hasAttribute(CL_XML_ATT_DOUBLE)) {
+	else if (var.userType()==qMetaTypeId<SwDouble>() && property_node.hasAttribute(CL_XML_ATT_DOUBLE)) {
 		double evalue=property_node.attribute(CL_XML_ATT_DOUBLE).toDouble();
 		SwDouble double_value=var.value<SwDouble>();        
 		double_value.setValue(evalue);
@@ -586,7 +586,7 @@ void _SwPropertyPersistent_Toolbox::setProperty(QDomElement & property_node, ISw
 		inProperty->SetValue(tmp);
 	}
 	//Type SwFileDescriptor
-	if (var.userType()==qMetaTypeId<SwFileDescriptor>() && property_node.hasAttribute(CL_XML_ATT_FD)) 
+	else if (var.userType()==qMetaTypeId<SwFileDescriptor>() && property_node.hasAttribute(CL_XML_ATT_FD)) 
 	{
 		SwFileDescriptor fd=var.value<SwFileDescriptor>();
 		fd.setFileName(property_node.attribute(CL_XML_ATT_FD));
@@ -594,7 +594,7 @@ void _SwPropertyPersistent_Toolbox::setProperty(QDomElement & property_node, ISw
 		inProperty->SetValue(tmp);
 	}
 	//Type SwIconDescriptor
-	if (var.userType()==qMetaTypeId<SwIconDescriptor>() && property_node.hasAttribute(CL_XML_ATT_ID)) 
+	else if (var.userType()==qMetaTypeId<SwIconDescriptor>() && property_node.hasAttribute(CL_XML_ATT_ID)) 
 	{
 		SwIconDescriptor idesc=var.value<SwIconDescriptor>();
 		idesc.setPath(property_node.attribute(CL_XML_ATT_ID));
@@ -602,7 +602,7 @@ void _SwPropertyPersistent_Toolbox::setProperty(QDomElement & property_node, ISw
 		inProperty->SetValue(tmp);
 	}
 	//Type SwIpV4Address
-	if (var.userType()==qMetaTypeId<SwIpV4Address>() && property_node.hasAttribute(CL_XML_ATT_IPV4)) 
+	else if (var.userType()==qMetaTypeId<SwIpV4Address>() && property_node.hasAttribute(CL_XML_ATT_IPV4)) 
 	{
 		SwIpV4Address value=var.value<SwIpV4Address>();
 		value.FromString(property_node.attribute(CL_XML_ATT_IPV4));
@@ -610,12 +610,16 @@ void _SwPropertyPersistent_Toolbox::setProperty(QDomElement & property_node, ISw
 		inProperty->SetValue(tmp);
 	}
 	//Type SwUUID
-	if (var.userType()==qMetaTypeId<SwUUID>() && property_node.hasAttribute(CL_XML_ATT_UUID_H) && property_node.hasAttribute(CL_XML_ATT_UUID_L))  
+	else if (var.userType()==qMetaTypeId<SwUUID>() && property_node.hasAttribute(CL_XML_ATT_UUID_H) && property_node.hasAttribute(CL_XML_ATT_UUID_L))  
 	{
 		SwUUID value=var.value<SwUUID>();
 		value.mostSigBits=property_node.attribute(CL_XML_ATT_UUID_H).toLongLong();
 		value.leastSigBits=property_node.attribute(CL_XML_ATT_UUID_L).toLongLong();
 		tmp.setValue(value);
 		inProperty->SetValue(tmp);
+	}
+	else
+	{
+		//inProperty->SetValue(var); 
 	}
 }
