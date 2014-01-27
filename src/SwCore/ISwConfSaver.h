@@ -22,8 +22,10 @@ namespace StreamWork
         public:
             
             /** @brief : sauvegarde dans un fichier des données de la QString */
-            virtual bool saveCallBack(QString file)=0;         
+            virtual bool saveCallBack(QString file) = 0;         
             
+			/** @brief sauvegarde manuelle dans un fichier des données de la QString */
+			virtual bool manualSave(QString filedata) = 0;
         };
     }
 }

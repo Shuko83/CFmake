@@ -37,7 +37,7 @@ namespace StreamWork
 			// Interface ISwAdminConfiguration
 			//---------------------------------------------------------------------
 			
-			virtual void loadConfigurationFile( QString confName, QString confFileToBeLoaded );
+			virtual bool loadConfigurationFile( QString confName, QString confFileToBeLoaded );
 
 			/**
              * @brief	: Permet de récupérer tous les ConfCollectors registered
@@ -191,6 +191,20 @@ namespace StreamWork
              * @Param	: QDomDocument : document de conf à sauvegarder
              */
 			virtual bool writeConfigurationFile( QString confName, QDomDocument &doc  );
+
+			
+			/**
+             * @brief	: permet d'importer une configuration
+             * @Param	: QString : nom de la configuration concernée
+             */
+			virtual bool importConfigurationFile (QString confName );
+
+
+			/**
+			* @brief	: permet d'exporter une configuration en XML ( createConfigurationFile + writeConfigurationFile)
+             * @Param	: QString : nom de la configuration concernée
+             */
+			virtual bool exportConfigurationFile (QString confName);
 
 
 			/**

@@ -39,11 +39,13 @@ namespace StreamWork
              */
 			virtual bool createNewConfiguration (QString confName, QString confProfileName, bool fromCurrent) = 0;
 
+
             /**
              * @brief	: permet de supprimer la configuration courante
              * @Param	: QString : nom de la configuration concernée
              */
 			virtual bool deleteConfiguration (QString confName) = 0;
+
 
 			/**
              * @brief	: permet de renomer le profil de configuration courant
@@ -52,13 +54,13 @@ namespace StreamWork
              */
 			virtual bool renameConfiguration (QString confName, QString newConfProfileName) = 0;
 
+
 			/**
              * @brief	: permet de changer de configuration courante
              * @Param	: QString : nom de la configuration concernée
              * @Param	: QString : nom du profil de conf à charger
              */
 			virtual bool switchConfiguration( QString confName, QString confProfileName) = 0;
-
 			
 
 			/**
@@ -70,13 +72,11 @@ namespace StreamWork
              */
 			virtual bool restoreCancelConfiguration( QString confName, QString parametersConcerned, bool fromDefault, bool isStarlinxRunning) = 0;
 
-			
 
 			/**
              * @brief	: permet de sauver ( createConfigurationFile + writeConfigurationFile)
              *			  un XML file pour la configuration
              * @Param	: QString : nom de la configuration concernée
-             * @Param	: QDomDocument : document de conf à sauvegarder
              */
 			virtual bool saveConfigurationFile( QString confName ) = 0;
 
@@ -94,6 +94,20 @@ namespace StreamWork
              * @Param	: QString : nom de la configuration concernée
              */
 			virtual bool writeConfigurationFile (QString confName, QDomDocument &doc ) = 0;
+
+
+			/**
+             * @brief	: permet d'importer une configuration
+             * @Param	: QString : nom de la configuration concernée
+             */
+			virtual bool importConfigurationFile (QString confName ) = 0;
+
+
+			/**
+			* @brief	: permet d'exporter une configuration en XML ( createConfigurationFile + writeConfigurationFile)
+             * @Param	: QString : nom de la configuration concernée
+             */
+			virtual bool exportConfigurationFile (QString confName) = 0;
 
 
 			/**
@@ -146,13 +160,6 @@ namespace StreamWork
              */
 			virtual QHash<QString, int> getAllPropertiesOrder (QString confName) = 0;
             
-
-			/**
-             * @brief	: permet de récupérer l'arborescence d'une property d'après son pointeur
-             * @Param	: ISwProperty* : pointeur sur la propery concernée
-             * @return	: QString : Nom de la property concernée
-             */
-			//virtual QString getConstructedNameForProperty( ISwProperty* property) = 0;
 
 
             //---------------------------------------------------------------------

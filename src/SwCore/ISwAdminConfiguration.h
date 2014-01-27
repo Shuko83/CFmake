@@ -32,7 +32,7 @@ namespace StreamWork
              * @Param	: QString, nom de la configuration concernée
              * @Param	: QString, data du fichier de configuration
              */
-			virtual void loadConfigurationFile (QString confName, QString confFileToBeLoaded) = 0;
+			virtual bool loadConfigurationFile (QString confName, QString confFileToBeLoaded) = 0;
 
             /**
              * @brief	: Permet de récupérer tous les ConfCollectors registered
