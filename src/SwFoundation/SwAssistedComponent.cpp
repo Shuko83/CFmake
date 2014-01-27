@@ -726,11 +726,11 @@ void SwAssistedComponent::eventActivationChanged()
 {
 	if(isActive())
 	{
-		deactivation();
+		activation();
 	}
 	else
 	{
-		activation();
+		deactivation();
 	}
 }
 

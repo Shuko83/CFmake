@@ -61,8 +61,8 @@ QString _SwPropertyImpl_Class::GetRealName() {
 QVariant _SwPropertyImpl_Class::GetValue(){
     return GetInternalValue();
 }
-void _SwPropertyImpl_Class::SetValue (const QVariant & val){
-    if (!_is_editable)
+void _SwPropertyImpl_Class::SetValue (const QVariant & val, bool force /*= false*/){
+    if (!IsEditable() && !force)
         return;
 
 	// Ajout CGD : notif et changement que si la valeur de la property est différente
@@ -173,7 +173,7 @@ bool _SwPropertyImpl_Class::IsVisible(){
 }
 /*! \brief methode permettant de savoir si la propriété est editable*/
 bool _SwPropertyImpl_Class::IsEditable(){
-    return _is_editable;
+    return _is_editable && _hosting_service->GetPropertiesEdition();
 }
 /*! \brief methode permettant de savoir si la propriété est controllable*/
 bool _SwPropertyImpl_Class::IsControllable() {
@@ -250,7 +250,7 @@ QString _SwPropertyImpl_Class::GetDescription() {
 }
 /*! \brief Icon*/
 void _SwPropertyImpl_Class::SetIcon(QIcon & icon) {
-    if (!_is_editable)
+    if (!IsEditable())
         return;
     _icon=icon;
     _has_changed=true;
@@ -263,7 +263,7 @@ QIcon & _SwPropertyImpl_Class::GetIcon(){
 }
 /*! \brief value Icon*/
 void _SwPropertyImpl_Class::SetValueIcon(QIcon & icon){
-    if (!_is_editable)
+    if (!IsEditable())
         return;
     _valueIcon=icon;
     _has_changed=true;

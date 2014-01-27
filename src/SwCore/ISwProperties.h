@@ -73,6 +73,10 @@ namespace StreamWork
 	        virtual void ChangePropertyControllable(QString name,bool is_controllable)=0;
 	        /*! \brief Permet d'indiquer qu'une property a changé */
 	        virtual void SignalPropertyChange(QString name)=0;
+			/*! \brief Override l'editabilité de toutes les proprieté du service */
+			virtual void ChangePropertiesEdition(bool isEditable)=0;
+			/*! \brief Renvoi si le service du proprieté autorise l'edition de ses proprietés */
+			virtual bool GetPropertiesEdition()=0;
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------

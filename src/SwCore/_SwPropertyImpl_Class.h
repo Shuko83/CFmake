@@ -86,7 +86,7 @@ namespace StreamWork
 	        /*! \brief methode de recuperer la valeur d'une propri�t� */
 	        QVariant GetValue();
 	        /*! \brief methode permettant de definir la valeur d'une propri�t�*/
-	        void SetValue (const QVariant & val);
+	        void SetValue (const QVariant & val, bool force = false);
 	        /*! \brief methode permettant de definir la valeur d'une propri�t� par son controller*/
 	        void SetValueByController(const QVariant & val);
 	        /*! \brief methode de recuperer la valeur d'une propri�t� en interne*/

@@ -26,6 +26,7 @@ using namespace StreamWork::SwCore;
 SwProperties_Class::SwProperties_Class(SwComponent_Class * host) {
     _host_component=host;
     _set_properties.clear();
+	_isEditable = true;
 }
 /*! \brief Destrusteur */
 SwProperties_Class::~SwProperties_Class(){
@@ -486,4 +487,24 @@ void SwProperties_ClassHelper::validate()
 ISwProperties * SwProperties_ClassHelper::getHost()
 {
 	return _propertiesClass;
+}
+
+//---------------------------------------------------------------------------------
+void StreamWork::SwCore::SwProperties_Class::ChangePropertiesEdition( bool isEditable )
+{
+	_isEditable = isEditable;
+	QMap<QString,_SwPropertyImpl_Class *>::iterator it = _map_properties.begin();
+
+	while (it!=_map_properties.end()) {
+		_OnBeforeChange(this);
+		it.value()->GetOnEditableChangeSignal()(it.value());
+		_OnAfterChange(this);
+		++it;
+	}
+}
+
+//---------------------------------------------------------------------------------
+bool StreamWork::SwCore::SwProperties_Class::GetPropertiesEdition()
+{
+	return _isEditable;
 }

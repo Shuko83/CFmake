@@ -62,6 +62,7 @@ namespace StreamWork {
 			virtual public ISwPersistentConfigurable
 		{
             Q_OBJECT
+			Q_PROPERTY(bool SwAssistedComponent_isActive READ isActive WRITE setActive)
         public:
 
             /**

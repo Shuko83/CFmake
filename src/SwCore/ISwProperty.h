@@ -43,7 +43,7 @@ namespace StreamWork
 	        /*! \brief methode de recuperer la valeur d'une propri�t� */
 	        virtual QVariant GetValue()=0;
 	        /*! \brief methode permettant de definir la valeur d'une propri�t�*/
-	        virtual void SetValue (const QVariant & val)=0;
+	        virtual void SetValue (const QVariant & val, bool force = false)=0;
 	        /*! \brief methode permettant de savoir si la propri�t� est visible*/
 	        virtual bool IsVisible()=0;
 	        /*! \brief methode permettant de savoir si la propri�t� est editable*/

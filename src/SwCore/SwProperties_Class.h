@@ -44,6 +44,7 @@ namespace StreamWork
             QMap<QString,_SwPropertyImpl_Class *> _map_properties;
             /*! \brief QList des propriétés */
             QList<ISwProperty *> _set_properties;
+			bool _isEditable;
 
 			// ------------------------------------------------------------------------
 			//				Gestion des helpers
@@ -112,6 +113,10 @@ namespace StreamWork
 	        LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> & GetOnCreateProperty();
 	        /*! \brief methode d'acces au signal de destruction de propriété*/
 	        LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> & GetOnDestroyProperty();
+			/*! \brief Override l'editabilité de toutes les proprieté du service /!\ cette proprieté n'est pas sauvé et remise à false au début*/
+			virtual void ChangePropertiesEdition(bool isEditable);
+			/*! \brief Renvoi si le service du proprieté autorise l'edition de ses proprietés */
+			virtual bool GetPropertiesEdition();
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------
