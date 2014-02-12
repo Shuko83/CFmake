@@ -7,7 +7,7 @@
 
 #include <QMessageBox>
 #include <QDebug>
-//#include <QElapsedTimer>
+
 
 
 #include "SwServiceSaveConfiguration.h"
@@ -102,7 +102,7 @@ bool SwServiceSaveConfiguration::loadConfigurationFile( QString confName, QStrin
 				it.value() = true; 
 			}
 
-			notifyServiceListeners(confName);
+			notifyServiceListeners(confName, false);
 		}
 	}
 	return ret;
@@ -294,7 +294,7 @@ bool SwServiceSaveConfiguration::registerConfSaver( QString confName, ISwConfSav
 	}
 	else
 	{
-		qDebug() << "Conf service : Cannot regiter this confSaver because there is already a confSaver registered for configuration : "<< confName;
+		qDebug() << "Conf service : Cannot register this confSaver because there is already a confSaver registered for configuration : "<< confName;
 	}
 	return ret;
 }
@@ -366,7 +366,7 @@ bool SwServiceSaveConfiguration::registerConfigServiceListener( ISwConfigListene
 		{
 			if(it_loaded.value() == true)
 			{
-				listener->notifyConfiguration(_listenerConfName);
+				listener->notifyConfiguration(_listenerConfName, false);
 				//qDebug() << "Conf service : Conf already loaded, notify listener :" << _listenerConfName;
 			}
 		}
@@ -439,7 +439,7 @@ bool SwServiceSaveConfiguration::createNewConfiguration( QString confName, QStri
 			newConfCreated = true;
 		}
 		// copie du QDomElement de la conf par défaut (paramètres usine) 	
-		else
+		else 
 		{
 			QHash<QString, QHash<QString, QString>>::iterator it_profiles = _confProfilesDatas.find(confName);
 			if(it_profiles != _confProfilesDatas.end())
@@ -530,7 +530,7 @@ bool SwServiceSaveConfiguration::createNewConfiguration( QString confName, QStri
 			// appel de la méthode writeConfigurationFile[confName]
 			ret = writeConfigurationFile(confName, doc);
 
-			notifyServiceListeners(confName);
+			notifyServiceListeners(confName, true);
 		}	
 	}
 	return ret;
@@ -574,7 +574,7 @@ bool SwServiceSaveConfiguration::deleteConfiguration( QString confName )
 					// appel de la méthode saveConfFile[confName]
 					ret = saveConfigurationFile(confName);
 
-					notifyServiceListeners(confName);
+					notifyServiceListeners(confName, true);
 				}
 			}
 		}
@@ -628,7 +628,7 @@ bool SwServiceSaveConfiguration::renameConfiguration( QString confName, QString 
 				// appel de la méthode saveConfFile[confName]
 				ret = saveConfigurationFile(confName);
 				
-				notifyServiceListeners(confName);
+				notifyServiceListeners(confName, true);
 			}
 		}
 	}
@@ -867,6 +867,39 @@ bool SwServiceSaveConfiguration::createConfigurationFile( QString confName, QDom
 	return ret;
 }
 
+//-------------------------------------------------------------------------
+void SwServiceSaveConfiguration::createCurrentConfProfile( QString confName, QDomDocument &doc )
+{
+	// 1) Création d'un QDomDocument avec un noeud racine qui le profil de conf
+	QDomElement root_node;
+	root_node = doc.createElement(CFM_XML_TAG_FILE);
+	root_node.setAttribute(CFM_XML_TAG_FILE_CONFNAME, confName);
+
+	// Faire un append du QDomElement au QDomDocument créé au début (balise ConfigurationsFile ouverte)
+	doc.appendChild(root_node);
+
+
+	//2) Récupération de la confCourante 
+	QString	currentConfigProfile = "";
+	currentConfigProfile = getCurrentConf(confName);
+
+
+	// 3) Création d'un QDomElement contenant une balise <Config> pour la confCourante
+	QDomElement elt_current_config;
+	elt_current_config = doc.createElement(CFM_XML_TAG_CONFIG);
+	elt_current_config.setAttribute(CFM_XML_CONFIG_DEFAULT,		"false");
+	elt_current_config.setAttribute(CFM_XML_CONFIG_CURRENT,		"true");
+	elt_current_config.setAttribute(CFM_XML_CONFIG_NAME,		currentConfigProfile);
+
+
+	// récupération des valeurs courantes des properties pour setter la confCourante 
+	createQDomProfile(confName, doc, elt_current_config); 
+
+
+	// Fermer la balise <Config>
+	root_node.appendChild(elt_current_config);
+}
+
 
 //-------------------------------------------------------------------------
 bool SwServiceSaveConfiguration::writeConfigurationFile( QString confName, QDomDocument &doc )
@@ -914,8 +947,34 @@ bool SwServiceSaveConfiguration::importConfigurationFile( QString confName)
 		xmlFile.close();
 	}
 
-	ret = loadConfigurationFile(confName, filecontent);
-	
+	// Parsage du profil loadé pour l'ajouter dans _confProfilesDatas et _confProfilesList
+	QString resultParsage = parseConfigurationFile(confName, filecontent);
+
+	if(resultParsage == "invalid")
+	{
+		QMessageBox* msgBox 	= new QMessageBox();
+		msgBox->setWindowTitle("Invalid File");
+		msgBox->setText(QString("The .xml file loaded do not correspond to the configuration %1").arg(confName));
+		msgBox->setWindowFlags(Qt::WindowStaysOnTopHint);
+		msgBox->show();
+	}
+	else if(resultParsage != "")
+	{
+		//Récupération de la confCourrante 
+		QString	currentConfigProfile = "";
+		currentConfigProfile = getCurrentConf(confName);
+
+		// set des valeurs des properties
+		if(!setPropertiesValuesFromProfile(confName, currentConfigProfile))
+			qDebug() << "Conf service : Failed to setPropertiesValuesFromProfile() in loadConfigurationFile() method";
+		else
+		{
+			// appel de la méthode saveConfFile[confName] pour sauver le nouveau profil
+			ret = saveConfigurationFile(confName);
+
+			notifyServiceListeners(confName, true);
+		}
+	}
  	return ret;
 }
 
@@ -928,7 +987,7 @@ bool SwServiceSaveConfiguration::exportConfigurationFile( QString confName)
 	// QDomDoc temporaire pour la création des profils de conf à renseigner dans _confProfilesDatas
 	QDomDocument confFileToSave;
 
-	ret = createConfigurationFile(confName, confFileToSave);
+	createCurrentConfProfile(confName, confFileToSave);
 	
 	// Transformer le QDomDocument en QString
 	QString confFileContent = "";
@@ -938,7 +997,7 @@ bool SwServiceSaveConfiguration::exportConfigurationFile( QString confName)
 	QHash<QString, ISwConfSaver*>::const_iterator it_savers = _confSavers.find(confName);
 	if(it_savers != _confSavers.end() && confFileContent != 0)
 	{
-		ret = ret && it_savers.value()->manualSave(confFileContent);
+		ret = it_savers.value()->manualSave(confFileContent);
 	}
 	return ret;
 }
@@ -1130,7 +1189,6 @@ QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QSt
 	bool inDefaultConfig = false;
 	int nbProfiles = 0;
 
-
 	// Créer un seul QDomDoc pour toute la fonction sinon plantage...
 	QDomDocument tempDoc;
 
@@ -1150,13 +1208,6 @@ QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QSt
 
 	if(confConcernedByFile == confName || confConcernedByFile == "")
 	{
-		QHash<QString, QHash<QString, QString>>::iterator it = _confProfilesDatas.find(confName);
-		if(it != _confProfilesDatas.end())
-			_confProfilesDatas.erase(it);
-		QHash<QString, QList<QString>>::iterator it2 = _configsProfilesList.find(confName);
-		if(it2 != _configsProfilesList.end())
-			_configsProfilesList.erase(it2);
-	
 		// Pour chaque config dans le fichier, on récupère les datas (set dans "confProfilesDatas")
 		// et set de la confCourrante dans "currentConf"
 		for(int i=0; i<ConfigElements.size(); i++)
@@ -1341,22 +1392,15 @@ bool SwServiceSaveConfiguration::setPropertiesValuesFromProfile( QString confNam
 							{
 								bool OldEditableValue = prop->IsEditable();
 
-								// Si l'on n'est pas en jeu et que la property n'était pas éditable, on l'active
-								if(!OldEditableValue && !isStarlinxRunning)
-									prop->SetIsEditable(true);
-
-								// Si l'on est en jeu et que la property n'était pas éditable, on NE l'active PAS
-
 								// Il faut notifier les listeners du changement de la property pour que la valeur 
 								// par défaut de celle-ci soit mise à jour (OnPropertyChange dans CPropertyTowidget)
 								if(decoratedName.contains("_readOnly", Qt::CaseInsensitive))
 									prop->MarkAsChanged();
 								// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
 								// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
-								else
+								
+								if((!OldEditableValue && !isStarlinxRunning) || OldEditableValue)
 									_SwPropertyPersistent_Toolbox::LoadProperty(val, prop);
-
-								prop->SetIsEditable(OldEditableValue);
 
 								// Pour que la property ne soit plus marquée comme "modififée"
 								prop->MarkAsUnchanged();
@@ -1411,12 +1455,14 @@ void SwServiceSaveConfiguration::createQDomProfile(QString confName, QDomDocumen
 
 
 //-------------------------------------------------------------------------
-void SwServiceSaveConfiguration::notifyServiceListeners(QString confName)
+void SwServiceSaveConfiguration::notifyServiceListeners(QString confName, bool profilesNotif)
 {
 	for(int i=0; i<_configurationServiceListeners.size(); i++)
 	{
 		// On notifie uniquement les Listeners concernés par la confName
 		if(_configurationServiceListeners.at(i)->getListenerName() == confName)
-			_configurationServiceListeners.at(i)->notifyConfiguration(confName);
+			_configurationServiceListeners.at(i)->notifyConfiguration(confName, profilesNotif);
 	}
 }
+
+

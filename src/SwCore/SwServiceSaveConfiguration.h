@@ -27,6 +27,7 @@ namespace StreamWork
 											public ISwConfPropertiesObserver
         {
         public:
+
             /** @brief Constructor */
             SwServiceSaveConfiguration();
 
@@ -184,6 +185,12 @@ namespace StreamWork
              */
 			virtual bool createConfigurationFile( QString confName, QDomDocument &tempDoc );
 
+			/**
+             * @brief	: permet de créer un XML file pour un profil d'une conf
+             *			  récupère les valeurs de la conf courante 
+             * @Param	: QString : nom de la configuration concernée
+             */
+			virtual void createCurrentConfProfile( QString confName, QDomDocument &tempDoc );
 
 			/**
              * @brief	: permet de sauvegarder les profils de configuration
@@ -333,7 +340,7 @@ namespace StreamWork
 			* @brief : notifie les listeners du service de configuration
 			* @Param : QString : nom de la configuration concernée
 			*/
-			void notifyServiceListeners(QString confName);
+			void notifyServiceListeners(QString confName, bool profilesNotif);
 
 		};
     }

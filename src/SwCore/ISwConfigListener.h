@@ -36,7 +36,7 @@ namespace StreamWork
             /** @brief : Notification en cas de changement sur une configuration
              *	@param : QString : nom de la conf concernée
              */
-			virtual void notifyConfiguration(QString confName) = 0;
+			virtual void notifyConfiguration(QString confName, bool profilesNotif) = 0;
 
 			/** @brief : Récupération du nom du Listener pour notifier uniquement ceux concernés
 			 *	@param : QString : nom du Listener
