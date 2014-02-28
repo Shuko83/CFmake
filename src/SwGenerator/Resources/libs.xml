@@ -5,75 +5,75 @@
 	<!--Foundation-->
 	<lib>
 		<name>SxBasicsEntity</name>
-    <path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/src/sx/basics/entity</pathInclude>
+    <path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/src/sx/basics/entity</pathInclude>
   </lib>
 
 	<lib>
 		<name>SxBasicsAdmin</name>
-		<path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/src/sx/basics/admin</pathInclude>
+		<path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/src/sx/basics/admin</pathInclude>
   </lib>
 
 	<lib>
 		<name>SxBasicsApplication</name>
-		<path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/src/sx/basics/application</pathInclude>
+		<path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/src/sx/basics/application</pathInclude>
   </lib>
 
   <lib>
     <name>SxBasicsUi</name>
-    <path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/src/sx/basics/ui</pathInclude>
+    <path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/src/sx/basics/ui</pathInclude>
   </lib>
 
 	<lib>
 		<name>SxBasicsController</name>
-		<path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/Stable/src/sx/basics/controller</pathInclude>
+		<path>$$PROJECTS_PATH/Modules/Starlinx/Foundations/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Foundations/src/sx/basics/controller</pathInclude>
   </lib>
 
 	<!--TDL-->
 	<lib>
 		<name>SxTdlController</name>
-		<path>$STARLINX_PATH/Tdl/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/Stable/src/sx/tdl/controller</pathInclude>
+		<path>$STARLINX_PATH/Tdl/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/src/sx/tdl/controller</pathInclude>
   </lib>
 
 	<lib>
 		<name>SxTdlDataLink</name>
-		<path>$STARLINX_PATH/Tdl/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/Stable/src/sx/tdl/datalink</pathInclude>
+		<path>$STARLINX_PATH/Tdl/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/src/sx/tdl/datalink</pathInclude>
   </lib>
 	
 	<lib>
 		<name>SxTdlListeners</name>
-		<path>$STARLINX_PATH/Tdl/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/Stable/src/sx/tdl/listeners</pathInclude>
+		<path>$STARLINX_PATH/Tdl/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/src/sx/tdl/listeners</pathInclude>
   </lib>
 
   <lib>
     <name>SxTdlNetwork</name>
-    <path>$STARLINX_PATH/Tdl/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/Stable/src/sx/tdl/network</pathInclude>
+    <path>$STARLINX_PATH/Tdl/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/src/sx/tdl/network</pathInclude>
   </lib>
 
   <lib>
     <name>SxTdlNetworkL16</name>
-    <path>$STARLINX_PATH/Tdl/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/Stable/src/sx/tdl/networkl16</pathInclude>
+    <path>$STARLINX_PATH/Tdl/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/src/sx/tdl/networkl16</pathInclude>
   </lib>
 	
 	<lib>
 		<name>SxTdlTool</name>
-		<path>$STARLINX_PATH/Tdl/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/Stable/src/sx/tdl/tool</pathInclude>
+		<path>$STARLINX_PATH/Tdl/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/src/sx/tdl/tool</pathInclude>
   </lib>
 
   <lib>
     <name>SxTdlUi</name>
-    <path>$STARLINX_PATH/Tdl/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/Stable/src/sx/tdl/ui</pathInclude>
+    <path>$STARLINX_PATH/Tdl/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Tdl/src/sx/tdl/ui</pathInclude>
   </lib>
 
 	
@@ -82,20 +82,20 @@
 	<!--IHS-->
 	<lib>
 		<name>SxIhsCarto</name>
-		<path>$$PROJECTS_PATH/Modules/Starlinx/Ihs/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Ihs/Stable/src/sx/ihs/carto</pathInclude>
+		<path>$$PROJECTS_PATH/Modules/Starlinx/Ihs/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Ihs/src/sx/ihs/carto</pathInclude>
   </lib>
 
   <lib>
     <name>SxIhsFoundations</name>
-    <path>$$PROJECTS_PATH/Modules/Starlinx/Ihs/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Ihs/Stable/src/sx/ihs/foundations</pathInclude>
+    <path>$$PROJECTS_PATH/Modules/Starlinx/Ihs/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Ihs/src/sx/ihs/foundations</pathInclude>
   </lib>
 
   <lib>
     <name>SxIhsTdl</name>
-    <path>$$PROJECTS_PATH/Modules/Starlinx/Ihs/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Ihs/Stable/src/sx/ihs/tdl</pathInclude>
+    <path>$$PROJECTS_PATH/Modules/Starlinx/Ihs/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Ihs/src/sx/ihs/tdl</pathInclude>
   </lib>
 	
 	
@@ -105,8 +105,8 @@
 	<!--Hard-->
 	<lib>
 		<name>SxDevices</name>
-		<path>$$PROJECTS_PATH/Modules/Starlinx/Hard/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Hard/Stable/src/sx/Hard/Devices</pathInclude>
+		<path>$$PROJECTS_PATH/Modules/Starlinx/Hard/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Hard/src/sx/Hard/Devices</pathInclude>
   </lib>
 	
 	
@@ -115,14 +115,14 @@
 	<!--Carto-->
 	<lib>
 		<name>SxCartoAdapters</name>
-		<path>$$PROJECTS_PATH/Modules/Starlinx/Carto/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Carto/Stable/src/sx/Carto/Cartography</pathInclude>
+		<path>$$PROJECTS_PATH/Modules/Starlinx/Carto/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Carto/src/sx/Carto/Cartography</pathInclude>
   </lib>
 	
 	<lib>
 		<name>SxCartography</name>
-		<path>$$PROJECTS_PATH/Modules/Starlinx/Carto/Stable/lib/vc/{{CONF}}/plugins</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Carto/Stable/src/sx/Carto/Adapters</pathInclude>
+		<path>$$PROJECTS_PATH/Modules/Starlinx/Carto/lib/vc/{{CONF}}/plugins</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Starlinx/Carto/src/sx/Carto/Adapters</pathInclude>
   </lib>
 	
 	
@@ -132,8 +132,8 @@
 	<!--MapLib-->
 	<lib>
 		<name>MapLib</name>
-		<path>$$PROJECTS_PATH/Libraries/Carto/MapLib/Stable/lib/vc/{{CONF}}</path>
-    <pathInclude>$$PROJECTS_PATH\Libraries/Carto/MapLib/Stable/src</pathInclude>
+		<path>$$PROJECTS_PATH/Libraries/Carto/MapLib/lib/vc/{{CONF}}</path>
+    <pathInclude>$$PROJECTS_PATH\Libraries/Carto/MapLib/src</pathInclude>
   </lib>
 
 	
@@ -143,20 +143,20 @@
 	<!--Plg3-->
 	<lib>
 		<name>link16common</name>
-		<path>$$PROJECTS_PATH/Modules/Plg3/link16common/Stable/lib/vc/{{CONF}}</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Plg3/link16common/Stable/src</pathInclude>
+		<path>$$PROJECTS_PATH/Modules/Plg3/link16common/lib/vc/{{CONF}}</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Plg3/link16common/src</pathInclude>
   </lib>
 
   <lib>
     <name>tdlcommon</name>
-    <path>$$PROJECTS_PATH/Modules/Plg3/tdlcommon/Stable/lib/vc/{{CONF}}</path>
-    <pathInclude>$$PROJECTS_PATH/Modules/Plg3/tdlcommon/Stable/src</pathInclude>
+    <path>$$PROJECTS_PATH/Modules/Plg3/tdlcommon/lib/vc/{{CONF}}</path>
+    <pathInclude>$$PROJECTS_PATH/Modules/Plg3/tdlcommon/src</pathInclude>
   </lib>
 
   <lib>
     <name>protolg3</name>
-    <path>$$PROJECTS_PATH/Libraries/ProtoLG3/Stable/lib/vc/{{CONF}}</path>
-    <pathInclude>$$PROJECTS_PATH/Libraries/ProtoLG3/Stable/src</pathInclude>
+    <path>$$PROJECTS_PATH/Libraries/ProtoLG3/lib/vc/{{CONF}}</path>
+    <pathInclude>$$PROJECTS_PATH/Libraries/ProtoLG3/src</pathInclude>
   </lib>
 
 
@@ -164,26 +164,26 @@
   <!--Streamwork-->
   <lib>
     <name>SwCore</name>
-    <path>$$PROJECTS_PATH/Libraries/StreamWork/Stable/lib/vc/{{CONF}}</path>
-    <pathInclude>$$PROJECTS_PATH/Libraries/StreamWork/Stable/src/SwCore</pathInclude>
+    <path>$$PROJECTS_PATH/Libraries/StreamWork/lib/vc/{{CONF}}</path>
+    <pathInclude>$$PROJECTS_PATH/Libraries/StreamWork/src/SwCore</pathInclude>
   </lib>
 
   <lib>
     <name>SwExecution</name>
-    <path>$$PROJECTS_PATH/Libraries/StreamWork/Stable/lib/vc/{{CONF}}</path>
-    <pathInclude>$$PROJECTS_PATH/Libraries/StreamWork/Stable/src/SwExecution</pathInclude>
+    <path>$$PROJECTS_PATH/Libraries/StreamWork/lib/vc/{{CONF}}</path>
+    <pathInclude>$$PROJECTS_PATH/Libraries/StreamWork/src/SwExecution</pathInclude>
   </lib>
   
   <lib>
     <name>SwFoundation</name>
-    <path>$$PROJECTS_PATH/Libraries/StreamWork/Stable/lib/vc/{{CONF}}</path>
-    <pathInclude>$$PROJECTS_PATH/Libraries/StreamWork/Stable/src/SwFoundation</pathInclude>
+    <path>$$PROJECTS_PATH/Libraries/StreamWork/lib/vc/{{CONF}}</path>
+    <pathInclude>$$PROJECTS_PATH/Libraries/StreamWork/src/SwFoundation</pathInclude>
   </lib>
   
   <lib>
     <name>SwGui</name>
-    <path>$$PROJECTS_PATH/Libraries/StreamWork/Stable/lib/vc/{{CONF}}</path>
-    <pathInclude>$$PROJECTS_PATH/Libraries/StreamWork/Stable/src/SwGui</pathInclude>
+    <path>$$PROJECTS_PATH/Libraries/StreamWork/lib/vc/{{CONF}}</path>
+    <pathInclude>$$PROJECTS_PATH/Libraries/StreamWork/src/SwGui</pathInclude>
   </lib>
 
 </libs>

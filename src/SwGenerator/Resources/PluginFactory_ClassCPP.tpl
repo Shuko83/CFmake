@@ -102,7 +102,7 @@ QString {{PLUGIN_NAME}}PluginFactory_Class::GetPluginVersion()
 }
 
 //---------------------------------------------------------------------------------
-double {{PLUGIN_NAME}}::GetPluginCompilationDate()
+double {{PLUGIN_NAME}}PluginFactory_Class::GetPluginCompilationDate()
 {
 	//recup de la date à partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));

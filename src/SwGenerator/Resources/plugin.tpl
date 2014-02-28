@@ -3,8 +3,8 @@
 # PROJECT
 ################################################################################
 PROJECTS_NAME ={{PLUGIN_NAME}}
-PROJECTS_PATH = ./../../../../../../../..   
-STARLINX_PATH = ../../../../../..
+PROJECTS_PATH = ../../../../../../..   
+STARLINX_PATH = ../../../../..
 DEV_PATH = ../../../..
 PROJECTS_TYPE = lib
 SUB_DIR = /plugins 
