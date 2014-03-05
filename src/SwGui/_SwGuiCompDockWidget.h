@@ -1,13 +1,13 @@
 /*!
  \file _SwGuiCompDockWidget.h
- \brief Implementation of the Class _SwGuiCompDockWidget generant un QDockWidget
+ \brief Implementation of the Class _SwGuiCompDockWidget generant un SwDockWidget
  \version 1.0
- \date 23-août-2006 18:59:26
- \author F.Bighelli
+ \date
+ \author
 */
 
-#ifndef __SwGuiCompDockWidget_H
-#define __SwGuiCompDockWidget_H
+#ifndef __SwGuiCompSwDockWidget_H
+#define __SwGuiCompSwDockWidget_H
 
 /*
   * INCLUDES GLOBAUX
@@ -30,17 +30,17 @@ using namespace StreamWork::SwGui;
 
 /*!
 	\class _SwGuiCompDockWidget 
-	\brief _SwGuiCompDockWidget generant un QDockWidget
+	\brief _SwGuiCompDockWidget generant un SwDockWidget
 */
 class _SwGuiCompDockWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwDockWidget
 {
 	Q_OBJECT
-	Q_PROPERTY(bool forceFloating READ GetForceFloating WRITE SetForceFloating)
-	Q_PROPERTY (bool showTitleBar READ getShowTitleBar	WRITE setShowTitleBar);
+	//Q_PROPERTY(bool forceFloating READ GetForceFloating WRITE SetForceFloating) //ISwQDockWidget
+	//Q_PROPERTY (bool showTitleBar READ getShowTitleBar	WRITE setShowTitleBar);
 
 protected:
     /* menu */
-    QDockWidget * _dockwidget;
+    SwDockWidget_DockWidget * _dockwidget;
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
@@ -49,10 +49,11 @@ protected:
     SwProperties_Class * _properties_service;
     /* interface widget a consommée */
     ISwWidget * _handle_widget;
-	/* Force floating because in Qt, the floating is true until the dock is parent */
-	bool _forceFloating;
-	bool _showTitleBar;
-	QWidget* _titleBar;
+	//bool _forceFloating; //ISwQDockWidget
+	
+	/*Properties*/
+	/*bool _showTitleBar;
+	QWidget* _titleBar;*/
 
 public:
     /*! \brief Constructeur */
@@ -63,25 +64,27 @@ public:
     /*! \brief Initialisation des ressources
     \note tous les services du composants doivent être déclarés dans cette methodes*/
     virtual void InitializeResources() throw(SwException);
-    //---------------------------------------------------------------------
+    //-------------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
-    //---------------------------------------------------------------------
+    //-------------------------------------------------------------------------
 	/*! \brief Avant changement de la disponibilité de l'interface */
 	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
 	/*! \brief Apres changement de la disponibilité de l'interface */
 	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-    //---------------------------------------------------------------------
+    //-------------------------------------------------------------------------
     // Interface ISwDockWidget
-    //---------------------------------------------------------------------
+    //-------------------------------------------------------------------------
     /*! \brief Renvoie le dockwidget
     \return le dockwidget */
-	virtual QDockWidget & GetDockWidget();
+	virtual SwDockWidget_DockWidget & GetDockWidget();
 
+	/*virtual bool GetForceFloating() const { return _forceFloating; }
+	virtual void SetForceFloating(bool val) { _forceFloating = val; }*/
 
-	virtual bool GetForceFloating() const { return _forceFloating; }
-	virtual void SetForceFloating(bool val) { _forceFloating = val; }
+	//----------------------------------------------------------------------------
+	/*Properties*/
 
-	bool getShowTitleBar();
-	void setShowTitleBar(bool val);
+	/*bool getShowTitleBar();
+	void setShowTitleBar(bool val);*/
 };
 #endif 

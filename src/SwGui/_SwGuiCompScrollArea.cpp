@@ -160,7 +160,7 @@ void _SwGuiCompScrollArea::AfterInterfaceAvailabilityChange(QString interface_na
     }
 }
 //---------------------------------------------------------------------
-// Interface ISwMainWindow
+// Interface ISwQMainWindow
 //---------------------------------------------------------------------
 /*! \brief Renvoie le menu
 \return le menu */

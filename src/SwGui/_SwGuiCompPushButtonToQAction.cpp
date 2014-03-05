@@ -87,7 +87,7 @@ void _SwGuiCompPushButtonToQAction::BeforeInterfaceAvailabilityChange(QString in
 void _SwGuiCompPushButtonToQAction::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {    
 }
 //---------------------------------------------------------------------
-// Interface ISwMainWindow
+// Interface ISwQMainWindow
 //---------------------------------------------------------------------
 /*! \brief Renvoie le menu
 \return le menu */

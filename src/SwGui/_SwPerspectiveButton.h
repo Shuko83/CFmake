@@ -52,7 +52,7 @@ namespace StreamWork {
        
         signals:
             /** @brief sur changement de checked*/
-            virtual void onPerspectiveToggle(ISwPerspective * perspective,bool checked);
+            /*virtual */void onPerspectiveToggle(ISwPerspective * perspective,bool checked);
 
         protected:
             /** @brief calcul des valeurs pour le dessin */

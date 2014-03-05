@@ -237,7 +237,7 @@ void _SwGuiCompWidget::AfterInterfaceAvailabilityChange(QString interface_name,S
     }
 }
 //---------------------------------------------------------------------
-// Interface ISwMainWindow
+// Interface ISwQMainWindow
 //---------------------------------------------------------------------
 /*! \brief Renvoie le menu
 \return le menu */

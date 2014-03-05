@@ -55,7 +55,7 @@ void _SwEditorCompToolbox::InitializeResources() throw(SwException) {
 
 }
 //---------------------------------------------------------------------
-// Interface ISwMainWindow
+// Interface ISwQMainWindow
 //---------------------------------------------------------------------
 /*! \brief Renvoie le menu
 \return le menu */

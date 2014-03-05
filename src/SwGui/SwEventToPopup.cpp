@@ -23,7 +23,7 @@ SwEventToPopup::~SwEventToPopup()
 	//				Gestion des Interfaces
 	//---------------------------------------------------
 	unconsummeInterface("ISwEvent");
-	unconsummeInterface("ISwMainWindow");
+	unconsummeInterface("ISwQMainWindow");
 }
 
 void SwEventToPopup::initializeComponent() throw(SwException)
@@ -32,7 +32,7 @@ void SwEventToPopup::initializeComponent() throw(SwException)
 	//				Gestion des Interfaces
 	//---------------------------------------------------
 	consummeInterface<ISwEvent>("ISwEvent");
-	consummeInterface<ISwMainWindow>("ISwMainWindow");
+	consummeInterface<ISwQMainWindow>("ISwQMainWindow");
 
 	createPropertiesForThisObject(QString(),true);
 }
@@ -48,9 +48,9 @@ void SwEventToPopup::interfaceAvailable( QString interface_name )
 		_iSwEvent->addObserver(this);
 	}
 
-	if(interface_name == "ISwMainWindow")
+	if(interface_name == "ISwQMainWindow")
 	{
-		_iSwMainWindow = getInterface<ISwMainWindow>("ISwMainWindow");
+		_iSwMainWindow = getInterface<ISwQMainWindow>("ISwQMainWindow");
 	}
 }
 
@@ -60,7 +60,7 @@ void SwEventToPopup::interfaceUnavailable( QString interface_name )
 	{
 		_iSwEvent->removeObserver(this);
 	}
-	if(interface_name == "ISwMainWindow")
+	if(interface_name == "ISwQMainWindow")
 	{
 		_iSwMainWindow = NULL;
 	}

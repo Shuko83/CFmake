@@ -12,9 +12,11 @@
 #include "ISwServiceExtensions.h"
 
 #include "_SwGuiPluginFactory_Class.h"
+#include "_SwGuiCompQMainWindow.h"
 #include "_SwGuiCompMainWindow.h"
 #include "_SwGuiCompMenu.h"
 #include "_SwGuiCompToolbar.h"
+#include "_SwGuiCompQDockWidget.h"
 #include "_SwGuiCompDockWidget.h"
 #include "_SwGuiCompWidget.h"
 #include "_SwGuiCompFrame.h"
@@ -65,7 +67,8 @@ void _SwGuiPluginFactory_Class::Initialize() {
 	RegisterComponent("SwGuiActionList","Simple action list (Actions)");
 	RegisterComponent("SwGuiActionProvider","Simple action provider");
     RegisterComponent("SwGuiToolBar","Simple toolbar (QToolBar)");
-    RegisterComponent("SwGuiDockWidget","Simple dock widget (QDockWidget)");
+    RegisterComponent("SwGuiQDockWidget","Simple dock widget (QDockWidget)");
+	RegisterComponent("SwGuiDockWidget","Advanced Dock widget (SwDockWidget)");
     RegisterComponent("SwGuiWidget","Simple widget (QWidget)");
 	RegisterComponent("SwGuiFrame","Simple frame (QFrame)");
 	RegisterComponent("SwGuiScrollArea","Simple scrollArea (QScrollArea)");
@@ -101,7 +104,10 @@ void _SwGuiPluginFactory_Class::Liberate() {
 }
 /*! \brief instanciation d'un composant */
 SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
-    if (name=="SwGuiMainWindow") {
+    if (name=="SwGuiQMainWindow") {
+        return new _SwGuiCompQMainWindow;
+    }
+	if (name=="SwGuiMainWindow") {
         return new _SwGuiCompMainWindow;
     }
     if (name=="SwGuiMenu") {
@@ -115,6 +121,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
 	}
     if (name=="SwGuiToolBar") {
         return new _SwGuiCompToolBar;
+    }
+    if (name=="SwGuiQDockWidget") {
+        return new _SwGuiCompQDockWidget;
     }
     if (name=="SwGuiDockWidget") {
         return new _SwGuiCompDockWidget;
@@ -221,6 +230,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
 	}
     if (name=="SwGuiToolBar") {
         return QIcon(":/SwGui/toolbar.png");
+    }
+    if (name=="SwGuiQDockWidget") {
+        return QIcon(":/SwGui/widget.png");
     }
     if (name=="SwGuiDockWidget") {
         return QIcon(":/SwGui/widget.png");
@@ -341,7 +353,8 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
         eservice->registerExtension<ISwActionList>("ActionList","SwGuiActionList");
         eservice->registerExtension<QAbstractItemModel>("Model","SwGuiCompToPropertiesModel");
         eservice->registerExtension<ISwQAbstractItemViewSlots>("ViewSlots","SwGuiCompToPropertiesModel");
-        eservice->registerExtension<ISwDockWidget>("DockWidget","SwGuiDockWidget");
+        eservice->registerExtension<ISwQDockWidget>("QDockWidget","SwGuiQDockWidget");
+		eservice->registerExtension<ISwDockWidget>("DockWidget","SwGuiDockWidget");
 		eservice->registerExtension<ISwWidget>("Widget","SwGuiFrame");
 		eservice->registerExtension<ISwWidget>("Widget","SwGuiScrollArea");
         eservice->registerExtension<ISwLayout>("GridLayout","SwGuiGridLayout");
@@ -349,7 +362,7 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
         eservice->registerExtension<ISwLayout>("Layout","SwGuiHorizontalLayout");
         eservice->registerExtension<ISwHttpServer>("ISwHttpServer","SwGuiHttpServer");
         eservice->registerExtension<ISwWidget>("Widget","SwGuiLabel");
-        eservice->registerExtension<ISwMainWindow>("MainWindow","SwGuiMainWindow");
+        eservice->registerExtension<ISwQMainWindow>("MainWindow","SwGuiMainWindow");
         eservice->registerExtension<ISwMenu>("Menu","SwGuiMenu");
         eservice->registerExtension<ISwAction>("Action","SwGuiPluginsTree");
         eservice->registerExtension<ISwAction>("Action","SwGuiQActionToWidget");

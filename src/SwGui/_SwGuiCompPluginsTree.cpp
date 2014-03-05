@@ -71,7 +71,7 @@ void _SwGuiCompPluginsTree::OnPropertyChange(ISwProperty * property) {
     }
 }
 //---------------------------------------------------------------------
-// Interface ISwMainWindow
+// Interface ISwQMainWindow
 //---------------------------------------------------------------------
 /*! \brief Renvoie le Action
 \return le Action */

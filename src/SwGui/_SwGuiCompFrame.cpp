@@ -152,7 +152,7 @@ void _SwGuiCompFrame::AfterInterfaceAvailabilityChange(QString interface_name,Sw
     }
 }
 //---------------------------------------------------------------------
-// Interface ISwMainWindow
+// Interface ISwQMainWindow
 //---------------------------------------------------------------------
 /*! \brief Renvoie le menu
 \return le menu */

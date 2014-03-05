@@ -1,5 +1,5 @@
 /*!
- \file ISwMainWindow.h
+ \file ISwQMainWindow.h
  \brief interface fenetre principale
  \date 23-août-2006 16:04:34
  \author F.Bighelli
@@ -11,7 +11,8 @@
 /*
   * INCLUDES GLOBAUX
   */
-#include <QMainWindow>
+//#include <QMainWindow>
+#include "SwDockWidget_MainWindow.h"
 
 
 namespace StreamWork
@@ -19,7 +20,7 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \interface ISwMainWindow 
+		 \interface ISwQMainWindow 
 		 \brief interface definissant une QMainWindow
          \ingroup SwGuiGrp
          \swinterface
@@ -29,7 +30,7 @@ namespace StreamWork
 		public:
             /*! \brief Renvoie la fenetre principale
             \return la fenetre principale */
-			virtual QMainWindow & GetMainWindow()=0;
+			virtual SwDockWidget_MainWindow & GetMainWindow()=0;
 		};
 	}
 }

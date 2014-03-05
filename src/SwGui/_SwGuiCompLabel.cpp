@@ -78,7 +78,7 @@ void _SwGuiCompLabel::BeforeInterfaceAvailabilityChange(QString interface_name,S
 void _SwGuiCompLabel::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {    
 }
 //---------------------------------------------------------------------
-// Interface ISwMainWindow
+// Interface ISwQMainWindow
 //---------------------------------------------------------------------
 /*! \brief Renvoie le menu
 \return le menu */

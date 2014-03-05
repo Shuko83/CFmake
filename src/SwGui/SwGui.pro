@@ -11,11 +11,9 @@ PRECOMPILED_SOURCE = StdAfx.cpp
 }
 
 	
-HEADERS += *.h 	
-SOURCES += *.cpp 	 
-
-FORMS += _SwGuiCssDialog.ui \
-	_QRcViewerUi.ui
+HEADERS += *.h
+SOURCES += *.cpp
+FORMS += *.ui
 	
 RESOURCES += _resources/SwGuiRsc.qrc
 

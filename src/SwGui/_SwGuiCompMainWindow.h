@@ -1,6 +1,6 @@
 /*!
  \file _SwGuiCompMainWindow.h
- \brief Implementation of the Class _SwGuiMainWindow generant une QMainWindow
+ \brief Implementation of the Class _SwGuiMainWindow generant une SwDockWidget_MainWindow
  \version 1.0
  \date 23-août-2006 18:59:26
  \author F.Bighelli
@@ -14,6 +14,8 @@
   */
 #include <QMap>
 #include <Qt>
+
+#include "SwAssistedComponent.h"
 #include <Component.h>
 #include <SwInterfaces_Provider_Class.h>
 #include <SwInterfaces_Consumer_Class.h>
@@ -25,6 +27,9 @@
 #include "ISwToolBar.h"
 #include "ISwDockWidget.h"
 #include "ISwWidget.h"
+//#include "ISwFinalizer.h"
+
+
 /*
   * INCLUDES LOCAUX
   */
@@ -34,20 +39,29 @@
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
+using namespace StreamWork::SwFoundation;
 
 /*!
 	\class _SwGuiCompMainWindow 
 	\brief _SwGuiMainWindow generant une QMainWindow
 */
-class _SwGuiCompMainWindow : public Component, public QMainWindow, public ISwMainWindow , public ISwWidget, public ISwEvent
+class _SwGuiCompMainWindow : public SwAssistedComponent,
+							 //public Component, 
+							 public ISwMainWindow,
+							 public ISwWidget,
+							 public ISwEvent,
+							 public ISwFinalizer
 {
+
 protected:
     /* fenetre principale */
-    //QMainWindow * _main_window;
+	SwDockWidget_MainWindow * _mainWindow;
+
     /* show */
     SwEnum _show_mode;
     ISwProperty * _show_property;
-    // --- Menus ---
+    
+	// --- Menus ---
     /* nombre de menus */
     uint _menus_nb;
     /* propriété nombre de menu */
@@ -55,8 +69,9 @@ protected:
     /* map des interfaces menus*/
     QMap<QString,ISwMenu *> _menus;
     /* handle temporaire d'interface menus*/
-    ISwMenu * _tmp_handle_menu;
-    // --- Actions ---
+    //ISwMenu * _tmp_handle_menu;
+    
+	// --- Actions ---
     /* nombre d'actions */
     uint _actions_nb;
     /* propriété nombre d'actions*/
@@ -64,8 +79,9 @@ protected:
     /* map des interfaces actions*/
     QMap<QString,ISwAction *> _actions;
     /* handle temporaire d'interface menus*/
-    ISwAction * _tmp_handle_action;
-    // --- ToolBars ---
+    //ISwAction * _tmp_handle_action;
+    
+	// --- ToolBars ---
     /* default toolbar position */
     SwEnum _default_toolbar_position;
     /* nombre de toolbars */
@@ -77,10 +93,11 @@ protected:
     /* map des properties positions toolbars*/
     QMap<QString,ISwProperty *> _toolbar_positions;
     /* handle temporaire d'interface toolbar*/
-    ISwToolBar * _tmp_handle_toolbar;
-    // --- DockWidgets ---
+    //ISwToolBar * _tmp_handle_toolbar;
+    
+	// --- DockWidgets ---
     /* default dockwidget position */
-    SwEnum _default_dockwidget_position;
+    //SwEnum _default_dockwidget_position;
     /* nombre de dockwidgets */
     uint _dockwidgets_nb;
     /* propriété nombre de dockwidgets */
@@ -88,18 +105,20 @@ protected:
     /* map des interfaces dockwidgets*/
     QMap<QString,ISwDockWidget *> _dockwidgets;
     /* map des properties positions dockwidgets*/
-    QMap<QString,ISwProperty *> _dockwidget_positions;
+    //QMap<QString,ISwProperty *> _dockwidget_positions;
     /* handle temporaire d'interface dockwidget*/
-    ISwDockWidget * _tmp_handle_dockwidget;
-    // --- Central Widget ---
+    //ISwDockWidget * _tmp_handle_dockwidget;
+    
+	// --- Central Widget ---
     /* widget central */
-    ISwWidget * _handle_central_widget;
+    //ISwWidget * _handle_central_widget;
     /* choix du type d'interface Widget ou MainWindow*/
     bool  _useAsWidget;
     /* propriété nombre d'actions*/
     ISwProperty * _use_aswidget_property;   
 
 	QList<ISwEventObserver*> _iSwEvent;
+
 public:
     /*! \brief Constructeur */
     _SwGuiCompMainWindow();
@@ -112,17 +131,19 @@ public:
     void eventPropertyChange(ISwProperty * property);
     
     //---------------------------------------------------------------------
-    // Interface ISwMainWindow
+    // Interface ISwQMainWindow
     //---------------------------------------------------------------------
     /*! \brief Renvoie le nom du service
     \return le nom du service */
-	virtual QMainWindow & GetMainWindow();
-	    //---------------------------------------------------------------------
+	virtual SwDockWidget_MainWindow & GetMainWindow();
+
+	//---------------------------------------------------------------------
     // Interface ISwWidget
     //---------------------------------------------------------------------
-	            /*! \brief Renvoie le widget
-            \return le widget */
+	/*! \brief Renvoie le widget
+	\return le widget */
 	virtual QWidget & GetWidget();
+
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
@@ -138,8 +159,29 @@ public:
 	void removeObserver(ISwEventObserver * obs);
 	void notify(QEvent * event);
 
+	//---------------------------------------------------------------------
+	// Interface ISwFinalizer
+	//---------------------------------------------------------------------
+	virtual bool Finalize( quint64 historic_index );
+
+	//---------------------------------------------------------------------
+	// Gestion des Propriétés
+	//---------------------------------------------------------------------
+	/**
+	 * @brief    : Callback appelée lors de la disponibilité de l'interface
+	 * @param	 : QString interfaceName - Nom de l'interface
+	 */
+	virtual void interfaceAvailable(QString interfaceName);
+
+	/**
+	 * @brief    : Callback appelée lors de l'indisponibilité de l'interface
+	 * @param	 : QString interfaceName - Nom de l'interface
+	 */
+	virtual void interfaceUnavailable(QString interfaceName);
+
 private:
     void showChanged();
+
 protected:
 	void closeEvent(QCloseEvent* event);
 };

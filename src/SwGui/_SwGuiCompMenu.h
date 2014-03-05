@@ -78,7 +78,7 @@ public:
 	/*! \brief Apres changement de la disponibilité de l'interface */
 	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
     //---------------------------------------------------------------------
-    // Interface ISwMainWindow
+    // Interface ISwQMainWindow
     //---------------------------------------------------------------------
     /*! \brief Renvoie le menu
     \return le menu */
