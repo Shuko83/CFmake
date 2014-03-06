@@ -167,11 +167,29 @@ void SwDockWidget_MainArea::createMainWidgetAction(SwDockWidget_DockWidget * doc
 }
 
 //-----------------------------------------------------------------------------
-void SwDockWidget_MainArea::addWidgetInMenu(SwDockWidget_DockWidget * widget)
+void SwDockWidget_MainArea::addWidgetInMenu(SwDockWidget_DockWidget * widget, QString menuName)
 {
 	if (_widgetMenu && widget)
 	{
-		QAction * action = _widgetMenu->addAction(widget->getTitle());
+		QMenu * menu = _widgetMenu;
+		//Si ajout dans un sous-menu
+		if (menuName.compare(""))
+		{
+			menu = NULL;
+			//Recherche de l'existance du sous-menu
+			if (_listSousMenu.contains(menuName))
+				menu = _listSousMenu.value(menuName);
+
+			//S'il n'existe pas, on le cree
+			else
+			{
+				menu = new QMenu(menuName, _widgetMenu);
+				_widgetMenu->addMenu(menu);
+				_listSousMenu.insert(menuName, menu);
+			}
+		}
+
+		QAction * action = menu->addAction(widget->getTitle());
 		action->setCheckable(true);
 		action->setChecked(true);
 		connect(action, SIGNAL(triggered(bool)), this, SLOT(switchWidgetStateFromMenu(bool)));
@@ -766,7 +784,7 @@ void SwDockWidget_MainArea::lockConf(bool state)
 // Gestion des docks
 //-----------------------------------------------------------------------------
 //Enregistrement d'un dock dans la liste
-void SwDockWidget_MainArea::addDockWidget( SwDockWidget_DockWidget * dock, bool addInMenu )
+void SwDockWidget_MainArea::addDockWidget( SwDockWidget_DockWidget * dock, QString menuName)
 {
 	//Enregistrement du dock
 	_list.append(dock);
@@ -783,8 +801,8 @@ void SwDockWidget_MainArea::addDockWidget( SwDockWidget_DockWidget * dock, bool 
 	connect(dock, SIGNAL(releaseFromToolBarAsked()), this, SLOT(releaseFromToolBar()));
 
 	//Ajout du dock dans le menu
-	if (addInMenu)
-		addWidgetInMenu(dock);
+	//if (addInMenu)
+		addWidgetInMenu(dock, menuName);
 
 	//Affichage du dock
 	dock->show();

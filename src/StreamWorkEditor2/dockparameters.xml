@@ -1,0 +1,79 @@
+<!DOCTYPE dockparameters>
+<SwDockWidget_MainArea>
+ <SwDockWidget_Splitter objectName="SwDockWidget_Splitter" orientation="2">
+  <pos x="0" y="0"/>
+  <size width="1846" height="1036"/>
+  <SwDockWidget_Splitter objectName="SwDockWidget_Splitter" orientation="1">
+   <pos x="0" y="0"/>
+   <size width="1846" height="715"/>
+   <SwDockWidget_Splitter objectName="SwDockWidget_Splitter" orientation="2">
+    <pos x="0" y="0"/>
+    <size width="1537" height="715"/>
+    <SwDockWidget_MainDockWidget objectName="topMainDock" currentTab="0" visible="1" area="4" configuration="12">
+     <pos x="0" y="0"/>
+     <size width="1505" height="346"/>
+     <freeSize width="1505" height="346"/>
+     <QWidget objectName="tab_0" name="Dock1">
+      <pos x="0" y="0"/>
+      <size width="1527" height="304"/>
+      <SwDockWidget_DockWidget objectName="Test1" area="0">
+       <pos x="0" y="0"/>
+       <size width="1527" height="304"/>
+       <freeSize width="203" height="155"/>
+      </SwDockWidget_DockWidget>
+     </QWidget>
+    </SwDockWidget_MainDockWidget>
+    <QWidget objectName="centralWidget">
+     <pos x="0" y="342"/>
+     <size width="1537" height="373"/>
+     <QWidget objectName="MainWidget">
+      <pos x="0" y="0"/>
+      <size width="1537" height="373"/>
+     </QWidget>
+    </QWidget>
+   </SwDockWidget_Splitter>
+   <SwDockWidget_MainDockWidget objectName="rightMainDock" currentTab="0" visible="1" area="2" configuration="12">
+    <pos x="1542" y="0"/>
+    <size width="314" height="311"/>
+    <freeSize width="314" height="311"/>
+    <QWidget objectName="tab_0" name="Dock4">
+     <pos x="0" y="0"/>
+     <size width="294" height="682"/>
+     <SwDockWidget_DockWidget objectName="Test4" area="0">
+      <pos x="0" y="0"/>
+      <size width="294" height="682"/>
+      <freeSize width="134" height="131"/>
+     </SwDockWidget_DockWidget>
+    </QWidget>
+   </SwDockWidget_MainDockWidget>
+  </SwDockWidget_Splitter>
+  <SwDockWidget_MainDockWidget objectName="bottomMainDock" currentTab="0" visible="1" area="8" configuration="12">
+   <pos x="0" y="720"/>
+   <size width="321" height="325"/>
+   <freeSize width="321" height="325"/>
+   <QWidget objectName="tab_0" name="Dock3">
+    <pos x="0" y="0"/>
+    <size width="1836" height="283"/>
+    <SwDockWidget_DockWidget objectName="Test3" area="0">
+     <pos x="0" y="0"/>
+     <size width="1836" height="283"/>
+     <freeSize width="141" height="145"/>
+    </SwDockWidget_DockWidget>
+   </QWidget>
+  </SwDockWidget_MainDockWidget>
+ </SwDockWidget_Splitter>
+ <SwDockWidget_ToolBar orientation="2" aimantation="0">
+  <pos x="446" y="398"/>
+  <dist x="0" y="0"/>
+  <SwDockWidget_DockWidget objectName="Test2" area="0">
+   <pos x="436" y="388"/>
+   <size width="670" height="529"/>
+   <freeSize width="670" height="529"/>
+  </SwDockWidget_DockWidget>
+  <SwDockWidget_DockWidget objectName="Test5" area="0">
+   <pos x="559" y="406"/>
+   <size width="670" height="529"/>
+   <freeSize width="670" height="529"/>
+  </SwDockWidget_DockWidget>
+ </SwDockWidget_ToolBar>
+</SwDockWidget_MainArea>

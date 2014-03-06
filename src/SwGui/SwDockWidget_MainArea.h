@@ -27,7 +27,7 @@ public:
 	~SwDockWidget_MainArea();
 	
 	//Ajout d'un dock
-	void addDockWidget(SwDockWidget_DockWidget * dock, bool addInMenu = true);
+	void addDockWidget(SwDockWidget_DockWidget * dock, QString menuName = "");
 
 	//Suppression d'un dock
 	void removeDockWidget(SwDockWidget_DockWidget * dock);
@@ -74,7 +74,7 @@ private:
 
 	//Gestion de la barre de titre
 	void setMenu();
-	void addWidgetInMenu(SwDockWidget_DockWidget * widget);
+	void addWidgetInMenu(SwDockWidget_DockWidget * widget, QString menuName = "");
 	void createMainWidgetAction(SwDockWidget_DockWidget * dock, QString iconPath, QString disabledIcon, QString checkedIcon);
 	void updateConfiguration();
 	QString checkConfiguration(QSplitter * splitter);
@@ -147,6 +147,7 @@ private:
 	//Menu
 	QMenuBar * _menuBar;
 	QMenu * _widgetMenu;
+	QMap<QString, QMenu*> _listSousMenu;
 	SwDockWidget_MainDockConfiguration * _mainDockConf;
 
 	bool _isMovingDock; //Si un DockWidget est en train d'etre deplace

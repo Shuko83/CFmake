@@ -26,8 +26,10 @@
 #include "ISwAction.h"
 #include "ISwToolBar.h"
 #include "ISwDockWidget.h"
+#include "ISwListDockWidget.h"
 #include "ISwWidget.h"
 //#include "ISwFinalizer.h"
+#include "ISwListDockWidgetListener.h"
 
 
 /*
@@ -50,7 +52,8 @@ class _SwGuiCompMainWindow : public SwAssistedComponent,
 							 public ISwMainWindow,
 							 public ISwWidget,
 							 public ISwEvent,
-							 public ISwFinalizer
+							 public ISwFinalizer,
+							 public ISwListDockWidgetListener
 {
 
 protected:
@@ -104,6 +107,12 @@ protected:
     ISwProperty * _dockwidgets_nb_property;
     /* map des interfaces dockwidgets*/
     QMap<QString,ISwDockWidget *> _dockwidgets;
+	/* nombre de listes de dockwidgets */
+    uint _listdockwidgets_nb;
+    /* propriété nombre de listes de dockwidgets */
+    ISwProperty * _listdockwidgets_nb_property;
+	/* map des liste des docks widgets*/
+	QMap<QString, ISwListDockWidget *> _listdockwidgets;
     /* map des properties positions dockwidgets*/
     //QMap<QString,ISwProperty *> _dockwidget_positions;
     /* handle temporaire d'interface dockwidget*/
@@ -163,6 +172,12 @@ public:
 	// Interface ISwFinalizer
 	//---------------------------------------------------------------------
 	virtual bool Finalize( quint64 historic_index );
+
+	//----------------------------------------------------------------------------
+	// Interface ISwListDockWidgetListener
+	//----------------------------------------------------------------------------
+	virtual void addDockWidget(ISwDockWidget * widget);
+	virtual void removeDockWidget(ISwDockWidget *widget);
 
 	//---------------------------------------------------------------------
 	// Gestion des Propriétés

@@ -20,9 +20,11 @@ using namespace StreamWork::SwGui;
 #define CL_MENU_INTERFACE_NAME "Menu_%1"
 #define CL_ACTION_INTERFACE_NAME "Action_%1"
 #define CL_TOOLBAR_INTERFACE_NAME "ToolBar_%1"
-#define CL_DOCKWIDGET_NAME "DockWidget"
+//#define CL_DOCKWIDGET_NAME "DockWidget"
 #define CL_DOCKWIDGET_INTERFACE_NAME "DockWidget_%1"
 #define CL_CENTRALWIDGET_INTERFACE_NAME "CentralWidget"
+#define CL_LISTDOCKWIDGET_INTERFACE_NAME "ListDockWidget_%1"
+
 #define SHOW_NORMAL 0
 #define SHOW_CENTERED 1
 #define SHOW_FULLSCREEN 2
@@ -44,6 +46,7 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()
     _actions_nb = 0;
     _toolbars_nb = 0;
     _dockwidgets_nb = 0;
+	_listdockwidgets_nb = 0;
     /*_tmp_handle_menu = NULL;
     _tmp_handle_action = NULL;
     _tmp_handle_toolbar = NULL;
@@ -65,18 +68,13 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()
 /*! \brief Destructeur */
 _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
 {
-    QMap<QString,ISwMenu *>::iterator menu_it;
-    QMap<QString,ISwAction *>::iterator action_it;
-    QMap<QString,ISwToolBar *>::iterator toolbar_it;
-    QMap<QString,ISwDockWidget *>::iterator dockwidget_it;
-    
     //Menus
-    menu_it = _menus.begin();
+    QMap<QString,ISwMenu *>::iterator menu_it = _menus.begin();
     while (menu_it != _menus.end())
 	{
         if (menu_it.value()!=NULL)
 		{
-            //S'l etait defini, on le detache de la menubar
+            //S'il etait defini, on le detache de la menubar
             menu_it.value()->GetMenu().setParent(NULL);   
             menu_it.value() = NULL;
         }
@@ -84,7 +82,7 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
     } 
 
     //Actions
-    action_it = _actions.begin();
+    QMap<QString,ISwAction *>::iterator action_it = _actions.begin();
     while (action_it != _actions.end())
 	{
         if (action_it.value() != NULL)
@@ -97,7 +95,7 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
     } 
 
     //Toolbar
-    toolbar_it = _toolbars.begin();
+    QMap<QString,ISwToolBar *>::iterator toolbar_it = _toolbars.begin();
     while (toolbar_it != _toolbars.end())
 	{
         if (toolbar_it.value() != NULL)
@@ -110,8 +108,8 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
     } 
 
     //Dockwidget
-    dockwidget_it = _dockwidgets.begin();
-    if (dockwidget_it != _dockwidgets.end())
+    QMap<QString,ISwDockWidget *>::iterator dockwidget_it = _dockwidgets.begin();
+    while (dockwidget_it != _dockwidgets.end())
 	{
         if (dockwidget_it.value() != NULL)
 		{
@@ -121,6 +119,24 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
         }
         dockwidget_it++;
     } 
+
+	//ListDockWidget
+	QMap<QString,ISwListDockWidget *>::iterator listdockwidget_it = _listdockwidgets.begin();
+	while (listdockwidget_it != _listdockwidgets.end())
+	{
+        if (listdockwidget_it.value() != NULL)
+		{
+			QList<SwDockWidget_DockWidget*> list = listdockwidget_it.value()->GetListDockWidget();
+			foreach(SwDockWidget_DockWidget * widget, list)
+			{
+				//Si elle etait definie, on la detache de la main window
+				if (widget)
+					widget->setParent(NULL);
+			}
+        }
+        listdockwidget_it++;
+    } 
+
 
     //Widget central
     /*if (_handle_central_widget != NULL)
@@ -134,6 +150,10 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
 	//DockWidget
 	for (uint i = 0; i < _dockwidgets_nb; i++)
 		unconsummeInterface(QString(CL_DOCKWIDGET_INTERFACE_NAME).arg(i));
+
+	//ListDockWidget
+	for (uint i = 0; i < _listdockwidgets_nb; i++)
+		unconsummeInterface(QString(CL_LISTDOCKWIDGET_INTERFACE_NAME).arg(i));
 
 	//Central widget
 	unconsummeInterface(CL_CENTRALWIDGET_INTERFACE_NAME);
@@ -211,6 +231,17 @@ void _SwGuiCompMainWindow::initializeComponent() throw(SwException)
     _dockwidgets_nb_property->SetDescription("Define how many ISwDockWidget interfaces this component accept");  
     _dockwidgets_nb_property->SetValue(QVariant(_dockwidgets_nb));
 	_dockwidgets_nb_property->GetOnChangeSignal().iconnect(*this, &_SwGuiCompMainWindow::eventPropertyChange);
+
+	//Gestion des listes de dockwidgets
+    _listdockwidgets_nb_property = getPropertiesService().CreateProperty<uint>("nb_listdockwidgets");
+    if (_listdockwidgets_nb_property == NULL)
+	{
+        if (SW_APP->IsVerbose())
+			SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register nb_listdockwidgets property\n"));
+    }
+    _listdockwidgets_nb_property->SetDescription("Define how many ISwListDockWidget interfaces this component accept");  
+    _listdockwidgets_nb_property->SetValue(QVariant(_listdockwidgets_nb));
+	_listdockwidgets_nb_property->GetOnChangeSignal().iconnect(*this, &_SwGuiCompMainWindow::eventPropertyChange);
 
     // choix de l'interface externe
     _use_aswidget_property = getPropertiesService().CreateProperty<bool>("use_aswidget");    
@@ -394,6 +425,34 @@ void _SwGuiCompMainWindow::eventPropertyChange(ISwProperty * property)
             }
         }
         _dockwidgets_nb = val;
+    }
+
+	//Changement du nombre de listes de docks
+    if (_listdockwidgets_nb_property == property)
+	{
+        val = property->GetValue().toUInt();
+        if (val == _listdockwidgets_nb)
+			return;
+		//S'il faut en supprimer
+        if (val < _listdockwidgets_nb)
+		{
+            for (uint i = val; i < _listdockwidgets_nb; i++)
+			{
+                interface_name = QString(CL_LISTDOCKWIDGET_INTERFACE_NAME).arg(i);
+				unconsummeInterface(interface_name);
+            }
+        }
+		//S'il faut en ajouter
+		else
+		{
+            for (uint i = _listdockwidgets_nb; i < val; i++)
+			{
+                interface_name = QString(CL_LISTDOCKWIDGET_INTERFACE_NAME).arg(i);
+                _listdockwidgets.insert(interface_name,(ISwListDockWidget *)NULL);
+				consummeInterface<ISwListDockWidget>(interface_name);
+            }
+        }
+        _listdockwidgets_nb = val;
     }
 
 	//Changement du mode d'affichage
@@ -648,6 +707,21 @@ bool _SwGuiCompMainWindow::Finalize( quint64 historic_index )
 	return false;
 }
 
+//----------------------------------------------------------------------------
+// Interface ISwListDockWidgetListener
+//----------------------------------------------------------------------------
+void _SwGuiCompMainWindow::addDockWidget(ISwDockWidget * widget)
+{
+	if (widget)
+		_mainWindow->addDockWidget(&(widget->GetDockWidget()));
+}
+
+void _SwGuiCompMainWindow::removeDockWidget(ISwDockWidget *widget)
+{
+	if (widget)
+		_mainWindow->removeDockWidget(&(widget->GetDockWidget()));
+}
+
 //-----------------------------------------------------------------------------
 // Gestion des Propriétés
 //-----------------------------------------------------------------------------
@@ -671,6 +745,27 @@ void _SwGuiCompMainWindow::interfaceAvailable(QString interfaceName)
 		{
 			dockwidget_it.value() = widget;
 			_mainWindow->addDockWidget(&(widget->GetDockWidget()));
+		}
+		return;
+	}
+
+	//DockWidget
+	QMap<QString,ISwListDockWidget *>::iterator listdockwidget_it = _listdockwidgets.find(interfaceName);
+	if (listdockwidget_it != _listdockwidgets.end() && listdockwidget_it.value() == NULL)
+	{
+		ISwListDockWidget * widget = getInterface<ISwListDockWidget>(interfaceName);
+		if (widget)
+		{
+			listdockwidget_it.value() = widget;
+			//_mainWindow->addDockWidget(&(widget->GetDockWidget()));
+			//Enregistrement du listener
+			widget->addDockWidgetListener(this);
+			//Ajout des docks presents
+			foreach(SwDockWidget_DockWidget * dock, widget->GetListDockWidget())
+			{
+				if (dock && _mainWindow)
+					_mainWindow->addDockWidget(dock, widget->getName());
+			}
 		}
 		return;
 	}
@@ -737,6 +832,27 @@ void _SwGuiCompMainWindow::interfaceUnavailable(QString interfaceName)
 		if (widget && _mainWindow)
 			_mainWindow->removeDockWidget(&(widget->GetDockWidget()));
 		dockwidget_it.value()=NULL;
+		return;
+	}
+
+	//ListDockWidget
+	QMap<QString,ISwListDockWidget *>::iterator listdockwidget_it = _listdockwidgets.find(interfaceName);
+    if (listdockwidget_it != _listdockwidgets.end() && listdockwidget_it.value() != NULL)
+	{
+		ISwListDockWidget * widget = listdockwidget_it.value();
+		if (widget && _mainWindow)
+		{
+			//_mainWindow->removeDockWidget(&(widget->GetDockWidget()));
+			//Suppression du listener
+			widget->removeDockWidgetListener(this);
+			//Suppression des docks presents
+			foreach(SwDockWidget_DockWidget * dock, widget->GetListDockWidget())
+			{
+				if (dock && _mainWindow)
+					_mainWindow->removeDockWidget(dock);
+			}
+		}
+		listdockwidget_it.value()=NULL;
 		return;
 	}
 

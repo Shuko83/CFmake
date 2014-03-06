@@ -15,7 +15,7 @@ public:
 
 	void setMainWidget(QWidget * widget);
 
-	void addDockWidget(SwDockWidget_DockWidget * dock);
+	void addDockWidget(SwDockWidget_DockWidget * dock, QString menuName = "");
 	void removeDockWidget(SwDockWidget_DockWidget * dock);
 
 	void loadConfiguration();

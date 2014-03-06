@@ -27,7 +27,7 @@ namespace StreamWork
 		\swinterface
 
 		*/
-		class ISwListQDockWidget 
+		class ISwListQDockWidget
 		{   
 		public:
 

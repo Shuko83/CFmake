@@ -35,10 +35,10 @@ void SwDockWidget_MainWindow::setMainWidget(QWidget * widget)
 	}
 }
 
-void SwDockWidget_MainWindow::addDockWidget(SwDockWidget_DockWidget * dock)
+void SwDockWidget_MainWindow::addDockWidget(SwDockWidget_DockWidget * dock, QString menuName)
 {
 	if (dock && _dockArea)
-		_dockArea->addDockWidget(dock);
+		_dockArea->addDockWidget(dock, menuName);
 }
 
 void SwDockWidget_MainWindow::removeDockWidget(SwDockWidget_DockWidget * dock)

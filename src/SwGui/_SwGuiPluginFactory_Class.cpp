@@ -18,6 +18,7 @@
 #include "_SwGuiCompToolbar.h"
 #include "_SwGuiCompQDockWidget.h"
 #include "_SwGuiCompDockWidget.h"
+#include "_SwGuiCompListDockWidget.h"
 #include "_SwGuiCompWidget.h"
 #include "_SwGuiCompFrame.h"
 #include "_SwGuiCompScrollArea.h"
@@ -69,6 +70,7 @@ void _SwGuiPluginFactory_Class::Initialize() {
     RegisterComponent("SwGuiToolBar","Simple toolbar (QToolBar)");
     RegisterComponent("SwGuiQDockWidget","Simple dock widget (QDockWidget)");
 	RegisterComponent("SwGuiDockWidget","Advanced Dock widget (SwDockWidget)");
+	RegisterComponent("SwGuiListDockWidget","List of Advanced Dock widget (SwDockWidget)");
     RegisterComponent("SwGuiWidget","Simple widget (QWidget)");
 	RegisterComponent("SwGuiFrame","Simple frame (QFrame)");
 	RegisterComponent("SwGuiScrollArea","Simple scrollArea (QScrollArea)");
@@ -127,6 +129,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
     }
     if (name=="SwGuiDockWidget") {
         return new _SwGuiCompDockWidget;
+    }
+    if (name=="SwGuiListDockWidget") {
+        return new _SwGuiCompListDockWidget;
     }
     if (name=="SwGuiWidget") {
         return new _SwGuiCompWidget;
@@ -235,6 +240,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
         return QIcon(":/SwGui/widget.png");
     }
     if (name=="SwGuiDockWidget") {
+        return QIcon(":/SwGui/widget.png");
+    }
+    if (name=="SwGuiListDockWidget") {
         return QIcon(":/SwGui/widget.png");
     }
     if (name=="SwGuiWidget") {
@@ -355,6 +363,7 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
         eservice->registerExtension<ISwQAbstractItemViewSlots>("ViewSlots","SwGuiCompToPropertiesModel");
         eservice->registerExtension<ISwQDockWidget>("QDockWidget","SwGuiQDockWidget");
 		eservice->registerExtension<ISwDockWidget>("DockWidget","SwGuiDockWidget");
+		eservice->registerExtension<ISwListDockWidget>("ListDockWidget","SwGuiListDockWidget");
 		eservice->registerExtension<ISwWidget>("Widget","SwGuiFrame");
 		eservice->registerExtension<ISwWidget>("Widget","SwGuiScrollArea");
         eservice->registerExtension<ISwLayout>("GridLayout","SwGuiGridLayout");

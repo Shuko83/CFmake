@@ -19,7 +19,7 @@ namespace StreamWork
 	namespace SwGui
 	{
         /*!
-		 \interface ISwQDockWidget 
+		 \interface ISwDockWidget 
 		 \brief interface definissant un DockWidget
          \ingroup SwGuiGrp
          \swinterface
