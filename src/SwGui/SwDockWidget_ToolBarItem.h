@@ -8,7 +8,7 @@ class SwDockWidget_ToolBarItem : public QToolButton
 	Q_OBJECT
 
 public:
-	SwDockWidget_ToolBarItem(QWidget * dock, QString title, QWidget * toolBar);
+	SwDockWidget_ToolBarItem(QWidget * dock, QString title, QWidget * toolBar, QSize size);
 	SwDockWidget_ToolBarItem(SwDockWidget_ToolBarItem * item);
 	~SwDockWidget_ToolBarItem();
 
@@ -21,6 +21,9 @@ public:
 	void setMovingItem(QWidget * widget);
 
 	void hideWidget(bool effect = true);
+	void setOrientation(Qt::Orientation orientation);
+	QSize getTitleBarSize();
+	void updateWidgetPosition();
 
 signals:
 	void isMoving(QPoint pos);
@@ -34,10 +37,13 @@ protected:
 
 private:
 	void showWidget();
+	QPoint setPosition();
 
 private:
 	QWidget * _widget;
 	QWidget * _toolBar;
+	Qt::Orientation _orientation;
+	QSize _titleBarSize;
 
 	QWidget * _tempMovingItem;
 

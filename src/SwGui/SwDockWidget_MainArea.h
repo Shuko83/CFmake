@@ -116,7 +116,7 @@ private:
 private:
 	Ui::DockArea ui;
 
-	bool _lock; //Lock configuration
+	//bool _lock; //Lock configuration
 	
 	//Liste des DockWidgets
 	QList<QObject*> _list;	

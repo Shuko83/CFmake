@@ -49,10 +49,10 @@ public:
 	void setAlwaysOnTop(bool state);
 
 	//Evenements
-	virtual void mouseReleaseEvent( QMouseEvent * event );
+	/*virtual void mouseReleaseEvent( QMouseEvent * event );
 	virtual void mousePressEvent( QMouseEvent * event );
 	virtual void mouseMoveEvent( QMouseEvent * event );
-	virtual bool event( QEvent * event );
+	virtual bool event( QEvent * event );*/
 	void parentResized();
 
 	//Passage en mode "deplacement"
@@ -83,8 +83,8 @@ public:
 	void setInToolBar(bool state, QWidget * toolBarItem = NULL);
 	void setArea(Qt::DockWidgetArea area);
 	void setTabWidget(QWidget * widget);
-	void lock();
-	void releaseLock();
+	virtual void lock();
+	virtual void releaseLock();
 	void setToolBarItem(QWidget * toolbar);
 	void setMenuAction(QAction * action);
 
@@ -94,8 +94,13 @@ public:
 	void removeSpacer();
 	void showShadow(int area);
 	void hideShadow();
+	int getShadowSize();
 
 protected:
+	virtual void mouseReleaseEvent( QMouseEvent * event );
+	virtual void mousePressEvent( QMouseEvent * event );
+	virtual void mouseMoveEvent( QMouseEvent * event );
+	virtual bool event( QEvent * event );
 	void showShadow();
 	
 signals:

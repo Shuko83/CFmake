@@ -34,7 +34,7 @@
 //-----------------------------------------------------------------------------
 SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar)
 	: SwDockWidget_ToolBarWindow(parent), _mainWidget(NULL), _menuBar(menuBar), _widgetMenu(NULL), _movingDock(""), _tempDock(NULL),
-	_lock(false), _isReleasing(false), _isMovingDock(false), _mainDockConf(NULL), _posEffect(NULL)
+	/*locked()(false), */_isReleasing(false), _isMovingDock(false), _mainDockConf(NULL), _posEffect(NULL)
 {
 	ui.setupUi(this);
 	this->setMinimumSize(50,50);
@@ -610,7 +610,7 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 			//Clic initial : selection de l'objet, debut de deplacement
 			case QEvent::MouseButtonPress:
 				dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
-				if (dock && (dock->canBePin() || (dock->parent() != this)) && !_lock)
+				if (dock && (dock->canBePin() || (dock->parent() != this)) && !locked())
 				{
 					_isMovingDock = true;
 					_movingDock = obj->objectName();
@@ -619,7 +619,7 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 
 			//Deplacement
 			case QEvent::Move:
-				if (!_isReleasing && !_lock)
+				if (!_isReleasing && !locked())
 				{
 					//Si un dock est deplace suite a un clic (pour differencier d'un deplacement automatique non initie par l'utilisateur)
 					if (_isMovingDock && !_movingDock.compare(obj->objectName()))
@@ -642,7 +642,7 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 
 			//Fin de clic, relachement, fin de deplacement
 			case QEvent::MouseButtonRelease:
-				if (_isMovingDock && !_lock)
+				if (_isMovingDock && !locked())
 				{
 					_isMovingDock = false;
 					_movingDock = "";
@@ -669,8 +669,8 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 					releaseFromToolBar(dock);
 					//_list.removeOne(dock);
 					//Mise a jour du menu
-					if (dock->getMenuAction())
-						dock->getMenuAction()->setChecked(false);
+					//if (dock->getMenuAction())
+					//	dock->getMenuAction()->setChecked(false);
 					//Mise a jour des docks principaux
 					if (_list.contains(obj))
 						updateMainDock();
@@ -711,12 +711,12 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 					if (mainDock && mainDock->getMenuAction() && mainDock->empty())
 						mainDock->getMenuAction()->setEnabled(false);
 				}
-				else if (_list.contains(obj))
+				/*else if (_list.contains(obj))
 				{
 					dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
 					if (dock && dock->getMenuAction() && !dock->isVisibleTo(dock->parentWidget()))
 						dock->getMenuAction()->setChecked(false);
-				}
+				}*/
 				break;
 		}
 
@@ -1710,7 +1710,11 @@ void SwDockWidget_MainArea::showOverlay(Qt::DockWidgetArea area, bool toMain)
 				//Sinon il prend tout le cote gauche
 				else
 				{
+					//Hauteur max
 					osize.setHeight(ui.topwidget->height());
+					//Largeur fonction de la place disponible
+					if (ui.mainLayout->itemAt(0)->widget()->width() - dock->width() < ui.mainLayout->itemAt(0)->widget()->minimumSizeHint().width())
+						osize.setWidth(ui.mainLayout->itemAt(0)->widget()->width()/2);
 				}
 				break;
 
@@ -1724,7 +1728,11 @@ void SwDockWidget_MainArea::showOverlay(Qt::DockWidgetArea area, bool toMain)
 				//Sinon il prend tout le cote droit
 				else
 				{
+					//Hauteur max
 					osize.setHeight(ui.topwidget->height());
+					//Largeur fonction de la place disponible
+					if (ui.mainLayout->itemAt(0)->widget()->width() - dock->width() < ui.mainLayout->itemAt(0)->widget()->minimumSizeHint().width())
+						osize.setWidth(ui.mainLayout->itemAt(0)->widget()->width()/2);
 					opos.setX(ui.topwidget->width() - osize.width());
 				}
 				break;
@@ -1739,7 +1747,11 @@ void SwDockWidget_MainArea::showOverlay(Qt::DockWidgetArea area, bool toMain)
 				//Sinon il prend tout le haut
 				else
 				{
+					//Largeur max
 					osize.setWidth(ui.topwidget->width());
+					//Hauteur fonction de la place disponible
+					if (ui.mainLayout->itemAt(0)->widget()->height() - dock->height() < ui.mainLayout->itemAt(0)->widget()->minimumSizeHint().height())
+						osize.setHeight(ui.mainLayout->itemAt(0)->widget()->height()/2);
 				}
 				break;
 
@@ -1753,7 +1765,11 @@ void SwDockWidget_MainArea::showOverlay(Qt::DockWidgetArea area, bool toMain)
 				//Sinon il prend tout le bas
 				else
 				{
+					//Largeur max
 					osize.setWidth(ui.topwidget->width());
+					//Hauteur fonction de la place disponible
+					if (ui.mainLayout->itemAt(0)->widget()->height() - dock->height() < ui.mainLayout->itemAt(0)->widget()->minimumSizeHint().height())
+						osize.setHeight(ui.mainLayout->itemAt(0)->widget()->height()/2);
 					opos.setY(ui.topwidget->height() - osize.height());
 				}
 				break;
@@ -2506,32 +2522,50 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 //-----------------------------------------------------------------------------
 void SwDockWidget_MainArea::lock()
 {
-	if (!_lock)
+	if (!locked())
 	{
-		_lock = true;
+		//Propagation aux docks
 		foreach(QObject * obj, _list)
 		{
 			SwDockWidget_DockWidget *dockWidget = qobject_cast<SwDockWidget_DockWidget*>(obj);
 			if (dockWidget)
 				dockWidget->lock();		
 		}
+		//Propagation aux docks principaux
+		foreach(QObject * obj, _listMainDock)
+		{
+			SwDockWidget_DockWidget *dockWidget = qobject_cast<SwDockWidget_DockWidget*>(obj);
+			if (dockWidget)
+				dockWidget->lock();		
+		}
 	}
+
+	SwDockWidget_ToolBarWindow::lock();
 }
 
 //-----------------------------------------------------------------------------
 //Deverrouillage de la disposition des docks
 void SwDockWidget_MainArea::releaseLock()
 {
-	if (_lock)
+	if (locked())
 	{
-		_lock = false;
+		//Propagation aux docks
 		foreach(QObject * obj, _list)
 		{
 			SwDockWidget_DockWidget *dockWidget = qobject_cast<SwDockWidget_DockWidget*>(obj);
 			if (dockWidget)
 				dockWidget->releaseLock();		
 		}
+		//Propagation aux docks principaux
+		foreach(QObject * obj, _listMainDock)
+		{
+			SwDockWidget_DockWidget *dockWidget = qobject_cast<SwDockWidget_DockWidget*>(obj);
+			if (dockWidget)
+				dockWidget->releaseLock();		
+		}
 	}
+
+	SwDockWidget_ToolBarWindow::releaseLock();
 }
 
 //-----------------------------------------------------------------------------
@@ -2554,7 +2588,7 @@ SwDockWidget_MainDockWidget * SwDockWidget_MainArea::setupMainDockWidget(QString
 void SwDockWidget_MainArea::freeMainTab(int index, QPoint pos)
 {
 	SwDockWidget_MainDockWidget * main = qobject_cast<SwDockWidget_MainDockWidget*>(this->sender());
-	if (main)
+	if (main && !locked())
 	{
 		//Creation d'un dock provisoire pour le deplacement
 		_tempDock = setupMainDockWidget("tempDock", Qt::NoDockWidgetArea, false);
@@ -2592,7 +2626,7 @@ void SwDockWidget_MainArea::freeMainTab(int index, QPoint pos)
 //-----------------------------------------------------------------------------
 void SwDockWidget_MainArea::moveMainTab(QPoint pos)
 {
-	if (_tempDock)
+	if (_tempDock && !locked())
 		_tempDock->move(pos);
 }
 
@@ -2600,7 +2634,7 @@ void SwDockWidget_MainArea::moveMainTab(QPoint pos)
 void SwDockWidget_MainArea::stopMovingMainTab()
 {
 	SwDockWidget_MainDockWidget * main = qobject_cast<SwDockWidget_MainDockWidget*>(this->sender());
-	if (_tempDock)
+	if (_tempDock && !locked())
 	{
 		_tempDock->setMoving(false);
 		_isMovingDock = false;

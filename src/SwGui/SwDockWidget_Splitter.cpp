@@ -22,6 +22,23 @@ SwDockWidget_Splitter::SwDockWidget_Splitter(QWidget *parent)
 }
 
 //-----------------------------------------------------------------------------
+//Gestion des evenements
+bool SwDockWidget_Splitter::event( QEvent * event )
+{
+	switch(event->type())
+	{
+		case QEvent::Close:
+			if (_widget1)
+				_widget1->close();
+			if (_widget2)
+				_widget2->close();
+			break;
+	}
+
+	return QSplitter::event(event);
+}
+
+//-----------------------------------------------------------------------------
 SwDockWidget_Splitter::~SwDockWidget_Splitter()
 {
 

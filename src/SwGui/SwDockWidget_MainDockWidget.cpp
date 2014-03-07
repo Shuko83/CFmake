@@ -21,6 +21,9 @@ SwDockWidget_MainDockWidget::SwDockWidget_MainDockWidget(QWidget * parent, QStri
 
 	//Suppression du spacer present par defaut dans un DockWidget
 	ui.contentLayout->removeItem(ui.verticalSpacer);
+
+	//Taille minimale
+	setMinimumSize(minimumWidth(), _tab->getTabBar()->height());
 }
 
 //-----------------------------------------------------------------------------
@@ -235,4 +238,20 @@ bool SwDockWidget_MainDockWidget::isCurrentEmpty()
 	}
 
 	return empty;
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_MainDockWidget::lock()
+{
+	SwDockWidget_DockWidget::lock();
+	if (_tab)
+		_tab->lock();
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_MainDockWidget::releaseLock()
+{
+	SwDockWidget_DockWidget::releaseLock();
+	if (_tab)
+		_tab->releaseLock();
 }

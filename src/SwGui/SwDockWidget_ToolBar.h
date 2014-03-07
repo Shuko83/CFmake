@@ -41,10 +41,16 @@ public:
 	void setStuckPosition(Qt::WindowFrameSection section);
 	void setDist(QPoint dist);
 	QPoint getDist();
+	QSize getTitleBarSize();
+
+	void lock();
+	void releaseLock();
 
 
 signals:
 	void closeToolBarAsked();
+	void isMoving(/*QPoint point*/);
+	void stopMoving();
 
 protected:
 	//Evenements
@@ -80,6 +86,8 @@ private:
 
 	bool _canMove; //Deplacement autorise
 	QPoint _clickPos; //Position du curseur lors du clic
+
+	bool _lock;
 };
 
 

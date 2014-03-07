@@ -22,6 +22,9 @@ public:
 
 	void moveSplitter(int pos);
 
+protected:
+	virtual bool event( QEvent * event );
+
 protected slots:
 	virtual void resizeEvent( QResizeEvent * r );
 	void childrenResized();

@@ -14,7 +14,8 @@
 
 //-----------------------------------------------------------------------------
 SwDockWidget_ToolBar::SwDockWidget_ToolBar(QWidget * parent, QRect rect)
-: QWidget(parent), _orientation(Qt::Vertical), _layout(NULL), _stuck(Qt::NoSection), _mainRect(rect)
+: QWidget(parent), _orientation(Qt::Vertical), _layout(NULL), _stuck(Qt::NoSection), _mainRect(rect),
+  _lock(false), _canMove(false)
 {
 	ui.setupUi(this);
 
@@ -45,7 +46,7 @@ void SwDockWidget_ToolBar::setOrientation(Qt::Orientation orientation)
 {
 	if (orientation != _orientation)
 	{
-		_orientation = orientation;
+		//_orientation = orientation;
 		switchOrientation();
 	}
 }
@@ -105,6 +106,9 @@ void SwDockWidget_ToolBar::updateOrientation()
 		foreach(QWidget * widg, list)
 		{
 			_layout->addWidget(widg);
+			SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(widg);
+			if (item)
+				item->setOrientation(_orientation);
 		}
 	}
 
@@ -155,6 +159,9 @@ void SwDockWidget_ToolBar::mouseReleaseEvent( QMouseEvent * event )
 {
 	if (event->button() == Qt::LeftButton)
 	{
+		if (_canMove)
+			emit this->stopMoving();
+		
 		_canMove = false;
 		setWindowOpacity(1);
 
@@ -179,6 +186,8 @@ void SwDockWidget_ToolBar::mouseMoveEvent( QMouseEvent * event )
 			QPoint point = getAdjustedPosition(mapToGlobal(event->pos() - _clickPos));
 			point = checkStuckPosition(point.x(), point.y());
 			move(point);
+
+			emit this->isMoving(/*point*/);
 		}
 	}
 }
@@ -257,6 +266,9 @@ void SwDockWidget_ToolBar::addItem(QWidget * widget)
 	{
 		_layout->addWidget(widget);
 		widget->installEventFilter(this);
+		SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(widget);
+		if (item)
+			item->setOrientation(_orientation);
 		
 		updateSize();
 	}
@@ -299,6 +311,9 @@ void SwDockWidget_ToolBar::addItem(QWidget * widget, QPoint pos)
 		}
 
 		widget->installEventFilter(this);
+		SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(widget);
+		if (item)
+			item->setOrientation(_orientation);
 		
 		updateSize();
 	}
@@ -352,6 +367,12 @@ int SwDockWidget_ToolBar::count()
 //-----------------------------------------------------------------------------
 void SwDockWidget_ToolBar::updateSize()
 {
+	//Affichage ou non du bouton de changement de sens
+	if (_layout->count() > 1)
+		ui.switchBtn->show();
+	else
+		ui.switchBtn->hide();
+
 	//Mise a jour des dimensions
 	QTimer::singleShot(10, this, SLOT(fixSize())); //Attente de la prise en compte des modifications avant mise a jour des dimensions
 }
@@ -383,6 +404,7 @@ QPoint SwDockWidget_ToolBar::getAdjustedPosition(QPoint p)
 	return getAdjustedPosition(p.x(), p.y());
 }
 
+//-----------------------------------------------------------------------------
 QPoint SwDockWidget_ToolBar::getAdjustedPosition(int x, int y)
 {
 	QPoint point(x,y);
@@ -838,6 +860,21 @@ void SwDockWidget_ToolBar::updatePosition()
 	}
 	
 	QWidget::move(pos);
+	
+	//Mise a jour de la position du widget ouvert si necessaire
+	for (int i=0; i<_layout->count(); i++)
+	{
+		QLayoutItem * lItem = _layout->itemAt(i);
+		if (lItem)
+		{
+			//Recuperation de l'item en i-eme position
+			SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(lItem->widget());
+			if (item)
+			{
+				item->updateWidgetPosition();
+			}
+		}
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -866,4 +903,32 @@ void SwDockWidget_ToolBar::setDist(QPoint dist)
 QPoint SwDockWidget_ToolBar::getDist()
 {
 	return _dist;
+}
+
+//-----------------------------------------------------------------------------
+QSize SwDockWidget_ToolBar::getTitleBarSize()
+{
+	return ui.Frame->size();
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBar::lock()
+{
+	if (!_lock)
+	{
+		_lock = true;
+		ui.PB_Close->hide();
+		ui.switchBtn->hide();
+	}
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBar::releaseLock()
+{
+	if (_lock)
+	{
+		_lock = false;
+		ui.PB_Close->show();
+		ui.switchBtn->show();
+	}
 }

@@ -55,6 +55,12 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()
 
 	_mainWindow = NULL;
 
+	_default_toolbar_position.AddKey(Qt::LeftToolBarArea,"Left");
+    _default_toolbar_position.AddKey(Qt::RightToolBarArea,"Right");
+    _default_toolbar_position.AddKey(Qt::TopToolBarArea,"Top");
+    _default_toolbar_position.AddKey(Qt::BottomToolBarArea,"Bottom");
+    _default_toolbar_position.FromInt(Qt::TopToolBarArea);
+
     _show_mode.AddKey(SHOW_NORMAL,"None");
     _show_mode.AddKey(SHOW_CENTERED,"Centered");
     _show_mode.AddKey(SHOW_FULLSCREEN,"FullScreen");

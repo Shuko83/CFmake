@@ -19,7 +19,7 @@ SwDockWidget_MainTabBar::~SwDockWidget_MainTabBar()
 //-----------------------------------------------------------------------------
 void SwDockWidget_MainTabBar::mousePressEvent(QMouseEvent * e)
 {
-	if (e->button() == Qt::LeftButton)
+	if (e->button() == Qt::LeftButton && tabsClosable())
 	{
 		//Si demande d'ajout d'onglet
 		if (tabRect(count()-1).contains(e->pos()) && this->parent())
@@ -39,7 +39,7 @@ void SwDockWidget_MainTabBar::mousePressEvent(QMouseEvent * e)
 //-----------------------------------------------------------------------------
 void SwDockWidget_MainTabBar::mouseReleaseEvent(QMouseEvent *e)
 {
-	if (e->button() == Qt::LeftButton)
+	if (e->button() == Qt::LeftButton && tabsClosable())
 	{
 		if (_moving)
 			emit stopMovingTabRequested();
@@ -52,7 +52,7 @@ void SwDockWidget_MainTabBar::mouseReleaseEvent(QMouseEvent *e)
 //-----------------------------------------------------------------------------
 void SwDockWidget_MainTabBar::mouseMoveEvent(QMouseEvent * e)
 {
-	if (!_moving)
+	if (!_moving && tabsClosable())
 	{
 		QRect rect = this->rect();
 		//Si le pointeur est sortie de la TabBar, deplacement de l'onglet
@@ -107,7 +107,7 @@ void SwDockWidget_MainTabBar::mouseMoveEvent(QMouseEvent * e)
 //-----------------------------------------------------------------------------
 void SwDockWidget_MainTabBar::mouseDoubleClickEvent(QMouseEvent *e)
 {
-	if (e->button () == Qt::LeftButton)
+	if (e->button () == Qt::LeftButton && tabsClosable())
 	{
 		//Si demande d'ajout d'onglet
 		if (tabRect(count()-1).contains(e->pos()))
@@ -125,8 +125,8 @@ void SwDockWidget_MainTabBar::mouseDoubleClickEvent(QMouseEvent *e)
 		//Placement de la LineEdit sur l'onglet
 		QRect rect(tabRect(index));
 		//Ajustement de la taille et de la position pour que le widget soit a l'interieur de l'onglet
-		_nameEdit->move(QPoint(rect.x(), rect.y()) + QPoint(9,2));
-		_nameEdit->resize(rect.size() - QSize(12, 5));
+		_nameEdit->move(QPoint(rect.x(), rect.y())/* + QPoint(9,2)*/);
+		_nameEdit->resize(rect.size()/* - QSize(12, 5)*/);
 		_nameEdit->show();
 		return;
 	}
@@ -207,8 +207,9 @@ void SwDockWidget_MainTabBar::connectNameEdit()
 	if (_nameEdit)
 	{
 		connect(_nameEdit, SIGNAL(textChanged(QString)), this, SLOT(renameTabTemporarily(QString)));
-		connect(_nameEdit, SIGNAL(returnPressed()), this, SLOT(renameTab()));
-		connect(_nameEdit, SIGNAL(editingFinished()), this, SLOT(cancelNameEdit()));
+		//connect(_nameEdit, SIGNAL(returnPressed()), this, SLOT(renameTab()));
+		//connect(_nameEdit, SIGNAL(editingFinished()), this, SLOT(cancelNameEdit()));
+		connect(_nameEdit, SIGNAL(editingFinished()), this, SLOT(renameTab()));
 	}
 }
 
@@ -218,7 +219,8 @@ void SwDockWidget_MainTabBar::disconnectNameEdit()
 	if (_nameEdit)
 	{
 		disconnect(_nameEdit, SIGNAL(textChanged(QString)), this, SLOT(renameTabTemporarily(QString)));
-		disconnect(_nameEdit, SIGNAL(returnPressed()), this, SLOT(renameTab()));
-		disconnect(_nameEdit, SIGNAL(editingFinished()), this, SLOT(cancelNameEdit()));
+		//disconnect(_nameEdit, SIGNAL(returnPressed()), this, SLOT(renameTab()));
+		//disconnect(_nameEdit, SIGNAL(editingFinished()), this, SLOT(cancelNameEdit()));
+		disconnect(_nameEdit, SIGNAL(editingFinished()), this, SLOT(renameTab()));
 	}
 }

@@ -30,6 +30,9 @@ public:
 
 	virtual bool event( QEvent * event );
 
+	virtual void lock();
+	virtual void releaseLock();
+
 public slots:
 	void updateContents(/*bool light = false*/);
 

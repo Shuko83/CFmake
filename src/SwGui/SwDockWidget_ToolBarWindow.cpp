@@ -8,7 +8,7 @@
 
 //-----------------------------------------------------------------------------
 SwDockWidget_ToolBarWindow::SwDockWidget_ToolBarWindow(QWidget * parent)
- : QWidget(parent), _isMovingToolBarItem(false), _tbOverlay(NULL)
+ : QWidget(parent), _isMovingToolBarItem(false), _tbOverlay(NULL), _lock(false)
 {
 	//Creation de la zone de pre-positionnement
 	_tbOverlay = new SwDockWidget_Overlay(this, NULL, QColor(200,100,0,200));
@@ -40,7 +40,8 @@ void SwDockWidget_ToolBarWindow::reduceInToolBar()
 		tb->move(pos + QPoint(10,10));
 		//Enregistrement de la toolbar
 		_listToolBar.push_back(tb);
-		connect(tb, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
+		connectSignals(tb);
+		//connect(tb, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
 	}
 }
 
@@ -53,7 +54,7 @@ void SwDockWidget_ToolBarWindow::addInToolBar(QWidget * widget, QWidget * toolba
 	if (widget && tb)
 	{
 		//Creation d'un bouton pour le dock actif
-		SwDockWidget_ToolBarItem * tbi = new SwDockWidget_ToolBarItem(dock, dock->getTitle(), tb);
+		SwDockWidget_ToolBarItem * tbi = new SwDockWidget_ToolBarItem(dock, dock->getTitle(), tb, tb->getTitleBarSize());
 		//Mise a jour de l'etat du dock
 		dock->setInToolBar(true, tbi);
 		//Ajout du bouton dans la toolbar
@@ -102,7 +103,7 @@ void SwDockWidget_ToolBarWindow::releaseFromToolBar(QWidget * widget)
 void SwDockWidget_ToolBarWindow::moveToolBarItem(QPoint pos)
 {
 	SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(this->sender());
-	if (item)
+	if (item && !_lock)
 	{
 		//Si l'element est le seul de la toolbar, on deplace la toolbar
 		SwDockWidget_ToolBar * toolbar = qobject_cast<SwDockWidget_ToolBar*>(item->getToolBar());
@@ -154,7 +155,8 @@ void SwDockWidget_ToolBarWindow::moveToolBarItem(QPoint pos)
 			}
 
 			_listToolBar.push_back(newTb);
-			connect(newTb, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
+			connectSignals(newTb);
+			//connect(newTb, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
 		}
 	}
 }
@@ -163,7 +165,7 @@ void SwDockWidget_ToolBarWindow::moveToolBarItem(QPoint pos)
 void SwDockWidget_ToolBarWindow::stopMovingToolBarItem()
 {
 	SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(this->sender());
-	if (item)
+	if (item && !_lock)
 	{
 		if (_tbOverlay)
 		{
@@ -205,6 +207,56 @@ void SwDockWidget_ToolBarWindow::stopMovingToolBarItem()
 				item->hide();
 				toolbar->removeItem(item);
 				item = 0;
+			}
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBarWindow::moveToolBar(/*QPoint pos*/)
+{
+	SwDockWidget_ToolBar * toolbar = qobject_cast<SwDockWidget_ToolBar*>(this->sender());
+	
+	//Si l'element est le seul de la toolbar, on deplace la toolbar
+	if (toolbar && toolbar->count() == 1 && !_lock)
+	{
+		//Suppression du shadowitem precedent
+		_tbOverlay->hide();
+
+		//Si l'element est au-dessus d'une autre toolbar, on cree un element provisoire de placement
+		SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(getToolBarUnderCursor(toolbar));
+		if (tb)
+		{
+			tb->showOverlay(QCursor::pos(), _tbOverlay);
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBarWindow::stopMovingToolBar()
+{
+	SwDockWidget_ToolBar * toolbar = qobject_cast<SwDockWidget_ToolBar*>(this->sender());
+	if (toolbar && toolbar->count() == 1 && !_lock)
+	{
+		if (_tbOverlay)
+		{
+			_tbOverlay->hide();
+		}
+		
+		//Si l'element est au-dessus d'une autre toolbar, on le place dedans
+		SwDockWidget_ToolBar * newToolbar = qobject_cast<SwDockWidget_ToolBar*>(getToolBarUnderCursor(toolbar));
+		if (newToolbar)
+		{
+			SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(toolbar->itemAt(0));
+			if (item)
+			{
+				newToolbar->addItem(item, QCursor::pos());
+				item->hideWidget(false);
+				item->setToolBar(newToolbar);
+				
+				//Suppression de l'ancienne toolbar
+				_listToolBar.removeOne(toolbar);
+				toolbar->deleteLater();
 			}
 		}
 	}
@@ -348,7 +400,8 @@ QWidget * SwDockWidget_ToolBarWindow::loadToolBar(QDomNode node)
 			{
 				//Enregistrement de la toolbar
 				_listToolBar.push_back(tb);
-				connect(tb, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
+				//connect(tb, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
+				connectSignals(tb);
 
 				return tb;
 			}
@@ -400,4 +453,56 @@ void SwDockWidget_ToolBarWindow::setMainRect(QRect rect)
 		}
 		_globalMainRect = rect;
 	}
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBarWindow::connectSignals(QWidget * toolbar)
+{
+	if (toolbar)
+	{
+		connect(toolbar, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
+		connect(toolbar, SIGNAL(isMoving(/*QPoint*/)), this, SLOT(moveToolBar(/*QPoint*/)));
+		connect(toolbar, SIGNAL(stopMoving()), this, SLOT(stopMovingToolBar()));
+	}
+}
+
+//-----------------------------------------------------------------------------
+//Verrouillage de la disposition des docks
+void SwDockWidget_ToolBarWindow::lock()
+{
+	if (!_lock)
+	{
+		_lock = true;
+		foreach(QObject * obj, _listToolBar)
+		{
+			SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
+			if (tb)
+			{
+				tb->lock();
+			}
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBarWindow::releaseLock()
+{
+	if (_lock)
+	{
+		_lock = false;
+		foreach(QObject * obj, _listToolBar)
+		{
+			SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
+			if (tb)
+			{
+				tb->releaseLock();
+			}
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+bool SwDockWidget_ToolBarWindow::locked()
+{
+	return _lock;
 }

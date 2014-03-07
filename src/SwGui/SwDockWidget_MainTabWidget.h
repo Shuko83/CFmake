@@ -12,6 +12,10 @@ public:
 	~SwDockWidget_MainTabWidget();
 
 	int count();
+	QWidget * getTabBar();
+
+	void lock();
+	void releaseLock();
 
 signals:
 	void moveTabRequested(QPoint pos);
@@ -22,6 +26,10 @@ protected slots:
 	void closeTab(int index);
 	void updateCurrent(int index);
 	void insertNewTab();
+
+private:
+	bool _lock;
+	QWidget * _addWidget;
 };
 
 

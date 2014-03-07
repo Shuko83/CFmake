@@ -40,7 +40,7 @@
 #define SZ_SIZEBOTTOMLEFT	0xF007
 #define SZ_SIZEBOTTOMRIGHT  0xF008
 
-#define offset				10
+//#define offset				10
 #define REDUCED_OPACITY		0.7
 
 //-----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ SwDockWidget_DockWidget::SwDockWidget_DockWidget(QWidget *parent)
 	//Taille par defaut
 	setFreeSize(QSize(0,0));
 	//Taille minimale
-	setMinimumSize(50, ui.DockFrame->height());
+	//setMinimumSize(50, ui.DockFrame->height());
 
 	//Tooltip
 	ui.PB_Close->setToolTip("Close");
@@ -280,6 +280,7 @@ void SwDockWidget_DockWidget::updateBtn()
 {
 	if (!_lock)
 	{
+		ui.PB_Close->show();
 		if (parent() == _mainArea)
 		{
 			//Boutons invisibles
@@ -298,6 +299,7 @@ void SwDockWidget_DockWidget::updateBtn()
 	{
 		ui.toToolBarBtn->hide();
 		ui.outToolBarBtn->hide();
+		ui.PB_Close->hide();
 	}
 }
 
@@ -334,7 +336,7 @@ void SwDockWidget_DockWidget::mousePressEvent( QMouseEvent * event )
 			return;
 
 		//Verification d'une demande de deplacement (clic sur la barre de titre)
-		int border = ui.bottom->isVisible()?offset:0;
+		int border = ui.bottom->isVisible()?getShadowSize():0;
 		if(_canBeMoved && (event->y() >= 0 && event->y() <= ui.DockFrame->height() + border ))
 		{	
 			//Enregistrement de la position, et preparation du deplacement
@@ -402,6 +404,9 @@ bool SwDockWidget_DockWidget::event( QEvent * event )
 					updateBtn();
 					//Transparent aux evenements souris pour ne pas masquer les zones dockables
 					setAttribute(Qt::WA_TransparentForMouseEvents);
+					//Si dock libere mais masque, mise a jour du bouton d'action
+					if (!this->isVisible() && _action)
+						_action->setChecked(false);
 				}
 				//Ancrage du dock
 				else
@@ -415,6 +420,12 @@ bool SwDockWidget_DockWidget::event( QEvent * event )
 					setAttribute(Qt::WA_TransparentForMouseEvents, false);
 				}
 			}
+			break;
+
+		//Si masquage d'un dock flottant, mise a jour du bouton d'action
+		case QEvent::Hide:
+			if (parent() == _mainArea && _action && !isInToolBar())
+				_action->setChecked(false);
 			break;
 	}
 
@@ -506,6 +517,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 	//Redimensionnement d'un dock flottant
 	if(parent() == _mainArea)
 	{
+		int offset = getShadowSize();
 		//Definition des zones de selection - coins
 		QRect topLeft = QRect(QPoint(0,0),QSize(offset,offset));
 		QRect topLeftExtRight = QRect(QPoint(offset,0),QSize(offset,offset));
@@ -625,6 +637,8 @@ void SwDockWidget_DockWidget::undockedSize(const QSize & size)
 void SwDockWidget_DockWidget::setRawSize(const QSize & size)
 {
 	QSize temp = size;
+	int offset = getShadowSize();
+
 	if (ui.top->isVisibleTo(this))
 		temp += QSize(0,offset);
 	if (ui.bottom->isVisibleTo(this))
@@ -642,6 +656,7 @@ void SwDockWidget_DockWidget::setRawSize(const QSize & size)
 QSize SwDockWidget_DockWidget::getRawSize()
 {
 	QSize size = QWidget::size();
+	int offset = getShadowSize();
 
 	if (ui.top->isVisibleTo(this))
 		size -= QSize(0,offset);
@@ -702,6 +717,10 @@ void SwDockWidget_DockWidget::setInToolBar(bool state, QWidget * toolBarItem)
 			ui.toToolBarBtn->hide();
 			ui.outToolBarBtn->show();
 			ui.PB_Close->hide();
+
+			//Mise a jour du bouton d'action
+			if (_action)
+				_action->setChecked(true);
 		}
 		//Si le dock est sorti d'une toolbar
 		else
@@ -878,6 +897,12 @@ void SwDockWidget_DockWidget::setupShadow(QColor color)
 	ui.topRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:1, radius:0.7, fx:0, fy:1, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
 	ui.bottomRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:0, radius:0.7, fx:0, fy:0, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
 	ui.bottomLeft->setStyleSheet("background:qradialgradient(spread:pad, cx:1, cy:0, radius:0.7, fx:1, fy:0, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
+}
+
+//-----------------------------------------------------------------------------
+int SwDockWidget_DockWidget::getShadowSize()
+{
+	return ui.top->height();
 }
 
 //-----------------------------------------------------------------------------

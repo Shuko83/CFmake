@@ -19,6 +19,26 @@ SwDockWidget_TabWidget::~SwDockWidget_TabWidget()
 }
 
 //-----------------------------------------------------------------------------
+//Gestion des evenements
+bool SwDockWidget_TabWidget::event( QEvent * event )
+{
+	switch(event->type())
+	{
+		case QEvent::Close:
+			//Recuperation de la liste des widgets
+			QWidgetList list;
+			for (int i = 0; i < count(); i++)
+				list.push_back(widget(i));
+			//Fermeture de tous les widgets
+			foreach(QWidget * w, list)
+				w->close();
+			break;
+	}
+
+	return QTabWidget::event(event);
+}
+
+//-----------------------------------------------------------------------------
 //Ajout d'un onglet
 int SwDockWidget_TabWidget::addTab(QWidget * widget, int pos)
 {

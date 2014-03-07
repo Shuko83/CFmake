@@ -15,6 +15,9 @@ public:
 
 	int addTab(QWidget * widget, int pos = -1);
 
+protected:
+	virtual bool event( QEvent * event );
+
 private:
 	void setSize();
 };

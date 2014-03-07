@@ -5,7 +5,7 @@
 
 //-----------------------------------------------------------------------------
 SwDockWidget_MainTabWidget::SwDockWidget_MainTabWidget(QWidget * parent, bool withAddButton)
- : SwDockWidget_TabWidget(parent)
+ : SwDockWidget_TabWidget(parent), _lock(false), _addWidget(NULL)
 {
 	SwDockWidget_MainTabBar * tabBar = new SwDockWidget_MainTabBar(this);
 	setTabBar(tabBar);
@@ -15,8 +15,8 @@ SwDockWidget_MainTabWidget::SwDockWidget_MainTabWidget(QWidget * parent, bool wi
 	//Creation d'un onglet vide pour l'ajout d'un nouvel onglet
 	if (withAddButton)
 	{
-		QIcon icon = QIcon(":/DockWidget/images/DockWidget/add.png");
-		insertTab(0, new QWidget(this), icon, "");
+		_addWidget = new QWidget(this);
+		insertTab(0, _addWidget, QIcon(":/DockWidget/images/DockWidget/add.png"), "");
 		tabBar->setTabButton(0, QTabBar::RightSide, 0);
 	}
 
@@ -65,7 +65,9 @@ void SwDockWidget_MainTabWidget::closeTab(int index)
 			return;
 	}
 
-	//Fermeture du widget contenu dans l'onglet pour propager l'evenement (ne fonctionne pas! les docks ne sont pas notifies)
+	//Fermeture du widget
+	widget->close();
+	//Fermeture du widget contenu dans l'onglet pour propager l'evenement
 	if (widget->layout())
 	{
 		QLayoutItem * item = widget->layout()->itemAt(0);
@@ -73,8 +75,9 @@ void SwDockWidget_MainTabWidget::closeTab(int index)
 			item->widget()->close();
 	}
 
-	//Suppression de l'onglet
-	this->removeTab(index);
+	//Suppression de l'onglet (fait automatiquement lors de la suppression du widget)
+	if (empty)
+		this->removeTab(index);
 
 	//Mise a jour de l'onglet actif
 	setCurrentIndex(index);
@@ -83,7 +86,10 @@ void SwDockWidget_MainTabWidget::closeTab(int index)
 //-----------------------------------------------------------------------------
 int SwDockWidget_MainTabWidget::count()
 {
-	return SwDockWidget_TabWidget::count() - 1;
+	if (_addWidget)
+		return SwDockWidget_TabWidget::count() - 1;
+	else
+		return SwDockWidget_TabWidget::count();
 }
 
 //-----------------------------------------------------------------------------
@@ -100,4 +106,38 @@ void SwDockWidget_MainTabWidget::insertNewTab ()
 {
 	int index = insertTab(count(), new QWidget(this), "Tab " + QString::number(count() + 1));
 	setCurrentIndex(index);
+}
+
+//-----------------------------------------------------------------------------
+QWidget * SwDockWidget_MainTabWidget::getTabBar()
+{
+	return this->tabBar();
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_MainTabWidget::lock()
+{
+	if (!_lock)
+	{
+		_lock = true;
+		setTabsClosable(false);
+		removeTab(count());
+		_addWidget = 0;
+	}
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_MainTabWidget::releaseLock()
+{
+	if (_lock)
+	{
+		_lock = false;
+		setTabsClosable(true);
+		if (!_addWidget)
+		{
+			_addWidget = new QWidget(this);
+			int index = QTabWidget::addTab(_addWidget, QIcon(":/DockWidget/images/DockWidget/add.png"), "");
+			tabBar()->setTabButton(index, QTabBar::RightSide, 0);
+		}
+	}
 }

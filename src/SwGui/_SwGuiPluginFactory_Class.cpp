@@ -63,7 +63,8 @@ _SwGuiPluginFactory_Class::~_SwGuiPluginFactory_Class() {
 }
 /*! \brief Initialisation */
 void _SwGuiPluginFactory_Class::Initialize() {
-    RegisterComponent("SwGuiMainWindow","Main application window (QMainWindow)");
+    RegisterComponent("SwGuiMainWindow","Advanced Main application window (SwMainWindow)");
+	RegisterComponent("SwGuiQMainWindow","Main application window (QMainWindow)");
     RegisterComponent("SwGuiMenu","Simple menu (QMenu)");       
 	RegisterComponent("SwGuiActionList","Simple action list (Actions)");
 	RegisterComponent("SwGuiActionProvider","Simple action provider");
@@ -221,6 +222,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
 \return l'incone ou icone vide si non trouvé*/
 QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
     QIcon ico;
+	if (name=="SwGuiQMainWindow") {
+        return QIcon(":/SwGui/mainwindow.png");
+    }
     if (name=="SwGuiMainWindow") {
         return QIcon(":/SwGui/mainwindow.png");
     }
@@ -371,7 +375,8 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
         eservice->registerExtension<ISwLayout>("Layout","SwGuiHorizontalLayout");
         eservice->registerExtension<ISwHttpServer>("ISwHttpServer","SwGuiHttpServer");
         eservice->registerExtension<ISwWidget>("Widget","SwGuiLabel");
-        eservice->registerExtension<ISwQMainWindow>("MainWindow","SwGuiMainWindow");
+        eservice->registerExtension<ISwQMainWindow>("QMainWindow","SwGuiQMainWindow");
+		eservice->registerExtension<ISwMainWindow>("MainWindow","SwGuiMainWindow");
         eservice->registerExtension<ISwMenu>("Menu","SwGuiMenu");
         eservice->registerExtension<ISwAction>("Action","SwGuiPluginsTree");
         eservice->registerExtension<ISwAction>("Action","SwGuiQActionToWidget");

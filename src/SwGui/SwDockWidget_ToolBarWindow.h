@@ -18,6 +18,11 @@ public:
 
 	void setMainRect(QRect rect);
 
+	//Verrouillage de la disposition des docks
+	virtual void lock();
+	virtual void releaseLock();
+	bool locked();
+
 protected:
 	void saveToolBar(QDomDocument doc, QDomElement dom);
 	QWidget * loadToolBar(QDomNode node);
@@ -28,8 +33,13 @@ protected slots:
 	void reduceInToolBar();
 	void releaseFromToolBar(QWidget * dock = NULL);
 	
+	//Deplacement d'un item pour le changer de toolbar
 	void moveToolBarItem(QPoint pos);
 	void stopMovingToolBarItem();
+
+	//Deplacement d'une toolbar a un seul item
+	void moveToolBar(/*QPoint pos*/);
+	void stopMovingToolBar();
 
 	void closeToolBar();
 
@@ -37,8 +47,10 @@ private:
 	//Gestion des toolbar
 	QWidget * getToolBarUnderCursor(QWidget * activeToolBar);
 	void addInToolBar(QWidget * widget, QWidget * toolbar);
+	void connectSignals(QWidget * toolbar);
 
 private:
+	bool _lock; //Lock configuration
 	//Liste des items des toolbar
 	QList<QObject*> _listToolBar;
 	SwDockWidget_Overlay * _tbOverlay;

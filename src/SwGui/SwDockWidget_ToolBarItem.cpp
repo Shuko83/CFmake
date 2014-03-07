@@ -8,13 +8,15 @@
 #include <QDesktopWidget>
 
 //-----------------------------------------------------------------------------
-SwDockWidget_ToolBarItem::SwDockWidget_ToolBarItem(QWidget * dock, QString title, QWidget * toolBar)
- : QToolButton(), _widget(dock), _toolBar(toolBar), _tempMovingItem(NULL),
-	_canMove(false), _isMoving(false)
+SwDockWidget_ToolBarItem::SwDockWidget_ToolBarItem(QWidget * dock, QString title, QWidget * toolBar, QSize size)
+ : QToolButton(), _widget(dock), _toolBar(toolBar), _tempMovingItem(NULL), _orientation(Qt::Vertical),
+	_canMove(false), _isMoving(false), _titleBarSize(size)
 {
 	if (_widget)
 	{
 		setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+		setCheckable(true);
+		setChecked(false);
 		//Texte
 		setText(title);
 		//Icone
@@ -37,6 +39,7 @@ SwDockWidget_ToolBarItem::SwDockWidget_ToolBarItem(SwDockWidget_ToolBarItem * it
 {
 	if (item)
 	{
+		_titleBarSize = item->getTitleBarSize();
 		setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 		setText(item->text());
 		setIcon(item->icon());
@@ -64,11 +67,19 @@ void SwDockWidget_ToolBarItem::showWidget()
 		//Si le widget est affiche, on le masque
 		if (_widget->isVisible())
 		{
-			hideWidget();
+			//Masquage avec animation
+			QPropertyAnimation * effect = new QPropertyAnimation(_widget, "windowOpacity");
+			effect->setDuration(300);
+			effect->setStartValue(1);
+			effect->setEndValue(0);
+			effect->start();
+			//Lorsque la fenetre est transparante, on la masque
+			connect(effect, SIGNAL(finished()), _widget, SLOT(hide()));
 		}
 		//Sinon, on l'affiche
 		else if (_toolBar)
 		{
+			/*
 			//Recuperation de la taille de l'ecran actif
 			QDesktopWidget desktop;
 			QRect rect = desktop.screenGeometry (desktop.screenNumber(QCursor::pos()));
@@ -104,8 +115,79 @@ void SwDockWidget_ToolBarItem::showWidget()
 			effect->setStartValue(0);
 			effect->setEndValue(1);
 			effect->start();
+			*/
+
+			QPoint pos = setPosition();
+
+			//Mise a jour de la position
+			_widget->move(pos);
+
+			//Fenetre transparante avant affichage, pour utiliser l'effet
+			_widget->setWindowOpacity(0);
+			_widget->show();
+			//Affichage avec animation
+			QPropertyAnimation * effect = new QPropertyAnimation(_widget, "windowOpacity");
+			effect->setDuration(300);
+			effect->setStartValue(0);
+			effect->setEndValue(1);
+			effect->start();
 		}
 	}
+}
+
+//-----------------------------------------------------------------------------
+QPoint SwDockWidget_ToolBarItem::setPosition()
+{
+	//Recuperation de la taille de l'ecran actif
+	QDesktopWidget desktop;
+	QRect rect = desktop.screenGeometry (desktop.screenNumber(QCursor::pos()));
+	SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(_widget);
+	
+	//Ajustement de la position du dock avant ouverture
+	QPoint pos = this->pos();
+	//Si la toolbar est verticale, ouverture a gauche ou a droite du bouton
+	if (_orientation == Qt::Vertical)
+	{
+		pos = _toolBar->pos() + this->pos() + QPoint(this->width(),0); //Ouverture a droite par defaut
+		//Si l'item est situe dans la partie droite de l'ecran, on ouvre la fenetre a gauche
+		if (_toolBar->pos().x() > (rect.x() + rect.size().width() / 2) ) //On ajoute la position rect.x() pour gere le cas multi-ecran
+		{
+			if( dock)
+				dock->showShadow(Qt::LeftDockWidgetArea | Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
+			pos.setX(_toolBar->pos().x() + this->pos().x() - _widget->width());
+		}
+		//Si l'item est situe dans la partie gauche de l'ecran, on ouvre la fenetre a droite
+		else
+		{
+			if( dock)
+				dock->showShadow(Qt::RightDockWidgetArea | Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
+		}
+		//Si l'item est trop pret du bord inferieur de l'ecran, on ouvre la fenetre vers le haut
+		if (pos.y() + _widget->height() > (rect.y() + rect.height()))
+		{
+			pos.setY(_toolBar->pos().y() + this->pos().y() + this->height() -_widget->height());
+		}
+	}
+	//Si la toolbar est horizontale, ouverture au dessus ou au dessous du bouton
+	else 
+	{
+		pos = _toolBar->pos() + this->pos() + QPoint(-dock->getShadowSize(), this->height() + _titleBarSize.height()); //Ouverture a droite par defaut
+		//Si l'item est situe dans la partie droite de l'ecran, on ouvre la fenetre a gauche
+		if (_toolBar->pos().x() > (rect.x() + rect.size().width() / 2) ) //On ajoute la position rect.x() pour gere le cas multi-ecran
+		{
+			pos.setX(_toolBar->pos().x() + this->pos().x() + this->width() + dock->getShadowSize() - _widget->width());
+		}
+		dock->showShadow(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+		//Si l'item est trop pret du bord inferieur de l'ecran, on ouvre la fenetre vers le haut
+		if (pos.y() + _widget->height() > (rect.y() + rect.height()))
+		{
+			pos.setY(_toolBar->pos().y() + this->pos().y() -_widget->height());
+			if( dock)
+				dock->showShadow(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea);
+		}
+	}
+
+	return pos;
 }
 
 //-----------------------------------------------------------------------------
@@ -113,6 +195,7 @@ void SwDockWidget_ToolBarItem::hideWidget(bool withEffect)
 {
 	if (_widget)
 	{
+		setChecked(false);
 		//Masquage avec animation
 		QPropertyAnimation * effect = new QPropertyAnimation(_widget, "windowOpacity");
 		if (withEffect)
@@ -219,5 +302,28 @@ void SwDockWidget_ToolBarItem::mouseMoveEvent( QMouseEvent * event )
 				_clickPos = cursor;
 			}
 		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBarItem::setOrientation(Qt::Orientation orientation)
+{
+	if (orientation != _orientation)
+		_orientation = orientation;
+}
+
+//-----------------------------------------------------------------------------
+QSize SwDockWidget_ToolBarItem::getTitleBarSize()
+{
+	return _titleBarSize;
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBarItem::updateWidgetPosition()
+{
+	//Si le widget est ouvert, on met a jour sa position
+	if (_widget && _widget->isVisible())
+	{
+		_widget->move(setPosition());
 	}
 }
