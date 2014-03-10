@@ -5,8 +5,9 @@
 #include <QSettings>
 #include <QMenuBar>
 
+
 SwDockWidget_MainWindow::SwDockWidget_MainWindow(QWidget *parent, Qt::WFlags flags)
-	: QMainWindow(parent, flags), _lock(false)
+	: QMainWindow(parent, flags)//, _lock(false)
 {
 	//ui.setupUi(this);
 
@@ -70,7 +71,7 @@ void SwDockWidget_MainWindow::loadConfiguration()
 	}
 }
 
-bool SwDockWidget_MainWindow::getLock()
+/*bool SwDockWidget_MainWindow::getLock()
 {
 	return _lock;
 }
@@ -90,3 +91,4 @@ void SwDockWidget_MainWindow::setLock(bool lock)
 		}
 	}
 }
+*/

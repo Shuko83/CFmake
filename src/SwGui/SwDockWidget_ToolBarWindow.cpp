@@ -506,3 +506,29 @@ bool SwDockWidget_ToolBarWindow::locked()
 {
 	return _lock;
 }
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBarWindow::setLock(bool state)
+{
+	if (_lock != state)
+	{
+		_lock = state;
+		if (state)
+			lock();
+		else
+			releaseLock();
+	}
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_ToolBarWindow::closeToolbars()
+{
+	foreach(QObject * obj, _listToolBar)
+	{
+		SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
+		if (tb)
+		{
+			tb->close();
+		}
+	}
+}

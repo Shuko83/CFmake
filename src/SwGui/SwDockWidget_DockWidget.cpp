@@ -283,9 +283,8 @@ void SwDockWidget_DockWidget::updateBtn()
 		ui.PB_Close->show();
 		if (parent() == _mainArea)
 		{
-			//Boutons invisibles
-			ui.toToolBarBtn->show();
-			ui.outToolBarBtn->hide();
+			ui.toToolBarBtn->setVisible(!isInToolBar());
+			ui.outToolBarBtn->setVisible(isInToolBar());
 		}
 		//Si le dock est attache ou en toolbar
 		else
@@ -572,7 +571,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		if (ui.bottomLeft->isVisible() &&
 			(bottomLeft.contains(event->pos()) ||
 			bottomLeftExtRight.contains(event->pos()) ||
-			bottomRightExtUp.contains(event->pos())))
+			bottomLeftExtUp.contains(event->pos())))
 		{
 			_isResizing = true;
 			ReleaseCapture();

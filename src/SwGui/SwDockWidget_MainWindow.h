@@ -8,7 +8,7 @@
 class SwDockWidget_MainWindow : public QMainWindow
 {
 	Q_OBJECT
-	Q_PROPERTY(bool _lock READ getLock WRITE setLock)
+	//Q_PROPERTY(bool _lock READ getLock WRITE setLock)
 
 public:
 	SwDockWidget_MainWindow(QWidget *parent = 0, Qt::WFlags flags = 0);
@@ -21,12 +21,12 @@ public:
 
 	void loadConfiguration();
 
-	bool getLock();
-	void setLock(bool lock);
+	/*bool getLock();
+	void setLock(bool lock);*/
 
 private:
 	//Ui::mainWindow ui;
-	bool _lock;
+	//bool _lock;
 
 	//SwDockWidget_MainArea *_dockArea;
 	QWidget * _mainArea;

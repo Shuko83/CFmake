@@ -56,6 +56,9 @@ class _SwGuiCompMainWindow : public SwAssistedComponent,
 							 public ISwListDockWidgetListener
 {
 
+	//Q_OBJECT
+	//Q_PROPERTY(bool _lock READ getLock WRITE setLock)
+
 protected:
     /* fenetre principale */
 	SwDockWidget_MainWindow * _mainWindow;
@@ -124,9 +127,14 @@ protected:
     /* choix du type d'interface Widget ou MainWindow*/
     bool  _useAsWidget;
     /* propriété nombre d'actions*/
-    ISwProperty * _use_aswidget_property;   
+    ISwProperty * _use_aswidget_property;
+
+	//Status Bar
 
 	QList<ISwEventObserver*> _iSwEvent;
+
+	//bool getLock();
+	//void setLock(bool lock);
 
 public:
     /*! \brief Constructeur */
@@ -199,5 +207,8 @@ private:
 
 protected:
 	void closeEvent(QCloseEvent* event);
+
+/*private:
+	bool _lock;*/
 };
 #endif 

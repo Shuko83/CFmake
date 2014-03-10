@@ -34,6 +34,7 @@ protected slots:
 private:
 	void connectNameEdit();
 	void disconnectNameEdit();
+	void renameAction();
 
 private:
 	QLineEdit * _nameEdit;

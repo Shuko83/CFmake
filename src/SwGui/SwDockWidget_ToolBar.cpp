@@ -927,8 +927,14 @@ void SwDockWidget_ToolBar::releaseLock()
 {
 	if (_lock)
 	{
+		qDebug() << "tb::releaseLock";
+
 		_lock = false;
 		ui.PB_Close->show();
-		ui.switchBtn->show();
+		if (_layout->count() > 1)
+		{
+			qDebug() << _layout->count();
+			ui.switchBtn->show();
+		}
 	}
 }

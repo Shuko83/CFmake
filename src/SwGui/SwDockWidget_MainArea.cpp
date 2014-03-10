@@ -34,7 +34,7 @@
 //-----------------------------------------------------------------------------
 SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar)
 	: SwDockWidget_ToolBarWindow(parent), _mainWidget(NULL), _menuBar(menuBar), _widgetMenu(NULL), _movingDock(""), _tempDock(NULL),
-	/*locked()(false), */_isReleasing(false), _isMovingDock(false), _mainDockConf(NULL), _posEffect(NULL)
+	/*locked()(false), */_isReleasing(false), _isMovingDock(false), _mainDockConf(NULL), _posEffect(NULL), _lockAction(NULL)
 {
 	ui.setupUi(this);
 	this->setMinimumSize(50,50);
@@ -150,6 +150,15 @@ void SwDockWidget_MainArea::setMenu()
 		createMainWidgetAction(_bottomMainDock, ":/DockWidget/images/DockWidget/hideBottom.png"
 											  , ":/DockWidget/images/DockWidget/hideBottomDisabled.png"
 											  , ":/DockWidget/images/DockWidget/hideBottomSelected.png");
+
+		//Lock / Unlock
+		_lockAction = new SwDockWidget_MainDockMenuAction(this,
+				":/DockWidget/images/DockWidget/lock.png",
+				":/DockWidget/images/DockWidget/lock.png",
+				":/DockWidget/images/DockWidget/unlock.png");
+		_lockAction->setEnabled(true);
+		_menuBar->addAction(_lockAction);
+		connect(_lockAction, SIGNAL(toggled(bool)), this, SLOT(setLock(bool)));
 	}
 }
 
@@ -515,6 +524,9 @@ bool SwDockWidget_MainArea::close()
 	//Fermeture du dock principal de deuxieme ecran si necessaire
 	_secondScreenMainDock->close();
 
+	//Fermeture des toolbars
+	closeToolbars();
+
 	return true;
 }
 
@@ -610,12 +622,25 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 			//Clic initial : selection de l'objet, debut de deplacement
 			case QEvent::MouseButtonPress:
 				dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
-				if (dock && (dock->canBePin() || (dock->parent() != this)) && !locked())
+				if (dock && dock->canBePin()/* && (dock->parent() != this)*/ && !locked())
 				{
+					if (dock->parent())
+						qDebug() << dock->parent()->objectName() << this->objectName();
 					_isMovingDock = true;
 					_movingDock = obj->objectName();
 				}
 				break;
+
+			//Redimensionnement : on ignore le deplacement du dock flottant
+			/*case QEvent::Resize:
+				if (!_movingDock.compare(obj->objectName()))
+				{
+					_isMovingDock = false;
+					_movingDock = "";
+					//Masquage des fleches de positionnement
+					hideArrows();
+				}
+				break;*/
 
 			//Deplacement
 			case QEvent::Move:
@@ -1931,6 +1956,7 @@ void SwDockWidget_MainArea::savePosition(QDomDocument doc, QDomElement dom, QWid
 			QGridLayout * layout = ui.centralLayout;
 			//Sauvegarde du centralWidget
 			QDomElement noeud = writeWidgetParameters(doc, dom, widget);
+			noeud.setAttribute("locked", QString::number(this->locked()));
 			if (layout->count())
 			{
 				//Sauvegarde du contenu du centralWidget
@@ -2453,6 +2479,13 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 		//Si centralWidget
 		else if (!name.compare("QWidget") && !e.attribute("objectName").compare("centralWidget"))
 		{
+			bool locked = e.attribute("locked").toInt();
+			if (locked)
+			{
+				lock();
+				_lockAction->setChecked(true);
+			}
+
 			//Lecture des parametres
 			QDomNodeList list = node.childNodes();
 			for (int i = 0; i < list.count(); i++)
@@ -2566,6 +2599,15 @@ void SwDockWidget_MainArea::releaseLock()
 	}
 
 	SwDockWidget_ToolBarWindow::releaseLock();
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_MainArea::setLock(bool state)
+{
+	if (state)
+		lock();
+	else
+		releaseLock();
 }
 
 //-----------------------------------------------------------------------------

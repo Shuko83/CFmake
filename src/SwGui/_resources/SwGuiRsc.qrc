@@ -86,5 +86,7 @@
         <file>images/DockWidget/topHover.png</file>
         <file>images/DockWidget/trbl.png</file>
         <file>images/DockWidget/trlb.png</file>
+        <file>images/DockWidget/lock.png</file>
+        <file>images/DockWidget/unlock.png</file>
     </qresource>
 </RCC>

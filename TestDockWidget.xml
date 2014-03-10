@@ -129,10 +129,10 @@
                 <interface provider_path="..SwGuiDockWidget" provider_interface="DockWidget" name="DockWidget_3"/>
                 <!--Begin : Ignore on merge-->
                 <ListIDX>
-                    <interface idx="11" name="DockWidget_0"/>
-                    <interface idx="12" name="DockWidget_1"/>
-                    <interface idx="13" name="DockWidget_2"/>
-                    <interface idx="14" name="DockWidget_3"/>
+                    <interface idx="10" name="DockWidget_0"/>
+                    <interface idx="11" name="DockWidget_1"/>
+                    <interface idx="12" name="DockWidget_2"/>
+                    <interface idx="13" name="DockWidget_3"/>
                 </ListIDX>
                 <!--End : Ignore on merge-->
             </service>
@@ -146,7 +146,7 @@
                 <interface provider_path="..SwGuiDockWidget4" provider_interface="DockWidget" name="DockWidget_0"/>
                 <!--Begin : Ignore on merge-->
                 <ListIDX>
-                    <interface idx="17" name="DockWidget_0"/>
+                    <interface idx="15" name="DockWidget_0"/>
                 </ListIDX>
                 <!--End : Ignore on merge-->
             </service>
@@ -163,17 +163,17 @@
                 <!--Begin : Ignore on merge-->
                 <ListIDX>
                     <interface idx="8" name="CentralWidget"/>
-                    <interface idx="15" name="ListDockWidget_0"/>
-                    <interface idx="19" name="ListDockWidget_1"/>
+                    <interface idx="14" name="ListDockWidget_0"/>
+                    <interface idx="16" name="ListDockWidget_1"/>
                 </ListIDX>
                 <!--End : Ignore on merge-->
             </service>
             <service name="Properties">
+                <property pname="_lock">true</property>
                 <property pname="QWidget.visible">true</property>
-                <property pname="nb_dockwidgets">0</property>
                 <property pname="nb_listdockwidgets">2</property>
             </service>
-            <service historyIndex="16" name="Owner"/>
+            <service historyIndex="17" name="Owner"/>
         </component>
         <component factory_name="SwGuiWidget" name="SwGuiWidget" factory="SwGuid.swdld">
             <service name="Properties"/>
@@ -188,17 +188,24 @@
         </component>
     </component>
     <Scene width="1607.069649266583" x="0" y="0" height="1120">
-        <IA x="129" y="612" W="1198" H="167" alpha="136" color="#005500" text="Deuxieme liste">
-            <CGItem tcolor="#000000" x="89" y="78" name="SwGuiLabel5" color="#7c5ccb">
+        <CGItem tcolor="#000000" x="949" y="485" name="SwGuiMainWindow" color="#ff9900">
+            <Cnt name="MainWindow" pos="left"/>
+            <Cnt name="ISwEvent" pos="left"/>
+            <Cnt name="CentralWidget" pos="left"/>
+            <Cnt name="ListDockWidget_0" pos="right"/>
+            <Cnt name="ListDockWidget_1" pos="right"/>
+        </CGItem>
+        <IA x="130" y="403" W="1196" H="188" alpha="136" color="#a53700" text="MainWindow">
+            <CGItem tcolor="#000000" x="326" y="102" name="SwGuiGridLayout" color="#e2e100">
+                <Cnt name="GridLayout" pos="right"/>
+                <Cnt name="Widget0" pos="left"/>
+            </CGItem>
+            <CGItem tcolor="#000000" x="531" y="102" name="SwGuiWidget" color="#7c5ccb">
                 <Cnt name="Widget" pos="right"/>
+                <Cnt name="Layout" pos="left"/>
             </CGItem>
-            <CGItem tcolor="#000000" x="515" y="78" name="SwGuiDockWidget4" color="#3d9b35">
-                <Cnt name="DockWidget" pos="right"/>
-                <Cnt name="Widget" pos="left"/>
-            </CGItem>
-            <CGItem tcolor="#000000" x="957" y="78" name="SwGuiListDockWidget1" color="#ff9900">
-                <Cnt name="ISwListDockWidget" pos="right"/>
-                <Cnt name="DockWidget_0" pos="left"/>
+            <CGItem tcolor="#000000" x="134" y="102" name="SwGuiLabel1" color="#7c5ccb">
+                <Cnt name="Widget" pos="right"/>
             </CGItem>
         </IA>
         <IA x="134" y="22" W="1194" H="361" alpha="136" color="#005500" text="Premiere liste">
@@ -238,24 +245,17 @@
                 <Cnt name="DockWidget_3" pos="left"/>
             </CGItem>
         </IA>
-        <IA x="130" y="403" W="1196" H="188" alpha="136" color="#a53700" text="MainWindow">
-            <CGItem tcolor="#000000" x="326" y="102" name="SwGuiGridLayout" color="#e2e100">
-                <Cnt name="GridLayout" pos="right"/>
-                <Cnt name="Widget0" pos="left"/>
-            </CGItem>
-            <CGItem tcolor="#000000" x="531" y="102" name="SwGuiWidget" color="#7c5ccb">
+        <IA x="129" y="612" W="1198" H="167" alpha="136" color="#005500" text="Deuxieme liste">
+            <CGItem tcolor="#000000" x="89" y="78" name="SwGuiLabel5" color="#7c5ccb">
                 <Cnt name="Widget" pos="right"/>
-                <Cnt name="Layout" pos="left"/>
             </CGItem>
-            <CGItem tcolor="#000000" x="819" y="82" name="SwGuiMainWindow" color="#ff9900">
-                <Cnt name="MainWindow" pos="left"/>
-                <Cnt name="ISwEvent" pos="left"/>
-                <Cnt name="CentralWidget" pos="left"/>
-                <Cnt name="ListDockWidget_0" pos="right"/>
-                <Cnt name="ListDockWidget_1" pos="right"/>
+            <CGItem tcolor="#000000" x="515" y="78" name="SwGuiDockWidget4" color="#3d9b35">
+                <Cnt name="DockWidget" pos="right"/>
+                <Cnt name="Widget" pos="left"/>
             </CGItem>
-            <CGItem tcolor="#000000" x="134" y="102" name="SwGuiLabel1" color="#7c5ccb">
-                <Cnt name="Widget" pos="right"/>
+            <CGItem tcolor="#000000" x="957" y="78" name="SwGuiListDockWidget1" color="#ff9900">
+                <Cnt name="ISwListDockWidget" pos="right"/>
+                <Cnt name="DockWidget_0" pos="left"/>
             </CGItem>
         </IA>
     </Scene>

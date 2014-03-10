@@ -16,6 +16,8 @@ public:
 
 	QList<QObject*> getListToolBar();
 
+	void closeToolbars();
+
 	void setMainRect(QRect rect);
 
 	//Verrouillage de la disposition des docks
@@ -42,6 +44,7 @@ protected slots:
 	void stopMovingToolBar();
 
 	void closeToolBar();
+	virtual void setLock(bool state);
 
 private:
 	//Gestion des toolbar

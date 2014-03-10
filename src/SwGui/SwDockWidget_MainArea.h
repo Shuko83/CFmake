@@ -66,6 +66,8 @@ protected slots:
 	void freeMainTab(int index, QPoint pos);
 	void moveMainTab(QPoint pos);
 	void stopMovingMainTab();
+	
+	void setLock(bool state);
 
 
 private:
@@ -117,6 +119,7 @@ private:
 	Ui::DockArea ui;
 
 	//bool _lock; //Lock configuration
+	QAction * _lockAction;
 	
 	//Liste des DockWidgets
 	QList<QObject*> _list;	

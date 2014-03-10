@@ -16,7 +16,7 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
-
+#define STATUSBAR_INTERFACE "StatusBar"
 #define CL_MENU_INTERFACE_NAME "Menu_%1"
 #define CL_ACTION_INTERFACE_NAME "Action_%1"
 #define CL_TOOLBAR_INTERFACE_NAME "ToolBar_%1"
@@ -33,7 +33,7 @@ using namespace StreamWork::SwGui;
 
 
 /*! \brief Constructeur */
-_SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()
+_SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()//, _lock(false)
 {
 	setConsumerServiceAvaibility(true);
 	setProviderServiceAvaibility(true);
@@ -164,6 +164,9 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
 	//Central widget
 	unconsummeInterface(CL_CENTRALWIDGET_INTERFACE_NAME);
 
+	//Status bar
+	unconsummeInterface(STATUSBAR_INTERFACE);
+
 	//Event
 	unprovideInterface("ISwEvent");
 
@@ -189,14 +192,18 @@ void _SwGuiCompMainWindow::initializeComponent() throw(SwException)
     else
 		provideInterface<ISwWidget>("MainWindowAsWidget",(ISwWidget *)this);
 
-    //Importation de l'interface ISwWidget
+    //Central widget
 	consummeInterface<ISwWidget>(CL_CENTRALWIDGET_INTERFACE_NAME);
 
 	//Exportation de l'interface ISwWidget
 	provideInterface<ISwEvent>("ISwEvent",(ISwEvent*)this);
 
+	//Status bar
+	consummeInterface<ISwWidget>(STATUSBAR_INTERFACE);
+
     //Enregistrement des propriétés
 	//getPropertiesService().CreatePropertiesForQObject(_mainWindow,"QWidget");
+	//createPropertiesForThisObject(QString(), true);
 	createPropertiesForQObject(_mainWindow,"QWidget");
 	//getPropertiesService().CreatePropertiesForQObject((QMainWindow*)this,"QMainWindow");
     
@@ -815,7 +822,16 @@ void _SwGuiCompMainWindow::interfaceAvailable(QString interfaceName)
 			_mainWindow->addToolBar((Qt::ToolBarArea)enum_value.ToInt(),&(toolbar->GetToolBar()));
 		}
 		return;
-	} 
+	}
+
+	//Status bar
+	if(interfaceName == STATUSBAR_INTERFACE)
+	{
+		ISwWidget * widget = getInterface<ISwWidget>(interfaceName);
+		if (widget && _mainWindow && _mainWindow->statusBar())
+			_mainWindow->statusBar()->addPermanentWidget(&widget->GetWidget(), 1);
+		return;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -825,7 +841,7 @@ void _SwGuiCompMainWindow::interfaceUnavailable(QString interfaceName)
 	if(interfaceName == CL_CENTRALWIDGET_INTERFACE_NAME)
 	{
 		ISwWidget * widget = getInterface<ISwWidget>(interfaceName);
-		if (widget)
+		if (widget && _mainWindow)
 			_mainWindow->setMainWidget(0);
 		return;
 	}
@@ -888,6 +904,33 @@ void _SwGuiCompMainWindow::interfaceUnavailable(QString interfaceName)
         toolbar_it.value() = NULL;
 		return;
 	}
+	
+	//Status bar
+	if(interfaceName == STATUSBAR_INTERFACE)
+	{
+		ISwWidget * widget = getInterface<ISwWidget>(interfaceName);
+		if (widget && _mainWindow && _mainWindow->statusBar())
+			_mainWindow->statusBar()->removeWidget(&widget->GetWidget());
+		return;
+	}
 }
 
+/*
+//-----------------------------------------------------------------------------
+bool _SwGuiCompMainWindow::getLock()
+{
+	return _lock;
+}
+
+//-----------------------------------------------------------------------------
+void _SwGuiCompMainWindow::setLock(bool lock)
+{
+	if (lock != _lock)
+	{
+		_lock = lock;
+		if (_mainWindow)
+			_mainWindow->setLock(lock);
+	}
+}
+*/
 
