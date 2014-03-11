@@ -221,6 +221,8 @@
 			<File
 				RelativePath="_SwGuiCompActionProvider.cpp" />
 			<File
+				RelativePath="_SwGuiCompDockToQDock.cpp" />
+			<File
 				RelativePath="_SwGuiCompDockWidget.cpp" />
 			<File
 				RelativePath="_SwGuiCompFrame.cpp" />
@@ -250,6 +252,8 @@
 				RelativePath="_SwGuiCompPushButtonToQAction.cpp" />
 			<File
 				RelativePath="_SwGuiCompQActionToStackedWidget.cpp" />
+			<File
+				RelativePath="_SwGuiCompQDockToDock.cpp" />
 			<File
 				RelativePath="_SwGuiCompQDockWidget.cpp" />
 			<File
@@ -1043,6 +1047,29 @@
 			<File
 				RelativePath="_SwGuiCompActionProvider.h" />
 			<File
+				RelativePath="_SwGuiCompDockToQDock.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompDockToQDock.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DQT_DLL -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompDockToQDock.h -o GeneratedFiles\mocd\moc__SwGuiCompDockToQDock.cpp"
+						Description="MOC _SwGuiCompDockToQDock.h"
+						Outputs="GeneratedFiles\mocd\moc__SwGuiCompDockToQDock.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompDockToQDock.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompDockToQDock.h -o GeneratedFiles\moc\moc__SwGuiCompDockToQDock.cpp"
+						Description="MOC _SwGuiCompDockToQDock.h"
+						Outputs="GeneratedFiles\moc\moc__SwGuiCompDockToQDock.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath="_SwGuiCompDockWidget.h">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -1279,6 +1306,29 @@
 						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompQActionToStackedWidget.h -o GeneratedFiles\moc\moc__SwGuiCompQActionToStackedWidget.cpp"
 						Description="MOC _SwGuiCompQActionToStackedWidget.h"
 						Outputs="GeneratedFiles\moc\moc__SwGuiCompQActionToStackedWidget.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwGuiCompQDockToDock.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompQDockToDock.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DQT_DLL -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompQDockToDock.h -o GeneratedFiles\mocd\moc__SwGuiCompQDockToDock.cpp"
+						Description="MOC _SwGuiCompQDockToDock.h"
+						Outputs="GeneratedFiles\mocd\moc__SwGuiCompQDockToDock.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompQDockToDock.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompQDockToDock.h -o GeneratedFiles\moc\moc__SwGuiCompQDockToDock.cpp"
+						Description="MOC _SwGuiCompQDockToDock.h"
+						Outputs="GeneratedFiles\moc\moc__SwGuiCompQDockToDock.cpp"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
@@ -2020,6 +2070,18 @@
 					ExcludedFromBuild="true" />
 			</File>
 			<File
+				RelativePath="GeneratedFiles\moc\moc__SwGuiCompDockToQDock.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc__SwGuiCompDockToQDock.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
 				RelativePath="GeneratedFiles\moc\moc__SwGuiCompDockWidget.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -2135,6 +2197,18 @@
 			</File>
 			<File
 				RelativePath="GeneratedFiles\mocd\moc__SwGuiCompQActionToStackedWidget.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\moc\moc__SwGuiCompQDockToDock.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc__SwGuiCompQDockToDock.cpp">
 				<FileConfiguration
 					Name="Release|Win32"
 					ExcludedFromBuild="true" />

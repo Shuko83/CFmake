@@ -21,7 +21,7 @@
 #include <QAction>
 #include <QDesktopWidget>
 #include <QPropertyAnimation>
-#include <QDebug>
+//#include <QDebug>
 #include <QMetaEnum>
 
 #define BTN_SIZE 32
@@ -624,8 +624,8 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 				dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
 				if (dock && dock->canBePin()/* && (dock->parent() != this)*/ && !locked())
 				{
-					if (dock->parent())
-						qDebug() << dock->parent()->objectName() << this->objectName();
+					/*if (dock->parent())
+						qDebug() << dock->parent()->objectName() << this->objectName();*/
 					_isMovingDock = true;
 					_movingDock = obj->objectName();
 				}

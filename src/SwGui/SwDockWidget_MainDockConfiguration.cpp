@@ -3,7 +3,7 @@
 #include <QRadioButton>
 #include <QWidgetAction>
 #include <QMetaEnum>
-#include <QDebug>
+//#include <QDebug>
 
 #define ADDINLAYOUT(a) {_layout->addWidget(a, num/4, num%4); num++;}
 

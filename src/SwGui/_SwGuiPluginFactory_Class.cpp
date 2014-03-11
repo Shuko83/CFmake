@@ -18,6 +18,8 @@
 #include "_SwGuiCompToolbar.h"
 #include "_SwGuiCompQDockWidget.h"
 #include "_SwGuiCompDockWidget.h"
+#include "_SwGuiCompDockToQDock.h"
+#include "_SwGuiCompQDockToDock.h"
 #include "_SwGuiCompListDockWidget.h"
 #include "_SwGuiCompWidget.h"
 #include "_SwGuiCompFrame.h"
@@ -71,6 +73,8 @@ void _SwGuiPluginFactory_Class::Initialize() {
     RegisterComponent("SwGuiToolBar","Simple toolbar (QToolBar)");
     RegisterComponent("SwGuiQDockWidget","Simple dock widget (QDockWidget)");
 	RegisterComponent("SwGuiDockWidget","Advanced Dock widget (SwDockWidget)");
+	RegisterComponent("SwGuiDockToQDock","Convert DockWidget into QDockWidget");
+	RegisterComponent("SwGuiQDockToDock","Convert QDockWidget into DockWidget");
 	RegisterComponent("SwGuiListDockWidget","List of Advanced Dock widget (SwDockWidget)");
     RegisterComponent("SwGuiWidget","Simple widget (QWidget)");
 	RegisterComponent("SwGuiFrame","Simple frame (QFrame)");
@@ -131,6 +135,12 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
     if (name=="SwGuiDockWidget") {
         return new _SwGuiCompDockWidget;
     }
+	if (name=="SwGuiDockToQDock") {
+		return new _SwGuiCompDockToQDock;
+	}
+	if (name=="SwGuiQDockToDock") {
+		return new _SwGuiCompQDockToDock;
+	}
     if (name=="SwGuiListDockWidget") {
         return new _SwGuiCompListDockWidget;
     }
@@ -246,6 +256,12 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
     if (name=="SwGuiDockWidget") {
         return QIcon(":/SwGui/widget.png");
     }
+	if (name=="SwGuiDockToQDock") {
+		return QIcon(":/SwGui/widget.png");
+	}
+	if (name=="SwGuiQDockToDock") {
+		return QIcon(":/SwGui/widget.png");
+	}
     if (name=="SwGuiListDockWidget") {
         return QIcon(":/SwGui/widget.png");
     }
