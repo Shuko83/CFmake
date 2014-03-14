@@ -15,8 +15,8 @@
 
 
 /*
-  * INCLUDES LOCAUX
-  */
+* INCLUDES LOCAUX
+*/
 #include "SwPropertiesModelImpl.h"
 #include "SwIconDescriptor.h"
 #include "ISwSnapShotPropertiesService.h"
@@ -258,7 +258,8 @@ void SwPropertiesModelImpl::SetProperties(QList<StarlinxProperty> inProperties_l
 		#endif
 
 		// Si on est PAS en débug et que la propery contient le mot clé, on NE l'ajoute PAS dans le TreeView
-		if(!takeCareOfDebugProperties && constructedPropertyName.contains("_DebugMode", Qt::CaseInsensitive))
+		if( (!takeCareOfDebugProperties && constructedPropertyName.contains("_DebugMode", Qt::CaseInsensitive))
+			|| constructedPropertyName.contains("_DoNotDisplay", Qt::CaseInsensitive))
 		{
 			// ne rien faire
 		}
@@ -278,6 +279,9 @@ void SwPropertiesModelImpl::SetProperties(QList<StarlinxProperty> inProperties_l
 			{
 				if(constructedPropertyName.contains("_DebugMode", Qt::CaseInsensitive))
 					constructedPropertyName.remove("_DebugMode", Qt::CaseInsensitive);
+
+				if(constructedPropertyName.contains("_DoNotDisplay", Qt::CaseInsensitive))
+					constructedPropertyName.remove("_DoNotDisplay", Qt::CaseInsensitive);
 
 				CreateItem(prop, constructedPropertyName);
 			}

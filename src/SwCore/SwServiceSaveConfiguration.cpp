@@ -1186,7 +1186,7 @@ void SwServiceSaveConfiguration::onPropertyDeleted( ISwProperty * propertyDelete
 //-------------------------------------------------------------------------
 QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QString inConfigFileToParse)
 {
-	bool inDefaultConfig = false;
+	bool inFactoryConfig = false;
 	int nbProfiles = 0;
 
 	// Créer un seul QDomDoc pour toute la fonction sinon plantage...
@@ -1200,7 +1200,7 @@ QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QSt
 	// On récupère la liste des configs dans le fichier
 	QDomNodeList ConfigElements = _xmlConfigFileDocument.documentElement().elementsByTagName(CFM_XML_TAG_CONFIG);
 
-	// On check si le fichier loadé correspond à la configuration concernée. Sinon on re
+	// On check si le fichier loadé correspond à la configuration concernée. Sinon on re (?)
 	QString confConcernedByFile = "";
 	QDomNodeList Root = _xmlConfigFileDocument.elementsByTagName(CFM_XML_TAG_FILE);
 	if(Root.size() > 0)
@@ -1254,10 +1254,10 @@ QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QSt
 					nbProfiles++;
 				}
 				else
-					inDefaultConfig = true;
+					inFactoryConfig = true;
 			}
 
-			// récupération de la conf courrante et set dans "currentConf"
+			// récupération de la conf courante et set dans "currentConf"
 			// /!\ Il ne peux y avoir qu'une seule config tagguée comme courrante dans le fichier de conf
 			// Si l'élément a un attribut "current" sans être la config par défaut
 			QString configAttribut2 = ConfigElements.at(i).toElement().attribute(CFM_XML_CONFIG_CURRENT);
@@ -1273,37 +1273,87 @@ QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QSt
 
 		// Check s'il y a un fichier de conf présent sur la machine (et valide)
 		// Check s'il y a une conf par défaut et une conf courrante, sinon on les créées 
-		if((!inDefaultConfig || nbProfiles == 0) && confConcernedByFile == "")
+		if((!inFactoryConfig || nbProfiles == 0))
 		{
 			QDomDocument doc;
-			QDomElement elt_new_config;
 			QDomElement root_node;
 			root_node = doc.createElement(CFM_XML_TAG_FILE);
 			root_node.setAttribute(CFM_XML_TAG_FILE_CONFNAME, confName);
 
-			if(!inDefaultConfig)
+			// S'il n'y a pas de configuration usine, on en créé une à partir des valeurs par défaut des paramètres dans les streams
+			QDomElement elt_factory_config;
+			if(!inFactoryConfig)
 			{
-				elt_new_config = doc.createElement(CFM_XML_TAG_CONFIG);
-				elt_new_config.setAttribute(CFM_XML_CONFIG_DEFAULT,		"true");
-				elt_new_config.setAttribute(CFM_XML_CONFIG_CURRENT,		"false");
-				elt_new_config.setAttribute(CFM_XML_CONFIG_NAME,		CFM_DEFAULT_FILENAME);
+				elt_factory_config = doc.createElement(CFM_XML_TAG_CONFIG);
+				elt_factory_config.setAttribute(CFM_XML_CONFIG_DEFAULT,		"true");
+				elt_factory_config.setAttribute(CFM_XML_CONFIG_CURRENT,		"false");
+				elt_factory_config.setAttribute(CFM_XML_CONFIG_NAME,		CFM_DEFAULT_FILENAME);
 
-				createQDomProfile(confName, doc, elt_new_config);
+				createQDomProfile(confName, doc, elt_factory_config);	
 
-				// Fermer la balise <Config>
-				root_node.appendChild(elt_new_config);			
+			
+				// Récupération du QString associé à chaque QDomElement
+				tempDoc.clear();
+				QDomNode xmlDatas  = tempDoc.importNode(elt_factory_config, true);
+				tempDoc.appendChild(xmlDatas);
+				QString configDatas = tempDoc.toString();
+
+				//ajout dans QHash<QString, QHash<QString, QString>> _confProfilesDatas;
+				QHash<QString, QString> aConfig;
+				QHash<QString, QHash<QString, QString>>::iterator it = _confProfilesDatas.find(confName);
+				if(it != _confProfilesDatas.end())
+				{
+					it.value().insert(CFM_DEFAULT_FILENAME, configDatas);
+				}
+				else
+				{
+					aConfig.insert(CFM_DEFAULT_FILENAME, configDatas);
+					_confProfilesDatas.insert(confName, aConfig);
+				}
 			}
+			// S'il en existe déja une on récupère les valeurs déja connues pour créer un fichier de conf
+			else
+			{
+				QHash<QString, QHash<QString, QString>>::iterator it_profiles = _confProfilesDatas.find(confName);
+				if(it_profiles != _confProfilesDatas.end())
+				{
+					// On vérifie que le profil de conf est bien dans la liste
+					QHash<QString, QString>::iterator it = it_profiles.value().find(CFM_DEFAULT_FILENAME);
+					if(it != it_profiles.value().end())
+					{
+						QDomDocument doc;
+						// Récupération des datas (QString) pour le profil voulu
+						doc.setContent(it.value());
+						elt_factory_config = doc.firstChildElement(CFM_XML_TAG_CONFIG);
+					}
+				}
+			}
+			root_node.appendChild(elt_factory_config);		
+
+			// S'il n'y a pas de configuration par défaut (visible par l'utilisateur)
+			QDomElement elt_default_config;
 			if(nbProfiles == 0)
 			{
-				elt_new_config = doc.createElement(CFM_XML_TAG_CONFIG);
-				elt_new_config.setAttribute(CFM_XML_CONFIG_DEFAULT,		"false");
-				elt_new_config.setAttribute(CFM_XML_CONFIG_CURRENT,		"true");
-				elt_new_config.setAttribute(CFM_XML_CONFIG_NAME,		"default config");
+				// On fait une copie de la configuration usine
+				QHash<QString, QHash<QString, QString>>::iterator it_profiles = _confProfilesDatas.find(confName);
+				if(it_profiles != _confProfilesDatas.end())
+				{
+					QHash<QString, QString>::iterator it = it_profiles.value().find(CFM_DEFAULT_FILENAME);
+					if(it != it_profiles.value().end())
+					{
+						QDomDocument tempDoc;
+						tempDoc.setContent(it.value());
+						QDomNode tempNode = tempDoc.firstChild();
+						if (!tempNode.isNull() && tempNode.isElement()) 
+							elt_default_config = tempNode.toElement();
 
-				createQDomProfile(confName, doc, elt_new_config);
-				
-				// Fermer la balise <Config>
-				root_node.appendChild(elt_new_config);	
+						elt_default_config.setAttribute(CFM_XML_CONFIG_DEFAULT,		"false");
+						elt_default_config.setAttribute(CFM_XML_CONFIG_CURRENT,		"true");
+						elt_default_config.setAttribute(CFM_XML_CONFIG_NAME,		QString("Default %1 configuration").arg(confName));
+
+						root_node.appendChild(elt_default_config);		
+					}
+				}
 			}
 
 			// Faire un append du QDomElement au QDomDocument créé au début (balise ConfigurationsFile ouverte)
