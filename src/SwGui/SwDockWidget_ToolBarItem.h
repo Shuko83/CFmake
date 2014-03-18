@@ -1,5 +1,5 @@
-#ifndef TOOLBARITEM_H
-#define TOOLBARITEM_H
+#ifndef SWDOCKWIDGET_TOOLBARITEM_H
+#define SWDOCKWIDGET_TOOLBARITEM_H
 
 #include <QToolButton>
 
@@ -54,9 +54,4 @@ private:
 
 };
 
-
-
-
-
-
-#endif //TOOLBARITEM_H
+#endif

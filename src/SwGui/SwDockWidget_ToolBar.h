@@ -1,5 +1,5 @@
-#ifndef TOOLBAR_H
-#define TOOLBAR_H
+#ifndef SWDOCKWIDGET_TOOLBAR_H
+#define SWDOCKWIDGET_TOOLBAR_H
 
 #include "ui_SwDockWidget_ToolBar.h"
 #include "SwDockWidget_ToolBarItem.h"
@@ -49,7 +49,7 @@ public:
 
 signals:
 	void closeToolBarAsked();
-	void isMoving(/*QPoint point*/);
+	void isMoving();
 	void stopMoving();
 
 protected:
@@ -70,6 +70,7 @@ private:
 	void moveItem(QWidget * widget, SwDockWidget_ToolBarItem * item, QPoint pos);
 	bool isInTriangle(QPoint a, QPoint b, QPoint c, QPoint p);
 	int setupButtonPosition(QPoint pos, Qt::Orientation * o);
+	void getTopParent();
 
 private slots:
 	void fixSize();
@@ -79,6 +80,7 @@ private:
 	Ui::ToolBar ui;
 	Qt::Orientation _orientation;
 	QLayout * _layout;
+	QWidget * _topParent;
 
 	Qt::WindowFrameSection _stuck; //Aimante a un bord de la fenetre
 	QRect _mainRect; //Rectangle du widget principal
@@ -90,10 +92,4 @@ private:
 	bool _lock;
 };
 
-
-
-
-
-
-
-#endif //TOOLBAR_H
+#endif

@@ -35,8 +35,6 @@ using namespace StreamWork::SwGui;
 class _SwGuiCompDockWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwDockWidget
 {
 	Q_OBJECT
-	//Q_PROPERTY(bool forceFloating READ GetForceFloating WRITE SetForceFloating) //ISwQDockWidget
-	//Q_PROPERTY (bool showTitleBar READ getShowTitleBar	WRITE setShowTitleBar);
 
 protected:
     /* menu */
@@ -49,11 +47,6 @@ protected:
     SwProperties_Class * _properties_service;
     /* interface widget a consommée */
     ISwWidget * _handle_widget;
-	//bool _forceFloating; //ISwQDockWidget
-	
-	/*Properties*/
-	/*bool _showTitleBar;
-	QWidget* _titleBar;*/
 
 public:
     /*! \brief Constructeur */
@@ -77,14 +70,5 @@ public:
     /*! \brief Renvoie le dockwidget
     \return le dockwidget */
 	virtual SwDockWidget_DockWidget & GetDockWidget();
-
-	/*virtual bool GetForceFloating() const { return _forceFloating; }
-	virtual void SetForceFloating(bool val) { _forceFloating = val; }*/
-
-	//----------------------------------------------------------------------------
-	/*Properties*/
-
-	/*bool getShowTitleBar();
-	void setShowTitleBar(bool val);*/
 };
 #endif 

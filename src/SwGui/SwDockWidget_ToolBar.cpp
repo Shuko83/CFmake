@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------
 SwDockWidget_ToolBar::SwDockWidget_ToolBar(QWidget * parent, QRect rect)
 : QWidget(parent), _orientation(Qt::Vertical), _layout(NULL), _stuck(Qt::NoSection), _mainRect(rect),
-  _lock(false), _canMove(false)
+  _lock(false), _canMove(false), _topParent(NULL)
 {
 	ui.setupUi(this);
 
@@ -33,6 +33,9 @@ SwDockWidget_ToolBar::SwDockWidget_ToolBar(QWidget * parent, QRect rect)
 	//Inversion du sens de la toolbar
 	connect(ui.switchBtn, SIGNAL(clicked()), this, SLOT(switchOrientation()));
 
+	getTopParent();
+	installEventFilter(this);
+
 	this->show();
 }
 
@@ -46,7 +49,6 @@ void SwDockWidget_ToolBar::setOrientation(Qt::Orientation orientation)
 {
 	if (orientation != _orientation)
 	{
-		//_orientation = orientation;
 		switchOrientation();
 	}
 }
@@ -136,7 +138,7 @@ void SwDockWidget_ToolBar::setMoving(bool state)
 //Gestion du clic
 void SwDockWidget_ToolBar::mousePressEvent( QMouseEvent * event )
 {
-	if (event->button() == Qt::LeftButton)
+	if (event->button() == Qt::LeftButton && !_lock)
 	{
 		//Verification d'une demande de deplacement (clic sur la barre de titre)
 		if(event->y() >= 0 && event->y() <= ui.Frame->height())
@@ -176,7 +178,7 @@ void SwDockWidget_ToolBar::mouseReleaseEvent( QMouseEvent * event )
 void SwDockWidget_ToolBar::mouseMoveEvent( QMouseEvent * event )
 {
 	//Si un deplacement a ete initialise (clic sur la barre de titre)
-	if (_canMove)
+	if (_canMove && !_lock)
 	{
 		if ((event->pos() - _clickPos).manhattanLength() > QApplication::startDragDistance())
 		{
@@ -187,7 +189,7 @@ void SwDockWidget_ToolBar::mouseMoveEvent( QMouseEvent * event )
 			point = checkStuckPosition(point.x(), point.y());
 			move(point);
 
-			emit this->isMoving(/*point*/);
+			emit this->isMoving();
 		}
 	}
 }
@@ -228,6 +230,28 @@ void SwDockWidget_ToolBar::moveEvent ( QMoveEvent * event )
 //Evenements generes par un autre widget
 bool SwDockWidget_ToolBar::eventFilter( QObject *obj , QEvent * event )
 {
+	if (obj == this)
+	{
+		switch(event->type())
+		{
+			case QEvent::ParentChange:
+				getTopParent();
+				break;
+		}
+	}
+
+	if (obj == _topParent || obj == this->parentWidget())
+	{
+		switch(event->type())
+		{
+			case QEvent::Resize:
+			case QEvent::Move:
+				_mainRect = QRect(QPoint(this->parentWidget()->mapToGlobal(QPoint(0,0))), this->parentWidget()->size());
+				updatePosition();
+				break;
+		}
+	}
+
 	SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(obj);
 	if (item)
 	{
@@ -254,9 +278,10 @@ bool SwDockWidget_ToolBar::eventFilter( QObject *obj , QEvent * event )
 				}
 				break;
 		}
+		return false;
 	}
 
-	return false;
+	return QWidget::eventFilter(obj, event);
 }
 
 //-----------------------------------------------------------------------------
@@ -432,6 +457,10 @@ QPoint SwDockWidget_ToolBar::checkStuckPosition(int x, int y)
 	
 	//Si toolbar proche d'un bord du widget principal, on l'aimante
 	_stuck = Qt::NoSection;
+
+	//Si toolbar hors de la fenetre, pas de verification
+	if (!_mainRect.contains(QPoint(x,y)))
+		return point;
 	
 	//Bord gauche
 	if (qAbs(x - _mainRect.x()) < MIN_DISTANCE_TO_STUCK)
@@ -917,8 +946,9 @@ void SwDockWidget_ToolBar::lock()
 	if (!_lock)
 	{
 		_lock = true;
-		ui.PB_Close->hide();
-		ui.switchBtn->hide();
+
+		//Masquage de la barre de titre
+		setMoving(true);
 	}
 }
 
@@ -927,14 +957,41 @@ void SwDockWidget_ToolBar::releaseLock()
 {
 	if (_lock)
 	{
-		//qDebug() << "tb::releaseLock";
-
 		_lock = false;
-		ui.PB_Close->show();
-		if (_layout->count() > 1)
-		{
-			//qDebug() << _layout->count();
-			ui.switchBtn->show();
-		}
+
+		//Affichage de la barre de titre
+		setMoving(false);
+	}
+}
+
+//-----------------------------------------------------------------------------
+//Recuperation du parent de plus haut niveau
+void SwDockWidget_ToolBar::getTopParent()
+{
+	QWidget * lastParent = NULL;
+
+	if (this->parentWidget())
+		this->parentWidget()->installEventFilter(this);
+
+	//Si un top parent existe, on supprime l'ecoute des evenements
+	if (_topParent)
+		_topParent->removeEventFilter(this);
+
+	_topParent = qobject_cast<QWidget*>(this->parentWidget());
+	while(_topParent != NULL)
+	{
+		_topParent = qobject_cast<QWidget*>(_topParent->parentWidget());
+		if(_topParent)
+			lastParent = _topParent;
+	}
+
+	if(lastParent)
+	{
+		//Si le parent de plus haut niveau a ete trouve, on ecoute ses evenements
+		_topParent = lastParent;
+		_topParent->installEventFilter(this);
+		//Mise a jour de sa position
+		QPoint pos = QPoint(this->parentWidget()->mapToGlobal(QPoint(0,0)));
+		_mainRect = QRect(pos, this->parentWidget()->size());
 	}
 }

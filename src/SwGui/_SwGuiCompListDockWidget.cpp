@@ -11,9 +11,6 @@
 #include "_SwGuiCompListDockWidget.h"
 #include "ISwDockWidget.h"
 
-//using namespace StreamWork::SwCore;
-//using namespace StreamWork::SwGui;
-
 #define DOCK_INTERFACE_NAME "DockWidget_%1"
 
 /*! \brief Constructeur */

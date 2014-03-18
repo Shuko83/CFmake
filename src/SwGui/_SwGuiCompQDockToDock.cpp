@@ -66,7 +66,4 @@ SwDockWidget_DockWidget & _SwGuiCompQDockToDock::GetDockWidget()
 {
 	if (_dock)
 		return (*_dock);
-	else
-	{
-	}
 }

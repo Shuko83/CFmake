@@ -1,5 +1,5 @@
-#ifndef OVERLAY_H
-#define OVERLAY_H
+#ifndef SWDOCKWIDGET_OVERLAY_H
+#define SWDOCKWIDGET_OVERLAY_H
 
 #include <QWidget>
 

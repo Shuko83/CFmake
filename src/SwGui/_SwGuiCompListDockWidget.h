@@ -17,15 +17,8 @@
   */
 
 #include "SwAssistedComponent.h"
-//#include <SwComponent_Class.h>
-//#include <SwInterfaces_Provider_Class.h>
-//#include <SwInterfaces_Consumer_Class.h>
-//#include <SwProperties_Class.h>
-//#include <ISwProperty.h>
 #include "ISwListDockWidget.h"
 
-//using namespace StreamWork::SwCore;
-//using namespace StreamWork::SwGui;
 using namespace StreamWork::SwFoundation;
 
 /*!

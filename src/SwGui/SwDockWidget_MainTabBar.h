@@ -1,5 +1,5 @@
-#ifndef MAINTABBAR_H
-#define MAINTABBAR_H
+#ifndef SWDOCKWIDGET_MAINTABBAR_H
+#define SWDOCKWIDGET_MAINTABBAR_H
 
 #include <QTabBar>
 #include <QLineEdit>
@@ -42,7 +42,5 @@ private:
 	bool _moving;
 	QPoint _clickPos; //Position du curseur lors du clic
 };
-
-
 
 #endif

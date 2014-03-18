@@ -54,7 +54,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../DockWidget.qrc"/>
+  <include location="_resources/SwGuiRsc.qrc"/>
  </resources>
  <connections/>
  <slots>

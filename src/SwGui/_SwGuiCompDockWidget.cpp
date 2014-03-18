@@ -20,9 +20,6 @@ _SwGuiCompDockWidget::_SwGuiCompDockWidget(): SwComponent_Class(){
     _properties_service=NULL;
     _dockwidget=NULL;
     _handle_widget=NULL;
-	//_forceFloating = false; //ISwQDockWidget
-	//Properties
-	//_showTitleBar = true;
 }
 
 /*! \brief Destructeur */
@@ -35,8 +32,7 @@ _SwGuiCompDockWidget::~_SwGuiCompDockWidget(){
     delete _consumer_service;
     delete _provider_service;
     delete _properties_service;
-    delete _dockwidget;
-
+    //delete _dockwidget;
 }
 
 /*! \brief Initialisation des ressources
@@ -47,8 +43,7 @@ void _SwGuiCompDockWidget::InitializeResources() throw(SwException) {
     _consumer_service=new SwInterfaces_Consumer_Class(this) ;
     _provider_service=new SwInterfaces_Provider_Class(this) ;
     //Creation de l'interface principale
-    _dockwidget=new SwDockWidget_DockWidget();	
-	//_titleBar = GetDockWidget().titleBarWidget();
+    _dockwidget=new SwDockWidget_DockWidget();
 
     //Enregistrement des services
     this->RegisterService(_properties_service);
@@ -77,6 +72,7 @@ void _SwGuiCompDockWidget::InitializeResources() throw(SwException) {
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompDockWidget::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     if (_handle_widget!=NULL) {
+		//_dockwidget->setWidget(NULL);
         _handle_widget->GetWidget().setParent(NULL);
     }
 }
@@ -96,27 +92,3 @@ void _SwGuiCompDockWidget::AfterInterfaceAvailabilityChange(QString interface_na
 SwDockWidget_DockWidget & _SwGuiCompDockWidget::GetDockWidget() {
     return *_dockwidget;
 }
-
-//---------------------------------------------------------------------
-// Properties
-//---------------------------------------------------------------------
-/*bool _SwGuiCompDockWidget::getShowTitleBar()
-{
-	return _showTitleBar;
-}
-
-//---------------------------------------------------------------------
-void _SwGuiCompDockWidget::setShowTitleBar( bool val )
-{
-	_showTitleBar = val;
-
-	if (!_showTitleBar)
-	{				
-		QWidget* lEmptyWidget = new QWidget();
-		GetDockWidget().setTitleBarWidget(lEmptyWidget);
-	}
-	else
-		GetDockWidget().setTitleBarWidget(_titleBar);
-
-}*/
-

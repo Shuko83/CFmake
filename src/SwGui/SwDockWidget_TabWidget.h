@@ -1,5 +1,5 @@
-#ifndef TABWIDGET_H
-#define TABWIDGET_H
+#ifndef SWDOCKWIDGET_TABWIDGET_H
+#define SWDOCKWIDGET_TABWIDGET_H
 
 #include <QtGui/QWidget>
 #include <QTabWidget>
@@ -22,4 +22,4 @@ private:
 	void setSize();
 };
 
-#endif //TABWIDGET_H
+#endif

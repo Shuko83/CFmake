@@ -1,5 +1,6 @@
 #include "SwDockWidget_MainDockWidget.h"
 #include "SwDockWidget_MainTabBar.h"
+#include "ui_SwDockWidget_DockWidget.h"
 
 //-----------------------------------------------------------------------------
 SwDockWidget_MainDockWidget::SwDockWidget_MainDockWidget(QWidget * parent, QString name, bool withAddButton)
@@ -20,7 +21,7 @@ SwDockWidget_MainDockWidget::SwDockWidget_MainDockWidget(QWidget * parent, QStri
 	connect(_tab, SIGNAL(currentChanged(int)), this, SLOT(updateContents()));
 
 	//Suppression du spacer present par defaut dans un DockWidget
-	ui.contentLayout->removeItem(ui.verticalSpacer);
+	ui->contentLayout->removeItem(ui->verticalSpacer);
 
 	//Taille minimale
 	setMinimumSize(minimumWidth(), _tab->getTabBar()->height());
@@ -93,7 +94,7 @@ void SwDockWidget_MainDockWidget::insertWidget(int index, QWidget * widget)
 	if (widget && index < count())
 	{
 		//Verification du contenu de l'onglet
-		if (_tab->widget(index)/* && !_tab->widget(index)->layout()*/)
+		if (_tab->widget(index))
 		{
 			//Ajout du widget dans un nouveal onglet
 			QGridLayout * lay = qobject_cast<QGridLayout*>(_tab->widget(index)->layout());
@@ -116,7 +117,7 @@ void SwDockWidget_MainDockWidget::removeWidget(int index)
 }
 
 //-----------------------------------------------------------------------------
-void SwDockWidget_MainDockWidget::updateContents(/*bool light*/)
+void SwDockWidget_MainDockWidget::updateContents()
 {
 	//Si un onglet est vide, on le supprime
 	int index = 0;
@@ -137,13 +138,9 @@ void SwDockWidget_MainDockWidget::updateContents(/*bool light*/)
 	}
 
 	//S'il n'y a plus aucun onglet, on masque le dock principal
-	if (/*this->isVisible() && */_tab->count() == 0)
+	if (_tab->count() == 0)
 	{
-		/*if (light)
-			this->resize(0,0);
-		else*/
-			//hide();
-			close();
+		close();
 	}
 }
 
@@ -254,4 +251,11 @@ void SwDockWidget_MainDockWidget::releaseLock()
 	SwDockWidget_DockWidget::releaseLock();
 	if (_tab)
 		_tab->releaseLock();
+}
+
+//-----------------------------------------------------------------------------
+//Suppression de tous les onglets
+void SwDockWidget_MainDockWidget::clear()
+{
+	_tab->clear();
 }

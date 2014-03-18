@@ -3,7 +3,6 @@
 #include <QRadioButton>
 #include <QWidgetAction>
 #include <QMetaEnum>
-//#include <QDebug>
 
 #define ADDINLAYOUT(a) {_layout->addWidget(a, num/4, num%4); num++;}
 
@@ -63,7 +62,7 @@ void SwDockWidget_MainDockConfiguration::updateConf(bool state)
 
 	if (button && state && _listBtn.contains(button))
 	{
-		_activeConf = _listBtn.value(button);
+		//_activeConf = _listBtn.value(button);
 		emit changeConf(_listBtn.value(button));
 	}
 }
@@ -86,43 +85,96 @@ SwDockWidget_MainDockConfiguration::ConfigurationIndex SwDockWidget_MainDockConf
 	return _activeConf;
 }
 
+//-----------------------------------------------------------------------------
+QString SwDockWidget_MainDockConfiguration::getActiveConfigurationInString()
+{
+	//Conversion de la configuration active en String
+	const QMetaObject & mo = SwDockWidget_MainDockConfiguration::staticMetaObject;
+	QMetaEnum me = mo.enumerator(mo.indexOfEnumerator("ConfigurationIndex"));
+	return me.valueToKey(_activeConf);
+}
+
+//-----------------------------------------------------------------------------
+QString SwDockWidget_MainDockConfiguration::getConfigurationInString(int index)
+{
+	//Conversion de la configuration active en String
+	const QMetaObject & mo = SwDockWidget_MainDockConfiguration::staticMetaObject;
+	QMetaEnum me = mo.enumerator(mo.indexOfEnumerator("ConfigurationIndex"));
+	return me.valueToKey(index);
+}
+
 //----------------------------------------------------------------------------
 void SwDockWidget_MainDockConfiguration::setActiveConfiguration(QString conf)
 {
 	if (!conf.isEmpty())
 	{
-		const QMetaObject & mo = SwDockWidget_MainDockConfiguration::staticMetaObject;
-		QMetaEnum me = mo.enumerator(mo.indexOfEnumerator("ConfigurationIndex"));
-
 		//Nombre de docks
 		int nb = conf.length();
-		QString code("");
-		for (int i = 0; i < SwDockWidget_MainDockConfiguration::NB_CONF; i++)
-		{
-			code = QString(me.valueToKey(i));
-			if (!code.left(nb).compare(conf))
-			{
-				setActiveConfiguration((SwDockWidget_MainDockConfiguration::ConfigurationIndex)i);
-				return;
-			}
-		}
-
-		//Gestion des cas non affiches car similaires a une configuration existante
-		if (!conf.compare(QString("TBLR").left(nb)) ||
-			!conf.compare(QString("BTRL").left(nb)) ||
-			!conf.compare(QString("BTLR").left(nb)))
-			setActiveConfiguration(SwDockWidget_MainDockConfiguration::TBRL);
-		else if (!conf.compare(QString("TLRB").left(nb)))
-			setActiveConfiguration(SwDockWidget_MainDockConfiguration::TRLB);
-		else if (!conf.compare(QString("RBTL").left(nb)))
-			setActiveConfiguration(SwDockWidget_MainDockConfiguration::RTBL);
-		else if (!conf.compare(QString("RLBT").left(nb)) ||
-				 !conf.compare(QString("LRBT").left(nb)) ||
-				 !conf.compare(QString("LRTB").left(nb)))
-			setActiveConfiguration(SwDockWidget_MainDockConfiguration::RLTB);
-		else if (!conf.compare(QString("BLRT").left(nb)))
-			setActiveConfiguration(SwDockWidget_MainDockConfiguration::BRLT);
-		else if (!conf.compare(QString("LBTR").left(nb)))
-			setActiveConfiguration(SwDockWidget_MainDockConfiguration::LTBR);
+		SwDockWidget_MainDockConfiguration::ConfigurationIndex index = getExistingConf(conf, nb);
+		if (index != SwDockWidget_MainDockConfiguration::NB_CONF)
+			setActiveConfiguration(index);
 	}
+}
+
+//----------------------------------------------------------------------------
+SwDockWidget_MainDockConfiguration::ConfigurationIndex SwDockWidget_MainDockConfiguration::getExistingConf(QString conf, int nb)
+{
+	SwDockWidget_MainDockConfiguration::ConfigurationIndex index = SwDockWidget_MainDockConfiguration::NB_CONF;
+	QString code("");
+	const QMetaObject & mo = SwDockWidget_MainDockConfiguration::staticMetaObject;
+	QMetaEnum me = mo.enumerator(mo.indexOfEnumerator("ConfigurationIndex"));
+
+	//Recherche de compatibilite entre la configuration active et une configuration existante
+	for (int i = 0; i < SwDockWidget_MainDockConfiguration::NB_CONF; i++)
+	{
+		code = QString(me.valueToKey(i));
+		if (!code.left(nb).compare(conf))
+		{
+			//Si la configuration esty compatible, on l'active 
+			return (SwDockWidget_MainDockConfiguration::ConfigurationIndex)i;
+		}
+	}
+
+	//Gestion des cas non affiches car similaires a une configuration existante (symetrie)
+	//TBRL est equivalent a TBLR, BTRL et BTLR
+	if (!conf.compare(QString("TBLR").left(nb)) ||
+		!conf.compare(QString("BTRL").left(nb)) ||
+		!conf.compare(QString("BTLR").left(nb)))
+	{
+		index = SwDockWidget_MainDockConfiguration::TBRL;
+	}
+
+	//TRLB est equivalent a TLRB
+	else if (!conf.compare(QString("TLRB").left(nb)))
+	{
+		index = SwDockWidget_MainDockConfiguration::TRLB;
+	}
+
+	//RTBL est equivalent a RBTL
+	else if (!conf.compare(QString("RBTL").left(nb)))
+	{
+		index = SwDockWidget_MainDockConfiguration::RTBL;
+	}
+
+	//RLTB est equivalent a RLBT, LRBT et LRTB
+	else if (!conf.compare(QString("RLBT").left(nb)) ||
+			 !conf.compare(QString("LRBT").left(nb)) ||
+			 !conf.compare(QString("LRTB").left(nb)))
+	{
+		index = SwDockWidget_MainDockConfiguration::RLTB;
+	}
+
+	//BRLT est equivalent a BLRT
+	else if (!conf.compare(QString("BLRT").left(nb)))
+	{
+		index = SwDockWidget_MainDockConfiguration::BRLT;
+	}
+
+	//LTBR est equivalent a LBTR
+	else if (!conf.compare(QString("LBTR").left(nb)))
+	{
+		index  =SwDockWidget_MainDockConfiguration::LTBR;
+	}
+
+	return index;
 }

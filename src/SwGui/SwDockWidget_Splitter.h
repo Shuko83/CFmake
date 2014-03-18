@@ -1,5 +1,5 @@
-#ifndef DOCKSPLITTER_H
-#define DOCKSPLITTER_H
+#ifndef SWDOCKWIDGET_SPLITTER_H
+#define SWDOCKWIDGET_SPLITTER_H
 
 #include <QtGui/QSplitter>
 

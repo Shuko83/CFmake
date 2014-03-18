@@ -1,5 +1,5 @@
-#ifndef MAINDOCKWIDGET_H
-#define MAINDOCKWIDGET_H
+#ifndef SWDOCKWIDGET_MAINDOCKWIDGET_H
+#define SWDOCKWIDGET_MAINDOCKWIDGET_H
 
 #include "SwDockWidget_DockWidget.h"
 #include "SwDockWidget_MainTabWidget.h"
@@ -33,8 +33,10 @@ public:
 	virtual void lock();
 	virtual void releaseLock();
 
+	void clear();
+
 public slots:
-	void updateContents(/*bool light = false*/);
+	void updateContents();
 
 signals:
 	void moveTabRequested(QPoint pos);
@@ -45,11 +47,5 @@ private:
 	SwDockWidget_MainTabWidget * _tab;
 	QString _styleSheet;
 };
-
-
-
-
-
-
 
 #endif

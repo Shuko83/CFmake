@@ -19,10 +19,6 @@
   <property name="windowTitle">
    <string>DockWidget</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>:/Dock/Resources/Dock/DockSettings.png</normaloff>:/Dock/Resources/Dock/DockSettings.png</iconset>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="margin">
     <number>0</number>

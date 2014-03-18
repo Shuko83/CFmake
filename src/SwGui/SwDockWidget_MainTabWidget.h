@@ -1,5 +1,5 @@
-#ifndef MAINTABWIDGET_H
-#define MAINTABWIDGET_H
+#ifndef SWDOCKWIDGET_MAINTABWIDGET_H
+#define SWDOCKWIDGET_MAINTABWIDGET_H
 
 #include "SwDockWidget_TabWidget.h"
 
@@ -17,6 +17,8 @@ public:
 	void lock();
 	void releaseLock();
 
+	void clear();
+
 signals:
 	void moveTabRequested(QPoint pos);
 	void freeTabRequested(int index, QPoint pos);
@@ -31,19 +33,5 @@ private:
 	bool _lock;
 	QWidget * _addWidget;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif

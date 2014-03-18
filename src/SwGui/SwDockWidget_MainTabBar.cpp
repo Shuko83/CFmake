@@ -116,20 +116,6 @@ void SwDockWidget_MainTabBar::mouseDoubleClickEvent(QMouseEvent *e)
 		}
 
 		renameAction();
-		/*
-		//Creation d'une LineEdit pour editer le nom de l'onglet
-		int index = currentIndex();
-		_name = tabText(index);
-		_nameEdit = new QLineEdit(_name, this);
-		_nameEdit->setFrame(false);
-		_nameEdit->setFocus();
-		connectNameEdit();
-		//Placement de la LineEdit sur l'onglet
-		QRect rect(tabRect(index));
-		//Ajustement de la taille et de la position pour que le widget soit a l'interieur de l'onglet
-		_nameEdit->move(QPoint(rect.x(), rect.y())); // + QPoint(9,2));
-		_nameEdit->resize(rect.size());// - QSize(12, 5));
-		_nameEdit->show();*/
 		return;
 	}
 
@@ -182,7 +168,7 @@ void SwDockWidget_MainTabBar::renameAction()
 	connectNameEdit();
 	//Placement de la LineEdit sur l'onglet
 	QRect rect(tabRect(index));
-	//Ajustement de la taille et de la position pour que le widget soit a l'interieur de l'onglet
+	//Ajustement de la taille et de la position pour que le widget soit a l'interieur de l'onglet //TODO
 	_nameEdit->move(QPoint(rect.x(), rect.y())); // + QPoint(9,2));
 	_nameEdit->resize(rect.size());// - QSize(12, 5));
 	_nameEdit->show();

@@ -8,7 +8,7 @@
 
 //-----------------------------------------------------------------------------
 SwDockWidget_ToolBarWindow::SwDockWidget_ToolBarWindow(QWidget * parent)
- : QWidget(parent), _isMovingToolBarItem(false), _tbOverlay(NULL), _lock(false)
+ : QWidget(parent), _isMovingToolBarItem(false), _tbOverlay(NULL), _lock(false), _mainWidget(NULL)
 {
 	//Creation de la zone de pre-positionnement
 	_tbOverlay = new SwDockWidget_Overlay(this, NULL, QColor(200,100,0,200));
@@ -33,7 +33,7 @@ void SwDockWidget_ToolBarWindow::reduceInToolBar()
 		//Recuperation de la position
 		QPoint pos = dock->pos();
 		//Creation d'une toolbar
-		SwDockWidget_ToolBar * tb = new SwDockWidget_ToolBar(this, _globalMainRect);
+		SwDockWidget_ToolBar * tb = new SwDockWidget_ToolBar(_mainWidget);
 		//Creation d'un bouton pour le dock actif
 		addInToolBar(dock, tb);
 		//Mise a jour de la position de la toolbar
@@ -41,7 +41,6 @@ void SwDockWidget_ToolBarWindow::reduceInToolBar()
 		//Enregistrement de la toolbar
 		_listToolBar.push_back(tb);
 		connectSignals(tb);
-		//connect(tb, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
 	}
 }
 
@@ -129,7 +128,7 @@ void SwDockWidget_ToolBarWindow::moveToolBarItem(QPoint pos)
 		{
 			item->getWidget()->hide();
 			QPoint newPos = item->pos() + toolbar->pos();
-			SwDockWidget_ToolBar * newTb = new SwDockWidget_ToolBar(this, _globalMainRect);
+			SwDockWidget_ToolBar * newTb = new SwDockWidget_ToolBar(_mainWidget);
 			//Mise a jour de la position de la toolbar
 			newTb->move(newPos + pos);
 			//Ajout du bouton dans la toolbar
@@ -156,7 +155,6 @@ void SwDockWidget_ToolBarWindow::moveToolBarItem(QPoint pos)
 
 			_listToolBar.push_back(newTb);
 			connectSignals(newTb);
-			//connect(newTb, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
 		}
 	}
 }
@@ -314,6 +312,9 @@ void SwDockWidget_ToolBarWindow::saveToolBar(QDomDocument doc, QDomElement dom)
 			dist.setAttribute("y", tb->getDist().y());
 			noeud.appendChild(dist);
 
+			//Verrouillage
+			noeud.setAttribute("locked", QString::number(this->locked()));
+
 			//Sauvegarde des elements qui constituent la toolbar
 			for(int i = 0; i < tb->count(); i++)
 			{
@@ -340,7 +341,7 @@ QWidget * SwDockWidget_ToolBarWindow::loadToolBar(QDomNode node)
 		//Si toolbar
 		if (!name.compare("SwDockWidget_ToolBar"))
 		{
-			SwDockWidget_ToolBar * tb = new SwDockWidget_ToolBar(this);
+			SwDockWidget_ToolBar * tb = new SwDockWidget_ToolBar(_mainWidget);
 			int nbDocks = 0;
 
 			//Orientation
@@ -349,6 +350,8 @@ QWidget * SwDockWidget_ToolBarWindow::loadToolBar(QDomNode node)
 
 			//Aimantation
 			Qt::WindowFrameSection section = (Qt::WindowFrameSection)e.attribute("aimantation").toInt();
+			//Verrouillage
+			bool locked = e.attribute("locked").toInt();
 
 			//Lecture des parametres
 			QDomNodeList list = node.childNodes();
@@ -356,6 +359,7 @@ QWidget * SwDockWidget_ToolBarWindow::loadToolBar(QDomNode node)
 			{
 				QDomNode attrNode = list.item(i);
 				e = attrNode.toElement();
+
 				//Widget
 				if (!e.nodeName().compare("SwDockWidget_DockWidget"))
 				{
@@ -391,6 +395,10 @@ QWidget * SwDockWidget_ToolBarWindow::loadToolBar(QDomNode node)
 			//Aimantation
 			tb->setStuckPosition(section);
 
+			//Verrouillage
+			if (locked)
+				tb->lock();
+
 			//Si la toolbar ne contient aucun dock, on la supprime
 			if (nbDocks == 0)
 			{
@@ -400,7 +408,6 @@ QWidget * SwDockWidget_ToolBarWindow::loadToolBar(QDomNode node)
 			{
 				//Enregistrement de la toolbar
 				_listToolBar.push_back(tb);
-				//connect(tb, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
 				connectSignals(tb);
 
 				return tb;
@@ -439,29 +446,12 @@ void SwDockWidget_ToolBarWindow::closeToolBar()
 }
 
 //-----------------------------------------------------------------------------
-void SwDockWidget_ToolBarWindow::setMainRect(QRect rect)
-{
-	if (rect != _globalMainRect)
-	{
-		foreach(QObject * obj, _listToolBar)
-		{
-			SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
-			if (tb)
-			{
-				tb->setMainRect(rect);
-			}
-		}
-		_globalMainRect = rect;
-	}
-}
-
-//-----------------------------------------------------------------------------
 void SwDockWidget_ToolBarWindow::connectSignals(QWidget * toolbar)
 {
 	if (toolbar)
 	{
 		connect(toolbar, SIGNAL(closeToolBarAsked()), this, SLOT(closeToolBar()));
-		connect(toolbar, SIGNAL(isMoving(/*QPoint*/)), this, SLOT(moveToolBar(/*QPoint*/)));
+		connect(toolbar, SIGNAL(isMoving()), this, SLOT(moveToolBar()));
 		connect(toolbar, SIGNAL(stopMoving()), this, SLOT(stopMovingToolBar()));
 	}
 }

@@ -1,16 +1,13 @@
 #include "SwDockWidget_DockWidget.h"
 
-//#include "inDockWidget.h"
-//#include "QsLog.h"
-
-//#include <QDebug> //DEBUG ONLY
-//#include <QMetaEnum> //DEBUG ONLY
 #include <QEvent>
 #include <QMouseEvent>
 #include <QPicture>
 #include <QPropertyAnimation>
 #include <QDesktopWidget>
 #include "qt_windows.h"
+
+#include "ui_SwDockWidget_DockWidget.h"
 
 /*
  * Valeurs pour les evenements Windows de redimensionnement
@@ -40,7 +37,6 @@
 #define SZ_SIZEBOTTOMLEFT	0xF007
 #define SZ_SIZEBOTTOMRIGHT  0xF008
 
-//#define offset				10
 #define REDUCED_OPACITY		0.7
 
 //-----------------------------------------------------------------------------
@@ -50,8 +46,11 @@ SwDockWidget_DockWidget::SwDockWidget_DockWidget(QWidget *parent)
 	_canBeClose(true), _canBePin(true), _couldBePin(true), _lock(false), _canBeResize(true), _canBeMoved(true),
 	_canBeOutside(true), _isResizing(false), _alwaysOnTop(true)
 {
-	ui.setupUi(this);
+	ui = new Ui::DockWidget();
+	ui->setupUi(this);
 	_mainArea = parent;
+
+	ui->contentLayout->removeItem(ui->verticalSpacer); //rendre parametrable?
 
 	this->setVisible(false);
 
@@ -66,16 +65,14 @@ SwDockWidget_DockWidget::SwDockWidget_DockWidget(QWidget *parent)
 	setAttribute(Qt::WA_TransparentForMouseEvents);
 	//Taille par defaut
 	setFreeSize(QSize(0,0));
-	//Taille minimale
-	//setMinimumSize(50, ui.DockFrame->height());
 
 	//Tooltip
-	ui.PB_Close->setToolTip("Close");
+	ui->PB_Close->setToolTip("Close");
 
 	//Gestion des boutons
 	setCanBeClose(_canBeClose);
-	connect(ui.toToolBarBtn, SIGNAL(clicked()), this, SIGNAL(reduceInToolBarAsked()));
-	connect(ui.outToolBarBtn, SIGNAL(clicked()), this, SIGNAL(releaseFromToolBarAsked()));
+	connect(ui->toToolBarBtn, SIGNAL(clicked()), this, SIGNAL(reduceInToolBarAsked()));
+	connect(ui->outToolBarBtn, SIGNAL(clicked()), this, SIGNAL(releaseFromToolBarAsked()));
 
 	//Aspect du pointeur pour le redimensionnement
 	setCursorAspect();
@@ -84,7 +81,7 @@ SwDockWidget_DockWidget::SwDockWidget_DockWidget(QWidget *parent)
 	_area = Qt::NoDockWidgetArea;
 
 	//Boutons masques
-	ui.outToolBarBtn->hide();
+	ui->outToolBarBtn->hide();
 
 	_blinkStatus = 0;
 	_timer = 0;
@@ -93,7 +90,10 @@ SwDockWidget_DockWidget::SwDockWidget_DockWidget(QWidget *parent)
 //-----------------------------------------------------------------------------
 SwDockWidget_DockWidget::~SwDockWidget_DockWidget()
 {
-	
+	if (ui)
+		delete ui;
+	if (_widget)
+		_widget->setParent(0);
 }
 
 //-----------------------------------------------------------------------------
@@ -102,21 +102,26 @@ void SwDockWidget_DockWidget::setWidget(QWidget * widget)
 {
 	if (widget)
 	{
+		//Suppression si necessaire du widget precedent
+		if (_widget)
+			ui->contentLayout->removeWidget(_widget);
 		//Widget
-		ui.contentLayout->insertWidget(0, widget);
+		ui->contentLayout->insertWidget(0, widget);
 		_widget = widget;
 		this->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 		
 		//Icon
 		this->setWindowIcon(widget->windowIcon());
-		ui.icone->setPixmap(this->windowIcon().pixmap(16));
+		ui->icone->setPixmap(this->windowIcon().pixmap(16));
 
 		//Nom du widget
 		setTitle(widget->windowTitle());
 
 		//Taille
-		this->setRawSize(widget->size() + QSize(10, ui.DockFrame->height() + 10));
+		this->setRawSize(widget->size() + QSize(10, ui->DockFrame->height() + 10));
 	}
+	else
+		_widget = widget;
 }
 
 //-----------------------------------------------------------------------------
@@ -133,7 +138,7 @@ void SwDockWidget_DockWidget::setTitle(QString title)
 		//Mise a jour du nom du SwDockWidget_DockWidget
 		_title = title;
 		this->setObjectName(title);
-		setTextToLabel(ui.L_Title, _title);
+		setTextToLabel(ui->L_Title, _title);
 		//Mise a jour du bouton d'affichage du widget
 		if (_action)
 			_action->setText(_title);
@@ -183,13 +188,13 @@ void SwDockWidget_DockWidget::setCanBeClose(bool state)
 
 	if (_canBeClose)
 	{
-		ui.PB_Close->show();
-		connect(ui.PB_Close, SIGNAL(clicked()), this, SLOT(buttonsSlots()));
+		ui->PB_Close->show();
+		connect(ui->PB_Close, SIGNAL(clicked()), this, SLOT(buttonsSlots()));
 	}
 	else
 	{
-		ui.PB_Close->hide();
-		disconnect(ui.PB_Close, SIGNAL(clicked()), this, SLOT(buttonsSlots()));
+		ui->PB_Close->hide();
+		disconnect(ui->PB_Close, SIGNAL(clicked()), this, SLOT(buttonsSlots()));
 	}
 }
 
@@ -233,7 +238,6 @@ void SwDockWidget_DockWidget::setCanBeResize(bool state)
 	else
 		hideShadow();
 }
-
 
 //-----------------------------------------------------------------------------
 bool SwDockWidget_DockWidget::canMove()
@@ -280,44 +284,44 @@ void SwDockWidget_DockWidget::updateBtn()
 {
 	if (!_lock)
 	{
-		ui.PB_Close->show();
+		ui->PB_Close->show();
 		if (parent() == _mainArea)
 		{
-			ui.toToolBarBtn->setVisible(!isInToolBar());
-			ui.outToolBarBtn->setVisible(isInToolBar());
+			ui->toToolBarBtn->setVisible(!isInToolBar());
+			ui->outToolBarBtn->setVisible(isInToolBar());
 		}
 		//Si le dock est attache ou en toolbar
 		else
 		{
 			//Boutons invisibles
-			ui.toToolBarBtn->hide();
-			ui.outToolBarBtn->hide();
+			ui->toToolBarBtn->hide();
+			ui->outToolBarBtn->hide();
 		}
 	}
 	else
 	{
-		ui.toToolBarBtn->hide();
-		ui.outToolBarBtn->hide();
-		ui.PB_Close->hide();
+		ui->toToolBarBtn->hide();
+		ui->outToolBarBtn->hide();
+		ui->PB_Close->hide();
 	}
 }
 
 //-----------------------------------------------------------------------------
 void SwDockWidget_DockWidget::hideFrame()
 {
-	ui.DockFrame->hide();
+	ui->DockFrame->hide();
 }
 
 //-----------------------------------------------------------------------------
 void SwDockWidget_DockWidget::showFrame()
 {
-	ui.DockFrame->show();
+	ui->DockFrame->show();
 }
 
 //-----------------------------------------------------------------------------
 void SwDockWidget_DockWidget::removeSpacer()
 {
-	delete ui.verticalSpacer;
+	delete ui->verticalSpacer;
 }
 
 //-----------------------------------------------------------------------------
@@ -335,8 +339,8 @@ void SwDockWidget_DockWidget::mousePressEvent( QMouseEvent * event )
 			return;
 
 		//Verification d'une demande de deplacement (clic sur la barre de titre)
-		int border = ui.bottom->isVisible()?getShadowSize():0;
-		if(_canBeMoved && (event->y() >= 0 && event->y() <= ui.DockFrame->height() + border ))
+		int border = ui->bottom->isVisible()?getShadowSize():0;
+		if(_canBeMoved && (event->y() >= 0 && event->y() <= ui->DockFrame->height() + border ))
 		{	
 			//Enregistrement de la position, et preparation du deplacement
 			this->setInitialMoving(event->pos());
@@ -384,7 +388,7 @@ bool SwDockWidget_DockWidget::event( QEvent * event )
 	{
 		//Redimensionnement
 		case QEvent::Resize:
-			setTextToLabel(ui.L_Title, _title);
+			setTextToLabel(ui->L_Title, _title);
 			//Si dock flottant et non reduit, enregistrement de sa taille
 			if (parent() == _mainArea && _isResizing)
 				setFreeSize(getRawSize());
@@ -392,7 +396,7 @@ bool SwDockWidget_DockWidget::event( QEvent * event )
 
 		//Changement de parent = fenetre ancree ou liberee
 		case QEvent::ParentChange:
-			setTextToLabel(ui.L_Title, _title);
+			setTextToLabel(ui->L_Title, _title);
 			if (_widget)
 			{
 				//Liberation du dock
@@ -464,7 +468,6 @@ void SwDockWidget_DockWidget::setMoving(bool state)
 	}
 	else
 	{
-		//setAttribute(Qt::WA_TransparentForMouseEvents, false);
 		_canMove = false;
 		setCursor (Qt::ArrowCursor);
 		setWindowOpacity(1);
@@ -496,14 +499,14 @@ QPoint SwDockWidget_DockWidget::getAdjustedPosition(int x, int y)
 		QDesktopWidget desktop;
 		QRect rect = desktop.geometry ();
 		//Si position en dehors de l'ecran, on s'arrete au bord
-		if (x + ui.left->width() < rect.x()) //Bord gauche
-			point.setX(rect.x() - ui.left->width());
-		else if (x + this->width() - ui.right->width() > rect.x() + rect.width()) //Bord droit
-			point.setX(rect.x() + rect.width() - this->width() + ui.right->width());
-		if (y + ui.top->height() < rect.y()) //Bord haut
-			point.setY(rect.y() - ui.top->height());
-		else if (y + this->height() - ui.bottom->height() > rect.y() + rect.height()) //Bord bas
-			point.setY(rect.y() + rect.height() - this->height() + ui.bottom->height());
+		if (x + ui->left->width() < rect.x()) //Bord gauche
+			point.setX(rect.x() - ui->left->width());
+		else if (x + this->width() - ui->right->width() > rect.x() + rect.width()) //Bord droit
+			point.setX(rect.x() + rect.width() - this->width() + ui->right->width());
+		if (y + ui->top->height() < rect.y()) //Bord haut
+			point.setY(rect.y() - ui->top->height());
+		else if (y + this->height() - ui->bottom->height() > rect.y() + rect.height()) //Bord bas
+			point.setY(rect.y() + rect.height() - this->height() + ui->bottom->height());
 	}
 
 	return point;
@@ -535,7 +538,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		QRect bottomRightExtUp = QRect(QPoint(width()-offset,height()-offset*2),QSize(offset,offset*2));
 
 		//Recherche de l'emplacement du curseur parmis les zones de selection actives - coins
-		if (ui.bottomRight->isVisible() &&
+		if (ui->bottomRight->isVisible() &&
 			(bottomRight.contains(event->pos()) ||
 			bottomRightExtLeft.contains(event->pos()) ||
 			bottomRightExtUp.contains(event->pos())))
@@ -546,7 +549,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			return true;
 		}
 
-		if (ui.topLeft->isVisible() && 
+		if (ui->topLeft->isVisible() && 
 			(topLeft.contains(event->pos()) ||
 			topLeftExtRight.contains(event->pos()) ||
 			topLeftExtBottom.contains(event->pos())))
@@ -557,7 +560,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			return true;
 		}
 
-		if (ui.topRight->isVisible() &&
+		if (ui->topRight->isVisible() &&
 			(topRight.contains(event->pos()) ||
 			topRightExtLeft.contains(event->pos()) ||
 			topRightExtBottom.contains(event->pos())))
@@ -568,7 +571,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			return true;
 		}
 
-		if (ui.bottomLeft->isVisible() &&
+		if (ui->bottomLeft->isVisible() &&
 			(bottomLeft.contains(event->pos()) ||
 			bottomLeftExtRight.contains(event->pos()) ||
 			bottomLeftExtUp.contains(event->pos())))
@@ -586,7 +589,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		QRect top = QRect(QPoint(offset*2,0),QSize(width()-offset*2,offset));
 
 		//Recherche de l'emplacement du curseur parmis les zones de selection - cotes
-		if (ui.bottom->isVisible() && bottom.contains(event->pos()))
+		if (ui->bottom->isVisible() && bottom.contains(event->pos()))
 		{
 			_isResizing = true;
 			ReleaseCapture();
@@ -594,7 +597,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			return true;
 		}
 
-		if (ui.left->isVisible() && left.contains(event->pos()))
+		if (ui->left->isVisible() && left.contains(event->pos()))
 		{
 			_isResizing = true;
 			ReleaseCapture();
@@ -602,7 +605,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			return true;
 		}
 
-		if (ui.right->isVisible() && right.contains(event->pos()))
+		if (ui->right->isVisible() && right.contains(event->pos()))
 		{
 			_isResizing = true;
 			ReleaseCapture();
@@ -610,7 +613,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			return true;
 		}
 
-		if (ui.top->isVisible() && top.contains(event->pos()))
+		if (ui->top->isVisible() && top.contains(event->pos()))
 		{
 			_isResizing = true;
 			ReleaseCapture();
@@ -638,13 +641,13 @@ void SwDockWidget_DockWidget::setRawSize(const QSize & size)
 	QSize temp = size;
 	int offset = getShadowSize();
 
-	if (ui.top->isVisibleTo(this))
+	if (ui->top->isVisibleTo(this))
 		temp += QSize(0,offset);
-	if (ui.bottom->isVisibleTo(this))
+	if (ui->bottom->isVisibleTo(this))
 		temp += QSize(0,offset);
-	if (ui.left->isVisibleTo(this))
+	if (ui->left->isVisibleTo(this))
 		temp += QSize(offset,0);
-	if (ui.right->isVisibleTo(this))
+	if (ui->right->isVisibleTo(this))
 		temp += QSize(offset,0);
 
 	QWidget::resize(temp);
@@ -657,13 +660,13 @@ QSize SwDockWidget_DockWidget::getRawSize()
 	QSize size = QWidget::size();
 	int offset = getShadowSize();
 
-	if (ui.top->isVisibleTo(this))
+	if (ui->top->isVisibleTo(this))
 		size -= QSize(0,offset);
-	if (ui.bottom->isVisibleTo(this))
+	if (ui->bottom->isVisibleTo(this))
 		size -= QSize(0,offset);
-	if (ui.left->isVisibleTo(this))
+	if (ui->left->isVisibleTo(this))
 		size -= QSize(offset,0);
-	if (ui.right->isVisibleTo(this))
+	if (ui->right->isVisibleTo(this))
 		size -= QSize(offset,0);
 
 	return size;
@@ -713,9 +716,9 @@ void SwDockWidget_DockWidget::setInToolBar(bool state, QWidget * toolBarItem)
 				setToolBarItem(toolBarItem);
 
 			//Mise a jour des boutons
-			ui.toToolBarBtn->hide();
-			ui.outToolBarBtn->show();
-			ui.PB_Close->hide();
+			ui->toToolBarBtn->hide();
+			ui->outToolBarBtn->show();
+			ui->PB_Close->hide();
 
 			//Mise a jour du bouton d'action
 			if (_action)
@@ -727,9 +730,9 @@ void SwDockWidget_DockWidget::setInToolBar(bool state, QWidget * toolBarItem)
 			setToolBarItem(NULL);
 
 			//Mise a jour des boutons
-			ui.toToolBarBtn->show();
-			ui.outToolBarBtn->hide();
-			ui.PB_Close->show();
+			ui->toToolBarBtn->show();
+			ui->outToolBarBtn->hide();
+			ui->PB_Close->show();
 
 			//Mise a jour du contour
 			showShadow();
@@ -760,7 +763,7 @@ void SwDockWidget_DockWidget::buttonsSlots()
 	QPushButton * send = qobject_cast<QPushButton*>(sender());
 
 	//Fermeture du Dock Widget
-	if(send == ui.PB_Close)
+	if(send == ui->PB_Close)
 	{
 		close();
 	}
@@ -773,34 +776,32 @@ void SwDockWidget_DockWidget::showShadow()
 	QSize size = this->getRawSize();
 
 	//Cotes
-	ui.top->show();
-	ui.bottom->show();
-	ui.right->show();
-	ui.left->show();
+	ui->top->show();
+	ui->bottom->show();
+	ui->right->show();
+	ui->left->show();
 
 	//Angle haut gauche
-	ui.topLeft->show();
-	ui.topLeft_ext1->show();
-	ui.topLeft_ext2->show();
+	ui->topLeft->show();
+	ui->topLeft_ext1->show();
+	ui->topLeft_ext2->show();
 
 	//Angle bas gauche
-	ui.bottomLeft->show();
-	ui.bottomLeft_ext1->show();
-	ui.bottomLeft_ext2->show();
+	ui->bottomLeft->show();
+	ui->bottomLeft_ext1->show();
+	ui->bottomLeft_ext2->show();
 
 	//Angle haut droit
-	ui.topRight->show();
-	ui.topRight_ext1->show();
-	ui.topRight_ext2->show();
+	ui->topRight->show();
+	ui->topRight_ext1->show();
+	ui->topRight_ext2->show();
 
 	//Angle bas droit
-	ui.bottomRight->show();
-	ui.bottomRight_ext1->show();
-	ui.bottomRight_ext2->show();
+	ui->bottomRight->show();
+	ui->bottomRight_ext1->show();
+	ui->bottomRight_ext2->show();
 
 	this->setRawSize(size);
-
-	//QWidget::updateGeometry();
 }
 
 //-----------------------------------------------------------------------------
@@ -813,23 +814,23 @@ void SwDockWidget_DockWidget::showShadow(int area)
 
 	//Cotes
 	if (area & Qt::LeftDockWidgetArea)
-		ui.left->show();
+		ui->left->show();
 	if (area & Qt::RightDockWidgetArea)
-		ui.right->show();
+		ui->right->show();
 	if (area & Qt::TopDockWidgetArea)
-		ui.top->show();
+		ui->top->show();
 	if (area & Qt::BottomDockWidgetArea)
-		ui.bottom->show();
+		ui->bottom->show();
 
 	//Angles
 	if ((area & Qt::LeftDockWidgetArea) && (area & Qt::TopDockWidgetArea))
-		ui.topLeft->show();
+		ui->topLeft->show();
 	if ((area & Qt::LeftDockWidgetArea) && (area & Qt::BottomDockWidgetArea))
-		ui.bottomLeft->show();
+		ui->bottomLeft->show();
 	if ((area & Qt::RightDockWidgetArea) && (area & Qt::TopDockWidgetArea))
-		ui.topRight->show();
+		ui->topRight->show();
 	if ((area & Qt::RightDockWidgetArea) && (area & Qt::BottomDockWidgetArea))
-		ui.bottomRight->show();
+		ui->bottomRight->show();
 
 	this->setRawSize(size);
 }
@@ -841,30 +842,30 @@ void SwDockWidget_DockWidget::hideShadow()
 	QSize size = this->getRawSize();
 
 	//Cotes
-	ui.top->hide();
-	ui.bottom->hide();
-	ui.right->hide();
-	ui.left->hide();
+	ui->top->hide();
+	ui->bottom->hide();
+	ui->right->hide();
+	ui->left->hide();
 
 	//Angle haut gauche
-	ui.topLeft->hide();
-	ui.topLeft_ext1->hide();
-	ui.topLeft_ext2->hide();
+	ui->topLeft->hide();
+	ui->topLeft_ext1->hide();
+	ui->topLeft_ext2->hide();
 
 	//Angle bas gauche
-	ui.bottomLeft->hide();
-	ui.bottomLeft_ext1->hide();
-	ui.bottomLeft_ext2->hide();
+	ui->bottomLeft->hide();
+	ui->bottomLeft_ext1->hide();
+	ui->bottomLeft_ext2->hide();
 
 	//Angle haut droit
-	ui.topRight->hide();
-	ui.topRight_ext1->hide();
-	ui.topRight_ext2->hide();
+	ui->topRight->hide();
+	ui->topRight_ext1->hide();
+	ui->topRight_ext2->hide();
 
 	//Angle bas droit
-	ui.bottomRight->hide();
-	ui.bottomRight_ext1->hide();
-	ui.bottomRight_ext2->hide();
+	ui->bottomRight->hide();
+	ui->bottomRight_ext1->hide();
+	ui->bottomRight_ext2->hide();
 
 	QWidget::updateGeometry();
 	this->setRawSize(size);
@@ -876,32 +877,32 @@ void SwDockWidget_DockWidget::setupShadow(QColor color)
 {
 	QString strcolor = QString("rgba(%1, %2, %3, %4)").arg(color.red()).arg(color.green()).arg(color.blue()).arg(color.alpha());
 
-	ui.top->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui.topLeft_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui.topRight_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->top->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->topLeft_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->topRight_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
 
-	ui.right->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui.topRight_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui.bottomRight_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->right->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->topRight_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->bottomRight_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
 	
-	ui.bottom->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui.bottomRight_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui.bottomLeft_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->bottom->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->bottomRight_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->bottomLeft_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
 
-	ui.left->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui.bottomLeft_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui.topLeft_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->left->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->bottomLeft_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->topLeft_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
 
-	ui.topLeft->setStyleSheet("background:qradialgradient(spread:pad, cx:1, cy:1, radius:0.7, fx:1, fy:1, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
-	ui.topRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:1, radius:0.7, fx:0, fy:1, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
-	ui.bottomRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:0, radius:0.7, fx:0, fy:0, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
-	ui.bottomLeft->setStyleSheet("background:qradialgradient(spread:pad, cx:1, cy:0, radius:0.7, fx:1, fy:0, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
+	ui->topLeft->setStyleSheet("background:qradialgradient(spread:pad, cx:1, cy:1, radius:0.7, fx:1, fy:1, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
+	ui->topRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:1, radius:0.7, fx:0, fy:1, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
+	ui->bottomRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:0, radius:0.7, fx:0, fy:0, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
+	ui->bottomLeft->setStyleSheet("background:qradialgradient(spread:pad, cx:1, cy:0, radius:0.7, fx:1, fy:0, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
 }
 
 //-----------------------------------------------------------------------------
 int SwDockWidget_DockWidget::getShadowSize()
 {
-	return ui.top->height();
+	return ui->top->height();
 }
 
 //-----------------------------------------------------------------------------
@@ -913,27 +914,27 @@ void SwDockWidget_DockWidget::setCursorAspect()
 	QCursor bdiagCursor = Qt::SizeBDiagCursor;
 
 	//Aspect du pointeur sur le bord de la fenetre
-	ui.top->setCursor(verCursor);
-	ui.bottom->setCursor(verCursor);
-	ui.right->setCursor(horCursor);
-	ui.left->setCursor(horCursor);
+	ui->top->setCursor(verCursor);
+	ui->bottom->setCursor(verCursor);
+	ui->right->setCursor(horCursor);
+	ui->left->setCursor(horCursor);
 
 	//Aspect du pointeur sur les angles de la fenetre
-	ui.topLeft->setCursor(fdiagCursor);
-	ui.topLeft_ext1->setCursor(fdiagCursor); //Agrandissement de la zone de selection de l'angle
-	ui.topLeft_ext2->setCursor(fdiagCursor); //Agrandissement de la zone de selection de l'angle
+	ui->topLeft->setCursor(fdiagCursor);
+	ui->topLeft_ext1->setCursor(fdiagCursor); //Agrandissement de la zone de selection de l'angle
+	ui->topLeft_ext2->setCursor(fdiagCursor); //Agrandissement de la zone de selection de l'angle
 
-	ui.bottomLeft->setCursor(bdiagCursor);
-	ui.bottomLeft_ext1->setCursor(bdiagCursor); //Agrandissement de la zone de selection de l'angle
-	ui.bottomLeft_ext2->setCursor(bdiagCursor); //Agrandissement de la zone de selection de l'angle
+	ui->bottomLeft->setCursor(bdiagCursor);
+	ui->bottomLeft_ext1->setCursor(bdiagCursor); //Agrandissement de la zone de selection de l'angle
+	ui->bottomLeft_ext2->setCursor(bdiagCursor); //Agrandissement de la zone de selection de l'angle
 
-	ui.topRight->setCursor(bdiagCursor);
-	ui.topRight_ext1->setCursor(bdiagCursor); //Agrandissement de la zone de selection de l'angle
-	ui.topRight_ext2->setCursor(bdiagCursor); //Agrandissement de la zone de selection de l'angle
+	ui->topRight->setCursor(bdiagCursor);
+	ui->topRight_ext1->setCursor(bdiagCursor); //Agrandissement de la zone de selection de l'angle
+	ui->topRight_ext2->setCursor(bdiagCursor); //Agrandissement de la zone de selection de l'angle
 
-	ui.bottomRight->setCursor(fdiagCursor);
-	ui.bottomRight_ext1->setCursor(fdiagCursor); //Agrandissement de la zone de selection de l'angle
-	ui.bottomRight_ext2->setCursor(fdiagCursor); //Agrandissement de la zone de selection de l'angle
+	ui->bottomRight->setCursor(fdiagCursor);
+	ui->bottomRight_ext1->setCursor(fdiagCursor); //Agrandissement de la zone de selection de l'angle
+	ui->bottomRight_ext2->setCursor(fdiagCursor); //Agrandissement de la zone de selection de l'angle
 }
 
 //-----------------------------------------------------------------------------

@@ -1,5 +1,5 @@
-#ifndef MENUACTION_H
-#define MENUACTION_H
+#ifndef SWDOCKWIDGET_MAINDOCKMENUACTION_H
+#define SWDOCKWIDGET_MAINDOCKMENUACTION_H
 
 
 #include <QAction>
@@ -20,10 +20,5 @@ private:
 	QIcon _disabled;
 	QIcon _checked;
 };
-
-
-
-
-
 
 #endif

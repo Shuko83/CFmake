@@ -119,10 +119,7 @@ void SwDockWidget_Splitter::addWidget(QWidget * widget, int pos, Qt::DockWidgetA
 			size = dock->getRawSize();
 			if (area != Qt::NoDockWidgetArea)
 				dock->setArea(area);
-		//	setStretchFactor(pos, 0);
 		}
-		//else
-		//	setStretchFactor(pos, 1);
 
 		if (pos == 0)
 		{
@@ -170,9 +167,6 @@ void SwDockWidget_Splitter::updateSizes(QSize size1, QSize size2)
 {
 	if (QSplitter::count() == 2)
 	{
-		//Mise a jour de l'affichage
-		//this->show();
-
 		//Set widgets sizes
 		QList<int> sizes;
 		sizes << 1 << 1;

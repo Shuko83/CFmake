@@ -1,5 +1,5 @@
-#ifndef MAINDOCKCONFIGURATION_H
-#define MAINDOCKCONFIGURATION_H
+#ifndef SWDOCKWIDGET_MAINDOCKCONFIGURATION_H
+#define SWDOCKWIDGET_MAINDOCKCONFIGURATION_H
 
 #include <QMenu>
 #include <QRadioButton>
@@ -37,6 +37,8 @@ public :
 	void setActiveConfiguration(ConfigurationIndex index);
 	void setActiveConfiguration(QString conf);
 	ConfigurationIndex getActiveConfiguration();
+	QString getActiveConfigurationInString();
+	QString getConfigurationInString(int index);
 
 signals:
 	void changeConf(SwDockWidget_MainDockConfiguration::ConfigurationIndex index);
@@ -46,19 +48,12 @@ protected slots:
 
 private:
 	QRadioButton * addConfiguration(QString iconPath, ConfigurationIndex index = BLTR);
+	SwDockWidget_MainDockConfiguration::ConfigurationIndex getExistingConf(QString conf, int nbDocks);
 
 private:
 	QMap<QRadioButton*, ConfigurationIndex> _listBtn;
 	ConfigurationIndex _activeConf;
 	QGridLayout * _layout;
 };
-
-
-
-
-
-
-
-
 
 #endif

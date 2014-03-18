@@ -1,18 +1,18 @@
-#ifndef DOCKWIDGET_H
-#define DOCKWIDGET_H
-
-#include "ui_SwDockWidget_DockWidget.h"
+#ifndef SWDOCKWIDGET_DOCKWIDGET_H
+#define SWDOCKWIDGET_DOCKWIDGET_H
 
 #include <QtGui/QWidget>
 #include <QtGui/qdockwidget.h>
 #include <QTimer>
-//#include <QPropertyAnimation>
+
+namespace Ui {
+    class DockWidget;
+}
 
 class SwDockWidget_DockWidget : public QWidget
 {
 	Q_OBJECT
 
-	//Q_PROPERTY (QString _title READ getTitle WRITE setTitle);
 	Q_PROPERTY (bool _canBeClose READ canBeClose WRITE setCanBeClose);
 	Q_PROPERTY (bool _canBeMoved READ canMove WRITE setCanBeMoved);
 	Q_PROPERTY (bool _canBePin READ canBePin WRITE setCanBePin);
@@ -49,10 +49,6 @@ public:
 	void setAlwaysOnTop(bool state);
 
 	//Evenements
-	/*virtual void mouseReleaseEvent( QMouseEvent * event );
-	virtual void mousePressEvent( QMouseEvent * event );
-	virtual void mouseMoveEvent( QMouseEvent * event );
-	virtual bool event( QEvent * event );*/
 	void parentResized();
 
 	//Passage en mode "deplacement"
@@ -122,7 +118,7 @@ private:
 
 protected:
 	QWidget * _widget; //Widget contenu dans le SwDockWidget_DockWidget
-	Ui::DockWidget ui;
+	Ui::DockWidget* ui;
 
 private:
 	QString _title; //Titre du Dock
@@ -159,4 +155,4 @@ private:
 	QTimer * _timer;
 };
 
-#endif // DOCKWIDGET_H
+#endif

@@ -1,12 +1,8 @@
 #include "SwDockWidget_MainArea.h"
 #include "SwDockWidget_DockWidget.h"
 #include "SwDockWidget_TabWidget.h"
-//#include "inMainAreaWidget.h"
-//#include "inDockWidget.h"
 #include "SwDockWidget_MainDockMenuAction.h"
 #include "SwDockWidget_MainDockConfiguration.h"
-
-//#include "DebugWindow.h" //DEBUG ONLY
 
 //Qt
 #include <QtCore/QTime>
@@ -21,7 +17,6 @@
 #include <QAction>
 #include <QDesktopWidget>
 #include <QPropertyAnimation>
-//#include <QDebug>
 #include <QMetaEnum>
 
 #define BTN_SIZE 32
@@ -33,8 +28,8 @@
 
 //-----------------------------------------------------------------------------
 SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar)
-	: SwDockWidget_ToolBarWindow(parent), _mainWidget(NULL), _menuBar(menuBar), _widgetMenu(NULL), _movingDock(""), _tempDock(NULL),
-	/*locked()(false), */_isReleasing(false), _isMovingDock(false), _mainDockConf(NULL), _posEffect(NULL), _lockAction(NULL)
+	: SwDockWidget_ToolBarWindow(parent), _menuBar(menuBar), _widgetMenu(NULL), _movingDock(""), _tempDock(NULL),
+	_isReleasing(false), _isMovingDock(false), _mainDockConf(NULL), _posEffect(NULL), _lockAction(NULL)
 {
 	ui.setupUi(this);
 	this->setMinimumSize(50,50);
@@ -44,11 +39,7 @@ SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar
 	//Creation de la zone de pre-positionnement
 	_overlay = new SwDockWidget_Overlay(this, ui.topwidget);
 
-	//Enregistrement du widget principal
-	//setMainWidget(new inMainAreaWidget());
-
 	//Filtre sur les events
-	//installEventFilter(this);
 	if (parent)
 		parent->installEventFilter(this);
 
@@ -63,11 +54,7 @@ SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar
 	_secondScreenMainDock->setCanBePin(false);
 	_secondScreenMainDock->setAlwaysOnTop(false);
 
-	//DEBUG ONLY
-	/*DebugWindow * dbg = new DebugWindow();
-	dbg->setWidget(_leftMainDock, _rightMainDock, _topMainDock, _bottomMainDock);
-	dbg->show();*/
-	//Fin DEBUG ONLY
+	_configurationFileName = PARAMETER_FILE;
 
 	//Initialisation
 	init();
@@ -78,25 +65,14 @@ SwDockWidget_MainArea::~SwDockWidget_MainArea()
 {
 	if (_mainWidget)
 		_mainWidget->setParent(0);
-	//delete _mainWidget;
 }
 
 //-----------------------------------------------------------------------------
 //Initialisation
 void SwDockWidget_MainArea::init()
 {
-	//int num = DEFAULT_DOCK_NUMBER;
-
-	//Chargement du nombre de docks crees lors de la session precedente
-	/*QSettings settings("Diginext", "TestDock");
-	num = settings.value("docknumber", DEFAULT_DOCK_NUMBER).toInt();*/
-	
 	//Creation des options de la barre titre
 	setMenu();
-
-	//Creation de SwDockWidget_DockWidget par defaut
-	/*for (int i = 0; i < num; i++)
-		createNewDock();*/
 
 	//Restauration des positions
 	//loadDockPosition();
@@ -112,14 +88,16 @@ void SwDockWidget_MainArea::setMainWidget(QWidget * widget)
 			ui.centralLayout->removeWidget(ui.centralLayout->itemAt(0)->widget());
 		ui.centralLayout->addWidget(widget);
 
-		//Ecoute du signal de creation d'un nouveau SwDockWidget_DockWidget
-		//connect(widget, SIGNAL(newDock()), this, SLOT(createNewDock()));
-		//connect(widget, SIGNAL(lockConf(bool)), this, SLOT(lockConf(bool)));
-
 		_mainWidget = widget;
 		_mainWidget->setObjectName("MainWidget");
 		_mainWidget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 	}
+}
+
+//-----------------------------------------------------------------------------
+QWidget * SwDockWidget_MainArea::getMainWidget()
+{
+	return _mainWidget;
 }
 
 //-----------------------------------------------------------------------------
@@ -396,6 +374,7 @@ void SwDockWidget_MainArea::changeDockConfiguration(SwDockWidget_MainDockConfigu
 		if (w && !w->empty())
 			pinDockTo(w, _mainWidget, w->getArea(), true);
 	}
+	_mainDockConf->setActiveConfiguration(index);
 
 	//Restauration des dimensions
 	qApp->processEvents(); //Force le rafraichissement pour mettre a jour les dimensions
@@ -471,14 +450,12 @@ QString SwDockWidget_MainArea::checkConfiguration(QSplitter * splitter)
 			else if (w)
 				return checkConfiguration(qobject_cast<QSplitter*>(splitter->widget(index))) + getStringFromMainDock(w);
 		}
-		//DEBUG ONLY
 		else
 		{
 			//Si le splitter n'a qu'un seul element, on verifie sa descendance
 			if (splitter->count() == 1)
 				return checkConfiguration(qobject_cast<QSplitter*>(splitter->widget(index)));
 		}
-		//Fin DEBUG ONLY
 	}
 	return s;
 }
@@ -515,8 +492,11 @@ void SwDockWidget_MainArea::closeEvent(QCloseEvent * event )
 bool SwDockWidget_MainArea::close()
 {
 	//Sauvegarde du nombre de docks crees
-	QSettings settings("Diginext", "TestDock");
-	settings.setValue("docknumber", _list.count());
+	//QSettings settings("Diginext", "TestDock");
+	//settings.setValue("docknumber", _list.count());
+
+	//Masquage de la fenetre
+	hide();
 
 	//Sauvegarde des positions et dimensions de tous les elements
 	saveAllPositions();
@@ -539,8 +519,8 @@ void SwDockWidget_MainArea::hideAll()
 		_secondScreenMainDock->hide();
 
 	//Sauvegarde du nombre de docks crees
-	QSettings settings("Diginext", "TestDock");
-	settings.setValue("docknumber", _list.count());
+	//QSettings settings("Diginext", "TestDock");
+	//settings.setValue("docknumber", _list.count());
 
 	//Sauvegarde des positions et dimensions de tous les elements
 	saveAllPositions();
@@ -570,24 +550,14 @@ bool SwDockWidget_MainArea::event( QEvent * event )
 			break;
 
 		//Mise a jour de l'affichage
-		case QEvent::Paint:
+		/*case QEvent::Paint:
 			if (_mainWidget && _mainWidget->rect() != _mainRect)
 			{
 				setMainRect(QRect(_mainWidget->mapToGlobal(QPoint(0,0)), _mainWidget->size()));
 				_mainRect = _mainWidget->rect();
 			}
-			break;
+			break;*/
 	}
-
-	//DEBUG ONLY : affichage du nom de l'event (necessite d'inclure <QMetaEnum> et <QDebug>)
-	/*{
-		const QMetaObject & mo = QEvent::staticMetaObject;
-		QMetaEnum me = mo.enumerator(mo.indexOfEnumerator("Type"));
-		QString test(me.valueToKey(event->type()));
-		static int num = 0;
-		qDebug() << num++ << ": " << this->objectName() << " : " << test << "(" << event->type() << ")";
-	}*/
-	//Fin DEBUG ONLY
 
 	return QWidget::event(event);
 }
@@ -622,25 +592,12 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 			//Clic initial : selection de l'objet, debut de deplacement
 			case QEvent::MouseButtonPress:
 				dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
-				if (dock && dock->canBePin()/* && (dock->parent() != this)*/ && !locked())
+				if (dock && dock->canBePin() && !locked())
 				{
-					/*if (dock->parent())
-						qDebug() << dock->parent()->objectName() << this->objectName();*/
 					_isMovingDock = true;
 					_movingDock = obj->objectName();
 				}
 				break;
-
-			//Redimensionnement : on ignore le deplacement du dock flottant
-			/*case QEvent::Resize:
-				if (!_movingDock.compare(obj->objectName()))
-				{
-					_isMovingDock = false;
-					_movingDock = "";
-					//Masquage des fleches de positionnement
-					hideArrows();
-				}
-				break;*/
 
 			//Deplacement
 			case QEvent::Move:
@@ -685,21 +642,14 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 
 			//Fermeture du SwDockWidget_DockWidget
 			case QEvent::Close:
-				//if (_list.contains(obj))
-				{
-					dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
-					//Liberation du dock avant fermeture
-					releaseDock(obj);
-					//Suppression de la toolbar associee si necessaire
-					releaseFromToolBar(dock);
-					//_list.removeOne(dock);
-					//Mise a jour du menu
-					//if (dock->getMenuAction())
-					//	dock->getMenuAction()->setChecked(false);
-					//Mise a jour des docks principaux
-					if (_list.contains(obj))
-						updateMainDock();
-				}
+				dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
+				//Liberation du dock avant fermeture
+				releaseDock(obj);
+				//Suppression de la toolbar associee si necessaire
+				releaseFromToolBar(dock);
+				//Mise a jour des docks principaux
+				if (_list.contains(obj))
+					updateMainDock();
 				//Desactivation du bouton de masquage si dock principal
 				if (_listMainDock.contains(obj))
 				{
@@ -736,12 +686,6 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 					if (mainDock && mainDock->getMenuAction() && mainDock->empty())
 						mainDock->getMenuAction()->setEnabled(false);
 				}
-				/*else if (_list.contains(obj))
-				{
-					dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
-					if (dock && dock->getMenuAction() && !dock->isVisibleTo(dock->parentWidget()))
-						dock->getMenuAction()->setChecked(false);
-				}*/
 				break;
 		}
 
@@ -754,8 +698,6 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 		{
 			case QEvent::Move:
 				//Enregistrement de la position de l'area pour positionner les toolbar
-				if (_mainWidget)
-					setMainRect(QRect(_mainWidget->mapToGlobal(QPoint(0,0)), _mainWidget->size()));
 				//Verification de la position globale de la fenetre pour positionner si necessaire le dock principal de deuxieme ecran
 				if (!_secondScreenMainDock->empty())
 				{
@@ -826,8 +768,7 @@ void SwDockWidget_MainArea::addDockWidget( SwDockWidget_DockWidget * dock, QStri
 	connect(dock, SIGNAL(releaseFromToolBarAsked()), this, SLOT(releaseFromToolBar()));
 
 	//Ajout du dock dans le menu
-	//if (addInMenu)
-		addWidgetInMenu(dock, menuName);
+	addWidgetInMenu(dock, menuName);
 
 	//Affichage du dock
 	dock->show();
@@ -855,7 +796,10 @@ void SwDockWidget_MainArea::removeDockWidget(SwDockWidget_DockWidget * dock)
 
 		//Mise a jour du menu
 		if (dock->getMenuAction())
+		{
 			delete dock->getMenuAction();
+			dock->setMenuAction(0);
+		}
 	}
 }
 
@@ -1166,44 +1110,36 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 			return toReturn;
 	}
 	//Ajout dans un dock principal dans le deuxieme ecran
-	/*else */if (obj && QRect(_secondScreenBtn->pos(),QSize(BTN_CENTER_SIZE,BTN_CENTER_SIZE)).contains(QCursor::pos()))
+	if (obj && QRect(_secondScreenBtn->pos(),QSize(BTN_CENTER_SIZE,BTN_CENTER_SIZE)).contains(QCursor::pos()))
 	{
 		QRect rect = QApplication::desktop()->availableGeometry(QCursor::pos());
-		/*int appScreen = QApplication::desktop()->screenNumber(mapToGlobal(this->rect().center()));
-		int currentScreen = QApplication::desktop()->screenNumber(QCursor::pos());
-		if (appScreen != currentScreen)*/
+		//Si le dock en cours de deplacement est un dock principal, on ne deplace que son contenu
+		QWidget * dock = qobject_cast<QWidget*>(obj);
+		SwDockWidget_MainDockWidget * mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(obj);
+		QString name = "";
+		QSize * size = NULL;
+		if (mainDock)
 		{
-			//if (_secondScreenMainDock->empty())
+			//Recuperation du contenu de l'onglet principal
+			dock = mainDock->getWidget(0);
+			if (dock && dock->layout())
 			{
-				//Si le dock en cours de deplacement est un dock principal, on ne deplace que son contenu
-				QWidget * dock = qobject_cast<QWidget*>(obj);
-				SwDockWidget_MainDockWidget * mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(obj);
-				QString name = "";
-				QSize * size = NULL;
-				if (mainDock)
-				{
-					//Recuperation du contenu de l'onglet principal
-					dock = mainDock->getWidget(0);
-					if (dock && dock->layout())
-					{
-						QLayoutItem * litem = dock->layout()->itemAt(0);
-						if (litem)
-							dock = litem->widget();
-					}
-					//Recuperation du nom et de la taille de l'onglet
-					name = mainDock->tabText(0);
-					size = new QSize(mainDock->getRawSize());
-				}
-
-				//Ajout du widget dans le dock principal de deuxieme ecran
-				_secondScreenMainDock->addWidget(dock, name);
-				_secondScreenMainDock->resize(rect.size());
-				_secondScreenMainDock->move(rect.x(), rect.y());
-				_secondScreenMainDock->show();
-
-				toReturn = dock;
+				QLayoutItem * litem = dock->layout()->itemAt(0);
+				if (litem)
+					dock = litem->widget();
 			}
+			//Recuperation du nom et de la taille de l'onglet
+			name = mainDock->tabText(0);
+			size = new QSize(mainDock->getRawSize());
 		}
+
+		//Ajout du widget dans le dock principal de deuxieme ecran
+		_secondScreenMainDock->addWidget(dock, name);
+		_secondScreenMainDock->resize(rect.size());
+		_secondScreenMainDock->move(rect.x(), rect.y());
+		_secondScreenMainDock->show();
+
+		toReturn = dock;
 	}
 	return toReturn;
 }
@@ -1213,7 +1149,6 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 void SwDockWidget_MainArea::releaseDock(QObject * obj)
 {
 	SwDockWidget_DockWidget * dock = NULL;
-	//bool light = false;
 
 	//Recuperation du dock selectionne
 	if (!obj)
@@ -1421,7 +1356,6 @@ void SwDockWidget_MainArea::releaseDock(QObject * obj)
 				QSize dockSize = dock->size();
 
 				//Liberation
-				//light = _secondScreenMainDock->isAncestorOf(dock);
 				dock->returnToMainArea();
 
 				//Mise a jour de la position et de la taille du dock
@@ -1432,20 +1366,17 @@ void SwDockWidget_MainArea::releaseDock(QObject * obj)
 				_isReleasing = false;
 			}
 		}
-
-		//Masquage du dock principal si necessaire
-		//updateMainDock(light);
 	}
 }
 
 //-----------------------------------------------------------------------------
-void SwDockWidget_MainArea::updateMainDock(/*bool light*/)
+void SwDockWidget_MainArea::updateMainDock()
 {
-	_leftMainDock->updateContents(/*light*/);
-	_rightMainDock->updateContents(/*light*/);
-	_topMainDock->updateContents(/*light*/);
-	_bottomMainDock->updateContents(/*light*/);
-	_secondScreenMainDock->updateContents(/*light*/);
+	_leftMainDock->updateContents();
+	_rightMainDock->updateContents();
+	_topMainDock->updateContents();
+	_bottomMainDock->updateContents();
+	_secondScreenMainDock->updateContents();
 
 	//Mise a jour de la configuration des docks principaux
 	updateConfiguration();
@@ -1570,7 +1501,7 @@ void SwDockWidget_MainArea::manageArrows(QObject * obj)
 	if (_isMovingDock && _mainWidget)
 	{
 		//Recuperation du widget sur lequel afficher les fleches
-		QWidget * widget = getDockableWidget(/*obj*/);
+		QWidget * widget = getDockableWidget();
 		if (widget)
 		{
 			SwDockWidget_MainDockWidget * mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(obj);
@@ -1607,24 +1538,21 @@ void SwDockWidget_MainArea::manageArrows(QObject * obj)
 				}
 			}
 		}
-		//else// if (_isMovingDock)
+		//Si le pointeur est dans le deuxieme ecran
+		int appScreen = QApplication::desktop()->screenNumber(mapToGlobal(this->rect().center()));
+		int currentScreen = QApplication::desktop()->screenNumber(QCursor::pos());
+		if (appScreen != currentScreen)
 		{
-			//Si le pointeur est dans le deuxieme ecran
-			int appScreen = QApplication::desktop()->screenNumber(mapToGlobal(this->rect().center()));
-			int currentScreen = QApplication::desktop()->screenNumber(QCursor::pos());
-			if (appScreen != currentScreen)
+			SwDockWidget_MainDockWidget * mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(obj);
+			//Si le dock du deuxieme ecran est vide ou si le deplacement concerne un onglet
+			if (_secondScreenMainDock->empty() || mainDock)
 			{
-				SwDockWidget_MainDockWidget * mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(obj);
-				//Si le dock du deuxieme ecran est vide ou si le deplacement concerne un onglet
-				if (_secondScreenMainDock->empty() || mainDock)
-				{
-					QRect rect = QApplication::desktop()->availableGeometry(QCursor::pos());
-					//Affichage d'un symbole de positionnement centrale
-					showArrowsOnSecondScreen(rect);
-					//Mise en surbrillance du bouton survole
-					highlightArrows(QCursor::pos(), false);
-					return;
-				}
+				QRect rect = QApplication::desktop()->availableGeometry(QCursor::pos());
+				//Affichage d'un symbole de positionnement centrale
+				showArrowsOnSecondScreen(rect);
+				//Mise en surbrillance du bouton survole
+				highlightArrows(QCursor::pos(), false);
+				return;
 			}
 		}
 	}
@@ -1824,28 +1752,27 @@ void SwDockWidget_MainArea::hideOverlay()
 // Fonctions locales
 //-----------------------------------------------------------------------------
 //Recuperation du dock situe sous le curseur
-QWidget * SwDockWidget_MainArea::getDockableWidget(/*QObject * obj*/)
+QWidget * SwDockWidget_MainArea::getDockableWidget()
 {
 	if (!_mainWidget)
 		return NULL;
-	
+
 	//Recuperation du widget situe sous le pointeur (en excluant le dock en cours de deplacement)
-	QWidget * w = qApp->widgetAt(QCursor::pos());
-	if (w)
+	QWidget * widget = qApp->widgetAt(QCursor::pos());
+	if (widget)
 	{
 		//Parcours des parents du widget pour retrouver le dock, ou l'area
-		while (w/*->parentWidget()*/ && !qobject_cast<SwDockWidget_DockWidget*>(w) && (w != _mainWidget))
+		while (widget && !qobject_cast<SwDockWidget_DockWidget*>(widget) && (widget != _mainWidget))
 		{
-			w = w->parentWidget();
+			widget = widget->parentWidget();
 		}
 	}
 	//Si un parent a ete trouve parmi les docks et l'area
-	if (w/* && w->parentWidget()*/)
+	if (widget)
 	{
-		//w = w->parentWidget();
 		//S'il s'agit d'un dock, il ne doit pas etre flottant (donc avoir l'area pour parent)
-		if (w->parentWidget() != this)
-			return w;
+		if (widget->parentWidget() != this)
+			return widget;
 	}
 
 	return NULL;
@@ -1895,6 +1822,24 @@ QPoint SwDockWidget_MainArea::getPosition(QWidget * widget)
 //-----------------------------------------------------------------------------
 // Persistence de la configuration des DockWidgets
 //-----------------------------------------------------------------------------
+void SwDockWidget_MainArea::setConfigurationFileName(QString name)
+{
+	if (_configurationFileName != name)
+	{
+		//Sauvegarde de la configuration active
+		saveAllPositions();
+		//Mise a jour du fichier de configuration
+		_configurationFileName = name;
+	}
+}
+
+//-----------------------------------------------------------------------------
+QString SwDockWidget_MainArea::getConfigurationFileName()
+{
+	return _configurationFileName;
+}
+
+//-----------------------------------------------------------------------------
 //Sauvegarde de la position des docks
 void SwDockWidget_MainArea::saveAllPositions()
 {
@@ -1931,7 +1876,7 @@ void SwDockWidget_MainArea::saveAllPositions()
 	saveToolBar(doc, root);
 
 	//Ecriture
-	QFile file(PARAMETER_FILE);
+	QFile file(_configurationFileName);
 	if (file.open(QIODevice::WriteOnly))
 	{
 		file.write(doc.toString().toStdString().c_str());
@@ -2114,7 +2059,7 @@ void SwDockWidget_MainArea::loadDockPosition()
 	QDomDocument doc("dockparameters");
 
 	//Lecture
-	QFile file(PARAMETER_FILE);
+	QFile file(_configurationFileName);
 	if (!file.open(QIODevice::ReadOnly))
 		return;
 	if (!doc.setContent(&file)) {
@@ -2422,7 +2367,6 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 
 			//Lecture des parametres
 			QDomNodeList list = node.childNodes();
-			//int numWidget = 0;
 			QWidgetList widgetList;
 			QPoint pos;
 			QSize size;
@@ -2571,6 +2515,10 @@ void SwDockWidget_MainArea::lock()
 			if (dockWidget)
 				dockWidget->lock();		
 		}
+
+		//Verrouillage des menus
+		_mainDockConf->setEnabled(false);
+		_widgetMenu->setEnabled(false);
 	}
 
 	SwDockWidget_ToolBarWindow::lock();
@@ -2596,6 +2544,10 @@ void SwDockWidget_MainArea::releaseLock()
 			if (dockWidget)
 				dockWidget->releaseLock();		
 		}
+
+		//Deverrouillage des menus
+		_mainDockConf->setEnabled(true);
+		_widgetMenu->setEnabled(true);
 	}
 
 	SwDockWidget_ToolBarWindow::releaseLock();
@@ -2659,8 +2611,6 @@ void SwDockWidget_MainArea::freeMainTab(int index, QPoint pos)
 			//Mise a jour de la position du dock
 			_tempDock->move(pos);
 			_tempDock->setRawSize(size);
-			//Mise a jour du dock principal de depart
-			//main->updateContents(main == _secondScreenMainDock);
 		}
 	}
 }
@@ -2686,7 +2636,7 @@ void SwDockWidget_MainArea::stopMovingMainTab()
 		hideArrows();
 
 		//Ajout du dock si necessaire
-		QWidget * widget = managePinDock(_tempDock, getDockableWidget(/*_tempDock*/));
+		QWidget * widget = managePinDock(_tempDock, getDockableWidget());
 		
 		//Si l'onglet a ete ancree dans un dock principal, on supprime le dock principal provisoire
 		if (widget)

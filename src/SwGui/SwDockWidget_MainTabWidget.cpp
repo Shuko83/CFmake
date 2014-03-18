@@ -141,3 +141,15 @@ void SwDockWidget_MainTabWidget::releaseLock()
 		}
 	}
 }
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_MainTabWidget::clear()
+{
+	//Reinitialisation
+	QTabWidget::clear();
+
+	//Creation d'un onglet vide pour l'ajout d'un nouvel onglet
+	_addWidget = new QWidget(this);
+	insertTab(0, _addWidget, QIcon(":/DockWidget/images/DockWidget/add.png"), "");
+	tabBar()->setTabButton(0, QTabBar::RightSide, 0);
+}

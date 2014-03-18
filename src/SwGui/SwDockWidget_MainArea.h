@@ -1,5 +1,5 @@
-#ifndef DOCKAREA_H
-#define DOCKAREA_H
+#ifndef SWDOCKWIDGET_DOCKAREA_H
+#define SWDOCKWIDGET_DOCKAREA_H
 
 #include <QtGui/QMainWindow>
 #include <QtGui/QPushButton>
@@ -34,6 +34,7 @@ public:
 
 	//Enregistrement du widget principal
 	void setMainWidget(QWidget * widget);
+	QWidget * getMainWidget();
 
 	//Ancrage d'un dock
 	QWidget * pinDockTo(QObject * obj, QWidget * mainWidget, Qt::DockWidgetArea area, bool absolute = false);
@@ -47,6 +48,9 @@ public:
 	
 	//Fermeture
 	bool close();
+
+	void setConfigurationFileName(QString name);
+	QString getConfigurationFileName();
 
 protected:
 	//Evenements
@@ -101,10 +105,10 @@ private:
 	
 	//Ancrage d'un dock
 	QWidget * managePinDock(QObject * dock, QWidget * parent);
-	void updateMainDock(/*bool light = false*/);
+	void updateMainDock();
 	
 	//Gestion du survol des widgets
-	QWidget * getDockableWidget(/*QObject * obj*/);
+	QWidget * getDockableWidget();
 	QPoint getPosition(QWidget * widget);
 
 	//Zone de pre-positionnement
@@ -120,6 +124,7 @@ private:
 
 	//bool _lock; //Lock configuration
 	QAction * _lockAction;
+	QString _configurationFileName;
 	
 	//Liste des DockWidgets
 	QList<QObject*> _list;	
@@ -145,8 +150,7 @@ private:
 	QPushButton * _secondScreenBtn;
 
 	//Widget principal
-	QWidget * _mainWidget;
-	QRect _mainRect;
+	//QRect _mainRect;
 	//Menu
 	QMenuBar * _menuBar;
 	QMenu * _widgetMenu;
@@ -161,4 +165,4 @@ private:
 	SwDockWidget_Overlay *_overlay;
 };
 
-#endif // DOCKAREA_H
+#endif

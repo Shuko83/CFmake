@@ -20,7 +20,6 @@ using namespace StreamWork::SwGui;
 #define CL_MENU_INTERFACE_NAME "Menu_%1"
 #define CL_ACTION_INTERFACE_NAME "Action_%1"
 #define CL_TOOLBAR_INTERFACE_NAME "ToolBar_%1"
-//#define CL_DOCKWIDGET_NAME "DockWidget"
 #define CL_DOCKWIDGET_INTERFACE_NAME "DockWidget_%1"
 #define CL_CENTRALWIDGET_INTERFACE_NAME "CentralWidget"
 #define CL_LISTDOCKWIDGET_INTERFACE_NAME "ListDockWidget_%1"
@@ -31,27 +30,21 @@ using namespace StreamWork::SwGui;
 #define SHOW_MAXIMIZED 3
 #define SHOW_MINIMIZED 4
 
-
+//-----------------------------------------------------------------------------
 /*! \brief Constructeur */
-_SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()//, _lock(false)
+_SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()
 {
 	setConsumerServiceAvaibility(true);
 	setProviderServiceAvaibility(true);
 	setPropertyServiceAvaibility(true);
 	setOwnerServiceAvaibility(true);
 	
-	//_main_window=NULL;
     _use_aswidget_property = 0;
     _menus_nb = 0;
     _actions_nb = 0;
     _toolbars_nb = 0;
     _dockwidgets_nb = 0;
 	_listdockwidgets_nb = 0;
-    /*_tmp_handle_menu = NULL;
-    _tmp_handle_action = NULL;
-    _tmp_handle_toolbar = NULL;
-    _tmp_handle_dockwidget = NULL;
-    _handle_central_widget = NULL;*/
 
 	_mainWindow = NULL;
 
@@ -69,8 +62,12 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()//, _lock(fal
     _show_mode.FromInt(SHOW_NORMAL);
 
     _useAsWidget = false;
+	_finalized = false;
+
+	_configurationFileName = "dockParameters.xml";
 }
 
+//-----------------------------------------------------------------------------
 /*! \brief Destructeur */
 _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
 {
@@ -119,7 +116,7 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
 	{
         if (dockwidget_it.value() != NULL)
 		{
-            //Si elle etait definie, on la detache de la main window
+            //S'il etait definie, on le detache de la main window
             dockwidget_it.value()->GetDockWidget().setParent(NULL);    
             dockwidget_it.value() = NULL;
         }
@@ -132,26 +129,17 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
 	{
         if (listdockwidget_it.value() != NULL)
 		{
+			//Pour chaque dock de la liste
 			QList<SwDockWidget_DockWidget*> list = listdockwidget_it.value()->GetListDockWidget();
 			foreach(SwDockWidget_DockWidget * widget, list)
 			{
-				//Si elle etait definie, on la detache de la main window
+				//S'il etait definie, on le detache de la main window
 				if (widget)
 					widget->setParent(NULL);
 			}
         }
         listdockwidget_it++;
     } 
-
-
-    //Widget central
-    /*if (_handle_central_widget != NULL)
-	{
-        //S'il est defini, on le detache du parent
-        _handle_central_widget->GetWidget().setParent(NULL);
-    }*/
-
-    //delete _mainWindow;
 
 	//DockWidget
 	for (uint i = 0; i < _dockwidgets_nb; i++)
@@ -180,6 +168,7 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
 		delete _mainWindow;
 }
 
+//-----------------------------------------------------------------------------
 /*! \brief Initialisation des ressources
 \note tous les services du composants doivent être déclarés dans cette methodes*/
 void _SwGuiCompMainWindow::initializeComponent() throw(SwException)
@@ -202,10 +191,7 @@ void _SwGuiCompMainWindow::initializeComponent() throw(SwException)
 	consummeInterface<ISwWidget>(STATUSBAR_INTERFACE);
 
     //Enregistrement des propriétés
-	//getPropertiesService().CreatePropertiesForQObject(_mainWindow,"QWidget");
-	//createPropertiesForThisObject(QString(), true);
-	createPropertiesForQObject(_mainWindow,"QWidget");
-	//getPropertiesService().CreatePropertiesForQObject((QMainWindow*)this,"QMainWindow");
+	createPropertiesForQObject(_mainWindow,"QWidget"); //Necessaire pour acceder au "show"
     
     //Gestion des menus
 	_menus_nb_property=getPropertiesService().CreateProperty<uint>("nb_menus");
@@ -278,11 +264,24 @@ void _SwGuiCompMainWindow::initializeComponent() throw(SwException)
 		_show_property->GetOnChangeSignal().iconnect(*this, &_SwGuiCompMainWindow::eventPropertyChange);
     }
 
+	//Fichier de configuration
+	_path_property = getPropertiesService().CreateProperty<QString>("ConfigurationFilename");
+    if (_path_property != NULL)
+	{
+        QVariant variant;
+        variant.setValue(_configurationFileName);
+        _path_property->SetValue(variant);
+        _path_property->SetDescription("Configuration Filename (*.xml)");
+		_path_property->GetOnChangeSignal().iconnect(*this, &_SwGuiCompMainWindow::eventPropertyChange);
+    }
+
     //Fin
     if (SW_APP->IsVerbose())
 		SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiMainWindow done\n"));
 
 }
+
+//-----------------------------------------------------------------------------
 /*! \brief Callback sur les changements de propriétés*/
 void _SwGuiCompMainWindow::eventPropertyChange(ISwProperty * property)
 {
@@ -475,18 +474,26 @@ void _SwGuiCompMainWindow::eventPropertyChange(ISwProperty * property)
         _show_mode = showmode;
         showChanged();
     }
+
+	//Changement du fichier de configuration
+	if (_path_property == property)
+	{
+		QString path = _path_property->GetValue().value<QString>();
+		setConfigurationFileName(path);
+	}
 }
 
 //---------------------------------------------------------------------
-// Interface ISwQMainWindow
+// Interface ISwMainWindow
 //---------------------------------------------------------------------
 /*! \brief Renvoie le nom du service
 \return le nom du service */
-SwDockWidget_MainWindow & _SwGuiCompMainWindow::GetMainWindow()
+SwDockWidget_MainWindow & _SwGuiCompMainWindow::getMainWindow()
 {
     return *_mainWindow;
 }
 
+//-----------------------------------------------------------------------------
 /*! \brief Renvoie le widget
 \return le widget */
 QWidget & _SwGuiCompMainWindow::GetWidget()
@@ -500,142 +507,15 @@ QWidget & _SwGuiCompMainWindow::GetWidget()
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompMainWindow::eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host)
 {
-    /*QMap<QString,ISwMenu *>::iterator menu_it;
-    QMap<QString,ISwAction *>::iterator action_it;
-    QMap<QString,ISwToolBar *>::iterator toolbar_it;
-    QMap<QString,ISwDockWidget *>::iterator dockwidget_it;*/
-    
-    //Si c'est un menu
-    /*menu_it = _menus.find(interface_name);
-    if (menu_it != _menus.end())
-	{
-        if (menu_it.value() != NULL)
-		{
-            //Et qu'il etait defini, on le detache de la menubar
-            menu_it.value()->GetMenu().setParent(NULL);   
-            menu_it.value()=NULL;
-        }
-        return;
-    } */
-
-    //Si c'est une action
-    /*action_it = _actions.find(interface_name);
-    if (action_it !=_actions.end())
-	{
-        if (action_it.value() != NULL)
-		{
-            //Et qu'elle etait definie, on la detache de la menubar
-            action_it.value()->GetAction().setParent(NULL);    
-            action_it.value()=NULL;
-        }
-        return;
-    }*/
-
-    //Si c'est une toolbar
-    /*toolbar_it = _toolbars.find(interface_name);
-    if (toolbar_it != _toolbars.end())
-	{
-        if (toolbar_it.value() != NULL)
-		{
-            //Et qu'elle etait definie, on la detache de la main window
-            toolbar_it.value()->GetToolBar().setParent(NULL);    
-            toolbar_it.value()=NULL;
-       }
-        return;
-    } */
-
-    //Si c'est un dockwidget
-    /*dockwidget_it=_dockwidgets.find(interface_name);
-    if (dockwidget_it!=_dockwidgets.end()) {
-        if (dockwidget_it.value()!=NULL) {
-            //Et qu'elle etait definie, on la detache de la main window
-			_mainWindow->removeDockWidget(&dockwidget_it.value()->GetDockWidget());
-            dockwidget_it.value()->GetDockWidget().setParent(NULL);    
-            dockwidget_it.value()=NULL;
-        }
-        return;
-    }*/
-
-    //Si c'est le widget central
-    /*if (interface_name == CL_CENTRALWIDGET_INTERFACE_NAME && _handle_central_widget!=NULL)
-	{
-        //Et qu'il est defini, on le detache du parent
-        _handle_central_widget->GetWidget().setParent(NULL);
-        return;
-    }*/
-
 }
 
+//-----------------------------------------------------------------------------
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompMainWindow::eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host)
 {
-	/*QMap<QString,ISwMenu *>::iterator menu_it;
-	QMap<QString,ISwAction *>::iterator action_it;
-	QMap<QString,ISwToolBar *>::iterator toolbar_it;
-	QMap<QString,ISwProperty *>::iterator toolbar_position_it;
-	QMap<QString,ISwDockWidget *>::iterator dockwidget_it;
-	QMap<QString,ISwProperty *>::iterator dockwidget_position_it;*/
-
-	//Si c'est un menu
-	/*menu_it = _menus.find(interface_name);
-	if (menu_it != _menus.end())
-	{
-		if (menu_it.value() == NULL && _tmp_handle_menu != NULL)
-		{
-			//Et qu'il etait non defini, on l'enregistre et l'attache a la menubar
-			menu_it.value() = _tmp_handle_menu;  
-			_mainWindow->menuBar()->addMenu(&(_tmp_handle_menu->GetMenu()));
-		}
-		return;
-	} */
-
-	//Si c'est une action
-	/*action_it = _actions.find(interface_name);
-	if (action_it != _actions.end())
-	{
-		if (action_it.value() == NULL && _tmp_handle_action != NULL)
-		{
-			//Et qu'ellle etait non definie,on l'enregistre et l'attache a la menubar
-			action_it.value() = _tmp_handle_action;
-			_mainWindow->menuBar()->addAction(&(_tmp_handle_action->GetAction()));
-			//this->menuBar()->addAction(&(_tmp_handle_action->GetAction()));
-		}
-		return;
-	} */
-
-	//Si c'est une toolbar
-	/*toolbar_it = _toolbars.find(interface_name);
-	toolbar_position_it = _toolbar_positions.find(interface_name);
-	if (toolbar_it != _toolbars.end() && toolbar_position_it != _toolbar_positions.end())
-	{
-		if (toolbar_it.value() == NULL && _tmp_handle_toolbar != NULL)
-		{
-			//Et qu'ellle etait non definie,on l'enregistre et l'attache a la mainwindow
-			SwEnum enum_value = toolbar_position_it.value()->GetValue().value<SwEnum>();
-			toolbar_it.value() = _tmp_handle_toolbar;
-			_mainWindow->addToolBar((Qt::ToolBarArea)enum_value.ToInt(),&(_tmp_handle_toolbar->GetToolBar()));
-			//this->addToolBar((Qt::ToolBarArea)enum_value.ToInt(),&(_tmp_handle_toolbar->GetToolBar()));
-		}
-		return;
-	} */
-
-	//Si c'est un dockwidget
-	/*dockwidget_it=_dockwidgets.find(interface_name);
-	dockwidget_position_it=_dockwidget_positions.find(interface_name);
-	if (dockwidget_it!=_dockwidgets.end() && dockwidget_position_it!=_dockwidget_positions.end()) {
-
-		if (dockwidget_it.value()==NULL  && _tmp_handle_dockwidget!=NULL) {
-			//Et qu'elle etait non definie,on l'enregistre et l'attache a la mainwindow
-			SwEnum enum_value=dockwidget_position_it.value()->GetValue().value<SwEnum>();
-			dockwidget_it.value()=_tmp_handle_dockwidget;
-			_mainWindow->addDockWidget(&(_tmp_handle_dockwidget->GetDockWidget()));  
-
-		}
-		return;
-	}*/
-
 }
 
+//-----------------------------------------------------------------------------
 void _SwGuiCompMainWindow::showChanged()
 {
 	switch(_show_mode.ToInt())
@@ -715,6 +595,7 @@ bool _SwGuiCompMainWindow::Finalize( quint64 historic_index )
 	if (_mainWindow)
 	{
 		_mainWindow->loadConfiguration();
+		_finalized = true;
 		return true;
 	}
 	return false;
@@ -762,7 +643,7 @@ void _SwGuiCompMainWindow::interfaceAvailable(QString interfaceName)
 		return;
 	}
 
-	//DockWidget
+	//Liste DockWidget
 	QMap<QString,ISwListDockWidget *>::iterator listdockwidget_it = _listdockwidgets.find(interfaceName);
 	if (listdockwidget_it != _listdockwidgets.end() && listdockwidget_it.value() == NULL)
 	{
@@ -770,7 +651,6 @@ void _SwGuiCompMainWindow::interfaceAvailable(QString interfaceName)
 		if (widget)
 		{
 			listdockwidget_it.value() = widget;
-			//_mainWindow->addDockWidget(&(widget->GetDockWidget()));
 			//Enregistrement du listener
 			widget->addDockWidgetListener(this);
 			//Ajout des docks presents
@@ -864,7 +744,6 @@ void _SwGuiCompMainWindow::interfaceUnavailable(QString interfaceName)
 		ISwListDockWidget * widget = listdockwidget_it.value();
 		if (widget && _mainWindow)
 		{
-			//_mainWindow->removeDockWidget(&(widget->GetDockWidget()));
 			//Suppression du listener
 			widget->removeDockWidgetListener(this);
 			//Suppression des docks presents
@@ -915,22 +794,33 @@ void _SwGuiCompMainWindow::interfaceUnavailable(QString interfaceName)
 	}
 }
 
-/*
 //-----------------------------------------------------------------------------
-bool _SwGuiCompMainWindow::getLock()
+void _SwGuiCompMainWindow::saveConfiguration()
 {
-	return _lock;
+	if (_mainWindow)
+		_mainWindow->saveConfiguration();
 }
 
 //-----------------------------------------------------------------------------
-void _SwGuiCompMainWindow::setLock(bool lock)
+void _SwGuiCompMainWindow::restoreConfiguration()
 {
-	if (lock != _lock)
+	if (_mainWindow)
+		_mainWindow->restoreConfiguration();
+}
+
+//-----------------------------------------------------------------------------
+QString _SwGuiCompMainWindow::getConfigurationFileName()
+{
+	return _configurationFileName;
+}
+
+//-----------------------------------------------------------------------------
+void _SwGuiCompMainWindow::setConfigurationFileName(QString name)
+{
+	if (_configurationFileName != name)
 	{
-		_lock = lock;
+		_configurationFileName = name;
 		if (_mainWindow)
-			_mainWindow->setLock(lock);
+			_mainWindow->setConfigurationFileName(name);
 	}
 }
-*/
-

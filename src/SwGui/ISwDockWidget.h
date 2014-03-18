@@ -24,12 +24,12 @@ namespace StreamWork
          \ingroup SwGuiGrp
          \swinterface
 		*/
-        class ISwDockWidget 
+        class ISwDockWidget
 		{   
 		public:
             /*! \brief Renvoie le widget
             \return le widget */
-			virtual SwDockWidget_DockWidget & GetDockWidget()=0;
+			virtual SwDockWidget_DockWidget & GetDockWidget() = 0;
 		};
 	}
 }

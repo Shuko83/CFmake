@@ -1,5 +1,5 @@
-#ifndef TOOLBARWINDOW_H
-#define TOOLBARWINDOW_H
+#ifndef SWDOCKWIDGET_TOOLBARWINDOW_H
+#define SWDOCKWIDGET_TOOLBARWINDOW_H
 
 #include <QWidget>
 #include <QtXml/QDomDocument>
@@ -18,12 +18,12 @@ public:
 
 	void closeToolbars();
 
-	void setMainRect(QRect rect);
-
 	//Verrouillage de la disposition des docks
 	virtual void lock();
 	virtual void releaseLock();
 	bool locked();
+
+	QWidget * _mainWidget;
 
 protected:
 	void saveToolBar(QDomDocument doc, QDomElement dom);
@@ -40,7 +40,7 @@ protected slots:
 	void stopMovingToolBarItem();
 
 	//Deplacement d'une toolbar a un seul item
-	void moveToolBar(/*QPoint pos*/);
+	void moveToolBar();
 	void stopMovingToolBar();
 
 	void closeToolBar();
@@ -58,16 +58,7 @@ private:
 	QList<QObject*> _listToolBar;
 	SwDockWidget_Overlay * _tbOverlay;
 	bool _isMovingToolBarItem; //Si un element d'une toolbar est en train d'etre deplace
-	QRect _globalMainRect; //Zone principale en coordonnees absolues
 
 };
-
-
-
-
-
-
-
-
 
 #endif

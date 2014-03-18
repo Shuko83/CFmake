@@ -1237,7 +1237,28 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_SwGuiCompMainWindow.h" />
+				RelativePath="_SwGuiCompMainWindow.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompMainWindow.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DQT_DLL -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -I&quot;GeneratedFiles\uid&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompMainWindow.h -o GeneratedFiles\mocd\moc__SwGuiCompMainWindow.cpp"
+						Description="MOC _SwGuiCompMainWindow.h"
+						Outputs="GeneratedFiles\mocd\moc__SwGuiCompMainWindow.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwGuiCompMainWindow.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWGUI_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_PLUGIN -DQT_SCRIPT_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQDESIGNER_EXPORT_WIDGETS -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtDesigner&quot; -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtNetwork&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include\QtScript&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwFoundation&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -I&quot;GeneratedFiles\ui&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 _SwGuiCompMainWindow.h -o GeneratedFiles\moc\moc__SwGuiCompMainWindow.cpp"
+						Description="MOC _SwGuiCompMainWindow.h"
+						Outputs="GeneratedFiles\moc\moc__SwGuiCompMainWindow.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath="_SwGuiCompMenu.h" />
 			<File
@@ -2166,6 +2187,18 @@
 					ExcludedFromBuild="true" />
 			</File>
 			<File
+				RelativePath="GeneratedFiles\moc\moc__SwGuiCompMainWindow.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc__SwGuiCompMainWindow.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
 				RelativePath="GeneratedFiles\moc\moc__SwGuiCompPluginsTree.cpp">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -2442,18 +2475,6 @@
 					ExcludedFromBuild="true" />
 			</File>
 			<File
-				RelativePath="GeneratedFiles\ui\ui_SwDockWidget_MainWindow.h">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\uid\ui_SwDockWidget_MainWindow.h">
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
 				RelativePath="GeneratedFiles\ui\ui_SwDockWidget_ToolBar.h">
 				<FileConfiguration
 					Name="Debug|Win32"
@@ -2538,29 +2559,6 @@
 						CommandLine="C:\Qt\4.7.1\bin\uic.exe SwDockWidget_MainArea.ui -o GeneratedFiles\ui\ui_SwDockWidget_MainArea.h"
 						Description="UIC SwDockWidget_MainArea.ui"
 						Outputs="GeneratedFiles\ui\ui_SwDockWidget_MainArea.h"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="SwDockWidget_MainWindow.ui">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;SwDockWidget_MainWindow.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe SwDockWidget_MainWindow.ui -o GeneratedFiles\uid\ui_SwDockWidget_MainWindow.h"
-						Description="UIC SwDockWidget_MainWindow.ui"
-						Outputs="GeneratedFiles\uid\ui_SwDockWidget_MainWindow.h"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\uic.exe;SwDockWidget_MainWindow.ui"
-						CommandLine="C:\Qt\4.7.1\bin\uic.exe SwDockWidget_MainWindow.ui -o GeneratedFiles\ui\ui_SwDockWidget_MainWindow.h"
-						Description="UIC SwDockWidget_MainWindow.ui"
-						Outputs="GeneratedFiles\ui\ui_SwDockWidget_MainWindow.h"
 						Path="c:\Qt\4.7.1\bin" />
 				</FileConfiguration>
 			</File>
