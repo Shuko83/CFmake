@@ -41,9 +41,15 @@ SwDockWidget_ToolBarItem::SwDockWidget_ToolBarItem(SwDockWidget_ToolBarItem * it
 	{
 		_titleBarSize = item->getTitleBarSize();
 		setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+		setCheckable(true);
+		setChecked(false);
+		//Texte
 		setText(item->text());
+		//Icone
 		setIcon(item->icon());
+		//Tooltip
 		setToolTip(item->toolTip());
+		//Widget
 		_widget = item->getWidget();
 		_toolBar = item->getToolBar();
 	}
@@ -157,7 +163,8 @@ void SwDockWidget_ToolBarItem::hideWidget(bool withEffect)
 {
 	if (_widget)
 	{
-		setChecked(false);
+		if (isChecked())
+			setChecked(false);
 		//Masquage avec animation
 		QPropertyAnimation * effect = new QPropertyAnimation(_widget, "windowOpacity");
 		if (withEffect)

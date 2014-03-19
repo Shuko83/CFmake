@@ -789,7 +789,10 @@ void _SwGuiCompMainWindow::interfaceUnavailable(QString interfaceName)
 	{
 		ISwWidget * widget = getInterface<ISwWidget>(interfaceName);
 		if (widget && _mainWindow && _mainWindow->statusBar())
+		{
 			_mainWindow->statusBar()->removeWidget(&widget->GetWidget());
+			widget->GetWidget().setParent(0);
+		}
 		return;
 	}
 }

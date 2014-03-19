@@ -507,6 +507,16 @@ bool SwDockWidget_MainArea::close()
 	//Fermeture des toolbars
 	closeToolbars();
 
+	//Fermeture des docks flottants
+	foreach(QObject * obj, _list)
+	{
+		SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
+		if (dock && dock->parent() == this && !dock->isInToolBar())
+		{
+			dock->close();
+		}
+	}
+
 	return true;
 }
 
