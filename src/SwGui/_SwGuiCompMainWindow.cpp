@@ -824,6 +824,6 @@ void _SwGuiCompMainWindow::setConfigurationFileName(QString name)
 	{
 		_configurationFileName = name;
 		if (_mainWindow)
-			_mainWindow->setConfigurationFileName(name);
+			_mainWindow->setConfigurationFileName(name, _finalized);
 	}
 }

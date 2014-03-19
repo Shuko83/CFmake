@@ -54,6 +54,7 @@ public:
 	//Passage en mode "deplacement"
 	void setInitialMoving(QPoint pos);
 	void setMoving(bool state);
+	bool isMoving();
 	void move(int x, int y);
 	void move(const QPoint & pos);
 

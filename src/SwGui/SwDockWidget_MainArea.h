@@ -49,7 +49,7 @@ public:
 	//Fermeture
 	bool close();
 
-	void setConfigurationFileName(QString name);
+	void setConfigurationFileName(QString name, bool apply = false);
 	QString getConfigurationFileName();
 
 protected:
@@ -128,6 +128,7 @@ private:
 	
 	//Liste des DockWidgets
 	QList<QObject*> _list;	
+	//Liste des docks principaux
 	QList<QObject*> _listMainDock;
 	
 	//Dock principaux

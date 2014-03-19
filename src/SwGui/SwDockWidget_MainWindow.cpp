@@ -104,7 +104,7 @@ QString SwDockWidget_MainWindow::getConfigurationFileName()
 }
 
 //-----------------------------------------------------------------------------
-void SwDockWidget_MainWindow::setConfigurationFileName(QString name)
+void SwDockWidget_MainWindow::setConfigurationFileName(QString name, bool apply)
 {
 	if (_configurationFileName != name)
 	{
@@ -125,7 +125,7 @@ void SwDockWidget_MainWindow::setConfigurationFileName(QString name)
 				lDir.mkpath(path);
 
 			QString fullName = path + QDir::separator() + name;
-			_mainDock->setConfigurationFileName(fullName);
+			_mainDock->setConfigurationFileName(fullName, apply);
 		}
 	}
 }

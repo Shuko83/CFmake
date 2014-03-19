@@ -22,7 +22,7 @@ public:
 	void removeDockWidget(QWidget * dock);
 
 	QString getConfigurationFileName();
-	void setConfigurationFileName(QString name);
+	void setConfigurationFileName(QString name, bool apply = false);
 
 private:
 	QWidget * _mainArea;

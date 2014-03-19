@@ -475,6 +475,12 @@ void SwDockWidget_DockWidget::setMoving(bool state)
 }
 
 //-----------------------------------------------------------------------------
+bool SwDockWidget_DockWidget::isMoving()
+{
+	return _canMove;
+}
+
+//-----------------------------------------------------------------------------
 void SwDockWidget_DockWidget::move(int x, int y)
 {
 	QWidget::move(getAdjustedPosition(x,y));
@@ -717,7 +723,7 @@ void SwDockWidget_DockWidget::setInToolBar(bool state, QWidget * toolBarItem)
 
 			//Mise a jour des boutons
 			ui->toToolBarBtn->hide();
-			ui->outToolBarBtn->show();
+			ui->outToolBarBtn->setVisible(!_lock);
 			ui->PB_Close->hide();
 
 			//Mise a jour du bouton d'action
@@ -730,12 +736,16 @@ void SwDockWidget_DockWidget::setInToolBar(bool state, QWidget * toolBarItem)
 			setToolBarItem(NULL);
 
 			//Mise a jour des boutons
-			ui->toToolBarBtn->show();
+			ui->toToolBarBtn->setVisible(!_lock);
 			ui->outToolBarBtn->hide();
-			ui->PB_Close->show();
+			ui->PB_Close->setVisible(!_lock);
 
 			//Mise a jour du contour
 			showShadow();
+
+			//Affichage si necessaire du dock
+			if (!isVisible())
+				show();
 		}
 		_inToolBar = state;
 	}

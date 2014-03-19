@@ -618,7 +618,7 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 					{
 						//Verification du deplacement du dock
 						dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
-						if (dock && dock->canMove())
+						if (dock && dock->canMove() && dock->isMoving())
 						{
 							//Liberation du dock si necessaire
 							if (obj->parent() != this)
@@ -1309,7 +1309,7 @@ void SwDockWidget_MainArea::releaseDock(QObject * obj)
 					
 					if (parentWidget == this)
 						glayout = ui.mainLayout;
-					else
+					else if (parentWidget)
 					{
 						glayout = qobject_cast<QGridLayout*>(parentWidget->layout());
 						vlayout = qobject_cast<QVBoxLayout*>(parentWidget->layout());
@@ -1832,7 +1832,7 @@ QPoint SwDockWidget_MainArea::getPosition(QWidget * widget)
 //-----------------------------------------------------------------------------
 // Persistence de la configuration des DockWidgets
 //-----------------------------------------------------------------------------
-void SwDockWidget_MainArea::setConfigurationFileName(QString name)
+void SwDockWidget_MainArea::setConfigurationFileName(QString name, bool apply)
 {
 	if (_configurationFileName != name)
 	{
@@ -1840,6 +1840,33 @@ void SwDockWidget_MainArea::setConfigurationFileName(QString name)
 		saveAllPositions();
 		//Mise a jour du fichier de configuration
 		_configurationFileName = name;
+
+		//Si demande de mise a jour, application de la nouvelle configuration
+		if (apply)
+		{
+			//Reinitialisation des docks
+			foreach(QObject * obj, _list)
+			{
+				SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
+				if (dock)
+				{
+					if (dock->isInToolBar())
+						releaseFromToolBar(dock);
+					else
+						releaseDock(dock);
+				}
+			}
+			//Liberation de la configuration actuelle
+			if (ui.mainLayout->itemAt(0))
+			{
+				QWidget * widget = ui.mainLayout->itemAt(0)->widget();
+				if (widget)
+					widget->setParent(0);
+			}
+			//Chargement de la nouvelle configuration
+			loadDockPosition();
+			hideArrows(true); //Protection pour masquer les fleches qui peuvent apparaitre pendant le deplacement des fenetres
+		}
 	}
 }
 
