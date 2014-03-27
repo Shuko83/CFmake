@@ -43,6 +43,7 @@
 #include "_SwGuiCompFromQActionToStackedWidget.h"
 #include "SwMacros.h"
 #include "_SwGuiQActionToWidget.h"
+#include "_SwGuiQActionConsumedToWidget.h"
 #include "_SwGuiCompPushButtonToQAction.h"
 #include "SwEventToPopup.h"
 #include "SwActivationToQAction.h"
@@ -90,6 +91,7 @@ void _SwGuiPluginFactory_Class::Initialize() {
 	RegisterComponent("SwGuiQActionToStackedWidget","Interface de mapping des QActions sur les index d'un QStackedWidget");
 	RegisterComponent("SwGuiCompFromQActionToStackedWidget","Interface de mapping des QActions sur les index d'un QStackedWidget");
 	RegisterComponent("SwGuiQActionToWidget","Produit un ISwAction permettant de cacher ou d'afficher la widget");
+	RegisterComponent("SwGuiQActionConsumedToWidget","Consomme un ISwAction permettant de cacher ou d'afficher la widget");
 	RegisterComponent("SwGuiCompPushButtonToQAction","Produit un button widget qui permet d'exécuter des actions");
 	RegisterComponent("SwEventToPopup","Popup sur SwEvent");
 	RegisterComponent("SwActivationToQAction","Permet de d'activer un composant via une QAction");
@@ -190,6 +192,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
 	}
 	if (name=="SwGuiQActionToWidget") {
 		return new _SwGuiQActionToWidget;
+	}
+	if (name=="SwGuiQActionConsumedToWidget") {
+		return new _SwGuiQActionConsumedToWidget;
 	}
 	if (name=="SwGuiCompPushButtonToQAction") {
 		return new _SwGuiCompPushButtonToQAction;
@@ -297,6 +302,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
 	if (name=="SwGuiQActionToWidget") {
 		return QIcon(":/SwGui/widget.png");
 	}
+	if (name=="SwGuiQActionConsumedToWidget") {
+		return QIcon(":/SwGui/widget.png");
+	}
 	if (name=="SwGuiCompPushButtonToQAction") {
 		return QIcon(":/SwGui/widget.png");
 	}
@@ -353,6 +361,7 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
         eservice->registerExtension<ISwMenu>("Menu","SwGuiMenu");
         eservice->registerExtension<ISwAction>("Action","SwGuiPluginsTree");
         eservice->registerExtension<ISwAction>("Action","SwGuiQActionToWidget");
+		eservice->registerExtension<ISwAction>("Action","SwGuiQActionConsumedToWidget");
         eservice->registerExtension<ISwWidget>("Widget","SwGuiSplitterWidget");
         eservice->registerExtension<ISwWidget>("Widget","SwGuiStackedWidget");
         eservice->registerExtension<ISwStackedWidget_Controler>("StackedWidget_Controler","SwGuiStackedWidget");

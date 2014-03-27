@@ -119,6 +119,17 @@ void SwPropertiesModelImpl::DestroyItem(ISwProperty * property, QString customCo
 	if(customConstructedPropertyName != "")
 		propertyName = customConstructedPropertyName;
 
+	// CGD => cas particulier, les properties avec le suffix _DoNotDisplay ou _DebugMode n'ont pas été créées, 
+	bool takeCareOfDebugProperties = false;
+	#if _DEBUG	
+		takeCareOfDebugProperties = true;
+	#endif
+
+	// Pas besoin de supprimer les properties car elles n'ont pas été ajoutées
+	if( (!takeCareOfDebugProperties && propertyName.contains("_DebugMode", Qt::CaseInsensitive))
+		|| propertyName.contains("_DoNotDisplay", Qt::CaseInsensitive) )
+		return;
+
 	liste = propertyName.split(".");
 
 	if (liste.count()<=1) 
@@ -279,9 +290,6 @@ void SwPropertiesModelImpl::SetProperties(QList<StarlinxProperty> inProperties_l
 			{
 				if(constructedPropertyName.contains("_DebugMode", Qt::CaseInsensitive))
 					constructedPropertyName.remove("_DebugMode", Qt::CaseInsensitive);
-
-				if(constructedPropertyName.contains("_DoNotDisplay", Qt::CaseInsensitive))
-					constructedPropertyName.remove("_DoNotDisplay", Qt::CaseInsensitive);
 
 				CreateItem(prop, constructedPropertyName);
 			}
