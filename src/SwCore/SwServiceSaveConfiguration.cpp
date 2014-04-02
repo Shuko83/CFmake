@@ -1449,7 +1449,9 @@ bool SwServiceSaveConfiguration::setPropertiesValuesFromProfile( QString confNam
 								// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
 								// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
 								
-								if((!OldEditableValue && !isStarlinxRunning) || OldEditableValue)
+								if((!OldEditableValue && !isStarlinxRunning) 
+									|| (OldEditableValue && parametersConcerned != "all")
+									|| (!isStarlinxRunning && parametersConcerned == "all"))
 									_SwPropertyPersistent_Toolbox::LoadProperty(val, prop);
 
 								// Pour que la property ne soit plus marquée comme "modififée"
