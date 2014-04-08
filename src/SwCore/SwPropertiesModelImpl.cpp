@@ -15,8 +15,8 @@
 
 
 /*
-  * INCLUDES LOCAUX
-  */
+* INCLUDES LOCAUX
+*/
 #include "SwPropertiesModelImpl.h"
 #include "SwIconDescriptor.h"
 #include "ISwSnapShotPropertiesService.h"
@@ -118,6 +118,17 @@ void SwPropertiesModelImpl::DestroyItem(ISwProperty * property, QString customCo
 
 	if(customConstructedPropertyName != "")
 		propertyName = customConstructedPropertyName;
+
+	// CGD => cas particulier, les properties avec le suffix _DoNotDisplay ou _DebugMode n'ont pas été créées, 
+	bool takeCareOfDebugProperties = false;
+	#if _DEBUG	
+		takeCareOfDebugProperties = true;
+	#endif
+
+	// Pas besoin de supprimer les properties car elles n'ont pas été ajoutées
+	if( (!takeCareOfDebugProperties && propertyName.contains("_DebugMode", Qt::CaseInsensitive))
+		|| propertyName.contains("_DoNotDisplay", Qt::CaseInsensitive) )
+		return;
 
 	liste = propertyName.split(".");
 
@@ -258,7 +269,8 @@ void SwPropertiesModelImpl::SetProperties(QList<StarlinxProperty> inProperties_l
 		#endif
 
 		// Si on est PAS en débug et que la propery contient le mot clé, on NE l'ajoute PAS dans le TreeView
-		if(!takeCareOfDebugProperties && constructedPropertyName.contains("_DebugMode", Qt::CaseInsensitive))
+		if( (!takeCareOfDebugProperties && constructedPropertyName.contains("_DebugMode", Qt::CaseInsensitive))
+			|| constructedPropertyName.contains("_DoNotDisplay", Qt::CaseInsensitive))
 		{
 			// ne rien faire
 		}

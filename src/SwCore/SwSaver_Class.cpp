@@ -139,7 +139,21 @@ void SwSaver_Class::BuildXMLStream(SwComponent_Class * component,QDomDocument & 
     //Ajout attribut nom du plugin usine
     service=component->QueryService(CG_SW_SERVICE_PLUGIN_OVERVIEW);
     if (service!=NULL && dynamic_cast<ISwPluginOverview *>(service)!=NULL) {
-        component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY,dynamic_cast<ISwPluginOverview *>(service)->GetPluginName());
+		// On supprime les éventuels marqueurs "d" de débug lorsqu'on sauvegarde le stream
+		QString factoryName = dynamic_cast<ISwPluginOverview *>(service)->GetPluginName();
+		if((factoryName.endsWith("d") &&  QString::compare(factoryName.at(factoryName.size()-2), QString("d")) != 0) 
+			|| factoryName.endsWith("dd"))
+		{
+			factoryName = factoryName.mid(0, factoryName.size()-1);
+
+			int indexPoint = factoryName.lastIndexOf(".");
+			if((QString::compare(factoryName.at(indexPoint-1), QString("d")) == 0 && QString::compare(factoryName.at(indexPoint-2), QString("d")) != 0)
+				|| QString::compare(factoryName.mid(indexPoint-2, 2), QString("dd")) == 0)
+			{
+				factoryName = factoryName.remove(indexPoint-1, 1);
+			}
+		}
+        component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY, factoryName);
     }
     //Insertion du neoud
     parent_node.appendChild(component_node);
