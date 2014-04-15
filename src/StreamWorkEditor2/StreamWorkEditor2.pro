@@ -116,6 +116,7 @@ CONFIG(release, debug|release) {
 
 	INCLUDEPATH += ../SwDoc/GeneratedFiles/ui	
 	LIBS += -L"../../lib/vc/release" -lSwCore -lSwGui -lSwDoc
+	QMAKE_POST_LINK = "xcopy /Y ..\\..\\..\\..\\Libraries\\ExceptionManager\\bin\\vc\\release\\ExceptionManager.dll ..\\..\\bin\\vc\\release\\"
 }
 
 win32:RC_FILE = StreamWorkEditor2.rc

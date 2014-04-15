@@ -107,9 +107,7 @@ unix:DEFINES += _LINUX_PLATEFORM_
 win32:{
     LIBS += -lPsapi -limagehlp
 }    
-	!contains(DEFINES, EXCEPTIONMANAGER_LIB) {
-		LIBS += -L"$$PROJECTS_PATH/Libraries/ExceptionManager/lib/vc/debug" -lExceptionManagerd
-	}
+
 CONFIG(debug, debug|release) {
 	DESTDIR = ./../../lib/vc/debug
 	DLLDESTDIR=  ./../../bin/vc/debug
