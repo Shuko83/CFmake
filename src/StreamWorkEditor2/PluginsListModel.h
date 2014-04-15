@@ -8,9 +8,10 @@
 #define _PLUGINSLISTMODEL_H
 
 #include <QtCore>
-#include <SwApplication.h>
 #include <SwMacros.h>
 #include <SwPluginFactory_Class.h>
+
+#include "SwApplication.h"
 /**
 @class PluginsListModel
 @brief Qt Model pour la liste des plugins

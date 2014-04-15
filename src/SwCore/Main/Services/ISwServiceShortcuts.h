@@ -33,7 +33,7 @@ using namespace StreamWork::SwCore;
 
 namespace StreamWork
 {
-    namespace SwGui
+    namespace SwCore
     {
 		class ISwShortcutObserver;
 

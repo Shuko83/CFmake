@@ -11,7 +11,7 @@
 
 using namespace StreamWork::SwCore;
 
-class QActionMapper : public ISwAction{
+class QActionMapper : public StreamWork::SwGui::ISwAction{
 public :
 	QActionMapper(QAction * qAction);
 
@@ -35,7 +35,7 @@ public slots :
 		void toggleWatching();
 
 private:
-	ISwAction * _i_refWatcherSwitch;
+	StreamWork::SwGui::ISwAction * _i_refWatcherSwitch;
 
 };
 

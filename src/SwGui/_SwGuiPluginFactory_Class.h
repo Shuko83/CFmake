@@ -23,7 +23,6 @@
 
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*!
 	\class SwPluginFactory_Class 

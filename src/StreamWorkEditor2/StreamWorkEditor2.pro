@@ -121,3 +121,4 @@ CONFIG(release, debug|release) {
 win32:RC_FILE = StreamWorkEditor2.rc
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
+include($$PROJECTS_PATH/Libraries/StreamWork/baseSwCore.pri)

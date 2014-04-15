@@ -23,7 +23,7 @@ CONFIG(debug, debug|release) {
 	DLLDESTDIR=  ./../../bin/vc/debug
 	
 	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwExecutiond
-	TARGET_EXT = .dlld
+	TARGET_EXT = .swdld
 } 
 
 CONFIG(release, debug|release) {
@@ -31,7 +31,8 @@ CONFIG(release, debug|release) {
 	DLLDESTDIR=  ./../../bin/vc/release
 	
 	LIBS += -L"../../lib/vc/release" -lSwCore -lSwExecution
-	TARGET_EXT = .dll
+	TARGET_EXT = .swdl
 }
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
+include($$PROJECTS_PATH/Libraries/StreamWork/baseSwCore.pri)

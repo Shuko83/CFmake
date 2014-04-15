@@ -17,7 +17,7 @@
 
 namespace StreamWork
 {
-    namespace SwGui
+    namespace SwCore
     {
 
 		class ISwDeviceObserver;

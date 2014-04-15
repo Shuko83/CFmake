@@ -67,3 +67,4 @@ CONFIG(release, debug|release) {
 }
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
+include($$PROJECTS_PATH/Libraries/StreamWork/baseSwCore.pri)
