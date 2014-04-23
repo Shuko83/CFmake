@@ -61,8 +61,15 @@ namespace StreamWork
   				}
 				bool operator<( const StarlinxProperty& source) const
 				{
-					if(source.prefix.compare(prefix) > 0)
+					if(source.prefix.compare(prefix, Qt::CaseInsensitive) > 0)
 						return true;
+					else if(source.prefix.compare(prefix, Qt::CaseInsensitive) == 0)
+					{
+						if(source.propertyName.compare(propertyName, Qt::CaseInsensitive) > 0)
+							return true;
+						else
+							return false;
+					}
 					else
 						return false;
 				}
