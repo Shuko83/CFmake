@@ -20,6 +20,7 @@
 #include "ISwListDockWidget.h"
 
 using namespace StreamWork::SwFoundation;
+using namespace StreamWork::SwGui;
 
 /*!
 	\class _SwGuiCompListDockWidget 
@@ -55,7 +56,7 @@ public:
 	virtual QString getName();
 
 private:
-	uint _dockNumber;
+	unsigned int _dockNumber;
 	QList<SwDockWidget_DockWidget*> _listDockWidget;
 	QList<ISwListDockWidgetListener*> _listListener;
 	QString _name;

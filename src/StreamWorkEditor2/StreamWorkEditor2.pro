@@ -116,8 +116,10 @@ CONFIG(release, debug|release) {
 
 	INCLUDEPATH += ../SwDoc/GeneratedFiles/ui	
 	LIBS += -L"../../lib/vc/release" -lSwCore -lSwGui -lSwDoc
+	QMAKE_POST_LINK = "xcopy /Y ..\\..\\..\\..\\Libraries\\ExceptionManager\\bin\\vc\\release\\ExceptionManager.dll ..\\..\\bin\\vc\\release\\"
 }
 
 win32:RC_FILE = StreamWorkEditor2.rc
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
+include($$PROJECTS_PATH/Libraries/StreamWork/baseSwCore.pri)

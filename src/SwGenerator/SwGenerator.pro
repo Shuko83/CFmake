@@ -14,6 +14,8 @@ RESOURCES += SwGenerator.qrc
 
 DEFINES += SWGENERATOR_EXE
 
+include($$PROJECTS_PATH/Libraries/StreamWork/baseSwCore.pri)
+
 INCLUDEPATH += ../../../QCTemplate/src/
 	
 CONFIG(debug, debug|release) {

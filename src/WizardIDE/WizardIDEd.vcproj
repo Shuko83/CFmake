@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="."
-			IntermediateDirectory="_objd\"
+			IntermediateDirectory="GeneratedFiles\objd\"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
@@ -44,18 +44,19 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
-				Optimization="4"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwGui\_intermediaire&quot;,&quot;..\SwDatasBase&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwGui\_intermediaire&quot;,&quot;..\SwDatasBase&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\ExceptionManager\src&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwCore\Component&quot;,&quot;..\SwCore\Component\Base&quot;,&quot;..\SwCore\Component\Interfaces&quot;,&quot;..\SwCore\Component\Pin&quot;,&quot;..\SwCore\Component\Services&quot;,&quot;..\SwCore\Component\Services\ServiceImpl&quot;,&quot;..\SwCore\Extensions&quot;,&quot;..\SwCore\Main&quot;,&quot;..\SwCore\Main\Connexion&quot;,&quot;..\SwCore\Main\Plugin&quot;,&quot;..\SwCore\Main\Serialization&quot;,&quot;..\SwCore\Main\Services&quot;,&quot;..\SwCore\Main\Services\Management&quot;,&quot;..\SwCore\Main\Services\ServiceConfiguration&quot;,&quot;..\SwCore\Main\Services\ServiceImpl&quot;,&quot;..\SwCore\Main\Services\ServiceShortcut&quot;,&quot;..\SwCore\Properties&quot;,&quot;..\SwCore\SwRef&quot;,&quot;..\SwCore\Tools&quot;,&quot;..\SwCore\Tools\Exception&quot;,&quot;..\SwCore\Tools\Log&quot;,&quot;..\SwCore\Tools\Signal&quot;,&quot;..\SwCore\Types&quot;,&quot;..\SwCore\Types\UserType&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\mocd&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
 				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,WIZARDIDE_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
 				GeneratePreprocessedFile="0"
-				ExceptionHandling="1"
+				ExceptionHandling="2"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				BufferSecurityCheck="false"
 				TreatWChar_tAsBuiltInType="false"
 				RuntimeTypeInfo="true"
-				AssemblerListingLocation="_objd\"
-				ObjectFile="_objd\"
-				ProgramDataBaseFileName=".\"
+				AssemblerListingLocation="GeneratedFiles\objd\"
+				ObjectFile="GeneratedFiles\objd\"
+				ProgramDataBaseFileName="$(IntDir)\WizardIDE_vc90.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
@@ -73,10 +74,10 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwGuid.lib ../../lib/vc/debug\SwExecutiond.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				AdditionalDependencies="../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwGuid.lib ../../lib/vc/debug\SwExecutiond.lib ../../../../Libraries/ExceptionManager/lib/vc/debug\ExceptionManagerd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
 				OutputFile="..\..\lib\vc\debug\WizardIDEd.swdld"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug,../../../../Libraries/ExceptionManager/lib/vc/debug"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="./../../bin/vc/debug/WizardIDEd.pdb"
 				SubSystem="0"
@@ -109,7 +110,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="."
-			IntermediateDirectory="_obj\"
+			IntermediateDirectory="GeneratedFiles\obj\"
 			ConfigurationType="2"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
@@ -135,18 +136,19 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
-				Optimization="2"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;_intermediaire&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwGui\_intermediaire&quot;,&quot;..\SwDatasBase&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;_intermediaire&quot;,c:\Qt\4.7.1\mkspecs\default"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,WIZARDIDE_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwGui&quot;,&quot;..\SwGui\_intermediaire&quot;,&quot;..\SwDatasBase&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\ExceptionManager\src&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwCore\Component&quot;,&quot;..\SwCore\Component\Base&quot;,&quot;..\SwCore\Component\Interfaces&quot;,&quot;..\SwCore\Component\Pin&quot;,&quot;..\SwCore\Component\Services&quot;,&quot;..\SwCore\Component\Services\ServiceImpl&quot;,&quot;..\SwCore\Extensions&quot;,&quot;..\SwCore\Main&quot;,&quot;..\SwCore\Main\Connexion&quot;,&quot;..\SwCore\Main\Plugin&quot;,&quot;..\SwCore\Main\Serialization&quot;,&quot;..\SwCore\Main\Services&quot;,&quot;..\SwCore\Main\Services\Management&quot;,&quot;..\SwCore\Main\Services\ServiceConfiguration&quot;,&quot;..\SwCore\Main\Services\ServiceImpl&quot;,&quot;..\SwCore\Main\Services\ServiceShortcut&quot;,&quot;..\SwCore\Properties&quot;,&quot;..\SwCore\SwRef&quot;,&quot;..\SwCore\Tools&quot;,&quot;..\SwCore\Tools\Exception&quot;,&quot;..\SwCore\Tools\Log&quot;,&quot;..\SwCore\Tools\Signal&quot;,&quot;..\SwCore\Types&quot;,&quot;..\SwCore\Types\UserType&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,WIZARDIDE_LIB,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
 				GeneratePreprocessedFile="0"
-				ExceptionHandling="1"
+				ExceptionHandling="2"
+				BasicRuntimeChecks="3"
 				RuntimeLibrary="2"
 				BufferSecurityCheck="false"
 				TreatWChar_tAsBuiltInType="false"
 				RuntimeTypeInfo="true"
-				AssemblerListingLocation="_obj\"
-				ObjectFile="_obj\"
-				ProgramDataBaseFileName=".\"
+				AssemblerListingLocation="GeneratedFiles\obj\"
+				ObjectFile="GeneratedFiles\obj\"
+				ProgramDataBaseFileName="$(IntDir)\WizardIDE_vc90.pdb"
 				WarningLevel="3"
 				SuppressStartupBanner="true"
 				DebugInformationFormat="0"
@@ -156,7 +158,7 @@
 			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,WIZARDIDE_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,WIZARDIDE_LIB,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -164,11 +166,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				IgnoreImportLibrary="true"
-				AdditionalDependencies="../../lib/vc/release\SwCore.lib ../../lib/vc/release\SwGui.lib ../../lib/vc/release\SwExecution.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
+				AdditionalDependencies="../../lib/vc/release\SwCore.lib ../../lib/vc/release\SwGui.lib ../../lib/vc/release\SwExecution.lib ../../../../Libraries/ExceptionManager/lib/vc/release\ExceptionManager.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
 				OutputFile="..\..\lib\vc\release\WizardIDE.swdl"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/release"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/release,../../../../Libraries/ExceptionManager/lib/vc/release"
 				GenerateDebugInformation="false"
 				ProgramDatabaseFile=""
 				SubSystem="0"
@@ -274,9 +276,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeComponents.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeComponents.h -o _intermediaire\moc_NodeComponents.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeComponents.h -o GeneratedFiles\mocd\moc_NodeComponents.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeComponents.h"
-						Outputs="_intermediaire\moc_NodeComponents.cpp"
+						Outputs="GeneratedFiles\mocd\moc_NodeComponents.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -285,9 +287,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeComponents.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeComponents.h -o _intermediaire\moc_NodeComponents.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeComponents.h -o GeneratedFiles\moc\moc_NodeComponents.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeComponents.h"
-						Outputs="_intermediaire\moc_NodeComponents.cpp"
+						Outputs="GeneratedFiles\moc\moc_NodeComponents.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -300,9 +302,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeConnectors.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeConnectors.h -o _intermediaire\moc_NodeConnectors.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeConnectors.h -o GeneratedFiles\mocd\moc_NodeConnectors.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeConnectors.h"
-						Outputs="_intermediaire\moc_NodeConnectors.cpp"
+						Outputs="GeneratedFiles\mocd\moc_NodeConnectors.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -311,9 +313,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeConnectors.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeConnectors.h -o _intermediaire\moc_NodeConnectors.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeConnectors.h -o GeneratedFiles\moc\moc_NodeConnectors.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeConnectors.h"
-						Outputs="_intermediaire\moc_NodeConnectors.cpp"
+						Outputs="GeneratedFiles\moc\moc_NodeConnectors.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -326,9 +328,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeDescription.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeDescription.h -o _intermediaire\moc_NodeDescription.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeDescription.h -o GeneratedFiles\mocd\moc_NodeDescription.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeDescription.h"
-						Outputs="_intermediaire\moc_NodeDescription.cpp"
+						Outputs="GeneratedFiles\mocd\moc_NodeDescription.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -337,9 +339,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeDescription.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeDescription.h -o _intermediaire\moc_NodeDescription.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeDescription.h -o GeneratedFiles\moc\moc_NodeDescription.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeDescription.h"
-						Outputs="_intermediaire\moc_NodeDescription.cpp"
+						Outputs="GeneratedFiles\moc\moc_NodeDescription.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -352,9 +354,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeInterfaces.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeInterfaces.h -o _intermediaire\moc_NodeInterfaces.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeInterfaces.h -o GeneratedFiles\mocd\moc_NodeInterfaces.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeInterfaces.h"
-						Outputs="_intermediaire\moc_NodeInterfaces.cpp"
+						Outputs="GeneratedFiles\mocd\moc_NodeInterfaces.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -363,9 +365,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeInterfaces.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeInterfaces.h -o _intermediaire\moc_NodeInterfaces.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeInterfaces.h -o GeneratedFiles\moc\moc_NodeInterfaces.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeInterfaces.h"
-						Outputs="_intermediaire\moc_NodeInterfaces.cpp"
+						Outputs="GeneratedFiles\moc\moc_NodeInterfaces.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -378,9 +380,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeProperties.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeProperties.h -o _intermediaire\moc_NodeProperties.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeProperties.h -o GeneratedFiles\mocd\moc_NodeProperties.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeProperties.h"
-						Outputs="_intermediaire\moc_NodeProperties.cpp"
+						Outputs="GeneratedFiles\mocd\moc_NodeProperties.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -389,9 +391,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeProperties.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeProperties.h -o _intermediaire\moc_NodeProperties.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeProperties.h -o GeneratedFiles\moc\moc_NodeProperties.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeProperties.h"
-						Outputs="_intermediaire\moc_NodeProperties.cpp"
+						Outputs="GeneratedFiles\moc\moc_NodeProperties.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -404,9 +406,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodePropertiesModelImpl.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodePropertiesModelImpl.h -o _intermediaire\moc_NodePropertiesModelImpl.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodePropertiesModelImpl.h -o GeneratedFiles\mocd\moc_NodePropertiesModelImpl.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodePropertiesModelImpl.h"
-						Outputs="_intermediaire\moc_NodePropertiesModelImpl.cpp"
+						Outputs="GeneratedFiles\mocd\moc_NodePropertiesModelImpl.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -415,9 +417,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodePropertiesModelImpl.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodePropertiesModelImpl.h -o _intermediaire\moc_NodePropertiesModelImpl.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodePropertiesModelImpl.h -o GeneratedFiles\moc\moc_NodePropertiesModelImpl.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodePropertiesModelImpl.h"
-						Outputs="_intermediaire\moc_NodePropertiesModelImpl.cpp"
+						Outputs="GeneratedFiles\moc\moc_NodePropertiesModelImpl.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -430,9 +432,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeSwFactoryEntry.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeSwFactoryEntry.h -o _intermediaire\moc_NodeSwFactoryEntry.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeSwFactoryEntry.h -o GeneratedFiles\mocd\moc_NodeSwFactoryEntry.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeSwFactoryEntry.h"
-						Outputs="_intermediaire\moc_NodeSwFactoryEntry.cpp"
+						Outputs="GeneratedFiles\mocd\moc_NodeSwFactoryEntry.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -441,9 +443,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC NodeSwFactoryEntry.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 NodeSwFactoryEntry.h -o _intermediaire\moc_NodeSwFactoryEntry.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 NodeSwFactoryEntry.h -o GeneratedFiles\moc\moc_NodeSwFactoryEntry.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;NodeSwFactoryEntry.h"
-						Outputs="_intermediaire\moc_NodeSwFactoryEntry.cpp"
+						Outputs="GeneratedFiles\moc\moc_NodeSwFactoryEntry.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -456,9 +458,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SwSimpleComponent_Class.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwSimpleComponent_Class.h -o _intermediaire\moc_SwSimpleComponent_Class.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwSimpleComponent_Class.h -o GeneratedFiles\mocd\moc_SwSimpleComponent_Class.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwSimpleComponent_Class.h"
-						Outputs="_intermediaire\moc_SwSimpleComponent_Class.cpp"
+						Outputs="GeneratedFiles\mocd\moc_SwSimpleComponent_Class.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -467,9 +469,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SwSimpleComponent_Class.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwSimpleComponent_Class.h -o _intermediaire\moc_SwSimpleComponent_Class.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwSimpleComponent_Class.h -o GeneratedFiles\moc\moc_SwSimpleComponent_Class.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwSimpleComponent_Class.h"
-						Outputs="_intermediaire\moc_SwSimpleComponent_Class.cpp"
+						Outputs="GeneratedFiles\moc\moc_SwSimpleComponent_Class.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -490,9 +492,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SwWizardFrontEnd.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwWizardFrontEnd.h -o _intermediaire\moc_SwWizardFrontEnd.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwWizardFrontEnd.h -o GeneratedFiles\mocd\moc_SwWizardFrontEnd.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwWizardFrontEnd.h"
-						Outputs="_intermediaire\moc_SwWizardFrontEnd.cpp"
+						Outputs="GeneratedFiles\mocd\moc_SwWizardFrontEnd.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -501,9 +503,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SwWizardFrontEnd.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwWizardFrontEnd.h -o _intermediaire\moc_SwWizardFrontEnd.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwWizardFrontEnd.h -o GeneratedFiles\moc\moc_SwWizardFrontEnd.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwWizardFrontEnd.h"
-						Outputs="_intermediaire\moc_SwWizardFrontEnd.cpp"
+						Outputs="GeneratedFiles\moc\moc_SwWizardFrontEnd.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -516,9 +518,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SwWizardNodeModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwWizardNodeModel.h -o _intermediaire\moc_SwWizardNodeModel.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwWizardNodeModel.h -o GeneratedFiles\mocd\moc_SwWizardNodeModel.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwWizardNodeModel.h"
-						Outputs="_intermediaire\moc_SwWizardNodeModel.cpp"
+						Outputs="GeneratedFiles\mocd\moc_SwWizardNodeModel.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -527,9 +529,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SwWizardNodeModel.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwWizardNodeModel.h -o _intermediaire\moc_SwWizardNodeModel.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwWizardNodeModel.h -o GeneratedFiles\moc\moc_SwWizardNodeModel.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwWizardNodeModel.h"
-						Outputs="_intermediaire\moc_SwWizardNodeModel.cpp"
+						Outputs="GeneratedFiles\moc\moc_SwWizardNodeModel.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -542,9 +544,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SwWizardNodeTreeView.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwWizardNodeTreeView.h -o _intermediaire\moc_SwWizardNodeTreeView.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\mocd&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwWizardNodeTreeView.h -o GeneratedFiles\mocd\moc_SwWizardNodeTreeView.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwWizardNodeTreeView.h"
-						Outputs="_intermediaire\moc_SwWizardNodeTreeView.cpp"
+						Outputs="GeneratedFiles\mocd\moc_SwWizardNodeTreeView.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -553,9 +555,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="MOC SwWizardNodeTreeView.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;_intermediaire&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;_intermediaire&quot; -Ic:\Qt\4.7.1\mkspecs\default -D_MSC_VER=1500 -DWIN32 SwWizardNodeTreeView.h -o _intermediaire\moc_SwWizardNodeTreeView.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DWIZARDIDE_LIB -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwGui&quot; -I&quot;..\SwGui\_intermediaire&quot; -I&quot;..\SwDatasBase&quot; -I&quot;..\SwExecution&quot; -I&quot;.&quot; -I&quot;..\..\..\..\Libraries\ExceptionManager\src&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwCore\Component&quot; -I&quot;..\SwCore\Component\Base&quot; -I&quot;..\SwCore\Component\Interfaces&quot; -I&quot;..\SwCore\Component\Pin&quot; -I&quot;..\SwCore\Component\Services&quot; -I&quot;..\SwCore\Component\Services\ServiceImpl&quot; -I&quot;..\SwCore\Extensions&quot; -I&quot;..\SwCore\Main&quot; -I&quot;..\SwCore\Main\Connexion&quot; -I&quot;..\SwCore\Main\Plugin&quot; -I&quot;..\SwCore\Main\Serialization&quot; -I&quot;..\SwCore\Main\Services&quot; -I&quot;..\SwCore\Main\Services\Management&quot; -I&quot;..\SwCore\Main\Services\ServiceConfiguration&quot; -I&quot;..\SwCore\Main\Services\ServiceImpl&quot; -I&quot;..\SwCore\Main\Services\ServiceShortcut&quot; -I&quot;..\SwCore\Properties&quot; -I&quot;..\SwCore\SwRef&quot; -I&quot;..\SwCore\Tools&quot; -I&quot;..\SwCore\Tools\Exception&quot; -I&quot;..\SwCore\Tools\Log&quot; -I&quot;..\SwCore\Tools\Signal&quot; -I&quot;..\SwCore\Types&quot; -I&quot;..\SwCore\Types\UserType&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwWizardNodeTreeView.h -o GeneratedFiles\moc\moc_SwWizardNodeTreeView.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwWizardNodeTreeView.h"
-						Outputs="_intermediaire\moc_SwWizardNodeTreeView.cpp"
+						Outputs="GeneratedFiles\moc\moc_SwWizardNodeTreeView.cpp"
 					/>
 				</FileConfiguration>
 			</File>
@@ -570,52 +572,292 @@
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
 			>
 			<File
-				RelativePath="_intermediaire\moc_NodeComponents.cpp"
+				RelativePath="GeneratedFiles\mocd\moc_NodeComponents.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_NodeConnectors.cpp"
+				RelativePath="GeneratedFiles\moc\moc_NodeComponents.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_NodeDescription.cpp"
+				RelativePath="GeneratedFiles\mocd\moc_NodeConnectors.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_NodeInterfaces.cpp"
+				RelativePath="GeneratedFiles\moc\moc_NodeConnectors.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_NodeProperties.cpp"
+				RelativePath="GeneratedFiles\mocd\moc_NodeDescription.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_NodePropertiesModelImpl.cpp"
+				RelativePath="GeneratedFiles\moc\moc_NodeDescription.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_NodeSwFactoryEntry.cpp"
+				RelativePath="GeneratedFiles\moc\moc_NodeInterfaces.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_SwSimpleComponent_Class.cpp"
+				RelativePath="GeneratedFiles\mocd\moc_NodeInterfaces.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_SwWizardFrontEnd.cpp"
+				RelativePath="GeneratedFiles\mocd\moc_NodeProperties.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_SwWizardNodeModel.cpp"
+				RelativePath="GeneratedFiles\moc\moc_NodeProperties.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\moc_SwWizardNodeTreeView.cpp"
+				RelativePath="GeneratedFiles\mocd\moc_NodePropertiesModelImpl.cpp"
 				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="_intermediaire\qrc_WizardIDERsc.cpp"
+				RelativePath="GeneratedFiles\moc\moc_NodePropertiesModelImpl.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\moc\moc_NodeSwFactoryEntry.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc_NodeSwFactoryEntry.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc_SwSimpleComponent_Class.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\moc\moc_SwSimpleComponent_Class.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc_SwWizardFrontEnd.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\moc\moc_SwWizardFrontEnd.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\moc\moc_SwWizardNodeModel.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc_SwWizardNodeModel.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\mocd\moc_SwWizardNodeTreeView.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\moc\moc_SwWizardNodeTreeView.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\rccd\qrc_WizardIDERsc.cpp"
+				>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="GeneratedFiles\rcc\qrc_WizardIDERsc.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -661,9 +903,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="RCC _resources\WizardIDERsc.qrc"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name WizardIDERsc _resources\WizardIDERsc.qrc -o _intermediaire\qrc_WizardIDERsc.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name WizardIDERsc _resources\WizardIDERsc.qrc -o GeneratedFiles\rccd\qrc_WizardIDERsc.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\WizardIDERsc.qrc;_resources\images\comp_edit.png;_resources\images\comp_toolbox.png;_resources\images\connector.png;_resources\images\interface_in.png;_resources\images\interface_out.png;_resources\images\property.png;_resources\images\router.png"
-						Outputs="_intermediaire\qrc_WizardIDERsc.cpp"
+						Outputs="GeneratedFiles\rccd\qrc_WizardIDERsc.cpp"
 					/>
 				</FileConfiguration>
 				<FileConfiguration
@@ -672,9 +914,9 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="RCC _resources\WizardIDERsc.qrc"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name WizardIDERsc _resources\WizardIDERsc.qrc -o _intermediaire\qrc_WizardIDERsc.cpp&#x0D;&#x0A;"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name WizardIDERsc _resources\WizardIDERsc.qrc -o GeneratedFiles\rcc\qrc_WizardIDERsc.cpp&#x0D;&#x0A;"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\WizardIDERsc.qrc;_resources\images\comp_edit.png;_resources\images\comp_toolbox.png;_resources\images\connector.png;_resources\images\interface_in.png;_resources\images\interface_out.png;_resources\images\property.png;_resources\images\router.png"
-						Outputs="_intermediaire\qrc_WizardIDERsc.cpp"
+						Outputs="GeneratedFiles\rcc\qrc_WizardIDERsc.cpp"
 					/>
 				</FileConfiguration>
 			</File>

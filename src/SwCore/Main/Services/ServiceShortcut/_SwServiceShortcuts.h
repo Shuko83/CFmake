@@ -25,7 +25,7 @@
 
 namespace StreamWork
 {
-    namespace SwGui
+    namespace SwCore
     {
         /*!
         \interface _SWServiceShortcuts

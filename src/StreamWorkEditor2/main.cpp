@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     //QMessageBox::information(0,QString("typeid"),test,QMessageBox::Ok,QMessageBox::NoButton,QMessageBox::NoButton);
     //Test
 
-    try {
+/*    try {*/
         SW_APP->Verbose();
         liste_arg=QCoreApplication::instance()->arguments();
         nb_args=liste_arg.count();
@@ -115,17 +115,17 @@ int main(int argc, char *argv[])
         //Destruction du log_recorder
         // Le detachement n'est pas utile puisque l'application est detruite
 		delete log_recorder;
-    } catch(SwException & se) {
-        //L'application a levé une exception
-        //Traiter l'exception
-        QMessageBox::critical(0,QString("Aborting swlauncher because swexception..."),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
-		result  = -1;
-   } catch(std::exception & e) {
-        //L'application a levé une exception
-        //Traiter l'exception
-        QMessageBox::critical(0,QString("Aborting swlauncher because exception..."),QString(e.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
-		result  = -1;
-	}
+//     } catch(SwException & se) {
+//         //L'application a levé une exception
+//         //Traiter l'exception
+//         QMessageBox::critical(0,QString("Aborting swlauncher because swexception..."),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
+// 		result  = -1;
+//    } catch(std::exception & e) {
+//         //L'application a levé une exception
+//         //Traiter l'exception
+//         QMessageBox::critical(0,QString("Aborting swlauncher because exception..."),QString(e.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
+// 		result  = -1;
+// 	}
 	//Fin
 	return result;
 }

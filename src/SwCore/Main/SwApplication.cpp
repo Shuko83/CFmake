@@ -19,6 +19,8 @@
 #include "_SwServiceParametersImpl.h"
 #include "_SwServiceRefProfiler.h"
 #include "SwServiceSaveConfiguration.h"
+#include "_SwServiceShortcuts.h"
+#include "_SwServiceUnitSI.h"
 #include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
 #include "SwLoader_Class.h"
 #include "SwEnum.h"
@@ -43,15 +45,18 @@ using namespace StreamWork::SwCore;
 using namespace std;
 
 //Instance du singleton
-SwApplication								* _singleton			= NULL;
-_SwPluginsBank_Class						* _bank					= NULL;
-_SwComplexeTypeAdaptersFactoriesBankImpl	* _ctadaptersbank		= NULL;
-_SwFileEditorManager						* _feManager			= NULL;
-_SwServiceExtensionsImpl					* _serviceExtensions	= NULL;
-_SwServiceParametersImpl					* _serviceParameters	= NULL;
-_SwServiceCodeTimer							* _serviceCodeTimer		= NULL;
-_SwServiceRefProfiler						* _serviceRefProfiler	= NULL;
+SwApplication								* _singleton				= NULL;
+_SwPluginsBank_Class						* _bank						= NULL;
+_SwComplexeTypeAdaptersFactoriesBankImpl	* _ctadaptersbank			= NULL;
+_SwFileEditorManager						* _feManager				= NULL;
+_SwServiceExtensionsImpl					* _serviceExtensions		= NULL;
+_SwServiceParametersImpl					* _serviceParameters		= NULL;
+_SwServiceCodeTimer							* _serviceCodeTimer			= NULL;
+_SwServiceRefProfiler						* _serviceRefProfiler		= NULL;
 SwServiceSaveConfiguration					* _serviceSaveConfiguration	= NULL;
+_SwServiceShortcuts							* _serviceShortcuts			= NULL;
+_SwServiceUnitSI							* _serviceUnitSI			= NULL;
+
 bool										_is_launch				= false;
 bool										_isCheck				= false;
 
@@ -93,6 +98,12 @@ SwApplication::SwApplication():SwServicesManager_Class() {
 
 	_serviceSaveConfiguration = new SwServiceSaveConfiguration();
 	RegisterService(_serviceSaveConfiguration);
+
+	_serviceShortcuts = new _SwServiceShortcuts();
+	RegisterService(_serviceShortcuts);
+
+	_serviceUnitSI = new _SwServiceUnitSI();
+	RegisterService(_serviceUnitSI);
 }
 /*! \brief Destructeur*/
 SwApplication::~SwApplication() {
@@ -108,6 +119,11 @@ SwApplication::~SwApplication() {
 	delete _serviceRefProfiler;
 	UnregisterService(_serviceSaveConfiguration->GetServiceName());
 	delete _serviceSaveConfiguration;
+	UnregisterService(_serviceShortcuts->GetServiceName());
+	delete _serviceShortcuts;
+	UnregisterService(_serviceUnitSI->GetServiceName());
+	delete _serviceUnitSI;
+	
     _singleton=NULL;
     delete _bank;
     _bank=NULL;
@@ -541,3 +557,8 @@ void SwApplication::waitOnRestart() {
 #endif
 }
 
+
+StreamWork::SwCore::ISwService *  queryService(QString name)
+{
+	return StreamWork::SwCore::SwApplication::GetInstance()->QueryService(name);
+}

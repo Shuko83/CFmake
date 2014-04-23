@@ -54,7 +54,6 @@
 #include "SwActivationToQAction.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*! \brief Constructeur */
 _SwGuiPluginFactory_Class::_SwGuiPluginFactory_Class():SwPluginFactory_Class() {
@@ -377,12 +376,6 @@ QString _SwGuiPluginFactory_Class::GetPluginVersion(){
 /*! \brief sur ajout d'un service */
 void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service) 
 {
-	ISwServiceShortcuts * sservice=dynamic_cast<ISwServiceShortcuts *>(service);
-	if (sservice!=0)
-	{
-		//rservice->registerCodecFactory(new _SwRecordDataCodecDefaultFactory());
-        return;
-	}
     ISwServiceExtensions * eservice=dynamic_cast< ISwServiceExtensions *>(service);
     if (eservice!=0) {
         eservice->registerExtension<ISwPerspective>("Perspective","SwBasicPerspective");
@@ -427,9 +420,6 @@ void _SwGuiPluginFactory_Class::OnUnregisterService(ISwService * service)
 //-------------------------------------------------------------------------
 void _SwGuiPluginFactory_Class::FinalizeInitialisation()
 {
-	_serviceShortcuts = new _SwServiceShortcuts();
-	 SW_APP->RegisterService(_serviceShortcuts);
-
 }
 
 double _SwGuiPluginFactory_Class::GetPluginCompilationDate(){	

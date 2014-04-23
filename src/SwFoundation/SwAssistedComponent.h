@@ -36,7 +36,6 @@
 #endif
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 using namespace StreamWork::SwExecution;
 
 //implementation Inline

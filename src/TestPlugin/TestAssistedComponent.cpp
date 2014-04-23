@@ -14,6 +14,7 @@
 #include "ISwWidget.h"
 #include "SwPin.h"
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwGui;
 using namespace StreamWork::SwFoundation;
 
 /** @brief Constructeur */

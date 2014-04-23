@@ -16,7 +16,7 @@
 
 namespace StreamWork
 {
-    namespace SwGui
+    namespace SwCore
     {
         /*!
         \interface ISwShortcut

@@ -22,6 +22,7 @@
 
 
 using namespace StreamWork::SwFoundation;
+using namespace StreamWork::SwGui;
 
 
 /**
