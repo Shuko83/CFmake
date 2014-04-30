@@ -1,13 +1,13 @@
 /**
-* @file ISwQDockWidgetListener.h
+* @file ISwListQDockWidgetListener.h
 * @brief interface QDockWidget listener pour les totes
 * @version 1.0
 * @date 2011/02/01 - 1:2:2011 - 15:56
 * @author AAY
 */
 
-#ifndef _ISWQDOCKWIDGETLISTENER_H
-#define _ISWQDOCKWIDGETLISTENER_H
+#ifndef _ISwListQDockWidgetLISTENER_H
+#define _ISwListQDockWidgetLISTENER_H
 
 /*
 * INCLUDES GLOBAUX
@@ -20,16 +20,16 @@ namespace StreamWork
 	namespace SwGui
 	{
 		/*!
-		\interface ISwQDockWidgetListener 
+		\interface ISwListQDockWidgetListener 
 		\brief interface de gestion des QWdigets des totes
 		\ingroup SwGuiGrp
 		\swinterface
 		*/
-		class ISwQDockWidgetListener 
+		class ISwListQDockWidgetListener 
 		{   
 		public:
 
-			virtual ~ISwQDockWidgetListener(){};
+			virtual ~ISwListQDockWidgetListener(){};
 
 			/**
 			 * @brief    : Ajout d'un nouveau QDockWidget

@@ -1,8 +1,8 @@
 /*!
  \file ISwDockWidget.h
- \brief interface dockwidget
- \date 23-août-2006 16:04:34
- \author F.Bighelli
+ \brief interface SwDockWidget
+ \date
+ \author
 */
 
 #ifndef _ISwDockWidget_H
@@ -11,7 +11,8 @@
 /*
   * INCLUDES GLOBAUX
   */
-#include <QDockWidget>
+//#include <QDockWidget>
+#include "SwDockWidget_DockWidget.h"
 
 namespace StreamWork
 {
@@ -19,23 +20,16 @@ namespace StreamWork
 	{
         /*!
 		 \interface ISwDockWidget 
-		 \brief interface definissant un QDockWidget
+		 \brief interface definissant un DockWidget
          \ingroup SwGuiGrp
          \swinterface
 		*/
-        class ISwDockWidget 
+        class ISwDockWidget
 		{   
 		public:
-            /*! \brief Renvoie le dock widget
-            \return le dock widget */
-			virtual QDockWidget & GetDockWidget()=0;
-
-			/**
-			 * @brief	: get Force floating because in Qt, the floating is true until the dock is parent
-			 * @return	: bool 
-			 */
-			virtual bool GetForceFloating() const = 0 ;
-
+            /*! \brief Renvoie le widget
+            \return le widget */
+			virtual SwDockWidget_DockWidget & GetDockWidget() = 0;
 		};
 	}
 }

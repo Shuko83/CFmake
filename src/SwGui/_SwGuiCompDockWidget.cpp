@@ -1,9 +1,9 @@
 /*!
  \file _SwGuiCompDockWidget.cpp
- \brief Implementation of the Class _SwGuiCompDockWidget generant un QDockWidget
+ \brief Implementation of the Class _SwGuiCompDockWidget generant un SwDockWidget
  \version 1.0
- \date 23-août-2006 18:59:26
- \author F.Bighelli
+ \date
+ \author
 */
 
 #include <SwApplication.h>
@@ -20,9 +20,8 @@ _SwGuiCompDockWidget::_SwGuiCompDockWidget(): SwComponent_Class(){
     _properties_service=NULL;
     _dockwidget=NULL;
     _handle_widget=NULL;
-	_forceFloating = false;
-	_showTitleBar = true;
 }
+
 /*! \brief Destructeur */
 _SwGuiCompDockWidget::~_SwGuiCompDockWidget(){
     //Desenregistrement des services
@@ -33,8 +32,7 @@ _SwGuiCompDockWidget::~_SwGuiCompDockWidget(){
     delete _consumer_service;
     delete _provider_service;
     delete _properties_service;
-    delete _dockwidget;
-
+    //delete _dockwidget;
 }
 
 /*! \brief Initialisation des ressources
@@ -45,15 +43,14 @@ void _SwGuiCompDockWidget::InitializeResources() throw(SwException) {
     _consumer_service=new SwInterfaces_Consumer_Class(this) ;
     _provider_service=new SwInterfaces_Provider_Class(this) ;
     //Creation de l'interface principale
-    _dockwidget=new QDockWidget();	
-	_titleBar = GetDockWidget().titleBarWidget();
+    _dockwidget=new SwDockWidget_DockWidget();
 
     //Enregistrement des services
     this->RegisterService(_properties_service);
     this->RegisterService(_consumer_service);
     this->RegisterService(_provider_service);
 
-    //Exportation de l'interface ISwDockWidget
+    //Exportation de l'interface ISwQDockWidget
     _provider_service->RegisterProvidedInterface<ISwDockWidget>("DockWidget",(ISwDockWidget *)this);
 
     //Importation des interfaces ISwWidget et ISwLayout (exclusif)
@@ -63,53 +60,35 @@ void _SwGuiCompDockWidget::InitializeResources() throw(SwException) {
     _consumer_service->AttachInterfacesConsumerObserver(this);
 
 	//Enregistrement des propriétés
-	_properties_service->CreatePropertiesForQObject(_dockwidget,"QDockWidget");
-	_properties_service->CreatePropertiesForQObject(this,"",true);	
+	_properties_service->CreatePropertiesForQObject(_dockwidget, "Widget");
+	_properties_service->CreatePropertiesForQObject(this,"",true);
 
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiDockWidget done\n"));	
 }
+
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompDockWidget::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     if (_handle_widget!=NULL) {
-        _handle_widget->GetWidget().setParent(NULL);
+		_dockwidget->setWidget(NULL);
+        //_handle_widget->GetWidget().setParent(NULL);
     }
 }
+
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompDockWidget::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     if (_handle_widget!=NULL) {
         _dockwidget->setWidget(&(_handle_widget->GetWidget()));
     }
 }
+
 //---------------------------------------------------------------------
-// Interface ISwMainWindow
+// Interface ISwQMainWindow
 //---------------------------------------------------------------------
 /*! \brief Renvoie le menu
 \return le menu */
-QDockWidget & _SwGuiCompDockWidget::GetDockWidget() {
+SwDockWidget_DockWidget & _SwGuiCompDockWidget::GetDockWidget() {
     return *_dockwidget;
 }
-
-//---------------------------------------------------------------------
-bool _SwGuiCompDockWidget::getShowTitleBar()
-{
-	return _showTitleBar;
-}
-
-//---------------------------------------------------------------------
-void _SwGuiCompDockWidget::setShowTitleBar( bool val )
-{
-	_showTitleBar = val;
-
-	if (!_showTitleBar)
-	{				
-		QWidget* lEmptyWidget = new QWidget();
-		GetDockWidget().setTitleBarWidget(lEmptyWidget);
-	}
-	else
-		GetDockWidget().setTitleBarWidget(_titleBar);
-
-}
-

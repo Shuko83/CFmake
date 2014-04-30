@@ -72,6 +72,7 @@ void ManageLinkColor::loadStaticColor()
 		_mapColor.insert("ISxModel","#40E1E7");
 		_mapColor.insert("ISwAction","#AAE740");
 		_mapColor.insert("ISwToolBar","#E7408B");
+		_mapColor.insert("ISwQDockWidget","#FDFF55");
 		_mapColor.insert("ISwDockWidget","#FDFF55");
 		_mapColor.insert("ISwLayout","#032F55");
 		_mapColor.insert("IPlgGlobalContext","#2d2dff");

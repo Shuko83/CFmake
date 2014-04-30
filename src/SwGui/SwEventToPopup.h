@@ -18,7 +18,7 @@
 #include <QIcon.h>
 #include "ISwEventObserver.h"
 #include "ISwEvent.h"
-#include "ISwMainWindow.h"
+#include "ISwQMainWindow.h"
 
 
 using namespace StreamWork::SwFoundation;
@@ -94,7 +94,7 @@ protected:
 	//---------------------------------------------------
 	//				Declaration des interfaces
 	ISwEvent* _iSwEvent;								
-	ISwMainWindow* _iSwMainWindow;
+	ISwQMainWindow* _iSwMainWindow;
 
 
 private:

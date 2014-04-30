@@ -1,55 +1,40 @@
-/**
-* @file ISwQDockWidget.h
-* @brief Interface listener des QDockWidgets
-* @version 1.0
-* @date 2011/02/01 - 1:2:2011 - 16:00
-* @author AAY
+/*!
+ \file ISwQDockWidget.h
+ \brief interface dockwidget
+ \date 23-août-2006 16:04:34
+ \author F.Bighelli
 */
 
-#ifndef _ISWQDOCKWIDGET_H
-#define _ISWQDOCKWIDGET_H
+#ifndef _ISwQDockWidget_H
+#define _ISwQDockWidget_H
 
 /*
-* INCLUDES GLOBAUX
-*/
-#include <QList>  
-#include <QAction>
-#include "ISwQDockWidgetListener.h"
+  * INCLUDES GLOBAUX
+  */
+#include <QDockWidget>
 
 namespace StreamWork
 {
 	namespace SwGui
 	{
-		/*!
-		\interface ISwQDockWidget 
-		\brief Interface listener des QDockWidgets
-		\ingroup SwGuiGrp
-		\swinterface
-
+        /*!
+		 \interface ISwQDockWidget 
+		 \brief interface definissant un QDockWidget
+         \ingroup SwGuiGrp
+         \swinterface
 		*/
-		class ISwQDockWidget 
+        class ISwQDockWidget 
 		{   
 		public:
-
-			virtual  ~ISwQDockWidget(){}
-
-			/**
-			 * @brief    : Permet de récupérer la liste des QDockWidget initiale
-			 * @return   : QList<QDockWidget*> - Liste de pointeur QDockWidget
-			 */
-			virtual QList<QDockWidget*> get() = 0;  
+            /*! \brief Renvoie le dock widget
+            \return le dock widget */
+			virtual QDockWidget & GetDockWidget()=0;
 
 			/**
-			 * @brief    : S'enregistrer en tant que listener
-			 * @param	 : ISwQDockWidgetListener * observer - Pointeur sur l'oberserveur
+			 * @brief	: get Force floating because in Qt, the floating is true until the dock is parent
+			 * @return	: bool 
 			 */
-			virtual void addQDockWidgetListener(ISwQDockWidgetListener * observer) = 0;  
-
-			/**
-			 * @brief    : Se désenregistrer 
-			 * @param	 : ISwQDockWidgetListener * observer - Pointeur sur l'oberserveur
-			 */
-			virtual void removeQDockWidgetListener(ISwQDockWidgetListener * observer) = 0;
+			virtual bool GetForceFloating() const = 0 ;
 
 		};
 	}
