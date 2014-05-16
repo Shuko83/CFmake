@@ -290,13 +290,13 @@
        <number>6</number>
       </property>
       <property name="leftMargin">
-       <number>9</number>
+       <number>6</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>6</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -321,12 +321,6 @@
           <width>20</width>
           <height>0</height>
          </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>Segoe UI</family>
-          <pointsize>10</pointsize>
-         </font>
         </property>
         <property name="text">
          <string>Title</string>
@@ -361,7 +355,7 @@
       <item>
        <layout class="QHBoxLayout" name="optionLayout">
         <property name="spacing">
-         <number>0</number>
+         <number>9</number>
         </property>
         <item>
          <widget class="QPushButton" name="outToolBarBtn">
@@ -370,10 +364,6 @@
           </property>
           <property name="text">
            <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="_resources/SwGuiRsc.qrc">
-            <normaloff>:/DockWidget/images/DockWidget/OutToolBar.png</normaloff>:/DockWidget/images/DockWidget/OutToolBar.png</iconset>
           </property>
          </widget>
         </item>
@@ -385,24 +375,20 @@
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset resource="_resources/SwGuiRsc.qrc">
-            <normaloff>:/DockWidget/images/DockWidget/InToolBar.png</normaloff>:/DockWidget/images/DockWidget/InToolBar.png</iconset>
-          </property>
          </widget>
         </item>
         <item>
          <widget class="QPushButton" name="PB_Close">
           <property name="minimumSize">
            <size>
-            <width>20</width>
-            <height>20</height>
+            <width>0</width>
+            <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>20</width>
-            <height>20</height>
+            <width>16777215</width>
+            <height>16777215</height>
            </size>
           </property>
           <property name="styleSheet">
@@ -410,10 +396,6 @@
           </property>
           <property name="text">
            <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="_resources/SwGuiRsc.qrc">
-            <normaloff>:/DockWidget/images/DockWidget/DockClose.png</normaloff>:/DockWidget/images/DockWidget/DockClose.png</iconset>
           </property>
           <property name="iconSize">
            <size>

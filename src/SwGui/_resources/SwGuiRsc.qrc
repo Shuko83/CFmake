@@ -87,6 +87,48 @@
         <file>images/DockWidget/trlb.png</file>
         <file>images/DockWidget/locked.png</file>
         <file>images/DockWidget/unlocked.png</file>
-        <file>images/DockWidget/return.png</file>
+        <file alias="return">images/DockWidget/return.png</file>
+        <file>images/DockWidget/add_hover.png</file>
+    </qresource>
+    <qresource prefix="/Widget">
+        <file alias="checkbox_checked">images/Widget/checkbox_checked.png</file>
+        <file alias="checkbox_checked_hover">images/Widget/checkbox_checked_hover.png</file>
+        <file alias="checkbox_disabled">images/Widget/checkbox_disabled.png</file>
+        <file alias="checkbox_unchecked">images/Widget/checkbox_unchecked.png</file>
+        <file alias="checkbox_unchecked_hover">images/Widget/checkbox_unchecked_hover.png</file>
+        <file alias="closeDock">images/Widget/closeDock.png</file>
+        <file alias="closeDock_hover">images/Widget/closeDock_hover.png</file>
+        <file alias="closeTab">images/Widget/closeTab.png</file>
+        <file alias="closeTab_hover">images/Widget/closeTab_hover.png</file>
+        <file alias="closeTab_white">images/Widget/closeTab_white.png</file>
+        <file alias="closeToolBar">images/Widget/closeToolBar.png</file>
+        <file alias="closeToolBar_hover">images/Widget/closeToolBar_hover.png</file>
+        <file alias="collapseDock">images/Widget/collapseDock.png</file>
+        <file alias="collapseDock_hover">images/Widget/collapseDock_hover.png</file>
+        <file alias="dropDown">images/Widget/dropDown.png</file>
+        <file alias="dropDown_disabled">images/Widget/dropDown_disabled.png</file>
+        <file alias="dropDown_hover">images/Widget/dropDown_hover.png</file>
+        <file alias="expandDock">images/Widget/expandDock.png</file>
+        <file alias="expandDock_hover">images/Widget/expandDock_hover.png</file>
+        <file alias="radiobutton_checked">images/Widget/radiobutton_checked.png</file>
+        <file alias="radiobutton_checked_hover">images/Widget/radiobutton_checked_hover.png</file>
+        <file alias="radiobutton_unchecked">images/Widget/radiobutton_unchecked.png</file>
+        <file alias="radiobutton_unchecked_disabled">images/Widget/radiobutton_unchecked_disabled.png</file>
+        <file alias="radiobutton_unchecked_hover">images/Widget/radiobutton_unchecked_hover.png</file>
+        <file alias="return">images/Widget/return.png</file>
+        <file alias="spinbutton_arrowDown">images/Widget/spinbutton_arrowDown.png</file>
+        <file alias="spinButton_arrowDown_disabled">images/Widget/spinButton_arrowDown_disabled.png</file>
+        <file alias="spinButton_arrowDown_hover">images/Widget/spinButton_arrowDown_hover.png</file>
+        <file alias="spinButton_arrowUp">images/Widget/spinButton_arrowUp.png</file>
+        <file alias="spinButton_arrowUp_disabled">images/Widget/spinButton_arrowUp_disabled.png</file>
+        <file alias="spinButton_arrowUp_hover">images/Widget/spinButton_arrowUp_hover.png</file>
+        <file alias="spinButton_minus">images/Widget/spinButton_minus.png</file>
+        <file alias="spinButton_minus_disabled">images/Widget/spinButton_minus_disabled.png</file>
+        <file alias="spinButton_minus_hover">images/Widget/spinButton_minus_hover.png</file>
+        <file alias="spinButton_plus">images/Widget/spinButton_plus.png</file>
+        <file alias="spinButton_plus_disabled">images/Widget/spinButton_plus_disabled.png</file>
+        <file alias="spinButton_plus_hover">images/Widget/spinButton_plus_hover.png</file>
+        <file alias="splitterHandle_horiz">images/Widget/splitterHandle_horiz.png</file>
+        <file alias="splitterHandle_vertic">images/Widget/splitterHandle_vertic.png</file>
     </qresource>
 </RCC>

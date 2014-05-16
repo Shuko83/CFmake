@@ -56,7 +56,7 @@ SwDockWidget_DockWidget::SwDockWidget_DockWidget(QWidget *parent)
 
 	//Aspect du dock
 	//Couleurs
-	setStyleSheet("#L_Title{color: #FFF;} #DockFrame{background:#353535} #DockContent{border:1px solid #AAA;background:#707070;} #scrollArea{background:#707070;}");
+	//setStyleSheet("#L_Title{color: #FFF;} #DockFrame{background:#353535} #DockContent{border:1px solid #AAA;background:#707070;} #scrollArea{background:#707070;}");
 	setupShadow();
 	//Suppression du cadre de fenetre windows et affichage du dock au premier plan
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Window);

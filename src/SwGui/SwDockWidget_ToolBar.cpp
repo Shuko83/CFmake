@@ -124,13 +124,15 @@ void SwDockWidget_ToolBar::setMoving(bool state)
 	if (state)
 	{
 		//Pendant le deplacement d'un bouton, on masque la barre de titre et le fond pour ne laisser visible que le bouton
-		setStyleSheet("#Frame{background:#353535} #Content{background:transparent;}");
+		//setStyleSheet("#Frame{background:#353535} #Content{background:transparent;}");
+		//setStyleSheet("#Content{background:transparent;}");
 		ui.Frame->hide();
 	}
 	else
 	{
 		//A la fin du deplacement, on restaure le fond et la barre de titre
-		setStyleSheet("#Frame{background:#353535} #Content{border:1px solid #AAA;background:#707070;}");
+		//setStyleSheet("#Frame{background:#353535} #Content{border:1px solid #AAA;background:#707070;}");
+		//setStyleSheet("#Content{border:1px solid #AAA;background:#707070;}");
 		ui.Frame->show();
 	}
 }
