@@ -146,6 +146,7 @@ private:
 	
 	Qt::DockWidgetArea _area; //Zone d'attachement du SwDockWidget_DockWidget
 	Qt::DockWidgetArea _isMinResizing; //Cote en cours de redimensionnement
+	int _shownShadow; //Ombres affichees
 
 	QWidget * _tabWidget; //TabWidget auquel est attache le SwDockWidget_DockWidget
 	QWidget * _toolBarItem; //Bouton du dock dans la toolBar

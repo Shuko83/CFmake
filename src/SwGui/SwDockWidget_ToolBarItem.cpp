@@ -111,7 +111,7 @@ QPoint SwDockWidget_ToolBarItem::setPosition()
 	QRect rect = desktop.screenGeometry (desktop.screenNumber(QCursor::pos()));
 	SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(_widget);
 	
-	//Ajustement de la position du dock avant ouverture
+	//Ajustement de la position du dock
 	QPoint pos = this->pos();
 	//Si la toolbar est verticale, ouverture a gauche ou a droite du bouton
 	if (_orientation == Qt::Vertical)
@@ -120,14 +120,14 @@ QPoint SwDockWidget_ToolBarItem::setPosition()
 		//Si l'item est situe dans la partie droite de l'ecran, on ouvre la fenetre a gauche
 		if (_toolBar->pos().x() > (rect.x() + rect.size().width() / 2) ) //On ajoute la position rect.x() pour gere le cas multi-ecran
 		{
-			if( dock)
+			if (dock)
 				dock->showShadow(Qt::LeftDockWidgetArea | Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
 			pos.setX(_toolBar->pos().x() + this->pos().x() - _widget->width());
 		}
 		//Si l'item est situe dans la partie gauche de l'ecran, on ouvre la fenetre a droite
 		else
 		{
-			if( dock)
+			if (dock)
 				dock->showShadow(Qt::RightDockWidgetArea | Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
 		}
 		//Si l'item est trop pret du bord inferieur de l'ecran, on ouvre la fenetre vers le haut
@@ -145,12 +145,13 @@ QPoint SwDockWidget_ToolBarItem::setPosition()
 		{
 			pos.setX(_toolBar->pos().x() + this->pos().x() + this->width() + dock->getShadowSize() - _widget->width());
 		}
-		dock->showShadow(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
+		if (dock)
+			dock->showShadow(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::BottomDockWidgetArea);
 		//Si l'item est trop pret du bord inferieur de l'ecran, on ouvre la fenetre vers le haut
 		if (pos.y() + _widget->height() > (rect.y() + rect.height()))
 		{
 			pos.setY(_toolBar->pos().y() + this->pos().y() -_widget->height());
-			if( dock)
+			if (dock)
 				dock->showShadow(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea);
 		}
 	}
@@ -285,14 +286,4 @@ void SwDockWidget_ToolBarItem::setOrientation(Qt::Orientation orientation)
 QSize SwDockWidget_ToolBarItem::getTitleBarSize()
 {
 	return _titleBarSize;
-}
-
-//-----------------------------------------------------------------------------
-void SwDockWidget_ToolBarItem::updateWidgetPosition()
-{
-	//Si le widget est ouvert, on met a jour sa position
-	if (_widget && _widget->isVisible())
-	{
-		_widget->move(setPosition());
-	}
 }

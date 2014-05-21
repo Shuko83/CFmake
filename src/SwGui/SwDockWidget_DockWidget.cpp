@@ -44,7 +44,7 @@ SwDockWidget_DockWidget::SwDockWidget_DockWidget(QWidget *parent)
 	: QWidget(parent), _widget(NULL), _emptyWidget(NULL), _tabWidget(NULL), _toolBarItem(NULL), _action(NULL), _mainArea(NULL),
 	_inTabWidget(false), _inToolBar(false), _canMove(false), _isMinResizing(Qt::NoDockWidgetArea),
 	_canBeClose(true), _canBePin(true), _couldBePin(true), _lock(false), _canBeResize(true), _canBeMoved(true),
-	_canBeOutside(true), _isResizing(false), _alwaysOnTop(true)
+	_canBeOutside(true), _isResizing(false), _alwaysOnTop(true), _shownShadow(0)
 {
 	ui = new Ui::DockWidget();
 	ui->setupUi(this);
@@ -801,6 +801,7 @@ void SwDockWidget_DockWidget::buttonsSlots()
 void SwDockWidget_DockWidget::showShadow()
 {
 	QSize size = this->getRawSize();
+	_shownShadow = 0; //Reinit
 
 	//Cotes
 	ui->top->show();
@@ -837,29 +838,37 @@ void SwDockWidget_DockWidget::showShadow(int area)
 {
 	QSize size = this->getRawSize();
 	
-	hideShadow();
+	//Mise a jour si necessaire
+	if (area != _shownShadow)
+	{
+		//Masquage de toutes les ombres
+		hideShadow();
 
-	//Cotes
-	if (area & Qt::LeftDockWidgetArea)
-		ui->left->show();
-	if (area & Qt::RightDockWidgetArea)
-		ui->right->show();
-	if (area & Qt::TopDockWidgetArea)
-		ui->top->show();
-	if (area & Qt::BottomDockWidgetArea)
-		ui->bottom->show();
+		//Affichage des cotes
+		if (area & Qt::LeftDockWidgetArea)
+			ui->left->show();
+		if (area & Qt::RightDockWidgetArea)
+			ui->right->show();
+		if (area & Qt::TopDockWidgetArea)
+			ui->top->show();
+		if (area & Qt::BottomDockWidgetArea)
+			ui->bottom->show();
 
-	//Angles
-	if ((area & Qt::LeftDockWidgetArea) && (area & Qt::TopDockWidgetArea))
-		ui->topLeft->show();
-	if ((area & Qt::LeftDockWidgetArea) && (area & Qt::BottomDockWidgetArea))
-		ui->bottomLeft->show();
-	if ((area & Qt::RightDockWidgetArea) && (area & Qt::TopDockWidgetArea))
-		ui->topRight->show();
-	if ((area & Qt::RightDockWidgetArea) && (area & Qt::BottomDockWidgetArea))
-		ui->bottomRight->show();
+		//Affichages des angles entre deux cotes affiches
+		if ((area & Qt::LeftDockWidgetArea) && (area & Qt::TopDockWidgetArea))
+			ui->topLeft->show();
+		if ((area & Qt::LeftDockWidgetArea) && (area & Qt::BottomDockWidgetArea))
+			ui->bottomLeft->show();
+		if ((area & Qt::RightDockWidgetArea) && (area & Qt::TopDockWidgetArea))
+			ui->topRight->show();
+		if ((area & Qt::RightDockWidgetArea) && (area & Qt::BottomDockWidgetArea))
+			ui->bottomRight->show();
 
-	this->setRawSize(size);
+		//Mise a jour de la taille de la fenetre
+		this->setRawSize(size);
+
+		_shownShadow = area;
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -867,6 +876,7 @@ void SwDockWidget_DockWidget::showShadow(int area)
 void SwDockWidget_DockWidget::hideShadow()
 {
 	QSize size = this->getRawSize();
+	_shownShadow = 0; //Reinit
 
 	//Cotes
 	ui->top->hide();

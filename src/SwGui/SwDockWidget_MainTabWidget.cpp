@@ -15,9 +15,7 @@ SwDockWidget_MainTabWidget::SwDockWidget_MainTabWidget(QWidget * parent, bool wi
 	//Creation d'un onglet vide pour l'ajout d'un nouvel onglet
 	if (withAddButton)
 	{
-		_addWidget = new QWidget(this);
-		insertTab(0, _addWidget, QIcon(":/DockWidget/images/DockWidget/add.png"), "");
-		tabBar->setTabButton(0, QTabBar::RightSide, 0);
+		createAddTabWidget();
 	}
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
@@ -151,9 +149,7 @@ void SwDockWidget_MainTabWidget::releaseLock()
 		setTabsClosable(true);
 		if (!_addWidget)
 		{
-			_addWidget = new QWidget(this);
-			int index = QTabWidget::addTab(_addWidget, QIcon(":/DockWidget/images/DockWidget/add.png"), "");
-			tabBar()->setTabButton(index, QTabBar::RightSide, 0);
+			createAddTabWidget();
 		}
 	}
 }
@@ -165,7 +161,14 @@ void SwDockWidget_MainTabWidget::clear()
 	QTabWidget::clear();
 
 	//Creation d'un onglet vide pour l'ajout d'un nouvel onglet
+	createAddTabWidget();
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_MainTabWidget::createAddTabWidget()
+{
 	_addWidget = new QWidget(this);
-	insertTab(0, _addWidget, QIcon(":/DockWidget/images/DockWidget/add.png"), "");
-	tabBar()->setTabButton(0, QTabBar::RightSide, 0);
+	_addWidget->setObjectName("AddTabWidget");
+	int index = QTabWidget::addTab(_addWidget, QIcon(":/DockWidget/images/DockWidget/add.png"), "");
+	tabBar()->setTabButton(index, QTabBar::RightSide, 0);
 }

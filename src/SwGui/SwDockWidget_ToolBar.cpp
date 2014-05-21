@@ -250,7 +250,7 @@ bool SwDockWidget_ToolBar::eventFilter( QObject *obj , QEvent * event )
 		{
 			case QEvent::Resize:
 			case QEvent::Move:
-			case QEvent::Paint:
+			//case QEvent::Paint:
 				_mainRect = QRect(QPoint(this->parentWidget()->mapToGlobal(QPoint(0,0))), this->parentWidget()->size());
 				updatePosition();
 				break;
@@ -439,7 +439,7 @@ QPoint SwDockWidget_ToolBar::getAdjustedPosition(int x, int y)
 {
 	QPoint point(x,y);
 
-	//Verification de la position du dock pour eviter qu'il ne sorte de l'ecran
+	//Verification de la position pour eviter de sortir de l'ecran
 	QDesktopWidget desktop;
 	QRect rect = desktop.geometry ();
 	//Si position en dehors de l'ecran, on s'arrete au bord
@@ -851,71 +851,60 @@ void SwDockWidget_ToolBar::updateMainRect()
 //-----------------------------------------------------------------------------
 void SwDockWidget_ToolBar::updatePosition()
 {
-	QPoint pos(pos());
-	switch(_stuck)
+	//Mise a jour de la position si la toolbar est aimantee
+	if (_stuck)
 	{
-		//Cotes
-		case Qt::LeftSection:
-			if (_dist.y() + height() > _mainRect.height())
-				pos = QPoint(_mainRect.x(), _mainRect.y() + _mainRect.height() - height());
-			else
-				pos = QPoint(_mainRect.x(), _dist.y() + _mainRect.y());
-			break;
-
-		case Qt::TopSection:
-			if (_dist.x() + width() > _mainRect.width())
-				pos = QPoint(_mainRect.x() + _mainRect.width() - width(), _mainRect.y());
-			else
-				pos = QPoint(_dist.x() + _mainRect.x(), _mainRect.y());
-			break;
-
-		case Qt::RightSection:
-			if (_dist.y() + height() > _mainRect.height())
-				pos = QPoint(_mainRect.x() + _mainRect.width() - width() , _mainRect.y() + _mainRect.height() - height());
-			else
-				pos = QPoint(_mainRect.x() + _mainRect.width() - width() , _dist.y() + _mainRect.y());
-			break;
-
-		case Qt::BottomSection:
-			if (_dist.x() + width() > _mainRect.width())
-				pos = QPoint(_mainRect.x() + _mainRect.width() - width(), _mainRect.y() + _mainRect.height() - height());
-			else
-				pos = QPoint(_dist.x() + _mainRect.x(), _mainRect.y() + _mainRect.height() - height());
-			break;
-
-		//Angles
-		case Qt::TopLeftSection:
-			pos = QPoint(_mainRect.x(), _mainRect.y());
-			break;
-
-		case Qt::TopRightSection:
-			pos = QPoint(_mainRect.x() + _mainRect.width() - width(), _mainRect.y());
-			break;
-
-		case Qt::BottomRightSection:
-			pos = QPoint(_mainRect.x() + _mainRect.width() - width(), _mainRect.y() + _mainRect.height() - height());
-			break;
-
-		case Qt::BottomLeftSection:
-			pos = QPoint(_mainRect.x(), _mainRect.y() + _mainRect.height() - height());
-			break;
-	}
-	
-	QWidget::move(pos);
-	
-	//Mise a jour de la position du widget ouvert si necessaire
-	for (int i=0; i<_layout->count(); i++)
-	{
-		QLayoutItem * lItem = _layout->itemAt(i);
-		if (lItem)
+		QPoint pos(pos());
+		switch(_stuck)
 		{
-			//Recuperation de l'item en i-eme position
-			SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(lItem->widget());
-			if (item)
-			{
-				item->updateWidgetPosition();
-			}
+			//Cotes
+			case Qt::LeftSection:
+				if (_dist.y() + height() > _mainRect.height())
+					pos = QPoint(_mainRect.x(), _mainRect.y() + _mainRect.height() - height());
+				else
+					pos = QPoint(_mainRect.x(), _dist.y() + _mainRect.y());
+				break;
+
+			case Qt::TopSection:
+				if (_dist.x() + width() > _mainRect.width())
+					pos = QPoint(_mainRect.x() + _mainRect.width() - width(), _mainRect.y());
+				else
+					pos = QPoint(_dist.x() + _mainRect.x(), _mainRect.y());
+				break;
+
+			case Qt::RightSection:
+				if (_dist.y() + height() > _mainRect.height())
+					pos = QPoint(_mainRect.x() + _mainRect.width() - width() , _mainRect.y() + _mainRect.height() - height());
+				else
+					pos = QPoint(_mainRect.x() + _mainRect.width() - width() , _dist.y() + _mainRect.y());
+				break;
+
+			case Qt::BottomSection:
+				if (_dist.x() + width() > _mainRect.width())
+					pos = QPoint(_mainRect.x() + _mainRect.width() - width(), _mainRect.y() + _mainRect.height() - height());
+				else
+					pos = QPoint(_dist.x() + _mainRect.x(), _mainRect.y() + _mainRect.height() - height());
+				break;
+
+			//Angles
+			case Qt::TopLeftSection:
+				pos = QPoint(_mainRect.x(), _mainRect.y());
+				break;
+
+			case Qt::TopRightSection:
+				pos = QPoint(_mainRect.x() + _mainRect.width() - width(), _mainRect.y());
+				break;
+
+			case Qt::BottomRightSection:
+				pos = QPoint(_mainRect.x() + _mainRect.width() - width(), _mainRect.y() + _mainRect.height() - height());
+				break;
+
+			case Qt::BottomLeftSection:
+				pos = QPoint(_mainRect.x(), _mainRect.y() + _mainRect.height() - height());
+				break;
 		}
+
+		QWidget::move(pos);
 	}
 }
 

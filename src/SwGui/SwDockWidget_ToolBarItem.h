@@ -22,8 +22,7 @@ public:
 
 	void hideWidget(bool effect = true);
 	void setOrientation(Qt::Orientation orientation);
-	QSize getTitleBarSize();
-	void updateWidgetPosition();
+	QSize getTitleBarSize();	
 
 signals:
 	void isMoving(QPoint pos);

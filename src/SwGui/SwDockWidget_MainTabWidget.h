@@ -28,6 +28,7 @@ protected slots:
 	void closeTab(int index);
 	void updateCurrent(int index);
 	void insertNewTab();
+	void createAddTabWidget();
 
 private:
 	bool _lock;

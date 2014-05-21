@@ -234,3 +234,15 @@ void SwDockWidget_MainTabBar::disconnectNameEdit()
 		disconnect(_nameEdit, SIGNAL(editingFinished()), this, SLOT(renameTab()));
 	}
 }
+
+//-----------------------------------------------------------------------------
+QSize SwDockWidget_MainTabBar::tabSizeHint( int index ) const
+{
+	//Taille de l'onglet "+" fixe
+	if (tabsClosable() && index == count()-1 && count() > 1)
+	{
+		return QSize(QTabBar::tabSizeHint(index).height(), QTabBar::tabSizeHint(index).height());
+	}
+	else
+		return QTabBar::tabSizeHint(index);
+}

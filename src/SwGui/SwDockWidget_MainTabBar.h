@@ -25,6 +25,7 @@ protected:
 	virtual void keyPressEvent ( QKeyEvent * event );
 	virtual void paintEvent ( QPaintEvent * event );
 	virtual void mouseMoveEvent(QMouseEvent * e);
+	virtual QSize tabSizeHint ( int index ) const;
 
 protected slots:
 	void renameTabTemporarily(QString name);

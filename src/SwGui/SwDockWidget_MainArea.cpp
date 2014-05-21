@@ -821,6 +821,7 @@ void SwDockWidget_MainArea::removeDockWidget(SwDockWidget_DockWidget * dock)
 	{
 		//Liberation du dock
 		dock->close();
+		dock->setParent(0);
 
 		//Suppression de la liste
 		_list.removeOne(dock);
