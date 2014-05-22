@@ -227,6 +227,7 @@ const QString & SwApplication::GetApplicationDirPath() {
 }
 /*! \brief path de l'application ou celui configure comme tel par l'utilisateur*/
 void SwApplication::SetApplicationDirPath(const QString & path) {
+	qApp->setProperty("appDirPath", path);
 	//enregistrement du path
 	_applicationDirPath = path;
 	//ajout des paths pour la banque de plugins
