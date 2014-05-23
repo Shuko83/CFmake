@@ -287,10 +287,10 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
-       <number>6</number>
+       <number>3</number>
       </property>
       <property name="leftMargin">
-       <number>6</number>
+       <number>3</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -335,22 +335,6 @@
          <set>Qt::NoTextInteraction</set>
         </property>
        </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Maximum</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>10</width>
-          <height>17</height>
-         </size>
-        </property>
-       </spacer>
       </item>
       <item>
        <layout class="QHBoxLayout" name="optionLayout">

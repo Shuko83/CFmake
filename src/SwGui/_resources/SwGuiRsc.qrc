@@ -44,11 +44,11 @@
     <qresource prefix="/DockWidget">
         <file>images/DockWidget/add.png</file>
         <file>images/DockWidget/bltr.png</file>
-        <file>images/DockWidget/bottom.png</file>
-        <file>images/DockWidget/bottomHover.png</file>
+        <file alias="bottom">images/DockWidget/bottom.png</file>
+        <file alias="bottomHover">images/DockWidget/bottomHover.png</file>
         <file>images/DockWidget/brlt.png</file>
         <file>images/DockWidget/brtl.png</file>
-        <file>images/DockWidget/center.png</file>
+        <file alias="center">images/DockWidget/center.png</file>
         <file>images/DockWidget/DockClose.png</file>
         <file>images/DockWidget/hideBottom.png</file>
         <file>images/DockWidget/hideBottomDisabled.png</file>
@@ -64,14 +64,14 @@
         <file>images/DockWidget/hideTopSelected.png</file>
         <file>images/DockWidget/InToolBar.png</file>
         <file>images/DockWidget/lbrt.png</file>
-        <file>images/DockWidget/left.png</file>
-        <file>images/DockWidget/leftHover.png</file>
+        <file alias="left">images/DockWidget/left.png</file>
+        <file alias="leftHover">images/DockWidget/leftHover.png</file>
         <file>images/DockWidget/ltbr.png</file>
         <file>images/DockWidget/ltrb.png</file>
         <file>images/DockWidget/OutToolBar.png</file>
         <file>images/DockWidget/rblt.png</file>
-        <file>images/DockWidget/right.png</file>
-        <file>images/DockWidget/rightHover.png</file>
+        <file alias="right">images/DockWidget/right.png</file>
+        <file alias="rightHover">images/DockWidget/rightHover.png</file>
         <file>images/DockWidget/rltb.png</file>
         <file>images/DockWidget/rtbl.png</file>
         <file>images/DockWidget/rtlb.png</file>
@@ -81,8 +81,8 @@
         <file>images/DockWidget/tabHover.png</file>
         <file>images/DockWidget/tbrl.png</file>
         <file>images/DockWidget/tlbr.png</file>
-        <file>images/DockWidget/top.png</file>
-        <file>images/DockWidget/topHover.png</file>
+        <file alias="top">images/DockWidget/top.png</file>
+        <file alias="topHover">images/DockWidget/topHover.png</file>
         <file>images/DockWidget/trbl.png</file>
         <file>images/DockWidget/trlb.png</file>
         <file>images/DockWidget/locked.png</file>
@@ -130,5 +130,7 @@
         <file alias="spinButton_plus_hover">images/Widget/spinButton_plus_hover.png</file>
         <file alias="splitterHandle_horiz">images/Widget/splitterHandle_horiz.png</file>
         <file alias="splitterHandle_vertic">images/Widget/splitterHandle_vertic.png</file>
+        <file alias="invertToolBar">images/Widget/invertToolBar.png</file>
+        <file alias="invertToolBar_hover">images/Widget/invertToolBar_hover.png</file>
     </qresource>
 </RCC>

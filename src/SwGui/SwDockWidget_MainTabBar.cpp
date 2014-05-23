@@ -163,6 +163,7 @@ void SwDockWidget_MainTabBar::renameAction()
 	int index = currentIndex();
 	_name = tabText(index);
 	_nameEdit = new QLineEdit(_name, this);
+	_nameEdit->setObjectName("mainTabRename");
 	_nameEdit->setFrame(false);
 	_nameEdit->setFocus();
 	connectNameEdit();

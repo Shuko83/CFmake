@@ -111,7 +111,7 @@ public slots:
 
 private:
 	bool manageResize(QMouseEvent * event);
-	void setupShadow(QColor color = QColor(150, 150, 150, 150));
+	void setupShadow(QColor color = QColor(109, 183, 255, 120));
 	void setCursorAspect();
 	void setTextToLabel( QLabel *label, QString text );
 	void updateBtn();
@@ -156,6 +156,8 @@ private:
 
 	int _blinkStatus;
 	QTimer * _timer;
+
+	QColor _shadowColor;
 };
 
 #endif

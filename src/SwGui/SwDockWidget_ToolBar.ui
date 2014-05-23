@@ -80,7 +80,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
         </property>
         <item>
          <spacer name="horizontalSpacer">
@@ -101,7 +101,7 @@
            <string notr="true">border:none</string>
           </property>
           <property name="text">
-           <string>lali</string>
+           <string/>
           </property>
          </widget>
         </item>

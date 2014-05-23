@@ -44,7 +44,7 @@ SwDockWidget_DockWidget::SwDockWidget_DockWidget(QWidget *parent)
 	: QWidget(parent), _widget(NULL), _emptyWidget(NULL), _tabWidget(NULL), _toolBarItem(NULL), _action(NULL), _mainArea(NULL),
 	_inTabWidget(false), _inToolBar(false), _canMove(false), _isMinResizing(Qt::NoDockWidgetArea),
 	_canBeClose(true), _canBePin(true), _couldBePin(true), _lock(false), _canBeResize(true), _canBeMoved(true),
-	_canBeOutside(true), _isResizing(false), _alwaysOnTop(true), _shownShadow(0)
+	_canBeOutside(true), _isResizing(false), _alwaysOnTop(true), _shownShadow(0),_shadowColor(QColor(109, 183, 255, 120))
 {
 	ui = new Ui::DockWidget();
 	ui->setupUi(this);
@@ -57,7 +57,7 @@ SwDockWidget_DockWidget::SwDockWidget_DockWidget(QWidget *parent)
 	//Aspect du dock
 	//Couleurs
 	//setStyleSheet("#L_Title{color: #FFF;} #DockFrame{background:#353535} #DockContent{border:1px solid #AAA;background:#707070;} #scrollArea{background:#707070;}");
-	setupShadow();
+	setupShadow(_shadowColor);
 	//Suppression du cadre de fenetre windows et affichage du dock au premier plan
 	setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 	//Affichage du cadre en transparence
@@ -829,6 +829,8 @@ void SwDockWidget_DockWidget::showShadow()
 	ui->bottomRight_ext1->show();
 	ui->bottomRight_ext2->show();
 
+	setupShadow(_shadowColor);
+
 	this->setRawSize(size);
 }
 
@@ -863,6 +865,12 @@ void SwDockWidget_DockWidget::showShadow(int area)
 			ui->topRight->show();
 		if ((area & Qt::RightDockWidgetArea) && (area & Qt::BottomDockWidgetArea))
 			ui->bottomRight->show();
+
+		//Changement de style si docké
+		if((area & Qt::TopDockWidgetArea) && (area & Qt::BottomDockWidgetArea) && (area & Qt::RightDockWidgetArea) && (area & Qt::LeftDockWidgetArea))
+			setupShadow(_shadowColor);
+		else
+			setupShadow(QColor(0,0,0,10)); // transparent
 
 		//Mise a jour de la taille de la fenetre
 		this->setRawSize(size);
@@ -904,6 +912,8 @@ void SwDockWidget_DockWidget::hideShadow()
 	ui->bottomRight_ext1->hide();
 	ui->bottomRight_ext2->hide();
 
+	setupShadow(QColor(0,0,0,10)); // transparent
+
 	QWidget::updateGeometry();
 	this->setRawSize(size);
 }
@@ -914,27 +924,29 @@ void SwDockWidget_DockWidget::setupShadow(QColor color)
 {
 	QString strcolor = QString("rgba(%1, %2, %3, %4)").arg(color.red()).arg(color.green()).arg(color.blue()).arg(color.alpha());
 
-	ui->top->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui->topLeft_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui->topRight_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->top->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
+	ui->topLeft_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
+	ui->topRight_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
 
-	ui->right->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui->topRight_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui->bottomRight_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	
-	ui->bottom->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui->bottomRight_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui->bottomLeft_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->right->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
+	ui->topRight_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
+	ui->bottomRight_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
 
-	ui->left->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui->bottomLeft_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
-	ui->topLeft_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.7 rgba(255, 255, 255, 0))");
+	ui->bottom->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
+	ui->bottomRight_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
+	ui->bottomLeft_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
 
-	ui->topLeft->setStyleSheet("background:qradialgradient(spread:pad, cx:1, cy:1, radius:0.7, fx:1, fy:1, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
-	ui->topRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:1, radius:0.7, fx:0, fy:1, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
-	ui->bottomRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:0, radius:0.7, fx:0, fy:0, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
-	ui->bottomLeft->setStyleSheet("background:qradialgradient(spread:pad, cx:1, cy:0, radius:0.7, fx:1, fy:0, stop:0 " + strcolor + ", stop:1 rgba(255, 255, 255, 0))");
+	ui->left->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
+	ui->bottomLeft_ext1->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
+	ui->topLeft_ext2->setStyleSheet("background:qlineargradient(spread:pad, x1:1, y1:0, x2:0, y2:0, stop:0 " + strcolor + ", stop:0.4 rgba(255, 255, 255, 0))");
+
+	ui->topLeft->setStyleSheet("background:qradialgradient(spread:pad, cx:1, cy:1, radius:0.7, fx:1, fy:1, stop:0 " + strcolor + ", stop:0.6 rgba(255, 255, 255, 0))");
+	ui->topRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:1, radius:0.7, fx:0, fy:1, stop:0 " + strcolor + ", stop:0.6 rgba(255, 255, 255, 0))");
+	ui->bottomRight->setStyleSheet("background:qradialgradient(spread:pad, cx:0, cy:0, radius:0.7, fx:0, fy:0, stop:0 " + strcolor + ", stop:0.6 rgba(255, 255, 255, 0))");
+	ui->bottomLeft->setStyleSheet("background:qradialgradient(spread:pad, cx:1, cy:0, radius:0.7, fx:1, fy:0, stop:0 " + strcolor + ", stop:0.6 rgba(255, 255, 255, 0))");
+
 }
+
 
 //-----------------------------------------------------------------------------
 int SwDockWidget_DockWidget::getShadowSize()
@@ -1101,7 +1113,7 @@ void SwDockWidget_DockWidget::blink()
 				if (_blinkStatus%2)
 					setupShadow(QColor(255,0,0));
 				else
-					setupShadow();
+					setupShadow(_shadowColor);
 				_blinkStatus++;
 				break;
 		}

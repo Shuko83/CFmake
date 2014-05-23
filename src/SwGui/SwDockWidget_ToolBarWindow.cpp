@@ -6,12 +6,14 @@
 
 #include <QMessageBox>
 
+#define OVERLAY_COLOR			QColor(124,189,255,255)
+
 //-----------------------------------------------------------------------------
 SwDockWidget_ToolBarWindow::SwDockWidget_ToolBarWindow(QWidget * parent)
  : QWidget(parent), _isMovingToolBarItem(false), _tbOverlay(NULL), _lock(false), _mainWidget(NULL)
 {
 	//Creation de la zone de pre-positionnement
-	_tbOverlay = new SwDockWidget_Overlay(this, NULL, QColor(200,100,0,200));
+	_tbOverlay = new SwDockWidget_Overlay(this, NULL, OVERLAY_COLOR);
 }
 
 //-----------------------------------------------------------------------------

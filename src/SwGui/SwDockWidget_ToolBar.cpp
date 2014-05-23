@@ -11,7 +11,6 @@
 #include <QtCore/qmath.h>
 
 #define	MIN_DISTANCE_TO_STUCK	20
-#define OVERLAY_COLOR			QColor(200,100,0,200)
 
 //-----------------------------------------------------------------------------
 SwDockWidget_ToolBar::SwDockWidget_ToolBar(QWidget * parent, QRect rect)

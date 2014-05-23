@@ -1443,15 +1443,15 @@ void SwDockWidget_MainArea::createArrowsButton()
 {
 	//Positionnement sur les bords du dock actif
 	//Center
-	addButton(&_centerWidgetBtn, BTN_CENTER_SIZE, QIcon(":/DockWidget/images/DockWidget/center.png"));
+	addButton(&_centerWidgetBtn, BTN_CENTER_SIZE, QIcon(":/DockWidget/center"));
 	//Fleche en haut
-	addButton(&_topWidgetBtn, BTN_SIZE, QIcon(":/DockWidget/images/DockWidget/top.png"));
+	addButton(&_topWidgetBtn, BTN_SIZE, QIcon(":/DockWidget/top"));
 	//Fleche a droite
-	addButton(&_rightWidgetBtn, BTN_SIZE, QIcon(":/DockWidget/images/DockWidget/right.png"));
+	addButton(&_rightWidgetBtn, BTN_SIZE, QIcon(":/DockWidget/right"));
 	//Fleche a gauche
-	addButton(&_leftWidgetBtn, BTN_SIZE, QIcon(":/DockWidget/images/DockWidget/left.png"));
+	addButton(&_leftWidgetBtn, BTN_SIZE, QIcon(":/DockWidget/left"));
 	//Fleche en bas
-	addButton(&_bottomWidgetBtn, BTN_SIZE, QIcon(":/DockWidget/images/DockWidget/bottom.png"));
+	addButton(&_bottomWidgetBtn, BTN_SIZE, QIcon(":/DockWidget/bottom"));
 
 	//Positionnement en onglet
 	addButton(&_tabBtn, BTN_SIZE, QIcon(":/DockWidget/images/DockWidget/tab.png"));
@@ -1622,39 +1622,39 @@ void SwDockWidget_MainArea::highlightArrows(QPoint pos, bool toMain)
 	//Bord du widget
 	if(_topWidgetBtn->isVisible() && QRect(_topWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 	{
-		_topWidgetBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/topHover.png"));
+		_topWidgetBtn->setIcon(QIcon(":/DockWidget/topHover"));
 		showOverlay(Qt::TopDockWidgetArea, toMain);
 		return;
 	}
 	else
-		_topWidgetBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/top.png"));
+		_topWidgetBtn->setIcon(QIcon(":/DockWidget/top"));
 
 	if(_bottomWidgetBtn->isVisible() && QRect(_bottomWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 	{
-		_bottomWidgetBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/bottomHover.png"));
+		_bottomWidgetBtn->setIcon(QIcon(":/DockWidget/bottomHover"));
 		showOverlay(Qt::BottomDockWidgetArea, toMain);
 		return;
 	}
 	else
-		_bottomWidgetBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/bottom.png"));
+		_bottomWidgetBtn->setIcon(QIcon(":/DockWidget/bottom"));
 
 	if(_leftWidgetBtn->isVisible() && QRect(_leftWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 	{
-		_leftWidgetBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/leftHover.png"));
+		_leftWidgetBtn->setIcon(QIcon(":/DockWidget/leftHover"));
 		showOverlay(Qt::LeftDockWidgetArea, toMain);
 		return;
 	}
 	else
-		_leftWidgetBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/left.png"));
+		_leftWidgetBtn->setIcon(QIcon(":/DockWidget/left"));
 
 	if(_rightWidgetBtn->isVisible() && QRect(_rightWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 	{
-		_rightWidgetBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/rightHover.png"));
+		_rightWidgetBtn->setIcon(QIcon(":/DockWidget/rightHover"));
 		showOverlay(Qt::RightDockWidgetArea, toMain);
 		return;
 	}
 	else
-		_rightWidgetBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/right.png"));
+		_rightWidgetBtn->setIcon(QIcon(":/DockWidget/right"));
 
 	//Onglet
 	if(_tabBtn->isVisible() && QRect(_tabBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
