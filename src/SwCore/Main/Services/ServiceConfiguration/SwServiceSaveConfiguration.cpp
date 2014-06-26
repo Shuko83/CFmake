@@ -537,13 +537,16 @@ bool SwServiceSaveConfiguration::createNewConfiguration( QString confName, QStri
 }
 
 //-------------------------------------------------------------------------
-bool SwServiceSaveConfiguration::deleteConfiguration( QString confName )
+bool SwServiceSaveConfiguration::deleteConfiguration( QString confName, QString inProfileName )
 {
 	bool ret = false;
 
 	// Récupération de la confCourante (on ne peut supprimer que la conf courante)
 	QString	currentConfigProfile = "";
-	currentConfigProfile = getCurrentConf(confName);
+	if(inProfileName == "")
+		currentConfigProfile = getCurrentConf(confName);
+	else
+		currentConfigProfile = inProfileName;
 	
 	// On ne peux pas supprimer la config par défaut
 	if(currentConfigProfile != CFM_DEFAULT_FILENAME)

@@ -44,7 +44,7 @@ namespace StreamWork
              * @brief	: permet de supprimer la configuration courante
              * @Param	: QString : nom de la configuration concernée
              */
-			virtual bool deleteConfiguration (QString confName) = 0;
+			virtual bool deleteConfiguration (QString confName, QString inProfileName) = 0;
 
 
 			/**
