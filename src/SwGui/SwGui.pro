@@ -1,9 +1,13 @@
 TEMPLATE = lib
 TARGET = SwGui
-PROJECTS_PATH = ../../../..
+PROJECTS_PATH = $$PWD/../../../..
 
-QT += core gui xml network
-CONFIG      += designer plugin
+PLUGINS=SW
+
+include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
+
+QT += core gui xml network designer widgets
+CONFIG +=  plugin
 CONFIG += StdAfx.h
 PRECOMPILED_HEADER = StdAfx.h
 win32-msvc* {
@@ -24,19 +28,19 @@ INCLUDEPATH += ./\
     ../SwExecution/ \
 	../SwFoundation/ 
     
+DESTDIR = ./../../$$LIB_PATH
+DLLDESTDIR=  ./../../$$BIN_PATH
+
+LIBS += -L"../../$$LIB_PATH"
+
 CONFIG(debug, debug|release) {
-	DESTDIR = ./../../lib/vc/debug
-	DLLDESTDIR=  ./../../bin/vc/debug
 	
-	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwFoundationd
+	LIBS += -lSwCored -lSwFoundationd
 	TARGET_EXT = .swdld
 } 
 
-CONFIG(release, debug|release) {
-	DESTDIR = ./../../lib/vc/release
-	DLLDESTDIR=  ./../../bin/vc/release
-	
-	LIBS += -L"../../lib/vc/release" -lSwCore -lSwFoundation
+CONFIG(release, debug|release) {	
+	LIBS += -lSwCore -lSwFoundation
 	TARGET_EXT = .swdl
 }
 

@@ -5,9 +5,11 @@ TARGET = SwCore
 # PROJECT
 ################################################################################
 
-PROJECTS_PATH = ../../../..
+PROJECTS_PATH = $$PWD/../../../..
 
-QT += core xml
+include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
+
+QT += core xml widgets
 
 CONFIG += StdAfx.h
 PRECOMPILED_HEADER = StdAfx.h
@@ -15,7 +17,6 @@ win32-msvc* {
 PRECOMPILED_SOURCE = StdAfx.cpp
 }
 
-CONFIG -= flat
 QMAKE_CXXFLAGS += /MP
 				
 HEADERS += *.h \
@@ -99,27 +100,23 @@ INCLUDEPATH += ./ \
 		Types/ \
 		Types/UserType/ \
 
-win32:DEFINES += _WIN32_PLATEFORM_ 
 win32:DEFINES +=_CRT_SECURE_NO_WARNINGS
-
-unix:DEFINES += _LINUX_PLATEFORM_
 
 win32:{
     LIBS += -lPsapi -limagehlp
 }    
 
-CONFIG(debug, debug|release) {
-	DESTDIR = ./../../lib/vc/debug
-	DLLDESTDIR=  ./../../bin/vc/debug
+DESTDIR = ./../../$$LIB_PATH
+DLLDESTDIR=  ./../../$$BIN_PATH
+
+CONFIG(debug, debug|release) {	
 	LIBS += \
-		-L"$$PROJECTS_PATH/Libraries/GeographicLib/lib/vc/debug" -lGeographicLibd 
+		-L"$$PROJECTS_PATH/Libraries/GeographicLib/$$LIB_PATH" -lGeographicLibd 
 } 
 
 CONFIG(release, debug|release) {
-	DESTDIR = ./../../lib/vc/release
-	DLLDESTDIR=  ./../../bin/vc/release
 	LIBS += \
-		-L"$$PROJECTS_PATH/Libraries/GeographicLib/lib/vc/release" -lGeographicLib
+		-L"$$PROJECTS_PATH/Libraries/GeographicLib/$$LIB_PATH" -lGeographicLib
 }
 
 ################################################################################

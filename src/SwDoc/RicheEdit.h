@@ -4,7 +4,14 @@
 
 #include <QtCore>
 #include <QPainter>
-#include <QtGui/QtGui>
+
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
+
+#include <qaction.h>
 
 
 class ColorAction : public QAction

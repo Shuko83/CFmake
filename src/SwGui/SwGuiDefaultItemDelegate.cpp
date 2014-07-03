@@ -6,7 +6,13 @@
 */
 
 #include "SwGuiDefaultItemDelegate.h"
+
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
+
 #include <QLocale>
 #include <QMetaType>
 #include <QFileDialog>
@@ -122,7 +128,13 @@ void SwGuiDefaultItemDelegate::paint(QPainter *painter,
     value = index.data(Qt::CheckStateRole);
     if (value.isValid()) {
         checkState = static_cast<Qt::CheckState>(value.toInt());
-        checkRect = check(opt, opt.rect, value);
+		
+		#if QT_VERSION >= 0x050000 
+		checkRect = doCheck (opt, opt.rect, value);
+		#else 
+		checkRect = check (opt, opt.rect, value);
+		#endif
+			        
     }
 
     // do the layout

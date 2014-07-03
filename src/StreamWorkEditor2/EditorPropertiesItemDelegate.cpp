@@ -27,7 +27,7 @@ void EditorPropertiesItemDelegate::paint ( QPainter * painter, const QStyleOptio
     if (!index.isValid() || index.column()!=0) 
         return;
     QVariant value = index.model()->data(index, Qt::UserRole);
-    void * ptr=qVariantValue<void *>(value);
+    void * ptr=value.value<void*>();
     if(ptr==0) {
         return;
     }

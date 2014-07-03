@@ -121,6 +121,7 @@ void QInterestAreaTreeModel::onSelectItem(const QModelIndex & index) {
 // Interface IStreamControlerObserver
 //------------------------------------------------------------
 void QInterestAreaTreeModel::controlerHasChanged(){
+	beginResetModel();
     _items.clear();
     for(int i=0;i<_items.count();i++) {
         delete _items.at(i);
@@ -132,7 +133,7 @@ void QInterestAreaTreeModel::controlerHasChanged(){
         }
         qSort(_items.begin(), _items.end(), caseInsensitiveLessThan);
     }
-    reset();
+	endResetModel();
 }
 //-------------------------------------------------------------
 // Item

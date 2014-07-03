@@ -137,7 +137,7 @@ void PropertiesWidget::onReset( const QModelIndex & index ) {
     if (!index.isValid() || index.column()!=0) 
         return;
     QVariant value = index.model()->data(index, Qt::UserRole);
-    void * ptr=qVariantValue<void *>(value);
+    void * ptr=value.value<void*>();
     if(ptr==0) {
         return;
     }

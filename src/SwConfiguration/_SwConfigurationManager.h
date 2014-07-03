@@ -36,7 +36,7 @@
 #include <SwFileDescriptor.h>
 #include <ISwConfigurationController.h>
 //#include <ISwReplayManager.h>
-#include <ISwRecordManager.h>
+//#include <ISwRecordManager.h>
 #include <ISwConfigurationControllerListener.h>
 #include <_SwControllerActionStart.h>
 #include <_SwControllerActionStop.h>
@@ -194,7 +194,7 @@ protected:
 
     //StreamWork::SwRecord::ISwReplayManager            *   _iReplayInterface;
 
-    StreamWork::SwRecord::ISwRecordManager            *   _iRecordInterface;
+   // StreamWork::SwRecord::ISwRecordManager            *   _iRecordInterface;
 
     bool                                                  _isStarted;
     bool                                                  _configurationModified;

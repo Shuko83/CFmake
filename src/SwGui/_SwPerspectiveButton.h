@@ -7,7 +7,12 @@
 #ifndef _STREAMWORK_SWGUI__SWPERSPECTIVEBUTTON_H
 #define _STREAMWORK_SWGUI__SWPERSPECTIVEBUTTON_H
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
+
 #include "ISwPerspective.h"
 #include "ISwPerspectiveObserver.h"
 

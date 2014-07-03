@@ -7,7 +7,11 @@
 #ifndef _IANCHORABLEOBSERVER_H
 #define _IANCHORABLEOBSERVER_H
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
 
 /**
 @class IAnchorableObserver

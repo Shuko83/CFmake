@@ -181,15 +181,15 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
     if (name=="SwGuiCompToPropertiesModel") {
         return new _SwGuiCompToPropertiesModel;
     }
-    if (name=="SwGuiHttpServer") {
+    /*if (name=="SwGuiHttpServer") {
         return new _SwGuiCompHttpServer;
-    }
-    if (name=="SwGuiVisualLogConsole") {
+    }*/
+    /*if (name=="SwGuiVisualLogConsole") {
         return new _SwGuiVisualLogConsole;
-    }
-    if (name=="SwGuiVisualUpdater") {
+    }*/
+    /*if (name=="SwGuiVisualUpdater") {
         return new _SwGuiVisualUpdater;
-    }
+    }*/
     if (name=="SwPerspectivesManager") {
         return new _SwPerspectivesManager;
     }

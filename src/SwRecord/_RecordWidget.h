@@ -7,7 +7,8 @@
 #ifndef __RECORDWIDGET_H
 #define __RECORDWIDGET_H
 
-#include <QtGui>
+#include <QWidget>
+#include <QLabel>
 #include <QtCore>
 #include "ISwRecordManagerListener.h"
 

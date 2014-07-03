@@ -1,13 +1,18 @@
 /*
  * Classe widget console
  */
-#include <QtGui/QMainWindow>
+
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
+
 #include <QTimer>
 #include <QKeyEvent>
 #include <QShowEvent>
 #include <QWidget>
 #include <QLabel>
-#include <QWidget>
 #include <QStringList>
 
 #ifndef __SwConsoleWidget_H

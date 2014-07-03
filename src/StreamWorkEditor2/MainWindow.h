@@ -8,7 +8,11 @@
 #define _MAINWINDOW_H
 
 #include <QtCore>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
 #include "StreamView.h"
 #include "StreamControler.h"
 #include "QStreamTreeModel.h"

@@ -118,7 +118,7 @@ void StreamScene::mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent ){
     }
     if (_connectorToMove!=0) {
         ComponentGraphicItem * parent=(ComponentGraphicItem *)_connectorToMove->parentItem();
-        QGraphicsItem * tmpTarget=itemAt(mouseEvent->scenePos());
+        QGraphicsItem * tmpTarget=itemAt(mouseEvent->scenePos(), QTransform());
         if (tmpTarget!=0) {
             ConnectorGraphicItem * targetConnector=dynamic_cast<ConnectorGraphicItem *>(tmpTarget);
             if (_tmpTargetConnector!=0 && _tmpTargetConnector!=targetConnector) {
@@ -150,7 +150,7 @@ void StreamScene::mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent ){
 void StreamScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent ){
     QGraphicsScene::mousePressEvent(mouseEvent);
     if (mouseEvent->buttons().testFlag(Qt::LeftButton) && !(mouseEvent->modifiers() & Qt::ControlModifier)) {
-        QGraphicsItem * tmpTarget=itemAt(mouseEvent->scenePos());
+		QGraphicsItem * tmpTarget = itemAt(mouseEvent->scenePos(), QTransform());
         if (tmpTarget!=0) {
             _linkSrc=dynamic_cast<ConnectorGraphicItem *>(tmpTarget);
             if (_linkSrc!=0 && _linkSrc->getLinks()->isEmpty() &&
@@ -164,7 +164,7 @@ void StreamScene::mousePressEvent ( QGraphicsSceneMouseEvent * mouseEvent ){
         }
     } else 
     if (mouseEvent->buttons().testFlag(Qt::LeftButton) && (mouseEvent->modifiers() & Qt::ControlModifier)) {
-        QGraphicsItem * tmpTarget=itemAt(mouseEvent->scenePos());
+		QGraphicsItem * tmpTarget = itemAt(mouseEvent->scenePos(), QTransform());
         if (tmpTarget!=0) {
             _connectorToMove=dynamic_cast<ConnectorGraphicItem *>(tmpTarget);
             if (_connectorToMove!=0) {
@@ -188,7 +188,7 @@ void StreamScene::mouseReleaseEvent ( QGraphicsSceneMouseEvent * mouseEvent ){
     }
     if (_connectorToMove!=0) {
         ComponentGraphicItem * parent=(ComponentGraphicItem *)_connectorToMove->parentItem();
-        QGraphicsItem * tmpTarget=itemAt(mouseEvent->scenePos());
+		QGraphicsItem * tmpTarget = itemAt(mouseEvent->scenePos(), QTransform());
         showAllItems(_connectorToMove);
         QApplication::restoreOverrideCursor();
         if (tmpTarget!=0) {

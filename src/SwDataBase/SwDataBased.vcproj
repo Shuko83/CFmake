@@ -19,7 +19,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\ExceptionManager\src&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Base&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Interfaces&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Pin&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Services&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Services\ServiceImpl&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Extensions&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Connexion&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Plugin&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Serialization&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\Management&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\ServiceConfiguration&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\ServiceImpl&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\ServiceShortcut&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\ServiceUnitSI&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Properties&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\SwRef&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Tools&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Tools\Exception&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Tools\Log&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Tools\Signal&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Types&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Types\UserType&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\mocd&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\ExceptionManager\src&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwCore\Component&quot;,&quot;..\SwCore\Component\Base&quot;,&quot;..\SwCore\Component\Interfaces&quot;,&quot;..\SwCore\Component\Pin&quot;,&quot;..\SwCore\Component\Services&quot;,&quot;..\SwCore\Component\Services\ServiceImpl&quot;,&quot;..\SwCore\Extensions&quot;,&quot;..\SwCore\Main&quot;,&quot;..\SwCore\Main\Connexion&quot;,&quot;..\SwCore\Main\Plugin&quot;,&quot;..\SwCore\Main\Serialization&quot;,&quot;..\SwCore\Main\Services&quot;,&quot;..\SwCore\Main\Services\Management&quot;,&quot;..\SwCore\Main\Services\ServiceConfiguration&quot;,&quot;..\SwCore\Main\Services\ServiceImpl&quot;,&quot;..\SwCore\Main\Services\ServiceShortcut&quot;,&quot;..\SwCore\Main\Services\ServiceUnitSI&quot;,&quot;..\SwCore\Properties&quot;,&quot;..\SwCore\SwRef&quot;,&quot;..\SwCore\Tools&quot;,&quot;..\SwCore\Tools\Exception&quot;,&quot;..\SwCore\Tools\Log&quot;,&quot;..\SwCore\Tools\Signal&quot;,&quot;..\SwCore\Types&quot;,&quot;..\SwCore\Types\UserType&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
 				AssemblerListingLocation="GeneratedFiles\objd\"
 				BasicRuntimeChecks="3"
@@ -29,7 +29,7 @@
 				GeneratePreprocessedFile="0"
 				ObjectFile="GeneratedFiles\objd\"
 				Optimization ="0"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWDATASBASE_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,Q_OS_WIN,SWDATASBASE_LIB,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,Q_OS_WIN,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
 				ProgramDataBaseFileName="$(IntDir)\SwDataBase_vc90.pdb"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
@@ -40,13 +40,13 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../lib/vc/debug\SwCored.lib ../../lib/vc/debug\SwExecutiond.lib ../../../../Libraries/ExceptionManager/lib/vc/debug\ExceptionManagerd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug,../../../../Libraries/ExceptionManager/lib/vc/debug"
+				AdditionalDependencies="../../\lib\vc\debug\SwCored.lib ../../\lib\vc\debug\SwExecutiond.lib C:/Projects/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/ExceptionManager/\lib\vc\debug\ExceptionManagerd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../\lib\vc\debug,C:/Projects/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/ExceptionManager/\lib\vc\debug"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
 				LinkTimeCodeGeneration="0"
 				OutputFile="..\..\lib\vc\debug\SwDataBased.swdld"
-				ProgramDatabaseFile="./../../bin/vc/debug/SwDataBased.pdb"
+				ProgramDatabaseFile="../..\bin\vc\debug/SwDataBased.pdb"
 				SubSystem="0"
 				SuppressStartupBanner="true" />
 			<Tool
@@ -64,7 +64,7 @@
 				Name="VCPreLinkEventTool" />
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWDATASBASE_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,Q_OS_WIN,SWDATASBASE_LIB,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,Q_OS_WIN,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -75,7 +75,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\ExceptionManager\src&quot;,&quot;.&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Base&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Interfaces&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Pin&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Services&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Component\Services\ServiceImpl&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Extensions&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Connexion&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Plugin&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Serialization&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\Management&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\ServiceConfiguration&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\ServiceImpl&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\ServiceShortcut&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Main\Services\ServiceUnitSI&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Properties&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\SwRef&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Tools&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Tools\Exception&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Tools\Log&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Tools\Signal&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Types&quot;,&quot;..\..\..\..\Libraries\StreamWork\src\SwCore\Types\UserType&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;.&quot;,&quot;..\..\..\ExceptionManager\src&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwCore\Component&quot;,&quot;..\SwCore\Component\Base&quot;,&quot;..\SwCore\Component\Interfaces&quot;,&quot;..\SwCore\Component\Pin&quot;,&quot;..\SwCore\Component\Services&quot;,&quot;..\SwCore\Component\Services\ServiceImpl&quot;,&quot;..\SwCore\Extensions&quot;,&quot;..\SwCore\Main&quot;,&quot;..\SwCore\Main\Connexion&quot;,&quot;..\SwCore\Main\Plugin&quot;,&quot;..\SwCore\Main\Serialization&quot;,&quot;..\SwCore\Main\Services&quot;,&quot;..\SwCore\Main\Services\Management&quot;,&quot;..\SwCore\Main\Services\ServiceConfiguration&quot;,&quot;..\SwCore\Main\Services\ServiceImpl&quot;,&quot;..\SwCore\Main\Services\ServiceShortcut&quot;,&quot;..\SwCore\Main\Services\ServiceUnitSI&quot;,&quot;..\SwCore\Properties&quot;,&quot;..\SwCore\SwRef&quot;,&quot;..\SwCore\Tools&quot;,&quot;..\SwCore\Tools\Exception&quot;,&quot;..\SwCore\Tools\Log&quot;,&quot;..\SwCore\Tools\Signal&quot;,&quot;..\SwCore\Types&quot;,&quot;..\SwCore\Types\UserType&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
 				AdditionalOptions="-Zm200 /MP -w34100 -w34189"
 				AssemblerListingLocation="GeneratedFiles\obj\"
 				BasicRuntimeChecks="3"
@@ -85,7 +85,7 @@
 				GeneratePreprocessedFile="0"
 				ObjectFile="GeneratedFiles\obj\"
 				Optimization ="0"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWDATASBASE_LIB,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,Q_OS_WIN,SWDATASBASE_LIB,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,Q_OS_WIN,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
 				ProgramDataBaseFileName="$(IntDir)\SwDataBase_vc90.pdb"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
@@ -96,8 +96,8 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../lib/vc/release\SwCore.lib ../../lib/vc/release\SwExecution.lib ../../../../Libraries/ExceptionManager/lib/vc/release\ExceptionManager.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/release,../../../../Libraries/ExceptionManager/lib/vc/release"
+				AdditionalDependencies="../../\lib\vc\release\SwCore.lib ../../\lib\vc\release\SwExecution.lib C:/Projects/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/ExceptionManager/\lib\vc\release\ExceptionManager.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../\lib\vc\release,C:/Projects/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/ExceptionManager/\lib\vc\release"
 				GenerateDebugInformation="false"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
@@ -121,7 +121,7 @@
 				Name="VCPreLinkEventTool" />
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWDATASBASE_LIB,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,Q_OS_WIN,SWDATASBASE_LIB,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,Q_OS_WIN,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
 		</Configuration>
 	</Configurations>
 	<Files>
@@ -157,49 +157,55 @@
 			Name="Generated Files"
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
 			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
-			<File
-				RelativePath="GeneratedFiles\rcc\qrc_SwDatasBaseRsc.cpp">
-				<FileConfiguration
-					Name="Debug|Win32"
-					ExcludedFromBuild="true" />
-			</File>
-			<File
-				RelativePath="GeneratedFiles\rccd\qrc_SwDatasBaseRsc.cpp">
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true" />
-			</File>
+			<Filter
+				Name="GeneratedFiles"
+				Filter="">
+				<Filter
+					Name="rcc"
+					Filter="">
+					<File
+						RelativePath="GeneratedFiles\rcc\qrc_SwDatasBaseRsc.cpp" />
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="qrc;*"
 			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
 			ParseFiles="false">
-			<File
-				RelativePath="_resources\SwDatasBaseRsc.qrc">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwDatasBaseRsc.qrc;_resources\images\router.png"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwDatasBaseRsc _resources\SwDatasBaseRsc.qrc -o GeneratedFiles\rccd\qrc_SwDatasBaseRsc.cpp"
-						Description="RCC _resources\SwDatasBaseRsc.qrc"
-						Outputs="GeneratedFiles\rccd\qrc_SwDatasBaseRsc.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwDatasBaseRsc.qrc;_resources\images\router.png"
-						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwDatasBaseRsc _resources\SwDatasBaseRsc.qrc -o GeneratedFiles\rcc\qrc_SwDatasBaseRsc.cpp"
-						Description="RCC _resources\SwDatasBaseRsc.qrc"
-						Outputs="GeneratedFiles\rcc\qrc_SwDatasBaseRsc.cpp"
-						Path="c:\Qt\4.7.1\bin" />
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="_resources\images\router.png" />
+			<Filter
+				Name="_resources"
+				Filter="">
+				<Filter
+					Name="images"
+					Filter="">
+					<File
+						RelativePath="_resources\images\router.png" />
+				</Filter>
+				<File
+					RelativePath="_resources\SwDatasBaseRsc.qrc">
+					<FileConfiguration
+						Name="Debug|Win32">
+						<Tool
+							Name="VCCustomBuildTool"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwDatasBaseRsc.qrc;_resources\images\router.png"
+							CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwDatasBaseRsc _resources\SwDatasBaseRsc.qrc -o GeneratedFiles\rcc\qrc_SwDatasBaseRsc.cpp"
+							Description="RCC _resources\SwDatasBaseRsc.qrc"
+							Outputs="GeneratedFiles\rcc\qrc_SwDatasBaseRsc.cpp"
+							Path="c:\Qt\4.7.1\bin" />
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32">
+						<Tool
+							Name="VCCustomBuildTool"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwDatasBaseRsc.qrc;_resources\images\router.png"
+							CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwDatasBaseRsc _resources\SwDatasBaseRsc.qrc -o GeneratedFiles\rcc\qrc_SwDatasBaseRsc.cpp"
+							Description="RCC _resources\SwDatasBaseRsc.qrc"
+							Outputs="GeneratedFiles\rcc\qrc_SwDatasBaseRsc.cpp"
+							Path="c:\Qt\4.7.1\bin" />
+					</FileConfiguration>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

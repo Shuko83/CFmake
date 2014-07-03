@@ -8,7 +8,11 @@
 #define _STREAMSCENE_H
 
 #include <QtCore>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
 #include <QGLWidget>
 #include <QGraphicsScene>
 #include "IAnchorableObserver.h"

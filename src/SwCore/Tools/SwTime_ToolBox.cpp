@@ -16,7 +16,7 @@
 #endif
 
 //include winNt
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <windows.h>
 #define CL_SYS_1_JANVIER_1970   11644473600000LL       //1 janvier 1970 ?00h00mn00 en ms
 #endif
@@ -34,7 +34,7 @@ ULONGLONG _startTickCount;
 
 /*! \brief Permet de recuperer le nombre de seconde depuis le 1 janvier 1970*/
 double SwTime_ToolBox::GetTime() {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     if (!_isInitialized) {
         SYSTEMTIME st;
         FILETIME fTime;
@@ -79,7 +79,7 @@ double SwTime_ToolBox::GetTime() {
 }
 /*! \brief Permet d'attendre un certain nombre de millisecondes*/
 void SwTime_ToolBox::InternalSleep(unsigned int time_ms) {
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
         Sleep(time_ms);
 #endif
 #ifdef Q_OS_LINUX

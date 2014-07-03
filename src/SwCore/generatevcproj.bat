@@ -1,1 +1,1 @@
-qmake -tp vc -o SwCored.vcproj SwCore.pro
+qmake -tp vc 

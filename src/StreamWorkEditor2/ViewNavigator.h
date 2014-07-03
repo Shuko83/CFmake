@@ -7,7 +7,12 @@
 #ifndef _VIEWNAVIGATOR_H
 #define _VIEWNAVIGATOR_H
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
+
 #include "IStreamViewObserver.h"
 #include "StreamView.h"
 /**

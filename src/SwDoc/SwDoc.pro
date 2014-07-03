@@ -1,8 +1,10 @@
 TEMPLATE = lib
 TARGET = SwDoc
-PROJECTS_PATH = ../../../..
+PROJECTS_PATH = $$PWD/../../../..
 
-QT += core sql
+include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
+
+QT += core sql widgets
 
 HEADERS +=  *.h 
 
@@ -18,28 +20,24 @@ INCLUDEPATH += ./ \
 	../../../QDjango/src/
 	
     
-CONFIG(debug, debug|release) {
-	DESTDIR = ./../../lib/vc/debug
-	DLLDESTDIR=  ./../../bin/vc/debug
+DESTDIR = ./../../$$LIB_PATH
+DLLDESTDIR=  ./../../$$BIN_PATH
 
-	LIBS += -L"../../../QDjango/lib/vc/debug" -lQDjangod
-	LIBS += -L"../../lib/vc/debug" -lSwCored
-	TARGET_EXT = .dlld
+LIB_PATH ~= s,/,\\,g
+BIN_PATH ~= s,/,\\,g
+
+CONFIG(debug, debug|release) {
+
+	LIBS += -L"../../../QDjango\\$$LIB_PATH" -lQDjangod
+	LIBS += -L"../../$$LIB_PATH" -lSwCored
+	TARGET_EXT = .swdld
 	
-	QMAKE_POST_LINK = "xcopy /Y .\\_resources\\libmySQL.dll ..\\..\\bin\\vc\\debug\\" &
-	QMAKE_POST_LINK += "xcopy /Y .\\_resources\\sqldrivers\\qsqlmysqld4.dll ..\\..\\bin\\vc\\debug\\sqldrivers\\" 
 } 
 
 CONFIG(release, debug|release) {
-	DESTDIR = ./../../lib/vc/release
-	DLLDESTDIR=  ./../../bin/vc/release
-	
-	LIBS += -L"../../../QDjango/lib/vc/release" -lQDjango
-	LIBS += -L"../../lib/vc/release" -lSwCore
-	TARGET_EXT = .dll
-
-	QMAKE_POST_LINK = "xcopy /Y .\\_resources\\libmySQL.dll ..\\..\\bin\\vc\\debug\\" &
-	QMAKE_POST_LINK += "xcopy /Y .\\_resources\\sqldrivers\\qsqlmysql4.dll ..\\..\\bin\\vc\\debug\\sqldrivers\\"
+	TARGET_EXT = .swdl	
+	LIBS += -L"../../../QDjango\\$$LIB_PATH" -lQDjango
+	LIBS += -L"../../$$LIB_PATH" -lSwCore
 }
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

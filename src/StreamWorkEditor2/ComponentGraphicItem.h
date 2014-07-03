@@ -8,7 +8,11 @@
 #define _COMPONENTGRAPHICITEM_H
 
 #include <QtCore>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
 #include <SwComponent_Class.h>
 #include <ISwExecutable_Service.h>
 #include <ISwExecution_Service.h>

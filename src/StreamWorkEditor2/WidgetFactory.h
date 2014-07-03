@@ -7,7 +7,11 @@
 #ifndef _WIDGETFACTORY_H
 #define _WIDGETFACTORY_H
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
 #include "PropertiesWidget.h"
 #include "QStreamTreeModel.h"
 #include "..\SwDoc\EditDoc.h"

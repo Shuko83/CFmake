@@ -1,8 +1,16 @@
 TEMPLATE = lib
 TARGET = SwEditor
-PROJECTS_PATH = ../../../..
+PROJECTS_PATH = $$PWD/../../../..
 
 QT += core gui xml
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+} 
+
+PLUGINS=SW
+
+include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
 HEADERS += ISwEditorGraphicItem.h \
     ISwEditorGraphicScene.h \
@@ -89,26 +97,23 @@ INCLUDEPATH += ./ \
     ../SwGui \
     ../StreamWorkEditor2
     
-    
+DESTDIR = ../../$$LIB_PATH
+DLLDESTDIR=  ../..$$BIN_PATH
+
+LIBS += -L"../../$$LIB_PATH" 
     
 CONFIG(debug, debug|release) {
-	DESTDIR = ./../../lib/vc/debug
-	DLLDESTDIR=  ./../../bin/vc/debug
-	
-	LIBS += -L"../../lib/vc/debug" \
-    -lSwCored \
+	LIBS += -lSwCored \
     -lSwExecutiond \
     -lSwGuid
+
 	TARGET_EXT = .swdld
 } 
-CONFIG(release, debug|release) {
-	DESTDIR = ./../../lib/vc/release
-	DLLDESTDIR=  ./../../bin/vc/release
-	
-	LIBS += -L"../../lib/vc/release" \
-    -lSwCore \
+CONFIG(release, debug|release) {	
+	LIBS += -lSwCore \
     -lSwExecution \
     -lSwGui
+
 	TARGET_EXT = .swdl
 }
 

@@ -13,9 +13,11 @@
 #include "Shortcut.h"
 #include "Interface.h"
 
+#include <QMessageBox>
+
 
 //-------------------------------------------------------------------------
-SWGenerator::SWGenerator(QWidget *parent, Qt::WFlags flags)
+SWGenerator::SWGenerator(QWidget *parent, Qt::WindowFlags flags)
 : QMainWindow(parent, flags)
 {
 	ui.setupUi(this);
@@ -363,11 +365,13 @@ void SWGenerator::writeSettings()
 void SWGenerator::readSettings()
 {
 	//Get username of the windows sessions
-	TCHAR name [ UNLEN + 1 ];
+	/*TCHAR name [ UNLEN + 1 ];
 	DWORD size = UNLEN + 1;
 	QString username = "";
 	if (GetUserName( (TCHAR*)name, &size ))
-		username = QString::fromUtf16(name).toUpper();
+		username = QString::fromUtf16(name).toUpper();*/
+
+	QString username = QDir::home().dirName();
 
 
 	QSettings settings(QSettings::IniFormat, QSettings::UserScope,"SwGenerator", "Config");

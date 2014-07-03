@@ -11,7 +11,7 @@
 #include <SwApplication.h>
 #include <SwMacros.h>
 #include "_SwGuiCompMainWindow.h"
-#include "..\src\gui\kernel\qevent.h"
+#include <QEvent>
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;

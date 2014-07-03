@@ -58,7 +58,11 @@ void ViewNavigator::paintEvent(QPaintEvent * /*event*/) {
 /** @brief sur click de la souris */
 void ViewNavigator::mousePressEvent ( QMouseEvent * e ) {
     if (!_movingInProgress) {
-        if (_rViewNav.contains(e->posF())) {
+#if QT_VERSION >= 0x050000
+		if (_rViewNav.contains(e->localPos())) {
+#else
+		if (_rViewNav.contains(e->pos())) {
+#endif        
             setCursor(Qt::SizeAllCursor);   
             _movingInProgress=true;
             pstart=e->pos();
@@ -72,7 +76,11 @@ void ViewNavigator::mousePressEvent ( QMouseEvent * e ) {
 /* \brief Evenement sourie en deplacement */
 void ViewNavigator::mouseMoveEvent ( QMouseEvent * e ){
     if (!_movingInProgress) {
-        if (_rViewNav.contains(e->posF())) {
+#if QT_VERSION >= 0x050000
+		if (_rViewNav.contains(e->localPos())) {
+#else
+		if (_rViewNav.contains(e->pos())) {
+#endif 
             setCursor(Qt::SizeAllCursor);    
         } else {
             setCursor(Qt::ArrowCursor); 

@@ -1,13 +1,14 @@
 #ifndef SWGENERATOR_H
 #define SWGENERATOR_H
 
-#include <QtGui/QMainWindow>
+#include <QMainWindow>
 #include "ui_SWGenerator.h"
 #include <QCompleter>
 #include <QSettings>
 #include <QCTemplate.h>
-#include <QtGui>
 #include "Component.h"
+
+#include <QProgressDialog>
 
 struct XmlPath
 {
@@ -28,7 +29,7 @@ class SWGenerator : public QMainWindow
 	Q_OBJECT
 
 public:
-	SWGenerator(QWidget *parent = 0, Qt::WFlags flags = 0);
+	SWGenerator(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~SWGenerator();
 
 	bool generatePlugin();

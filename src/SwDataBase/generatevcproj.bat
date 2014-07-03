@@ -1,1 +1,1 @@
-qmake -tp vc -o SwDataBased.vcproj SwDataBase.pro
+qmake -tp vc

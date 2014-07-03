@@ -1,6 +1,8 @@
 TEMPLATE = lib
 TARGET = SwFoundation
-PROJECTS_PATH = ../../../..
+PROJECTS_PATH = $$PWD/../../../..
+
+include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
 QT += core xml
 	
@@ -17,20 +19,18 @@ INCLUDEPATH += ./ \
 	../SwGui/ \
 	../SwExecution
 
-    
-CONFIG(debug, debug|release) {
-	DESTDIR = ./../../lib/vc/debug
-	DLLDESTDIR=  ./../../bin/vc/debug
-	
-	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwExecutiond
+DESTDIR = ./../../$$LIB_PATH
+DLLDESTDIR=  ./../../$$BIN_PATH
+
+LIBS += -L"../../$$LIB_PATH"
+   
+CONFIG(debug, debug|release) {	
+	LIBS += -lSwCored -lSwExecutiond
 	TARGET_EXT = .swdld
 } 
 
-CONFIG(release, debug|release) {
-	DESTDIR = ./../../lib/vc/release
-	DLLDESTDIR=  ./../../bin/vc/release
-	
-	LIBS += -L"../../lib/vc/release" -lSwCore -lSwExecution
+CONFIG(release, debug|release) {	
+	LIBS += -lSwCore -lSwExecution
 	TARGET_EXT = .swdl
 }
 

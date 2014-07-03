@@ -196,9 +196,9 @@ QVariant InterestArea::itemChange ( GraphicsItemChange change,
                                    const QVariant & value ) {
     QVariant result=QGraphicsItem::itemChange(change, value);
     if (change == ItemPositionHasChanged) {
-		if(!children().isEmpty())
+		if(!childItems().isEmpty())
 		{
-			foreach(QGraphicsItem *item , children())
+			foreach(QGraphicsItem *item, childItems())
 			{
 				ComponentGraphicItem * component = dynamic_cast<ComponentGraphicItem*>(item);
 				if(component)

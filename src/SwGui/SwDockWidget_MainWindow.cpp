@@ -6,7 +6,7 @@
 #include <QMenuBar>
 
 //-----------------------------------------------------------------------------
-SwDockWidget_MainWindow::SwDockWidget_MainWindow(QWidget *parent, Qt::WFlags flags)
+SwDockWidget_MainWindow::SwDockWidget_MainWindow(QWidget *parent, Qt::WindowFlags flags)
 	: QMainWindow(parent, flags)
 {
 	//Chargement des parametres de la fenetre

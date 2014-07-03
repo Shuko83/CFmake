@@ -203,7 +203,8 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString roo
 
     if (_properties!=properties) {
         //Signal avant changement
-        
+		beginResetModel();
+
         //Si l'ancienne collection de propriétés est definie
         if (_properties!=NULL) {
             //Desenregistrement des signaux
@@ -237,13 +238,15 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString roo
 
         }
         //Signal apres changement
-        reset();
+		endResetModel();
     }
 }
 
 //-------------------------------------------------------------------------
 void SwPropertiesModelImpl::SetProperties(QList<StarlinxProperty> inProperties_list, QString rootName, QString rootLabel )
 {
+	beginResetModel();
+
 	_map_properties_to_item.clear();
 
 	if (_root_item)
@@ -304,7 +307,7 @@ void SwPropertiesModelImpl::SetProperties(QList<StarlinxProperty> inProperties_l
 	}
 
 	//Signal apres changement
-	reset();
+	endResetModel();
 }
 
 

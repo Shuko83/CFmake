@@ -1,7 +1,12 @@
 #ifndef SWDOCKWIDGET_TABWIDGET_H
 #define SWDOCKWIDGET_TABWIDGET_H
 
-#include <QtGui/QWidget>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
+
 #include <QTabWidget>
 #include "SwDockWidget_DockWidget.h"
 

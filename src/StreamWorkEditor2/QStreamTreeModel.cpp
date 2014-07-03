@@ -17,20 +17,20 @@ QStreamTreeModel::QStreamTreeModel(QObject * parent):QAbstractItemModel(parent) 
 /** @brief definition du controler */
 void QStreamTreeModel::setStreamControler(StreamControler * controler) {
     if (_controler!=controler) {
+		beginResetModel();
         if (_controler!=0) {
             _controler->removeSelectionObserver(this);
             recursiveDisconnectToControler(_rootComponent);
             _controler=0;
             _rootComponent=0;
-            reset();
-        }
+	    }
         _controler=controler;
         if (_controler!=0) {
             _rootComponent=_controler->getRootItem();
             recursiveConnectToControler(_rootComponent);
             _controler->addSelectionObserver(this);
-            reset();
         }
+		endResetModel();
     }
 }
 //-------------------------------------------------------------

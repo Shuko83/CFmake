@@ -2,7 +2,6 @@
 
 #include <QApplication>
 #include <QMessageBox>
-#include <QPlastiqueStyle>
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
@@ -33,7 +32,7 @@ Build on %2 at %3\n";
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-	QApplication::setStyle(new QPlastiqueStyle);
+	//QApplication::setStyle(new QPlastiqueStyle);
     QStringList liste_arg;
     int nb_args;
 	QString stream_desc;

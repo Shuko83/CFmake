@@ -3,6 +3,8 @@
 #include "Shortcut.h"
 #include "Interface.h"
 
+#include <QFileDialog>
+
 
 Component::Component(QWidget *parent)
 	: QWidget(parent)

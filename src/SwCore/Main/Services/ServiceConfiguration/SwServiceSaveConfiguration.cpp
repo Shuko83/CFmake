@@ -6,6 +6,7 @@
 
 
 #include <QMessageBox>
+#include <qfiledialog.h>
 #include <QDebug>
 
 

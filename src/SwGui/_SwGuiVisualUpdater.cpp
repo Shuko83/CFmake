@@ -100,12 +100,12 @@ QString  _SwGuiVisualUpdater::getPath() {
     return "/update";
 }
 /*! @brief process de la requete */
-void _SwGuiVisualUpdater::processRequest(QHttpRequestHeader * request,
+void _SwGuiVisualUpdater::processRequest(/*QHttpRequestHeader * request,*/
                             QMap<QString,QString> * parameters,
                             QByteArray * body,
                             QIODevice * device) 
 {
-    if (request->path().startsWith("/update")) {
+    /*if (request->path().startsWith("/update")) {
         if (_isUpdateLocked) {
             QHttpResponseHeader httpreponse(200,"Ok",1,1);
             httpreponse.setContentType("text/html");
@@ -147,7 +147,7 @@ void _SwGuiVisualUpdater::processRequest(QHttpRequestHeader * request,
             device->write(_updateHtmlBody);
         }
         return;
-    }
+    }*/
 
 }
 /*! @breif  sur mise a jour du tray icon */
@@ -284,10 +284,10 @@ void _SwGuiVisualUpdater::saveFile(QString filename,QString contentType,QByteArr
     //}
 }
 /*! @brief envoie du status */
-void _SwGuiVisualUpdater::sendStatus(QHttpRequestHeader * request,QIODevice *device) {
-    QHttpResponseHeader httpreponse(200,"Ok",1,1);
+void _SwGuiVisualUpdater::sendStatus(/*QHttpRequestHeader * request,*/QIODevice *device) {
+    /*QHttpResponseHeader httpreponse(200,"Ok",1,1);
     httpreponse.setContentType("text/xml");
-    device->write(buildStatus().toUtf8());
+    device->write(buildStatus().toUtf8());*/
 }
 /*! @brief construction du status */
 QString _SwGuiVisualUpdater::buildStatus() {

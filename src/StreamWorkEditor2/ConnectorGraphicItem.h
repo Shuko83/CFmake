@@ -8,7 +8,11 @@
 #define _CONNECTORGRAPHICITEM_H
 
 #include <QtCore>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
 
 #define CL_CONNECTOR_BBSIZE 20.0
 #define CL_CONNECTOR_SIZE 12.0

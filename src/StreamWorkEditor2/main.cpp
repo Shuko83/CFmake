@@ -2,8 +2,6 @@
 
 #include <QApplication>
 #include <QMessageBox>
-#include <QPlastiqueStyle>
-#include <QCleanlooksStyle>
 #include <QFile>
 #include <QDir>
 #include <QTextStream>

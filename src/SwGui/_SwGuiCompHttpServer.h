@@ -100,7 +100,7 @@ public:
     /*! @brief Renvoie le path de la partie  */
 	virtual QString  getPath();
     /*! @brief process de la requete */
-    virtual void processRequest(QHttpRequestHeader * request,
+    virtual void processRequest(/*QHttpRequestHeader * request,*/
                                 QMap<QString,QString> * parameters,
                                 QByteArray * body,
                                 QIODevice * device);

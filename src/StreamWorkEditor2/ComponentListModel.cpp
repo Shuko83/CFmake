@@ -87,6 +87,8 @@ void ComponentListModel::onSelectedPluginChanged(const QModelIndex & index)
 	_map.clear();
     if (index.isValid())
 	{
+		beginResetModel();
+
 		_plugin=static_cast<SwPluginFactory_Class *>(index.internalPointer());
 		if(_plugin)
 		{
@@ -106,7 +108,7 @@ void ComponentListModel::onSelectedPluginChanged(const QModelIndex & index)
 		}
         //_cList=_plugin->GetComponentsList().toList();
         //_cList.sort();
-        reset();
+        endResetModel();
     } else {
         clear();
     }
@@ -115,9 +117,10 @@ void ComponentListModel::onSelectedPluginChanged(const QModelIndex & index)
 //-------------------------------------------------------------------------
 void ComponentListModel::clear()
 {
+	beginResetModel();
 	_plugin=0;
 	_map.clear();
-	reset();
+	endResetModel();
 }
 
 //-------------------------------------------------------------------------
@@ -127,6 +130,7 @@ void ComponentListModel::manageList(QStringList listComponent)
 
 	if (!listComponent.isEmpty()) 
 	{
+		beginResetModel();
 		int indice=0;
  		foreach(QString componentName,listComponent)
  		{
@@ -146,7 +150,7 @@ void ComponentListModel::manageList(QStringList listComponent)
  				}
  			}
  		}
-		reset();
+		endResetModel();
 	} 
 	else 
 	{

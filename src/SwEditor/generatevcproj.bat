@@ -1,1 +1,1 @@
-qmake -tp vc -o SwEditord.vcproj SwEditor.pro
+qmake -tp vc

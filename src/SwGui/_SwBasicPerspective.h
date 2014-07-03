@@ -7,7 +7,12 @@
 #ifndef _STREAMWORK_SWGUI__SWBASICPERSPECTIVE_H
 #define _STREAMWORK_SWGUI__SWBASICPERSPECTIVE_H
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
+
 #include "SwDefaultPerspective.h"
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>

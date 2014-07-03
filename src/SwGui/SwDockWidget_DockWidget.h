@@ -1,8 +1,12 @@
 #ifndef SWDOCKWIDGET_DOCKWIDGET_H
 #define SWDOCKWIDGET_DOCKWIDGET_H
 
-#include <QtGui/QWidget>
-#include <QtGui/qdockwidget.h>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
+
 #include <QTimer>
 
 namespace Ui {

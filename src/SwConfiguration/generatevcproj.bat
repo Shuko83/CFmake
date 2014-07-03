@@ -1,1 +1,1 @@
-qmake -tp vc -o SwConfigurationd.vcproj SwConfiguration.pro
+qmake -tp vc 

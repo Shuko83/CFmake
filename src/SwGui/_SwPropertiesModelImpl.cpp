@@ -163,7 +163,8 @@ void _SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString ro
 
     if (_properties!=properties) {
         //Signal avant changement
-        
+		beginResetModel();
+
         //Si l'ancienne collection de propriétés est definie
         if (_properties!=NULL) {
             //Desenregistrement des signaux
@@ -196,7 +197,7 @@ void _SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString ro
 
         }
         //Signal apres changement
-        reset();
+        endResetModel();
     }
 }
 /*! \brief callback sur changement de controle */

@@ -13,7 +13,7 @@
   */
 #include <QString>
 #include <QByteArray>
-#include <QHttpRequestHeader>
+//#include <QHttpRequestHeader>
 #include <QIODevice>
 
 namespace StreamWork
@@ -71,11 +71,11 @@ namespace StreamWork
             /*! @brief Renvoie le path de la partie  */
 			virtual QString  getPath()=0;
             /*! @brief process de la requete */
-            virtual void processRequest(QHttpRequestHeader * request,
+            virtual void processRequest(/*QHttpRequestHeader * request,
                                         QMap<QString,QString> * parameters,
                                         QByteArray * body,
                                         QIODevice * device
-                                        )=0;
+                                        */)=0;
 		};
 	}
 }

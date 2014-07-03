@@ -6,7 +6,6 @@
  \author F.Bighelli
 */
 
-#include <QApplication>
 #include <QLibrary>
 #include <QProcess>
 #include <QRegExp>
@@ -22,14 +21,16 @@
 #include "SwData_Class.h"
 #include "_SwTreeItem.h"
 
-#ifdef Q_WS_WIN
+#include <stdlib.h> 
+
+#ifdef Q_OS_WIN
     //Enregistrement du path dans le path applicatif
 #include <windows.h>
 #include "ImageHlp.h"
 #define WIN32_BUFSIZE 30000
 #include <QMessageBox>
 TCHAR chNewEnv[WIN32_BUFSIZE];
-#define VARNAME_PATH TEXT("PATH")
+#define VARNAME_PATH "PATH"
 #define VARNAME_USER TEXT("USERNAME")
 #endif
 
@@ -37,6 +38,19 @@ using namespace StreamWork::SwCore;
 
 /*! \brief list des popups déjà popé pour une DLL pour éviter le flood */
 static QList<QString> _msgBoxAllReadyPopup;
+
+
+
+int setenv(const char *name, const char *value, int overwrite)
+{
+	int errcode = 0;
+	if(!overwrite) {
+		size_t envsize = 0;
+		errcode = getenv_s(&envsize, NULL, 0, name);
+		if(errcode || envsize) return errcode;
+	}
+	return _putenv_s(name, value);
+}
 
 //--- DLL access 
 template <class T> PIMAGE_SECTION_HEADER GetEnclosingSectionHeader(DWORD rva, T* pNTHeader) // 'T' == PIMAGE_NT_HEADERS 
@@ -108,12 +122,12 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
                                            image->MappedAddress) );
             //qDebug("Checking %s", result.toLatin1().data());
             SW_APP->Logger().Log(LogLvl_Info,QString("Checking %1").arg(result));
-            if (0==LoadLibrary(result.utf16())) {
+            if (0==LoadLibrary(result.toStdWString().c_str())) {
                      DWORD error=GetLastError();
                      //qDebug(QString("-->LoadLibrary failed for %1:%2)").arg(result).arg(error).toLatin1().data());
                      SW_APP->Logger().Log(LogLvl_Critical,QString("Check %1 failed :error core:%2").arg(result).arg(error));
                      if (depth>0) {
-                        DumpDllFromPath(result.utf16(),depth-1);
+						 DumpDllFromPath(result.toStdWString().c_str(), depth - 1);
                      }
             }
             importDesc++;
@@ -142,7 +156,7 @@ _SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel() {
     dwRet = GetEnvironmentVariable(VARNAME_USER, chNewEnv, WIN32_BUFSIZE);
     if (dwRet<=WIN32_BUFSIZE) {
 #ifdef UNICODE
-       userName = QString::fromUtf16(chNewEnv);
+		userName = (LPSTR)chNewEnv;
 #else
        userName = QString::fromLocal8Bit(chNewEnv);
 #endif
@@ -191,39 +205,22 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
         if (!it.value() && registerable) it.value()=registerable;
         return;
     }
-#ifdef Q_WS_WIN
-    //Enregistrement du path dans le path applicatif
-    DWORD dwRet;
-    dwRet = GetEnvironmentVariable(VARNAME_PATH, chNewEnv, WIN32_BUFSIZE);
-    if (dwRet<=WIN32_BUFSIZE) {
-        QString tmppath=realPath;
-        tmppath=tmppath.replace('/','\\');
-        #ifdef UNICODE
-        QString qstrMessage = QString::fromUtf16(chNewEnv);
-        #else
-        qstrMessage = QString::fromLocal8Bit(chNewEnv);
-        #endif
-        qstrMessage+=";";
-        qstrMessage+=tmppath;
-/*#ifndef QT_NO_DEBUG
-        SW_APP->Logger().Log(LogLvl_Warning,QString(">>>> path size %1\n").arg(qstrMessage.length()));
-#endif*/
-        #ifdef UNICODE
-        bool result=SetEnvironmentVariable(VARNAME_PATH, (wchar_t*) qstrMessage.utf16());
-        #else
-        bool result=SetEnvironmentVariable(VARNAME_PATH, qstrMessage.local8Bit().constData());
-        #endif
-        if (!result) 
-			SW_APP->Logger().Log(LogLvl_Warning,QString("Failed to set PATH environment variable (pathSize : %1)\n").arg(qstrMessage.length()));
-        else
-            if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("PATH= %1\n").arg(qstrMessage));
 
-    } else {
-        QString msg=QString("Failed to get PATH environment variable");
-        LAUNCH_SWEXCEPTION("SwPluginsBank_Class",msg)
-    }
-#endif
-    //Ajout a la liste des path
+	QDir pathDir(realPath);
+	QString qstrMessage(getenv ("PATH"));
+    
+    qstrMessage+=";";
+    qstrMessage+=pathDir.canonicalPath();
+
+    bool result=setenv(VARNAME_PATH, qstrMessage.toStdString().c_str(), true);
+   
+    if (!result) 
+		SW_APP->Logger().Log(LogLvl_Warning,QString("Failed to set PATH environment variable (pathSize : %1)\n").arg(qstrMessage.length()));
+    else
+        if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("PATH= %1\n").arg(qstrMessage));
+
+
+	//Ajout a la liste des path
     if (SW_APP->IsVerbose())
 		SW_APP->Logger().Log(LogLvl_Debug,QString("Adding path %1\n").arg(realPath));
     _paths.insert(realPath,registerable);
@@ -251,8 +248,10 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 #endif			
             QString real_file=realPath;
             real_file+="/";real_file+=list_files[j];
+			QFileInfo fileInfo(real_file);
+			QString libPath = fileInfo.absoluteFilePath();
             //On recherche le point d'entrée du plugin
-			QLibrary lib(real_file);
+			QLibrary lib(libPath);
 #ifndef QT_NO_DEBUG
             Tf_getPluginEntry plugin_entry=(Tf_getPluginEntry)lib.resolve("GetPluginInterfaceD");
 #else
@@ -300,9 +299,9 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
                 //Enregistrement des composants controllers
                 _controllers+=plugin->GetControllersMap();
             } else {
-                SW_APP->Logger().Log(LogLvl_Critical,QString("Unable to load Lib %1").arg(real_file).toAscii(),lib.errorString());
+                SW_APP->Logger().Log(LogLvl_Critical,QString("Unable to load Lib %1").arg(real_file).toLatin1(),lib.errorString());
                 qDebug(QString("QLoadLibrary failed for %1").arg(real_file).toLatin1().data()); 
-                DumpDllFromPath(real_file.utf16(),5);
+                DumpDllFromPath(real_file.toStdWString().c_str(),5);
 				_dllWithError.append(realPath.toLower());
                 /* if (0==LoadLibrary(real_file.utf16())) {
                     DWORD error=GetLastError();
@@ -826,4 +825,3 @@ void _SwPluginsBank_Class::displayUpdate() {
 void _SwPluginsBank_Class::hideDisplayUpdate() {
     _trayIcon->setVisible(false);
 }
-

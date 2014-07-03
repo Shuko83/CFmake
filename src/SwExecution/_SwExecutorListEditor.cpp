@@ -5,11 +5,20 @@
  \date 23-août-2006 18:59:26
  \author F.Bighelli
 */
-#include <QtGui>
 #include <Qt>
 #include <QMimeData>
 #include <QDrag>
 #include "_SwExecutorListEditor.h"
+
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
+
+
+
+
 
 #define CL_ROW_HEIGHT 16
 #define CL_HEADER_HEIGHT 16

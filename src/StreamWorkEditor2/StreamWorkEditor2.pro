@@ -1,8 +1,10 @@
 TEMPLATE = app
 TARGET = StreamWorkEditor2
-PROJECTS_PATH = ../../../..
+PROJECTS_PATH = $$PWD/../../../..
 
-QT += core gui xml opengl
+include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
+
+QT += core gui xml opengl widgets printsupport
 
 HEADERS += SwSplash.h  \
 	MainWindow.h \
@@ -22,10 +24,6 @@ HEADERS += SwSplash.h  \
 	GraphicsResources.h \
 	MenuManager.h \
 	PropertiesWidget.h \
-	#../SwGui/_SwGuiPluginsFrontEnd.h \
-	#../SwGui/SwGuiDefaultItemDelegate.h \
-	#../SwGui/SwGuiEnumComboBox.h \
-	#../SwGui/_QRcViewer.h \
 	Arranger.h \
 	GraphicsLoaderV1.h \
 	QStreamTreeModel.h \
@@ -62,10 +60,6 @@ SOURCES += SwSplash.cpp \
 	GraphicsResources.cpp \
 	MenuManager.cpp \
 	PropertiesWidget.cpp \
-	#../SwGui/_SwGuiPluginsFrontEnd.cpp \
-	#../SwGui/SwGuiDefaultItemDelegate.cpp \
-	#../SwGui/SwGuiEnumComboBox.cpp \
-	#../SwGui/_QRcViewer.cpp \
 	Arranger.cpp \
 	GraphicsLoaderV1.cpp \
 	QStreamTreeModel.cpp \
@@ -81,45 +75,46 @@ SOURCES += SwSplash.cpp \
 	ModelCreatorHelper.cpp 
 
 FORMS += _resources/LogView.ui \
-	#../SwGui/_QRcViewerUi.ui \
 	_resources/PluginOverview.ui
 	
 RESOURCES += _resources/StreamWorkEditor2.qrc
 
 INCLUDEPATH += ./ \
     ../SwCore \
-    ../SwGui \
+   ../SwGui \
     ../SwExecution \
 	  ../SwDoc \
 	  ../SwModel2
-    
-#    ../SwGui/_intermediaire \
 
 DEFINES += SW_EDITOR
     
 VERSION = 1.2.3 
 
+DESTDIR = .\\..\\..\\$$BIN_PATH
+DLLDESTDIR=  .\\..\\..\\$$BIN_PATH
 
+LIBS += -L"../../$$LIB_PATH"
 
-CONFIG(debug, debug|release) {
-	DESTDIR = ./../../bin/vc/debug/
-	DLLDESTDIR = ./../../bin/vc/debug/
-	
-	INCLUDEPATH += ../SwDoc/GeneratedFiles/uid
-	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwGuid -lSwDocd
+CONFIG(debug, debug|release) {	
+	LIBS += -lSwCored -lSwGuid -lSwDocd
 	CONFIG += console
 } 
 
 CONFIG(release, debug|release) {
-	DESTDIR = ./../../bin/vc/release/
-	DLLDESTDIR = ./../../bin/vc/release/
-
-	INCLUDEPATH += ../SwDoc/GeneratedFiles/ui	
-	LIBS += -L"../../lib/vc/release" -lSwCore -lSwGui -lSwDoc
-	QMAKE_POST_LINK = "xcopy /Y ..\\..\\..\\..\\Libraries\\ExceptionManager\\bin\\vc\\release\\ExceptionManager.dll ..\\..\\bin\\vc\\release\\"
+	LIBS += -lSwCore -lSwGui -lSwDoc
+	QMAKE_POST_LINK = "$${QMAKE_COPY} ..\\..\\..\\..\\Libraries\\ExceptionManager\\$$BIN_PATH\\ExceptionManager.dll ..\\..\\$$BIN_PATH"
 }
 
 win32:RC_FILE = StreamWorkEditor2.rc
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
 include($$PROJECTS_PATH/Libraries/StreamWork/baseSwCore.pri)
+
+#degeulace:!!!!!
+CONFIG(debug, debug|release) {	
+	INCLUDEPATH += ../SwDoc/$$GEN_FILES/uid
+} 
+
+CONFIG(release, debug|release) {
+	INCLUDEPATH += ../SwDoc/$$GEN_FILES/ui	
+}

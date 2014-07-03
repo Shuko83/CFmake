@@ -10,8 +10,8 @@
 #include <QStringList>
 #include <QString>
 #include <QRegExp>
-#include <QHttpRequestHeader>
-#include <QHttpResponseHeader>
+//#include <QHttpRequestHeader>
+//#include <QHttpResponseHeader>
 #include <QFile>
 #include <QByteArray>
 #include <SwApplication.h>
@@ -185,7 +185,7 @@ void _SwGuiCompHttpServer::httpRequestReceived() {
     } 
     
     //Construction de l'objet requete qt
-    QHttpRequestHeader httpr=QHttpRequestHeader(QString(header));
+  /*  QHttpRequestHeader httpr=QHttpRequestHeader(QString(header));
     
     //Definition des parametres
     QMap<QString,QString> parameters;
@@ -227,7 +227,7 @@ void _SwGuiCompHttpServer::httpRequestReceived() {
         os << httpr.path();
         os.flush();
     }
-
+	*/
     clientConnection->close();
     clientConnection->disconnectFromHost();
 
@@ -241,11 +241,11 @@ QString _SwGuiCompHttpServer::getPath() {
 }
 
 /*! @brief process de la requete */
-void _SwGuiCompHttpServer::processRequest(QHttpRequestHeader * request,
+void _SwGuiCompHttpServer::processRequest(/*QHttpRequestHeader * request,*/
                                             QMap<QString,QString> * parameters,
                                             QByteArray * body,
                                             QIODevice * device) {
-    if (request->path()=="/_about.jpg") {
+   /* if (request->path()=="/_about.jpg") {
         QFile image(":/SwGui/about.jpg");
         image.open(QIODevice::ReadOnly);
         QByteArray data=image.readAll();
@@ -264,6 +264,6 @@ void _SwGuiCompHttpServer::processRequest(QHttpRequestHeader * request,
 
     QTextStream os(device);
     os << httpreponse.toString() << "<link rel=\"icon\" type=\"image/jpg\" href=\"/_about.jpg\" /><center><img src=\"/_about.jpg\"><h1> Tiny Streamwork HttpServer version "<< CG_STREAMWORK_VERSION <<" </h1><img src=\"/_about.jpg\"></center>";
-    os.flush();
+    os.flush();*/
 }
 

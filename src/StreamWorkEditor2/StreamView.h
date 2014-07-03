@@ -7,8 +7,14 @@
 #ifndef _STREAMVIEW_H
 #define _STREAMVIEW_H
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
 #include <QGLWidget>
+#include <QGraphicsView>
+#include <QLineEdit>
 #include "IStreamViewObserver.h"
 
 class StreamControler;

@@ -12,7 +12,12 @@
 #include <ISwHttpServer.h>
 #include <ISwHttpPart.h>
 #include <QtCore>
+
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -89,7 +94,7 @@ public:
     /*! @brief Renvoie le path de la partie  */
 	virtual QString  getPath();
     /*! @brief process de la requete */
-    virtual void processRequest(QHttpRequestHeader * request,
+    virtual void processRequest(/*QHttpRequestHeader * request,*/
                                 QMap<QString,QString> * parameters,
                                 QByteArray * body,
                                 QIODevice * device);
@@ -114,7 +119,7 @@ private:
     /*! @brief build response */
     QString buildResponse();
     /*! @brief envoie du status */
-    void sendStatus(QHttpRequestHeader * request,QIODevice *device);
+    void sendStatus(/*QHttpRequestHeader * request,*/QIODevice *device);
     /*! @brief construction du status */
     QString buildStatus();
 };

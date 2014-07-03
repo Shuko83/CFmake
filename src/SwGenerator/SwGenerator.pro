@@ -1,8 +1,14 @@
 TEMPLATE = app
 TARGET = SwGenerator
-PROJECTS_PATH = ../../../..
+PROJECTS_PATH = $$PWD/../../../..
+
+include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
 QT += core xml
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+	QT += widgets
+} 
 
 HEADERS +=  *.h 
 
@@ -17,21 +23,20 @@ DEFINES += SWGENERATOR_EXE
 include($$PROJECTS_PATH/Libraries/StreamWork/baseSwCore.pri)
 
 INCLUDEPATH += ../../../QCTemplate/src/
+
+DESTDIR = ./../../$$BIN_PATH
+DLLDESTDIR=  ./../../$$BIN_PATH
+
+LIBS += -L"../../../QCTemplate/$$LIB_PATH"
 	
 CONFIG(debug, debug|release) {
-	DLLDESTDIR=  ./../../bin/vc/debug
-	DESTDIR=  ./../../bin/vc/debug
 	
-	LIBS += -L"../../../QCTemplate/lib/vc/debug" -llibctemplated -lQCTemplated
-	QMAKE_POST_LINK = "xcopy /Y ..\\..\\..\\QCTemplate\\bin\\vc\\debug\\*.dll .\\..\\..\\bin\\vc\\debug\\"
+	LIBS += -lQCTemplated
 } 
 
 CONFIG(release, debug|release) {
-	DESTDIR = ./../../bin/vc/release
-	DLLDESTDIR=  ./../../bin/vc/release
 	
-	LIBS += -L"../../../QCTemplate/lib/vc/release" -llibctemplate -lQCTemplate
-	QMAKE_POST_LINK = "xcopy /Y ..\\..\\..\\QCTemplate\\bin\\vc\\release\\*.dll .\\..\\..\\bin\\vc\\release\\"
+	LIBS += -lQCTemplate
 }
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

@@ -180,7 +180,7 @@ void _SwEditorGraphicItem::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         QPointF p=event->pos();
         if (_resizer_bbox.contains(event->pos())) {
             _pressed_left_button_on_resizer=true;  
-            items_list=children();
+            items_list=childItems();
             _child_bbox=QRectF();
             for (int i=0;i<items_list.count();i++) {
                 if (dynamic_cast<_SwEditorGraphicItem *>(items_list[i])!=NULL) 

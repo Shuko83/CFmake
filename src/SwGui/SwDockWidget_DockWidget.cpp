@@ -568,7 +568,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		{
 			_isResizing = true;
 			ReleaseCapture();
-			PostMessage(this->winId(), WM_SYSCOMMAND, SZ_SIZEBOTTOMRIGHT, 0);
+			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZEBOTTOMRIGHT, 0);
 			return true;
 		}
 
@@ -579,7 +579,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		{
 			_isResizing = true;
 			ReleaseCapture();
-			PostMessage(this->winId(), WM_SYSCOMMAND, SZ_SIZETOPLEFT, 0);
+			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZETOPLEFT, 0);
 			return true;
 		}
 
@@ -590,7 +590,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		{
 			_isResizing = true;
 			ReleaseCapture();
-			PostMessage(this->winId(), WM_SYSCOMMAND, SZ_SIZETOPRIGHT, 0);
+			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZETOPRIGHT, 0);
 			return true;
 		}
 
@@ -601,7 +601,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		{
 			_isResizing = true;
 			ReleaseCapture();
-			PostMessage(this->winId(), WM_SYSCOMMAND, SZ_SIZEBOTTOMLEFT, 0);
+			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZEBOTTOMLEFT, 0);
 			return true;
 		}
 
@@ -616,7 +616,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		{
 			_isResizing = true;
 			ReleaseCapture();
-			PostMessage(this->winId(), WM_SYSCOMMAND, SZ_SIZEBOTTOM, 0);
+			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZEBOTTOM, 0);
 			return true;
 		}
 
@@ -624,7 +624,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		{
 			_isResizing = true;
 			ReleaseCapture();
-			PostMessage(this->winId(), WM_SYSCOMMAND, SZ_SIZELEFT, 0);
+			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZELEFT, 0);
 			return true;
 		}
 
@@ -632,7 +632,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		{
 			_isResizing = true;
 			ReleaseCapture();
-			PostMessage(this->winId(), WM_SYSCOMMAND, SZ_SIZERIGHT, 0);
+			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZERIGHT, 0);
 			return true;
 		}
 
@@ -640,7 +640,7 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		{
 			_isResizing = true;
 			ReleaseCapture();
-			PostMessage(this->winId(), WM_SYSCOMMAND, SZ_SIZETOP, 0);
+			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZETOP, 0);
 			return true;
 		}
 	}

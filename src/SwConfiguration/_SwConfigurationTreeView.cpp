@@ -5,6 +5,8 @@
 \author  Big
 \version 1.0
  */
+#include <QDropEvent>
+#include <QMimeData>
 #include <QDragEnterEvent>
 #include <QDragLeaveEvent>
 #include <QDragMoveEvent>

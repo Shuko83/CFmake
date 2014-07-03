@@ -116,9 +116,9 @@ QVariant _SwExecutorStreamTreeModel::data ( const QModelIndex & index, int role 
     }
     if (role == Qt::ForegroundRole) {
         if (service!=NULL) {
-            return QVariant(Qt::black);
+            return QVariant::fromValue(QColor(Qt::black));
         } else {
-            return QVariant(Qt::gray);
+			return QVariant::fromValue(QColor(Qt::gray));
         }
     }
     if (role == Qt::FontRole) {

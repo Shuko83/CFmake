@@ -54,7 +54,8 @@ _SwEditorStreamTreeModel::~_SwEditorStreamTreeModel() {
 }
 /*! \brief forceReset */
 void _SwEditorStreamTreeModel::ForceReset() {
-    reset();
+	beginResetModel();
+	endResetModel();
 }
 /*! \brief Renvoie les capacites du modèle */
 Qt::ItemFlags _SwEditorStreamTreeModel::flags ( const QModelIndex & index ) const {
@@ -226,8 +227,9 @@ QModelIndex _SwEditorStreamTreeModel::parent ( const QModelIndex & index ) const
 /*! \brief methode appelée par l'observable*/
 void _SwEditorStreamTreeModel::Update() {
     if (_current_host!=_manager->GetCurrentStreamRoot()) {
+		beginResetModel();
         _current_host=_manager->GetCurrentStreamRoot();
-        this->reset();
+		endResetModel();
         return;
     }
     if (_current_selection!=_navigator->GetCurrentComponent()) {

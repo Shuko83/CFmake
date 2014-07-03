@@ -35,7 +35,7 @@ _SwConfigurationManager::_SwConfigurationManager():
     _isStarted = false;
 
 //   _iReplayInterface = 0;
-    _iRecordInterface = 0;
+//    _iRecordInterface = 0;
     _mainWidget=new _SwConfigurationManagerGui(0);
     _actionStart = new _SwControllerActionStart();
     _actionStop = new _SwControllerActionStop();
@@ -201,7 +201,7 @@ void _SwConfigurationManager::InitializeResources() throw(SwException) {
     _provider_service->RegisterProvidedInterface<ISwConfigurationNameProvider>(
 										"ConfigurationNameProvider",
 										_managedConfigurations);    
-    _consumer_service->RegisterConsumedInterface<StreamWork::SwRecord::ISwRecordManager>("IRecordManager",&_iRecordInterface);
+    //_consumer_service->RegisterConsumedInterface<StreamWork::SwRecord::ISwRecordManager>("IRecordManager",&_iRecordInterface);
     //_consumer_service->RegisterConsumedInterface<StreamWork::SwRecord::ISwReplayManager>("IReplayManager",&_iReplayInterface);
 
 
@@ -294,12 +294,12 @@ void _SwConfigurationManager::SetReplayConfiguration()
 }
 void _SwConfigurationManager::SetNormalConfiguration()
 {
-    if (_iRecordInterface != 0)
+    /*if (_iRecordInterface != 0)
     {
         // chargement des parametres d enregistrement
         _iRecordInterface->setRecordDirectory(getAbsoluteFilePath(_launchManager->getRecordDirectory().getFileName()));
        
-    }
+    }*/
     bool configLoaded = LoadConfiguration();
     if (!configLoaded)
     {
@@ -481,7 +481,7 @@ bool _SwConfigurationManager::Start()
             execution =  config->getConfiguration()->getExecutionService();
             if (execution != 0)
             {   
-                if (_iRecordInterface != 0 && _launchManager->getRecordActivated())
+                /*if (_iRecordInterface != 0 && _launchManager->getRecordActivated())
                 {
                     // demarrage de l enregistrement
                     
@@ -490,7 +490,7 @@ bool _SwConfigurationManager::Start()
                     _iRecordInterface->setRecordDirectory(getAbsoluteFilePath(_launchManager->getRecordDirectory().getFileName()));
                     _iRecordInterface->startRecording();
                     
-                }
+                }*/
                 execution->StartExecution();
                 _isStarted = true;
                 signalControllerStartChanged();
@@ -555,12 +555,12 @@ bool _SwConfigurationManager::Stop()
                     
                     execution->AskForStopExecution();
                     execution->StopExecution();
-                    if (_iRecordInterface != 0 && _launchManager->getRecordActivated())
+                    /*if (_iRecordInterface != 0 && _launchManager->getRecordActivated())
                     {
                         // arret de l enregistrement
                         _iRecordInterface->stopRecording();
                         
-                    }
+                    }*/
                     
                 }
                 _mainWidget->setStopped();
@@ -668,10 +668,10 @@ void _SwConfigurationManager::BeforeInterfaceAvailabilityChange(
 						QString interface_name,
 						SwComponent_Class * provider_host)
 {
-    if (interface_name == "IRecordManager")
+    /*if (interface_name == "IRecordManager")
     {
         _iRecordInterface = 0;
-    }
+    }*/
     if (interface_name == "IReplayManager")
     {
         //_iReplayInterface = 0;
@@ -683,14 +683,14 @@ void _SwConfigurationManager::AfterInterfaceAvailabilityChange(
 						QString interface_name,
 						SwComponent_Class * provider_host)
 {
-    if (interface_name == "IRecordManager")
+    /*if (interface_name == "IRecordManager")
     {
         if (_iRecordInterface != 0)
         {
 
 
         }
-    }
+    }*/
     if (interface_name == "IReplayManager")
     {
         //if (_iReplayInterface != 0)

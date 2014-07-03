@@ -1,14 +1,18 @@
 #ifndef _SwGuiCompSwMainWindow_H
 #define _SwGuiCompSwMainWindow_H
 
-#include <QtGui/QMainWindow>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
 
 class SwDockWidget_MainWindow : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	SwDockWidget_MainWindow(QWidget *parent = 0, Qt::WFlags flags = 0);
+	SwDockWidget_MainWindow(QWidget *parent = 0, Qt::WindowFlags flags = 0);
 	~SwDockWidget_MainWindow();
 
 	void saveConfiguration();

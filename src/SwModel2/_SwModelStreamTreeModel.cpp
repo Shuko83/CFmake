@@ -93,12 +93,12 @@ QVariant _SwModelStreamTreeModel::data ( const QModelIndex & index, int role ) c
     if (role == Qt::ForegroundRole) {
         if (dynamic_cast<_SwModelHost_Class *>(cparent)!=NULL) {
             if (_current_selected==dynamic_cast<_SwModelHost_Class *>(cparent)) {
-                return QVariant(Qt::red);
+                return QVariant(QColor(Qt::red));
             } else {
-                return QVariant(Qt::black);
+				return QVariant(QColor(Qt::black));
             }
         } else {
-            return QVariant(Qt::gray);
+			return QVariant(QColor(Qt::gray));
         }
     }
     return QVariant();

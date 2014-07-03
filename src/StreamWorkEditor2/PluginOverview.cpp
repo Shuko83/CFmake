@@ -2,7 +2,18 @@
 #include "PluginsListModel.h"
 #include <QScrollBar>
 #include "EditDoc.h"
+
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
+
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#else
 #include <QtConcurrentRun>
+#endif
 
 //#include "..\SwDoc\MultiTagCompleter.h"
 

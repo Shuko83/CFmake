@@ -7,7 +7,11 @@
 #ifndef _GRAPHICSRESOURCES_H
 #define _GRAPHICSRESOURCES_H
 
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
 #include <QtGui>
+#endif
 #include <SwComponent_Class.h>
 
 class ConnectorGraphItem;

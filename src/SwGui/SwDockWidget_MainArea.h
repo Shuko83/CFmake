@@ -1,9 +1,11 @@
 #ifndef SWDOCKWIDGET_DOCKAREA_H
 #define SWDOCKWIDGET_DOCKAREA_H
 
-#include <QtGui/QMainWindow>
-#include <QtGui/QPushButton>
-#include <QtGui/QToolButton>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#else
+#include <QtGui>
+#endif
 #include <QtXml/QDomDocument>
 #include <QCloseEvent>
 #include <QMenuBar>

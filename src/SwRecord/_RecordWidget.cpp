@@ -5,6 +5,9 @@
  */
 
 #include "_RecordWidget.h"
+
+#include <QHBoxLayout>
+#include <QPainter>
  
 
 /** @brief Constructor */

@@ -34,7 +34,7 @@
 #include "SwIpV4Address.h"
 #include "SwTime_ToolBox.h"
 #include "ISwCheckService.h"
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
 #include <windows.h>
 #include <stdio.h>
 #include <tchar.h>
@@ -535,7 +535,7 @@ void SwApplication::waitOnRestart() {
     }
     if (processId==0)
         return;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
     //Recherche du process origine,
     //Si trouve on attends et sinon, on contenu
     DWORD aProcesses[1024], cbNeeded, cProcesses;

@@ -213,11 +213,11 @@ QString  _SwGuiVisualLogConsole::getPath() {
     return "/_console";
 }
 /*! @brief process de la requete */
-void _SwGuiVisualLogConsole::processRequest(QHttpRequestHeader * request,
+void _SwGuiVisualLogConsole::processRequest(/*QHttpRequestHeader * request,*/
                                         QMap<QString,QString> * parameters,
                                         QByteArray * body,
                                         QIODevice * device) {
-    if (request->path()=="/_console.xml") {
+   /* if (request->path()=="/_console.xml") {
         QHttpResponseHeader httpreponse(200,"Ok",1,1);
         httpreponse.setContentType("text/xml");
         QString result="";
@@ -246,7 +246,7 @@ void _SwGuiVisualLogConsole::processRequest(QHttpRequestHeader * request,
         device->write(httpreponse.toString().toUtf8());
         device->write(_consoleHtmlBody);
         return;
-    }
+    }*/
 
 }
 

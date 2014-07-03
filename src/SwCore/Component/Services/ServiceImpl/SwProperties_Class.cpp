@@ -42,7 +42,7 @@ ISwProperty * SwProperties_Class::CreatePropertyWithType(int type_id,QString nam
     QVariant var;
     void * _my_objet;
 
-    if (name.at(0).toAscii()=='!') {
+    if (name.at(0).toLatin1()=='!') {
         QString s=QString("Unable to create property %1 in %2 because already defined because its name begin with !").arg(name).arg(_host_component->GetName());
         LAUNCH_SWEXCEPTION("SwCore",s);                
     }
@@ -51,7 +51,13 @@ ISwProperty * SwProperties_Class::CreatePropertyWithType(int type_id,QString nam
         QString s=QString("Unable to create property %1 in %2 because already defined").arg(name).arg(_host_component->GetName());
         LAUNCH_SWEXCEPTION("SwCore",s);                
     }
-    _my_objet=QMetaType::construct(type_id);
+
+	#if QT_VERSION >= 0x050000
+	_my_objet=QMetaType::create(type_id);
+	#else
+	_my_objet=QMetaType::construct(type_id);
+	#endif
+
     if (_my_objet==NULL) {
         QString s=QString("Unable to create property %1 in %2 because type undefined").arg(name).arg(_host_component->GetName());
         LAUNCH_SWEXCEPTION("SwCore",s);                

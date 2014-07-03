@@ -1,8 +1,16 @@
 TEMPLATE = lib
 TARGET = SwConfiguration
-PROJECTS_PATH = ../../../..
+PROJECTS_PATH = $$PWD/../../../..
 
 QT += core xml gui
+
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+} 
+
+PLUGINS=SW
+
+include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
 HEADERS += ISwConfiguration.h \
     ISwConfigurationListener.h \
@@ -74,24 +82,19 @@ INCLUDEPATH += ./ \
     ../SwCore \
     ../SwExecution \
     ../SwGui \
-    ../SwModel \
-    ../SwRecord
+    ../SwModel2 \
 
-#    ../SwGui/_intermediaire \	
+DESTDIR = ../../$$LIB_PATH
+DLLDESTDIR=  ../..$$BIN_PATH
+LIBS += -L"../../$$LIB_PATH"
 	
 CONFIG(debug, debug|release) {
-	DESTDIR = ./../../lib/vc/debug
-	DLLDESTDIR=  ./../../bin/vc/debug
-
-	LIBS += -L"../../lib/vc/debug" -lSwCored -lSwGuid -lSwExecutiond
+	LIBS += -lSwCored -lSwExecutiond -lSwGuid
 	TARGET_EXT = .swdld
 } 
 
-CONFIG(release, debug|release) {
-	DESTDIR = ./../../lib/vc/release
-	DLLDESTDIR=  ./../../bin/vc/release
-  
-	LIBS += -L"../../lib/vc/release" -lSwCore -lSwGui -lSwExecution
+CONFIG(release, debug|release) {  
+	LIBS += -lSwCore -lSwExecution -lSwGui 
 	TARGET_EXT = .swdl
 }
 

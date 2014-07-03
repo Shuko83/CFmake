@@ -10,7 +10,7 @@
 #include <SwApplication.h>
 #include <SwMacros.h>
 #include "_SwGuiCompActionList.h"
-#include "..\src\gui\dialogs\qmessagebox.h"
+#include "qmessagebox.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;

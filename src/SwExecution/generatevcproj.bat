@@ -1,1 +1,1 @@
-qmake -tp vc -o SwExecutiond.vcproj SwExecution.pro
+qmake -tp vc
