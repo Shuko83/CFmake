@@ -27,15 +27,11 @@ LIB_PATH ~= s,/,\\,g
 BIN_PATH ~= s,/,\\,g
 
 CONFIG(debug, debug|release) {
-
 	LIBS += -L"../../../QDjango\\$$LIB_PATH" -lQDjangod
 	LIBS += -L"../../$$LIB_PATH" -lSwCored
-	TARGET_EXT = .swdld
-	
 } 
 
 CONFIG(release, debug|release) {
-	TARGET_EXT = .swdl	
 	LIBS += -L"../../../QDjango\\$$LIB_PATH" -lQDjango
 	LIBS += -L"../../$$LIB_PATH" -lSwCore
 }

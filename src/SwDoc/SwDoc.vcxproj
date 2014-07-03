@@ -47,14 +47,14 @@
     <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">..\..\lib\vc\release_QT5\</OutDir>
     <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\obj\</IntDir>
     <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwDoc</TargetName>
-    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">.swdl</TargetExt>
+    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">.dll</TargetExt>
     <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</IgnoreImportLibrary>
     <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">false</LinkIncremental>
     <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</PostBuildEventUseInBuild>
     <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">..\..\lib\vc\debug_QT5\</OutDir>
     <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\objd\</IntDir>
     <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwDocd</TargetName>
-    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">.swdld</TargetExt>
+    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">.dll</TargetExt>
     <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</IgnoreImportLibrary>
     <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</PostBuildEventUseInBuild>
   </PropertyGroup>
@@ -80,14 +80,14 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\..\QDjango\\lib\vc\release_QT5\QDjango.lib;SwCore.lib;C:\Projects\Libraries\StreamWork\src\SwDoc\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5\ExceptionManager.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgets.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Sql.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Gui.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\..\QDjango\\lib\vc\release_QT5\QDjango.lib;..\..\\lib\vc\release_QT5\SwCore.lib;C:\Projects\Libraries\StreamWork\src\SwDoc\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5\ExceptionManager.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgets.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Sql.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Gui.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\QDjango\\lib\vc\release_QT5;..\..\\lib\vc\release_QT5;C:\Projects\Libraries\StreamWork\src\SwDoc\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
       <LinkDLL>true</LinkDLL>
       <LinkIncremental>false</LinkIncremental>
-      <OutputFile>$(OutDir)\SwDoc.swdl</OutputFile>
+      <OutputFile>$(OutDir)\SwDoc.dll</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Link>
@@ -101,7 +101,7 @@
     </ResourceCompile>
     <PostBuildEvent>
       <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release_QT5&quot;</Command>
-      <Message>Copy SwDoc.swdl to ..\..\bin\vc\release_QT5</Message>
+      <Message>Copy SwDoc.dll to ..\..\bin\vc\release_QT5</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
@@ -126,13 +126,13 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\..\QDjango\\lib\vc\debug_QT5\QDjangod.lib;SwCored.lib;C:\Projects\Libraries\StreamWork\src\SwDoc\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Sqld.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Guid.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\..\QDjango\\lib\vc\debug_QT5\QDjangod.lib;..\..\\lib\vc\debug_QT5\SwCored.lib;C:\Projects\Libraries\StreamWork\src\SwDoc\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Sqld.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Guid.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\..\QDjango\\lib\vc\debug_QT5;..\..\\lib\vc\debug_QT5;C:\Projects\Libraries\StreamWork\src\SwDoc\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
       <LinkDLL>true</LinkDLL>
-      <OutputFile>$(OutDir)\SwDocd.swdld</OutputFile>
+      <OutputFile>$(OutDir)\SwDocd.dll</OutputFile>
       <ProgramDatabaseFile>./../../\bin\vc\debug_QT5/SwDocd.pdb</ProgramDatabaseFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SuppressStartupBanner>true</SuppressStartupBanner>
@@ -147,7 +147,7 @@
     </ResourceCompile>
     <PostBuildEvent>
       <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug_QT5&quot;</Command>
-      <Message>Copy SwDocd.swdld to ..\..\bin\vc\debug_QT5</Message>
+      <Message>Copy SwDocd.dll to ..\..\bin\vc\debug_QT5</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -437,11 +437,11 @@
   <ItemGroup>
     <CustomBuild Include="SwDoc.qrc">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwDoc.qrc;_resources\textsuperscript.png;_resources\textunder.png;_resources\add.png;_resources\database_on.png;_resources\textbold.png;_resources\DeleteRed.png;_resources\textsubscript.png;_resources\textleft.png;_resources\textjustify.png;_resources\textright.png;_resources\database_off.png;_resources\database_wait.png;_resources\textcenter.png;_resources\textitalic.png;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwDoc.qrc;_resources\textleft.png;_resources\database_on.png;_resources\textitalic.png;_resources\textunder.png;_resources\database_off.png;_resources\textcenter.png;_resources\textjustify.png;_resources\DeleteRed.png;_resources\textsubscript.png;_resources\add.png;_resources\textright.png;_resources\textsuperscript.png;_resources\textbold.png;_resources\database_wait.png;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\rcc.exe -name SwDoc SwDoc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwDoc.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">RCC SwDoc.qrc</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_SwDoc.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwDoc.qrc;_resources\textleft.png;_resources\textunder.png;_resources\database_wait.png;_resources\textcenter.png;_resources\textitalic.png;_resources\database_on.png;_resources\database_off.png;_resources\DeleteRed.png;_resources\textsuperscript.png;_resources\textjustify.png;_resources\textright.png;_resources\textsubscript.png;_resources\add.png;_resources\textbold.png;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwDoc.qrc;_resources\textjustify.png;_resources\textsuperscript.png;_resources\add.png;_resources\database_off.png;_resources\textunder.png;_resources\textsubscript.png;_resources\textbold.png;_resources\textleft.png;_resources\textcenter.png;_resources\textitalic.png;_resources\DeleteRed.png;_resources\database_on.png;_resources\database_wait.png;_resources\textright.png;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\rcc.exe -name SwDoc SwDoc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwDoc.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">RCC SwDoc.qrc</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_SwDoc.cpp;%(Outputs)</Outputs>
