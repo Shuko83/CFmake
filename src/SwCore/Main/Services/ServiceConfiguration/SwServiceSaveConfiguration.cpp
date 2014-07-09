@@ -543,10 +543,8 @@ bool SwServiceSaveConfiguration::deleteConfiguration( QString confName, QString 
 	bool ret = false;
 
 	// Récupération de la confCourante (on ne peut supprimer que la conf courante)
-	QString	currentConfigProfile = "";
-	if(inProfileName == "")
-		currentConfigProfile = getCurrentConf(confName);
-	else
+	QString	currentConfigProfile = getCurrentConf(confName);
+	if(inProfileName != "" && inProfileName != currentConfigProfile)
 		currentConfigProfile = inProfileName;
 	
 	// On ne peux pas supprimer la config par défaut
@@ -568,17 +566,22 @@ bool SwServiceSaveConfiguration::deleteConfiguration( QString confName, QString 
 					it.value().removeOne(currentConfigProfile);
 
 					// Changement de la valeur dans _currentConfs[confName]
-					// On se positionne sur la première de la liste
-					_currentConfs.insert(confName, it.value().at(0));
+					// On se positionne sur la première de la liste si le profil delete était le current
+					if(inProfileName == "")
+					{
+						_currentConfs.insert(confName, it.value().at(0));
 
-					// Changement des valeurs des properties
-					if(!setPropertiesValuesFromProfile(confName, it.value().at(0)))
-						qDebug() << "Conf service : Failed to setPropertiesValuesFromProfile in deleteConfiguration() method";
+						// Changement des valeurs des properties
+						if(!setPropertiesValuesFromProfile(confName, it.value().at(0)))
+							qDebug() << "Conf service : Failed to setPropertiesValuesFromProfile in deleteConfiguration() method";
 
-					// appel de la méthode saveConfFile[confName]
-					ret = saveConfigurationFile(confName);
+						// appel de la méthode saveConfFile[confName]
+						ret = saveConfigurationFile(confName);
 
-					notifyServiceListeners(confName, true);
+						notifyServiceListeners(confName, true);
+					}
+					else
+						ret = true;
 				}
 			}
 		}
