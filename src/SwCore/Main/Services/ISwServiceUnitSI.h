@@ -12,6 +12,7 @@
 #include "ISwUnitSI.h"
 
 #include <QHash>
+#include <QMap>
 
 //Nom du service
 #define CG_SW_SERVICE_UNIT_SI "ServiceUnitSI"

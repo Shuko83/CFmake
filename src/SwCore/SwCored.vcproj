@@ -4,1018 +4,1553 @@
 	Version="9,00"
 	Name="SwCored"
 	ProjectGUID="{01E6F984-C53E-3746-9238-59FF4FFEC5ED}"
-	Keyword="Qt4VSv1.0">
+	Keyword="Qt4VSv1.0"
+	TargetFrameworkVersion="0"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32" />
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="."
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			ConfigurationType="2"
 			IntermediateDirectory="GeneratedFiles\objd\"
-			UseOfMfc="0">
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;Component&quot;,&quot;Component\Base&quot;,&quot;Component\Interfaces&quot;,&quot;Component\Pin&quot;,&quot;Component\Services&quot;,&quot;Component\Services\ServiceImpl&quot;,&quot;Extensions&quot;,&quot;Main&quot;,&quot;Main\Connexion&quot;,&quot;Main\Plugin&quot;,&quot;Main\Serialization&quot;,&quot;Main\Services&quot;,&quot;Main\Services\Management&quot;,&quot;Main\Services\ServiceConfiguration&quot;,&quot;Main\Services\ServiceImpl&quot;,&quot;Main\Services\ServiceShortcut&quot;,&quot;Main\Services\ServiceUnitSI&quot;,&quot;Properties&quot;,&quot;SwRef&quot;,&quot;Tools&quot;,&quot;Tools\Exception&quot;,&quot;Tools\Log&quot;,&quot;Tools\Signal&quot;,&quot;Types&quot;,&quot;Types\UserType&quot;,&quot;..\..\..\GeographicLib\src&quot;,&quot;.&quot;,&quot;..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
-				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
-				AssemblerListingLocation="GeneratedFiles\objd\"
-				BasicRuntimeChecks="3"
-				BufferSecurityCheck="false"
-				DebugInformationFormat="3"
-				ExceptionHandling="2"
-				ForcedIncludeFiles="StdAfx.h"
-				GeneratePreprocessedFile="0"
-				ObjectFile="GeneratedFiles\objd\"
-				Optimization ="0"
-				PrecompiledHeaderFile="$(IntDir)\SwCored.pch"
-				PrecompiledHeaderThrough="StdAfx.h"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
-				ProgramDataBaseFileName="$(IntDir)\SwCore_vc90.pdb"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="true"
-				SuppressStartupBanner="true"
-				TreatWChar_tAsBuiltInType="false"
-				UsePrecompiledHeader="2"
-				WarningLevel="3" />
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool" />
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="Psapi.lib imagehlp.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\debug\GeographicLibd.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\debug\ExceptionManagerd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\debug,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\debug"
-				GenerateDebugInformation="true"
-				IgnoreImportLibrary="true"
-				LinkTimeCodeGeneration="0"
-				OutputFile="..\..\lib\vc\debug\SwCored.dll"
-				ProgramDatabaseFile="./../../\bin\vc\debug/SwCored.pdb"
-				SubSystem="0"
-				SuppressStartupBanner="true" />
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
+				WarningLevel="0"
 				DefaultCharType="0"
 				EnableErrorChecks="1"
-				WarningLevel="0" />
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug&quot;"
-				Description="Copy SwCored.dll to ..\..\bin\vc\debug" />
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;Component&quot;,&quot;Component\Base&quot;,&quot;Component\Interfaces&quot;,&quot;Component\Pin&quot;,&quot;Component\Services&quot;,&quot;Component\Services\ServiceImpl&quot;,&quot;Extensions&quot;,&quot;Main&quot;,&quot;Main\Connexion&quot;,&quot;Main\Plugin&quot;,&quot;Main\Serialization&quot;,&quot;Main\Services&quot;,&quot;Main\Services\Management&quot;,&quot;Main\Services\ServiceConfiguration&quot;,&quot;Main\Services\ServiceImpl&quot;,&quot;Main\Services\ServiceShortcut&quot;,&quot;Main\Services\ServiceUnitSI&quot;,&quot;Properties&quot;,&quot;SwRef&quot;,&quot;Tools&quot;,&quot;Tools\Exception&quot;,&quot;Tools\Log&quot;,&quot;Tools\Signal&quot;,&quot;Types&quot;,&quot;Types\UserType&quot;,&quot;..\..\..\GeographicLib\src&quot;,&quot;.&quot;,&quot;..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				GeneratePreprocessedFile="0"
+				ExceptionHandling="2"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="StdAfx.h"
+				PrecompiledHeaderFile="$(IntDir)\SwCored.pch"
+				AssemblerListingLocation="GeneratedFiles\objd\"
+				ObjectFile="GeneratedFiles\objd\"
+				ProgramDataBaseFileName="$(IntDir)\SwCore_vc90.pdb"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
+				ForcedIncludeFiles="StdAfx.h"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool" />
-			<Tool
-				Name="VCPreLinkEventTool" />
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="Psapi.lib imagehlp.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\debug\GeographicLibd.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\debug\ExceptionManagerd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				OutputFile="..\..\lib\vc\debug\SwCored.dll"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\debug,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\debug"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="./../../\bin\vc\debug/SwCored.pdb"
+				SubSystem="0"
+				LinkTimeCodeGeneration="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy SwCored.dll to ..\..\bin\vc\debug"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug&quot;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="."
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			ConfigurationType="2"
 			IntermediateDirectory="GeneratedFiles\obj\"
-			UseOfMfc="0">
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;Component&quot;,&quot;Component\Base&quot;,&quot;Component\Interfaces&quot;,&quot;Component\Pin&quot;,&quot;Component\Services&quot;,&quot;Component\Services\ServiceImpl&quot;,&quot;Extensions&quot;,&quot;Main&quot;,&quot;Main\Connexion&quot;,&quot;Main\Plugin&quot;,&quot;Main\Serialization&quot;,&quot;Main\Services&quot;,&quot;Main\Services\Management&quot;,&quot;Main\Services\ServiceConfiguration&quot;,&quot;Main\Services\ServiceImpl&quot;,&quot;Main\Services\ServiceShortcut&quot;,&quot;Main\Services\ServiceUnitSI&quot;,&quot;Properties&quot;,&quot;SwRef&quot;,&quot;Tools&quot;,&quot;Tools\Exception&quot;,&quot;Tools\Log&quot;,&quot;Tools\Signal&quot;,&quot;Types&quot;,&quot;Types\UserType&quot;,&quot;..\..\..\GeographicLib\src&quot;,&quot;.&quot;,&quot;..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
-				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
-				AssemblerListingLocation="GeneratedFiles\obj\"
-				BasicRuntimeChecks="3"
-				BufferSecurityCheck="false"
-				DebugInformationFormat="0"
-				ExceptionHandling="2"
-				ForcedIncludeFiles="StdAfx.h"
-				GeneratePreprocessedFile="0"
-				ObjectFile="GeneratedFiles\obj\"
-				Optimization ="0"
-				PrecompiledHeaderFile="$(IntDir)\SwCore.pch"
-				PrecompiledHeaderThrough="StdAfx.h"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
-				ProgramDataBaseFileName="$(IntDir)\SwCore_vc90.pdb"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="true"
-				SuppressStartupBanner="true"
-				TreatWChar_tAsBuiltInType="false"
-				UsePrecompiledHeader="2"
-				WarningLevel="3" />
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool" />
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="Psapi.lib imagehlp.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\release\GeographicLib.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\release\ExceptionManager.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\release,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\release"
-				GenerateDebugInformation="false"
-				IgnoreImportLibrary="true"
-				LinkIncremental="1"
-				LinkTimeCodeGeneration="0"
-				OutputFile="..\..\lib\vc\release\SwCore.dll"
-				ProgramDatabaseFile=""
-				SubSystem="0"
-				SuppressStartupBanner="true" />
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
+				WarningLevel="0"
 				DefaultCharType="0"
 				EnableErrorChecks="1"
-				WarningLevel="0" />
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;"
-				Description="Copy SwCore.dll to ..\..\bin\vc\release" />
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;Component&quot;,&quot;Component\Base&quot;,&quot;Component\Interfaces&quot;,&quot;Component\Pin&quot;,&quot;Component\Services&quot;,&quot;Component\Services\ServiceImpl&quot;,&quot;Extensions&quot;,&quot;Main&quot;,&quot;Main\Connexion&quot;,&quot;Main\Plugin&quot;,&quot;Main\Serialization&quot;,&quot;Main\Services&quot;,&quot;Main\Services\Management&quot;,&quot;Main\Services\ServiceConfiguration&quot;,&quot;Main\Services\ServiceImpl&quot;,&quot;Main\Services\ServiceShortcut&quot;,&quot;Main\Services\ServiceUnitSI&quot;,&quot;Properties&quot;,&quot;SwRef&quot;,&quot;Tools&quot;,&quot;Tools\Exception&quot;,&quot;Tools\Log&quot;,&quot;Tools\Signal&quot;,&quot;Types&quot;,&quot;Types\UserType&quot;,&quot;..\..\..\GeographicLib\src&quot;,&quot;.&quot;,&quot;..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				GeneratePreprocessedFile="0"
+				ExceptionHandling="2"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="StdAfx.h"
+				PrecompiledHeaderFile="$(IntDir)\SwCore.pch"
+				AssemblerListingLocation="GeneratedFiles\obj\"
+				ObjectFile="GeneratedFiles\obj\"
+				ProgramDataBaseFileName="$(IntDir)\SwCore_vc90.pdb"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="0"
+				ForcedIncludeFiles="StdAfx.h"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool" />
-			<Tool
-				Name="VCPreLinkEventTool" />
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,SWCORE_LIB,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="Psapi.lib imagehlp.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\release\GeographicLib.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\release\ExceptionManager.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
+				OutputFile="..\..\lib\vc\release\SwCore.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\release,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\release"
+				GenerateDebugInformation="false"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				LinkTimeCodeGeneration="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy SwCore.dll to ..\..\bin\vc\release"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
+			<File
+				RelativePath="StdAfx.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="$(INHERIT)"
+						ForcedIncludeFiles="$(NOINHERIT)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="$(INHERIT)"
+						ForcedIncludeFiles="$(NOINHERIT)"
+					/>
+				</FileConfiguration>
+			</File>
 			<Filter
 				Name="Component"
-				Filter="">
+				>
 				<Filter
 					Name="Base"
-					Filter="">
+					>
 					<File
-						RelativePath="Component\Base\Component.cpp" />
+						RelativePath="Component\Base\_SwTreeItem.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Component\Base\SwComponent_Class.cpp" />
+						RelativePath="Component\Base\Component.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Component\Base\SwNamed_Class.cpp" />
+						RelativePath="Component\Base\SwComponent_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Component\Base\_SwTreeItem.cpp" />
+						RelativePath="Component\Base\SwNamed_Class.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Pin"
-					Filter="">
+					>
 					<File
-						RelativePath="Component\Pin\SwData_Class.cpp" />
+						RelativePath="Component\Pin\SwData_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Component\Pin\SwPin.cpp" />
+						RelativePath="Component\Pin\SwPin.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Services"
-					Filter="">
+					>
 					<Filter
 						Name="ServiceImpl"
-						Filter="">
+						>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwController_Class.cpp" />
+							RelativePath="Component\Services\ServiceImpl\SwController_Class.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwInterfaces_Consumer_Class.cpp" />
+							RelativePath="Component\Services\ServiceImpl\SwInterfaces_Consumer_Class.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwInterfaces_Provider_Class.cpp" />
+							RelativePath="Component\Services\ServiceImpl\SwInterfaces_Provider_Class.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwPins_Manager_Class.cpp" />
+							RelativePath="Component\Services\ServiceImpl\SwPins_Manager_Class.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwProperties_Class.cpp" />
+							RelativePath="Component\Services\ServiceImpl\SwProperties_Class.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwSnapShotPropertiesService.cpp" />
+							RelativePath="Component\Services\ServiceImpl\SwSnapShotPropertiesService.cpp"
+							>
+						</File>
 					</Filter>
 				</Filter>
 			</Filter>
 			<Filter
 				Name="Extensions"
-				Filter="">
+				>
 				<File
-					RelativePath="Extensions\SwExtensionHelper.cpp" />
+					RelativePath="Extensions\_SwExtensionImpl.cpp"
+					>
+				</File>
 				<File
-					RelativePath="Extensions\_SwExtensionImpl.cpp" />
+					RelativePath="Extensions\_SwExtensionPointImpl.cpp"
+					>
+				</File>
 				<File
-					RelativePath="Extensions\_SwExtensionPointImpl.cpp" />
+					RelativePath="Extensions\SwExtensionHelper.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Main"
-				Filter="">
+				>
+				<File
+					RelativePath="Main\SwApplication.cpp"
+					>
+				</File>
 				<Filter
 					Name="Connexion"
-					Filter="">
+					>
 					<File
-						RelativePath="Main\Connexion\_SwCleanLinksVisitor.cpp" />
+						RelativePath="Main\Connexion\_SwCleanLinksVisitor.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Main\Connexion\_SwConsumedInterfaceContainer_Class.cpp" />
+						RelativePath="Main\Connexion\_SwConsumedInterfaceContainer_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Main\Connexion\_SwProvidedInterfaceContainer_Class.cpp" />
+						RelativePath="Main\Connexion\_SwProvidedInterfaceContainer_Class.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Plugin"
-					Filter="">
+					>
 					<File
-						RelativePath="Main\Plugin\SwPluginFactory_Class.cpp" />
+						RelativePath="Main\Plugin\_SwPluginsBank_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Main\Plugin\_SwPluginsBank_Class.cpp" />
+						RelativePath="Main\Plugin\SwPluginFactory_Class.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Serialization"
-					Filter="">
+					>
 					<File
-						RelativePath="Main\Serialization\SwLoader_Class.cpp" />
+						RelativePath="Main\Serialization\SwLoader_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Main\Serialization\SwSaver_Class.cpp" />
+						RelativePath="Main\Serialization\SwSaver_Class.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Services"
-					Filter="">
+					>
 					<Filter
 						Name="Management"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\Management\SwServicesManager_Class.cpp" />
+							RelativePath="Main\Services\Management\SwServicesManager_Class.cpp"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="ServiceConfiguration"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\ServiceConfiguration\SwServiceSaveConfiguration.cpp" />
+							RelativePath="Main\Services\ServiceConfiguration\SwServiceSaveConfiguration.cpp"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="ServiceImpl"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwFileEditorManager.cpp" />
+							RelativePath="Main\Services\ServiceImpl\_SwFileEditorManager.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwServiceCodeTimer.cpp" />
+							RelativePath="Main\Services\ServiceImpl\_SwServiceCodeTimer.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwServiceExtensionsImpl.cpp" />
+							RelativePath="Main\Services\ServiceImpl\_SwServiceExtensionsImpl.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwServiceParametersImpl.cpp" />
+							RelativePath="Main\Services\ServiceImpl\_SwServiceParametersImpl.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwServiceRefProfiler.cpp" />
+							RelativePath="Main\Services\ServiceImpl\_SwServiceRefProfiler.cpp"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="ServiceShortcut"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\ServiceShortcut\_SwServiceShortcuts.cpp" />
+							RelativePath="Main\Services\ServiceShortcut\_SwServiceShortcuts.cpp"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="ServiceUnitSI"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\ServiceUnitSI\SwSiEnums.cpp" />
+							RelativePath="Main\Services\ServiceUnitSI\_SwServiceUnitSI.cpp"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceUnitSI\_SwServiceUnitSI.cpp" />
+							RelativePath="Main\Services\ServiceUnitSI\SwSiEnums.cpp"
+							>
+						</File>
 					</Filter>
 				</Filter>
-				<File
-					RelativePath="Main\SwApplication.cpp" />
 			</Filter>
 			<Filter
 				Name="Properties"
-				Filter="">
+				>
 				<File
-					RelativePath="Properties\SwPropertiesModelImpl.cpp" />
+					RelativePath="Properties\_SwPropertyImpl_Class.cpp"
+					>
+				</File>
 				<File
-					RelativePath="Properties\_SwPropertyImplForQOject_Class.cpp" />
+					RelativePath="Properties\_SwPropertyImplForQOject_Class.cpp"
+					>
+				</File>
 				<File
-					RelativePath="Properties\_SwPropertyImplSimpleTypeAdapter_Class.cpp" />
+					RelativePath="Properties\_SwPropertyImplSimpleTypeAdapter_Class.cpp"
+					>
+				</File>
 				<File
-					RelativePath="Properties\_SwPropertyImpl_Class.cpp" />
+					RelativePath="Properties\SwPropertiesModelImpl.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="SwRef"
-				Filter="">
+				>
 				<File
-					RelativePath="SwRef\DisabledSwRef.cpp" />
+					RelativePath="SwRef\DisabledSwRef.cpp"
+					>
+				</File>
 				<File
-					RelativePath="SwRef\SwRef.cpp" />
+					RelativePath="SwRef\SwRef.cpp"
+					>
+				</File>
 				<File
-					RelativePath="SwRef\SwRefParent.cpp" />
+					RelativePath="SwRef\SwRefParent.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Tools"
-				Filter="">
+				>
+				<File
+					RelativePath="Tools\_SwPropertyPersistent_Toolbox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwAddress_ToolBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwBuffer_Toolbox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwPropertiesPersistentToolbox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwRefPtrTools.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwTime_ToolBox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwWinProcess.cpp"
+					>
+				</File>
 				<Filter
 					Name="Exception"
-					Filter="">
+					>
 					<File
-						RelativePath="Tools\Exception\SwException.cpp" />
+						RelativePath="Tools\Exception\SwException.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Log"
-					Filter="">
+					>
 					<File
-						RelativePath="Tools\Log\SwAlerter_Class.cpp" />
+						RelativePath="Tools\Log\SwAlerter_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Tools\Log\SwFileLogRecorder_Class.cpp" />
+						RelativePath="Tools\Log\SwFileLogRecorder_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Tools\Log\SwLogger_Class.cpp" />
+						RelativePath="Tools\Log\SwLogger_Class.cpp"
+						>
+					</File>
 				</Filter>
-				<File
-					RelativePath="Tools\SwAddress_ToolBox.cpp" />
-				<File
-					RelativePath="Tools\SwBuffer_Toolbox.cpp" />
-				<File
-					RelativePath="Tools\SwPropertiesPersistentToolbox.cpp" />
-				<File
-					RelativePath="Tools\SwRefPtrTools.cpp" />
-				<File
-					RelativePath="Tools\SwTime_ToolBox.cpp" />
-				<File
-					RelativePath="Tools\SwWinProcess.cpp" />
-				<File
-					RelativePath="Tools\_SwPropertyPersistent_Toolbox.cpp" />
 			</Filter>
 			<Filter
 				Name="Types"
-				Filter="">
+				>
+				<File
+					RelativePath="Types\_SwEnumKeys_Class.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwDouble.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwEnum.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwEnumModel.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwFileDescriptor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwIconDescriptor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwInteger.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwIntegerEnum.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwIpV4Address.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwString.cpp"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwUUID.cpp"
+					>
+				</File>
 				<Filter
 					Name="UserType"
-					Filter="">
+					>
 					<File
-						RelativePath="Types\UserType\SwDefaultComplexeTypeAdapters.cpp" />
+						RelativePath="Types\UserType\_SwComplexeTypeAdaptersFactoriesBankImpl.cpp"
+						>
+					</File>
 					<File
-						RelativePath="Types\UserType\_SwComplexeTypeAdaptersFactoriesBankImpl.cpp" />
+						RelativePath="Types\UserType\SwDefaultComplexeTypeAdapters.cpp"
+						>
+					</File>
 				</Filter>
-				<File
-					RelativePath="Types\SwDouble.cpp" />
-				<File
-					RelativePath="Types\SwEnum.cpp" />
-				<File
-					RelativePath="Types\SwEnumModel.cpp" />
-				<File
-					RelativePath="Types\SwFileDescriptor.cpp" />
-				<File
-					RelativePath="Types\SwIconDescriptor.cpp" />
-				<File
-					RelativePath="Types\SwInteger.cpp" />
-				<File
-					RelativePath="Types\SwIntegerEnum.cpp" />
-				<File
-					RelativePath="Types\SwIpV4Address.cpp" />
-				<File
-					RelativePath="Types\SwString.cpp" />
-				<File
-					RelativePath="Types\SwUUID.cpp" />
-				<File
-					RelativePath="Types\_SwEnumKeys_Class.cpp" />
 			</Filter>
-			<File
-				RelativePath="StdAfx.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						ForcedIncludeFiles="$(NOINHERIT)"
-						PrecompiledHeaderThrough="$(INHERIT)"
-						UsePrecompiledHeader="1" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						ForcedIncludeFiles="$(NOINHERIT)"
-						PrecompiledHeaderThrough="$(INHERIT)"
-						UsePrecompiledHeader="1" />
-				</FileConfiguration>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
+			<File
+				RelativePath="StdAfx.h"
+				>
+			</File>
+			<File
+				RelativePath="SwCoreConstantes.h"
+				>
+			</File>
 			<Filter
 				Name="Component"
-				Filter="">
+				>
 				<Filter
 					Name="Base"
-					Filter="">
+					>
 					<File
-						RelativePath="Component\Base\Component.h">
+						RelativePath="Component\Base\_SwTreeItem.h"
+						>
+					</File>
+					<File
+						RelativePath="Component\Base\Component.h"
+						>
 						<FileConfiguration
-							Name="Debug|Win32">
+							Name="Debug|Win32"
+							>
 							<Tool
 								Name="VCCustomBuildTool"
-								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component\Base\Component.h"
-								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component\Base\Component.h -o GeneratedFiles\moc\moc_Component.cpp"
 								Description="MOC Component\Base\Component.h"
+								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component\Base\Component.h -o GeneratedFiles\moc\moc_Component.cpp&#x0D;&#x0A;"
+								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component\Base\Component.h"
 								Outputs="GeneratedFiles\moc\moc_Component.cpp"
-								Path="c:\Qt\4.7.1\bin" />
+							/>
 						</FileConfiguration>
 						<FileConfiguration
-							Name="Release|Win32">
+							Name="Release|Win32"
+							>
 							<Tool
 								Name="VCCustomBuildTool"
-								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component\Base\Component.h"
-								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component\Base\Component.h -o GeneratedFiles\moc\moc_Component.cpp"
 								Description="MOC Component\Base\Component.h"
+								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component\Base\Component.h -o GeneratedFiles\moc\moc_Component.cpp&#x0D;&#x0A;"
+								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component\Base\Component.h"
 								Outputs="GeneratedFiles\moc\moc_Component.cpp"
-								Path="c:\Qt\4.7.1\bin" />
+							/>
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="Component\Base\SwComponent_Class.h">
+						RelativePath="Component\Base\SwComponent_Class.h"
+						>
 						<FileConfiguration
-							Name="Debug|Win32">
+							Name="Debug|Win32"
+							>
 							<Tool
 								Name="VCCustomBuildTool"
-								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component\Base\SwComponent_Class.h"
-								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component\Base\SwComponent_Class.h -o GeneratedFiles\moc\moc_SwComponent_Class.cpp"
 								Description="MOC Component\Base\SwComponent_Class.h"
+								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component\Base\SwComponent_Class.h -o GeneratedFiles\moc\moc_SwComponent_Class.cpp&#x0D;&#x0A;"
+								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component\Base\SwComponent_Class.h"
 								Outputs="GeneratedFiles\moc\moc_SwComponent_Class.cpp"
-								Path="c:\Qt\4.7.1\bin" />
+							/>
 						</FileConfiguration>
 						<FileConfiguration
-							Name="Release|Win32">
+							Name="Release|Win32"
+							>
 							<Tool
 								Name="VCCustomBuildTool"
-								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component\Base\SwComponent_Class.h"
-								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component\Base\SwComponent_Class.h -o GeneratedFiles\moc\moc_SwComponent_Class.cpp"
 								Description="MOC Component\Base\SwComponent_Class.h"
+								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Component\Base\SwComponent_Class.h -o GeneratedFiles\moc\moc_SwComponent_Class.cpp&#x0D;&#x0A;"
+								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Component\Base\SwComponent_Class.h"
 								Outputs="GeneratedFiles\moc\moc_SwComponent_Class.cpp"
-								Path="c:\Qt\4.7.1\bin" />
+							/>
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="Component\Base\SwNamed_Class.h" />
-					<File
-						RelativePath="Component\Base\_SwTreeItem.h" />
+						RelativePath="Component\Base\SwNamed_Class.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Interfaces"
-					Filter="">
+					>
 					<File
-						RelativePath="Component\Interfaces\ISwActivable.h" />
+						RelativePath="Component\Interfaces\ISwActivable.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwAdminSetup.h" />
+						RelativePath="Component\Interfaces\ISwAdminSetup.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwComponentProvider.h" />
+						RelativePath="Component\Interfaces\ISwComponentProvider.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwCreationPostProcessor.h" />
+						RelativePath="Component\Interfaces\ISwCreationPostProcessor.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwExecutor.h" />
+						RelativePath="Component\Interfaces\ISwExecutor.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwExecutor2.h" />
+						RelativePath="Component\Interfaces\ISwExecutor2.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwFinalizer.h" />
+						RelativePath="Component\Interfaces\ISwFinalizer.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwFinalizerManager.h" />
+						RelativePath="Component\Interfaces\ISwFinalizerManager.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwHost.h" />
+						RelativePath="Component\Interfaces\ISwHost.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwInterfaces_ConsumerObserver.h" />
+						RelativePath="Component\Interfaces\ISwInterfaces_ConsumerObserver.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwObject.h" />
+						RelativePath="Component\Interfaces\ISwObject.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwObjectFactory.h" />
+						RelativePath="Component\Interfaces\ISwObjectFactory.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwObservable.h" />
+						RelativePath="Component\Interfaces\ISwObservable.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwObserver.h" />
+						RelativePath="Component\Interfaces\ISwObserver.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwPersistent.h" />
+						RelativePath="Component\Interfaces\ISwPersistent.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwPersistentConfigurable.h" />
+						RelativePath="Component\Interfaces\ISwPersistentConfigurable.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwPin_Listener.h" />
+						RelativePath="Component\Interfaces\ISwPin_Listener.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwSubStream.h" />
+						RelativePath="Component\Interfaces\ISwSubStream.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Interfaces\ISwVisitor.h" />
+						RelativePath="Component\Interfaces\ISwVisitor.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Pin"
-					Filter="">
+					>
 					<File
-						RelativePath="Component\Pin\SwData_Class.h" />
+						RelativePath="Component\Pin\SwData_Class.h"
+						>
+					</File>
 					<File
-						RelativePath="Component\Pin\SwPin.h" />
+						RelativePath="Component\Pin\SwPin.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Services"
-					Filter="">
+					>
+					<File
+						RelativePath="Component\Services\ISwController.h"
+						>
+					</File>
+					<File
+						RelativePath="Component\Services\ISwInterfaces_Consumer.h"
+						>
+					</File>
+					<File
+						RelativePath="Component\Services\ISwInterfaces_Provider.h"
+						>
+					</File>
+					<File
+						RelativePath="Component\Services\ISwPins_Manager.h"
+						>
+					</File>
+					<File
+						RelativePath="Component\Services\ISwProperties.h"
+						>
+					</File>
+					<File
+						RelativePath="Component\Services\ISwServiceOwner.h"
+						>
+					</File>
+					<File
+						RelativePath="Component\Services\ISwServiceOwnerConfigurable.h"
+						>
+					</File>
+					<File
+						RelativePath="Component\Services\ISwSnapShotPropertiesService.h"
+						>
+					</File>
 					<Filter
 						Name="ServiceImpl"
-						Filter="">
+						>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwController_Class.h" />
+							RelativePath="Component\Services\ServiceImpl\SwController_Class.h"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwInterfaces_Consumer_Class.h" />
+							RelativePath="Component\Services\ServiceImpl\SwInterfaces_Consumer_Class.h"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwInterfaces_Provider_Class.h" />
+							RelativePath="Component\Services\ServiceImpl\SwInterfaces_Provider_Class.h"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwPins_Manager_Class.h" />
+							RelativePath="Component\Services\ServiceImpl\SwPins_Manager_Class.h"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwProperties_Class.h" />
+							RelativePath="Component\Services\ServiceImpl\SwProperties_Class.h"
+							>
+						</File>
 						<File
-							RelativePath="Component\Services\ServiceImpl\SwSnapShotPropertiesService.h" />
+							RelativePath="Component\Services\ServiceImpl\SwSnapShotPropertiesService.h"
+							>
+						</File>
 					</Filter>
-					<File
-						RelativePath="Component\Services\ISwController.h" />
-					<File
-						RelativePath="Component\Services\ISwInterfaces_Consumer.h" />
-					<File
-						RelativePath="Component\Services\ISwInterfaces_Provider.h" />
-					<File
-						RelativePath="Component\Services\ISwPins_Manager.h" />
-					<File
-						RelativePath="Component\Services\ISwProperties.h" />
-					<File
-						RelativePath="Component\Services\ISwServiceOwner.h" />
-					<File
-						RelativePath="Component\Services\ISwServiceOwnerConfigurable.h" />
-					<File
-						RelativePath="Component\Services\ISwSnapShotPropertiesService.h" />
 				</Filter>
 			</Filter>
 			<Filter
 				Name="Extensions"
-				Filter="">
+				>
 				<File
-					RelativePath="Extensions\ISwExtension.h" />
+					RelativePath="Extensions\_SwExtensionImpl.h"
+					>
+				</File>
 				<File
-					RelativePath="Extensions\ISwExtensionPoint.h" />
+					RelativePath="Extensions\_SwExtensionPointImpl.h"
+					>
+				</File>
 				<File
-					RelativePath="Extensions\SwExtensionHelper.h" />
+					RelativePath="Extensions\ISwExtension.h"
+					>
+				</File>
 				<File
-					RelativePath="Extensions\_SwExtensionImpl.h" />
+					RelativePath="Extensions\ISwExtensionPoint.h"
+					>
+				</File>
 				<File
-					RelativePath="Extensions\_SwExtensionPointImpl.h" />
+					RelativePath="Extensions\SwExtensionHelper.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Main"
-				Filter="">
+				>
+				<File
+					RelativePath="Main\SwApplication.h"
+					>
+				</File>
+				<File
+					RelativePath="Main\SwMacros.h"
+					>
+				</File>
 				<Filter
 					Name="Connexion"
-					Filter="">
+					>
 					<File
-						RelativePath="Main\Connexion\ISwInterfaces_Service.h" />
+						RelativePath="Main\Connexion\_SwCleanLinksVisitor.h"
+						>
+					</File>
 					<File
-						RelativePath="Main\Connexion\ISwInterfaces_ServicesListener.h" />
+						RelativePath="Main\Connexion\_SwConsumedInterfaceContainer_Class.h"
+						>
+					</File>
 					<File
-						RelativePath="Main\Connexion\ISwPins_ManagerListener.h" />
+						RelativePath="Main\Connexion\_SwProvidedInterfaceContainer_Class.h"
+						>
+					</File>
 					<File
-						RelativePath="Main\Connexion\_SwCleanLinksVisitor.h" />
+						RelativePath="Main\Connexion\ISwInterfaces_Service.h"
+						>
+					</File>
 					<File
-						RelativePath="Main\Connexion\_SwConsumedInterfaceContainer_Class.h" />
+						RelativePath="Main\Connexion\ISwInterfaces_ServicesListener.h"
+						>
+					</File>
 					<File
-						RelativePath="Main\Connexion\_SwProvidedInterfaceContainer_Class.h" />
+						RelativePath="Main\Connexion\ISwPins_ManagerListener.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Plugin"
-					Filter="">
+					>
 					<File
-						RelativePath="Main\Plugin\ISwPluginFactory.h" />
-					<File
-						RelativePath="Main\Plugin\ISwPluginOverview.h" />
-					<File
-						RelativePath="Main\Plugin\ISwPluginsBank.h" />
-					<File
-						RelativePath="Main\Plugin\SwPluginFactory_Class.h">
+						RelativePath="Main\Plugin\_SwPluginsBank_Class.h"
+						>
 						<FileConfiguration
-							Name="Debug|Win32">
+							Name="Debug|Win32"
+							>
 							<Tool
 								Name="VCCustomBuildTool"
-								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Plugin\SwPluginFactory_Class.h"
-								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Plugin\SwPluginFactory_Class.h -o GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp"
-								Description="MOC Main\Plugin\SwPluginFactory_Class.h"
-								Outputs="GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp"
-								Path="c:\Qt\4.7.1\bin" />
+								Description="MOC Main\Plugin\_SwPluginsBank_Class.h"
+								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Plugin\_SwPluginsBank_Class.h -o GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp&#x0D;&#x0A;"
+								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Plugin\_SwPluginsBank_Class.h"
+								Outputs="GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp"
+							/>
 						</FileConfiguration>
 						<FileConfiguration
-							Name="Release|Win32">
+							Name="Release|Win32"
+							>
 							<Tool
 								Name="VCCustomBuildTool"
-								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Plugin\SwPluginFactory_Class.h"
-								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Plugin\SwPluginFactory_Class.h -o GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp"
-								Description="MOC Main\Plugin\SwPluginFactory_Class.h"
-								Outputs="GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp"
-								Path="c:\Qt\4.7.1\bin" />
+								Description="MOC Main\Plugin\_SwPluginsBank_Class.h"
+								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Plugin\_SwPluginsBank_Class.h -o GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp&#x0D;&#x0A;"
+								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Plugin\_SwPluginsBank_Class.h"
+								Outputs="GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp"
+							/>
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="Main\Plugin\_SwPluginsBank_Class.h">
+						RelativePath="Main\Plugin\ISwPluginFactory.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Plugin\ISwPluginOverview.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Plugin\ISwPluginsBank.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Plugin\SwPluginFactory_Class.h"
+						>
 						<FileConfiguration
-							Name="Debug|Win32">
+							Name="Debug|Win32"
+							>
 							<Tool
 								Name="VCCustomBuildTool"
-								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Plugin\_SwPluginsBank_Class.h"
-								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Plugin\_SwPluginsBank_Class.h -o GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp"
-								Description="MOC Main\Plugin\_SwPluginsBank_Class.h"
-								Outputs="GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp"
-								Path="c:\Qt\4.7.1\bin" />
+								Description="MOC Main\Plugin\SwPluginFactory_Class.h"
+								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Plugin\SwPluginFactory_Class.h -o GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp&#x0D;&#x0A;"
+								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Plugin\SwPluginFactory_Class.h"
+								Outputs="GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp"
+							/>
 						</FileConfiguration>
 						<FileConfiguration
-							Name="Release|Win32">
+							Name="Release|Win32"
+							>
 							<Tool
 								Name="VCCustomBuildTool"
-								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Plugin\_SwPluginsBank_Class.h"
-								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Plugin\_SwPluginsBank_Class.h -o GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp"
-								Description="MOC Main\Plugin\_SwPluginsBank_Class.h"
-								Outputs="GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp"
-								Path="c:\Qt\4.7.1\bin" />
+								Description="MOC Main\Plugin\SwPluginFactory_Class.h"
+								CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Plugin\SwPluginFactory_Class.h -o GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp&#x0D;&#x0A;"
+								AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Plugin\SwPluginFactory_Class.h"
+								Outputs="GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp"
+							/>
 						</FileConfiguration>
 					</File>
 				</Filter>
 				<Filter
 					Name="Serialization"
-					Filter="">
+					>
 					<File
-						RelativePath="Main\Serialization\SwLoader_Class.h" />
+						RelativePath="Main\Serialization\SwLoader_Class.h"
+						>
+					</File>
 					<File
-						RelativePath="Main\Serialization\SwSaver_Class.h" />
+						RelativePath="Main\Serialization\SwSaver_Class.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Services"
-					Filter="">
+					>
+					<File
+						RelativePath="Main\Services\ISwCheckService.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwEditionService.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwServiceCodeTimer.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwServiceConfiguration.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwServiceExtensions.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwServiceFileEditorManager.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwServiceParameters.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwServiceProductKey.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwServiceRefProfiler.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwServiceShortcuts.h"
+						>
+					</File>
+					<File
+						RelativePath="Main\Services\ISwServiceUnitSI.h"
+						>
+					</File>
 					<Filter
 						Name="Management"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\Management\ISwService.h" />
+							RelativePath="Main\Services\Management\ISwService.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\Management\ISwServicesManager_Listener.h" />
+							RelativePath="Main\Services\Management\ISwServicesManager_Listener.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\Management\SwServicesManager_Class.h" />
+							RelativePath="Main\Services\Management\SwServicesManager_Class.h"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="ServiceConfiguration"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\ServiceConfiguration\ISwAdminConfiguration.h" />
+							RelativePath="Main\Services\ServiceConfiguration\ISwAdminConfiguration.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceConfiguration\ISwConfCollector.h" />
+							RelativePath="Main\Services\ServiceConfiguration\ISwConfCollector.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceConfiguration\ISwConfPropertiesObserver.h" />
+							RelativePath="Main\Services\ServiceConfiguration\ISwConfigListener.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceConfiguration\ISwConfSaver.h" />
+							RelativePath="Main\Services\ServiceConfiguration\ISwConfPropertiesObserver.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceConfiguration\ISwConfigListener.h" />
+							RelativePath="Main\Services\ServiceConfiguration\ISwConfSaver.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceConfiguration\SwServiceSaveConfiguration.h" />
+							RelativePath="Main\Services\ServiceConfiguration\SwServiceSaveConfiguration.h"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="ServiceImpl"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwFileEditorManager.h" />
+							RelativePath="Main\Services\ServiceImpl\_SwFileEditorManager.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwServiceCodeTimer.h" />
+							RelativePath="Main\Services\ServiceImpl\_SwServiceCodeTimer.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwServiceExtensionsImpl.h" />
+							RelativePath="Main\Services\ServiceImpl\_SwServiceExtensionsImpl.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwServiceParametersImpl.h" />
+							RelativePath="Main\Services\ServiceImpl\_SwServiceParametersImpl.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceImpl\_SwServiceRefProfiler.h" />
+							RelativePath="Main\Services\ServiceImpl\_SwServiceRefProfiler.h"
+							>
+						</File>
 					</Filter>
 					<Filter
 						Name="ServiceShortcut"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\ServiceShortcut\ISwDevice.h" />
-						<File
-							RelativePath="Main\Services\ServiceShortcut\ISwDeviceObserver.h" />
-						<File
-							RelativePath="Main\Services\ServiceShortcut\ISwShortcut.h" />
-						<File
-							RelativePath="Main\Services\ServiceShortcut\ISwShortcutObserver.h" />
-						<File
-							RelativePath="Main\Services\ServiceShortcut\_SwServiceShortcuts.h">
+							RelativePath="Main\Services\ServiceShortcut\_SwServiceShortcuts.h"
+							>
 							<FileConfiguration
-								Name="Debug|Win32">
+								Name="Debug|Win32"
+								>
 								<Tool
 									Name="VCCustomBuildTool"
-									AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Services\ServiceShortcut\_SwServiceShortcuts.h"
-									CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Services\ServiceShortcut\_SwServiceShortcuts.h -o GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
 									Description="MOC Main\Services\ServiceShortcut\_SwServiceShortcuts.h"
+									CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Services\ServiceShortcut\_SwServiceShortcuts.h -o GeneratedFiles\moc\moc__SwServiceShortcuts.cpp&#x0D;&#x0A;"
+									AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Services\ServiceShortcut\_SwServiceShortcuts.h"
 									Outputs="GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
-									Path="c:\Qt\4.7.1\bin" />
+								/>
 							</FileConfiguration>
 							<FileConfiguration
-								Name="Release|Win32">
+								Name="Release|Win32"
+								>
 								<Tool
 									Name="VCCustomBuildTool"
-									AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Services\ServiceShortcut\_SwServiceShortcuts.h"
-									CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Services\ServiceShortcut\_SwServiceShortcuts.h -o GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
 									Description="MOC Main\Services\ServiceShortcut\_SwServiceShortcuts.h"
+									CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Services\ServiceShortcut\_SwServiceShortcuts.h -o GeneratedFiles\moc\moc__SwServiceShortcuts.cpp&#x0D;&#x0A;"
+									AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Services\ServiceShortcut\_SwServiceShortcuts.h"
 									Outputs="GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
-									Path="c:\Qt\4.7.1\bin" />
+								/>
 							</FileConfiguration>
+						</File>
+						<File
+							RelativePath="Main\Services\ServiceShortcut\ISwDevice.h"
+							>
+						</File>
+						<File
+							RelativePath="Main\Services\ServiceShortcut\ISwDeviceObserver.h"
+							>
+						</File>
+						<File
+							RelativePath="Main\Services\ServiceShortcut\ISwShortcut.h"
+							>
+						</File>
+						<File
+							RelativePath="Main\Services\ServiceShortcut\ISwShortcutObserver.h"
+							>
 						</File>
 					</Filter>
 					<Filter
 						Name="ServiceUnitSI"
-						Filter="">
+						>
 						<File
-							RelativePath="Main\Services\ServiceUnitSI\ISwUnitSI.h" />
-						<File
-							RelativePath="Main\Services\ServiceUnitSI\SwSiEnums.h" />
-						<File
-							RelativePath="Main\Services\ServiceUnitSI\_SwServiceUnitSI.h">
+							RelativePath="Main\Services\ServiceUnitSI\_SwServiceUnitSI.h"
+							>
 							<FileConfiguration
-								Name="Debug|Win32">
+								Name="Debug|Win32"
+								>
 								<Tool
 									Name="VCCustomBuildTool"
-									AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Services\ServiceUnitSI\_SwServiceUnitSI.h"
-									CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Services\ServiceUnitSI\_SwServiceUnitSI.h -o GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
 									Description="MOC Main\Services\ServiceUnitSI\_SwServiceUnitSI.h"
+									CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Services\ServiceUnitSI\_SwServiceUnitSI.h -o GeneratedFiles\moc\moc__SwServiceUnitSI.cpp&#x0D;&#x0A;"
+									AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Services\ServiceUnitSI\_SwServiceUnitSI.h"
 									Outputs="GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
-									Path="c:\Qt\4.7.1\bin" />
+								/>
 							</FileConfiguration>
 							<FileConfiguration
-								Name="Release|Win32">
+								Name="Release|Win32"
+								>
 								<Tool
 									Name="VCCustomBuildTool"
-									AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Services\ServiceUnitSI\_SwServiceUnitSI.h"
-									CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Services\ServiceUnitSI\_SwServiceUnitSI.h -o GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
 									Description="MOC Main\Services\ServiceUnitSI\_SwServiceUnitSI.h"
+									CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Main\Services\ServiceUnitSI\_SwServiceUnitSI.h -o GeneratedFiles\moc\moc__SwServiceUnitSI.cpp&#x0D;&#x0A;"
+									AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Main\Services\ServiceUnitSI\_SwServiceUnitSI.h"
 									Outputs="GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
-									Path="c:\Qt\4.7.1\bin" />
+								/>
 							</FileConfiguration>
 						</File>
 						<File
-							RelativePath="Main\Services\ServiceUnitSI\sw_unitFamily.h" />
+							RelativePath="Main\Services\ServiceUnitSI\ISwUnitSI.h"
+							>
+						</File>
 						<File
-							RelativePath="Main\Services\ServiceUnitSI\sw_units.h" />
+							RelativePath="Main\Services\ServiceUnitSI\sw_unitFamily.h"
+							>
+						</File>
+						<File
+							RelativePath="Main\Services\ServiceUnitSI\sw_units.h"
+							>
+						</File>
+						<File
+							RelativePath="Main\Services\ServiceUnitSI\SwSiEnums.h"
+							>
+						</File>
 					</Filter>
-					<File
-						RelativePath="Main\Services\ISwCheckService.h" />
-					<File
-						RelativePath="Main\Services\ISwEditionService.h" />
-					<File
-						RelativePath="Main\Services\ISwServiceCodeTimer.h" />
-					<File
-						RelativePath="Main\Services\ISwServiceConfiguration.h" />
-					<File
-						RelativePath="Main\Services\ISwServiceExtensions.h" />
-					<File
-						RelativePath="Main\Services\ISwServiceFileEditorManager.h" />
-					<File
-						RelativePath="Main\Services\ISwServiceParameters.h" />
-					<File
-						RelativePath="Main\Services\ISwServiceProductKey.h" />
-					<File
-						RelativePath="Main\Services\ISwServiceRefProfiler.h" />
-					<File
-						RelativePath="Main\Services\ISwServiceShortcuts.h" />
-					<File
-						RelativePath="Main\Services\ISwServiceUnitSI.h" />
 				</Filter>
-				<File
-					RelativePath="Main\SwApplication.h" />
-				<File
-					RelativePath="Main\SwMacros.h" />
 			</Filter>
 			<Filter
 				Name="Properties"
-				Filter="">
+				>
 				<File
-					RelativePath="Properties\ISwProperty.h" />
-				<File
-					RelativePath="Properties\ISwProperty2.h" />
-				<File
-					RelativePath="Properties\SwPropertiesModelImpl.h">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Properties\SwPropertiesModelImpl.h"
-							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Properties\SwPropertiesModelImpl.h -o GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp"
-							Description="MOC Properties\SwPropertiesModelImpl.h"
-							Outputs="GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp"
-							Path="c:\Qt\4.7.1\bin" />
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Properties\SwPropertiesModelImpl.h"
-							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Properties\SwPropertiesModelImpl.h -o GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp"
-							Description="MOC Properties\SwPropertiesModelImpl.h"
-							Outputs="GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp"
-							Path="c:\Qt\4.7.1\bin" />
-					</FileConfiguration>
+					RelativePath="Properties\_SwPropertyImpl_Class.h"
+					>
 				</File>
 				<File
-					RelativePath="Properties\_SwPropertyImplForQOject_Class.h" />
+					RelativePath="Properties\_SwPropertyImplForQOject_Class.h"
+					>
+				</File>
 				<File
-					RelativePath="Properties\_SwPropertyImplSimpleTypeAdapter_Class.h" />
+					RelativePath="Properties\_SwPropertyImplSimpleTypeAdapter_Class.h"
+					>
+				</File>
 				<File
-					RelativePath="Properties\_SwPropertyImpl_Class.h" />
+					RelativePath="Properties\ISwProperty.h"
+					>
+				</File>
+				<File
+					RelativePath="Properties\ISwProperty2.h"
+					>
+				</File>
+				<File
+					RelativePath="Properties\SwPropertiesModelImpl.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="MOC Properties\SwPropertiesModelImpl.h"
+							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Properties\SwPropertiesModelImpl.h -o GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Properties\SwPropertiesModelImpl.h"
+							Outputs="GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="MOC Properties\SwPropertiesModelImpl.h"
+							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Properties\SwPropertiesModelImpl.h -o GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Properties\SwPropertiesModelImpl.h"
+							Outputs="GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp"
+						/>
+					</FileConfiguration>
+				</File>
 			</Filter>
 			<Filter
 				Name="SwRef"
-				Filter="">
+				>
 				<File
-					RelativePath="SwRef\DisabledSwRef.h" />
+					RelativePath="SwRef\DisabledSwRef.h"
+					>
+				</File>
 				<File
-					RelativePath="SwRef\ISwRef.h" />
+					RelativePath="SwRef\ISwRef.h"
+					>
+				</File>
 				<File
-					RelativePath="SwRef\SwRef.h" />
+					RelativePath="SwRef\SwRef.h"
+					>
+				</File>
 				<File
-					RelativePath="SwRef\SwRefParent.h" />
+					RelativePath="SwRef\SwRefParent.h"
+					>
+				</File>
 				<File
-					RelativePath="SwRef\SwRefPtr.h" />
+					RelativePath="SwRef\SwRefPtr.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Tools"
-				Filter="">
+				>
+				<File
+					RelativePath="Tools\_SwPerfChrono.h"
+					>
+				</File>
+				<File
+					RelativePath="Tools\_SwPropertyPersistent_Toolbox.h"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwAddress_ToolBox.h"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwBuffer_Toolbox.h"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwPropertiesPersistentToolbox.h"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwRefPtrTools.h"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwTime_ToolBox.h"
+					>
+				</File>
+				<File
+					RelativePath="Tools\SwWinProcess.h"
+					>
+				</File>
 				<Filter
 					Name="Exception"
-					Filter="">
+					>
 					<File
-						RelativePath="Tools\Exception\SwException.h" />
+						RelativePath="Tools\Exception\SwException.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Log"
-					Filter="">
+					>
 					<File
-						RelativePath="Tools\Log\ISwAlertRecorder.h" />
+						RelativePath="Tools\Log\ISwAlerter.h"
+						>
+					</File>
 					<File
-						RelativePath="Tools\Log\ISwAlerter.h" />
+						RelativePath="Tools\Log\ISwAlertRecorder.h"
+						>
+					</File>
 					<File
-						RelativePath="Tools\Log\ISwLogRecorder.h" />
+						RelativePath="Tools\Log\ISwLogger.h"
+						>
+					</File>
 					<File
-						RelativePath="Tools\Log\ISwLogger.h" />
+						RelativePath="Tools\Log\ISwLogRecorder.h"
+						>
+					</File>
 					<File
-						RelativePath="Tools\Log\SwAlerter_Class.h" />
+						RelativePath="Tools\Log\SwAlerter_Class.h"
+						>
+					</File>
 					<File
-						RelativePath="Tools\Log\SwFileLogRecorder_Class.h" />
+						RelativePath="Tools\Log\SwFileLogRecorder_Class.h"
+						>
+					</File>
 					<File
-						RelativePath="Tools\Log\SwLogger_Class.h" />
+						RelativePath="Tools\Log\SwLogger_Class.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Signal"
-					Filter="">
+					>
 					<File
-						RelativePath="Tools\Signal\LibIndeSig.h" />
+						RelativePath="Tools\Signal\LibIndeSig.h"
+						>
+					</File>
 				</Filter>
-				<File
-					RelativePath="Tools\SwAddress_ToolBox.h" />
-				<File
-					RelativePath="Tools\SwBuffer_Toolbox.h" />
-				<File
-					RelativePath="Tools\SwPropertiesPersistentToolbox.h" />
-				<File
-					RelativePath="Tools\SwRefPtrTools.h" />
-				<File
-					RelativePath="Tools\SwTime_ToolBox.h" />
-				<File
-					RelativePath="Tools\SwWinProcess.h" />
-				<File
-					RelativePath="Tools\_SwPerfChrono.h" />
-				<File
-					RelativePath="Tools\_SwPropertyPersistent_Toolbox.h" />
 			</Filter>
 			<Filter
 				Name="Types"
-				Filter="">
+				>
+				<File
+					RelativePath="Types\_SwEnumKeys_Class.h"
+					>
+				</File>
+				<File
+					RelativePath="Types\ISwFileEditor.h"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwDouble.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="MOC Types\SwDouble.h"
+							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwDouble.h -o GeneratedFiles\moc\moc_SwDouble.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwDouble.h"
+							Outputs="GeneratedFiles\moc\moc_SwDouble.cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="MOC Types\SwDouble.h"
+							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwDouble.h -o GeneratedFiles\moc\moc_SwDouble.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwDouble.h"
+							Outputs="GeneratedFiles\moc\moc_SwDouble.cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="Types\SwEnum.h"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwEnumModel.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="MOC Types\SwEnumModel.h"
+							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwEnumModel.h -o GeneratedFiles\moc\moc_SwEnumModel.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwEnumModel.h"
+							Outputs="GeneratedFiles\moc\moc_SwEnumModel.cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="MOC Types\SwEnumModel.h"
+							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwEnumModel.h -o GeneratedFiles\moc\moc_SwEnumModel.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwEnumModel.h"
+							Outputs="GeneratedFiles\moc\moc_SwEnumModel.cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="Types\SwFileDescriptor.h"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwIconDescriptor.h"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwInteger.h"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="MOC Types\SwInteger.h"
+							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwInteger.h -o GeneratedFiles\moc\moc_SwInteger.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwInteger.h"
+							Outputs="GeneratedFiles\moc\moc_SwInteger.cpp"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="MOC Types\SwInteger.h"
+							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwInteger.h -o GeneratedFiles\moc\moc_SwInteger.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwInteger.h"
+							Outputs="GeneratedFiles\moc\moc_SwInteger.cpp"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath="Types\SwIntegerEnum.h"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwIpV4Address.h"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwString.h"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwUUID.h"
+					>
+				</File>
+				<File
+					RelativePath="Types\SwUUID_Simplified.h"
+					>
+				</File>
 				<Filter
 					Name="UserType"
-					Filter="">
+					>
 					<File
-						RelativePath="Types\UserType\ISwComplexeTypeAdapters.h" />
+						RelativePath="Types\UserType\_SwComplexeTypeAdaptersFactoriesBankImpl.h"
+						>
+					</File>
 					<File
-						RelativePath="Types\UserType\ISwComplexeTypeAdaptersFactoriesBank.h" />
+						RelativePath="Types\UserType\ISwComplexeTypeAdapters.h"
+						>
+					</File>
 					<File
-						RelativePath="Types\UserType\ISwComplexeTypeAdaptersFactory.h" />
+						RelativePath="Types\UserType\ISwComplexeTypeAdaptersFactoriesBank.h"
+						>
+					</File>
 					<File
-						RelativePath="Types\UserType\ISwSimpleTypeAdapter.h" />
+						RelativePath="Types\UserType\ISwComplexeTypeAdaptersFactory.h"
+						>
+					</File>
 					<File
-						RelativePath="Types\UserType\SwDefaultComplexeTypeAdapters.h" />
+						RelativePath="Types\UserType\ISwSimpleTypeAdapter.h"
+						>
+					</File>
 					<File
-						RelativePath="Types\UserType\SwTemplateSimpleTypeAdapter.h" />
+						RelativePath="Types\UserType\SwDefaultComplexeTypeAdapters.h"
+						>
+					</File>
 					<File
-						RelativePath="Types\UserType\_SwComplexeTypeAdaptersFactoriesBankImpl.h" />
+						RelativePath="Types\UserType\SwTemplateSimpleTypeAdapter.h"
+						>
+					</File>
 				</Filter>
-				<File
-					RelativePath="Types\ISwFileEditor.h" />
-				<File
-					RelativePath="Types\SwDouble.h">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwDouble.h"
-							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwDouble.h -o GeneratedFiles\moc\moc_SwDouble.cpp"
-							Description="MOC Types\SwDouble.h"
-							Outputs="GeneratedFiles\moc\moc_SwDouble.cpp"
-							Path="c:\Qt\4.7.1\bin" />
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwDouble.h"
-							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwDouble.h -o GeneratedFiles\moc\moc_SwDouble.cpp"
-							Description="MOC Types\SwDouble.h"
-							Outputs="GeneratedFiles\moc\moc_SwDouble.cpp"
-							Path="c:\Qt\4.7.1\bin" />
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="Types\SwEnum.h" />
-				<File
-					RelativePath="Types\SwEnumModel.h">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwEnumModel.h"
-							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwEnumModel.h -o GeneratedFiles\moc\moc_SwEnumModel.cpp"
-							Description="MOC Types\SwEnumModel.h"
-							Outputs="GeneratedFiles\moc\moc_SwEnumModel.cpp"
-							Path="c:\Qt\4.7.1\bin" />
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwEnumModel.h"
-							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwEnumModel.h -o GeneratedFiles\moc\moc_SwEnumModel.cpp"
-							Description="MOC Types\SwEnumModel.h"
-							Outputs="GeneratedFiles\moc\moc_SwEnumModel.cpp"
-							Path="c:\Qt\4.7.1\bin" />
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="Types\SwFileDescriptor.h" />
-				<File
-					RelativePath="Types\SwIconDescriptor.h" />
-				<File
-					RelativePath="Types\SwInteger.h">
-					<FileConfiguration
-						Name="Debug|Win32">
-						<Tool
-							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwInteger.h"
-							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwInteger.h -o GeneratedFiles\moc\moc_SwInteger.cpp"
-							Description="MOC Types\SwInteger.h"
-							Outputs="GeneratedFiles\moc\moc_SwInteger.cpp"
-							Path="c:\Qt\4.7.1\bin" />
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|Win32">
-						<Tool
-							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;Types\SwInteger.h"
-							CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DSWCORE_LIB -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;Component&quot; -I&quot;Component\Base&quot; -I&quot;Component\Interfaces&quot; -I&quot;Component\Pin&quot; -I&quot;Component\Services&quot; -I&quot;Component\Services\ServiceImpl&quot; -I&quot;Extensions&quot; -I&quot;Main&quot; -I&quot;Main\Connexion&quot; -I&quot;Main\Plugin&quot; -I&quot;Main\Serialization&quot; -I&quot;Main\Services&quot; -I&quot;Main\Services\Management&quot; -I&quot;Main\Services\ServiceConfiguration&quot; -I&quot;Main\Services\ServiceImpl&quot; -I&quot;Main\Services\ServiceShortcut&quot; -I&quot;Main\Services\ServiceUnitSI&quot; -I&quot;Properties&quot; -I&quot;SwRef&quot; -I&quot;Tools&quot; -I&quot;Tools\Exception&quot; -I&quot;Tools\Log&quot; -I&quot;Tools\Signal&quot; -I&quot;Types&quot; -I&quot;Types\UserType&quot; -I&quot;..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 Types\SwInteger.h -o GeneratedFiles\moc\moc_SwInteger.cpp"
-							Description="MOC Types\SwInteger.h"
-							Outputs="GeneratedFiles\moc\moc_SwInteger.cpp"
-							Path="c:\Qt\4.7.1\bin" />
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath="Types\SwIntegerEnum.h" />
-				<File
-					RelativePath="Types\SwIpV4Address.h" />
-				<File
-					RelativePath="Types\SwString.h" />
-				<File
-					RelativePath="Types\SwUUID.h" />
-				<File
-					RelativePath="Types\SwUUID_Simplified.h" />
-				<File
-					RelativePath="Types\_SwEnumKeys_Class.h" />
 			</Filter>
-			<File
-				RelativePath="StdAfx.h" />
-			<File
-				RelativePath="SwCoreConstantes.h" />
 		</Filter>
 		<Filter
 			Name="Generated Files"
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
-			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
+			>
 			<Filter
 				Name="GeneratedFiles"
-				Filter="">
+				>
 				<Filter
 					Name="moc"
-					Filter="">
+					>
 					<File
-						RelativePath="GeneratedFiles\moc\moc_Component.cpp" />
+						RelativePath="GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="GeneratedFiles\moc\moc_SwComponent_Class.cpp" />
+						RelativePath="GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
+						>
+					</File>
 					<File
-						RelativePath="GeneratedFiles\moc\moc_SwDouble.cpp" />
+						RelativePath="GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
+						>
+					</File>
 					<File
-						RelativePath="GeneratedFiles\moc\moc_SwEnumModel.cpp" />
+						RelativePath="GeneratedFiles\moc\moc_Component.cpp"
+						>
+					</File>
 					<File
-						RelativePath="GeneratedFiles\moc\moc_SwInteger.cpp" />
+						RelativePath="GeneratedFiles\moc\moc_SwComponent_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp" />
+						RelativePath="GeneratedFiles\moc\moc_SwDouble.cpp"
+						>
+					</File>
 					<File
-						RelativePath="GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp" />
+						RelativePath="GeneratedFiles\moc\moc_SwEnumModel.cpp"
+						>
+					</File>
 					<File
-						RelativePath="GeneratedFiles\moc\moc__SwPluginsBank_Class.cpp" />
+						RelativePath="GeneratedFiles\moc\moc_SwInteger.cpp"
+						>
+					</File>
 					<File
-						RelativePath="GeneratedFiles\moc\moc__SwServiceShortcuts.cpp" />
+						RelativePath="GeneratedFiles\moc\moc_SwPluginFactory_Class.cpp"
+						>
+					</File>
 					<File
-						RelativePath="GeneratedFiles\moc\moc__SwServiceUnitSI.cpp" />
+						RelativePath="GeneratedFiles\moc\moc_SwPropertiesModelImpl.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="rcc"
-					Filter="">
+					>
 					<File
-						RelativePath="GeneratedFiles\rcc\qrc_SwCoreRsc.cpp" />
+						RelativePath="GeneratedFiles\rcc\qrc_SwCoreRsc.cpp"
+						>
+					</File>
 				</Filter>
 			</Filter>
 		</Filter>
@@ -1023,45 +1558,57 @@
 			Name="Resource Files"
 			Filter="qrc;*"
 			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
-			ParseFiles="false">
+			ParseFiles="false"
+			>
 			<Filter
 				Name="_resources"
-				Filter="">
-				<Filter
-					Name="images"
-					Filter="">
-					<File
-						RelativePath="_resources\images\SysTrayUpdate.png" />
-					<File
-						RelativePath="_resources\images\path.png" />
-					<File
-						RelativePath="_resources\images\plugin.png" />
-					<File
-						RelativePath="_resources\images\unknown.png" />
-				</Filter>
+				>
 				<File
-					RelativePath="_resources\SwCoreRsc.qrc">
+					RelativePath="_resources\SwCoreRsc.qrc"
+					>
 					<FileConfiguration
-						Name="Debug|Win32">
+						Name="Debug|Win32"
+						>
 						<Tool
 							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwCoreRsc.qrc;_resources\images\SysTrayUpdate.png;_resources\images\path.png;_resources\images\plugin.png;_resources\images\unknown.png"
-							CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o GeneratedFiles\rcc\qrc_SwCoreRsc.cpp"
 							Description="RCC _resources\SwCoreRsc.qrc"
+							CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o GeneratedFiles\rcc\qrc_SwCoreRsc.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwCoreRsc.qrc;_resources\images\SysTrayUpdate.png;_resources\images\path.png;_resources\images\plugin.png;_resources\images\unknown.png"
 							Outputs="GeneratedFiles\rcc\qrc_SwCoreRsc.cpp"
-							Path="c:\Qt\4.7.1\bin" />
+						/>
 					</FileConfiguration>
 					<FileConfiguration
-						Name="Release|Win32">
+						Name="Release|Win32"
+						>
 						<Tool
 							Name="VCCustomBuildTool"
-							AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwCoreRsc.qrc;_resources\images\SysTrayUpdate.png;_resources\images\path.png;_resources\images\plugin.png;_resources\images\unknown.png"
-							CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o GeneratedFiles\rcc\qrc_SwCoreRsc.cpp"
 							Description="RCC _resources\SwCoreRsc.qrc"
+							CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o GeneratedFiles\rcc\qrc_SwCoreRsc.cpp&#x0D;&#x0A;"
+							AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwCoreRsc.qrc;_resources\images\SysTrayUpdate.png;_resources\images\path.png;_resources\images\plugin.png;_resources\images\unknown.png"
 							Outputs="GeneratedFiles\rcc\qrc_SwCoreRsc.cpp"
-							Path="c:\Qt\4.7.1\bin" />
+						/>
 					</FileConfiguration>
 				</File>
+				<Filter
+					Name="images"
+					>
+					<File
+						RelativePath="_resources\images\path.png"
+						>
+					</File>
+					<File
+						RelativePath="_resources\images\plugin.png"
+						>
+					</File>
+					<File
+						RelativePath="_resources\images\SysTrayUpdate.png"
+						>
+					</File>
+					<File
+						RelativePath="_resources\images\unknown.png"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
