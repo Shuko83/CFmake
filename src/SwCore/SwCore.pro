@@ -109,14 +109,14 @@ win32:{
 DESTDIR = ./../../$$LIB_PATH
 DLLDESTDIR=  ./../../$$BIN_PATH
 
+LIBS += -L"$$PROJECTS_PATH/Libraries/GeographicLib/$$LIB_PATH"
+
 CONFIG(debug, debug|release) {	
-	LIBS += \
-		-L"$$PROJECTS_PATH/Libraries/GeographicLib/$$LIB_PATH" -lGeographicLibd 
+	LIBS += -lGeographicLibd 
 } 
 
 CONFIG(release, debug|release) {
-	LIBS += \
-		-L"$$PROJECTS_PATH/Libraries/GeographicLib/$$LIB_PATH" -lGeographicLib
+	LIBS += -lGeographicLib
 }
 
 ################################################################################
