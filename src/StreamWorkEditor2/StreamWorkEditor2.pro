@@ -111,10 +111,10 @@ include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
 include($$PROJECTS_PATH/Libraries/StreamWork/baseSwCore.pri)
 
 #degeulace:!!!!!
-CONFIG(debug, debug|release) {	
-	INCLUDEPATH += ../SwDoc/$$GEN_FILES/uid
+CONFIG(debug, debug|release) {
+	INCLUDEPATH += $$PWD/../SwDoc/$$GEN_FILES/ui
 } 
 
 CONFIG(release, debug|release) {
-	INCLUDEPATH += ../SwDoc/$$GEN_FILES/ui	
+	INCLUDEPATH += $$PWD/../SwDoc/$$GEN_FILES/ui	
 }
