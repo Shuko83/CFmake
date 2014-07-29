@@ -1,1 +1,1 @@
-qmake -tp vc -o SwRecord.vcproj SwRecord.pro
+qmake -tp vc

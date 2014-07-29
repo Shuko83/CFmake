@@ -1,0 +1,74 @@
+<Paths>
+	<Path target="C:\projects\Libraries\ExceptionManager\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\projects\Libraries\ExceptionManager\bin\vc\release_QT5" use="release"></Path>
+  
+	<!-- Modif CGD -->
+	<Path target="C:\Projects\Libraries\StreamWork\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\StreamWork\bin\vc\release_QT5" use="release"></Path>
+	<!-- end Modif CGD -->
+
+	<Path target="C:\Projects\Libraries\DCLI\Utils\Stable\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\DCLI\Utils\Stable\bin\vc\release_QT5" use="release"></Path>
+
+	<Path target="C:\Projects\Libraries\DCLI\Spy\Stable\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\DCLI\Spy\Stable\bin\vc\release_QT5" use="release"></Path>
+
+	<Path target="C:\Projects\Libraries\DCLI\Simple\Stable\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\DCLI\Simple\Stable\bin\vc\release_QT5" use="release"></Path>
+
+	<Path target="C:\Projects\Libraries\DCLI\Commander\Stable\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\DCLI\Commander\Stable\bin\vc\release_QT5" use="release"></Path>
+
+	<Path target="C:\Projects\Libraries\ProtoLG3\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\ProtoLG3\bin\vc\release_QT5" use="release"></Path>
+
+	
+	<!--
+	<Path target="C:\Projects\Libraries\ProductVersion\Stable\bin\vc\debug" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\ProductVersion\Stable\bin\vc\release" use="release"></Path>
+	<Path target="C:\Projects\Libraries\ProductKeys\Stable\bin\vc\debug" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\ProductKeys\Stable\bin\vc\release" use="release"></Path>
+	<Path target="C:\Projects\Libraries\ProductRegistration\Stable\bin\vc\debug" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\ProductRegistration\Stable\bin\vc\release" use="release"></Path>
+	<Path target="C:\Projects\Libraries\ProductRegistration2\Stable\bin\vc\debug" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\ProductRegistration2\Stable\bin\vc\release" use="release"></Path>
+	-->
+	
+	
+	<Path target="C:\Projects\Libraries\StoreLib\Stable\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\StoreLib\Stable\bin\vc\release_QT5" use="release"></Path>
+
+	<Path target="C:\Projects\Modules\Plg3\commonUtilities\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Modules\Plg3\commonUtilities\bin\vc\release_QT5" use="release"></Path>
+
+	<Path target="C:\Projects\Modules\Plg3\tdlcommon\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Modules\Plg3\tdlcommon\bin\vc\release_QT5" use="release"></Path>
+	
+	<Path target="C:\Projects\Libraries\QExtSerialPort\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\QExtSerialPort\bin\vc\release_QT5" use="release"></Path>  
+	
+	<Path target="C:\Projects\Modules\Sw\Tools\bin\vc\debug_QT5\plugins" use="debug"></Path>
+	<Path target="C:\Projects\Modules\Sw\Tools\bin\vc\release_QT5\plugins" use="release"></Path>
+
+	<Path target="C:\Projects\Libraries\DCLI\VMF\Stable\bin\vc\debug_QT5" use="debug"></Path>
+    <Path target="C:\Projects\Libraries\DCLI\VMF\Stable\bin\vc\release_QT5" use="release"></Path>
+	
+	<Path target="C:\Projects\Libraries\Id_Library\Dev\bin\vc\debug_QT5" use="debug"></Path>
+    <Path target="C:\Projects\Libraries\Id_Library\Dev\bin\vc\release_QT5" use="release"></Path>
+  
+    <Path target="C:\Projects\Modules\GUSA\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Modules\GUSA\bin\vc\release_QT5" use="release"></Path>	
+	<Path target="C:\Projects\Modules\GUSA\bin\vc\debug_QT5\GU_Plugins" use="debug"></Path>
+	<Path target="C:\Projects\Modules\GUSA\bin\vc\release_QT5\GU_Plugins" use="release"></Path>	
+                                                	
+	<Path target="C:\Projects\Libraries\QtPlugins\bin\vc\debug_QT5" use="debug"></Path>
+	<Path target="C:\Projects\Libraries\QtPlugins\bin\vc\release_QT5" use="release"></Path>
+
+	<Path target="C:\Projects\Modules\StreamWork\bin\vc\debug_QT5\plugins" use="debug"></Path>
+	<Path target="C:\Projects\Modules\StreamWork\bin\vc\release_QT5\plugins" use="release"></Path>
+	
+	<Path target="C:\Projects\Modules\GUSASw\bin\vc\debug_QT5\plugins" use="debug"></Path>
+    <Path target="C:\Projects\Modules\GUSASw\bin\vc\release_QT5\plugins" use="release"></Path>
+        
+</Paths>
+
