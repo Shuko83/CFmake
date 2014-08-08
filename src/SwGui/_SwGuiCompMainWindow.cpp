@@ -13,6 +13,9 @@
 #include "_SwGuiCompMainWindow.h"
 #include <QEvent>
 
+#include <io.h>
+#include <direct.h>
+
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
@@ -30,6 +33,11 @@ using namespace StreamWork::SwGui;
 #define SHOW_MAXIMIZED 3
 #define SHOW_MINIMIZED 4
 
+// constantes pour la gestion des paths des fichiers XML sur le disque
+QString HOME_PATH; 
+QString APP_PATH;	
+
+
 //-----------------------------------------------------------------------------
 /*! \brief Constructeur */
 _SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()
@@ -38,6 +46,10 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()
 	setProviderServiceAvaibility(true);
 	setPropertyServiceAvaibility(true);
 	setOwnerServiceAvaibility(true);
+
+	_relativePath = "Undefined Value - will not be saved";
+	_absolutePath = "Undefined Value - will not be saved";
+	_pathType = UserHomeDir;
 	
     _use_aswidget_property = 0;
     _menus_nb = 0;
@@ -65,7 +77,10 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()
     _useAsWidget = false;
 	_finalized = false;
 
-	_configurationFileName = "dockParameters.xml";
+	HOME_PATH = QDir::homePath () + QDir::separator(); 
+	APP_PATH	= SwApplication::GetInstance()->GetApplicationDirPath() + QDir::separator();
+
+	_relativePath = "AppData\\Roaming\\diginext\\Starlinx\\Configuration\\dockParameters.xml";
 }
 
 //-----------------------------------------------------------------------------
@@ -191,7 +206,8 @@ void _SwGuiCompMainWindow::initializeComponent() throw(SwException)
 	//Status bar
 	consummeInterface<ISwWidget>(STATUSBAR_INTERFACE);
 
-    //Enregistrement des propriétés
+	//Enregistrement des propriétés
+	createPropertiesForThisObject(QString(), true);
 	createPropertiesForQObject(_mainWindow,"QWidget"); //Necessaire pour acceder au "show"
     
     //Gestion des menus
@@ -273,17 +289,6 @@ void _SwGuiCompMainWindow::initializeComponent() throw(SwException)
     _saveAutoPeriod_property->SetDescription("Define the period for saving the dock configuration");  
     _saveAutoPeriod_property->SetValue(QVariant(_saveAutoPeriod));
 	_saveAutoPeriod_property->GetOnChangeSignal().iconnect(*this, &_SwGuiCompMainWindow::eventPropertyChange);
-
-	//Fichier de configuration
-	_path_property = getPropertiesService().CreateProperty<QString>("Parameters_Configuration Filename");
-    if (_path_property != NULL)
-	{
-        QVariant variant;
-        variant.setValue(_configurationFileName);
-        _path_property->SetValue(variant);
-        _path_property->SetDescription("Configuration Filename (*.xml)");
-		_path_property->GetOnChangeSignal().iconnect(*this, &_SwGuiCompMainWindow::eventPropertyChange);
-    }
 
     //Fin
     if (SW_APP->IsVerbose())
@@ -492,13 +497,6 @@ void _SwGuiCompMainWindow::eventPropertyChange(ISwProperty * property)
         _show_mode = showmode;
         showChanged();
     }
-
-	//Changement du fichier de configuration
-	if (_path_property == property)
-	{
-		QString path = _path_property->GetValue().value<QString>();
-		setConfigurationFileName(path);
-	}
 }
 
 //---------------------------------------------------------------------
@@ -598,7 +596,7 @@ bool _SwGuiCompMainWindow::Finalize( quint64 historic_index )
 {
 	if (_mainWindow)
 	{
-		_mainWindow->loadConfiguration();
+		_mainWindow->loadConfiguration(getFilePath());
 		_finalized = true;
 		return true;
 	}
@@ -817,19 +815,104 @@ void _SwGuiCompMainWindow::restoreConfiguration()
 		_mainWindow->restoreConfiguration();
 }
 
-//-----------------------------------------------------------------------------
-QString _SwGuiCompMainWindow::getConfigurationFileName()
+//-------------------------------------------------------------------------
+QString _SwGuiCompMainWindow::getFilePath()
 {
-	return _configurationFileName;
+	QString retFilePath = "";
+	QString directoryBasePath = "";
+
+	if(_pathType == UserHomeDir)
+	{
+		retFilePath = HOME_PATH + _relativePath;
+		directoryBasePath = HOME_PATH;
+	}
+	else if(_pathType == ApplicationDir)
+	{
+		retFilePath = APP_PATH + _relativePath;
+		directoryBasePath = APP_PATH;
+	}
+	else if(_pathType == Fixed)
+	{
+		retFilePath = _absolutePath;
+	}
+
+	// Vérification des répertoires
+	checkDirectory(directoryBasePath);
+
+	return retFilePath;
 }
 
-//-----------------------------------------------------------------------------
-void _SwGuiCompMainWindow::setConfigurationFileName(QString name)
+//-------------------------------------------------------------------------
+void _SwGuiCompMainWindow::checkDirectory(QString inDirectoryBasePath)
 {
-	if (_configurationFileName != name)
+	QString directoryPath = inDirectoryBasePath;
+	QStringList directoriesToCheck = _relativePath.split("\\");
+
+	// On teste si le(s) répertoire(s) existe(nt)
+	for(int i=0; i<directoriesToCheck.size(); i++)
 	{
-		_configurationFileName = name;
-		if (_mainWindow)
-			_mainWindow->setConfigurationFileName(name, _finalized);
+		if(!directoriesToCheck[i].contains("."))
+		{
+			directoryPath += directoriesToCheck[i];
+
+			// Si ce n'est pas le cas, on le créé
+			if(access(directoryPath.toStdString().c_str(), 0) == -1)
+			{
+				qDebug() << "The repertory named " << directoryPath << " doesn't exist, creation!!";
+				mkdir(directoryPath.toStdString().c_str());
+			}
+			directoryPath += "\\";
+		}
 	}
+}
+
+//-------------------------------------------------------------------------
+void _SwGuiCompMainWindow::setPathType( _SwGuiCompMainWindow::PathType val )
+{
+	if(val == UserHomeDir)
+	{
+		getPropertiesService().ChangePropertyEdition("relativePath",true);
+		getPropertiesService().ChangePropertyEdition("absolutePath",false);
+	}
+	else if(val == ApplicationDir)
+	{
+		getPropertiesService().ChangePropertyEdition("relativePath",true);
+		getPropertiesService().ChangePropertyEdition("absolutePath",false);
+	}
+	else if(val == Fixed)
+	{
+		getPropertiesService().ChangePropertyEdition("relativePath",false);
+		getPropertiesService().ChangePropertyEdition("absolutePath",true);
+	}
+	_pathType = val;
+}
+
+//-------------------------------------------------------------------------
+_SwGuiCompMainWindow::PathType _SwGuiCompMainWindow::getPathType()
+{
+	return _pathType;
+}
+
+//-------------------------------------------------------------------------
+QString _SwGuiCompMainWindow::getAbsolutePath()
+{
+	return _absolutePath;
+}
+
+//-------------------------------------------------------------------------
+void _SwGuiCompMainWindow::setAbsolutePath( QString val )
+{
+	_absolutePath = val;
+}
+
+//-------------------------------------------------------------------------
+QString _SwGuiCompMainWindow::getRelativePath()
+{
+	return _relativePath;
+}
+
+//-------------------------------------------------------------------------
+void _SwGuiCompMainWindow::setRelativePath( QString val )
+{
+	_relativePath = val;
 }

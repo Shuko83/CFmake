@@ -19,13 +19,13 @@
   */
 
 /*			ID,							name,						suffix,			base,					conv,			constant,			valueBase,	valueSecondBase,	minValue,		maxValue*/
-SW_SI_UNIT(	Meter,						"Meter",					"m",			Meter,					Base,			1.0,				609.60,				0,				0,			 300000		)
-SW_SI_UNIT(	KiloMeter,					"Kilometer",				"km",			Meter,					Linear,			0.001,					0,				0,				0,			  300 		)
-SW_SI_UNIT(	Feet,						"Feet",						"ft",			Meter,					Linear,			1.0/0.3048,				0,				0,				0,			984251.96	)
-SW_SI_UNIT(	Yard,						"Yard",						"yd",			Meter,					Linear,			1.0/0.9144,				0,				0,				0,		    328083.98	)
-SW_SI_UNIT(	Mile,						"Mile (int)",				"mi",			Meter,					Linear,			1.0/1609.344,			0,				0,				0,			  186.41	)
-SW_SI_UNIT(	NauticalMile,				"Nautical mile",			"NM",			Meter,					Linear,			1.0/1852.0,				0,				0,				0,			  161.98	)
-SW_SI_UNIT(	DataMile,					"Data mile",				"DM ",			Meter,					Linear,			1.0/1828.8,				0,				0,				0,			  164.04	)
+SW_SI_UNIT(	Meter,						"Meter",					"m",			Meter,					Base,			1.0,				609.60,				0,				0,			 800000		)
+SW_SI_UNIT(	KiloMeter,					"Kilometer",				"km",			Meter,					Linear,			0.001,					0,				0,				0,			  8000 		)
+SW_SI_UNIT(	Feet,						"Feet",						"ft",			Meter,					Linear,			1.0/0.3048,				0,				0,				0,			26246719.16	)
+SW_SI_UNIT(	Yard,						"Yard",						"yd",			Meter,					Linear,			1.0/0.9144,				0,				0,				0,		    8748906.38	)
+SW_SI_UNIT(	Mile,						"Mile (int)",				"mi",			Meter,					Linear,			1.0/1609.344,			0,				0,				0,			  4970.96	)
+SW_SI_UNIT(	NauticalMile,				"Nautical mile",			"NM",			Meter,					Linear,			1.0/1852.0,				0,				0,				0,			  4319.65	)
+SW_SI_UNIT(	DataMile,					"Data mile",				"DM ",			Meter,					Linear,			1.0/1828.8,				0,				0,				0,			  4374,45	)
 SW_SI_UNIT(	AltMeter,					"Meter (alt)",				"m ",			AltMeter,				Base,			1.0,				 1252.10,			0,			 -9753.6,		 304799.99	)
 SW_SI_UNIT(	AltKilometer,				"Kilometer (alt)",			"km ",			AltKilometer,			Linear,			0.001,					0,				0,			  -9.75,		  304.79	)
 SW_SI_UNIT(	AltFeet,					"Feet (alt)",				"ft ",			AltMeter,				Linear,			1.0/0.3048,				0,				0,			 -32000,		 999999.97	)

@@ -55,6 +55,18 @@ class SWGUI_EXPORT _SwGuiCompMainWindow :	public SwAssistedComponent,
 											public ISwListDockWidgetListener
 {
 	Q_OBJECT
+
+public :
+	enum PathType {
+		UserHomeDir = 0, 
+		ApplicationDir = 1,
+		Fixed = 2
+	};
+
+	Q_ENUMS(PathType)
+		Q_PROPERTY(QString relativePath READ getRelativePath WRITE setRelativePath)
+		Q_PROPERTY(QString absolutePath READ getAbsolutePath WRITE setAbsolutePath)
+		Q_PROPERTY(PathType pathType READ getPathType WRITE setPathType)
 	
 protected:
     /* fenetre principale */
@@ -116,14 +128,19 @@ protected:
     /* propriété nombre d'actions*/
     ISwProperty * _use_aswidget_property;
 
-	// --- Fichier de configuration --
-	//Nom du fichier de configuration
-	QString _configurationFileName;
 	//Propriete
 	ISwProperty * _path_property;
 
 	QList<ISwEventObserver*> _iSwEvent;
 	bool _finalized;
+
+	QString _relativePath;
+	QString _absolutePath;
+	PathType _pathType;
+
+	// --- Fichier de configuration --
+	//Nom du fichier de configuration
+	QString _configurationFileName;
 
 	
 
@@ -140,9 +157,6 @@ public:
 
 	void saveConfiguration();
 	void restoreConfiguration();
-
-	QString getConfigurationFileName();
-	void setConfigurationFileName(QString name);
     
     //---------------------------------------------------------------------
     // Interface ISwQMainWindow
@@ -191,8 +205,37 @@ public:
 	 */
 	virtual void interfaceUnavailable(QString interfaceName);
 
+
+	//----------------------------------------------------
+	// Accesseur 
+	//----------------------------------------------------
+
+	/** @brief Property value relativePath */
+	QString getRelativePath();
+	void setRelativePath(QString val);
+
+	/** @brief Property value absolutePath */
+	QString getAbsolutePath();
+	void setAbsolutePath(QString val);
+
+	/** @brief Property value pathType */
+	PathType getPathType();
+	void setPathType(PathType val);
+
 private:
     void showChanged();
+
+	/** 
+	 * @brief : getFilePath() récupère le path du fichier de sauvegarde d'une configuration
+	 */
+	QString getFilePath();
+
+	/** 
+	 * @brief : checkDirectory() vérifie l'existence des répertoires dans le path entré
+	 *			pour les fichiers de sauvegarde de la conf. Les créé s'ils n'existent pas
+	 * @param : QString : inDirectoryBasePath, type de path choisi par l'utilisateur (absolu, relatif, fixe)
+	 */
+	void checkDirectory(QString inDirectoryBasePath);
 
 protected:
 	void closeEvent(QCloseEvent* event);

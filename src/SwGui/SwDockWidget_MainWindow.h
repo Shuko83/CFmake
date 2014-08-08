@@ -17,7 +17,7 @@ public:
 
 	void saveConfiguration();
 	void restoreConfiguration();
-	void loadConfiguration();
+	void loadConfiguration(QString filePath);
 
 	void setMainWidget(QWidget * widget);
 	QWidget * getMainWidget();
@@ -27,13 +27,14 @@ public:
 	void removeMenu(QString name);
 
 	void setSaveAutoPeriod(unsigned int value);
-	QString getConfigurationFileName();
-	void setConfigurationFileName(QString name, bool apply = false);
+
+	QString getConfigurationPathFileName(){return _configurationPathFileName;}
+	void setConfigurationPathFileName(QString pathName){_configurationPathFileName = pathName;}
 
 private:
 	QWidget * _mainArea;
 
-	QString _configurationFileName;
+	QString _configurationPathFileName;
 };
 
 #endif

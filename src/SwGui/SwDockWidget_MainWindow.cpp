@@ -109,44 +109,11 @@ void SwDockWidget_MainWindow::restoreConfiguration()
 }
 
 //-----------------------------------------------------------------------------
-void SwDockWidget_MainWindow::loadConfiguration()
+void SwDockWidget_MainWindow::loadConfiguration(QString filePath)
 {
+	_configurationPathFileName = filePath;
 	SwDockWidget_MainArea * _mainDock = qobject_cast<SwDockWidget_MainArea*>(_mainArea);
 	if (_mainDock)
-		_mainDock->loadDockPosition();
+		_mainDock->loadDockPosition(_configurationPathFileName);
 }
-
-//-----------------------------------------------------------------------------
-QString SwDockWidget_MainWindow::getConfigurationFileName()
-{
-	return _configurationFileName;
-}
-
-//-----------------------------------------------------------------------------
-void SwDockWidget_MainWindow::setConfigurationFileName(QString name, bool apply)
-{
-	if (_configurationFileName != name)
-	{
-		_configurationFileName = name;
-		SwDockWidget_MainArea * _mainDock = qobject_cast<SwDockWidget_MainArea*>(_mainArea);
-		if (_mainDock)
-		{
-			//Ajout du path complet
-			QString path = QDir::homePath () + QDir::separator() +
-								"AppData" + QDir::separator() +
-								"Roaming" + QDir::separator() +
-								"diginext" + QDir::separator() +
-								"Starlinx" + QDir::separator() +
-								"DockConfiguration";
-			//Creation si necessaire du repertoire
-			QDir lDir;
-			if (!lDir.exists(path)) 
-				lDir.mkpath(path);
-
-			QString fullName = path + QDir::separator() + name;
-			_mainDock->setConfigurationFileName(fullName, apply);
-		}
-	}
-}
-
 

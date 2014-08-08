@@ -44,7 +44,7 @@ public:
 	QWidget * pinDockTo(QObject * obj, QWidget * mainWidget, Qt::DockWidgetArea area, bool absolute = false);
 
 	//Chargement des tailles et positions
-	void loadDockPosition();
+	void loadDockPosition(QString filePath);
 
 	//Verrouillage de la disposition des docks
 	void lock();

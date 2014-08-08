@@ -22,7 +22,6 @@
 #define BTN_CENTER_SIZE 72
 #define PADDING 4
 
-#define PARAMETER_FILE			"dockparameters.xml"
 #define SAVE_TIMER				1000 * 60 * 5 //Valeur par defaut : 5 minutes (en millisecondes)
 #define SAVE_TIMER_MIN_VALUE	1000 //Minimum 1 seconde
 
@@ -56,18 +55,7 @@ SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar
 	_secondScreenMainDock->setCanBePin(false);
 	_secondScreenMainDock->setAlwaysOnTop(false);
 
-	//Fichier de configuration par defaut
-	QString path = QDir::homePath () + QDir::separator() +
-								"AppData" + QDir::separator() +
-								"Roaming" + QDir::separator() +
-								"diginext" + QDir::separator() +
-								"Starlinx" + QDir::separator() +
-								"DockConfiguration";
-	//Creation si necessaire du repertoire
-	QDir lDir;
-	if (!lDir.exists(path)) 
-		lDir.mkpath(path);
-	_configurationFileName = path + QDir::separator() + PARAMETER_FILE;
+	//Fichier de configuration par defaut mis lors du load
 
 	//Creation d'un widget vide provisoire
 	_emptyWidget = new QWidget(this);
@@ -1912,7 +1900,7 @@ void SwDockWidget_MainArea::setConfigurationFileName(QString name, bool apply)
 					widget->setParent(0);
 			}
 			//Chargement de la nouvelle configuration
-			loadDockPosition();
+			loadDockPosition(_configurationFileName);
 			hideArrows(true); //Protection pour masquer les fleches qui peuvent apparaitre pendant le deplacement des fenetres
 		}
 	}
@@ -2164,11 +2152,12 @@ QDomElement SwDockWidget_MainArea::writeWidgetParameters(QDomDocument doc, QDomE
 
 //-----------------------------------------------------------------------------
 //Chargement de la position des docks
-void SwDockWidget_MainArea::loadDockPosition()
+void SwDockWidget_MainArea::loadDockPosition(QString filePath)
 {
 	//Creation du document
 	QDomDocument doc("dockparameters");
-
+	
+	_configurationFileName = filePath;
 	//Lecture
 	QFile file(_configurationFileName);
 	if (!file.open(QIODevice::ReadOnly))
