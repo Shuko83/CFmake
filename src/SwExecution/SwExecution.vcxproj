@@ -354,7 +354,7 @@
   <ItemGroup>
     <CustomBuild Include="_resources\SwExecutionRsc.qrc">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_resources\SwExecutionRsc.qrc;_resources\images\executor_simple.png;_resources\images\switchExecutor.png;_resources\images\executor.png;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_resources\SwExecutionRsc.qrc;_resources\images\executor.png;_resources\images\switchExecutor.png;_resources\images\executor_simple.png;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\rcc.exe -name SwExecutionRsc _resources\SwExecutionRsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwExecutionRsc.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">RCC _resources\SwExecutionRsc.qrc</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_SwExecutionRsc.cpp;%(Outputs)</Outputs>
