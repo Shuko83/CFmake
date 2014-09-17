@@ -29,7 +29,7 @@ StreamView::StreamView(QWidget * parent):QGraphicsView(parent) {
 	font1.setFamily(QString::fromUtf8("Segoe UI"));
 	font1.setPointSize(15);
 
-	_searchShortCut = new QShortcut(QKeySequence(tr("Ctrl+F","Search")),this);
+	_searchShortCut = new QShortcut(QKeySequence(tr("Ctrl+Shift+F","Search")),this);
 	connect(_searchShortCut,SIGNAL(activated ()),this,SLOT(showSearchBox()));
 
 	_scaleFactor = 1.0;
