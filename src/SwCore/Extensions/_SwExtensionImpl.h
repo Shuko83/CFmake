@@ -17,7 +17,7 @@ namespace StreamWork {
         @class _SwExtensionImpl
         @brief Extension implementation
         */
-        class _SwExtensionImpl : public ISwExtension{
+        class BUILD_SWCORE _SwExtensionImpl : public ISwExtension{
         public:
             /** @brief Constructor */
             _SwExtensionImpl(QString type,QString name,QString componentTypeName);

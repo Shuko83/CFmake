@@ -13,14 +13,7 @@
 #include <iostream>
 #include "SwApplication.h"
 #include "_SwPluginsBank_Class.h"
-#include "_SwFileEditorManager.h"
-#include "_SwServiceExtensionsImpl.h"
-#include "_SwServiceCodeTimer.h"
-#include "_SwServiceParametersImpl.h"
-#include "_SwServiceRefProfiler.h"
-#include "SwServiceSaveConfiguration.h"
-#include "_SwServiceShortcuts.h"
-#include "_SwServiceUnitSI.h"
+#include "ISwServiceParameters.h"
 #include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
 #include "SwLoader_Class.h"
 #include "SwEnum.h"
@@ -48,14 +41,14 @@ using namespace std;
 SwApplication								* _singleton				= NULL;
 _SwPluginsBank_Class						* _bank						= NULL;
 _SwComplexeTypeAdaptersFactoriesBankImpl	* _ctadaptersbank			= NULL;
-_SwFileEditorManager						* _feManager				= NULL;
-_SwServiceExtensionsImpl					* _serviceExtensions		= NULL;
-_SwServiceParametersImpl					* _serviceParameters		= NULL;
-_SwServiceCodeTimer							* _serviceCodeTimer			= NULL;
-_SwServiceRefProfiler						* _serviceRefProfiler		= NULL;
-SwServiceSaveConfiguration					* _serviceSaveConfiguration	= NULL;
-_SwServiceShortcuts							* _serviceShortcuts			= NULL;
-_SwServiceUnitSI							* _serviceUnitSI			= NULL;
+//_SwFileEditorManager						* _feManager				= NULL;
+//_SwServiceExtensionsImpl					* _serviceExtensions		= NULL;
+//_SwServiceParametersImpl					* _serviceParameters		= NULL;
+//_SwServiceCodeTimer							* _serviceCodeTimer			= NULL;
+//_SwServiceRefProfiler						* _serviceRefProfiler		= NULL;
+//SwServiceSaveConfiguration					* _serviceSaveConfiguration	= NULL;
+//_SwServiceShortcuts							* _serviceShortcuts			= NULL;
+//_SwServiceUnitSI							* _serviceUnitSI			= NULL;
 
 bool										_is_launch				= false;
 bool										_isCheck				= false;
@@ -86,44 +79,10 @@ SwApplication::SwApplication():SwServicesManager_Class() {
     _current_stream=_streams.begin();
     //Compteur d'historique a 1
     _historic_counter=Q_UINT64_C(1);
-    //Creation du service de parametres
-    _serviceParameters = new _SwServiceParametersImpl();
-    RegisterService(_serviceParameters);
-
-	_serviceCodeTimer = new _SwServiceCodeTimer();
-	RegisterService(_serviceCodeTimer);
-
-	_serviceRefProfiler = new _SwServiceRefProfiler();
-	RegisterService(_serviceRefProfiler);
-
-	_serviceSaveConfiguration = new SwServiceSaveConfiguration();
-	RegisterService(_serviceSaveConfiguration);
-
-	_serviceShortcuts = new _SwServiceShortcuts();
-	RegisterService(_serviceShortcuts);
-
-	_serviceUnitSI = new _SwServiceUnitSI();
-	RegisterService(_serviceUnitSI);
 }
 /*! \brief Destructeur*/
 SwApplication::~SwApplication() {
-    UnregisterService(_feManager->GetServiceName());
-    delete _feManager;
-    UnregisterService(_serviceExtensions->GetServiceName());
-    delete _serviceExtensions;
-    UnregisterService(_serviceParameters->GetServiceName());
-    delete _serviceParameters;
-	UnregisterService(_serviceCodeTimer->GetServiceName());
-	delete _serviceCodeTimer;
-	UnregisterService(_serviceRefProfiler->GetServiceName());
-	delete _serviceRefProfiler;
-	UnregisterService(_serviceSaveConfiguration->GetServiceName());
-	delete _serviceSaveConfiguration;
-	UnregisterService(_serviceShortcuts->GetServiceName());
-	delete _serviceShortcuts;
-	UnregisterService(_serviceUnitSI->GetServiceName());
-	delete _serviceUnitSI;
-	
+
     _singleton=NULL;
     delete _bank;
     _bank=NULL;
@@ -166,28 +125,10 @@ void SwApplication::readParameters() {
             if (args[i]=="-d") {
                 this->Verbose();
             }
-            // Parameters
-            if (args[i]=="-P" && i+1<nbArgs && _serviceParameters) 
-			{
-				QStringList tmpList = args[i+1].split("=");
-				if(tmpList.count() > 2)
-				{
-					LAUNCH_SWEXCEPTION("swapplication",QString("Miss match parameters -P with more thant one = (%1)").arg(args[i+1]));
-				}
-				else
-				{
-					if( tmpList.count() == 2)
-					{
-                        _serviceParameters->registerParameter (tmpList.at(0), tmpList.at(1));
-					}
-					else
-					{
-                        _serviceParameters->registerParameter (tmpList.at(0), QString());
-					}
-				}
-			}
+			
+			
 			//Ajout d'un path
-            else if (args[i]=="-ppath" && i+1<nbArgs) {
+            if (args[i]=="-ppath" && i+1<nbArgs) {
                 QDir dir(args[i+1]);
                 if (!dir.exists()) {
                     LAUNCH_SWEXCEPTION("swapplication",QString("Plugin path %1 doesn't exist").arg(args[i+1]));
@@ -319,14 +260,6 @@ void SwApplication::FinalizeInitialisation() {
     if (_initialisationFinalized)
         return;
 
-    //Creation du service d'extension
-    _serviceExtensions=new _SwServiceExtensionsImpl();
-    RegisterService(_serviceExtensions);
-
-    //Creation de la bd des file editors lors de la phase de finale de l'initialisation
-    _feManager=new _SwFileEditorManager();
-    RegisterService(_feManager);
-
     QMap<QString,SwPluginFactory_Class *> * plugins=_bank->GetAllPlugins();
     QMap<QString,SwPluginFactory_Class *>::iterator it=plugins->begin();
     while(it!=plugins->end()) {
@@ -375,7 +308,8 @@ bool SwApplication::IsVerbose() {
 void SwApplication::AddNewStream(SwComponent_Class * stream_root) {
     _streams.insert(SwComponent_ClassPtr(stream_root));   
 	QString val="";
-	if(_serviceParameters->getParameter("Check",val))
+	ISwServiceParameters * serviceParameters = dynamic_cast<ISwServiceParameters*>(QueryService(CG_SW_SERVICE_PARAMETER_MANAGER));
+	if(serviceParameters && serviceParameters->getParameter("Check",val))
 	{
 		if(!_isCheck)
 		{
@@ -562,4 +496,12 @@ void SwApplication::waitOnRestart() {
 StreamWork::SwCore::ISwService *  queryService(QString name)
 {
 	return StreamWork::SwCore::SwApplication::GetInstance()->QueryService(name);
+}
+
+//-------------------------------------------------------------------
+void SwApplication::raiseQueryError( QString serviceName )
+{
+	QMessageBox msgBox;
+	msgBox.setText("the service " + serviceName + " hasn't been loaded, check the presence of the dll");
+	msgBox.exec();
 }

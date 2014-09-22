@@ -53,6 +53,7 @@ DEFINES += SwRecord_LIB
 
 INCLUDEPATH += ./ \
 	../SwCore \
+	../SwService/ServiceShortcut \
 	../SwExecution \
 	../SwGui \
 	../SwModel2 \

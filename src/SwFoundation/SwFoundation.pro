@@ -17,7 +17,10 @@ DEFINES += SWFOUNDATION_LIB
 INCLUDEPATH += ./ \
     ../SwCore/ \
 	../SwGui/ \
-	../SwExecution
+	../SwExecution \
+	../SWService/ServiceShortcut \
+	../SwService/ServiceImpl \
+	../SwService/ServiceUnitSI
 
 DESTDIR = ./../../$$LIB_PATH
 DLLDESTDIR=  ./../../$$BIN_PATH

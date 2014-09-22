@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4AFA7CD1-663F-3DE2-98C8-8AE36F879CF6}</ProjectGuid>
+    <RootNamespace>SwServiceConfiguration</RootNamespace>
+    <Keyword>Qt4VSv1.0</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="Configuration">
+    <PlatformToolSet>v120</PlatformToolSet>
+    <OutputDirectory>..\..\..\lib\vc\release_QT5\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <IntermediateDirectory>GeneratedFiles_QT5\obj\</IntermediateDirectory>
+    <PrimaryOutput>SwServiceConfiguration</PrimaryOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="Configuration">
+    <PlatformToolSet>v120</PlatformToolSet>
+    <OutputDirectory>..\..\..\lib\vc\debug_QT5\</OutputDirectory>
+    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
+    <CharacterSet>NotSet</CharacterSet>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <IntermediateDirectory>GeneratedFiles_QT5\objd\</IntermediateDirectory>
+    <PrimaryOutput>SwServiceConfigurationd</PrimaryOutput>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
+  </ImportGroup>
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">..\..\..\lib\vc\release_QT5\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\obj\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwServiceConfiguration</TargetName>
+    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">.dll</TargetExt>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">false</LinkIncremental>
+    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</PostBuildEventUseInBuild>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">..\..\..\lib\vc\debug_QT5\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\objd\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwServiceConfigurationd</TargetName>
+    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">.dll</TargetExt>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</IgnoreImportLibrary>
+    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">
+    <ClCompile>
+      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\..\SwCore\Component\Base&quot;;&quot;..\..\SwCore\Component\Interfaces&quot;;&quot;..\..\SwCore\Component\Pin&quot;;&quot;..\..\SwCore\Component\Services&quot;;&quot;..\..\SwCore\Main&quot;;&quot;..\..\SwCore\Main\Plugin&quot;;&quot;..\..\SwCore\Main\Services\Management&quot;;&quot;..\..\SwCore\Properties&quot;;&quot;..\..\SwCore\SwRef&quot;;&quot;..\..\SwCore\Tools&quot;;&quot;..\..\SwCore\Tools\Exception&quot;;&quot;..\..\SwCore\Tools\Log&quot;;&quot;..\..\SwCore\Tools\Signal&quot;;&quot;..\..\SwCore\Types&quot;;&quot;..\..\SwCore\Types\UserType&quot;;&quot;..\..\SwCore&quot;;&quot;.&quot;;&quot;..\..\..\..\ExceptionManager\src&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtWidgets&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtXml&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;GeneratedFiles_QT5\moc&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>GeneratedFiles_QT5\obj\</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <ForcedIncludeFiles>StdAfx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>GeneratedFiles_QT5\obj\</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)\SwServiceConfiguration.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <ProgramDataBaseFileName>$(IntDir)\SwServiceConfiguration_vc.pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\..\\lib\vc\release_QT5\SwCore.lib;C:\Projects\Libraries\StreamWork\src\SwService\ServiceConfiguration\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5\ExceptionManager.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgets.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Xml.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Gui.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\\lib\vc\release_QT5;C:\Projects\Libraries\StreamWork\src\SwService\ServiceConfiguration\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkDLL>true</LinkDLL>
+      <LinkIncremental>false</LinkIncremental>
+      <OutputFile>$(OutDir)\SwServiceConfiguration.dll</OutputFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\..\bin\vc\release_QT5&quot;</Command>
+      <Message>Copy SwServiceConfiguration.dll to ..\..\..\bin\vc\release_QT5</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
+    <ClCompile>
+      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\..\SwCore\Component\Base&quot;;&quot;..\..\SwCore\Component\Interfaces&quot;;&quot;..\..\SwCore\Component\Pin&quot;;&quot;..\..\SwCore\Component\Services&quot;;&quot;..\..\SwCore\Main&quot;;&quot;..\..\SwCore\Main\Plugin&quot;;&quot;..\..\SwCore\Main\Services\Management&quot;;&quot;..\..\SwCore\Properties&quot;;&quot;..\..\SwCore\SwRef&quot;;&quot;..\..\SwCore\Tools&quot;;&quot;..\..\SwCore\Tools\Exception&quot;;&quot;..\..\SwCore\Tools\Log&quot;;&quot;..\..\SwCore\Tools\Signal&quot;;&quot;..\..\SwCore\Types&quot;;&quot;..\..\SwCore\Types\UserType&quot;;&quot;..\..\SwCore&quot;;&quot;.&quot;;&quot;..\..\..\..\ExceptionManager\src&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtWidgets&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtXml&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;GeneratedFiles_QT5\moc&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AssemblerListingLocation>GeneratedFiles_QT5\objd\</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BrowseInformation>false</BrowseInformation>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <ForcedIncludeFiles>StdAfx.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <ObjectFileName>GeneratedFiles_QT5\objd\</ObjectFileName>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)\SwServiceConfigurationd.pch</PrecompiledHeaderOutputFile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessToFile>false</PreprocessToFile>
+      <ProgramDataBaseFileName>$(IntDir)\SwServiceConfiguration_vc.pdb</ProgramDataBaseFileName>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\..\\lib\vc\debug_QT5\SwCored.lib;C:\Projects\Libraries\StreamWork\src\SwService\ServiceConfiguration\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Xmld.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Guid.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\\lib\vc\debug_QT5;C:\Projects\Libraries\StreamWork\src\SwService\ServiceConfiguration\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreImportLibrary>true</IgnoreImportLibrary>
+      <LinkDLL>true</LinkDLL>
+      <OutputFile>$(OutDir)\SwServiceConfigurationd.dll</OutputFile>
+      <ProgramDatabaseFile>./../../../\bin\vc\debug_QT5/SwServiceConfigurationd.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Link>
+    <Midl>
+      <DefaultCharType>Unsigned</DefaultCharType>
+      <EnableErrorChecks>None</EnableErrorChecks>
+      <WarningLevel>0</WarningLevel>
+    </Midl>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\..\bin\vc\debug_QT5&quot;</Command>
+      <Message>Copy SwServiceConfigurationd.dll to ..\..\..\bin\vc\debug_QT5</Message>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="StdAfx.cpp">
+      <ForcedIncludeFiles Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">$(NOINHERIT)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">StdAfx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">Create</PrecompiledHeader>
+      <ForcedIncludeFiles Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">$(NOINHERIT)</ForcedIncludeFiles>
+      <PrecompiledHeaderFile Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">StdAfx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SwServiceSaveConfiguration.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="_SwServiceConfigurationPluginFactory_Class.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISwAdminConfiguration.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISwConfCollector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISwConfPropertiesObserver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISwConfSaver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISwConfigListener.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISwServiceConfiguration.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StdAfx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SwServiceSaveConfiguration.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="_SwServiceConfigurationPluginFactory_Class.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

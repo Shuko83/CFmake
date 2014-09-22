@@ -1,306 +1,467 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-  </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>{DD1C4BE6-15F1-3856-B740-07DEA6C7613F}</ProjectGuid>
-    <RootNamespace>SwModel</RootNamespace>
-    <Keyword>Qt4VSv1.0</Keyword>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="Configuration">
-    <PlatformToolSet>v120</PlatformToolSet>
-    <OutputDirectory>..\..\lib\vc\release\</OutputDirectory>
-    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
-    <CharacterSet>NotSet</CharacterSet>
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <IntermediateDirectory>release\</IntermediateDirectory>
-    <PrimaryOutput>SwModel</PrimaryOutput>
-  </PropertyGroup>
-  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="Configuration">
-    <PlatformToolSet>v120</PlatformToolSet>
-    <OutputDirectory>..\..\lib\vc\debug\</OutputDirectory>
-    <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
-    <CharacterSet>NotSet</CharacterSet>
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <IntermediateDirectory>debug\</IntermediateDirectory>
-    <PrimaryOutput>SwModel</PrimaryOutput>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings" />
-  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
-  </ImportGroup>
-  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
-  </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">..\..\lib\vc\release\</OutDir>
-    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\</IntDir>
-    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwModel</TargetName>
-    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">.swdl</TargetExt>
-    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</IgnoreImportLibrary>
-    <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">false</LinkIncremental>
-    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</PostBuildEventUseInBuild>
-    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">..\..\lib\vc\debug\</OutDir>
-    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\</IntDir>
-    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwModel</TargetName>
-    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">.swdld</TargetExt>
-    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</IgnoreImportLibrary>
-    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</PostBuildEventUseInBuild>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">
-    <ClCompile>
-      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwExecution&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtXml&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;release&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
-      <AssemblerListingLocation>release\</AssemblerListingLocation>
-      <BrowseInformation>false</BrowseInformation>
-      <DebugInformationFormat>None</DebugInformationFormat>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <ObjectFileName>release\</ObjectFileName>
-      <Optimization>MaxSpeed</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;SWMODEL_LIB;QT_NO_DEBUG;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessToFile>false</PreprocessToFile>
-      <ProgramDataBaseFileName></ProgramDataBaseFileName>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <WarningLevel>Level3</WarningLevel>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;SwCore.lib;SwExecution.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Xml.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Gui.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\lib\vc\release;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <DataExecutionPrevention>true</DataExecutionPrevention>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
-      <IgnoreImportLibrary>true</IgnoreImportLibrary>
-      <LinkDLL>true</LinkDLL>
-      <LinkIncremental>false</LinkIncremental>
-      <OutputFile>$(OutDir)\SwModel.swdl</OutputFile>
-      <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-    </Link>
-    <Midl>
-      <DefaultCharType>Unsigned</DefaultCharType>
-      <EnableErrorChecks>None</EnableErrorChecks>
-      <WarningLevel>0</WarningLevel>
-    </Midl>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;SWMODEL_LIB;QT_NO_DEBUG;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ResourceCompile>
-    <PostBuildEvent>
-      <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;</Command>
-      <Message>Copy SwModel.swdl to ..\..\bin\vc\release</Message>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
-    <ClCompile>
-      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwExecution&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtXml&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;debug&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
-      <AssemblerListingLocation>debug\</AssemblerListingLocation>
-      <BrowseInformation>false</BrowseInformation>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ExceptionHandling>Sync</ExceptionHandling>
-      <ObjectFileName>debug\</ObjectFileName>
-      <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;SWMODEL_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessToFile>false</PreprocessToFile>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <WarningLevel>Level3</WarningLevel>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;SwCored.lib;SwExecutiond.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Xmld.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Guid.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\lib\vc\debug;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <DataExecutionPrevention>true</DataExecutionPrevention>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <IgnoreImportLibrary>true</IgnoreImportLibrary>
-      <LinkDLL>true</LinkDLL>
-      <OutputFile>$(OutDir)\SwModel.swdld</OutputFile>
-      <RandomizedBaseAddress>true</RandomizedBaseAddress>
-      <SuppressStartupBanner>true</SuppressStartupBanner>
-    </Link>
-    <Midl>
-      <DefaultCharType>Unsigned</DefaultCharType>
-      <EnableErrorChecks>None</EnableErrorChecks>
-      <WarningLevel>0</WarningLevel>
-    </Midl>
-    <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;SWMODEL_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ResourceCompile>
-    <PostBuildEvent>
-      <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug&quot;</Command>
-      <Message>Copy SwModel.swdld to ..\..\bin\vc\debug</Message>
-    </PostBuildEvent>
-  </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="_SwExportStreamTreeModel.cpp" />
-    <ClCompile Include="_SwModelExportTreeView.cpp" />
-    <ClCompile Include="_SwModelExportedEntitiesModel.cpp" />
-    <ClCompile Include="_SwModelExportedEntity.cpp" />
-    <ClCompile Include="_SwModelExportedExecutable.cpp" />
-    <ClCompile Include="_SwModelExportedInterfaceC.cpp" />
-    <ClCompile Include="_SwModelExportedInterfaceP.cpp" />
-    <ClCompile Include="_SwModelExportedOwnerConfigurable.cpp" />
-    <ClCompile Include="_SwModelExportedPin.cpp" />
-    <ClCompile Include="_SwModelExportedProperty.cpp" />
-    <ClCompile Include="_SwModelHostExportSelector.cpp" />
-    <ClCompile Include="_SwModelHostSelector.cpp" />
-    <ClCompile Include="_SwModelHost_Class.cpp" />
-    <ClCompile Include="_SwModelPluginFactory_Class.cpp" />
-    <ClCompile Include="_SwModelStreamTreeModel.cpp" />
-    <ClCompile Include="_SwModel_Class.cpp" />
-    <ClCompile Include="_SwModelsList.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SwModelConstantes.h" />
-    <CustomBuild Include="_SwExportStreamTreeModel.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwExportStreamTreeModel.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwExportStreamTreeModel.h -o release\moc__SwExportStreamTreeModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwExportStreamTreeModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc__SwExportStreamTreeModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwExportStreamTreeModel.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwExportStreamTreeModel.h -o debug\moc__SwExportStreamTreeModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwExportStreamTreeModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc__SwExportStreamTreeModel.cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="_SwModelExportTreeView.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelExportTreeView.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelExportTreeView.h -o release\moc__SwModelExportTreeView.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelExportTreeView.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc__SwModelExportTreeView.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelExportTreeView.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelExportTreeView.h -o debug\moc__SwModelExportTreeView.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelExportTreeView.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc__SwModelExportTreeView.cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="_SwModelExportedEntitiesModel.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelExportedEntitiesModel.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelExportedEntitiesModel.h -o release\moc__SwModelExportedEntitiesModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelExportedEntitiesModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc__SwModelExportedEntitiesModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelExportedEntitiesModel.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelExportedEntitiesModel.h -o debug\moc__SwModelExportedEntitiesModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelExportedEntitiesModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc__SwModelExportedEntitiesModel.cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <ClInclude Include="_SwModelExportedEntity.h" />
-    <ClInclude Include="_SwModelExportedExecutable.h" />
-    <ClInclude Include="_SwModelExportedInterfaceC.h" />
-    <ClInclude Include="_SwModelExportedInterfaceP.h" />
-    <ClInclude Include="_SwModelExportedOwnerConfigurable.h" />
-    <ClInclude Include="_SwModelExportedPin.h" />
-    <ClInclude Include="_SwModelExportedProperty.h" />
-    <CustomBuild Include="_SwModelHostExportSelector.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelHostExportSelector.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelHostExportSelector.h -o release\moc__SwModelHostExportSelector.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelHostExportSelector.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc__SwModelHostExportSelector.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelHostExportSelector.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelHostExportSelector.h -o debug\moc__SwModelHostExportSelector.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelHostExportSelector.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc__SwModelHostExportSelector.cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="_SwModelHostSelector.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelHostSelector.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelHostSelector.h -o release\moc__SwModelHostSelector.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelHostSelector.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc__SwModelHostSelector.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelHostSelector.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelHostSelector.h -o debug\moc__SwModelHostSelector.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelHostSelector.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc__SwModelHostSelector.cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <ClInclude Include="_SwModelHost_Class.h" />
-    <ClInclude Include="_SwModelPluginFactory_Class.h" />
-    <CustomBuild Include="_SwModelStreamTreeModel.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelStreamTreeModel.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelStreamTreeModel.h -o release\moc__SwModelStreamTreeModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelStreamTreeModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\moc__SwModelStreamTreeModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelStreamTreeModel.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -DSWMODEL_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwModel -IC:/Projects/Libraries/StreamWork/src/OLD/SwCore -IC:/Projects/Libraries/StreamWork/src/OLD/SwExecution -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtXml -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwModelStreamTreeModel.h -o debug\moc__SwModelStreamTreeModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelStreamTreeModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\moc__SwModelStreamTreeModel.cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <ClInclude Include="_SwModel_Class.h" />
-    <ClInclude Include="_SwModelsList.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="debug\moc__SwExportStreamTreeModel.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="release\moc__SwExportStreamTreeModel.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="debug\moc__SwModelExportTreeView.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="release\moc__SwModelExportTreeView.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="debug\moc__SwModelExportedEntitiesModel.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="release\moc__SwModelExportedEntitiesModel.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="debug\moc__SwModelHostExportSelector.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="release\moc__SwModelHostExportSelector.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="debug\moc__SwModelHostSelector.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="release\moc__SwModelHostSelector.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="debug\moc__SwModelStreamTreeModel.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="release\moc__SwModelStreamTreeModel.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="debug\qrc_SwModelRsc.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="release\qrc_SwModelRsc.cpp">
-      <ExcludedFromBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</ExcludedFromBuild>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="_resources\SwModelRsc.qrc">
-      <FileType>Document</FileType>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_resources\SwModelRsc.qrc;_resources\images\interface_out.png;_resources\images\property.png;_resources\images\interface_in.png;_resources\images\connector.png;_resources\images\model_host.png;_resources\images\model.png;_resources\images\executor.png;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\rcc.exe -name SwModelRsc _resources\SwModelRsc.qrc -o release\qrc_SwModelRsc.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">RCC _resources\SwModelRsc.qrc</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">release\qrc_SwModelRsc.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_resources\SwModelRsc.qrc;_resources\images\interface_in.png;_resources\images\model_host.png;_resources\images\interface_out.png;_resources\images\model.png;_resources\images\executor.png;_resources\images\connector.png;_resources\images\property.png;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\rcc.exe -name SwModelRsc _resources\SwModelRsc.qrc -o debug\qrc_SwModelRsc.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">RCC _resources\SwModelRsc.qrc</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">debug\qrc_SwModelRsc.cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <None Include="_resources\images\connector.png" />
-    <None Include="_resources\images\executor.png" />
-    <None Include="_resources\images\interface_in.png" />
-    <None Include="_resources\images\interface_out.png" />
-    <None Include="_resources\images\model.png" />
-    <None Include="_resources\images\model_host.png" />
-    <None Include="_resources\images\property.png" />
-  </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets" />
-</Project>
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9,00"
+	Name="SwModel"
+	ProjectGUID="{6D8C16F2-9B6A-3301-AF48-C42BF92E6F2A}"
+	Keyword="Qt4VSv1.0">
+	<Platforms>
+		<Platform
+			Name="Win32" />
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="debug\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;debug&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				AdditionalOptions="-Zm200 -w34100 -w34189"
+				AssemblerListingLocation="debug\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="3"
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="debug\"
+				Optimization ="4"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWMODEL_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SwCored.lib SwExecutiond.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/debug"
+				GenerateDebugInformation="true"
+				IgnoreImportLibrary="true"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\lib\vc\debug\SwModel.swdld"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug&quot;"
+				Description="Copy SwModel.swdld to ..\..\bin\vc\debug" />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWMODEL_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="release\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;release&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				AdditionalOptions="-Zm200 -w34100 -w34189"
+				AssemblerListingLocation="release\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="0"
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="release\"
+				Optimization ="2"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWMODEL_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SwCore.lib SwExecution.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../lib/vc/release"
+				GenerateDebugInformation="false"
+				IgnoreImportLibrary="true"
+				LinkIncremental="1"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\lib\vc\release\SwModel.swdl"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release&quot;"
+				Description="Copy SwModel.swdl to ..\..\bin\vc\release" />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWMODEL_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath="_SwExportStreamTreeModel.cpp" />
+			<File
+				RelativePath="_SwModelExportTreeView.cpp" />
+			<File
+				RelativePath="_SwModelExportedEntitiesModel.cpp" />
+			<File
+				RelativePath="_SwModelExportedEntity.cpp" />
+			<File
+				RelativePath="_SwModelExportedExecutable.cpp" />
+			<File
+				RelativePath="_SwModelExportedInterfaceC.cpp" />
+			<File
+				RelativePath="_SwModelExportedInterfaceP.cpp" />
+			<File
+				RelativePath="_SwModelExportedOwnerConfigurable.cpp" />
+			<File
+				RelativePath="_SwModelExportedPin.cpp" />
+			<File
+				RelativePath="_SwModelExportedProperty.cpp" />
+			<File
+				RelativePath="_SwModelHostExportSelector.cpp" />
+			<File
+				RelativePath="_SwModelHostSelector.cpp" />
+			<File
+				RelativePath="_SwModelHost_Class.cpp" />
+			<File
+				RelativePath="_SwModelPluginFactory_Class.cpp" />
+			<File
+				RelativePath="_SwModelStreamTreeModel.cpp" />
+			<File
+				RelativePath="_SwModel_Class.cpp" />
+			<File
+				RelativePath="_SwModelsList.cpp" />
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath="SwModelConstantes.h" />
+			<File
+				RelativePath="_SwExportStreamTreeModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwExportStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwExportStreamTreeModel.h -o debug\moc__SwExportStreamTreeModel.cpp"
+						Description="MOC _SwExportStreamTreeModel.h"
+						Outputs="debug\moc__SwExportStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwExportStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwExportStreamTreeModel.h -o release\moc__SwExportStreamTreeModel.cpp"
+						Description="MOC _SwExportStreamTreeModel.h"
+						Outputs="release\moc__SwExportStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelExportTreeView.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelExportTreeView.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelExportTreeView.h -o debug\moc__SwModelExportTreeView.cpp"
+						Description="MOC _SwModelExportTreeView.h"
+						Outputs="debug\moc__SwModelExportTreeView.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelExportTreeView.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelExportTreeView.h -o release\moc__SwModelExportTreeView.cpp"
+						Description="MOC _SwModelExportTreeView.h"
+						Outputs="release\moc__SwModelExportTreeView.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelExportedEntitiesModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelExportedEntitiesModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelExportedEntitiesModel.h -o debug\moc__SwModelExportedEntitiesModel.cpp"
+						Description="MOC _SwModelExportedEntitiesModel.h"
+						Outputs="debug\moc__SwModelExportedEntitiesModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelExportedEntitiesModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelExportedEntitiesModel.h -o release\moc__SwModelExportedEntitiesModel.cpp"
+						Description="MOC _SwModelExportedEntitiesModel.h"
+						Outputs="release\moc__SwModelExportedEntitiesModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelExportedEntity.h" />
+			<File
+				RelativePath="_SwModelExportedExecutable.h" />
+			<File
+				RelativePath="_SwModelExportedInterfaceC.h" />
+			<File
+				RelativePath="_SwModelExportedInterfaceP.h" />
+			<File
+				RelativePath="_SwModelExportedOwnerConfigurable.h" />
+			<File
+				RelativePath="_SwModelExportedPin.h" />
+			<File
+				RelativePath="_SwModelExportedProperty.h" />
+			<File
+				RelativePath="_SwModelHostExportSelector.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelHostExportSelector.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelHostExportSelector.h -o debug\moc__SwModelHostExportSelector.cpp"
+						Description="MOC _SwModelHostExportSelector.h"
+						Outputs="debug\moc__SwModelHostExportSelector.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelHostExportSelector.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelHostExportSelector.h -o release\moc__SwModelHostExportSelector.cpp"
+						Description="MOC _SwModelHostExportSelector.h"
+						Outputs="release\moc__SwModelHostExportSelector.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelHostSelector.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelHostSelector.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelHostSelector.h -o debug\moc__SwModelHostSelector.cpp"
+						Description="MOC _SwModelHostSelector.h"
+						Outputs="debug\moc__SwModelHostSelector.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelHostSelector.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelHostSelector.h -o release\moc__SwModelHostSelector.cpp"
+						Description="MOC _SwModelHostSelector.h"
+						Outputs="release\moc__SwModelHostSelector.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelHost_Class.h" />
+			<File
+				RelativePath="_SwModelPluginFactory_Class.h" />
+			<File
+				RelativePath="_SwModelStreamTreeModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;debug&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelStreamTreeModel.h -o debug\moc__SwModelStreamTreeModel.cpp"
+						Description="MOC _SwModelStreamTreeModel.h"
+						Outputs="debug\moc__SwModelStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwModelStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;release&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelStreamTreeModel.h -o release\moc__SwModelStreamTreeModel.cpp"
+						Description="MOC _SwModelStreamTreeModel.h"
+						Outputs="release\moc__SwModelStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModel_Class.h" />
+			<File
+				RelativePath="_SwModelsList.h" />
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			<File
+				RelativePath="debug\moc__SwExportStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwExportStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelExportTreeView.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelExportTreeView.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelExportedEntitiesModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelExportedEntitiesModel.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelHostExportSelector.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelHostExportSelector.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelHostSelector.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelHostSelector.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\qrc_SwModelRsc.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\qrc_SwModelRsc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="qrc;*"
+			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
+			ParseFiles="false">
+			<File
+				RelativePath="_resources\SwModelRsc.qrc">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwModelRsc.qrc;_resources\images\connector.png;_resources\images\executor.png;_resources\images\interface_in.png;_resources\images\interface_out.png;_resources\images\model.png;_resources\images\model_host.png;_resources\images\property.png"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwModelRsc _resources\SwModelRsc.qrc -o debug\qrc_SwModelRsc.cpp"
+						Description="RCC _resources\SwModelRsc.qrc"
+						Outputs="debug\qrc_SwModelRsc.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\rcc.exe;_resources\SwModelRsc.qrc;_resources\images\connector.png;_resources\images\executor.png;_resources\images\interface_in.png;_resources\images\interface_out.png;_resources\images\model.png;_resources\images\model_host.png;_resources\images\property.png"
+						CommandLine="C:\Qt\4.7.1\bin\rcc.exe -name SwModelRsc _resources\SwModelRsc.qrc -o release\qrc_SwModelRsc.cpp"
+						Description="RCC _resources\SwModelRsc.qrc"
+						Outputs="release\qrc_SwModelRsc.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_resources\images\connector.png" />
+			<File
+				RelativePath="_resources\images\executor.png" />
+			<File
+				RelativePath="_resources\images\interface_in.png" />
+			<File
+				RelativePath="_resources\images\interface_out.png" />
+			<File
+				RelativePath="_resources\images\model.png" />
+			<File
+				RelativePath="_resources\images\model_host.png" />
+			<File
+				RelativePath="_resources\images\property.png" />
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

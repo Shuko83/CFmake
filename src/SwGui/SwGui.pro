@@ -26,7 +26,9 @@ DEFINES += SWGUI_LIB
 INCLUDEPATH += ./\
     ../SwCore/ \
     ../SwExecution/ \
-	../SwFoundation/ 
+	../SwFoundation/ \
+	../SWService/ServiceShortcut/ \
+	../SwService/ServiceImpl/ \
     
 DESTDIR = ./../../$$LIB_PATH
 DLLDESTDIR=  ./../../$$BIN_PATH

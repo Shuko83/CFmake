@@ -49,6 +49,10 @@ ISwService * SwServicesManager_Class::QueryService(QString service_name){
     if (it!=_services.end()) {
         return it.value();
     }
+
+	// le service n'a pas été trouvé!!
+	raiseQueryError(service_name);	
+
     return NULL;
 }
 /*! \brief Enregistre un service

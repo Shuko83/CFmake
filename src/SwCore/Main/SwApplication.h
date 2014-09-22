@@ -206,6 +206,9 @@ namespace StreamWork
             /*! \brief Acces au compteur d'historique */
             quint64 GetHistoricCpt();
 
+		protected :
+			virtual void raiseQueryError(QString serviceName);
+
 		};
 	}
 }

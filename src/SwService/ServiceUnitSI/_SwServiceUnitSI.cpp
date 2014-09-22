@@ -252,25 +252,25 @@ bool _SwServiceUnitSI::convertComplexUnit(QString firstValFrom, QString secondVa
 		switch(unitTo)
 		{
 		case SwSiUnitCoordDegreeDecimal:
-			result = QString::fromLatin1(coord.DDRepresentation(5).c_str());
+			result = QString(coord.DDRepresentation(5).c_str());
 			valueDouble = true;
 			break;
 		case SwSiUnitCoordDegreeMinute:
-			result = QString::fromLatin1(coord.DMRepresentation(4).c_str());
+			result = QString(coord.DMRepresentation(4).c_str());
 			valueDouble = true;
 			break;
 		case SwSiUnitCoordDegreeMinuteSecond:
-			result = QString::fromLatin1(coord.DMSRepresentation(1).c_str());
+			result = QString(coord.DMSRepresentation(1).c_str()); 
 			valueDouble = true;
 			break;
 		case SwSiUnitCoordUTM:
-			result = QString::fromLatin1(coord.UTMUPSRepresentation().c_str());
+			result = QString(coord.UTMUPSRepresentation().c_str()); 
 			break;
 		case SwSiUnitCoordMGRS:
-			result = QString::fromLatin1(coord.MGRSRepresentation().c_str());
+			result = QString(coord.MGRSRepresentation().c_str());
 			break;
 		case SwSiUnitCoordGEOREF:
-			result = QString::fromLatin1(coord.GEOREFRepresentation(5).c_str());
+			result = QString(coord.GEOREFRepresentation(5).c_str()); 
 			break;
 		default:return false;
 		}

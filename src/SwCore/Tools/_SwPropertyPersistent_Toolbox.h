@@ -28,7 +28,7 @@ namespace StreamWork
         \note
         */
 
-        class _SwPropertyPersistent_Toolbox  {
+        class BUILD_SWCORE _SwPropertyPersistent_Toolbox  {
         public:
 	        /*! \brief methode permettant de charger une propriété via un ISwProperties
             \param[in] property_node noeud propriete potentiel

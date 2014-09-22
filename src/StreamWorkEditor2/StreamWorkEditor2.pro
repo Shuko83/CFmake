@@ -80,11 +80,15 @@ FORMS += _resources/LogView.ui \
 RESOURCES += _resources/StreamWorkEditor2.qrc
 
 INCLUDEPATH += ./ \
-    ../SwCore \
-   ../SwGui \
-    ../SwExecution \
-	  ../SwDoc \
-	  ../SwModel2
+		../SwCore \
+		../SwGui \
+		../SwExecution \
+		../SwDoc \
+		../SwModel2 \
+		../SwService/ServiceImpl \
+		../SwService/ServiceShortcut \
+		../SwService/ServiceUnitSI \
+		../SwService/ServiceConfiguration  
 
 DEFINES += SW_EDITOR
     

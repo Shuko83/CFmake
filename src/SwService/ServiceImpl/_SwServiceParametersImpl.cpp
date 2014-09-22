@@ -5,6 +5,7 @@
  */
 
 #include "_SwServiceParametersImpl.h"
+#include <QCoreApplication>
 
 using namespace StreamWork::SwCore;
 
@@ -13,6 +14,28 @@ using namespace StreamWork::SwCore;
 _SwServiceParametersImpl::_SwServiceParametersImpl () 
 {
 	_parameters.clear ();
+
+	QStringList args=QCoreApplication::instance()->arguments();      
+	int nbArgs = args.count();		
+
+	for(int i=1; i<nbArgs; i++) {
+		// Parameters
+		if (args[i]=="-P" && i+1<nbArgs ) 
+		{
+			QStringList tmpList = args[i+1].split("=");
+			if(tmpList.count() <= 2)
+			{
+				if( tmpList.count() == 2)
+				{
+					registerParameter (tmpList.at(0), tmpList.at(1));
+				}
+				else
+				{
+					registerParameter (tmpList.at(0), QString());
+				}
+			}
+		}
+	}
 }
 
 

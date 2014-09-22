@@ -102,6 +102,9 @@ namespace StreamWork
             void AddServicesManagerObserver(ISwServicesManager_Listener * observer);
             /*! \brief supprime un observer */
             void RemoveServicesManagerObserver(ISwServicesManager_Listener * observer);
+
+		protected:
+			virtual void raiseQueryError(QString serviceName){};
 		};
 	}
 }

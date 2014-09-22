@@ -80,6 +80,7 @@ DEFINES += SWCONFIGURATION_LIB
 
 INCLUDEPATH += ./ \
     ../SwCore \
+	../SwService/ServiceConfiguration \
     ../SwExecution \
     ../SwGui \
     ../SwModel2 \

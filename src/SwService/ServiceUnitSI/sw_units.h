@@ -17,7 +17,7 @@
 
   Remarque : space are present in text name and suffix because the service find the first text name as required. If it's the same name, the unit will be not available for an specified unit
   */
-#pragma warning(disable:4002) 
+
 /*			ID,							name,						suffix,			base,					conv,			constant,			valueBase,	valueSecondBase,	minValue,		maxValue*/
 SW_SI_UNIT(	Meter,						"Meter",					"m",			Meter,					Base,			1.0,				609.60,				0,				0,			 800000		)
 SW_SI_UNIT(	KiloMeter,					"Kilometer",				"km",			Meter,					Linear,			0.001,					0,				0,				0,			  8000 		)
@@ -47,5 +47,4 @@ SW_SI_UNIT(	CoordDegreeDecimal,			"DD",						"DD",			CoordDegreeDecimal,		Base,	
 SW_SI_UNIT(	CoordMGRS,					"MGRS",						"MGRS",			CoordDegreeDecimal,		Coordinates,	0,						0,				0,				0,				0		)
 SW_SI_UNIT(	CoordGEOREF,				"GeoRef",					"GeoRef",		CoordDegreeDecimal,		Coordinates,	0,						0,				0,				0,				0		)
 SW_SI_UNIT(	CoordUTM,					"UTM",						"UTM",			CoordDegreeDecimal,		Coordinates,	0,						0,				0,				0,				0		)
-#pragma warning(default:4002) 
 

@@ -32,10 +32,6 @@ HEADERS += *.h \
 		Main/Serialization/*.h\
 		Main/Services/*.h\
 		Main/Services/Management/*.h\
-		Main/Services/ServiceConfiguration/*.h\
-		Main/Services/ServiceImpl/*.h\
-		Main/Services/ServiceShortcut/*.h\
-		Main/Services/ServiceUnitSI/*.h\
 		Properties/*.h\
 		SwRef/*.h\
 		Tools/*.h\
@@ -55,10 +51,6 @@ SOURCES += *.cpp \
 		Main/Plugin/*.cpp\
 		Main/Serialization/*.cpp\
 		Main/Services/Management/*.cpp\
-		Main/Services/ServiceConfiguration/*.cpp\
-		Main/Services/ServiceImpl/*.cpp\
-		Main/Services/ServiceShortcut/*.cpp\
-		Main/Services/ServiceUnitSI/*.cpp\
 		Properties/*.cpp\
 		SwRef/*.cpp\
 		Tools/*.cpp\
@@ -87,10 +79,6 @@ INCLUDEPATH += ./ \
 		Main/Serialization/ \
 		Main/Services/ \
 		Main/Services/Management/ \
-		Main/Services/ServiceConfiguration/ \
-		Main/Services/ServiceImpl/ \
-		Main/Services/ServiceShortcut/ \
-		Main/Services/ServiceUnitSI/\
 		Properties/ \
 		SwRef/ \
 		Tools/ \
@@ -98,7 +86,8 @@ INCLUDEPATH += ./ \
 		Tools/Log/ \
 		Tools/Signal/ \
 		Types/ \
-		Types/UserType/ \
+		Types/UserType/ 
+
 
 win32:DEFINES +=_CRT_SECURE_NO_WARNINGS
 
@@ -109,14 +98,15 @@ win32:{
 DESTDIR = ./../../$$LIB_PATH
 DLLDESTDIR=  ./../../$$BIN_PATH
 
-LIBS += -L"$$PROJECTS_PATH/Libraries/GeographicLib/$$LIB_PATH"
+LIBS += -L"$$PROJECTS_PATH/Libraries/GeographicLib/$$LIB_PATH" 
+
 
 CONFIG(debug, debug|release) {	
 	LIBS += -lGeographicLibd 
 } 
 
 CONFIG(release, debug|release) {
-	LIBS += -lGeographicLib
+	LIBS += -lGeographicLib 
 }
 
 ################################################################################
@@ -124,7 +114,11 @@ CONFIG(release, debug|release) {
 ################################################################################
 
 INCLUDEPATH += \
-	$$PROJECTS_PATH/Libraries/GeographicLib/src 
+	../SwService/ServiceImpl \
+	../SwService/ServiceConfiguration
+#	$$PROJECTS_PATH/Libraries/GeographicLib/src \
+#	$$PROJECTS_PATH/Libraries/AlertManager/src/Interface/\
+#	$$PROJECTS_PATH/Libraries/AlertManager/src/\
 	
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
