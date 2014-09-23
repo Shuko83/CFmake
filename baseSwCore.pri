@@ -5,6 +5,7 @@ isEmpty( PROJECTS_PATH ) {
 }
 
 SWPATH = $$PROJECTS_PATH/Libraries/StreamWork/src/SwCore
+SWSERVICEPATH = $$PROJECTS_PATH/Libraries/StreamWork/src/SwService
 
 INCLUDEPATH += ./ \
 				$$SWPATH/ \
@@ -21,10 +22,6 @@ INCLUDEPATH += ./ \
 				$$SWPATH/Main/Serialization \
 				$$SWPATH/Main/Services/ \
 				$$SWPATH/Main/Services/Management/ \
-				$$SWPATH/Main/Services/ServiceConfiguration/ \
-				$$SWPATH/Main/Services/ServiceImpl/ \
-				$$SWPATH/Main/Services/ServiceShortcut/ \
-				$$SWPATH/Main/Services/ServiceUnitSI/ \
 				$$SWPATH/Properties/ \
 				$$SWPATH/SwRef/ \
 				$$SWPATH/Tools/ \
@@ -33,3 +30,8 @@ INCLUDEPATH += ./ \
 				$$SWPATH/Tools/Signal/ \
 				$$SWPATH/Types/ \
 				$$SWPATH/Types/UserType/ \
+				$$SWSERVICEPATH/ServiceAlert/ \
+				$$SWSERVICEPATH/ServiceConfiguration/ \
+				$$SWSERVICEPATH/ServiceImpl/ \
+				$$SWSERVICEPATH/ServiceShortcut/ \
+				$$SWSERVICEPATH/ServiceUnitSI/ \

@@ -2,7 +2,6 @@
 
 #include "SwApplication.h"
 
-
 using namespace StreamWork::SwCore;
 
 //----------------------------------------------------------------------------------------------

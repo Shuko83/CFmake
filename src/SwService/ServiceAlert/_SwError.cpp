@@ -19,8 +19,10 @@ SwError::SwError(QString title, QString description, alert::EnumErrorLevel::Erro
 	setlevel(level);
 	
 }
+
 //-------------------------------------------------------------------
 SwError::~SwError()
 {
 
 }
+
