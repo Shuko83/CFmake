@@ -14,7 +14,7 @@ _SwServiceConfigurationPluginFactory_Class::_SwServiceConfigurationPluginFactory
 //----------------------------------------------------------------------------------------------
 _SwServiceConfigurationPluginFactory_Class::~_SwServiceConfigurationPluginFactory_Class() 
 {
-	SW_APP->UnregisterService(_serviceconfiguration->GetServiceName());
+	//SW_APP->UnregisterService(_serviceconfiguration->GetServiceName());
 	delete _serviceconfiguration;
 }
 

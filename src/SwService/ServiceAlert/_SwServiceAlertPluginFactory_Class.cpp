@@ -13,7 +13,7 @@ _SwServiceAlertPluginFactory_Class::_SwServiceAlertPluginFactory_Class():SwPlugi
 //----------------------------------------------------------------------------------------------
 _SwServiceAlertPluginFactory_Class::~_SwServiceAlertPluginFactory_Class() 
 {
-	SW_APP->UnregisterService(_serviceAlert->GetServiceName());
+	//SW_APP->UnregisterService(_serviceAlert->GetServiceName());
 	delete _serviceAlert;
 }
 

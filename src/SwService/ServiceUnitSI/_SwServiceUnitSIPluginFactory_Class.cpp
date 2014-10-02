@@ -14,7 +14,7 @@ _SwServiceUnitSIPluginFactory_Class::_SwServiceUnitSIPluginFactory_Class():SwPlu
 //----------------------------------------------------------------------------------------------
 _SwServiceUnitSIPluginFactory_Class::~_SwServiceUnitSIPluginFactory_Class() 
 {
-	SW_APP->UnregisterService(_serviceUnitSI->GetServiceName());
+	//SW_APP->UnregisterService(_serviceUnitSI->GetServiceName());
 	delete _serviceUnitSI;
 }
 

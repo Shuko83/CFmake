@@ -14,7 +14,7 @@ _SwServiceShortcutPluginFactory_Class::_SwServiceShortcutPluginFactory_Class():S
 //----------------------------------------------------------------------------------------------
 _SwServiceShortcutPluginFactory_Class::~_SwServiceShortcutPluginFactory_Class() 
 {
-	SW_APP->UnregisterService(_serviceShortcuts->GetServiceName());
+	//SW_APP->UnregisterService(_serviceShortcuts->GetServiceName());
 	delete _serviceShortcuts;
 }
 

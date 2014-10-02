@@ -14,15 +14,16 @@ _SwServiceToolsPluginFactory_Class::_SwServiceToolsPluginFactory_Class():SwPlugi
 //----------------------------------------------------------------------------------------------
 _SwServiceToolsPluginFactory_Class::~_SwServiceToolsPluginFactory_Class() 
 {
-SW_APP->UnregisterService(_serviceRefProfiler->GetServiceName());
+	//TODO Service not present when unregister
+	//SW_APP->UnregisterService(_serviceRefProfiler->GetServiceName());
 	delete _serviceRefProfiler;
-SW_APP->UnregisterService(_serviceParameters->GetServiceName());
+	//SW_APP->UnregisterService(_serviceParameters->GetServiceName());
 	delete _serviceParameters;
-SW_APP->UnregisterService(_serviceExtensions->GetServiceName());
+	//SW_APP->UnregisterService(_serviceExtensions->GetServiceName());
 	delete _serviceExtensions;
-SW_APP->UnregisterService(_serviceCodeTimer->GetServiceName());
+	//SW_APP->UnregisterService(_serviceCodeTimer->GetServiceName());
 	delete _serviceCodeTimer; 
-SW_APP->UnregisterService(_serviceFileEditorManager->GetServiceName());
+	//SW_APP->UnregisterService(_serviceFileEditorManager->GetServiceName());
 	delete _serviceFileEditorManager;
 
 }

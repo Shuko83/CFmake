@@ -17,6 +17,7 @@ _SwServiceRecording::~_SwServiceRecording(){
 	QMap<QString,ISwRecordDataCodecFactory *>::iterator it=_factories.begin();
     while(it!=_factories.end()) {
         delete it.value();
+		++it;
     }
     _factories.clear();
     _points.clear();
