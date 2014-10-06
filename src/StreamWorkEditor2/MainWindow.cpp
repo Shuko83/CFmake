@@ -209,6 +209,17 @@ MainWindow::MainWindow(bool loadStream /*= true*/):QMainWindow(),_streamControle
     }
 
 }
+
+//---------------------------------------------------------------------------------
+MainWindow::~MainWindow()
+{
+	_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+	_streamTreeModel->setStreamControler(0);
+	_iaTreeModel->setStreamControler(0);
+	delete _streamControler;
+}
+
+
 /** @brief sur new stream */
 void MainWindow::onNewStream() 
 {
@@ -381,10 +392,7 @@ void MainWindow::onQuit()
 	if (_streamControler->getRootItem()->_getReferencesNb()>0) {
 		_streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
 	}
-	_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
-	_streamTreeModel->setStreamControler(0);
-	_iaTreeModel->setStreamControler(0);
-	delete _streamControler;
+
 
 	qApp->disconnect(qApp, SIGNAL(lastWindowClosed()), this, SLOT(onQuit()));
 	this->deleteLater();
@@ -402,10 +410,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	settings.setValue("windowState", saveState());
 	settings.setValue("history",_history);
 	_editors.remove(_streamControler->getRootItem());
-	_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
-	_streamTreeModel->setStreamControler(0);
-	_iaTreeModel->setStreamControler(0);
-	delete _streamControler;
+	
 	event->accept();
 
 	this->deleteLater();
@@ -554,3 +559,4 @@ void MainWindow::clearServices()
  		_serviceShortcuts->clearShortcutsService();
  	}
 }
+

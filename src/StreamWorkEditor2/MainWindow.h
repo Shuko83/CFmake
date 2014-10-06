@@ -30,6 +30,8 @@ class MainWindow : public QMainWindow , public ISelectionObserver{
 public:
 	/** @brief Constructor */
 	MainWindow(bool loadStream = true);
+	virtual ~MainWindow();
+
     /** @brief sur load stream existant */
 	void onLoadExistingStream(StreamWork::SwCore::SwComponent_Class * aStream,QString path,StreamWork::SwCore::SwComponent_Class * aStreamSource);
     /** @brief permet de voir l'editeur du stream a l'origine de l'ouverture de nous meme */
