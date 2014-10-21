@@ -32,7 +32,7 @@
 				Optimization ="0"
 				PrecompiledHeaderFile="$(IntDir)\SwServiceUnitSId.pch"
 				PrecompiledHeaderThrough="StdAfx.h"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
 				ProgramDataBaseFileName="$(IntDir)\SwServiceUnitSI_vc.pdb"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
@@ -68,7 +68,7 @@
 				Name="VCPreLinkEventTool" />
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -92,7 +92,7 @@
 				Optimization ="0"
 				PrecompiledHeaderFile="$(IntDir)\SwServiceUnitSI.pch"
 				PrecompiledHeaderThrough="StdAfx.h"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
 				ProgramDataBaseFileName="$(IntDir)\SwServiceUnitSI_vc.pdb"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
@@ -129,7 +129,7 @@
 				Name="VCPreLinkEventTool" />
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
 		</Configuration>
 	</Configurations>
 	<Files>
@@ -182,7 +182,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwServiceUnitSI.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwServiceUnitSI.h -o GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwServiceUnitSI.h -o GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
 						Description="MOC _SwServiceUnitSI.h"
 						Outputs="GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
 						Path="c:\Qt\4.7.1\bin" />
@@ -192,7 +192,7 @@
 					<Tool
 						Name="VCCustomBuildTool"
 						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwServiceUnitSI.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwServiceUnitSI.h -o GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\..\..\GeographicLib\src&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwServiceUnitSI.h -o GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
 						Description="MOC _SwServiceUnitSI.h"
 						Outputs="GeneratedFiles\moc\moc__SwServiceUnitSI.cpp"
 						Path="c:\Qt\4.7.1\bin" />
