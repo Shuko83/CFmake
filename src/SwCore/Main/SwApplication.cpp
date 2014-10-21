@@ -501,16 +501,9 @@ StreamWork::SwCore::ISwService *  queryService(QString name)
 //-------------------------------------------------------------------
 void SwApplication::raiseQueryError( QString serviceName )
 {
-	QStringList liste_arg=qApp->arguments();
-	int nb_args=liste_arg.count();
-	for(int i=1;i<nb_args;i++) {
-		if (liste_arg[i]=="--debug") { //lever que si en debug => degeu à faire propre
-			//TODO lever max une alerte par type
-			//TODO lever qu'une alerte global la premiere fois
-			//TODO lancer en -debug pour avoir l'ensemble des alertes
-			QMessageBox msgBox;
-			msgBox.setText("the service " + serviceName + " hasn't been loaded, check the presence of the dll");
-			msgBox.exec();
-		}
+	if(_missingServices.find(serviceName) == _missingServices.end())
+	{
+		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("the service " + serviceName + " hasn't been loaded, check the presence of the dll"));	
+		_missingServices.insert(serviceName);
 	}
 }

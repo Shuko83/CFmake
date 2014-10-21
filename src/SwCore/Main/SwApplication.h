@@ -119,6 +119,8 @@ namespace StreamWork
             bool _isGuiApp;
             /*! \brief mode affichage */
             bool _isVerboseMode;
+			/*! \brief services manquant */
+			QSet<QString> _missingServices;
             /*! \brief finalisation de l'initialisation */
             bool _initialisationFinalized;
             /*! \brief finalisation de l'initialisation */
