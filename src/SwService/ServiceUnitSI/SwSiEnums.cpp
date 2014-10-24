@@ -115,23 +115,28 @@ double StreamWork::SwCore::unitConvert(double inValue, SwSiUnit inUnit, SwSiUnit
 		}
 	}
 
-	/* Convert from original unit to base unit */
-	switch (units[inUnit].conversion)
+	if (inUnit != outUnit)
 	{
-	case swConvBase:       { baseValue = inValue;                                                  break; }  
-	case swConvLinear:     { baseValue = inValue / units[inUnit].factor; break; }  
-	case swConvRecipr:     { baseValue = units[inUnit].factor / inValue;                           break; } 
-	default: break;
-	} 
+		/* Convert from original unit to base unit */
+		switch (units[inUnit].conversion)
+		{
+		case swConvBase:       { baseValue = inValue;                                                  break; }  
+		case swConvLinear:     { baseValue = inValue / units[inUnit].factor; break; }  
+		case swConvRecipr:     { baseValue = units[inUnit].factor / inValue;                           break; } 
+		default: break;
+		} 
 
-	/* Convert from base unit to target unit */
-	switch (units[outUnit].conversion)
-	{
-	case swConvBase:       { outValue = baseValue;                                                 break; }  
-	case swConvLinear:     { outValue = baseValue * units[outUnit].factor; break; }  
-	case swConvRecipr:     { outValue = units[outUnit].factor / baseValue;                         break; } 
-	default: break;
-	} 
-
+		/* Convert from base unit to target unit */
+		switch (units[outUnit].conversion)
+		{
+		case swConvBase:       { outValue = baseValue;                                                 break; }  
+		case swConvLinear:     { outValue = baseValue * units[outUnit].factor; break; }  
+		case swConvRecipr:     { outValue = units[outUnit].factor / baseValue;                         break; } 
+		default: break;
+		} 
+	}
+	else
+		outValue = inValue;
+	
 	return outValue;
 }
