@@ -796,7 +796,7 @@
       <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwCoreRsc.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">RCC _resources\SwCoreRsc.qrc</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_SwCoreRsc.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_resources\SwCoreRsc.qrc;_resources\images\plugin.png;_resources\images\path.png;_resources\images\unknown.png;_resources\images\SysTrayUpdate.png;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_resources\SwCoreRsc.qrc;_resources\images\SysTrayUpdate.png;_resources\images\plugin.png;_resources\images\path.png;_resources\images\unknown.png;%(AdditionalInputs)</AdditionalInputs>
       <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\rcc.exe -name SwCoreRsc _resources\SwCoreRsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwCoreRsc.cpp</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">RCC _resources\SwCoreRsc.qrc</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_SwCoreRsc.cpp;%(Outputs)</Outputs>
