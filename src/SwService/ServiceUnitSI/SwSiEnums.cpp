@@ -19,7 +19,6 @@ using namespace StreamWork::SwCore;
 /******** UNIT ***********/
 const StreamWork::SwCore::sUnit StreamWork::SwCore::units[SwSiUnitNum] = 
 {
-#define QT_TR_NOOP(name) name
 #ifdef  SW_SI_UNIT
 #undef  SW_SI_UNIT
 #endif
