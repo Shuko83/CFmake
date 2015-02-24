@@ -1,0 +1,11 @@
+BaseDir=..
+ExecutableComponent.h
+ISwClockProvider.h
+ISwExecutable_Service.h
+ISwExecution_Service.h
+ISwSupportReplay.h
+ISwSwitchExecutorListener.h
+ISwSwitchExecutorListProvider.h
+_SwExecutor.h
+_SwExecution_Service.h
+SwExecutionConstantes.h

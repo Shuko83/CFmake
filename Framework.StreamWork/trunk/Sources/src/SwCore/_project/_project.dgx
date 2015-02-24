@@ -1,0 +1,11 @@
+<Project name="SwCore" path="SwCore" svn="Framework.StreamWork">
+    <Target type="SHARED_LIB"/>
+    <Dependencies>
+        <Artifact name="QsException"/>
+    </Dependencies>
+    <QTDependencies>
+        <Module name="core"/>
+        <Module name="xml"/>
+        <Module name="widgets"/>
+    </QTDependencies>
+</Project>
