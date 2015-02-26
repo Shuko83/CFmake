@@ -405,8 +405,7 @@ SwAssistedComponent::~SwAssistedComponent()
 	_disable_service=true;
 
 	//Clear provided interface
-	QStringList tmpList1 = _listIProvided;
-	foreach(QString providedInterfaceName,tmpList1)
+	for (QString providedInterfaceName : _listIProvided)
 	{
 		unprovideInterface(providedInterfaceName);
 	}
@@ -598,6 +597,10 @@ void SwAssistedComponent::eventBeforeInterfaceAvailability(QString interface_nam
 			interfaceUnavailable(interface_name);
 		}
 	}
+	if (_mapIConsummedWithCallBack.contains(interface_name))
+	{
+		_mapIConsummedWithCallBack[interface_name](CALLBACK_EVENT::BEFORE);
+	}
 
 }
 
@@ -611,6 +614,10 @@ void SwAssistedComponent::eventAfterInterfaceAvailability(QString interface_name
 		{
 			interfaceAvailable(interface_name);
 		}
+	}
+	if (_mapIConsummedWithCallBack.contains(interface_name))
+	{
+		_mapIConsummedWithCallBack[interface_name](CALLBACK_EVENT::AFTER);
 	}
 }
 
@@ -780,6 +787,12 @@ void SwAssistedComponent::unconsummeInterface( QString pinterface_name )
 		delete handle_interface;
 		//*handle_interface = NULL;
 		_mapIConsummed.remove(pinterface_name);
+	}
+
+	if(_mapIConsummedWithCallBack.contains(pinterface_name))
+	{
+		getIConsumerService().UnregisterConsumedInterface(pinterface_name);
+		_mapIConsummedWithCallBack.remove(pinterface_name);
 	}
 }
 

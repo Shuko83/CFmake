@@ -29,6 +29,8 @@
 #include "ISwPersistent.h"
 #include "ISwServiceOwner.h"
 
+#include <functional>
+
 #ifdef SWFOUNDATION_LIB
 # define BUILD_SWFOUNDATION Q_DECL_EXPORT
 #else
@@ -47,6 +49,11 @@ namespace StreamWork {
 
     namespace SwFoundation {
     
+		enum CALLBACK_EVENT {
+			BEFORE,
+			AFTER
+		};
+
         /**
         @class SwAssistedComponent
         @brief Implementation avance d'un composant par defaut pour les assistés
@@ -247,6 +254,15 @@ namespace StreamWork {
 			//------------------------------------------------------------------
 			// Template pour la gestion des interfaces
 			//------------------------------------------------------------------
+
+			//provideInterface<TYPE>(QString NAME, TYPE * object, &OnAvaibilityChangeCallBack());
+			//consumeInterface<TYPE>(QString NAME, TYPE * object, &OnAvaibilityChangeCallBack());
+
+			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, std::function<void(CALLBACK_EVENT)> callback)
+			{
+				getIConsumerService().RegisterConsumedInterface<T>(interfaceName,interfaceHandle);
+				_mapIConsummedWithCallBack.insert(interfaceName, callback);
+			}
 
 			/**
 			 * @brief    : fourni une interface (sortie)
@@ -535,6 +551,9 @@ private:
 
 			/* Map des interfaces consommées */
 			QMap<QString,void **> _mapIConsummed;
+
+			/* hash des interfaces consommées vers les methode de disponibilité*/
+			QHash<QString, std::function<void(CALLBACK_EVENT)>> _mapIConsummedWithCallBack;
 
 			/* Nom du composant pour les raccourcis*/
 			QString _componentNameShortcut;
