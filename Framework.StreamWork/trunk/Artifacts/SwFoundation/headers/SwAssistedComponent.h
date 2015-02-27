@@ -255,9 +255,29 @@ namespace StreamWork {
 			// Template pour la gestion des interfaces
 			//------------------------------------------------------------------
 
-			//provideInterface<TYPE>(QString NAME, TYPE * object, &OnAvaibilityChangeCallBack());
-			//consumeInterface<TYPE>(QString NAME, TYPE * object, &OnAvaibilityChangeCallBack());
+			/**
+			@brief Methode simplifiant la consomation d'interface
+					- A chaque interface sa methode de disponibilité
+					- set automatique du pointeur
+					- fini les appels à getInterface avec le nom de l'interface
 
+				exemple : 
+				.h : 
+					ISwWidget * _i_widget;
+				constructor : 
+					_i_widget = 0;
+				initializeComponent :
+					consumeInterface("ISwWidget", &_i_widget, [this](CALLBACK_EVENT eventType)->void { this->onWidgetChange(eventType); });
+				onWidgetChange(CALLBACK_EVENT event) : // Specifique
+					if(event == BEFORE)
+						//do something on old value of _i_widget ( unregister from listener or anything else...)
+					if(event == AFTER)
+						//do something with new value of _i_widget
+
+			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
+			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
+			@param callback : >  => methode à appeler lors des évennements de disponibilité d'interface (à utilisé de préférence avec une lambda expression)
+			*/
 			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, std::function<void(CALLBACK_EVENT)> callback)
 			{
 				getIConsumerService().RegisterConsumedInterface<T>(interfaceName,interfaceHandle);

@@ -170,6 +170,13 @@ namespace StreamWork
 			virtual bool updateProperty(QString confName, QString prefix, ISwProperty* propToUpdate) = 0;
 
 
+			/**
+			* @brief	: permet d'updater la part XML de la configuration par défault (CFM_DEFAULT_FILENAME)
+			* @Param	: QString : nom de la configuration concernée
+			*/
+			virtual bool updateDefaultProfile(QString confName) = 0;
+
+
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------

@@ -1238,6 +1238,178 @@ bool SwServiceSaveConfiguration::updateProperty(QString confName, QString prefix
 }
 
 
+
+//-------------------------------------------------------------------------
+bool SwServiceSaveConfiguration::updateDefaultProfile(QString confName)
+{
+	bool ret = false;
+
+	QDomDocument doc;
+	QDomElement root_node;
+	root_node = doc.createElement(CFM_XML_TAG_FILE);
+	root_node.setAttribute(CFM_XML_TAG_FILE_CONFNAME, confName);
+	doc.appendChild(root_node);
+
+	QDomDocument tempDoc;
+	QDomElement tempNode;
+	
+	// Liste des éléments dans la conf par défault acutelle
+	QDomNodeList DefaultElements;
+	
+
+	// Création de l'entête du profil qui est celui du profil par défault
+	QDomElement newProfileConfDatas;
+	newProfileConfDatas = doc.createElement(CFM_XML_TAG_CONFIG);
+	newProfileConfDatas.setAttribute(CFM_XML_CONFIG_DEFAULT, "true");
+	newProfileConfDatas.setAttribute(CFM_XML_CONFIG_CURRENT, "false");
+	newProfileConfDatas.setAttribute(CFM_XML_CONFIG_NAME, CFM_DEFAULT_FILENAME);
+
+
+	// récupération des valeurs courantes des properties (cf saveConfigFile) dans currentProfileConfDatas
+	QDomElement currentProfileConfDatas;
+	currentProfileConfDatas = doc.createElement(CFM_XML_TAG_CONFIG);
+	createQDomProfile(confName, doc, currentProfileConfDatas);
+
+	
+	QHash<QString, QHash<QString, QString>>::iterator it_profiles = _confProfilesDatas.find(confName);
+	if (it_profiles != _confProfilesDatas.end())
+	{
+		// Récupération du defaultSettings Actuel
+		QHash<QString, QString>::const_iterator it2 = it_profiles.value().find(CFM_DEFAULT_FILENAME);
+		if (it2 != it_profiles.value().constEnd())
+		{
+			QDomDocument tmpDoc;
+			tmpDoc.setContent(it2.value());
+			QDomElement defaultSettingsQDom = tmpDoc.firstChildElement(CFM_XML_TAG_CONFIG);
+			DefaultElements = defaultSettingsQDom.elementsByTagName(CFM_XML_TAG_PROPERTY);
+		}
+	
+
+		// Parsage du QDom currentProfileConfDatas, pour chaque élément, on récupère :  prefix - decoratedName 
+		QDomNodeList PropertiesElements = currentProfileConfDatas.elementsByTagName(CFM_XML_TAG_PROPERTY);
+		for (int i = 0; i < PropertiesElements.size(); i++)
+		{
+			QString prefixNewDefaultProfile = "";
+			QString decoratedNameNewDefaultProfile = "";
+			prefixNewDefaultProfile = PropertiesElements.at(i).toElement().attribute(CFM_XML_PROPERTY_PREFIX);
+			decoratedNameNewDefaultProfile = PropertiesElements.at(i).toElement().attribute(CFM_XML_PROPERTY_NAME);
+	
+
+			// Parcours du QDom et si le champ est trouvé, on copie sa valeur par défault dans la nouvelle conf
+			bool found = false;
+			for (int j = 0; j < DefaultElements.size() && !found; j++)
+			{
+				QString prefixOldDefaultProfile = "";
+				QString decoratedNameOldDefaultProfile = "";
+				prefixOldDefaultProfile = DefaultElements.at(j).toElement().attribute(CFM_XML_PROPERTY_PREFIX);
+				decoratedNameOldDefaultProfile = DefaultElements.at(j).toElement().attribute(CFM_XML_PROPERTY_NAME);
+
+				// Si le nom est identique, on garde la valeur de currentProfileConfDatas
+				if (prefixNewDefaultProfile == prefixOldDefaultProfile && decoratedNameNewDefaultProfile == decoratedNameOldDefaultProfile)
+				{
+					tempDoc.clear();
+					tempNode = tempDoc.importNode(DefaultElements.at(j), true).toElement();
+					newProfileConfDatas.appendChild(tempNode);
+					found = true;
+				}
+			}
+
+			// Si property non trouvée, elle est nouvelle, sa valeur courante devient la valeur par défault
+			if (!found)
+			{
+				tempDoc.clear();
+				tempNode = tempDoc.importNode(PropertiesElements.at(i), true).toElement();
+				newProfileConfDatas.appendChild(tempNode);
+			}
+		}
+
+		// Ajout dans le XML de la conf par défault mise à jour
+		root_node.appendChild(newProfileConfDatas);
+
+		// Mise à jour des valeurs du profil DEFAULT dans _confProfilesDatas
+		updateConfProfilesDatas(it_profiles, CFM_DEFAULT_FILENAME, newProfileConfDatas);
+
+	
+		//Récupération de la confCourante 
+		QString	currentConfigProfile = "";
+		currentConfigProfile = getCurrentConf(confName);
+
+		// Création de l'entête du profil qui est celui du profil confCourante
+		newProfileConfDatas.clear();
+		newProfileConfDatas = doc.createElement(CFM_XML_TAG_CONFIG);
+		newProfileConfDatas = currentProfileConfDatas;					// copie des valeurs courantes des properties pour setter la confCourante 
+		newProfileConfDatas.setAttribute(CFM_XML_CONFIG_DEFAULT, "false");
+		newProfileConfDatas.setAttribute(CFM_XML_CONFIG_CURRENT, "true");
+		newProfileConfDatas.setAttribute(CFM_XML_CONFIG_NAME, currentConfigProfile);
+
+
+
+		// Ajout dans le XML de la conf courante mise à jour
+		root_node.appendChild(newProfileConfDatas);
+
+
+		// Mise à jour des valeurs du profil COURANT dans _confProfilesDatas
+		updateConfProfilesDatas(it_profiles, currentConfigProfile, newProfileConfDatas);
+
+
+		// Parcours les confProfilesDatas[confName], pour chaque autre profil de conf 
+		// Faire un append dans le root_node des QDomElement correspondants aux profils de conf.
+		QHashIterator<QString, QString> it_config(it_profiles.value());
+		while (it_config.hasNext())
+		{
+			it_config.next();
+
+			// Création du QDomNode du profil de conf à partir du QString dans _confProfilesDatas
+			tempDoc.clear();
+			tempDoc.setContent(it_config.value());
+			QDomNode tempElem = tempDoc.firstChild();
+			QDomElement elemToAdd;
+
+
+			// SAUF LA DEFAULT et la COURANTE que l'on vient de mettre à jour, 
+			// On récupère les autres conf pour les ajouter au XML
+			tempDoc.clear();
+			if (it_config.key() != CFM_DEFAULT_FILENAME && it_config.key() != currentConfigProfile &&  !tempElem.isNull())
+			{
+				// Copie du profil dans un nouveau QDomElement attaché au bon QDomDocument
+				elemToAdd = doc.importNode(tempElem, true).toElement();
+				root_node.appendChild(elemToAdd);
+				elemToAdd.clear();
+
+				// Ajout dans le QDomDocument correspondant le QDomElement MAJ
+				elemToAdd = tempDoc.importNode(tempElem, true).toElement();
+
+				// Mise à jour dans _confProfilesDatas[confName][confProfile]
+				updateConfProfilesDatas(it_profiles, it_config.key(), elemToAdd);
+			}
+		}
+	}
+
+	ret =  writeConfigurationFile(confName, doc);
+
+	return ret;
+}
+
+
+//-------------------------------------------------------------------------
+bool SwServiceSaveConfiguration::updateConfProfilesDatas(QHash<QString, QHash<QString, QString>>::iterator it_profiles, QString profile, QDomElement newProfileConfDatas)
+{
+	bool retValue = false;
+	
+	// Mise à jour dans _confProfilesDatas[confName][profile]
+	QHash<QString, QString>::const_iterator it2 = it_profiles.value().find(profile);
+	if (it2 != it_profiles.value().constEnd())
+	{
+		QDomDocument tempDoc;
+		QDomNode e = tempDoc.importNode(newProfileConfDatas, true);
+		tempDoc.appendChild(e);
+		it_profiles.value().insert(profile, tempDoc.toString());
+		retValue = true;
+	}
+	return retValue;
+}
+
+
 //---------------------------------------------------------------------
 // Interface ISwConfPropertiesObserver
 //---------------------------------------------------------------------

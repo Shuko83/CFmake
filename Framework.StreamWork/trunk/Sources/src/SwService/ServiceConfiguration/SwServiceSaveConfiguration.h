@@ -276,7 +276,13 @@ namespace StreamWork
 			bool updateProperty(QString confName, QString prefix, ISwProperty* propToUpdate);
 
 
+			/**
+			* @brief	: permet d'updater la part XML de la configuration par défault (CFM_DEFAULT_FILENAME)
+			* @Param	: QString : nom de la configuration concernée
+			*/
+			virtual bool updateDefaultProfile(QString confName);
 
+			
 			//---------------------------------------------------------------------
 			// Interface ISwConfPropertiesObserver
 			//---------------------------------------------------------------------
@@ -344,6 +350,15 @@ namespace StreamWork
 			* @Param : QString : nom de la configuration concernée
 			*/
 			void notifyServiceListeners(QString confName, bool profilesNotif);
+
+			
+			/**
+			* @brief : met à jour dans _confProfilesDatas les données des profils de conf
+			* @Param : QHash<QString, QHash<QString, QString>>::iterator : itérateur sur la configuration concernée
+			* @Param : QString : nom du profil concerné
+			* @Param : QDomElement : nouvelles valeurs des datas du profil
+			*/
+			bool updateConfProfilesDatas(QHash<QString, QHash<QString, QString>>::iterator it_profiles, QString profile, QDomElement newProfileConfDatas);
 
 		};
     }

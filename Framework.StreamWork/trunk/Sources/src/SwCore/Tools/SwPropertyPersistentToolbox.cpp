@@ -208,8 +208,8 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 	//----------------------------------------------------------
 	tmp = QVariant(QString(""));
 	//Si la conversion de l'objet en string et inversement est possible, on le sauvegarde en string
-
-	if (var.canConvert(QVariant::String) && tmp.canConvert(var.type()) && var.type () != QVariant::Color) 
+	if ((var.canConvert(QVariant::String) && tmp.canConvert(var.type()) && var.type () != QVariant::Color) 
+		|| (var.userType() == qMetaTypeId<ulong>()))
 	{
 		text_node = doc.createTextNode(var.toString());
 		if (!text_node.isNull()) 
@@ -386,15 +386,23 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 	{
 		//Si le save n'a pas reussi alors log
 		if (inProperty->GetHostingService())
-		SW_APP->Logger().Log(LogLvl_Warning,"Unable to save type %s for property %s of component %s\n",
-			name,
-			var.typeName(),
-			inProperty->GetHostingService()->GetHostComponent()->GetName().toLatin1().data());    
+		{
+			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
+				name,
+				var.typeName(),
+				inProperty->GetHostingService()->GetHostComponent()->GetName().toLatin1().data());
+
+			qDebug() << "Unable to save type " << name << " for property " << var.typeName() << " of component", inProperty->GetHostingService()->GetHostComponent()->GetName().toLatin1().data();
+		}
 		else
-			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n", 
-			name,
-			var.typeName(),
-			inProperty->GetName());
+		{
+			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
+				name,
+				var.typeName(),
+				inProperty->GetName());
+
+			qDebug() << "Unable to save type " << name << " for property " << var.typeName() << " of component " << inProperty->GetName();
+		}
 
 	} else 
 	{
@@ -416,6 +424,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 	QPoint p;
 	QSize s;
 	QRect r;
+	bool valueSetted = true;
 
 	//----------------------------------------------------------
 	// Gestion des types convertible en QString (et inversement)
@@ -423,8 +432,9 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 	tmp = QVariant(QString(""));
 	var = inProperty->GetValue();
 
-	//Si l'operation de string vers le type est alors alors
-	if (var.canConvert(QVariant::String) && tmp.canConvert(var.type()) && var.type() != QVariant::Color) 
+	//Si l'operation de string vers le type est alors 
+	if  ( (var.canConvert(QVariant::String) && tmp.canConvert(var.type()) && var.type() != QVariant::Color) 
+		|| (var.userType() == qMetaTypeId<ulong>()) )
 	{
 		node=property_node.firstChild();
 
@@ -545,6 +555,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		}
 		break;
 	default:
+		valueSetted = false;
 		break;
 	}
 
@@ -565,6 +576,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
         enum_value.FromInt(evalue);
         tmp.setValue(enum_value);
         inProperty->SetValue(tmp, true);
+		valueSetted = true;
     }
 	//Type SwIntegerEnum
 	else if (var.userType()==qMetaTypeId<SwIntegerEnum>() && property_node.hasAttribute(CL_XML_ATT_ENUM_INTEGER)) {
@@ -573,6 +585,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		enum_value.fromInt(evalue);
 		tmp.setValue(enum_value);
 		inProperty->SetValue(tmp, true);
+		valueSetted = true;
 	}
 	//Type SwInteger
 	else if (var.userType()==qMetaTypeId<SwInteger>() && property_node.hasAttribute(CL_XML_ATT_INTEGER)) {
@@ -581,6 +594,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		int_value.setValue(evalue);
 		tmp.setValue(int_value);
 		inProperty->SetValue(tmp, true);
+		valueSetted = true;
 	}
 	//Type SwString
 	else if (var.userType()==qMetaTypeId<SwString>() && property_node.hasAttribute(CL_XML_ATT_STRING)) {
@@ -589,6 +603,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		string_value.fromString(s);
 		tmp.setValue(string_value);
 		inProperty->SetValue(tmp, true);
+		valueSetted = true;
 	}
 	//Type SwDouble
 	else if (var.userType()==qMetaTypeId<SwDouble>() && property_node.hasAttribute(CL_XML_ATT_DOUBLE)) {
@@ -597,6 +612,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		double_value.setValue(evalue);
 		tmp.setValue(double_value);
 		inProperty->SetValue(tmp, true);
+		valueSetted = true;
 	}
 	//Type SwFileDescriptor
 	else if (var.userType()==qMetaTypeId<SwFileDescriptor>() && property_node.hasAttribute(CL_XML_ATT_FD)) 
@@ -605,6 +621,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		fd.setFileName(property_node.attribute(CL_XML_ATT_FD));
 		tmp.setValue(fd);
 		inProperty->SetValue(tmp, true);
+		valueSetted = true;
 	}
 	//Type SwIconDescriptor
 	else if (var.userType()==qMetaTypeId<SwIconDescriptor>() && property_node.hasAttribute(CL_XML_ATT_ID)) 
@@ -613,6 +630,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		idesc.setPath(property_node.attribute(CL_XML_ATT_ID));
 		tmp.setValue(idesc);
 		inProperty->SetValue(tmp, true);
+		valueSetted = true;
 	}
 	//Type SwIpV4Address
 	else if (var.userType()==qMetaTypeId<SwIpV4Address>() && property_node.hasAttribute(CL_XML_ATT_IPV4)) 
@@ -621,6 +639,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		value.FromString(property_node.attribute(CL_XML_ATT_IPV4));
 		tmp.setValue(value);
 		inProperty->SetValue(tmp, true);
+		valueSetted = true;
 	}
 	//Type SwUUID
 	else if (var.userType()==qMetaTypeId<SwUUID>() && property_node.hasAttribute(CL_XML_ATT_UUID_H) && property_node.hasAttribute(CL_XML_ATT_UUID_L))  
@@ -630,9 +649,14 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		value.leastSigBits=property_node.attribute(CL_XML_ATT_UUID_L).toLongLong();
 		tmp.setValue(value);
 		inProperty->SetValue(tmp, true);
+		valueSetted = true;
 	}
 	else
 	{
+		valueSetted = false;
 		//inProperty->SetValue(var); 
 	}
+
+	if (!valueSetted)
+		qDebug() << "ERROR : Property " << inProperty->GetName() << " cannot be setted because QVariant Type is unknown " << var.type();
 }
