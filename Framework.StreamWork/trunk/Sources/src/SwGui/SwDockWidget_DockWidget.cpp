@@ -423,7 +423,7 @@ bool SwDockWidget_DockWidget::event( QEvent * event )
 					showShadow();
 					updateBtn();
 					//Transparent aux evenements souris pour ne pas masquer les zones dockables
-					setAttribute(Qt::WA_TransparentForMouseEvents);
+					setAttribute(Qt::WA_TransparentForMouseEvents, false);
 					//Si dock libere mais masque, mise a jour du bouton d'action
 					if (!this->isVisible() && _action)
 						_action->setChecked(false);
@@ -485,6 +485,7 @@ void SwDockWidget_DockWidget::setMoving(bool state)
 	}
 	else
 	{
+		setAttribute(Qt::WA_TransparentForMouseEvents, false);
 		_canMove = false;
 		setCursor (Qt::ArrowCursor);
 		setWindowOpacity(1);

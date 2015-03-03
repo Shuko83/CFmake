@@ -52,6 +52,7 @@
 #include "_SwGuiCompPushButtonToQAction.h"
 #include "SwEventToPopup.h"
 #include "SwActivationToQAction.h"
+#include "SwActionToToolButton.h"
 
 using namespace StreamWork::SwCore;
 
@@ -103,7 +104,8 @@ void _SwGuiPluginFactory_Class::Initialize() {
 	RegisterComponent("SwGuiQActionConsumedToWidget","Consomme un ISwAction permettant de cacher ou d'afficher la widget");
 	RegisterComponent("SwGuiCompPushButtonToQAction","Produit un button widget qui permet d'exécuter des actions");
 	RegisterComponent("SwEventToPopup","Popup sur SwEvent");
-	RegisterComponent("SwActivationToQAction","Permet de d'activer un composant via une QAction");
+	RegisterComponent("SwActivationToQAction", "Permet de d'activer un composant via une QAction");
+	RegisterComponent("SwActionToToolButton", "Permet de convertir une action en QToolButton");
 
 }
 /*! \brief Liberation */
@@ -229,6 +231,9 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name) {
 	if (name=="SwActivationToQAction") {
 		return new SwActivationToQAction;
 	}
+	if (name == "SwActionToToolButton") {
+		return new SwActionToToolButton;
+	}
     return NULL;
 }
 /*! \brief acces a l'icone d'un composant
@@ -350,6 +355,9 @@ QIcon _SwGuiPluginFactory_Class::CreateIconOf(QString name) const {
 	if (name=="SwEventToPopup") {
 		return ico;
 	}
+	if (name == "SwActionToToolButton") {
+		return ico;
+	}
     return ico;
 }
 /*! \brief Acces a la version du plugin
@@ -408,7 +416,8 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
         eservice->registerExtension<ISwWidget>("logConsole","SwGuiVisualLogConsole");
         eservice->registerExtension<ISwWidget>("Widget","SwGuiWidget");
         eservice->registerExtension<ISwWidget>("Widget","SwPerspectivesManager");
-		eservice->registerExtension<ISwWidget>("Widget","SwGuiCompPushButtonToQAction");
+		eservice->registerExtension<ISwWidget>("Widget", "SwGuiCompPushButtonToQAction");
+		eservice->registerExtension<ISwWidget>("Widget", "SwActionToToolButton");
     }
 }
 /*! \brief sur suppression d'une  interface */

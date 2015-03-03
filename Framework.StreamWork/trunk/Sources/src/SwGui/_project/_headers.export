@@ -31,3 +31,5 @@ _QRcViewer.h
 _SwGuiCompMainWindow.h
 _SwGuiPluginsFrontEnd.h
 SwGuiConstantes.h
+SwGuiComponentTools.h
+ComponentTools\ComponentTableWidget.h
