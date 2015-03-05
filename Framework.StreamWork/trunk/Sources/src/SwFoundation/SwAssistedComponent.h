@@ -50,8 +50,8 @@ namespace StreamWork {
     namespace SwFoundation {
     
 		enum CALLBACK_EVENT {
-			BEFORE,
-			AFTER
+			BEFORE_POINTER_ASSIGNEMENT,
+			AFTER_POINTER_ASSIGNEMENT
 		};
 
         /**
@@ -257,8 +257,11 @@ namespace StreamWork {
 
 			/**
 			@brief Methode simplifiant la consomation d'interface
+
+			@details
 					- A chaque interface sa methode de disponibilité
 					- set automatique du pointeur
+					- notifie avant de changer le pointeur et aprés avoir changé le pointeur
 					- fini les appels à getInterface avec le nom de l'interface
 
 				exemple : 
@@ -269,9 +272,9 @@ namespace StreamWork {
 				initializeComponent :
 					consumeInterface("ISwWidget", &_i_widget, [this](CALLBACK_EVENT eventType)->void { this->onWidgetChange(eventType); });
 				onWidgetChange(CALLBACK_EVENT event) : // Specifique
-					if(event == BEFORE)
+					if(event == BEFORE_POINTER_ASSIGNEMENT)
 						//do something on old value of _i_widget ( unregister from listener or anything else...)
-					if(event == AFTER)
+					if(event == AFTER_POINTER_ASSIGNEMENT)
 						//do something with new value of _i_widget
 
 			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
@@ -280,10 +283,80 @@ namespace StreamWork {
 			*/
 			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, std::function<void(CALLBACK_EVENT)> callback)
 			{
-				getIConsumerService().RegisterConsumedInterface<T>(interfaceName,interfaceHandle);
+				getIConsumerService().RegisterConsumedInterface<T>(interfaceName, interfaceHandle);
 				_mapIConsummedWithCallBack.insert(interfaceName, callback);
 			}
 
+			/**
+			@brief Methode simplifiant la consomation d'interface
+				- A chaque interface sa methode de disponibilité
+				- set automatique du pointeur
+				- notifie avant de changer le pointeur et aprés avoir changé le pointeur
+				- fini les appels à getInterface avec le nom de l'interface
+
+			@details
+			
+			.h :
+				ISwWidget * _i_widget;
+			
+			constructor :
+				_i_widget = 0;
+			
+			initializeComponent :
+				consumeInterface("ISwWidget", &_i_widget, this, &MaClass::onWidgetChange);
+			
+			onWidgetChange(CALLBACK_EVENT event) : // Specifique
+			if(event == BEFORE_POINTER_ASSIGNEMENT)
+				//do something on old value of _i_widget ( unregister from listener or anything else...)
+			if(event == AFTER_POINTER_ASSIGNEMENT)
+				//do something with new value of _i_widget
+
+			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
+			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
+			@param thisPointer : U *  => pointeur sur la classe ayant la callback en membre
+			@param callback : void (U::*callback)(CALLBACK_EVENT) => pointeur sur la callback en tant que fonction membre
+			*/
+			template<typename T, typename U> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, U* thisPointer, void (U::*callback)(CALLBACK_EVENT))
+			{
+				consumeInterface(interfaceName, interfaceHandle, [=](CALLBACK_EVENT eventType)->void { (thisPointer->*callback)(eventType); });
+			}
+
+			/**
+			@brief Methode simplifiant la consomation d'interface
+				- A chaque interface sa methode de disponibilité
+				- notifie aprés avoir changé le pointeur
+				- fini les appels à getInterface avec le nom de l'interface
+
+			@details
+			
+			.h :
+				ISwWidget * _i_widget;
+			
+			constructor :
+				_i_widget = 0;
+			
+			initializeComponent :
+				consumeInterface("ISwWidget", &_i_widget, this, &MaClass::onWidgetChange);
+			
+			onWidgetChange() : // Specifique
+				//do something with new value of _i_widget
+
+			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
+			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
+			@param thisPointer : U *  => pointeur sur la classe ayant la callback en membre
+			@param callback : void (U::*callback)() => pointeur sur la callback en tant que fonction membre
+			*/
+			template<typename T, typename U, typename MEMBER> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, U* thisPointer, MEMBER func)
+			{
+				//passage de this pointer en = au contexte de la lambda expression pour copier l'adresse du pointeur dans la lambda expression car en sortie de la methode courante, la reference sur le pointeur n'est plus valide.
+				consumeInterface(interfaceName, interfaceHandle, [=](CALLBACK_EVENT eventType)->void { 
+					if(eventType==AFTER_POINTER_ASSIGNEMENT) 
+					{
+						(thisPointer->*func)();
+					}
+				});
+			}
+			
 			/**
 			 * @brief    : fourni une interface (sortie)
 			 * @param	 : QString pinterface_name - Nom de l'interface

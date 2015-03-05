@@ -47,6 +47,7 @@ Main\Serialization\SwSaver_Class.h
 Main\Services\ISwServiceProductKey.h
 Main\Services\ISwCheckService.h
 Main\Services\ISwEditionService.h
+Main\Services\Management\SwServiceManager_Helper.h
 Main\Services\Management\ISwServicesManager_Listener.h
 Main\Services\Management\SwServicesManager_Class.h
 Main\Services\Management\ISwService.h

@@ -40,6 +40,7 @@ Build on %2 at %3\n";
 
 int main(int argc, char *argv[])
 {
+	QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	QApplication app(argc, argv);
 	//QApplication::setStyle(new QPlastiqueStyle);
     QCoreApplication::setApplicationName("StreamWorkEditor2");
