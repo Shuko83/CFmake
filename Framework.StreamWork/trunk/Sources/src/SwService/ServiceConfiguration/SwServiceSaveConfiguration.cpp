@@ -10,9 +10,9 @@
 #include <QDebug>
 
 
-
 #include "SwServiceSaveConfiguration.h"
 #include "SwPropertyPersistentToolbox.h"
+
 
 
 using namespace StreamWork::SwCore;
@@ -311,30 +311,6 @@ void SwServiceSaveConfiguration::unregisterConfSaver( QString confName )
 	}
 	_confSavers.remove(confName);
 }
-
-//-------------------------------------------------------------------------
-bool SwServiceSaveConfiguration::registerConfPropertiesObserver( ISwConfPropertiesObserver * observer)
-{
-	bool ret = false;
-
-	if(_configurationPropertiesListeners.indexOf(observer) < 0)
-	{
-		_configurationPropertiesListeners.append(observer);
-		ret = true;
-	}
-	else
-	{
-		//qDebug() << "Conf service : Cannot register this ConfPropertiesObserver because it is already registered";
-	}
-	return ret;
-}
-
-//-------------------------------------------------------------------------
-void SwServiceSaveConfiguration::unregisterConfPropertiesObserver( ISwConfPropertiesObserver * observer )
-{
-	_configurationPropertiesListeners.removeOne(observer);
-}
-
 
 
 //-------------------------------------------------------------------------
@@ -1059,7 +1035,7 @@ ISwAdminConfiguration* SwServiceSaveConfiguration::getAdmin()
 
 
 //-------------------------------------------------------------------------
-ISwConfPropertiesObserver* SwServiceSaveConfiguration::getConfPropertiesObserver()
+ISwPropertiesObserver* SwServiceSaveConfiguration::getConfPropertiesObserver()
 {
 	return this;
 }
@@ -1410,16 +1386,43 @@ bool SwServiceSaveConfiguration::updateConfProfilesDatas(QHash<QString, QHash<QS
 }
 
 
+
 //---------------------------------------------------------------------
-// Interface ISwConfPropertiesObserver
+// Interface ISwConfigurationManager
 //---------------------------------------------------------------------
+bool SwServiceSaveConfiguration::registerConfPropertiesObserver(ISwPropertiesObserver * observer)
+{
+	bool ret = false;
+
+	if (_configurationPropertiesListeners.indexOf(observer) < 0)
+	{
+		_configurationPropertiesListeners.append(observer);
+		ret = true;
+	}
+	else
+	{
+		//qDebug() << "Conf service : Cannot register this ConfPropertiesObserver because it is already registered";
+	}
+	return ret;
+}
 
 //-------------------------------------------------------------------------
-void SwServiceSaveConfiguration::onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName )
+void SwServiceSaveConfiguration::unregisterConfPropertiesObserver(ISwPropertiesObserver * observer)
+{
+	_configurationPropertiesListeners.removeOne(observer);
+}
+
+
+
+
+//---------------------------------------------------------------------
+// Interface ISwPropertiesObserver
+//---------------------------------------------------------------------
+void StreamWork::SwCore::SwServiceSaveConfiguration::onPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName /*= ""*/)
 {
 	// Fonction appelée par les collectors lorsque une property est destroyed
 	// Notification de tous les observers (SwPropertiesModelImpl) que la property a été supprimée
-	for (int i = 0; i < _configurationPropertiesListeners.size(); ++i) 
+	for (int i = 0; i < _configurationPropertiesListeners.size(); ++i)
 	{
 		_configurationPropertiesListeners.at(i)->onPropertyDeleted(propertyDeleted, propertyDecoratedName, confName);
 	}
@@ -1429,8 +1432,6 @@ void SwServiceSaveConfiguration::onPropertyDeleted( ISwProperty * propertyDelete
 
 //-------------------------------------------------------------------------
 // Private Méthodes
-//-------------------------------------------------------------------------
-
 //-------------------------------------------------------------------------
 QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QString inConfigFileToParse)
 {

@@ -7,12 +7,15 @@
 #ifndef _STREAMWORK_SWCORE__SWSERVICESAVECONFIGURATION_H
 #define _STREAMWORK_SWCORE__SWSERVICESAVECONFIGURATION_H
 
+#include <QDomElement>
+
 #include "ISwAdminConfiguration.h"
 #include "ISwServiceConfiguration.h"
-#include "ISwConfPropertiesObserver.h"
 #include "ISwConfigListener.h"
 
-#include <QDomElement>
+#include "ISwConfigurationManager.h"
+#include "ISwPropertiesObserver.h"
+#include "ISwProperty.h"
 
 
 namespace StreamWork 
@@ -23,8 +26,9 @@ namespace StreamWork
           @class SwServiceSaveConfiguration
         */
         class SwServiceSaveConfiguration :  public ISwAdminConfiguration, 
-											public ISwServiceConfiguration ,
-											public ISwConfPropertiesObserver
+											public ISwServiceConfiguration,
+											public ISwConfigurationManager,
+											public ISwPropertiesObserver
         {
         public:
 
@@ -106,24 +110,34 @@ namespace StreamWork
 
 
 			/**
-             * @brief	: Permet d'enregistrer un ConfPropertiesObserver
-             * @Param	: ISwConfPropertiesObserver* observer des properties
-             */
-			virtual bool registerConfPropertiesObserver(  ISwConfPropertiesObserver * observer  );
-
-			/**
-             * @brief	: Permet désenregistrer un ConfPropertiesObserver
-             * @Param	: ISwConfPropertiesObserver* observer des properties
-             */
-			virtual void unregisterConfPropertiesObserver(  ISwConfPropertiesObserver * observer );
-
-
-
-			/**
              * @brief	: Permet de vider les Maps du service de conf
              */
 			virtual void clearConfService();
 
+
+
+			//---------------------------------------------------------------------
+			// Interface ISwConfigurationManager
+			//---------------------------------------------------------------------
+			/**
+			* @brief	: Permet d'enregistrer un ConfPropertiesObserver
+			* @Param	: ISwPropertiesObserver* observer des properties
+			*/
+			virtual bool registerConfPropertiesObserver(ISwPropertiesObserver * observer);
+
+			/**
+			* @brief	: Permet désenregistrer un ConfPropertiesObserver
+			* @Param	: ISwPropertiesObserver* observer des properties
+			*/
+			virtual void unregisterConfPropertiesObserver(ISwPropertiesObserver * observer);
+
+
+
+			//---------------------------------------------------------------------
+			// Interface ISwPropertiesObserver
+			//---------------------------------------------------------------------
+			/** @brief : Fonction appelée par les confcollectors lors du delete d'une property */
+			virtual void onPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName = "");
 
 
 			//---------------------------------------------------------------------
@@ -238,9 +252,9 @@ namespace StreamWork
 			
 			/**
              * @brief	: permet de récupérer l'interface de gestion des properties de la conf
-             * @return	: ISwConfPropertiesObserver : pointeur sur l'interface de gestion des properties de la conf
+             * @return	: ISwPropertiesObserver : pointeur sur l'interface de gestion des properties de la conf
              */
-			virtual ISwConfPropertiesObserver* getConfPropertiesObserver();
+			virtual ISwPropertiesObserver* getConfPropertiesObserver();
 
 			/**
              * @brief	: permet de récupérer un pointeur sur une property
@@ -283,11 +297,7 @@ namespace StreamWork
 			virtual bool updateDefaultProfile(QString confName);
 
 			
-			//---------------------------------------------------------------------
-			// Interface ISwConfPropertiesObserver
-			//---------------------------------------------------------------------
-			/** @brief : Fonction appelée par les confcollectors lors du delete d'une property */
-			virtual void onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName );
+			
 
 		
 		private:
@@ -317,7 +327,7 @@ namespace StreamWork
 			QList<ISwConfigListener*>	_configurationServiceListeners;
 
 			/** @brief : Liste des observers du service pour notif lors d'une suppression de property */
-			QList<ISwConfPropertiesObserver*>	_configurationPropertiesListeners;
+			QList<ISwPropertiesObserver*>	_configurationPropertiesListeners;
 			
 
 			/**

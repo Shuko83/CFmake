@@ -40,7 +40,7 @@ namespace StreamWork
 		public:
 
             /** @brief : Item representant une propriété */
-            class PropertyItem {
+			class BUILD_SWCORE PropertyItem {
             public:
                 /** @brief : model hote */
                 SwPropertiesModelImpl * _host;
