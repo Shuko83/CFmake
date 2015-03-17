@@ -606,7 +606,23 @@
 					<File
 						RelativePath="Main\Services\ISwEditionService.h" />
 					<File
+						RelativePath="Main\Services\ISwServiceCodeTimer.h" />
+					<File
+						RelativePath="Main\Services\ISwServiceConfiguration.h" />
+					<File
+						RelativePath="Main\Services\ISwServiceExtensions.h" />
+					<File
+						RelativePath="Main\Services\ISwServiceFileEditorManager.h" />
+					<File
+						RelativePath="Main\Services\ISwServiceParameters.h" />
+					<File
 						RelativePath="Main\Services\ISwServiceProductKey.h" />
+					<File
+						RelativePath="Main\Services\ISwServiceRefProfiler.h" />
+					<File
+						RelativePath="Main\Services\ISwServiceShortcuts.h" />
+					<File
+						RelativePath="Main\Services\ISwServiceUnitSI.h" />
 				</Filter>
 				<File
 					RelativePath="Main\SwApplication.h" />
