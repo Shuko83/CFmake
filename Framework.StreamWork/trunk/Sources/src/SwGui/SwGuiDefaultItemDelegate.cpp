@@ -34,8 +34,7 @@ using namespace StreamWork::SwGui;
 using namespace StreamWork::SwCore;
 
 /*! \brief Constructeur */
-SwGuiDefaultItemDelegate::SwGuiDefaultItemDelegate(QObject *parent)
-    : QItemDelegate(parent)
+SwGuiDefaultItemDelegate::SwGuiDefaultItemDelegate(QObject *parent) : QDynamicStyledItemDelegate(parent)
 {
 	currentWidgetIcon = NULL;
     boolExp.setPattern("true|false");
@@ -75,104 +74,10 @@ void SwGuiDefaultItemDelegate::paint(QPainter *painter,
                             const QStyleOptionViewItem &option,
                             const QModelIndex &index) const
 {
-    QVariant value = index.model()->data(index, Qt::DisplayRole);
-    if (!isSupportedType(value)) {
-        QStyleOptionViewItem myOption = option;
-        myOption.state &= ~QStyle::State_Enabled;
-        QItemDelegate::paint(painter, myOption, index);
-        return;
-    }
-    //QItemDelegate::paint(painter, option, index);
-    QStyleOptionViewItemV2 opt = setOptions(index, option);
-    const QStyleOptionViewItemV2 *v2 = qstyleoption_cast<const QStyleOptionViewItemV2 *>(&option);
-    opt.features = v2 ? v2->features : QStyleOptionViewItemV2::ViewItemFeatures(QStyleOptionViewItemV2::None);
-
-    // prepare
-    painter->save();
-    //if (d->clipPainting)
-    //    painter->setClipRect(opt.rect);
-
-    // get the data and the rectangles
-
-    QIcon icon;
-    QIcon::Mode iconMode = QIcon::Normal;//d->iconMode(option.state);
-    QIcon::State iconState = QIcon::On;//d->iconState(option.state);
-
-    QPixmap pixmap;
-    QRect decorationRect;
-    value = index.data(Qt::DecorationRole);
-    if (value.isValid()) {
-        if (value.type() == QVariant::Icon) {
-            icon = qvariant_cast<QIcon>(value);
-            decorationRect = QRect(QPoint(0, 0),
-                                   icon.actualSize(option.decorationSize, iconMode, iconState));
-        } else {
-            pixmap = decoration(opt, value);
-            decorationRect = QRect(QPoint(0, 0), pixmap.size());
-        }
-    }
-
-    QString text;
-    QRect displayRect;
-    value = index.data(Qt::DisplayRole);
-    if (value.isValid()) {
-        text=displayText(value);
-        painter->save();
-        painter->setFont(opt.font);
-        displayRect = textRectangle(painter, textLayoutBounds(opt), opt.font, text);
-        painter->restore();
-    }
-
-    QRect checkRect;
-    Qt::CheckState checkState = Qt::Unchecked;
-    value = index.data(Qt::CheckStateRole);
-    if (value.isValid()) {
-        checkState = static_cast<Qt::CheckState>(value.toInt());
-		
-		#if QT_VERSION >= 0x050000 
-		checkRect = doCheck (opt, opt.rect, value);
-		#else 
-		checkRect = check (opt, opt.rect, value);
-		#endif
-			        
-    }
-
-    // do the layout
-
-    doLayout(opt, &checkRect, &decorationRect, &displayRect, false);
-
-    // draw the item
-
-    drawBackground(painter, opt, index);
-    drawCheck(painter, opt, checkRect, checkState);
-    if (!icon.isNull())
-        icon.paint(painter, decorationRect, option.decorationAlignment, iconMode, iconState);
-    else
-        drawDecoration(painter, opt, decorationRect, pixmap);
-    drawDisplay(painter, opt, displayRect, text);
-    drawFocus(painter, opt, text.isEmpty() ? QRect() : displayRect);
-
-    // done
-    painter->restore();
+	QDynamicStyledItemDelegate::paint(painter, option, index);
+	return;
 }
- /*! \brief Permet de recuperer le rectangle englobant */
-QRect SwGuiDefaultItemDelegate::textLayoutBounds(const QStyleOptionViewItemV2 &option) const
-{
-    QRect rect = option.rect;
-    const bool wrapText = option.features & QStyleOptionViewItemV2::WrapText;
-    switch (option.decorationPosition) {
-    case QStyleOptionViewItem::Left:
-    case QStyleOptionViewItem::Right:
-        rect.setWidth(INT_MAX >> 6);
-        break;
-    case QStyleOptionViewItem::Top:
-    case QStyleOptionViewItem::Bottom:
-        rect.setWidth(wrapText ? option.decorationSize.width() : (INT_MAX >> 6));
-        break;
-    }
-
-    return rect;
-}
+ 
 /*! \brief Cree un editeur pour un item donne */
 QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent,
         const QStyleOptionViewItem & /* option */,
@@ -180,20 +85,23 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent,
 {
 
     QVariant originalValue = index.model()->data(index, Qt::EditRole);
-    if (!originalValue.isValid())
-        originalValue= index.model()->data(index, Qt::DisplayRole);
 
-    if (!isSupportedType(originalValue))
+	QVariant displayRole = index.model()->data(index, Qt::DisplayRole);
+	QString displayValue = "";
+	if (displayRole.isValid() )
+		displayValue = displayRole.value<QString>();
+	
+    if ( !originalValue.isValid())
         return 0;
 
     if (qMetaTypeId<SwFileDescriptor>()==originalValue.userType()) {
-        QWidget * w=new QWidget(parent);
-        QHBoxLayout * hl=new QHBoxLayout(w);
-        hl->setSpacing(0);
-        hl->setMargin(0);
-        QLineEdit * l=new QLineEdit(w);
+		QWidget * w = new QWidget(parent);
+		QHBoxLayout * hl = new QHBoxLayout(w);
+		hl->setSpacing(0);
+		hl->setMargin(0);
+        QLineEdit * l=new QLineEdit(parent);
         //l->setAutoFillBackground(true);
-        l->setText(displayText(originalValue));
+        l->setText(displayValue);
         l->setObjectName("fileText");
         hl->addWidget(l);
         QPushButton * b=new QPushButton("...",w);
@@ -213,7 +121,7 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent,
         hl->setMargin(0);
         QLabel * l=new QLabel(w);
         l->setAutoFillBackground(true);
-        l->setText(displayText(originalValue));
+        l->setText(displayValue);
         hl->addWidget(l);
         QPushButton * b=new QPushButton("...",w);
         b->setMaximumWidth(30);
@@ -231,7 +139,7 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent,
         hl->setMargin(0);
         QLabel * l=new QLabel(w);
         l->setAutoFillBackground(true);
-        l->setText(displayText(originalValue));
+        l->setText(displayValue);
         hl->addWidget(l);
         QPushButton * b=new QPushButton("...",w);
         b->setMaximumWidth(30);
@@ -290,7 +198,7 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent,
         QLineEdit * l=new QLineEdit(w);
         
         l->setObjectName("iconText");
-        l->setText(displayText(originalValue));
+        l->setText(displayValue);
         hl->addWidget(l);
         QPushButton * b=new QPushButton("...",w);
         b->setMaximumWidth(30);
@@ -373,8 +281,11 @@ void SwGuiDefaultItemDelegate::setEditorData(QWidget *editor,
                                     const QModelIndex &index) const
 {
     QVariant value = index.model()->data(index, Qt::EditRole);
-    if (!value.isValid())
-        value= index.model()->data(index, Qt::DisplayRole);
+    
+	QVariant displayRole = index.model()->data(index, Qt::DisplayRole);
+	QString displayValue = "";
+	if (displayRole.isValid() )
+		displayValue = displayRole.value<QString>();
 
     if (value.type()==QVariant::Bool) {
         QComboBox * cbox=qobject_cast<QComboBox *>(editor);
@@ -439,12 +350,12 @@ void SwGuiDefaultItemDelegate::setEditorData(QWidget *editor,
     }
 */
     if (QLineEdit *lineEdit = qobject_cast<QLineEdit *>(editor)) {
-        lineEdit->setText(displayText(value));
+        lineEdit->setText(displayValue);
         return;
     }
 
     if (QLabel *label = qobject_cast<QLabel *>(editor->children().at(1))) {
-        label->setText(displayText(value));
+        label->setText(displayValue);
     }
     
 }
@@ -622,158 +533,7 @@ void SwGuiDefaultItemDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 
     model->setData(index, value, Qt::EditRole);
 }
-/*! \brief Permet de savoir si le type de l'item est support� */
-bool SwGuiDefaultItemDelegate::isSupportedType(QVariant & val)
-{
-    switch (val.type()) {
-    case QVariant::Bool:
-    case QVariant::ByteArray:
-    case QVariant::Char:
-    case QVariant::Color:
-    case QVariant::Date:
-    case QVariant::DateTime:
-    case QVariant::Double:
-    case QVariant::Font:
-    case QVariant::Int:
-    case QVariant::LongLong:
-    case QVariant::Point:
-    case QVariant::Rect:
-    case QVariant::Size:
-    case QVariant::String:
-    case QVariant::StringList:
-    case QVariant::Time:
-    case QVariant::UInt:
-    case QVariant::ULongLong:
-        return true;
-    case QVariant::UserType:
-        if (qMetaTypeId<SwEnum>()==val.userType()) {
-            return true;
-        }
-		if (qMetaTypeId<SwIntegerEnum>()==val.userType()) {
-			return true;
-		}
-		if (qMetaTypeId<SwInteger>()==val.userType()) {
-			return true;
-		}
-		if (qMetaTypeId<SwString>()==val.userType()) {
-			return true;
-		}
-		if (qMetaTypeId<SwDouble>()==val.userType()) {
-			return true;
-		}
-        if (qMetaTypeId<SwFileDescriptor>()==val.userType()) {
-            return true;
-        }
-        if (qMetaTypeId<SwIconDescriptor>()==val.userType()) {
-            return true;
-        }
-        if (qMetaTypeId<SwIpV4Address>()==val.userType()) {
-            return true;
-        }
-        if (qMetaTypeId<SwUUID>()==val.userType()) {
-            return true;
-        }
-    default:
-        break;
-    }
-    return false;
-}
-/*! \brief Permet d'afficher l'item au format texte */
-QString SwGuiDefaultItemDelegate::displayText(const QVariant &value)
-{
-    QIcon tmpIcon;
 
-    switch (value.type()) {
-    case QVariant::Bool:
-    case QVariant::ByteArray:
-    case QVariant::Char:
-    case QVariant::Int:
-    case QVariant::LongLong:
-    case QVariant::String:
-    case QVariant::UInt:
-    case QVariant::ULongLong:
-        return value.toString();
-    case QVariant::Double:
-        return QLocale().toString(value.toDouble(),'f',4);
-    case QVariant::Color:
-        {
-            QColor color = qvariant_cast<QColor>(value);
-            QString text = color.name ().toUpper ();
-            QString alphaS = QString::number (color.alpha (), 16).toUpper ();
-            if (alphaS.length () == 1)
-            {
-                alphaS = QString ("0") + alphaS;
-            }
-            text += alphaS;
-            return text;
-        }
-    case QVariant::Font:
-        {
-            return value.value<QFont>().toString();
-        }
-    case QVariant::Date:
-        return value.toDate().toString(Qt::ISODate);
-    case QVariant::DateTime:
-        return value.toDateTime().toString(Qt::ISODate);
-    case QVariant::Invalid:
-        return "<Invalid>";
-    case QVariant::Point:
-        {
-            QPoint point = value.toPoint();
-            return QString("(%1,%2)").arg(point.x()).arg(point.y());
-        }
-    case QVariant::Rect:
-        {
-            QRect rect = value.toRect();
-            return QString("(%1,%2,%3,%4)")
-                   .arg(rect.x()).arg(rect.y())
-                   .arg(rect.width()).arg(rect.height());
-        }
-    case QVariant::Size:
-        {
-            QSize size = value.toSize();
-            return QString("(%1,%2)").arg(size.width()).arg(size.height());
-        }
-    case QVariant::StringList:
-        return value.toStringList().join(",");
-    case QVariant::Time:
-        return value.toTime().toString(Qt::ISODate);
-    case QVariant::UserType:
-		if (qMetaTypeId<SwEnum>()==value.userType()) {
-			SwEnum venum=value.value<SwEnum>();
-			return venum.ToString();
-		}
-        if (qMetaTypeId<SwIntegerEnum>()==value.userType()) {
-            SwIntegerEnum venum=value.value<SwIntegerEnum>();
-			return venum.toString();
-        }
-		if (qMetaTypeId<SwString>()==value.userType()) {
-			SwString vstring=value.value<SwString>();
-			return vstring.toString();
-		}
-		if (qMetaTypeId<SwInteger>()==value.userType()) {
-			SwInteger vinteger=value.value<SwInteger>();
-			return QString::number(vinteger.getValue());
-		}
-		if (qMetaTypeId<SwDouble>()==value.userType()) {
-			SwDouble vdouble=value.value<SwDouble>();
-			return QString::number(vdouble.getValue());
-		}
-        if (qMetaTypeId<SwFileDescriptor>()==value.userType()) {
-            return value.value<SwFileDescriptor>().getFileName();
-        }
-        if (qMetaTypeId<SwIconDescriptor>()==value.userType()) {
-            return value.value<SwIconDescriptor>().ToString();
-        }
-        if (qMetaTypeId<SwIpV4Address>()==value.userType()) {
-            return value.value<SwIpV4Address>().ToString();
-        }
-        if (qMetaTypeId<SwUUID>()==value.userType()) {
-            return value.value<SwUUID>().toQString();
-        }
-    }
-    return QString("<%1>").arg(value.typeName());
-}
 void SwGuiDefaultItemDelegate::onFontClick(bool checked) {
     bool result=false;
     QFont tmpfont=QFontDialog::getFont (&result,currentFont,0,"Edit Font");

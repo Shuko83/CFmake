@@ -6,6 +6,8 @@
         <Artifact name="SwExecution"/>
         <Artifact name="SwGui"/>
         <Artifact link="false" name="SwServiceConfiguration"/>
+		<Artifact link="false" name="QsGui"/>
+		<Artifact link="false" name="QsCore"/>
     </Dependencies>
     <QTDependencies>
         <Module name="core"/>

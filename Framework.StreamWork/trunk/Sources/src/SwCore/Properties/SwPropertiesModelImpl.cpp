@@ -1,6 +1,6 @@
-/**
+ï»¿/**
  * file : SwPropertiesModelImpl.h
- * brief : Definit un modele a partir d'une liste de propriétés d'un composant
+ * brief : Definit un modele a partir d'une liste de propriÃ©tÃ©s d'un composant
  *			(pour l'affichage dans un QTreeView)
  * date : 02-octobre-2006 16:04:34
  * author : F.Bighelli - modified by CGD (12/09/2013)
@@ -12,6 +12,17 @@
 #include <SwMacros.h>
 #include <QPainter>
 #include <qdebug>
+
+#include <SwEnum.h>
+#include <SwIntegerEnum.h>
+#include <SwInteger.h>
+#include <SwString.h>
+#include <SwDouble.h>
+#include <SwIpv4Address.h>
+#include <SwUUID.h>
+#include <SwFileDescriptor.h>
+
+#include "QDynamicStyledItemDelegate.h"
 
 
 /*
@@ -36,7 +47,7 @@ SwPropertiesModelImpl::SwPropertiesModelImpl(QObject * parent):QAbstractItemMode
 //-------------------------------------------------------------------------
 SwPropertiesModelImpl::~SwPropertiesModelImpl() 
 {
-    //Si l'ancienne collection de propriétés est definie
+    //Si l'ancienne collection de propriÃ©tÃ©s est definie
     if (_properties != 0) 
 	{
 		//Desenregistrement des signaux
@@ -112,13 +123,13 @@ void SwPropertiesModelImpl::DestroyItem(ISwProperty * property, QString customCo
 	if(customConstructedPropertyName != "")
 		propertyName = customConstructedPropertyName;
 
-	// CGD => cas particulier, les properties avec le suffix _DoNotDisplay ou _DebugMode n'ont pas été créées, 
+	// CGD => cas particulier, les properties avec le suffix _DoNotDisplay ou _DebugMode n'ont pas Ã©tÃ© crÃ©Ã©es, 
 	bool takeCareOfDebugProperties = false;
 	#if _DEBUG	
 		takeCareOfDebugProperties = true;
 	#endif
 
-	// Pas besoin de supprimer les properties car elles n'ont pas été ajoutées
+	// Pas besoin de supprimer les properties car elles n'ont pas Ã©tÃ© ajoutÃ©es
 	if( (!takeCareOfDebugProperties && propertyName.contains("_DebugMode", Qt::CaseInsensitive))
 		|| propertyName.contains("_DoNotDisplay", Qt::CaseInsensitive) )
 		return;
@@ -198,7 +209,7 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString roo
         //Signal avant changement
 		beginResetModel();
 
-        //Si l'ancienne collection de propriétés est definie
+        //Si l'ancienne collection de propriÃ©tÃ©s est definie
         if (_properties!=NULL) {
             //Desenregistrement des signaux
             _properties->GetOnBeforePropertiesChange().idisconnect(*this,&SwPropertiesModelImpl::OnBeforeChange);
@@ -211,7 +222,7 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties,QString roo
             //Destruction des items
             delete _root_item;
         }
-        //Enregistrement de la nouvelle collection de propriétés
+        //Enregistrement de la nouvelle collection de propriÃ©tÃ©s
         _properties=properties;
         if (_properties!=NULL) {
             //Enregistrement des signaux
@@ -281,8 +292,16 @@ Qt::ItemFlags SwPropertiesModelImpl::flags ( const QModelIndex & index ) const
     if (item->_property==NULL) {
         return Qt::ItemFlags(Qt::ItemIsEnabled);       
     }
-    if (index.column()==1 && item->_property->IsEditable())
-        return Qt::ItemFlags(Qt::ItemIsEnabled|Qt::ItemIsEditable| Qt::ItemIsSelectable);
+    if (index.column()==1)
+	{
+		if( item->_property->IsEditable())
+			return Qt::ItemFlags(Qt::ItemIsEnabled|Qt::ItemIsEditable| Qt::ItemIsSelectable);
+		else
+			return Qt::NoItemFlags;
+	}
+	else
+		if(! item->_property->IsEditable())
+			return Qt::NoItemFlags;
 
     return Qt::ItemFlags(Qt::ItemIsEnabled);
 }
@@ -343,53 +362,59 @@ QVariant SwPropertiesModelImpl::data ( const QModelIndex & index, int role) cons
             return QVariant(item->_label);
         }
     }
-    if (role == Qt::DisplayRole && index.column()==0) {
-        return QVariant(item->_label);
-    }
-    if (role == Qt::DisplayRole && index.column()==1) {
-        if (item->_property!=NULL) {
-            return QVariant(item->_property->GetValue());
-        } else {
-            return QVariant();            
-        }
-    }
-    if (role == Qt::ForegroundRole) {
-        if (item->_property!=NULL) {
-            if (item->_property->IsEditable())
-                if (item->_property->HasChanged()) {
-                    return QVariant(QColor(Qt::darkBlue));
-                } else {
-                    return QVariant(QColor(Qt::black));
-                }
-            else
-                return QVariant(QColor(Qt::lightGray));
-        } else {
-            return QVariant(QColor(Qt::black));
-        }
-    }
-    if (role == Qt::FontRole) {
-        QFont font;
-        if (item->_property!=NULL) {
-            if (item->_property->IsControllable()) {
-                if (item->_property->IsControlled()) {
-                    font.setItalic(true);
-                } else {
-                    font.setBold(true);
-                }
-                return QVariant(font);
-            } else {
-                if (item->_property->HasChanged()) {
-                    font.setBold(true);
-                } else {
-                    font.setBold(false);
-                }
-                return QVariant(font);
-            }
-        } else {
-            return QVariant(font);
-        }
 
-    }
+	//pas d'edition sur la premeire colone
+	if (index.column() == 0)
+	{
+		if (role == Qt::DisplayRole ) {
+			return QVariant(item->_label);
+		}
+	}
+
+	//affichage et eddition sur la deuxieme colone
+	if (index.column() == 1)
+	{
+		if (role == Qt::DisplayRole ) {
+			if (item->_property != NULL) {
+				QVariant variant = item->_property->GetValue();
+				if (isSupportedType(variant))
+					return QVariant(displayText(variant));
+				return QVariant();
+			}
+			else {
+				return QVariant();
+			}
+		}
+		else if (role == Qt::EditRole ) {
+			if (item->_property != NULL) {
+				QVariant variant = item->_property->GetValue();
+				if (isSupportedType(variant))
+					return variant;
+				return QVariant();
+			}
+			else {
+				return QVariant();
+			}
+		}
+	}
+
+	if (role == StyledStateRole) {
+		if (item->_property != NULL) {
+			if (item->_property->HasChanged()) {
+				if (item->_property->IsControlled())
+					return QVariant(QDynamicStyledItemDelegate::StyledState::Modified_And_Controled);
+				else
+					return QVariant(QDynamicStyledItemDelegate::StyledState::Modified);
+			}
+			else
+			{
+				if (item->_property->IsControlled())
+					return QVariant(QDynamicStyledItemDelegate::StyledState::Controled);					
+			}
+		}
+		return QVariant(QDynamicStyledItemDelegate::StyledState::Default);
+	}
+	
     if (role==Qt::DecorationRole && index.column()==1 && item->_property!=0) {
         if (item->_property->GetValue().type()==QVariant::Color) {
             QPixmap p(18,18);
@@ -504,6 +529,160 @@ QModelIndex SwPropertiesModelImpl::parent ( const QModelIndex & index ) const
     //Sinon il faut calculer l'index
     index_parent=iparent->_showChildrens.indexOf(iindex);
     return createIndex(index_parent,index.column(),(void *)iindex);   
+}
+
+//--------------------------------------------------------------
+QString SwPropertiesModelImpl::displayText(const QVariant &value)
+{
+	QIcon tmpIcon;
+
+	switch (value.type()) {
+	case QVariant::Bool:
+	case QVariant::ByteArray:
+	case QVariant::Char:
+	case QVariant::Int:
+	case QVariant::LongLong:
+	case QVariant::String:
+	case QVariant::UInt:
+	case QVariant::ULongLong:
+		return value.toString();
+	case QVariant::Double:
+		return QLocale().toString(value.toDouble(), 'f', 4);
+	case QVariant::Color:
+	{
+		QColor color = qvariant_cast<QColor>(value);
+		QString text = color.name().toUpper();
+		QString alphaS = QString::number(color.alpha(), 16).toUpper();
+		if (alphaS.length() == 1)
+		{
+			alphaS = QString("0") + alphaS;
+		}
+		text += alphaS;
+		return text;
+	}
+	case QVariant::Font:
+	{
+		return value.value<QFont>().toString();
+	}
+	case QVariant::Date:
+		return value.toDate().toString(Qt::ISODate);
+	case QVariant::DateTime:
+		return value.toDateTime().toString(Qt::ISODate);
+	case QVariant::Invalid:
+		return "<Invalid>";
+	case QVariant::Point:
+	{
+		QPoint point = value.toPoint();
+		return QString("(%1,%2)").arg(point.x()).arg(point.y());
+	}
+	case QVariant::Rect:
+	{
+		QRect rect = value.toRect();
+		return QString("(%1,%2,%3,%4)")
+			.arg(rect.x()).arg(rect.y())
+			.arg(rect.width()).arg(rect.height());
+	}
+	case QVariant::Size:
+	{
+		QSize size = value.toSize();
+		return QString("(%1,%2)").arg(size.width()).arg(size.height());
+	}
+	case QVariant::StringList:
+		return value.toStringList().join(",");
+	case QVariant::Time:
+		return value.toTime().toString(Qt::ISODate);
+	case QVariant::UserType:
+		if (qMetaTypeId<SwEnum>() == value.userType()) {
+			SwEnum venum = value.value<SwEnum>();
+			return venum.ToString();
+		}
+		if (qMetaTypeId<SwIntegerEnum>() == value.userType()) {
+			SwIntegerEnum venum = value.value<SwIntegerEnum>();
+			return venum.toString();
+		}
+		if (qMetaTypeId<SwString>() == value.userType()) {
+			SwString vstring = value.value<SwString>();
+			return vstring.toString();
+		}
+		if (qMetaTypeId<SwInteger>() == value.userType()) {
+			SwInteger vinteger = value.value<SwInteger>();
+			return QString::number(vinteger.getValue());
+		}
+		if (qMetaTypeId<SwDouble>() == value.userType()) {
+			SwDouble vdouble = value.value<SwDouble>();
+			return QString::number(vdouble.getValue());
+		}
+		if (qMetaTypeId<SwFileDescriptor>() == value.userType()) {
+			return value.value<SwFileDescriptor>().getFileName();
+		}
+		if (qMetaTypeId<SwIconDescriptor>() == value.userType()) {
+			return value.value<SwIconDescriptor>().ToString();
+		}
+		if (qMetaTypeId<SwIpV4Address>() == value.userType()) {
+			return value.value<SwIpV4Address>().ToString();
+		}
+		if (qMetaTypeId<SwUUID>() == value.userType()) {
+			return value.value<SwUUID>().toQString();
+		}
+	}
+	return QString("<%1>").arg(value.typeName());
+}
+
+/*! \brief Permet de savoir si le type de l'item est supportï¿½ */
+bool SwPropertiesModelImpl::isSupportedType(QVariant & val)
+{
+	switch (val.type()) {
+	case QVariant::Bool:
+	case QVariant::ByteArray:
+	case QVariant::Char:
+	case QVariant::Color:
+	case QVariant::Date:
+	case QVariant::DateTime:
+	case QVariant::Double:
+	case QVariant::Font:
+	case QVariant::Int:
+	case QVariant::LongLong:
+	case QVariant::Point:
+	case QVariant::Rect:
+	case QVariant::Size:
+	case QVariant::String:
+	case QVariant::StringList:
+	case QVariant::Time:
+	case QVariant::UInt:
+	case QVariant::ULongLong:
+		return true;
+	case QVariant::UserType:
+		if (qMetaTypeId<SwEnum>() == val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwIntegerEnum>() == val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwInteger>() == val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwString>() == val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwDouble>() == val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwFileDescriptor>() == val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwIconDescriptor>() == val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwIpV4Address>() == val.userType()) {
+			return true;
+		}
+		if (qMetaTypeId<SwUUID>() == val.userType()) {
+			return true;
+		}
+	default:
+		break;
+	}
+	return false;
 }
 
 //---------------------------------------------------------------------

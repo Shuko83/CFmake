@@ -101,3 +101,4 @@ Tools\Log\SwFileLogRecorder_Class.h
 Tools\Log\SwLogger_Class.h
 Tools\SwPropertyPersistentToolbox.h
 Extensions\SwExtensionImpl.h
+Properties/_SwPropertyImpl_Class.h

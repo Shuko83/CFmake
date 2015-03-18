@@ -1,6 +1,8 @@
 <Project name="StreamWorkEditor2" path="StreamWorkEditor2" svn="Framework.StreamWork" >
     <Target type="APP"/>
     <Dependencies>
+		<Artifact link="false" name="QsGui"/>
+		<Artifact link="false" name="QsCore"/>
         <Artifact name="QsException"/>
         <Artifact name="SwCore"/>
         <Artifact name="SwGui"/>

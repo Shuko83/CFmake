@@ -24,7 +24,7 @@ EditorPropertiesItemDelegate::~EditorPropertiesItemDelegate() {
 void EditorPropertiesItemDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const {
     SwGuiDefaultItemDelegate::paint(painter,option,index);
 
-    if (!index.isValid() || index.column()!=0) 
+    if (!index.isValid() || index.column()!=0)
         return;
     QVariant value = index.model()->data(index, Qt::UserRole);
     void * ptr=value.value<void*>();

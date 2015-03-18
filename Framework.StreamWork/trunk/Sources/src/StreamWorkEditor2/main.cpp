@@ -18,17 +18,17 @@
 using namespace StreamWork::SwCore;
 
 const char * VL_Help="Usage: %1 [options]\n\
-    -h                   this help\n\
-    -v                   informations about this application\n\
-    -d                   display core actions\n\
-    -ppath path          plugin path\n\
-    -pdesc pathdesc      plugin paths descriptor\n\
-    -stream streamfile   stream will be read in the specified path\n\
-	-models modelFile    file where all models are described\n\
-	-autostart			 Start automatically the executor in the stream witch is in Timer/MainEntry mode\n\
-	-appDirPath			 The application dir path \n\
-    -log logfile         logs will be write in the specified file\n\
-\n\
+    -h						this help\n\
+    -v						informations about this application\n\
+    -d						display core actions\n\
+    -ppath path				plugin path\n\
+    -pdesc pathdesc			plugin paths descriptor\n\
+    -stream streamfile		stream will be read in the specified path\n\
+	-models modelFile		file where all models are described\n\
+	-autostart				Start automatically the executor in the stream witch is in Timer/MainEntry mode\n\
+	-appDirPath				The application dir path \n\
+    -log logfile			logs will be write in the specified file\n\
+	-stylesheet styleFile	Add stylesheet to qapplication\n\
 ";
 
 const char * VL_Version="%1\n\
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     //QString test=QString(typeid(un_service).name());
     //QMessageBox::information(0,QString("typeid"),test,QMessageBox::Ok,QMessageBox::NoButton,QMessageBox::NoButton);
     //Test
-
+	QString style = "";
 /*    try {*/
         SW_APP->Verbose();
         liste_arg=QCoreApplication::instance()->arguments();
@@ -97,8 +97,17 @@ int main(int argc, char *argv[])
                     doNewStream=false;
                 }
             }
-
+			if (liste_arg[i] == "-stylesheet")
+				style = liste_arg[i + 1];
         }
+
+		if (style == "")
+		{
+			QFile res(":/StreamWorkEditor2/css_file");
+			res.open(QIODevice::ReadOnly | QIODevice::Text);
+			qApp->setStyleSheet(res.readAll());
+		}
+
         //Finalisation de l'initialisation
         SW_APP->FinalizeInitialisation();
         SW_APP->RegisterService(new EditionService());
