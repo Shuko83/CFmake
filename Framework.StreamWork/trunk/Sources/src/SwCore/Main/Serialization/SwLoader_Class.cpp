@@ -47,7 +47,8 @@ SwComponent_ClassPtr SwLoader_Class::Load(QDomDocument & doc) throw(SwException)
         if (path_node.hasAttribute(CG_SW_XML_PATH_NODE_ATT_VALUE)) {
             SW_APP->ComponentsBank().AddPath(path_node.attribute(CG_SW_XML_PATH_NODE_ATT_VALUE));
         }
-    }        
+    }   
+
     //Construction du stream
     QDomElement elt=root_elt.firstChildElement(QString(CG_SW_XML_COMPONENT_NODE));
     root_component=BuildStream(elt,NULL);

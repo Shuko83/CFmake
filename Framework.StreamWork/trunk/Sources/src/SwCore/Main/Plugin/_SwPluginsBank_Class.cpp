@@ -311,7 +311,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
             }
         }
     }
-    RebuildModel();
+	addPluginToModel(itpp.key(), itpp.value());
 }
 /*! \brief recuperatoin d'une liste de path d'un fichier descripteur */
 QList<QString> _SwPluginsBank_Class::getPathsFromFile(QFile *f) {
@@ -541,63 +541,7 @@ void _SwPluginsBank_Class::RereadPluginContent(SwPluginFactory_Class * plugin) t
     }
     RebuildModel();
 }
-/*! \brief Reconstruction du modele*/
-void _SwPluginsBank_Class::RebuildModel() {
-    QMap<QString,TL_plugins>::const_iterator it;
-    TL_pluginsIt itp;
-    _SwTreeItem * path_item;
-    _SwTreeItem * plugin_item;
-    QString s;
-    QSet<QString> l_comp;
-    QSet<QString>::const_iterator l_comp_it;
-    QFont f_bold=QFont();
-    f_bold.setBold(true);
-    QColor f_color=QColor("navy");
 
-
-    if (_has_changed || _tree_items==NULL) {
-        if (_tree_items!=NULL) {
-            //Indiquer un changement
-            layoutAboutToBeChanged();
-             delete _tree_items;
-        }
-        QList<QVariant> buildData;
-        buildData << "Paths/Plugins/Components" << "Details";
-        _tree_items = new _SwTreeItem(buildData,QIcon());
-        //Remplissage des données
-        for(it=_plugins_paths.begin();it!=_plugins_paths.end();it++) {
-            buildData.clear();
-            QColor pathColor=QColor("black");
-            if (globalUserPathList.contains(it.key())) {
-                buildData << "Path (User)" << QDir::cleanPath(it.key());
-                pathColor=QColor("green");
-            } else {
-                buildData << "Path" << QDir::cleanPath(it.key());
-            }
-			if(_dllWithError.contains(it.key().toLower()))
-			{
-				pathColor=QColor("red");
-			}
-            path_item=new _SwTreeItem(buildData,QIcon(":/SwCore/path.png"),_tree_items,pathColor,f_bold);
-            _tree_items->appendChild(path_item);
-            for(itp=it.value().begin();itp!=it.value().end();itp++) {
-                buildData.clear();
-                buildData << (*itp)->GetPluginName() << QString("Build %1").arg((*itp)->GetPluginVersion());
-                plugin_item=new _SwTreeItem(buildData,QIcon(":/SwCore/plugin.png"),path_item,f_color,f_bold);
-                path_item->appendChild(plugin_item);
-                l_comp=(*itp)->GetComponentsList();
-                for(l_comp_it=l_comp.begin();l_comp_it!=l_comp.end();l_comp_it++) {
-                    buildData.clear();
-                    buildData << (*l_comp_it) << (*itp)->GetComponentDescription((*l_comp_it));
-                    plugin_item->appendChild(new _SwTreeItem(buildData,(*itp)->GetComponentIcon((*l_comp_it)),plugin_item));
-                }
-            }
-        }
-        //Indiquer fin du changement
-        layoutChanged();
-        _has_changed=false;
-    }
-}
 /*! \brief Acces au modèle pour l'affichage*/
 QAbstractItemModel * _SwPluginsBank_Class::GetModel() {
     return this;
@@ -824,4 +768,85 @@ void _SwPluginsBank_Class::displayUpdate() {
 /*! \brief Affiche les mises a jours */
 void _SwPluginsBank_Class::hideDisplayUpdate() {
     _trayIcon->setVisible(false);
+}
+
+//---------------------------------------------------------------------------------
+void _SwPluginsBank_Class::addPluginToModel(QString name, TL_plugins& plugins)
+{
+	if (!_tree_items) //Si model non initialisé, initialisation du model
+	{
+		RebuildModel();
+	}
+	else //sinon ajout de la ligne 
+	{
+		beginInsertRow(_tree_items->childCount(), _tree_items);
+
+		_SwTreeItem * path_item;
+		_SwTreeItem * plugin_item;
+		QFont f_bold = QFont();
+		f_bold.setBold(true);
+		QColor f_color = QColor("navy");
+
+		QList<QVariant> buildData;
+		QColor pathColor = QColor("black");
+		if (globalUserPathList.contains(name)) {
+			buildData << "Path (User)" << QDir::cleanPath(name);
+			pathColor = QColor("green");
+		}
+		else {
+			buildData << "Path" << QDir::cleanPath(name);
+		}
+		if (_dllWithError.contains(name.toLower()))
+		{
+			pathColor = QColor("red");
+		}
+		path_item = new _SwTreeItem(buildData, QIcon(":/SwCore/path.png"), _tree_items, pathColor, f_bold);
+		_tree_items->appendChild(path_item);
+		for (ISwPluginFactory * plugin : plugins) {
+			buildData.clear();
+			buildData << plugin->GetPluginName() << QString("Build %1").arg(plugin->GetPluginVersion());
+			plugin_item = new _SwTreeItem(buildData, QIcon(":/SwCore/plugin.png"), path_item, f_color, f_bold);
+			path_item->appendChild(plugin_item);
+			for (QString compName : plugin->GetComponentsList()) {
+				buildData.clear();
+				buildData << compName << plugin->GetComponentDescription(compName);
+				plugin_item->appendChild(new _SwTreeItem(buildData, plugin->GetComponentIcon(compName), plugin_item));
+			}
+		}
+		endInsertRow();
+	}
+}
+
+/*! \brief Reconstruction du modele*/
+void _SwPluginsBank_Class::RebuildModel() {
+	QMap<QString, TL_plugins>::iterator jt;
+
+	if (_has_changed || _tree_items == NULL) {
+		beginResetModel();
+		if (_tree_items != NULL) {
+			//Indiquer un changement
+			delete _tree_items;
+		}
+		QList<QVariant> buildData;
+		buildData << "Paths/Plugins/Components" << "Details";
+		_tree_items = new _SwTreeItem(buildData, QIcon());
+		//Remplissage des données
+		for (jt = _plugins_paths.begin(); jt != _plugins_paths.end(); jt++) {
+			addPluginToModel(jt.key(), jt.value());
+		}
+		endResetModel();
+		_has_changed = false;
+	}
+}
+
+//---------------------------------------------------------------------------------
+void _SwPluginsBank_Class::beginInsertRow(int index, _SwTreeItem * node)
+{
+	beginInsertRows(createIndex(node->row(), 0, node), index, index);
+}
+
+//---------------------------------------------------------------------------------
+void _SwPluginsBank_Class::endInsertRow()
+{
+	endInsertRows();
 }

@@ -70,6 +70,7 @@ namespace StreamWork
             QList<QString> globalUserPathList;
             /*! \brief Reconstruction du modele*/
             void RebuildModel();
+			void addPluginToModel(QString name, TL_plugins& plugin);
             /*! \brief recuperatoin d'une liste de path d'un fichier descripteur */
             QList<QString> getPathsFromFile(QFile *f);
 
@@ -133,6 +134,10 @@ namespace StreamWork
             virtual QModelIndex parent ( const QModelIndex & index ) const;
             /*! \brief Returns the data for the given role and section in the header with the specified orientation */
             virtual QVariant headerData(int section, Qt::Orientation orientation,int role) const;
+
+			void beginInsertRow(int index, _SwTreeItem * node);
+			void endInsertRow();
+
             //----------------------------------------------------
             //-- Gestion des Creations Post Processor
             //----------------------------------------------------

@@ -89,6 +89,8 @@ namespace StreamWork
             virtual void RereadPluginContent(SwPluginFactory_Class * plugin) throw(SwException)=0;
             /*! \brief Acces au modèle pour l'affichage*/
             virtual QAbstractItemModel * GetModel()=0;
+			/*! \brief Demande au model de se reconstruire pour optimiser l'affichage*/
+			virtual void RebuildModel() = 0;
             /*! \brief Acces a la liste des noms de tous les composants */
             virtual QSet<SwUUID> GetDataList()=0;
             /*! \brief Acces au nom du type d'une donnée definie par son id */
