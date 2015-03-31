@@ -74,7 +74,7 @@ namespace StreamWork
 			void updateVisibilityAction();
 
 		private:
-			QToolButton  * _toolButton;
+			QToolButton  _toolButton;
 
 		};
 	}

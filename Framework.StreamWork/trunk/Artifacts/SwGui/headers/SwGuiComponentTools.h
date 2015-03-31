@@ -41,7 +41,7 @@ namespace StreamWork
 			SwGuiComponentTools();
 
 			/*! \brief Constructeur */
-			SwGuiComponentTools(StreamWork::SwCore::SwComponent_Class * root_component, QList<QString> current_list);
+			SwGuiComponentTools(QWidget *parent, StreamWork::SwCore::SwComponent_Class * root_component, QList<QString> current_list);
 
 			/*! \brief Destructeur */
 			~SwGuiComponentTools();

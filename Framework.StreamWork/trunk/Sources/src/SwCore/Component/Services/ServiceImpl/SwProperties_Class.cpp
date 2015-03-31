@@ -162,6 +162,29 @@ void SwProperties_Class::DestroyProperty(QString name) {
         _OnAfterChange(this);
     }    
 }
+
+/*! \brief Permet de detruire les propriétés commencant par name */
+void SwProperties_Class::DestroyPropertiesBeginWith(QString name){
+	QMap<QString, _SwPropertyImpl_Class *>::iterator it;
+
+	for (it = _map_properties.begin(); it != _map_properties.end();)
+	{
+		if (QString::compare(it.key().left(name.size()), name) == 0)
+		{
+			_OnBeforeChange(this);
+			it.value()->GetOnControlChangeSignal().idisconnect(*this, &SwProperties_Class::OnPropertyControlChange);
+			DestroySubProperties(it.value());
+			_OnDestroyProperty(this, (ISwProperty *)it.value());
+			_set_properties.removeAt(_set_properties.indexOf((ISwProperty *)it.value()));
+			delete it.value();
+			it = _map_properties.erase(it);
+			_OnAfterChange(this);
+		}
+		else
+			it++;
+	}
+}
+
 /*! \brief Permet d'acceder a une propriété*/
 ISwProperty * SwProperties_Class::GetProperty(QString name) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;

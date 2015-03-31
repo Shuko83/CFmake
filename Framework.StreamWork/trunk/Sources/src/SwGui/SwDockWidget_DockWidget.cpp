@@ -154,6 +154,7 @@ void SwDockWidget_DockWidget::setTitle(QString title)
 	{
 		//Mise a jour du nom du SwDockWidget_DockWidget
 		_title = title;
+		_toolBarItemName = title;
 		this->setObjectName(title);
 		setTextToLabel(ui->L_Title, _title);
 		//Mise a jour du bouton d'affichage du widget
@@ -1121,3 +1122,15 @@ void SwDockWidget_DockWidget::blink()
 	}
 }
 
+//-----------------------------------------------------------------------------
+void SwDockWidget_DockWidget::setToolbarItemName(QString name)
+{
+	if (_toolBarItemName != name && !name.isEmpty())
+		_toolBarItemName = name;
+}
+
+//-----------------------------------------------------------------------------
+QString SwDockWidget_DockWidget::getToolbarItemName()
+{
+	return _toolBarItemName;
+}

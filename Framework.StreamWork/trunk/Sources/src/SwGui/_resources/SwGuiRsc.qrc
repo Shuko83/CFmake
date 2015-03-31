@@ -89,6 +89,27 @@
         <file>images/DockWidget/unlocked.png</file>
         <file alias="return">images/DockWidget/return.png</file>
         <file>images/DockWidget/add_hover.png</file>
+        <file alias="bottomMain">images/DockWidget/bottomMain.png</file>
+        <file alias="bottomMainHover">images/DockWidget/bottomMainHover.png</file>
+        <file alias="leftMain">images/DockWidget/leftMain.png</file>
+        <file alias="leftMainHover">images/DockWidget/leftMainHover.png</file>
+        <file alias="rightMain">images/DockWidget/rightMain.png</file>
+        <file alias="rightMainHover">images/DockWidget/rightMainHover.png</file>
+        <file alias="topMain">images/DockWidget/topMain.png</file>
+        <file alias="topMainHover">images/DockWidget/topMainHover.png</file>
+        <file alias="emptyMainDock">images/DockWidget/emptyMainDock.png</file>
+        <file alias="emptyMainDockHover">images/DockWidget/emptyMainDockHover.png</file>
+        <file alias="close">images/DockWidget/close.png</file>
+        <file alias="downArrow">images/DockWidget/downArrow.png</file>
+        <file alias="leftArrow">images/DockWidget/leftArrow.png</file>
+        <file alias="rightArrow">images/DockWidget/rightArrow.png</file>
+        <file alias="secondScreen">images/DockWidget/secondScreenContext.png</file>
+        <file alias="upArrow">images/DockWidget/upArrow.png</file>
+        <file alias="downArrowDsb">images/DockWidget/downArrowDsb.png</file>
+        <file alias="leftArrowDsb">images/DockWidget/leftArrowDsb.png</file>
+        <file alias="rightArrowDsb">images/DockWidget/rightArrowDsb.png</file>
+        <file alias="secondScreenDsb">images/DockWidget/secondScreenContextDsb.png</file>
+        <file alias="upArrowDsb">images/DockWidget/upArrowDsb.png</file>
     </qresource>
     <qresource prefix="/Widget">
         <file alias="checkbox_checked">images/Widget/checkbox_checked.png</file>

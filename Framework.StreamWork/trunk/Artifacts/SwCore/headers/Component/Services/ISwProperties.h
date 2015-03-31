@@ -50,9 +50,11 @@ namespace StreamWork
 	        /*! \brief Permet de crée une propriété issue d'un object Qt*/
 	        virtual ISwProperty * CreatePropertyForQObject(QObject * obj,QString name,QString prefix=QString())=0;
 	        /*! \brief Permet de créer toutes les propriétés issues d'un object Qt*/
-	        virtual void CreatePropertiesForQObject(QObject * obj,QString prefix=QString(),bool disable_objectName=false)=0;
+			virtual void CreatePropertiesForQObject(QObject * obj, QString prefix = QString(), bool disable_objectName = false) = 0;
 	        /*! \brief Permet de detruire une propriété*/
-	        virtual void DestroyProperty(QString name)=0;
+			virtual void DestroyProperty(QString name) = 0;
+			/*! \brief Permet de detruire les propriétés commencant par name */
+			virtual void DestroyPropertiesBeginWith(QString name) = 0;
 	        /*! \brief Permet d'acceder a une propriété*/
 	        virtual ISwProperty * GetProperty(QString name)=0;
 	        /*! \brief Permet d'acceder a la liste des propriétés*/

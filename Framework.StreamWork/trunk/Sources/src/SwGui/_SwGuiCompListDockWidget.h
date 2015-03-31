@@ -29,15 +29,15 @@ using namespace StreamWork::SwGui;
 class _SwGuiCompListDockWidget : public SwAssistedComponent, public ISwListDockWidget
 {
 	Q_OBJECT
-	Q_PROPERTY(uint dockNumber READ getDockNumber WRITE setDockNumber)
+	Q_PROPERTY(uint widgetNumber READ getWidgetNumber WRITE setWidgetNumber)
 	Q_PROPERTY(QString name READ getName WRITE setName)
 
 public:
 	_SwGuiCompListDockWidget();
 	~_SwGuiCompListDockWidget();
 
-	void setDockNumber(uint nb);
-	uint getDockNumber();
+	void setWidgetNumber(uint nb);
+	uint getWidgetNumber();
 
 	void setName(QString name);
 
@@ -56,8 +56,9 @@ public:
 	virtual QString getName();
 
 private:
-	unsigned int _dockNumber;
-	QList<SwDockWidget_DockWidget*> _listDockWidget;
+	unsigned int _widgetNumber;
+
+	QMap<QString, SwDockWidget_DockWidget *> _dockwidgets;
 	QList<ISwListDockWidgetListener*> _listListener;
 	QString _name;
 

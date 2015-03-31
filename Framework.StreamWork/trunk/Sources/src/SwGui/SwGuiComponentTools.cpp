@@ -8,8 +8,9 @@ using namespace StreamWork::SwGui;
 using namespace StreamWork::SwCore;
 
 //---------------------------------------------------
-SwGuiComponentTools::SwGuiComponentTools(SwComponent_Class * root_component, QList<QString> current_list) : QDialog()
+SwGuiComponentTools::SwGuiComponentTools(QWidget *parent, SwComponent_Class * root_component, QList<QString> current_list) : QDialog(parent)
 {
+	setModal(true); //The window is modal to the application and blocks input to all windows.
 	for (int i = 0; i < current_list.count(); i++) 
 	{
 		if (SwAddress_ToolBox::FindTarget(current_list[i], root_component) != NULL) 

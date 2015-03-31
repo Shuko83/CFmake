@@ -11,8 +11,7 @@ SwActionToToolButton::SwActionToToolButton() : SwAssistedComponent()
 	setProviderServiceAvaibility(true);
 
 	//tool button
-	_toolButton = new QToolButton();
-	_toolButton->setVisible(false);
+	_toolButton.setVisible(false);
 }
 
 //---------------------------------------------------
@@ -20,8 +19,6 @@ SwActionToToolButton::~SwActionToToolButton()
 {
 	unconsummeInterface("ISwAction");
 	unprovideInterface("ISwWidget");
-
-	delete _toolButton;
 }
 
 //---------------------------------------------------
@@ -38,8 +35,8 @@ void SwActionToToolButton::interfaceAvailable( QString interface_name )
 {
 	if (interface_name == "ISwAction")
 	{
-		_toolButton->setDefaultAction(&getInterface<ISwAction>("ISwAction")->GetAction());
-		connect(_toolButton->defaultAction(), &QAction::changed, this, &SwActionToToolButton::updateVisibilityAction); 
+		_toolButton.setDefaultAction(&getInterface<ISwAction>("ISwAction")->GetAction());
+		connect(_toolButton.defaultAction(), &QAction::changed, this, &SwActionToToolButton::updateVisibilityAction); 
 
 		updateVisibilityAction();
 	}
@@ -50,8 +47,8 @@ void SwActionToToolButton::interfaceUnavailable(QString interface_name)
 {
 	if (interface_name == "ISwAction")
 	{
-		disconnect(_toolButton->defaultAction(), &QAction::changed, this, &SwActionToToolButton::updateVisibilityAction);
-		_toolButton->setDefaultAction(NULL);
+		disconnect(_toolButton.defaultAction(), &QAction::changed, this, &SwActionToToolButton::updateVisibilityAction);
+		_toolButton.setDefaultAction(NULL);
 
 		updateVisibilityAction();
 	}
@@ -60,15 +57,15 @@ void SwActionToToolButton::interfaceUnavailable(QString interface_name)
 //---------------------------------------------------
 void SwActionToToolButton::updateVisibilityAction()
 {
-	QAction * tmp = _toolButton->defaultAction();
+	QAction * tmp = _toolButton.defaultAction();
 	if (tmp)
-		_toolButton->setVisible(tmp->isVisible());
+		_toolButton.setVisible(tmp->isVisible());
 	else
-		_toolButton->setVisible(false);
+		_toolButton.setVisible(false);
 }
 
 //----------------------------------------------------
 QWidget & SwActionToToolButton::GetWidget()
 {
-	return * _toolButton;
+	return _toolButton;
 }

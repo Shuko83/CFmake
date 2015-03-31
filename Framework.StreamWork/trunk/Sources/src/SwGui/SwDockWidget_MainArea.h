@@ -20,6 +20,9 @@
 
 class SwDockWidget_DockWidget;
 
+//-----------------------------------------------------------------------------
+//Classe principale
+//-----------------------------------------------------------------------------
 class SwDockWidget_MainArea :public SwDockWidget_ToolBarWindow
 {
 	Q_OBJECT
@@ -41,7 +44,7 @@ public:
 	QWidget * getMainWidget();
 
 	//Ancrage d'un dock
-	QWidget * pinDockTo(QObject * obj, QWidget * mainWidget, Qt::DockWidgetArea area, bool absolute = false);
+	QWidget * pinDockTo(QObject * obj, QWidget * mainWidget, Qt::DockWidgetArea area, bool absolute = false);	
 
 	//Chargement des tailles et positions
 	void loadDockPosition(QString filePath);
@@ -75,9 +78,10 @@ protected slots:
 	void changeDockConfiguration(SwDockWidget_MainDockConfiguration::ConfigurationIndex index);
 	void lockConf(bool state);
 
-	void freeMainTab(int index, QPoint pos);
-	void moveMainTab(QPoint pos);
-	void stopMovingMainTab();
+	//void freeMainTab(int index, QPoint pos);
+	//void moveMainTab(QPoint pos);
+	//void stopMovingMainTab();
+	void moveMainTab(int index, Qt::DockWidgetArea area);
 	
 	void setLock(bool state);
 
@@ -107,6 +111,7 @@ private:
 	void addButton(QPushButton ** button, int size, QIcon icon);
 	void manageArrows(QObject * obj);
 	void showArrows(QWidget * widget);
+	void showArrowsOnEmptyMainDock(QWidget * widget);
 	void showArrowsOnSecondScreen(QRect rect);
 	void hideArrows(bool withOverlay = true);
 	void highlightArrows(QPoint pos, bool toMain);
@@ -123,6 +128,7 @@ private:
 	void showOverlay(Qt::DockWidgetArea area, bool toMain = false);
 	void hideOverlay();
 	void setupOverlay(QObject * obj, QWidget * widget);
+	void setupEmptyMainDockOverlay(QWidget * widget);
 
 	//Gestion des docks principaux
 	SwDockWidget_MainDockWidget * setupMainDockWidget(QString name, Qt::DockWidgetArea area, bool withAddButton = true);
@@ -150,13 +156,18 @@ private:
 	QPropertyAnimation * _posEffect;
 
 	//Boutons de redimensionnement
-	QPushButton *_centerWidgetBtn;
-	QPushButton *_leftWidgetBtn;
-	QPushButton *_topWidgetBtn;
-	QPushButton *_rightWidgetBtn;
-	QPushButton *_bottomWidgetBtn;
-	QPushButton *_tabBtn;
-	QPushButton * _secondScreenBtn;
+	QPushButton * _centerWidgetBtn;
+	QPushButton * _leftWidgetBtn;
+	QPushButton * _topWidgetBtn;
+	QPushButton * _rightWidgetBtn;
+	QPushButton * _bottomWidgetBtn;
+	QPushButton * _tabBtn;
+	QPushButton *  _secondScreenBtn;
+	QPushButton * _leftCentralBtn;
+	QPushButton * _topCentralBtn;
+	QPushButton * _rightCentralBtn;
+	QPushButton * _bottomCentralBtn;
+	QPushButton * _centerDockBtn;
 
 	//Menu
 	QMenuBar * _menuBar;

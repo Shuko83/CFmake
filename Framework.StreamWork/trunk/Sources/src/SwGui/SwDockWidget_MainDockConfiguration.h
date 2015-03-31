@@ -3,6 +3,7 @@
 
 #include <QMenu>
 #include <QRadioButton>
+#include <QPushButton>
 #include <QGridLayout>
 
 class SwDockWidget_MainDockConfiguration : public QMenu
@@ -45,15 +46,21 @@ signals:
 
 protected slots:
 	void updateConf(bool state = false);
+	void showMore();
+
+protected:
+	virtual void hideEvent(QHideEvent * event);
 
 private:
-	QRadioButton * addConfiguration(QString iconPath, ConfigurationIndex index = BLTR);
+	QRadioButton * addConfiguration(QString iconPath, ConfigurationIndex index = BLTR, bool visible = true);
 	SwDockWidget_MainDockConfiguration::ConfigurationIndex getExistingConf(QString conf, int nbDocks);
+	QPushButton * addSecondaryConfOption(QString iconPath);
 
 private:
 	QMap<QRadioButton*, ConfigurationIndex> _listBtn;
 	ConfigurationIndex _activeConf;
 	QGridLayout * _layout;
+	QPushButton * _btnMore;
 };
 
 #endif

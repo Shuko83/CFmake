@@ -97,6 +97,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="switchBtn">
+          <property name="toolTip">
+           <string>Switch orientation</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">border:none</string>
           </property>
@@ -124,6 +127,9 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Close toolbar</string>
           </property>
           <property name="styleSheet">
            <string notr="true">border:none</string>
