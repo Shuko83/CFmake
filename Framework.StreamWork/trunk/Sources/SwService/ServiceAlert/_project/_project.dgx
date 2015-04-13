@@ -1,0 +1,13 @@
+<Project name="SwServiceAlert" path="SwService.SwServiceAlert">
+    <Target type="SHARED_LIB" ext="swdl"/>
+    <Dependencies>
+        <Artifact name="QsException"/>
+        <Artifact name="AlertManager"/>
+        <Artifact name="SwCore"/>
+        <Artifact name="SwExecution"/>
+    </Dependencies>
+    <QTDependencies>
+        <Module name="core"/>
+        <Module name="widgets"/>
+    </QTDependencies>
+</Project>

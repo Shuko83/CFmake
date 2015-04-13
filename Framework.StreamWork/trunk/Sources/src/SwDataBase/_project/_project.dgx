@@ -1,8 +1,0 @@
-<Project name="SwDataBase" path="SwDataBase" svn="Framework.StreamWork">
-    <Target type="SHARED_LIB" ext="swdl"/>
-    <Dependencies>
-        <Artifact name="QsException"/>
-        <Artifact name="SwCore"/>
-        <Artifact name="SwExecution"/>
-    </Dependencies>
-</Project>

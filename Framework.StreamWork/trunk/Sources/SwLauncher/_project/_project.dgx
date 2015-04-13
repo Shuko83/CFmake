@@ -1,0 +1,12 @@
+<Project name="SwLauncher" path="SwLauncher">
+    <Target type="APP"/>
+    <Dependencies>
+        <Artifact name="QsException"/>
+        <Artifact name="SwCore"/>
+    </Dependencies>
+    <QTDependencies>
+        <Module name="core"/>
+        <Module name="xml"/>
+        <Module name="widgets"/>
+    </QTDependencies>
+</Project>

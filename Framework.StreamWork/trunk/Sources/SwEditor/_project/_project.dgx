@@ -1,0 +1,15 @@
+<Project name="SwEditor" path="SwEditor">
+    <Target type="SHARED_LIB" ext="swdl"/>
+    <Dependencies>
+        <Artifact name="QsException"/>
+        <Artifact name="SwCore"/>
+        <Artifact name="SwGui"/>
+        <Artifact name="SwExecution"/>
+    </Dependencies>
+    <QTDependencies>
+        <Module name="core"/>
+        <Module name="gui"/>
+        <Module name="xml"/>
+        <Module name="widgets"/>
+    </QTDependencies>
+</Project>

@@ -1,0 +1,18 @@
+<Project name="SwDoc" path="SwDoc">
+    <Target type="SHARED_LIB"/>
+    <Dependencies>
+        <Artifact name="QsException"/>
+        <Artifact name="SwCore"/>
+        <Artifact name="QDjango"/>
+    </Dependencies>
+    <QTDependencies>
+        <Module name="core"/>
+        <Module name="sql"/>
+        <Module name="widgets"/>
+    </QTDependencies>
+    <ExeDependencies>
+        <Prefix>
+            <Artifact name="sql"/>
+        </Prefix>
+    </ExeDependencies>
+</Project>
