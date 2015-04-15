@@ -46,7 +46,7 @@ namespace StreamWork
 
 			/**
              * @brief	: Permet de récupérer tous les ConfCollectors registered
-             * @Return	: List<ISwConfCollector*>, liste des pointeurs sur les ConfCollectors
+             * @Return	: List<QHash<QString, ISwConfCollector*>, liste des pointeurs sur les Prefix/ConfCollectors
              */
 			virtual QHash<QString, ISwConfCollector*> getConfCollectors(QString confName);
 
@@ -241,7 +241,13 @@ namespace StreamWork
 			* @Param : QString : nom de la configuration concernée
 			* @return : QString : nom du profil de la conf courante chargée
 			*/
-			virtual QString getCurrentConf( QString confName);
+			virtual QString getCurrentProfile(QString confName);
+
+			/**
+			* @brief	: permet de récupérer la liste des configurations enregistrées
+			* @return	: QList<QString> : liste des configurations
+			*/
+			QList<QString> getAllConfigurations();
 
 			/**
              * @brief	: permet de récupérer l'interface d'administration de la conf
@@ -287,17 +293,15 @@ namespace StreamWork
              * @Param	: ISwProperty* : pointeur sur la propery concernée
 			* @return	: bool : Update réussi ou pas
              */
-			bool updateProperty(QString confName, QString prefix, ISwProperty* propToUpdate);
+			virtual bool updateProperty(QString confName, QString prefix, ISwProperty* propToUpdate);
 
 
 			/**
 			* @brief	: permet d'updater la part XML de la configuration par défault (CFM_DEFAULT_FILENAME)
 			* @Param	: QString : nom de la configuration concernée
 			*/
-			virtual bool updateDefaultProfile(QString confName);
+			virtual bool updateDefaultProfile(QString confName, QHash<QString, QString> inNewDefaultValues = QHash<QString, QString>());
 
-			
-			
 
 		
 		private:
@@ -353,7 +357,7 @@ namespace StreamWork
 			* @Param : QDomDocument : CDomDoc concerné
 			* @Param : QDomElement : à remplir avec les valeurs des properties des collectors associés
 			*/
-			void createQDomProfile(QString confName, QDomDocument &doc, QDomElement &elt_config);
+			void createQDomProfile(QString confName, QDomDocument &doc, QDomElement &elt_config, QHash<QString, QString> inNewDefaultValues = QHash<QString, QString>());
 
 			/**
 			* @brief : notifie les listeners du service de configuration
@@ -370,6 +374,7 @@ namespace StreamWork
 			*/
 			bool updateConfProfilesDatas(QHash<QString, QHash<QString, QString>>::iterator it_profiles, QString profile, QDomElement newProfileConfDatas);
 
+			bool updateDefaultProfileFromCurrent(QDomNodeList &DefaultElements, QDomNodeList &PropertiesElements, QDomElement &newProfileConfDatas);
 		};
     }
 }
