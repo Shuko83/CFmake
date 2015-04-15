@@ -1,5 +1,0 @@
-<RCC>
- <qresource prefix="/SwDatasBase">
-     <file alias="router.png">images/router.png</file>
- </qresource>
-</RCC>
