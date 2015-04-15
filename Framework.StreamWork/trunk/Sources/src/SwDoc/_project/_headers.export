@@ -1,0 +1,5 @@
+BaseDir=..
+EditDoc.h
+ManageSQL.h
+MultiTagCompleter.h
+SwDocConstantes.h

@@ -35,7 +35,7 @@ namespace StreamWork
 
             /**
              * @brief	: Permet de récupérer tous les ConfCollectors registered
-             * @Return	: List<ISwConfCollector*>, liste des pointeurs sur les ConfCollectors
+             * @Return	: List<QHash<QString, ISwConfCollector*>, liste des pointeurs sur les Prefix/ConfCollectors
              */
             virtual QHash<QString, ISwConfCollector*> getConfCollectors (QString confName) = 0;
 

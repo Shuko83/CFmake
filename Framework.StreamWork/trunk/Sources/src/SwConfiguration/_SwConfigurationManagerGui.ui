@@ -1,0 +1,443 @@
+<ui version="4.0" >
+ <class>_SwConfigurationManagerGuiClass</class>
+ <widget class="QWidget" name="_SwConfigurationManagerGuiClass" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1140</width>
+    <height>762</height>
+   </rect>
+  </property>
+  <property name="sizePolicy" >
+   <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle" >
+   <string>_SwConfigurationManagerGui</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout" >
+   <item>
+    <widget class="QWidget" native="1" name="widget_2" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Fixed" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize" >
+      <size>
+       <width>450</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize" >
+      <size>
+       <width>450</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2" >
+      <property name="topMargin" >
+       <number>0</number>
+      </property>
+      <property name="bottomMargin" >
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QGroupBox" name="GroupBoxMode" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Fixed" hsizetype="Expanding" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize" >
+         <size>
+          <width>0</width>
+          <height>260</height>
+         </size>
+        </property>
+        <property name="maximumSize" >
+         <size>
+          <width>450</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="title" >
+         <string>Mode</string>
+        </property>
+        <widget class="QRadioButton" name="radioButtonReplay" >
+         <property name="geometry" >
+          <rect>
+           <x>10</x>
+           <y>180</y>
+           <width>84</width>
+           <height>18</height>
+          </rect>
+         </property>
+         <property name="font" >
+          <font>
+           <family>MS Shell Dlg 2</family>
+           <pointsize>10</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+           <underline>false</underline>
+           <strikeout>false</strikeout>
+          </font>
+         </property>
+         <property name="text" >
+          <string>Replay</string>
+         </property>
+        </widget>
+        <widget class="QRadioButton" name="radioButtonNormal" >
+         <property name="geometry" >
+          <rect>
+           <x>10</x>
+           <y>30</y>
+           <width>84</width>
+           <height>18</height>
+          </rect>
+         </property>
+         <property name="font" >
+          <font>
+           <family>MS Shell Dlg 2</family>
+           <pointsize>10</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
+           <underline>false</underline>
+           <strikeout>false</strikeout>
+          </font>
+         </property>
+         <property name="text" >
+          <string>Normal</string>
+         </property>
+        </widget>
+        <widget class="QWidget" native="1" name="widgetReplay" >
+         <property name="geometry" >
+          <rect>
+           <x>20</x>
+           <y>200</y>
+           <width>411</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <widget class="QToolButton" name="toolButtonLoadReplayFile" >
+          <property name="geometry" >
+           <rect>
+            <x>266</x>
+            <y>10</y>
+            <width>61</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text" >
+           <string>Load...</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEditReplayFile" >
+          <property name="geometry" >
+           <rect>
+            <x>80</x>
+            <y>10</y>
+            <width>171</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="readOnly" >
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QLabel" name="labelRecordFile_3" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>10</y>
+            <width>71</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font" >
+           <font>
+            <family>MS Shell Dlg 2</family>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+           </font>
+          </property>
+          <property name="text" >
+           <string>Replay Folder</string>
+          </property>
+          <property name="alignment" >
+           <set>Qt::AlignRight</set>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" native="1" name="widgetNormal" >
+         <property name="geometry" >
+          <rect>
+           <x>20</x>
+           <y>50</y>
+           <width>411</width>
+           <height>121</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="labelConfig" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>10</y>
+            <width>71</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font" >
+           <font>
+            <family>MS Shell Dlg 2</family>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+           </font>
+          </property>
+          <property name="text" >
+           <string>Mode</string>
+          </property>
+          <property name="alignment" >
+           <set>Qt::AlignRight</set>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="comboBox" >
+          <property name="geometry" >
+           <rect>
+            <x>80</x>
+            <y>10</y>
+            <width>171</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QToolButton" name="toolButtonLoadConfig" >
+          <property name="geometry" >
+           <rect>
+            <x>80</x>
+            <y>50</y>
+            <width>61</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text" >
+           <string>Load...</string>
+          </property>
+         </widget>
+         <widget class="QToolButton" name="toolButtonSaveAsConfig" >
+          <property name="geometry" >
+           <rect>
+            <x>160</x>
+            <y>50</y>
+            <width>61</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="text" >
+           <string>Save As...</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="checkBoxRecord" >
+          <property name="geometry" >
+           <rect>
+            <x>350</x>
+            <y>10</y>
+            <width>61</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font" >
+           <font>
+            <family>MS Shell Dlg 2</family>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+           </font>
+          </property>
+          <property name="layoutDirection" >
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text" >
+           <string>Record   </string>
+          </property>
+         </widget>
+         <widget class="QWidget" native="1" name="widgetRecord" >
+          <property name="geometry" >
+           <rect>
+            <x>0</x>
+            <y>80</y>
+            <width>411</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <widget class="QToolButton" name="toolButtonLoadRecordFile" >
+           <property name="geometry" >
+            <rect>
+             <x>266</x>
+             <y>10</y>
+             <width>61</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="text" >
+            <string>Choose...</string>
+           </property>
+          </widget>
+          <widget class="QLineEdit" name="lineEditRecordFile" >
+           <property name="geometry" >
+            <rect>
+             <x>80</x>
+             <y>10</y>
+             <width>171</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="readOnly" >
+            <bool>true</bool>
+           </property>
+          </widget>
+          <widget class="QLabel" name="labelRecordFile_2" >
+           <property name="geometry" >
+            <rect>
+             <x>0</x>
+             <y>10</y>
+             <width>71</width>
+             <height>20</height>
+            </rect>
+           </property>
+           <property name="font" >
+            <font>
+             <family>MS Shell Dlg 2</family>
+             <pointsize>8</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+             <underline>false</underline>
+             <strikeout>false</strikeout>
+            </font>
+           </property>
+           <property name="text" >
+            <string>Record Folder</string>
+           </property>
+           <property name="alignment" >
+            <set>Qt::AlignRight</set>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QCheckBox" name="checkBoxAutoStart" >
+          <property name="geometry" >
+           <rect>
+            <x>270</x>
+            <y>10</y>
+            <width>71</width>
+            <height>20</height>
+           </rect>
+          </property>
+          <property name="font" >
+           <font>
+            <family>MS Shell Dlg 2</family>
+            <pointsize>8</pointsize>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <underline>false</underline>
+            <strikeout>false</strikeout>
+           </font>
+          </property>
+          <property name="layoutDirection" >
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text" >
+           <string>AutoStart</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" native="1" name="widget" >
+        <property name="sizePolicy" >
+         <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize" >
+         <size>
+          <width>450</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <widget class="QPushButton" name="pushButtonStop" >
+         <property name="geometry" >
+          <rect>
+           <x>230</x>
+           <y>20</y>
+           <width>141</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text" >
+          <string>Configure</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButtonStart" >
+         <property name="geometry" >
+          <rect>
+           <x>60</x>
+           <y>20</y>
+           <width>141</width>
+           <height>31</height>
+          </rect>
+         </property>
+         <property name="text" >
+          <string>Save</string>
+         </property>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBoxCurrentConfig" >
+     <property name="sizePolicy" >
+      <sizepolicy vsizetype="Expanding" hsizetype="Expanding" >
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title" >
+      <string>Selected Configuration</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout" >
+      <item>
+       <widget class="QTreeView" name="treeView" />
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <resources/>
+ <connections/>
+</ui>

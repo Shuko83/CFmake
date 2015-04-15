@@ -1,0 +1,6 @@
+BaseDir=..
+ISwServiceParameters.h
+ISwServiceRefProfiler.h
+ISwServiceCodeTimer.h
+ISwServiceExtensions.h
+ISwServiceFileEditorManager.h

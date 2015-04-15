@@ -1,0 +1,11 @@
+<Project name="SwServiceShortcut" path="SwService.SwServiceShortcut" svn="Framework.StreamWork">
+    <Target type="SHARED_LIB" ext="swdl"/>
+    <Dependencies>
+        <Artifact name="QsException"/>
+        <Artifact name="SwCore"/>
+    </Dependencies>
+    <QTDependencies>
+        <Module name="core"/>
+        <Module name="widgets"/>
+    </QTDependencies>
+</Project>

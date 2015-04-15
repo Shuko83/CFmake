@@ -122,7 +122,13 @@ namespace StreamWork
              * @Param	: QString : nom de la configuration concernée
              * @return	: QString : nom de la configuration courante
              */
-			virtual QString getCurrentConf(QString confName) = 0;
+			virtual QString getCurrentProfile(QString confName) = 0;
+
+			/**
+			* @brief	: permet de récupérer la liste des configurations enregistrées
+			* @return	: QList<QString> : liste des configurations
+			*/
+			virtual QList<QString> getAllConfigurations() = 0;
 
 			/**
              * @brief	: permet de récupérer l'interface d'administration de la conf
@@ -174,7 +180,7 @@ namespace StreamWork
 			* @brief	: permet d'updater la part XML de la configuration par défault (CFM_DEFAULT_FILENAME)
 			* @Param	: QString : nom de la configuration concernée
 			*/
-			virtual bool updateDefaultProfile(QString confName) = 0;
+			virtual bool updateDefaultProfile(QString confName, QHash<QString, QString> inNewDefaultValues = QHash<QString, QString>()) = 0;
 
 
             //---------------------------------------------------------------------

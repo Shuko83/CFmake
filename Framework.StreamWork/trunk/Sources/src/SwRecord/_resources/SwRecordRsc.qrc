@@ -1,0 +1,10 @@
+<RCC>
+ <qresource prefix="/SwRecord">
+  <file alias="record_icon.png">images/record_icon.png</file>
+  <file alias="replay_icon.png">images/replay_icon.png</file>
+  <file alias="record_point_icon.png">images/record_point_icon.png</file>
+  <file alias="record_symbol.png">images/record_symbol.png</file>
+  <file alias="record_symbol_off.png">images/record_symbol_off.png</file>
+  <file alias="replay_pause.png">images/replay_pause.png</file>
+ </qresource>
+</RCC>

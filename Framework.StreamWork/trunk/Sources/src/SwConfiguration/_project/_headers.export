@@ -1,0 +1,12 @@
+BaseDir=..
+ISwConfiguration.h
+ISwConfigurationController.h
+ISwConfigurationControllerListener.h
+ISwConfigurationEditor.h
+ISwConfigurationListener.h
+ISwConfigurationNameListener.h
+ISwConfigurationNameProvider.h
+ISwConfigurationSaver.h
+_SwConfigurationExportedEntity.h
+_SwConfigurationSelector.h
+SwConfigurationConstantes.h

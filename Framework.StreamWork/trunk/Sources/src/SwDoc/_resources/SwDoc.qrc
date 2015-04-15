@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/SwDoc">
+        <file>add.png</file>
+        <file>DeleteRed.png</file>
+        <file>textbold.png</file>
+        <file>textcenter.png</file>
+        <file>textitalic.png</file>
+        <file>textjustify.png</file>
+        <file>textleft.png</file>
+        <file>textright.png</file>
+        <file>textsubscript.png</file>
+        <file>textsuperscript.png</file>
+        <file>textunder.png</file>
+        <file>database_off.png</file>
+        <file>database_on.png</file>
+        <file>database_wait.png</file>
+    </qresource>
+</RCC>

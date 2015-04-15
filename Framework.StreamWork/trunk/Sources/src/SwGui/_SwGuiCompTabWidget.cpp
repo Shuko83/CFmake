@@ -1,0 +1,177 @@
+/*!
+ \file _SwGuiCompTabWidget.cpp
+ \brief Implementation of the Class _SwGuiCompTabWidget generant un QWidget
+ \version 1.0
+ \date 23-août-2006 18:59:26
+ \author F.Bighelli
+*/
+
+#include <SwApplication.h>
+#include <SwMacros.h>
+#include "_SwGuiCompTabWidget.h"
+
+using namespace StreamWork::SwCore;
+using namespace StreamWork::SwGui;
+
+
+#define CL_WIDGET_INTERFACE_NAME "Widget_%1"
+
+
+/*! \brief Constructeur */
+_SwGuiCompTabWidget::_SwGuiCompTabWidget(): SwComponent_Class(){
+    _provider_service=NULL;
+    _consumer_service=NULL;
+    _properties_service=NULL;
+    _tabWidget=NULL;
+    _widgets_nb=0;
+    _tmp_handle_widget=NULL;
+}
+/*! \brief Destructeur */
+_SwGuiCompTabWidget::~_SwGuiCompTabWidget(){
+    //Desenregistrement des services
+    this->UnregisterService(_consumer_service->GetServiceName());
+    this->UnregisterService(_provider_service->GetServiceName());
+    this->UnregisterService(_properties_service->GetServiceName());
+    //Destruction des services
+    delete _consumer_service;
+    delete _provider_service;
+    delete _properties_service;
+    _tabWidget->clear();
+    delete _tabWidget;
+}
+
+/*! \brief Initialisation des ressources
+\note tous les services du composants doivent être déclarés dans cette methodes*/
+void _SwGuiCompTabWidget::InitializeResources() throw(SwException) {
+    //Creation des service
+    _consumer_service=new SwInterfaces_Consumer_Class(this) ;
+    _provider_service=new SwInterfaces_Provider_Class(this) ;
+    _properties_service=new SwProperties_Class(this);
+    //Creation de l'interface principale
+    _tabWidget=new QTabWidget();
+    //Enregistrement des services
+    this->RegisterService(_properties_service);
+    this->RegisterService(_consumer_service);
+    this->RegisterService(_provider_service);
+    //Exportation de l'interface ISwWidget
+    _provider_service->RegisterProvidedInterface<ISwWidget>("Widget",(ISwWidget *)this);
+
+
+    //S'enregistrer comme observer du consumer
+    _consumer_service->AttachInterfacesConsumerObserver(this);
+
+    _properties_service->CreatePropertiesForQObject(_tabWidget,"QTabWidget");
+
+    //Gestion des widgets
+    _widgets_nb_property=_properties_service->CreateProperty<uint>("nb_widgets");
+    if (_widgets_nb_property==NULL) {
+        if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register nb_widgets property\n"));
+    }
+    _widgets_nb_property->SetDescription("Define how many ISwWidget interfaces this component accept");
+    _widgets_nb_property->SetValue(QVariant(_widgets_nb));
+    _widgets_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompTabWidget::OnPropertyChange);
+
+
+    if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwFrameWidget done\n"));
+
+}
+/*! \brief Callback sur les changements de propriétés*/
+void _SwGuiCompTabWidget::OnPropertyChange(ISwProperty * property) {
+    uint val;
+    QString interface_name;
+
+    if (_widgets_nb_property==property) {
+        val=property->GetValue().toUInt();
+        if (val==_widgets_nb) return;
+        if (val<_widgets_nb) {
+            for (uint i=val;i<_widgets_nb;i++) {
+                interface_name=QString(CL_WIDGET_INTERFACE_NAME).arg(i);
+                _consumer_service->UnregisterConsumedInterface(interface_name);
+            }
+        } else {
+            for (uint i=_widgets_nb;i<val;i++) {
+                interface_name=QString(CL_WIDGET_INTERFACE_NAME).arg(i);
+                _widgets.insert(interface_name,(ISwWidget *)NULL);
+                _consumer_service->RegisterConsumedInterface<ISwWidget>(interface_name,&_tmp_handle_widget);
+            }
+        }
+        _widgets_nb=val;
+    }
+}
+//---------------------------------------------------------------------
+// Interface ISwInterfaces_ConsumerObserver
+//---------------------------------------------------------------------
+/*! \brief Avant changement de la disponibilité de l'interface */
+void _SwGuiCompTabWidget::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
+    QMap<QString,ISwWidget *>::iterator widget_it;
+    //Si c'est un menu
+    widget_it=_widgets.find(interface_name);
+    if (widget_it!=_widgets.end()) {
+        if (widget_it.value()!=NULL) {
+            //Et qu'il etait defini, on le detache de la widgetbar
+//            int index=_tabWidget->indexOf(&widget_it.value()->GetWidget());
+            //if(index>=0) {
+                //_tabWidget->removeTab(index);
+            //} else {
+                widget_it.value()->GetWidget().setParent(NULL);
+            //}
+            //Si c'est un widget observable, on se mets en observer
+            ISwWidget2 * wo=dynamic_cast<ISwWidget2 *>(widget_it.value());
+            if (wo!=0) {
+                wo->UnregisterISwWidgetObserver(this);
+            } 
+            //Fin
+            widget_it.value()=NULL;
+        }
+        return;
+    }
+}
+/*! \brief Apres changement de la disponibilité de l'interface */
+void _SwGuiCompTabWidget::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
+    QMap<QString,ISwWidget *>::iterator widget_it;
+
+    //Si c'est un widget
+    widget_it=_widgets.find(interface_name);
+    if (widget_it!=_widgets.end()) {
+        if (widget_it.value()==NULL && _tmp_handle_widget!=NULL) {
+            //Et qu'il etait non defini, on l'enregistre et l'attache a la widgetbar
+            widget_it.value()=_tmp_handle_widget;
+            _tabWidget->addTab(&_tmp_handle_widget->GetWidget(),_tmp_handle_widget->GetWidget().windowTitle());
+            //Si c'est un widget observable, on se mets en observer
+            ISwWidget2 * wo=dynamic_cast<ISwWidget2 *>(_tmp_handle_widget);
+            if (wo!=0) {
+                wo->RegisterISwWidgetObserver(this);
+            } 
+         }
+        return;
+    }
+}
+//---------------------------------------------------------------------
+// Interface ISwWidget2
+//---------------------------------------------------------------------
+/*! \brief Renvoie le menu
+\return le menu */
+QWidget & _SwGuiCompTabWidget::GetWidget() {
+    return *_tabWidget;
+}
+/** @brief Enregistrement de l'observer */
+void _SwGuiCompTabWidget::RegisterISwWidgetObserver(ISwWidget2_Observer * o) {
+    _wObservers.push_back(o);
+}
+/** @brief Desregistrement de l'observer */
+void _SwGuiCompTabWidget::UnregisterISwWidgetObserver(ISwWidget2_Observer * o) {
+    _wObservers.removeOne(o);
+}
+//---------------------------------------------------------------------
+// InterfaceISwWidget2_Observer
+//---------------------------------------------------------------------
+/** @brief mettre en avant le widget si c'est possible */
+void _SwGuiCompTabWidget::OnBringToFrontRequest(ISwWidget * w) {
+    int index=_tabWidget->indexOf(&(w->GetWidget()));
+    if (index>=0)
+        _tabWidget->setCurrentIndex(index);
+    for(int i=0;i<_wObservers.count();i++) {
+        _wObservers[i]->OnBringToFrontRequest(this);
+    }
+}
+

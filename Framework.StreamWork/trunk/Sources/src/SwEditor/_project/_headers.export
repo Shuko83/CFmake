@@ -1,0 +1,11 @@
+BaseDir=..
+ComponentListModel.h
+ISwEditorGraphicItem.h
+ISwEditorGraphicScene.h
+ISwEditorInterfacesGraphicItemManager.h
+ISwEditorPinGraphicItemManager.h
+ISwEditorStreamNavigation.h
+ISwEditorStreamOperations.h
+ISwEditorStreamsManager.h
+PluginsListModel.h
+SwEditorConstantes.h
