@@ -105,7 +105,7 @@ void SwPropertyPersistentToolbox::SaveProperty(QDomElement & parent_property_nod
 
 
 //-------------------------------------------------------------------------
-void SwPropertyPersistentToolbox::SaveProperty( QDomElement & parent_property_node, QDomDocument &doc, QString propCustomName, ISwProperty * inProperty, QString prefix )
+void SwPropertyPersistentToolbox::SaveProperty( QDomElement & parent_property_node, QDomDocument &doc, QString propCustomName, ISwProperty * inProperty, QString prefix, QVariant overWriteValue )
 {
 	QVariant var;
 	QDomElement elt;
@@ -123,6 +123,9 @@ void SwPropertyPersistentToolbox::SaveProperty( QDomElement & parent_property_no
 	//Si la propriété existe
 	if (inProperty)
 		var = inProperty->GetValue();
+
+	if (overWriteValue.isValid())
+		var = overWriteValue;
 
 	// Récupératin de la valeur de la property
 	createProperty(parent_property_node, doc, inProperty, elt, var);
@@ -424,7 +427,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 	QPoint p;
 	QSize s;
 	QRect r;
-	bool valueSetted = true;
+	bool valueSetted = false;
 
 	//----------------------------------------------------------
 	// Gestion des types convertible en QString (et inversement)
@@ -446,6 +449,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 			if (tmp.convert(var.type())) 
 			{
 				inProperty->SetValue(tmp, true);
+				valueSetted = true;
 				return;
 			}
 		} else 
@@ -461,6 +465,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 				if (tmp.convert(var.type())) 
 				{
 					inProperty->SetValue(tmp, true);   
+					valueSetted = true;
 					return;
 				}
 			}
@@ -484,6 +489,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 			p.setX(property_node.attribute(CL_XML_ATT_POINT_X).toInt());
 			p.setY(property_node.attribute(CL_XML_ATT_POINT_Y).toInt());
 			inProperty->SetValue(p, true);
+			valueSetted = true;
 		}
 		break;
 	case QVariant::Size:
@@ -492,6 +498,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 			s.setWidth(property_node.attribute(CL_XML_ATT_SIZE_WIDTH).toInt());
 			s.setHeight(property_node.attribute(CL_XML_ATT_SIZE_HEIGHT).toInt());
 			inProperty->SetValue(s, true);
+			valueSetted = true;
 		}
 		break;
 	case QVariant::Rect:
@@ -503,6 +510,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 			r.setWidth(property_node.attribute(CL_XML_ATT_SIZE_WIDTH).toInt());
 			r.setHeight(property_node.attribute(CL_XML_ATT_SIZE_HEIGHT).toInt());
 			inProperty->SetValue(r, true);
+			valueSetted = true;
 		}
 		break;
 	case QVariant::ByteArray:
@@ -512,7 +520,8 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		if (node.isText()) 
 		{
 			QByteArray ba=SwBuffer_Toolbox::ConvertStringIntoByteArrayInto(node.nodeValue());
-			inProperty->SetValue(QVariant(ba), true); 
+			inProperty->SetValue(QVariant(ba), true);
+			valueSetted = true;
 		}
 		break;
 	case QVariant::SizePolicy:
@@ -526,6 +535,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 			{
 				tmp.setValue(val_to_get);
 				inProperty->SetValue(tmp, true);
+				valueSetted = true;
 			}    
 		}
 		break;
@@ -552,6 +562,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 
 			tmp.setValue (color);
 			inProperty->SetValue(tmp, true);
+			valueSetted = true;
 		}
 		break;
 	default:
@@ -653,10 +664,9 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 	}
 	else
 	{
-		valueSetted = false;
 		//inProperty->SetValue(var); 
 	}
 
 	if (!valueSetted)
-		qDebug() << "ERROR : Property " << inProperty->GetName() << " cannot be setted because QVariant Type is unknown " << var.type();
+		qDebug() << "ERROR in SwPropertyPersistentToolbox::setProperty() : " << inProperty->GetName() << " cannot be setted because QVariant Type is unknown " << var.type();
 }

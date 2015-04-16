@@ -49,7 +49,7 @@ namespace StreamWork
             \param[in] propriété
             \param[in] "prefix" prefix de la conf pour la sauvegarde
             */
-	        static void SaveProperty(QDomElement & parent_property_node, QDomDocument &doc, QString propCustomName, ISwProperty * property, QString prefix);
+			static void SaveProperty(QDomElement & parent_property_node, QDomDocument &doc, QString propCustomName, ISwProperty * property, QString prefix, QVariant overWriteValue = QVariant());
 
 	        /*! \brief methode permettant de sauver une propriété  via une ISwProperties
             \param[in] "parent_property_nod" noeud parent
