@@ -3,6 +3,7 @@
     <Dependencies>
         <Artifact name="QsException"/>
         <Artifact name="AlertManager"/>
+		 <Artifact name="RefPtr"/>
         <Artifact name="SwCore"/>
         <Artifact name="SwExecution"/>
     </Dependencies>
