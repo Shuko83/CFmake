@@ -19,7 +19,6 @@
 #include "QInterestAreaTreeModel.h"
 #include "PropertiesWidget.h"
 #include "ISelectionObserver.h"
-#include "EditDoc.h"
 
 /**
 @class MainWindow

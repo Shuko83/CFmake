@@ -1,8 +1,6 @@
 #include "PluginOverview.h"
 #include "PluginsListModel.h"
 #include <QScrollBar>
-#include "EditDoc.h"
-
 #if QT_VERSION >= 0x050000
 #include <QtWidgets>
 #else
@@ -22,7 +20,6 @@ PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette grap
 	: QWidget(parent)
 {
 	ui.setupUi(this);
-	_doc = new EditDoc();
 
 	ui.LE_search->setText(DefaultSearchText);
 
@@ -50,9 +47,6 @@ PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette grap
         ui.lviewComponents->horizontalScrollBar()->setStyleSheet(ScrollBarHorizontalStyle);
     }
 
-	ui.lviewComponents->connect(ui.lviewComponents->selectionModel(),SIGNAL( currentChanged(const QModelIndex &, const QModelIndex &)),_doc,SLOT(onSelectedComponentChanged(const QModelIndex&)));
-	ui.lviewComponents->connect(ui.lviewComponents,SIGNAL(  clicked ( const QModelIndex &)),_doc,SLOT(onSelectedComponentChanged(const QModelIndex&)));
-
 	setPalette(graphPalette);
 	setAutoFillBackground(true);
 	ui.LE_search->setPalette(graphPalette);
@@ -65,7 +59,7 @@ PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette grap
 	_pal = graphPalette;
 
 
-	//QObject::connect(&_futureWatcher, SIGNAL(finished()), this, SLOT(setCompleter()));
+	// QObject::connect(&_futureWatcher, SIGNAL(finished()), this, SLOT(setCompleter()));
 }
 
 PluginOverview::~PluginOverview()
@@ -107,21 +101,37 @@ void PluginOverview::doSearch( const QString&text )
 		return;
 	}
 
-	QStringList keywords = text.split(",",QString::SkipEmptyParts);
-	QStringList::Iterator it = keywords.begin();
-
-	//On trimmed les mots clés et on ignore les mots clés inférieur a 3 lettres
-	for(it ; it != keywords.end() ; )
-	{
-		*it = it->trimmed();
-		if(it->size() < 3)
-			it = keywords.erase(it);
-		else
-			it++;
-	}
+	// Pour recherche par mot clé
+// 	QStringList keywords = text.split(",",QString::SkipEmptyParts);
+// 	QStringList::Iterator it = keywords.begin();
+// 
+// 	//On trimmed les mots clés et on ignore les mots clés inférieur a 3 lettres
+// 	for(it ; it != keywords.end() ; )
+// 	{
+// 		*it = it->trimmed();
+// 		if(it->size() < 3)
+// 			it = keywords.erase(it);
+// 		else
+// 			it++;
+// 	}
 
 	//Find the text on the database
-	QStringList componentToDisplay =  _doc->getListOfComponentName(keywords);
+	// A mettre dans un thread si latence trop importante
+	QStringList componentToDisplay;
+
+	QMap<QString, StreamWork::SwCore::SwPluginFactory_Class *> * allPlugins = SW_APP->ComponentsBank().GetAllPlugins();
+
+	QMapIterator<QString, StreamWork::SwCore::SwPluginFactory_Class *> itPlugins(*allPlugins);
+	while (itPlugins.hasNext())
+	{
+		itPlugins.next();
+		QSet<QString> components = itPlugins.value()->GetComponentsList();
+		for (QString componentName : components)
+		{
+			if (componentName.contains(text, Qt::CaseInsensitive))
+				componentToDisplay << componentName;
+		}
+	}
 
 	_componentModel->manageList(componentToDisplay);
 
@@ -131,10 +141,10 @@ void PluginOverview::doSearch( const QString&text )
 	ui.splitter->setSizes(sizeWid);
 }
 
-QStringList doCompleterFill(EditDoc *_doc)
-{
-	return _doc->getSearchStringList();
-}
+// QStringList doCompleterFill()
+// {
+//  	return QStringList(); // resultat pour la completion
+// }
 
 //-------------------------------------------------------------------------
 bool PluginOverview::eventFilter( QObject *obj, QEvent *event )
@@ -153,8 +163,8 @@ bool PluginOverview::eventFilter( QObject *obj, QEvent *event )
 			if(ui.LE_search->text() == DefaultSearchText)
 				ui.LE_search->setText("");
 
-			//Permet de faire la requete de recherche de tous les composants qu'une fois au click
-			_futureWatcher.setFuture(QtConcurrent::run(doCompleterFill,_doc));
+			// Permet de faire la requete de recherche de tous les composants qu'une fois au click
+			// _futureWatcher.setFuture(QtConcurrent::run(doCompleterFill));
 		}
 	}
 

@@ -40,13 +40,6 @@ WidgetFactory * WidgetFactory::getInstance() {
     return _instance;
 }
 
-
-QWidget * WidgetFactory::buildDocBlankView()
-{
-	return new EditDoc();
-}
-
-
 /** @brief Construction widget representant les composants disponibles*/
 QWidget * WidgetFactory::buildPluginsBankView(bool isGraphViewHosted) {
     

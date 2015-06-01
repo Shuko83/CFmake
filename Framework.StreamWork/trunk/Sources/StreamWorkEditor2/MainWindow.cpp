@@ -114,14 +114,6 @@ MainWindow::MainWindow(bool loadStream /*= true*/):QMainWindow(),_streamControle
 	pdock->setWidget(WidgetFactory::getInstance()->buildPluginsBankView(true));
 	addDockWidget(Qt::RightDockWidgetArea, pdock);
 
-	QDockWidget *ddock = new QDockWidget(tr("Doc"), this);
-	ddock->setObjectName("DockDoc");
-	ddock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-	QWidget * docWid = WidgetFactory::getInstance()->buildDocBlankView();
-	connect(this,SIGNAL(selection(QString&,QString&)),docWid,SLOT(onSelection(QString&,QString&)));
-	ddock->setWidget(docWid);
-	addDockWidget(Qt::RightDockWidgetArea, ddock);
-
 	QDockWidget * stdock = new QDockWidget(tr("Stream Tree"), this);
 	stdock->setObjectName("DockStreamTree");
 	stdock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);

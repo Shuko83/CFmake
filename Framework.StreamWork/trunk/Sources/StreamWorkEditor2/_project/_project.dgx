@@ -6,7 +6,6 @@
         <Artifact name="QsException"/>
         <Artifact name="SwCore"/>
         <Artifact name="SwGui"/>
-        <Artifact name="SwDoc"/>
         <Artifact name="SwModel2"/>
         <Artifact name="SwExecution"/>
         <Artifact name="SwEditor"/>

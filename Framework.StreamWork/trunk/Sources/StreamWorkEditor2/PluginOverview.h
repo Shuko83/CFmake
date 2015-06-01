@@ -97,13 +97,12 @@ public slots:
 	/**
 	 * @brief    : Au cas ou on veut remettre un completer mais pour le moment on le fait pas
 	 */
-	//void setCompleter();
+	// void setCompleter();
 
 private:
 	Ui::PluginOverview ui;
-	EditDoc* _doc;
 	QPalette _pal;
-	QFutureWatcher<QStringList> _futureWatcher;
+	// QFutureWatcher<QStringList> _futureWatcher;
 	ComponentListModel * _componentModel;
 
 };
