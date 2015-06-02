@@ -9,9 +9,10 @@ PROJECTS_PATH = $$PWD/../../../..
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
-QT += core xml widgets
+QT += core xml 
+greaterThan( QT_MAJOR_VERSION, 4 ): QT += widgets
 
-CONFIG += StdAfx.h
+
 PRECOMPILED_HEADER = StdAfx.h
 win32-msvc* {
 PRECOMPILED_SOURCE = StdAfx.cpp
@@ -58,7 +59,10 @@ SOURCES += *.cpp \
 		Tools/Log/*.cpp\
 		Types/*.cpp\
 		Types/UserType/*.cpp\
-    
+
+HEADERS -= 	StdAfx.h	
+SOURCES -= StdAfx.cpp \
+
 FORMS +=
 
 RESOURCES += _resources/SwCoreRsc.qrc
