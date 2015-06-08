@@ -49,7 +49,7 @@ PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette grap
 
 	setPalette(graphPalette);
 	setAutoFillBackground(true);
-	ui.LE_search->setPalette(graphPalette);
+	//ui.LE_search->setPalette(graphPalette);
 
 	//Connect
 	connect(ui.PB_clear,SIGNAL(clicked()),this,SLOT(resetSearchText()));
