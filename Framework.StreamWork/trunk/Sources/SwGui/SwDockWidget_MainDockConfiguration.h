@@ -2,14 +2,13 @@
 #define SWDOCKWIDGET_MAINDOCKCONFIGURATION_H
 
 #include <QMenu>
-#include <QRadioButton>
 #include <QPushButton>
 #include <QGridLayout>
 
 class SwDockWidget_MainDockConfiguration : public QMenu
 {
-	Q_OBJECT
-		Q_ENUMS(ConfigurationIndex);
+	Q_OBJECT;
+	Q_ENUMS(ConfigurationIndex);
 
 public :
 	SwDockWidget_MainDockConfiguration(QString title, QWidget * parent = 0);
@@ -52,12 +51,12 @@ protected:
 	virtual void hideEvent(QHideEvent * event);
 
 private:
-	QRadioButton * addConfiguration(QString iconPath, ConfigurationIndex index = BLTR, bool visible = true);
+	QPushButton * addConfiguration(QString iconPath, ConfigurationIndex index = BLTR, bool visible = true);
 	SwDockWidget_MainDockConfiguration::ConfigurationIndex getExistingConf(QString conf, int nbDocks);
 	QPushButton * addSecondaryConfOption(QString iconPath);
 
 private:
-	QMap<QRadioButton*, ConfigurationIndex> _listBtn;
+	QMap<QPushButton*, ConfigurationIndex> _listBtn;
 	ConfigurationIndex _activeConf;
 	QGridLayout * _layout;
 	QPushButton * _btnMore;

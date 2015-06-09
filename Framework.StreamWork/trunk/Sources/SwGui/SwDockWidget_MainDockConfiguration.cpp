@@ -19,23 +19,23 @@ SwDockWidget_MainDockConfiguration::SwDockWidget_MainDockConfiguration(QString t
 	int num = 0;
 	
 	//Ajout des configurations principales
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/rltb.png", RLTB));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/trlb.png", TRLB));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/brlt.png", BRLT));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/tbrl.png", TBRL));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/rltb", RLTB));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/trlb", TRLB));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/brlt", BRLT));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/tbrl", TBRL));
 	//Ajout des configurations secondaires, masquees par defaut
 	_layout->addWidget(addSecondaryConfOption(":/Widget/expandDock"), 1, 3);
 
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/bltr.png", BLTR, false));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/brtl.png", BRTL, false));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/tlbr.png", TLBR, false));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/trbl.png", TRBL, false));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/lbrt.png", LBRT, false));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/rblt.png", RBLT, false));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/ltrb.png", LTRB, false));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/rtlb.png", RTLB, false));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/rtbl.png", RTBL, false));
-	ADDINLAYOUT(addConfiguration(":/DockWidget/images/DockWidget/ltbr.png", LTBR, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/bltr", BLTR, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/brtl", BRTL, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/tlbr", TLBR, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/trbl", TRBL, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/lbrt", LBRT, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/rblt", RBLT, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/ltrb", LTRB, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/rtlb", RTLB, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/rtbl", RTBL, false));
+	ADDINLAYOUT(addConfiguration(":/DockWidget/ltbr", LTBR, false));
 }
 
 //-----------------------------------------------------------------------------
@@ -45,14 +45,23 @@ SwDockWidget_MainDockConfiguration::~SwDockWidget_MainDockConfiguration()
 }
 
 //-----------------------------------------------------------------------------
-QRadioButton * SwDockWidget_MainDockConfiguration::addConfiguration(QString iconPath, ConfigurationIndex index, bool visible)
+QPushButton * SwDockWidget_MainDockConfiguration::addConfiguration(QString iconPath, ConfigurationIndex index, bool visible)
 {
 	//Creation du bouton
-	QRadioButton * button = new QRadioButton(this);
+	QSize size = QImage(iconPath + "_on").size();
+	QPushButton * button = new QPushButton(this);
 	button->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-	button->setIcon(QIcon(iconPath));
-	button->setIconSize(QSize(40,40));
+	QIcon ico = QIcon();
+	ico.addPixmap(QPixmap(iconPath + "_on"), QIcon::Selected, QIcon::On);
+	ico.addPixmap(QPixmap(iconPath + "_off"), QIcon::Selected, QIcon::Off);
+	button->setIcon(ico);
+	button->setIconSize(size);
+	button->resize(size);
+	button->setFlat(true);
 	button->setEnabled(true);
+	button->setCheckable(true);
+	button->setChecked(false);
+	button->setAutoExclusive(true);
 	button->setVisible(visible);
 	connect(button, SIGNAL(toggled(bool)), this, SLOT(updateConf(bool)));
 	_listBtn.insert(button, index);
@@ -77,7 +86,7 @@ QPushButton * SwDockWidget_MainDockConfiguration::addSecondaryConfOption(QString
 //-----------------------------------------------------------------------------
 void SwDockWidget_MainDockConfiguration::updateConf(bool state)
 {
-	QRadioButton * button = qobject_cast<QRadioButton*>(this->sender());
+	QPushButton * button = qobject_cast<QPushButton*>(this->sender());
 
 	if (button && state && _listBtn.contains(button))
 	{
@@ -203,7 +212,7 @@ void SwDockWidget_MainDockConfiguration::showMore()
 	_btnMore->hide();
 
 	//Affichage des configurations supplementaires
-	QMapIterator<QRadioButton *,ConfigurationIndex> it(_listBtn);
+	QMapIterator<QPushButton *,ConfigurationIndex> it(_listBtn);
 	while (it.hasNext()) 
 	{
 		it.next();
@@ -215,7 +224,7 @@ void SwDockWidget_MainDockConfiguration::showMore()
 void SwDockWidget_MainDockConfiguration::hideEvent(QHideEvent *)
 {
 	//Masquage des configurations supplementaires
-	QMapIterator<QRadioButton *,ConfigurationIndex> it(_listBtn);
+	QMapIterator<QPushButton *,ConfigurationIndex> it(_listBtn);
 	while (it.hasNext()) 
 	{
 		it.next();
