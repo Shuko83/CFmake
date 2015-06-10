@@ -55,11 +55,11 @@ SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar
 	_secondScreenMainDock->setCanBePin(false);
 	_secondScreenMainDock->setAlwaysOnTop(false);
 
-	//Fichier de configuration par defaut mis lors du load
+	_quitOnClose = false;
 
 	//Creation d'un widget vide provisoire
 	_emptyWidget = new QWidget(this);
-	setMainWidget(_emptyWidget);
+	setMainWidget(_emptyWidget, _quitOnClose);
 
 	//Initialisation
 	init();
@@ -87,7 +87,7 @@ void SwDockWidget_MainArea::init()
 
 //-----------------------------------------------------------------------------
 //Enregistrement du widget principal
-void SwDockWidget_MainArea::setMainWidget(QWidget * widget)
+void SwDockWidget_MainArea::setMainWidget(QWidget * widget, bool quitOnClose)
 {
 	if (widget)
 	{
@@ -122,6 +122,8 @@ void SwDockWidget_MainArea::setMainWidget(QWidget * widget)
 		//Mise a jour du widget dans les toolbar
 		SwDockWidget_ToolBarWindow::updateMainWidget();
 	}
+
+	_quitOnClose = quitOnClose;
 }
 
 //-----------------------------------------------------------------------------
@@ -541,6 +543,9 @@ bool SwDockWidget_MainArea::close()
 			dock->close();
 		}
 	}
+
+	if (_quitOnClose)
+		qApp->quit();	
 
 	return true;
 }

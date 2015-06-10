@@ -81,6 +81,8 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow(): SwAssistedComponent()
 	APP_PATH	= SwApplication::GetInstance()->GetApplicationDirPath() + QDir::separator();
 
 	_relativePath = "AppData\\Roaming\\diginext\\Starlinx\\Configuration\\dockParameters.xml";
+	
+	_quitOnClose = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -628,7 +630,7 @@ void _SwGuiCompMainWindow::interfaceAvailable(QString interfaceName)
 	{
 		ISwWidget * widget = getInterface<ISwWidget>(interfaceName);
 		if (widget && _mainWindow)
-			_mainWindow->setMainWidget(&(widget->GetWidget()));
+			_mainWindow->setMainWidget(&(widget->GetWidget()), _quitOnClose);
 		return;
 	}
 
@@ -724,7 +726,7 @@ void _SwGuiCompMainWindow::interfaceUnavailable(QString interfaceName)
 	{
 		ISwWidget * widget = getInterface<ISwWidget>(interfaceName);
 		if (widget && _mainWindow)
-			_mainWindow->setMainWidget(0);
+			_mainWindow->setMainWidget(0, _quitOnClose);
 		return;
 	}
 
@@ -915,4 +917,16 @@ QString _SwGuiCompMainWindow::getRelativePath()
 void _SwGuiCompMainWindow::setRelativePath( QString val )
 {
 	_relativePath = val;
+}
+
+//-------------------------------------------------------------------------
+bool _SwGuiCompMainWindow::getQuitOnClose()
+{
+	return _quitOnClose;
+}
+
+//-------------------------------------------------------------------------
+void _SwGuiCompMainWindow::setQuitOnClose( bool val )
+{
+	_quitOnClose = val;
 }

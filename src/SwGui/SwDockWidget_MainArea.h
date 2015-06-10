@@ -37,7 +37,7 @@ public:
 	void removeMenu(QString menu);
 
 	//Enregistrement du widget principal
-	void setMainWidget(QWidget * widget);
+	void setMainWidget(QWidget * widget, bool quitOnClose);
 	QWidget * getMainWidget();
 
 	//Ancrage d'un dock
@@ -175,6 +175,8 @@ private:
 	//Periode de sauvegarde automatique des parametres
 	QTimer * _saveTimer;
 	unsigned int _saveAutoPeriod;
+
+	bool _quitOnClose;
 };
 
 #endif

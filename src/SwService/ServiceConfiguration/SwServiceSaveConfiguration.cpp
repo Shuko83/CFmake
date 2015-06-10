@@ -45,7 +45,7 @@ const QString CFM_XML_PROPERTY_NAME		= "pname";
 //-----------------------------------------------------------------------
 SwServiceSaveConfiguration::SwServiceSaveConfiguration()
 {
-
+	connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(onQuit()));
 }
 
 //-----------------------------------------------------------------------
@@ -1521,6 +1521,18 @@ void SwServiceSaveConfiguration::notifyServiceListeners(QString confName, bool p
 		// On notifie uniquement les Listeners concernés par la confName
 		if(_configurationServiceListeners.at(i)->getListenerName() == confName)
 			_configurationServiceListeners.at(i)->notifyConfiguration(confName, profilesNotif);
+	}
+}
+
+//-------------------------------------------------------------------------
+void SwServiceSaveConfiguration::onQuit()
+{
+	QListIterator<QString> it(_autoSaveConfs);
+
+	while (it.hasNext())
+	{
+		unregisterConfSaver(it.next());
+		
 	}
 }
 

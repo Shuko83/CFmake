@@ -180,9 +180,45 @@
 			<File
 				RelativePath="StdAfx.h" />
 			<File
-				RelativePath="SwServiceSaveConfiguration.h" />
+				RelativePath="SwServiceSaveConfiguration.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwServiceSaveConfiguration.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Component\Services&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\Properties&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\SwCore&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwServiceSaveConfiguration.h -o GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp"
+						Description="MOC SwServiceSaveConfiguration.h"
+						Outputs="GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwServiceSaveConfiguration.h"
+						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Component\Services&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\Properties&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\SwCore&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwServiceSaveConfiguration.h -o GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp"
+						Description="MOC SwServiceSaveConfiguration.h"
+						Outputs="GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp"
+						Path="c:\Qt\4.7.1\bin" />
+				</FileConfiguration>
+			</File>
 			<File
 				RelativePath="_SwServiceConfigurationPluginFactory_Class.h" />
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			<Filter
+				Name="GeneratedFiles"
+				Filter="">
+				<Filter
+					Name="moc"
+					Filter="">
+					<File
+						RelativePath="GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp" />
+				</Filter>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

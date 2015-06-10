@@ -31,13 +31,13 @@ SwDockWidget_MainWindow::~SwDockWidget_MainWindow()
 }
 
 //-----------------------------------------------------------------------------
-void SwDockWidget_MainWindow::setMainWidget(QWidget * widget)
+void SwDockWidget_MainWindow::setMainWidget(QWidget * widget, bool quitOnClose)
 {
 	if (_mainArea)
 	{
 		SwDockWidget_MainArea * _mainDock = qobject_cast<SwDockWidget_MainArea*>(_mainArea);
 		if (_mainDock)
-			_mainDock->setMainWidget(widget);
+			_mainDock->setMainWidget(widget, quitOnClose);
 	}
 }
 

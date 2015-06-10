@@ -22,10 +22,12 @@ namespace StreamWork
         /**
           @class SwServiceSaveConfiguration
         */
-        class SwServiceSaveConfiguration :  public ISwAdminConfiguration, 
+        class SwServiceSaveConfiguration :  public QObject,
+											public ISwAdminConfiguration, 
 											public ISwServiceConfiguration ,
 											public ISwConfPropertiesObserver
         {
+			Q_OBJECT
         public:
 
             /** @brief Constructor */
@@ -342,6 +344,8 @@ namespace StreamWork
 			*/
 			void notifyServiceListeners(QString confName, bool profilesNotif);
 
+			public slots:
+				void onQuit();
 		};
     }
 }
