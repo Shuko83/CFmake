@@ -279,6 +279,7 @@ void _SwExecutor::Initialize(double start_time,ISwExecution_Service * executor) 
                 executable->Initialize(start_time,executor); 
             else 
                 executable->Initialize(SwTime_ToolBox::GetTime(),executor); 
+
             executable->setRunning(true);
         }
     }

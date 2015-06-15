@@ -139,9 +139,6 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
 
 //
 
-
-
-
 /*! \brief Constructeur */
 _SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel() {
     _tree_items=NULL;

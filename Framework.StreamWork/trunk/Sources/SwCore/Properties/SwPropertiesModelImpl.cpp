@@ -582,6 +582,13 @@ QString SwPropertiesModelImpl::displayText(const QVariant &value)
 			.arg(rect.x()).arg(rect.y())
 			.arg(rect.width()).arg(rect.height());
 	}
+	case QVariant::RectF:
+	{
+		QRectF rect = value.toRectF();
+		return QString( "(%1,%2,%3,%4)" )
+			.arg( rect.x() ).arg( rect.y() )
+			.arg( rect.width() ).arg( rect.height() );
+	}
 	case QVariant::Size:
 	{
 		QSize size = value.toSize();
@@ -644,6 +651,7 @@ bool SwPropertiesModelImpl::isSupportedType(QVariant & val)
 	case QVariant::LongLong:
 	case QVariant::Point:
 	case QVariant::Rect:
+	case QVariant::RectF:
 	case QVariant::Size:
 	case QVariant::String:
 	case QVariant::StringList:

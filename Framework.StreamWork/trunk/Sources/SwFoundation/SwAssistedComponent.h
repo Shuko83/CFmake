@@ -59,13 +59,14 @@ namespace StreamWork {
         @brief Implementation avance d'un composant par defaut pour les assistés
         @ingroup SwCoreGrp
        */
-        class BUILD_SWFOUNDATION SwAssistedComponent: 
+		class BUILD_SWFOUNDATION SwAssistedComponent :
 			public SwComponent_Class,
 			virtual public ISwInterfaces_ConsumerObserver,
 			virtual public ISwPin_Listener,
 			virtual public ISwShortcut,
 			virtual public ISwPersistent,
-			virtual public ISwPersistentConfigurable
+			virtual public ISwPersistentConfigurable,
+			virtual public ISwServicesManager_Listener
 		{
             Q_OBJECT
 			Q_PROPERTY(bool SwAssistedComponent_isActive READ isActive WRITE setActive)
@@ -475,6 +476,27 @@ namespace StreamWork {
 			 */
 			virtual void interfaceUnavailable(QString interfaceName);
 
+			
+			template<typename U, typename T = ISwService> void RegisterToService( QString name, U* thisPointer, void (U::*callback)(T*) )
+			{
+				if ( !_allreadyListenerOfService )
+				{
+					_allreadyListenerOfService = true;
+					SW_APP->AddServicesManagerObserver( this );
+				}
+
+
+				_mapServiceWithCallBack.insert( name, [=]( ISwService* service )->void {
+
+					auto castS = dynamic_cast<T*>(service);
+					if ( castS )
+						(thisPointer->*callback)(castS);
+				} );
+
+				StreamWork::SwCore::ISwService * service = SW_APP->QueryService( name );
+				if ( service )
+					_mapServiceWithCallBack[name]( service );
+			}
 
 	
 protected:
@@ -539,6 +561,24 @@ protected:
 			quint64 getHistoryIndex();
 	
 private:
+
+			//---------------------------------------------------------------------
+			// Interface ISwPersistentConfigurable
+			//---------------------------------------------------------------------         
+
+			/**
+			 * @brief	: Quand un service est ajouté
+			 *
+			 * @param	: ISwService * service - pointeur sur le service
+			 */
+			void OnRegisterService( ISwService * service );
+			/**
+			 * @brief	: Quand un service est supprimé
+			 *
+			 * @param	: ISwService * service - Pointeur sur le service
+			 */
+			void OnUnregisterService( ISwService * service );
+
 
             /**
              * @brief    : evenement sur changement d'activation
@@ -646,7 +686,10 @@ private:
 			QMap<QString,void **> _mapIConsummed;
 
 			/* hash des interfaces consommées vers les methode de disponibilité*/
-			QHash<QString, std::function<void(CALLBACK_EVENT)>> _mapIConsummedWithCallBack;
+			QHash<QString, std::function<void( CALLBACK_EVENT )>> _mapIConsummedWithCallBack;
+
+			QHash<QString, std::function<void(ISwService*)>> _mapServiceWithCallBack;
+			bool _allreadyListenerOfService;
 
 			/* Nom du composant pour les raccourcis*/
 			QString _componentNameShortcut;

@@ -199,7 +199,8 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 	QDomCDATASection cdata_node;
 	QPoint p;
 	QSize s;
-	QRect r;
+	QRect rr;
+	QRectF rrF;
 	bool save_done=false;
 	QString name = "";
 
@@ -264,11 +265,19 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 				save_done=true;
 				break;
 			case QVariant::Rect:
-				r=var.toRect();
-				elt.setAttribute(CL_XML_ATT_POINT_X,r.x());
-				elt.setAttribute(CL_XML_ATT_POINT_Y,r.y());
-				elt.setAttribute(CL_XML_ATT_SIZE_WIDTH,r.width());
-				elt.setAttribute(CL_XML_ATT_SIZE_HEIGHT,r.height());
+				rr = var.toRect();
+				elt.setAttribute( CL_XML_ATT_POINT_X, rr.x() );
+				elt.setAttribute( CL_XML_ATT_POINT_Y, rr.y() );
+				elt.setAttribute( CL_XML_ATT_SIZE_WIDTH, rr.width() );
+				elt.setAttribute( CL_XML_ATT_SIZE_HEIGHT, rr.height() );
+				save_done = true;
+				break;
+			case QVariant::RectF:
+				rrF = var.toRectF();
+				elt.setAttribute( CL_XML_ATT_POINT_X, rrF.x() );
+				elt.setAttribute( CL_XML_ATT_POINT_Y, rrF.y() );
+				elt.setAttribute( CL_XML_ATT_SIZE_WIDTH, rrF.width() );
+				elt.setAttribute( CL_XML_ATT_SIZE_HEIGHT, rrF.height() );
 				save_done=true;
 				break;
 			case QVariant::ByteArray:
@@ -427,6 +436,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 	QPoint p;
 	QSize s;
 	QRect r;
+	QRectF rF;
 	bool valueSetted = false;
 
 	//----------------------------------------------------------
@@ -502,14 +512,25 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		}
 		break;
 	case QVariant::Rect:
+		if ( property_node.hasAttribute( CL_XML_ATT_POINT_X ) && property_node.hasAttribute( CL_XML_ATT_POINT_Y ) &&
+			 property_node.hasAttribute( CL_XML_ATT_SIZE_WIDTH ) && property_node.hasAttribute( CL_XML_ATT_SIZE_HEIGHT ) )
+		{
+			r.setX( property_node.attribute( CL_XML_ATT_POINT_X ).toInt() );
+			r.setY( property_node.attribute( CL_XML_ATT_POINT_Y ).toInt() );
+			r.setWidth( property_node.attribute( CL_XML_ATT_SIZE_WIDTH ).toInt() );
+			r.setHeight( property_node.attribute( CL_XML_ATT_SIZE_HEIGHT ).toInt() );
+			inProperty->SetValue( r, true );
+			valueSetted = true;
+		}
+	case QVariant::RectF:
 		if (property_node.hasAttribute(CL_XML_ATT_POINT_X) && property_node.hasAttribute(CL_XML_ATT_POINT_Y) &&
 			property_node.hasAttribute(CL_XML_ATT_SIZE_WIDTH) && property_node.hasAttribute(CL_XML_ATT_SIZE_HEIGHT)) 
 		{
-			r.setX(property_node.attribute(CL_XML_ATT_POINT_X).toInt());
-			r.setY(property_node.attribute(CL_XML_ATT_POINT_Y).toInt());
-			r.setWidth(property_node.attribute(CL_XML_ATT_SIZE_WIDTH).toInt());
-			r.setHeight(property_node.attribute(CL_XML_ATT_SIZE_HEIGHT).toInt());
-			inProperty->SetValue(r, true);
+			rF.setX( property_node.attribute( CL_XML_ATT_POINT_X ).toDouble() );
+			rF.setY( property_node.attribute( CL_XML_ATT_POINT_Y ).toDouble() );
+			rF.setWidth( property_node.attribute( CL_XML_ATT_SIZE_WIDTH ).toDouble() );
+			rF.setHeight( property_node.attribute( CL_XML_ATT_SIZE_HEIGHT ).toDouble() );
+			inProperty->SetValue( rF, true );
 			valueSetted = true;
 		}
 		break;

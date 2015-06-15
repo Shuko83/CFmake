@@ -13,10 +13,9 @@
 #include <QtConcurrentRun>
 #endif
 
-//#include "..\SwDoc\MultiTagCompleter.h"
 
-
-PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette graphPalette,QWidget *parent)
+//-----------------------------------------------------------------------
+PluginOverview::PluginOverview(bool isGraphViewHosted, QPalette graphPalette, QWidget *parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
@@ -57,11 +56,9 @@ PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette grap
 	
 	ui.LE_search->installEventFilter(this);
 	_pal = graphPalette;
-
-
-	// QObject::connect(&_futureWatcher, SIGNAL(finished()), this, SLOT(setCompleter()));
 }
 
+//-------------------------------------------------------------------------
 PluginOverview::~PluginOverview()
 {
 
@@ -101,20 +98,6 @@ void PluginOverview::doSearch( const QString&text )
 		return;
 	}
 
-	// Pour recherche par mot clé
-// 	QStringList keywords = text.split(",",QString::SkipEmptyParts);
-// 	QStringList::Iterator it = keywords.begin();
-// 
-// 	//On trimmed les mots clés et on ignore les mots clés inférieur a 3 lettres
-// 	for(it ; it != keywords.end() ; )
-// 	{
-// 		*it = it->trimmed();
-// 		if(it->size() < 3)
-// 			it = keywords.erase(it);
-// 		else
-// 			it++;
-// 	}
-
 	//Find the text on the database
 	// A mettre dans un thread si latence trop importante
 	QStringList componentToDisplay;
@@ -141,11 +124,6 @@ void PluginOverview::doSearch( const QString&text )
 	ui.splitter->setSizes(sizeWid);
 }
 
-// QStringList doCompleterFill()
-// {
-//  	return QStringList(); // resultat pour la completion
-// }
-
 //-------------------------------------------------------------------------
 bool PluginOverview::eventFilter( QObject *obj, QEvent *event )
 {
@@ -162,25 +140,8 @@ bool PluginOverview::eventFilter( QObject *obj, QEvent *event )
 		{
 			if(ui.LE_search->text() == DefaultSearchText)
 				ui.LE_search->setText("");
-
-			// Permet de faire la requete de recherche de tous les composants qu'une fois au click
-			// _futureWatcher.setFuture(QtConcurrent::run(doCompleterFill));
 		}
 	}
 
 	return ret;
 }
-
-//-------------------------------------------------------------------------
-// void PluginOverview::setCompleter()
-// {
-//  	MultiTagCompleter *completer = new MultiTagCompleter(_futureWatcher.result(), this);
-//  	completer->setCaseSensitivity(Qt::CaseInsensitive);
-//  	completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
-//  
-//  	completer->popup()->setPalette(_pal);
-//  	//Make the search and display result to listView
-//  	ui.LE_search->setCompleter(completer);
-//  
-//  	QObject::connect(completer,SIGNAL(activated(const QString&)),this, SLOT(doSearch(const QString&)));
-// }

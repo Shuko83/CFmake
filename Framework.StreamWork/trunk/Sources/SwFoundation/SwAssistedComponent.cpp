@@ -387,6 +387,7 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 
 	_componentNameShortcut		= "ERROR";
 	_disable_service			= false;
+	_allreadyListenerOfService  = false;
 
 	_isExecutable				= false;
 	_isConsumer					= true;
@@ -409,6 +410,12 @@ SwAssistedComponent::~SwAssistedComponent()
 	{
 		unprovideInterface(providedInterfaceName);
 	}
+
+	if (_allreadyListenerOfService )
+		SW_APP->RemoveServicesManagerObserver( this );
+
+	//clear registrer service
+
 
 	//Clear consummed interface
 	/*QStringList tmpList2 = _mapIConsummed.keys();
@@ -680,6 +687,23 @@ ISwProperty* StreamWork::SwFoundation::SwAssistedComponent::getISwProperty( QStr
 
 	return NULL;
 }
+
+//-----------------------------------------------------------------------
+void SwAssistedComponent::OnRegisterService( ISwService * service )
+{
+	auto name = service->GetServiceName();
+	if ( _mapServiceWithCallBack.contains( name ) )
+		_mapServiceWithCallBack[name]( service );
+}
+
+//-----------------------------------------------------------------------
+void SwAssistedComponent::OnUnregisterService( ISwService * service )
+{
+	auto name = service->GetServiceName();
+	if ( _mapServiceWithCallBack.contains( name ) )
+		_mapServiceWithCallBack[name]( service );
+}
+
 
 //-------------------------------------------------------------------------
 void SwAssistedComponent::processCommand( QString name )

@@ -11,7 +11,7 @@ using namespace StreamWork::SwCore;
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
 class SwServiceManager_Helper : public StreamWork::SwCore::ISwServicesManager_Listener
 {
-public :
+public:
 	SwServiceManager_Helper();
 	~SwServiceManager_Helper();
 
@@ -19,7 +19,7 @@ public :
 	void setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)());						// ATTENTION: ne peut être appelée qu'une seule fois
 	void setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(QString serviceName));   // ATTENTION: ne peut être appelée qu'une seule fois
 
-private :
+private:
 	QString _serviceName;
 	SERVICE_TYPE * _service;
 	std::function<void(QString serviceName)> _callback;
@@ -28,8 +28,22 @@ private :
 	void setService(StreamWork::SwCore::ISwService * service);
 
 	virtual void OnRegisterService(StreamWork::SwCore::ISwService * service);
-	virtual void OnUnregisterService(StreamWork::SwCore::ISwService * service);	
+	virtual void OnUnregisterService(StreamWork::SwCore::ISwService * service);
 };
+
+//---------------------------------------------------------------------------------
+template <typename SERVICE_TYPE, typename YOUR_CLASS>
+SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::SwServiceManager_Helper()
+{
+
+}
+
+//---------------------------------------------------------------------------------
+template <typename SERVICE_TYPE, typename YOUR_CLASS>
+SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::~SwServiceManager_Helper()
+{
+	SW_APP->RemoveServicesManagerObserver(this);
+}
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
@@ -48,26 +62,20 @@ void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(StreamWork::S
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
-void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::OnUnregisterService(StreamWork::SwCore::ISwService * service)
+void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)())
 {
-	if (service->GetServiceName() == _serviceName)
-		setService(service);
+	_callback = ([&](QString serviceName)->void { (thisPointer->*callback)(); });
+	registerService(serviceName);
 }
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
-void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::OnRegisterService(StreamWork::SwCore::ISwService * service)
+void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(QString serviceName))
 {
-	if (service->GetServiceName() == _serviceName)
-		setService(service);
+	_callback = ([&](QString serviceName)->void { (thisPointer->*callback)(serviceName); });
+	registerService(serviceName);
 }
 
-//---------------------------------------------------------------------------------
-template <typename SERVICE_TYPE, typename YOUR_CLASS>
-SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::~SwServiceManager_Helper()
-{
-	SW_APP->RemoveServicesManagerObserver(this);
-}
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
@@ -84,23 +92,17 @@ void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::registerService(QString 
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
-void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)())
+void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::OnUnregisterService(StreamWork::SwCore::ISwService * service)
 {
-	_callback = ([&](QString serviceName)->void { (thisPointer->*callback)(); });
-	registerService(serviceName);
+	if (service->GetServiceName() == _serviceName)
+		setService(service);
 }
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
-void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(QString serviceName))
+void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::OnRegisterService(StreamWork::SwCore::ISwService * service)
 {
-	_callback = ([&](QString serviceName)->void { (thisPointer->*callback)(serviceName); });
-	registerService(serviceName);
+	if (service->GetServiceName() == _serviceName)
+		setService(service);
 }
 
-//---------------------------------------------------------------------------------
-template <typename SERVICE_TYPE, typename YOUR_CLASS>
-SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::SwServiceManager_Helper()
-{
-
-}

@@ -58,8 +58,9 @@ namespace StreamWork
             mutable QRegExp dateTimeExp;
             mutable QRegExp doubleExp;
             mutable QRegExp pointExp;
-            mutable QRegExp rectExp;
-            mutable QRegExp signedIntegerExp;
+			mutable QRegExp rectExp;
+			mutable QRegExp rectFExp;
+			mutable QRegExp signedIntegerExp;
             mutable QRegExp sizeExp;
             mutable QRegExp timeExp;
             mutable QRegExp uuidExp;

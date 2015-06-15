@@ -207,20 +207,24 @@ void SwLoader_Class::FinalizeUnfinalized() {
     QMap<quint64,ISwFinalizer *>::iterator itd;
 
     it=_finalizations.begin();
-    if (it==_finalizations.end())
-        return;
-    itd=it;
-    do {
-        it++;
-        //Tente la finalization
-        if (itd.value()->Finalize(itd.key())) {
-            //Si ok, on supprime la finalisation
-            _finalizations.erase(itd);
-        }
-        //On passe a la finalization suivante
-        itd=it;  
-    } while (it!=_finalizations.end());
+	if ( it != _finalizations.end() )
+	{
+		itd = it;
+		do
+		{
+			it++;
+			//Tente la finalization
+			if ( itd.value()->Finalize( itd.key() ) )
+			{
+				//Si ok, on supprime la finalisation
+				_finalizations.erase( itd );
+			}
+			//On passe a la finalization suivante
+			itd = it;
+		} while ( it != _finalizations.end() );
 
+	}
+  
 
 	//finalization des ISwOwnerService :
 	QMap<quint64,ISwFinalizer *>::const_iterator cit = _finalizations2.constBegin();
