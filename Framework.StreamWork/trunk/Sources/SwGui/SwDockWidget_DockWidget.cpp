@@ -132,8 +132,6 @@ void SwDockWidget_DockWidget::setWidget(QWidget * widget)
 	}
 	else
 	{
-		_widget->setParent(NULL);
-
 		//Creation d'un widget vide provisoire
 		_emptyWidget = new QWidget();
 		_widget = _emptyWidget;
