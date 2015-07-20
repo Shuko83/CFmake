@@ -398,7 +398,7 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
     }
     QString path;
     foreach(path,pathList) {
-        AddPath(path,true);
+        AddPath(path);
     }
 
 }
