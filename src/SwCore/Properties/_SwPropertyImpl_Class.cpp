@@ -98,6 +98,11 @@ void _SwPropertyImpl_Class::SetValue (const QVariant & val, bool force /*= false
 			}
 		}
 	}
+	else
+	{
+		_initialValue=val;
+		_hasBeenInitialed=true;
+	}
 }
 
 

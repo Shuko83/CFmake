@@ -47,7 +47,7 @@ void SwNamed_Class::SetName(const QString & new_name) throw(SwException){
     if (!CheckNameValidity(new_name)) 
 	{
         QString msg=QString("Invalid name %1 for instance. The name must check the following pattern \"[A-Za-z_][A-Za-z_0-9]*\"").arg(new_name);
-		qDebug() << " : " << msg;
+		//qDebug() << " : " << msg;
        // LAUNCH_SWEXCEPTION("SwCore",msg)
     }
     _instance_name=new_name;

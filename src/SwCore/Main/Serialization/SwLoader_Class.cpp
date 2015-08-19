@@ -108,6 +108,7 @@ SwComponent_ClassPtr SwLoader_Class::BuildStream(QDomElement & node,SwComponent_
     ISwPersistent * persistent_interface;
     bool use_suggested_name;
 
+
     //Si le neoud est vide alors on renvoie null
     if (node.isNull()) {
         return SwComponent_ClassPtr(0);
@@ -172,24 +173,24 @@ SwComponent_ClassPtr SwLoader_Class::BuildStream(QDomElement & node,SwComponent_
     }
     //Chargement des services du composants
     for(QDomElement service_node = node.firstChildElement(QString(CG_SW_XML_SERVICE_NODE)); !service_node.isNull(); service_node = service_node.nextSiblingElement(QString(CG_SW_XML_SERVICE_NODE)))
-    {
+		{
         if (service_node.hasAttribute(CG_SW_XML_SERVICE_ATT_NAME)) {
-            service_name=service_node.attribute(CG_SW_XML_SERVICE_ATT_NAME);
-            service=component->QueryService(service_name);
+			service_name=service_node.attribute(CG_SW_XML_SERVICE_ATT_NAME);
+			service=component->QueryService(service_name);
             if (service!=NULL) {
-                persistent_interface=dynamic_cast<ISwPersistent *>(service);
+				persistent_interface=dynamic_cast<ISwPersistent *>(service);
                 if (persistent_interface!=NULL) {
-                    persistent_interface->Load(service_node,*((ISwFinalizerManager *)this));   
+					persistent_interface->Load(service_node,*((ISwFinalizerManager *)this));   
                 } else {
-                    SW_APP->Logger().Log(LogLvl_Debug,"At %d,%d unable to load service %s, because he hasn't persistent interface",service_node.lineNumber(),service_node.columnNumber(),service_name.toLatin1().data());
-                }
+					SW_APP->Logger().Log(LogLvl_Debug,"At %d,%d unable to load service %s, because he hasn't persistent interface",service_node.lineNumber(),service_node.columnNumber(),service_name.toLatin1().data());
+				}
             } else {
-                SW_APP->Logger().Log(LogLvl_Debug,"At %d,%d unable to load service %s, because he's indefined",service_node.lineNumber(),service_node.columnNumber(),service_name.toLatin1().data());
-            }
+				SW_APP->Logger().Log(LogLvl_Debug,"At %d,%d unable to load service %s, because he's indefined",service_node.lineNumber(),service_node.columnNumber(),service_name.toLatin1().data());
+			}
         } else {
-            SW_APP->Logger().Log(LogLvl_Debug,"At %d,%d found service with no name",service_node.lineNumber(),service_node.columnNumber());
-        }
-    }
+			SW_APP->Logger().Log(LogLvl_Debug,"At %d,%d found service with no name",service_node.lineNumber(),service_node.columnNumber());
+		}
+	}
     //Chargement des enfants
     for(QDomElement child_node = node.firstChildElement(QString(CG_SW_XML_COMPONENT_NODE)); !child_node.isNull(); child_node = child_node.nextSiblingElement(QString(CG_SW_XML_COMPONENT_NODE)))
     {

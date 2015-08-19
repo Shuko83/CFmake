@@ -278,9 +278,9 @@ SwComponent_Class * SwProperties_Class::GetHostComponent(){
 /*! \brief methode permettant de charger des donnees */
 void SwProperties_Class::Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager) {
     for(QDomElement elt_property = elt.firstChildElement(); !elt_property.isNull(); elt_property = elt_property.nextSiblingElement())
-    {
-        _SwPropertyPersistent_Toolbox::LoadProperty(elt_property,this);
-    }
+	{
+		_SwPropertyPersistent_Toolbox::LoadProperty(elt_property,this);
+	}
 }
 /*! \brief methode permettant de sauver des donnees
 (dans l'ordre d'enregistrement des données - important si des properties sont crées lors du load) */

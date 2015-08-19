@@ -59,7 +59,7 @@ void _SwProvidedInterfaceContainer_Class::ChangeAvailability(bool is_available){
         return;
     for (consumersIt=_consumers.begin();consumersIt!=_consumers.end();consumersIt++) {
         if (is_available) {
-            (*consumersIt)._consumer->ProvideInterface((*consumersIt)._cinterface,_handle);
+			(*consumersIt)._consumer->ProvideInterface((*consumersIt)._cinterface,_handle);
         } else {
             (*consumersIt)._consumer->UnprovideInterface((*consumersIt)._cinterface);
         }
