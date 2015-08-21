@@ -545,7 +545,7 @@ bool SwDockWidget_MainArea::close()
 	}
 
 	if (_quitOnClose)
-		qApp->quit();	
+		exit(0);	
 
 	return true;
 }
