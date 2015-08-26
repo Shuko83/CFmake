@@ -75,6 +75,7 @@ void _SwGuiQActionToWidget::initializeComponent() throw(SwException) {
     //--------------------------------------
 
     getPropertiesService().CreatePropertiesForQObject(this,"", true);
+    getPropertiesService().CreatePropertiesForQObject(_hostWidget, "HostWidget", true);
 
     //--------------------------------------
     //Autres
