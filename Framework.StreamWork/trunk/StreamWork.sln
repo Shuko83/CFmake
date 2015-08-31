@@ -1,7 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
-MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StreamWorkEditor2", "Sources\StreamWorkEditor2\_project\StreamWorkEditor2.vcxproj", "{4B54F083-67C4-3681-8023-7BB68F3DCDBF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5F62F47E-66F3-390B-AA1A-3668FBCCFA15} = {5F62F47E-66F3-390B-AA1A-3668FBCCFA15}
@@ -107,6 +105,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SwServiceUnitSI", "Sources\
 		{3673CBAF-CF28-37B4-A174-72D76CE57309} = {3673CBAF-CF28-37B4-A174-72D76CE57309}
 	EndProjectSection
 EndProject
+
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -181,4 +180,5 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	
 EndGlobal
