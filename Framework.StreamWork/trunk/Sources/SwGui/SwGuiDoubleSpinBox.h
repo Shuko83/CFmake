@@ -17,7 +17,7 @@
 * INCLUDES GLOBAUX
 */
 #include <QDoubleSpinBox>
-#include <QtDesigner/QDesignerExportWidget>
+#include <QtUiPlugin/QDesignerExportWidget>
 
 namespace StreamWork
 {

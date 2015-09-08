@@ -29,15 +29,15 @@ using namespace StreamWork::SwGui;
 *	@class SwEventToPopup 
 *	@brief 
 */               
-class SwEventToPopup : virtual public SwAssistedComponent, virtual public ISwEventObserver
+class SwEventToPopup : public SwAssistedComponent, virtual public ISwEventObserver
 {
-	Q_OBJECT
+	Q_OBJECT;
 
-		Q_PROPERTY(QEvent::Type EventType READ getEventType WRITE setEventType)
-		Q_PROPERTY(bool EventButtonCancelVisible READ getEventButtonConcelVisible WRITE setEventButtonConcelVisible)
-		Q_PROPERTY(QIcon PopupIcon READ getPopupIcon WRITE setPopupIcon)
-		Q_PROPERTY(QString PopupTitle READ getPopupTitle WRITE setPopupTitle)
-		Q_PROPERTY(QString PopupText READ getPopupText WRITE setPopupText)
+	Q_PROPERTY(QEvent::Type EventType READ getEventType WRITE setEventType);
+	Q_PROPERTY(bool EventButtonCancelVisible READ getEventButtonConcelVisible WRITE setEventButtonConcelVisible);
+	Q_PROPERTY(QIcon PopupIcon READ getPopupIcon WRITE setPopupIcon);
+	Q_PROPERTY(QString PopupTitle READ getPopupTitle WRITE setPopupTitle);
+	Q_PROPERTY(QString PopupText READ getPopupText WRITE setPopupText);
 
 public:
 

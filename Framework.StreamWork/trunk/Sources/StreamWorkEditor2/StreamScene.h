@@ -10,10 +10,10 @@
 #include <QtCore>
 #if QT_VERSION >= 0x050000
 #include <QtWidgets>
+#include <QtOpenGL>
 #else
 #include <QtGui>
 #endif
-#include <QGLWidget>
 #include <QGraphicsScene>
 #include "IAnchorableObserver.h"
 #include "IAnchorable.h"
