@@ -42,7 +42,7 @@ SwFileDescriptor::FileType SwFileDescriptor::getFileType() const{
 QString SwFileDescriptor::getFileName() const{
 	return _filename;
 }
-void SwFileDescriptor::setFileName(const QString &filename){
+void SwFileDescriptor::setFileName(const QString filename){
 	_filename=filename;
 }
 
@@ -62,6 +62,39 @@ bool SwFileDescriptor::operator==(const SwFileDescriptor& source) const{
 /*! \brief de recuperation de la valeur par une string*/
 QString SwFileDescriptor::ToString() const{
 	return getFileName();
+}
+
+QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
+{
+    QString pathAsWritten = getFileName();
+    int indexOfSeparator = pathAsWritten.indexOf("::");
+    QString relativePathString = "." + pathAsWritten.mid(pathAsWritten.indexOf("::") + 2);
+    QString absolutePath = pathAsWritten;
+
+    absolutePath.remove("::");
+  
+
+    if(indexOfSeparator != -1)
+    {
+    	//search in relative :
+        if (QFile::exists(relativePathString))
+    	{
+            *relativeExists = true;
+    		return relativePathString;
+    	}
+    	else
+    	{
+            *relativeExists = false;
+    		return absolutePath;
+    	}
+    }
+    else
+   { 
+       return pathAsWritten; 
+   }
+
+    *relativeExists = false;
+    return "";
 }
 
 QDataStream &operator<<(QDataStream &out, const StreamWork::SwCore::SwFileDescriptor &myObj) {

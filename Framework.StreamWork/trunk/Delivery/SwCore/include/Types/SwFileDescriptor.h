@@ -48,7 +48,14 @@ namespace StreamWork {
             enum FileType getFileType() const;
 	        /** @brief Acces au nom */
             QString getFileName() const;
-            void setFileName(const QString &filename);
+            void setFileName(const QString filename);
+
+            /** @brief
+            /* Pour un path de la forme C:\path\to\file \::relativeFolder
+            /* renvoie relativeFolder si relativeFolder existe a coté de l'exe
+            /* renvoie C:\path\to\file \relativeFolder sinon (le cas general quand on est ds le stream)
+            */
+            QString getDoubleDottedPath(bool * relativeExists);
 
             /*! \brief Operateur d'affectation */
             SwFileDescriptor & operator=(const SwFileDescriptor& source);
