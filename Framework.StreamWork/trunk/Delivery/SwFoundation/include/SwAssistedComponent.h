@@ -48,10 +48,10 @@ class SwOwner_Class;
 namespace StreamWork {
 
     namespace SwFoundation {
-    
-		enum CALLBACK_EVENT {
-			BEFORE_POINTER_ASSIGNEMENT,
-			AFTER_POINTER_ASSIGNEMENT
+
+		enum INTERFACE_EVENT {
+			AFTER_INTERFACE_AVAILABLE,
+			BEFORE_INTERFACE_UNAVAILABLE
 		};
 
         /**
@@ -271,21 +271,32 @@ namespace StreamWork {
 				constructor : 
 					_i_widget = 0;
 				initializeComponent :
-					consumeInterface("ISwWidget", &_i_widget, [this](CALLBACK_EVENT eventType)->void { this->onWidgetChange(eventType); });
-				onWidgetChange(CALLBACK_EVENT event) : // Specifique
-					if(event == BEFORE_POINTER_ASSIGNEMENT)
+					consumeInterface("ISwWidget", &_i_widget, [this](INTERFACE_EVENT eventType)->void { this->onWidgetChange(eventType); });
+				onWidgetChange(INTERFACE_EVENT event) : // Specifique
+					if(event == BEFORE_INTERFACE_UNAVAILABLE)
 						//do something on old value of _i_widget ( unregister from listener or anything else...)
-					if(event == AFTER_POINTER_ASSIGNEMENT)
+					if(event == AFTER_INTERFACE_AVAILABLE)
 						//do something with new value of _i_widget
 
 			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
 			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
 			@param callback : >  => methode à appeler lors des évennements de disponibilité d'interface (à utilisé de préférence avec une lambda expression)
 			*/
-			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, std::function<void(CALLBACK_EVENT)> callback)
+			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, std::function<void(INTERFACE_EVENT)> callback)
 			{
-				getIConsumerService().RegisterConsumedInterface<T>(interfaceName, interfaceHandle);
-				_mapIConsummedWithCallBack.insert(interfaceName, callback);
+				registerInterfaceCallback(interfaceName, interfaceHandle, [=](CALLBACK_EVENT eventType)->void {
+					if (*interfaceHandle)
+					{
+						if (eventType == AFTER_POINTER_ASSIGNEMENT)
+						{
+							callback(AFTER_INTERFACE_AVAILABLE);
+						}
+						else if (eventType == BEFORE_POINTER_ASSIGNEMENT)
+						{
+							callback(BEFORE_INTERFACE_UNAVAILABLE);
+						}
+					}
+				});
 			}
 
 			/**
@@ -306,20 +317,32 @@ namespace StreamWork {
 			initializeComponent :
 				consumeInterface("ISwWidget", &_i_widget, this, &MaClass::onWidgetChange);
 			
-			onWidgetChange(CALLBACK_EVENT event) : // Specifique
-			if(event == BEFORE_POINTER_ASSIGNEMENT)
+			onWidgetChange(INTERFACE_EVENT event) : // Specifique
+			if(event == BEFORE_INTERFACE_UNAVAILABLE)
 				//do something on old value of _i_widget ( unregister from listener or anything else...)
-			if(event == AFTER_POINTER_ASSIGNEMENT)
+			if(event == AFTER_INTERFACE_AVAILABLE)
 				//do something with new value of _i_widget
 
 			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
 			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
 			@param thisPointer : U *  => pointeur sur la classe ayant la callback en membre
-			@param callback : void (U::*callback)(CALLBACK_EVENT) => pointeur sur la callback en tant que fonction membre
+			@param callback : void (U::*callback)(INTERFACE_EVENT) => pointeur sur la callback en tant que fonction membre
 			*/
-			template<typename T, typename U> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, U* thisPointer, void (U::*callback)(CALLBACK_EVENT))
+			template<typename T, typename U> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, U* thisPointer, void (U::*callback)(INTERFACE_EVENT))
 			{
-				consumeInterface(interfaceName, interfaceHandle, [=](CALLBACK_EVENT eventType)->void { (thisPointer->*callback)(eventType); });
+				registerInterfaceCallback(interfaceName, interfaceHandle, [=](CALLBACK_EVENT eventType)->void {
+					if (*interfaceHandle)
+					{
+						if (eventType == AFTER_POINTER_ASSIGNEMENT)
+						{
+							(thisPointer->*callback)(AFTER_INTERFACE_AVAILABLE);
+						}
+						else if (eventType == BEFORE_POINTER_ASSIGNEMENT)
+						{
+							(thisPointer->*callback)(BEFORE_INTERFACE_UNAVAILABLE);
+						}
+					}
+				});
 			}
 
 			/**
@@ -350,7 +373,7 @@ namespace StreamWork {
 			template<typename T, typename U, typename MEMBER> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, U* thisPointer, MEMBER func)
 			{
 				//passage de this pointer en = au contexte de la lambda expression pour copier l'adresse du pointeur dans la lambda expression car en sortie de la methode courante, la reference sur le pointeur n'est plus valide.
-				consumeInterface(interfaceName, interfaceHandle, [=](CALLBACK_EVENT eventType)->void { 
+				registerInterfaceCallback(interfaceName, interfaceHandle, [=](CALLBACK_EVENT eventType)->void {
 					if(eventType==AFTER_POINTER_ASSIGNEMENT) 
 					{
 						(thisPointer->*func)();
@@ -642,8 +665,25 @@ private:
              */
             //void enableListeningChangeForProperty(ISwProperty * property);			
 
-        private:
+			//------------------------------------------------------------------
+			// Template pour la gestion des interfaces
+			//------------------------------------------------------------------
 
+			enum CALLBACK_EVENT {
+				BEFORE_POINTER_ASSIGNEMENT,
+				AFTER_POINTER_ASSIGNEMENT
+			};
+
+			/**
+			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
+			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
+			@param callback : >  => methode à appeler lors des évennements de disponibilité d'interface (à utilisé de préférence avec une lambda expression)
+			*/
+			template<typename T> inline void registerInterfaceCallback(QString interfaceName, T ** interfaceHandle, std::function<void(CALLBACK_EVENT)> callback)
+			{
+				getIConsumerService().RegisterConsumedInterface<T>(interfaceName, interfaceHandle);
+				_mapIConsummedWithCallBack.insert(interfaceName, callback);
+			}
 
 			/**
 			 * Gestion des services

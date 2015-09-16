@@ -606,9 +606,8 @@ void SwAssistedComponent::eventBeforeInterfaceAvailability(QString interface_nam
 	}
 	if (_mapIConsummedWithCallBack.contains(interface_name))
 	{
-		_mapIConsummedWithCallBack[interface_name](CALLBACK_EVENT::BEFORE_POINTER_ASSIGNEMENT);
+		_mapIConsummedWithCallBack[interface_name](BEFORE_POINTER_ASSIGNEMENT);
 	}
-
 }
 
 //-------------------------------------------------------------------------
@@ -624,7 +623,7 @@ void SwAssistedComponent::eventAfterInterfaceAvailability(QString interface_name
 	}
 	if (_mapIConsummedWithCallBack.contains(interface_name))
 	{
-		_mapIConsummedWithCallBack[interface_name](CALLBACK_EVENT::AFTER_POINTER_ASSIGNEMENT);
+		_mapIConsummedWithCallBack[interface_name](AFTER_POINTER_ASSIGNEMENT);
 	}
 }
 
