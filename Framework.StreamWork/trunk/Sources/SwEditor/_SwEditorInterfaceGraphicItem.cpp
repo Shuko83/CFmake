@@ -16,6 +16,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QPointF>
 #include <SwException.h>
+#include <SwMacros.h>
 #include <QGraphicsSceneMouseEvent>
 #include "_SwEditorInterfaceGraphicItem.h"
 #include "_SwEditorGIInterfaceMenu.h"

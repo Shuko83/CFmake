@@ -9,6 +9,7 @@
   * INCLUDES LOCAUX
   */
 #include <SwApplication.h>
+#include <SwMacros.h>
 #include <QMessageBox>
 #include "_SwEditorStreamTreeModel.h"
 

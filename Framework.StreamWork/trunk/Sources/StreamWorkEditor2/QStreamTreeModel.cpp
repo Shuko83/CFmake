@@ -6,6 +6,7 @@
 
 #include <SwApplication.h>
 #include "QStreamTreeModel.h"
+#include "SwMacros.h"
  
 using namespace StreamWork::SwCore;
 

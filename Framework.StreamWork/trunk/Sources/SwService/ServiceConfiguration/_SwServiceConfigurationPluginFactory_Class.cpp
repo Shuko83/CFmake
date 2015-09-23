@@ -1,6 +1,6 @@
 #include "_SwServiceConfigurationPluginFactory_Class.h"
 #include "SwApplication.h"
-
+#include "SwMacros.h"
 
 using namespace StreamWork::SwCore;
 

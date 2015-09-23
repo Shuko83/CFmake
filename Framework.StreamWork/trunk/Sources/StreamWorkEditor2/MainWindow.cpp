@@ -21,6 +21,7 @@
 #include <qDebug>
 #include "ISwServiceConfiguration.h"
 #include "ISwServiceShortcuts.h"
+#include "SwMacros.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;

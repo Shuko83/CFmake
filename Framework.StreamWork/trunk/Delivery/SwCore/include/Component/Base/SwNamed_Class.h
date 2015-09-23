@@ -17,7 +17,6 @@
   */
 #include "SwCoreConstantes.h"
 #include "SwException.h"
-#include "SwMacros.h"
 #include "LibIndeSig.h"
 
 namespace StreamWork

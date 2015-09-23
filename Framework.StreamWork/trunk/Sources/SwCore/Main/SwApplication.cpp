@@ -21,6 +21,7 @@
 #include "SwIntegerEnum.h"
 #include "SwDouble.h"
 #include "SwUUID.h"
+#include "SwMacros.h"
 #include "SwFileDescriptor.h"
 #include "SwIconDescriptor.h"
 #include "SwIpV4Address.h"

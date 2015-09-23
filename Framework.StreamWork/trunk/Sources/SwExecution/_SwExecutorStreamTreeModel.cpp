@@ -14,6 +14,7 @@
 #include <SwAddress_ToolBox.h>
 #include "_SwExecutorStreamTreeModel.h"
 #include "ISwExecutable_Service.h"
+#include "SwMacros.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;

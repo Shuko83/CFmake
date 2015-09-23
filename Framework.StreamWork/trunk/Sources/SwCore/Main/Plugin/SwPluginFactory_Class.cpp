@@ -12,6 +12,7 @@
   * INCLUDES LOCAUX
   */
 #include "SwPluginFactory_Class.h"
+#include "SwMacros.h"
 
 using namespace StreamWork::SwCore;
 

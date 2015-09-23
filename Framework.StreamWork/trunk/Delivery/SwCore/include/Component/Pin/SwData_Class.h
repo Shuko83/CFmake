@@ -14,7 +14,6 @@
   */
 #include <QDataStream>
 #include "SwException.h"
-#include "SwMacros.h"
 #include "SwRef.h"
 #include "SwRefPtr.h"
 #include "SwUUID.h"

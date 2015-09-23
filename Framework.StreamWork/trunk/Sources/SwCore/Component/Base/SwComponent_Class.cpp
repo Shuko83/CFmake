@@ -8,6 +8,7 @@
 #include <QtGlobal>
 #include <QStringList>
 #include <QRegExp>
+#include "SwMacros.h"
 #include "SwComponent_Class.h"
 #include "_SwCleanLinksVisitor.h"
 

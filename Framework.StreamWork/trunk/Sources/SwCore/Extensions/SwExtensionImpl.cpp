@@ -5,7 +5,7 @@
  */
 
 #include "SwExtensionImpl.h"
-#include "SwApplication.h"
+#include "SwMacros.h"
 using namespace StreamWork::SwCore;
 
 /** @brief Constructor */

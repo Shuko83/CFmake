@@ -6,6 +6,7 @@
  \author F.Bighelli
  */
 #include <QtGlobal>
+#include "SwMacros.h"
 #include "SwServicesManager_Class.h"
 #include <QCoreApplication>
 

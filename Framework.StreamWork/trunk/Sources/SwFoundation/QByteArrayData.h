@@ -12,6 +12,7 @@
 #endif
 
 #include "SwData_Class.h"
+#include "SwMacros.h"
 
 #include <QByteArray>
 #include <QString>
