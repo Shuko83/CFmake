@@ -5,6 +5,8 @@
 
 //Other External includes
 #include "IFieldError.h"
+#include "IError.h"
+#include "IErrorEnd.h"
 
 //Local includes
 #include "ISwService.h"
@@ -17,8 +19,6 @@ using namespace StreamWork::SwCore;
 
 namespace alert {
 	class IAlertObserver;
-	class Error;
-	class ErrorEnd;
 	class AlertManager;
 }
 
@@ -55,7 +55,7 @@ namespace StreamWork
 			  * ex de catégory avec un parent : "catParent1::catParent2::cat3" dans ce cas les observer de "CatParent1::CatParent2" et "CatParent1" seront notifié
 			  * Si l'erreur à une fin (willEnd = true), la méthode raiseErrorEnd() doit etre appellé pour mettre fin à l'erreur
 			  */
-			virtual void raiseError(alert::Error * error)=0;
+			virtual void raiseError(alert::PRefIError error)=0;
 			/**
 			  * @brief permet de notifié d'une erreur et du delay pour envoyé sa fin
 			  * timeOut est en Secondes
@@ -63,19 +63,19 @@ namespace StreamWork
 			  * puis à la fin du delai on notifie automatiquement ces meme observers via un raiseErrorEnd(Error * error)
 			  * ATTENTION il faut que l'erreur est une fin (willEnd doit etre à true) sinon on ne notifie pas de la fin
 			  */
-			virtual void raiseError(alert::Error * error, double timeOut) =0;
+			virtual void raiseError(alert::PRefIError error, double timeOut) = 0;
 			/**
 			  * @brief permet de notifié d'une fin d'erreur à partir de l'erreur qui a signalé le début!
 			  * Un ErrorEnd est créé,
 			  * puis on notifie les observers avec la méthode  raiseErrorEnd(ErrorEnd * errorEnd)
 			  */
-			virtual void raiseErrorEnd(alert::Error * error)=0;
+			virtual void raiseErrorEnd(alert::PRefIError error) = 0;
 			/**
 			  * @brief permet de notifié les observer d'une fin d'erreur
 			  * ATTENTION : pour que les observer de catégory soit notifié d'une fin d'erreur il faut que l'erreur initial ait été envoyé et 
 			  * que le paramètre willEnd de cette erreur soit à true
 			  */
-			virtual void raiseErrorEnd(alert::ErrorEnd * errorEnd)=0;	
+			virtual void raiseErrorEnd(alert::PRefIErrorEnd errorEnd)=0;	
 			/**
 			* @brief Accès direct à l'alertManager
 			* utile dans le cas ou l'on veux que les module utilise directement le composant AlertManager plutot que le Service Stramwork 

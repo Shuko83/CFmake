@@ -45,25 +45,25 @@ void _SwServiceAlert::raiseAlert(QString title, QString description, alert::Enum
 }
 
 //-------------------------------------------------------------------------
-void _SwServiceAlert::raiseError(Error * error)
+void _SwServiceAlert::raiseError(PRefIError error)
 {
 	_alertManager->raiseError(error);
 }
 
 //-------------------------------------------------------------------------
-void _SwServiceAlert::raiseError(Error * error, double timeOut)
+void _SwServiceAlert::raiseError(PRefIError error, double timeOut)
 {
 	_alertManager->raiseError(error, timeOut);
 }
 
 //-------------------------------------------------------------------------
-void _SwServiceAlert::raiseErrorEnd(Error * error)
+void _SwServiceAlert::raiseErrorEnd(PRefIError error)
 {
 	_alertManager->raiseErrorEnd(error);
 }
 
 //-------------------------------------------------------------------------
-void _SwServiceAlert::raiseErrorEnd(ErrorEnd * errorEnd)
+void _SwServiceAlert::raiseErrorEnd(PRefIErrorEnd errorEnd)
 {
 	_alertManager->raiseErrorEnd(errorEnd);
 }

@@ -40,10 +40,10 @@ namespace StreamWork
 			virtual void addObserver(alert::IAlertObserver * alertObserver, QString errorCategory);
 			virtual void removeCategoryObserver(alert::IAlertObserver * alertObserver);
 			virtual void raiseAlert(QString title, QString description, alert::EnumErrorLevel::ErrorLevel level);
-			virtual void raiseError(alert::Error * error);
-			virtual void raiseError(alert::Error * error, double timeOut);
-			virtual void raiseErrorEnd(alert::Error * error);
-			virtual void raiseErrorEnd(alert::ErrorEnd * errorEnd);
+			virtual void raiseError(alert::PRefIError error);
+			virtual void raiseError(alert::PRefIError error, double timeOut);
+			virtual void raiseErrorEnd(alert::PRefIError error);
+			virtual void raiseErrorEnd(alert::PRefIErrorEnd errorEnd);
 			virtual alert::AlertManager * getAlertManager();
 			
 		private:
