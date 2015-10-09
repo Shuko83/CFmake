@@ -8,6 +8,7 @@
 
 //Local includes
 #include "_SwError.h"
+#include "_SwResponse.h"
 
 // namespace
 using namespace alert;
@@ -40,7 +41,8 @@ void _SwServiceAlert::removeCategoryObserver(IAlertObserver * alertObserver)
 //-------------------------------------------------------------------------
 void _SwServiceAlert::raiseAlert(QString title, QString description, alert::EnumErrorLevel::ErrorLevel level)
 {
-	SwError * error = new SwError(title, description, level);
+   PRefIError error = new SwError(title, description, level); //FIXME A CORRIGER EN PREFIERROR TRUC MUCHE
+
 	_alertManager->raiseError(error);
 }
 

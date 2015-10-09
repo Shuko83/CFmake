@@ -1,4 +1,5 @@
 #include "_SwError.h"
+#include "_SwResponse.h"
 
 //QT includes
 
@@ -17,6 +18,13 @@ SwError::SwError(QString title, QString description, alert::EnumErrorLevel::Erro
 	setTitle(title);
 	setDescription(description);
 	setlevel(level);
+
+    if (level == alert::EnumErrorLevel::Critical || level == alert::EnumErrorLevel::Major)
+    {
+        addResponse(new StreamWork::SwCore::SwResponse("SwResponse1", "SwResponse1 desc"));
+        addResponse(new StreamWork::SwCore::SwResponse("SwResponse2", "SwResponse2 desc"));
+        addResponse(new StreamWork::SwCore::SwResponse("SwResponse3", "SwResponse3 desc"));
+    }
 	
 }
 
