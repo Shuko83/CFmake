@@ -93,10 +93,14 @@ void PropertiesWidget::nameChangedAndValid() {
         return;
     SwComponent_Class * component=_cgi->getComponent();
     SwComponent_Class * parent=component->GetParent();
-    SwComponent_Class * achild=parent->GetChild(_nameEdit->text());
-    if (achild==0 && component->CheckNameValidity(_nameEdit->text())) {
-        component->SetName(_nameEdit->text());
-    }
+	if ( parent )
+	{
+		SwComponent_Class * achild = parent->GetChild(_nameEdit->text());
+		if ( achild == 0 && component->CheckNameValidity(_nameEdit->text()) ) {
+			component->SetName(_nameEdit->text());
+		}
+	}
+    
 }
 /** @brief on color click */
 void PropertiesWidget::onColorClick() {
