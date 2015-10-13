@@ -1,9 +1,10 @@
 #include "_SwResponse.h"
+#include "ErrorEnd.h"
 
 
 
 
-StreamWork::SwCore::SwResponse::SwResponse(QString name, QString desc) : _desc(desc), _name(name)
+StreamWork::SwCore::SwResponse::SwResponse(QString name, QString desc, alert::AlertManager * am, alert::ProcessId source) :Response(source), _desc(desc), _name(name), _am(am)
 {
 
 }
@@ -37,4 +38,13 @@ QString StreamWork::SwCore::SwResponse::getName()
 void StreamWork::SwCore::SwResponse::execute()
 {
     qDebug() << "Executing SwRespond " << _name;
+
+    // envoi fin d'erreur
+    alert::ProcessId processId(QUuid::createUuid(), 0);
+    alert::PRefIErrorEnd errorEnd = new alert::ErrorEnd(processId, getProcessId());
+    // leveé de l'alert
+    if (_am)
+    {
+        _am->raiseErrorEnd(errorEnd);
+    }
 }

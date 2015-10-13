@@ -3,6 +3,7 @@
 
 //Local includes
 #include "Error.h"
+#include "AlertManager.h"
 
 #pragma warning(push)
 #pragma warning( disable : 4250 ) // c'est normal que le compilateur choisisse via la dominance la methode à utiliser ici en raison de l'heritage virtuel en diamant.
@@ -21,7 +22,7 @@ namespace StreamWork
 		{
 			DECLARE_CATEGORY("SwAlert")
 		public :
-			SwError(QString title, QString description, alert::EnumErrorLevel::ErrorLevel level);
+            SwError(QString title, QString description, alert::EnumErrorLevel::ErrorLevel level, alert::AlertManager * alertManager);
 			virtual ~SwError();
 		};
 	}

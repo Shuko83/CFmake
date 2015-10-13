@@ -2,7 +2,8 @@
 #define _SWRESPONSE_H
 
 //Local includes
-#include "IResponse.h"
+#include "Response.h"
+#include "AlertManager.h"
 
 
 
@@ -10,11 +11,11 @@ namespace StreamWork
 {
     namespace SwCore
     {
-        class SwResponse : public alert::IResponse
+        class SwResponse : public alert::Response
         {
         public:
 
-            SwResponse(QString name, QString desc);
+            SwResponse(QString name, QString desc, alert::AlertManager * am, alert::ProcessId source);
             ~SwResponse();
 
 
@@ -31,7 +32,7 @@ namespace StreamWork
             QString _desc;
             QString _name;
 
-
+            alert::AlertManager * _am;
         };
     }
 }

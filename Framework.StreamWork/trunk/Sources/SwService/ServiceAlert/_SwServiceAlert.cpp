@@ -41,7 +41,7 @@ void _SwServiceAlert::removeCategoryObserver(IAlertObserver * alertObserver)
 //-------------------------------------------------------------------------
 void _SwServiceAlert::raiseAlert(QString title, QString description, alert::EnumErrorLevel::ErrorLevel level)
 {
-   PRefIError error = new SwError(title, description, level); //FIXME A CORRIGER EN PREFIERROR TRUC MUCHE
+   PRefIError error = new SwError(title, description, level, _alertManager); //FIXME A CORRIGER EN PREFIERROR TRUC MUCHE
 
 	_alertManager->raiseError(error);
 }
