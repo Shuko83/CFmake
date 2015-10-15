@@ -5,6 +5,7 @@
 
 //Other External includes
 #include "AlertManager.h"
+#include "ErrorDb.h"
 
 //Local includes
 #include "_SwError.h"
@@ -18,11 +19,14 @@ using namespace alert;
 _SwServiceAlert::_SwServiceAlert()
 {
 	_alertManager = new AlertManager();
+    _errorDb = new ErrorDb();
+    addObserver(_errorDb, "");
 }
 
 //-------------------------------------------------------------------------
 _SwServiceAlert::~_SwServiceAlert()
 {
+    removeCategoryObserver(_errorDb);
 	delete _alertManager;
 }
 
@@ -74,4 +78,10 @@ void _SwServiceAlert::raiseErrorEnd(PRefIErrorEnd errorEnd)
 AlertManager * _SwServiceAlert::getAlertManager()
 {
 	return _alertManager;
+}
+
+//-------------------------------------------------------------------------
+alert::IErrorDb * StreamWork::SwCore::_SwServiceAlert::getErrorDb()
+{
+    return _errorDb;
 }

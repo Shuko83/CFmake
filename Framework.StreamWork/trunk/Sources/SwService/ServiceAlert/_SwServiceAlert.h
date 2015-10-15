@@ -12,6 +12,7 @@
 namespace alert { 
 	class AlertManager;
 	class IAlertObserver;
+    class IErrorDb;
 }
 
 
@@ -45,10 +46,11 @@ namespace StreamWork
 			virtual void raiseErrorEnd(alert::PRefIError error);
 			virtual void raiseErrorEnd(alert::PRefIErrorEnd errorEnd);
 			virtual alert::AlertManager * getAlertManager();
+            virtual alert::IErrorDb * getErrorDb();;
 			
 		private:
 			alert::AlertManager * _alertManager;
-
+            alert::IErrorDb * _errorDb;
         };
     }
 }

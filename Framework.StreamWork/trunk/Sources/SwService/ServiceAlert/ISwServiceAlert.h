@@ -7,9 +7,11 @@
 #include "IFieldError.h"
 #include "IError.h"
 #include "IErrorEnd.h"
+#include "IErrorDb.h"
 
 //Local includes
 #include "ISwService.h"
+
 
 using namespace StreamWork::SwCore;
 
@@ -82,6 +84,8 @@ namespace StreamWork
 			* Par ex avec la GUSA
 			*/
 			virtual alert::AlertManager * getAlertManager() = 0;
+
+            virtual alert::IErrorDb * getErrorDb() =0;
 			
 
 			//---------------------------------------------------------------------
