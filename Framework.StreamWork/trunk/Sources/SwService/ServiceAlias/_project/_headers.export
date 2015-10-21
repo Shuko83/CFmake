@@ -1,0 +1,7 @@
+BaseDir=..
+Components/SwSourceType.h
+Interfaces/ISwAliasEditor.h
+Interfaces/ISwAliasManager.h
+Interfaces/ISwAliasSaver.h
+Interfaces/ISwAliasUser.h
+SwServiceAlias_Constantes.h
