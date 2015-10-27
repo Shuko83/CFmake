@@ -155,16 +155,18 @@ namespace StreamWork
 			/**
              * @brief	: permet de récupérer les pointeurs de toutes les properties d'une conf
              * @Param	: QString : nom de la configuration concernée
+             * @Param	: QString : nom du groupe paramètres (page) concerné (prefix)
              * @return	: QHash<ISwProperty*, QString> : liste des pointeurs sur les properties et leur prefix associé
              */
-			virtual QHash<ISwProperty*, QString> getAllProperties (QString confName) = 0;
+			virtual QHash<ISwProperty*, QString> getAllProperties(QString confName, QString prefixName) = 0;
 
 			/**
              * @brief	: permet de récupérer l'ordre de toutes les properties d'une conf pour les classer dans un treeview
              * @Param	: QString : nom de la configuration concernée
+             * @Param	: QString : nom du groupe paramètres (page) concerné (prefix)
              * @return	: QHash<QString, int> : liste des noms décorés des properties et leur ordre dans le treeview
              */
-			virtual QHash<QString, int> getAllPropertiesOrder (QString confName) = 0;
+			virtual QHash<QString, int> getAllPropertiesOrder(QString confName, QString prefixName) = 0;
             
 			/**
 			* @brief	: permet d'updater la valeur d'une property depuis le fichier qui a été loadé

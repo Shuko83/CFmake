@@ -1083,23 +1083,20 @@ ISwProperty* SwServiceSaveConfiguration::getProperty( QString confName, QString 
 
 
 //-------------------------------------------------------------------------
-QHash<ISwProperty*, QString> SwServiceSaveConfiguration::getAllProperties( QString confName)
+QHash<ISwProperty*, QString> SwServiceSaveConfiguration::getAllProperties(QString confName, QString prefixName)
 {
 	// Qhash avec le pointeur sur la property et le nom du prefix du collecteur
 	QHash<ISwProperty*, QString> allProperties;
 
 	QHash<QString, QHash<QString, ISwConfCollector*>>::const_iterator it = _confCollectors.find(confName);
-
 	if(it != _confCollectors.end())
 	{
-		// pour chaque préfixe de confCollector[confName]  :
-		QHashIterator<QString, ISwConfCollector*> it_prefixes(it.value());
-		while (it_prefixes.hasNext()) 
+		// pour le préfixe de confCollector[prefixName]  :
+		QHash<QString, ISwConfCollector*>::const_iterator it_prefix = it.value().find(prefixName);
+		if (it_prefix != it.value().end())
 		{
-			it_prefixes.next();
-
 			// récupérer le pointeur sur l'ISwConfCollector
-			ISwConfCollector *collector = it_prefixes.value();
+			ISwConfCollector *collector = it_prefix.value();
 
 			// faire un getProperties() et parcourir toutes les properties (y compris les externals)
 			QHash<QString, ISwProperty*> props = collector->getProperties();
@@ -1121,7 +1118,7 @@ QHash<ISwProperty*, QString> SwServiceSaveConfiguration::getAllProperties( QStri
 
 
 //-------------------------------------------------------------------------
-QHash<QString, int> SwServiceSaveConfiguration::getAllPropertiesOrder( QString confName )
+QHash<QString, int> SwServiceSaveConfiguration::getAllPropertiesOrder(QString confName, QString prefixName)
 {
 	QHash<QString, int> allPropertiesOrder;
 
@@ -1129,14 +1126,12 @@ QHash<QString, int> SwServiceSaveConfiguration::getAllPropertiesOrder( QString c
 
 	if(it != _confCollectors.end())
 	{
-		// pour chaque préfixe de confCollector[confName]  :
-		QHashIterator<QString, ISwConfCollector*> it_prefixes(it.value());
-		while (it_prefixes.hasNext()) 
+		// pour le préfixe de confCollector[prefixName]  :
+		QHash<QString, ISwConfCollector*>::const_iterator it_prefix = it.value().find(prefixName);
+		if (it_prefix != it.value().end())
 		{
-			it_prefixes.next();
-
 			// récupérer le pointeur sur l'ISwConfCollector
-			ISwConfCollector *collector = it_prefixes.value();
+			ISwConfCollector *collector = it_prefix.value();
 
 			// faire un getProperties() et parcourir toutes les properties (y compris les externals)
 			QHash<QString, int> propsOrder = collector->getPropertiesOrder();
