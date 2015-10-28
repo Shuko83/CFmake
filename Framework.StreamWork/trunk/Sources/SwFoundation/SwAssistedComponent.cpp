@@ -405,6 +405,11 @@ SwAssistedComponent::~SwAssistedComponent()
 {    
 	_disable_service=true;
 
+	auto list = _mapIConsummed.keys();
+	//Clear Consummed Interface
+	for ( QString name : list )
+		unconsummeInterface(name);
+
 	//Clear provided interface
 	for (QString providedInterfaceName : _listIProvided)
 	{
