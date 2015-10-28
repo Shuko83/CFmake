@@ -26,7 +26,9 @@ namespace StreamWork {
             /** @brief internal access (backup compatibility) */
             virtual QString getModelsDirectory()=0;
             /** @brief add model */
-            virtual void addModel(QString hostComponent,QString modelName)=0;            
+            virtual void addModel(QString hostComponent,QString modelName)=0;    
+			/*! \brief check if the model name exist */
+			virtual bool checkModelName(QString modelName) = 0;
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------

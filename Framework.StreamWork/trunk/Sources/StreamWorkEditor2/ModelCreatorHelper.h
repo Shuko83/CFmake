@@ -27,7 +27,6 @@ public:
     virtual ~ModelCreatorHelper();
 
     void addProviderLink(ISwInterfaces_Provider * provider,QString p_interface_name,QString m_interface_name,ISwInterfaces_Consumer * consumer,QString c_interface_name);
-    void addConsumerLink(ISwInterfaces_Consumer * consumer,QString c_interface_name,QString m_interface_name,ISwInterfaces_Provider * provider,QString p_interface_name);
     void addConnectorLink(SwPin * source,SwPin * rtarget,QString m_connecteur);
     void connectInternalToModelHost(SwComponent_Class * model_host);
     void connectModelToExternal(SwComponent_Class * model);
@@ -62,7 +61,7 @@ private:
             this->c_interface_name=c_interface_name;
         }
     };
-
+public:
     class ConsumerKey {
     public:
         ISwInterfaces_Consumer * consumer;
@@ -109,7 +108,9 @@ private:
     QMultiMap<ProviderKey *,ProviderItem *> providerLinks; 
     QMap<ConsumerKey *,ConsumerItem *> consumerLinks; 
     QList<ConnectorItem *> connectorLinks;
-
+public:
+	ConsumerKey* addConsumerLink(ISwInterfaces_Consumer * consumer, QString c_interface_name, QString m_interface_name, ISwInterfaces_Provider * provider, QString p_interface_name);
+	void removeConsumerLink(ConsumerKey*);
 };
 
 #endif

@@ -235,6 +235,22 @@ void MenuManager::onRemove()
 	{
         InterestArea * ia=ialist.at(i);
         ia->setParentItem(0);
+
+		while ( ia->childItems().count() != 0 )
+		{
+			QGraphicsItem * item = ia->childItems().first();
+			if (! dynamic_cast<QGraphicsTextItem*>(item) )
+			{
+				QPointF pt = item->scenePos();
+				item->setParentItem(NULL);
+				item->setPos(pt);
+			}
+			else
+			{
+				item->setParentItem(NULL);
+				_streamControler->getScene()->removeItem(item);
+			}
+		}
         _streamControler->getScene()->removeItem(ia);
         delete ialist.at(i);
     }

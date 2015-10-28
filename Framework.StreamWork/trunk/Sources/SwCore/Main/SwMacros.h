@@ -54,6 +54,7 @@
  * MACRO POUR PUBLIER UN COMPOSANT VIA SON PLUGIN USINE a utiliser dans la methode surcharger CreateInstanceOf
  */
 #define SW_PUBLISH_COMPONENT(name_of_component,class_name) if (name_of_component == name) { return new class_name; } 
+#define SW_PUBLISH_ICON(name_of_component,qrcRessource) if (name_of_component == name) { return QIcon(qrcRessource); } 
 
 /*!
  * MACRO DE GESTION DES FABRIQUES D'OBJET

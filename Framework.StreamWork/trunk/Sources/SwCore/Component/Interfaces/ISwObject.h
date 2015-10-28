@@ -32,7 +32,7 @@ namespace StreamWork
 			 * @brief    : Renvoie une référence sur l'objet
 			 * @return   : QObject & - référence sur l'objet
 			 */
-			virtual QObject & getObject()=0;
+			virtual QObject * getObject()=0;
 		};
 	}
 }

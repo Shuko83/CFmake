@@ -4,7 +4,6 @@
         <Artifact name="QsException"/>
 		<Artifact name="QsCore" link="false"/>
 		<Artifact name="QsGui" link="false"/>
-		
     </Dependencies>
     <QTDependencies>
         <Module name="core"/>
