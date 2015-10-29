@@ -1725,6 +1725,9 @@ bool SwServiceSaveConfiguration::setPropertiesValuesFromProfile( QString confNam
 								// par défaut de celle-ci soit mise à jour (OnPropertyChange dans CPropertyTowidget)
 								if(decoratedName.contains("_readOnly", Qt::CaseInsensitive))
 									prop->MarkAsChanged();
+
+								bool saveChangedState = prop->HasChanged();
+
 								// Utilisation de la méthode LoadProperty(QDomElement, ISwProperty*) de SwPropertyPersistent
 								// Le QDomElement associé est la ligne XML <property name : ...  value : ... >
 								
@@ -1734,7 +1737,8 @@ bool SwServiceSaveConfiguration::setPropertiesValuesFromProfile( QString confNam
 									SwPropertyPersistentToolbox::LoadProperty(val, prop);
 
 								// Pour que la property ne soit plus marquée comme "modififée"
-								prop->MarkAsUnchanged();
+								if ( !saveChangedState )
+									prop->MarkAsUnchanged();
 
 								if(!ret)
 									ret = true;

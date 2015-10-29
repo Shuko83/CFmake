@@ -4,7 +4,7 @@
 @brief TableWidget view pour la vue des composants
 @author  EPO
 @version 1.0
- */
+*/
 
 // Includes globaux
 #include <QDragEnterEvent>
@@ -21,10 +21,10 @@ using namespace StreamWork::SwGui;
 
 // ------------------------------------------------------------------------
 ComponentTableWidget::ComponentTableWidget(QWidget * parent)
-			: QTableWidget(parent)
+	: QTableWidget(parent)
 {
 	// Construction du QTableWidget
-	if (this->columnCount() < 1)
+	if ( this->columnCount() < 1 )
 		this->setColumnCount(1);
 
 	QTableWidgetItem *_qtableheader1 = new QTableWidgetItem("Name");
@@ -38,7 +38,7 @@ ComponentTableWidget::ComponentTableWidget(QWidget * parent)
 	this->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 	this->verticalHeader()->setVisible(false);
 	this->verticalHeader()->setHighlightSections(true);
-	
+
 	this->setSelectionBehavior(SelectRows);
 }
 
@@ -48,83 +48,83 @@ ComponentTableWidget::~ComponentTableWidget()
 }
 
 // ------------------------------------------------------------------------
-void ComponentTableWidget::dragEnterEvent ( QDragEnterEvent * event ) 
+void ComponentTableWidget::dragEnterEvent(QDragEnterEvent * event)
 {
-	if (event->mimeData()->hasFormat("application/component"))
+	if ( event->mimeData()->hasFormat("application/component") )
 	{
 		event->accept();
-    } 
+	}
 	else
 		event->ignore();
 }
 
 // ------------------------------------------------------------------------
-void ComponentTableWidget::dragLeaveEvent ( QDragLeaveEvent * event )
+void ComponentTableWidget::dragLeaveEvent(QDragLeaveEvent * event)
 {
-    event->accept();
+	event->accept();
 }
 
 // ------------------------------------------------------------------------
-void ComponentTableWidget::dragMoveEvent ( QDragMoveEvent * event )
+void ComponentTableWidget::dragMoveEvent(QDragMoveEvent * event)
 {
-	if (event->mimeData()->hasFormat("application/component"))
+	if ( event->mimeData()->hasFormat("application/component") )
 	{
 		event->accept();
-    } 
+	}
 	else
 		event->ignore();
 }
 
 // ------------------------------------------------------------------------
- void ComponentTableWidget::keyPressEvent ( QKeyEvent * event ) 
- {
+void ComponentTableWidget::keyPressEvent(QKeyEvent * event)
+{
 	this->setSortingEnabled(false);
 
-    if (event->matches(QKeySequence::Delete)) 
- 	{
+	if ( event->matches(QKeySequence::Delete) )
+	{
 		int rowToDelete = this->currentRow();
 
 		// Suppression de la property dans la liste
-		if(rowToDelete <= this->rowCount() && rowToDelete >= 0 &&
-		   removeComponentToList(this->item(rowToDelete, 0)->text()))
+		if ( rowToDelete <= this->rowCount() && rowToDelete >= 0 &&
+			removeComponentToList(this->item(rowToDelete, 0)->text()) )
 		{
 			// Suppression de la ligne dans la QTableWidget
 			this->removeRow(rowToDelete);
 		}
 		event->accept();
-     }
-     QTableWidget::keyPressEvent(event);
-	 this->setSortingEnabled(true);
- }
+	}
+	QTableWidget::keyPressEvent(event);
+	this->setSortingEnabled(true);
+}
 
- // ------------------------------------------------------------------------
- void ComponentTableWidget::addComponentInQTable(QString compo) 
- {
-	 this->setSortingEnabled(false);
+// ------------------------------------------------------------------------
+void ComponentTableWidget::addComponentInQTable(QString compo)
+{
+	this->setSortingEnabled(false);
 
-	 // Insertion d'une nouvelle ligne à la fin de la liste
-	 int rowNumber = this->rowCount();
-	 this->insertRow(rowNumber);
+	// Insertion d'une nouvelle ligne à la fin de la liste
+	int rowNumber = this->rowCount();
+	this->insertRow(rowNumber);
 
-	 this->setItem(rowNumber, 0, new QTableWidgetItem(compo));
-	 this->item(rowNumber, 0)->setFlags(this->item(rowNumber, 0)->flags() ^ Qt::ItemIsEditable);
+	this->setItem(rowNumber, 0, new QTableWidgetItem(compo));
+	this->item(rowNumber, 0)->setFlags(this->item(rowNumber, 0)->flags() ^ Qt::ItemIsEditable);
 
-	 this->setSortingEnabled(true);
- }
+	this->setSortingEnabled(true);
+}
 
 //-----------------------------------------------------------------------------------------
 bool ComponentTableWidget::dropMimeData(int /*row*/, int /*column*/, const QMimeData *data, Qt::DropAction /*action*/)
 {
 	this->setSortingEnabled(false);
-	if (data->hasFormat("application/component"))
+	if ( data->hasFormat("application/component") )
 	{
 		//	Déserialisation de la classe 
- 		QString dataCompo = data->data("application/component").data();
+		QString dataCompo = data->data("application/component").data();
 
-		if (!dataCompo.isEmpty())
-		{			
+		if ( !dataCompo.isEmpty() )
+		{
 			// Ajout de la property dans la QList
-			if (addComponentToList(dataCompo))
+			if ( addComponentToList(dataCompo) )
 			{
 				// insertion d'une nouvelle ligne dans la QTableWidget
 				addComponentInQTable(dataCompo);
@@ -139,10 +139,10 @@ bool ComponentTableWidget::dropMimeData(int /*row*/, int /*column*/, const QMime
 void ComponentTableWidget::setComponentsSaved(QList<QString> listCompo)
 {
 	_components = listCompo;
-	
-	if (_components.size() != 0)
+
+	if ( _components.size() != 0 )
 	{
-		for (int nbCompo = 0; nbCompo < _components.size(); nbCompo++)
+		for ( int nbCompo = 0; nbCompo < _components.size(); nbCompo++ )
 			addComponentInQTable(_components.at(nbCompo));
 	}
 
@@ -157,11 +157,11 @@ bool ComponentTableWidget::addComponentToList(QString compo)
 
 	bool ret = false;
 
-	if (_components.indexOf(compo) != -1)
+	if ( _components.indexOf(compo) != -1 )
 	{
 		QMessageBox::warning(0,
-			"Cannot add component ",
-			QString("The component \"%1\" can't be added because it is already in the list").arg(compo));
+							 "Cannot add component ",
+							 QString("The component \"%1\" can't be added because it is already in the list").arg(compo));
 	}
 	else
 	{
@@ -181,11 +181,9 @@ bool ComponentTableWidget::removeComponentToList(QString compo)
 	bool ret = false;
 	int indexCompo = 0;
 
-	if ((indexCompo = _components.indexOf(compo)) == -1)
+	if ( (indexCompo = _components.indexOf(compo)) == -1 )
 	{
-		QMessageBox::warning(0,
-			"Cannot delete component ",
-			QString("The component \"%1\" can't be deleted because its not find").arg(compo));
+		QMessageBox::warning(0,"Cannot delete component ",QString("The component \"%1\" can't be deleted because its not find").arg(compo));
 	}
 	else
 	{

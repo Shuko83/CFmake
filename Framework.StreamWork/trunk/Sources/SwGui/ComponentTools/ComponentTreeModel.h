@@ -3,7 +3,7 @@
  \brief Modele pour la selection de composant
  \version 1.0
  \author EPO
-*/
+ */
 
 #ifndef _COMPONENT_TREEMODEL_H
 #define _COMPONENT_TREEMODEL_H
@@ -19,10 +19,10 @@
   * INCLUDES LOCAUX
   */
 
-namespace StreamWork  
+namespace StreamWork
 {
 
-	namespace SwGui 
+	namespace SwGui
 	{
 
 		/*!
@@ -37,7 +37,8 @@ namespace StreamWork
 			\class _Item
 			\brief Item pour la selection de composants
 			*/
-			class _Item {
+			class _Item
+			{
 			public:
 				/*! \brief Handle sur le host */
 				StreamWork::SwCore::SwComponent_Class * _host;

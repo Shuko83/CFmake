@@ -16,21 +16,17 @@
 // Includes locaux
 
 
-namespace StreamWork  {
-
-	namespace SwGui {
-  	
-        /** 
-	        @class ComponentTableWidget 
-        */
-
-        class ComponentTableWidget : public QTableWidget
+namespace StreamWork
+{
+	namespace SwGui
+	{
+		class ComponentTableWidget : public QTableWidget
 		{
-            Q_OBJECT
+			Q_OBJECT;
 
-        public:
-				 
-            /** @brief Constructeur */
+		public:
+
+			/** @brief Constructeur */
 			ComponentTableWidget(QWidget * parent = 0);
 
 			~ComponentTableWidget();
@@ -42,20 +38,20 @@ namespace StreamWork  {
 			void setComponentsSaved(QList<QString> listCompo);
 
 			/** @brief get component selected list */
-			QList <QString>  getComponentsSaved() const{ return _components; };
+			QList <QString>  getComponentsSaved() const { return _components; };
 
 
-        protected:
-            /** @brief Drag enter event */
-            void dragEnterEvent ( QDragEnterEvent * event );
+		protected:
+			/** @brief Drag enter event */
+			void dragEnterEvent(QDragEnterEvent * event);
 
-            /** @brief Drag leave event */
-            void dragLeaveEvent ( QDragLeaveEvent * event );
+			/** @brief Drag leave event */
+			void dragLeaveEvent(QDragLeaveEvent * event);
 
-            /** @brief Drag move event */
-            void dragMoveEvent ( QDragMoveEvent * event );
+			/** @brief Drag move event */
+			void dragMoveEvent(QDragMoveEvent * event);
 
-            /** @brief Sur key press */
+			/** @brief Sur key press */
 			void keyPressEvent(QKeyEvent * event);
 
 			QList<QString>	_components;
@@ -77,8 +73,8 @@ namespace StreamWork  {
 			* @param : QString : Component name
 			*/
 			void addComponentInQTable(QString compo);
-        };
-    }
+		};
+	}
 }
 
 #endif

@@ -3,16 +3,16 @@
 
 QTreeView[Modified="true"]::item
 {
-color : blue;
-font : bold;
+	color : blue;
+	font : bold;
 }
 
-QTreeView[Controlled="true"]::item
+QTreeView[Controled="true"]::item
 {
-font : italic;
+	font : italic;
 }
 
 QTreeView::item:disabled
 {
-color : darkgrey;
+	color : darkgrey;
 }
