@@ -40,6 +40,11 @@ Build on %2 at %3\n";
 
 int main(int argc, char *argv[])
 {
+	//Warning do not move this line . It must be the first thing to do
+	//To be able to save QDomDocument attribute with the same order
+	qputenv("QT_HASH_SEED", "12378");
+	
+	
 	QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	QApplication app(argc, argv);
 	//QApplication::setStyle(new QPlastiqueStyle);
