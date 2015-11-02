@@ -40,18 +40,35 @@ _SwGuiCompVBoxLayout::_SwGuiCompVBoxLayout() : SwComponent_Class()
 //-----------------------------------------------------------------------
 _SwGuiCompVBoxLayout::~_SwGuiCompVBoxLayout()
 {
+	for ( uint i = 0; i < _widgets_nb; i++ )
+	{
+		QString interface_name = QString(CL_WIDGET_INTERFACE_NAME).arg(i);
+		_consumer_service->UnregisterConsumedInterface(interface_name);
+	}
+
+	_provider_service->UnregisterProvidedInterface("Layout");
+
 	//Desenregistrement des services
 	this->UnregisterService(_consumer_service->GetServiceName());
 	this->UnregisterService(_provider_service->GetServiceName());
 	this->UnregisterService(_properties_service->GetServiceName());
+
 	//Destruction des services
 	delete _consumer_service;
 	delete _provider_service;
 	delete _properties_service;
-	if ( _layout != NULL )
+
+	if ( _layout != NULL && _layout->parent() == NULL)
+	{
 		delete _layout;
+		_layout = NULL;
+	}
+
 	if ( _spacer != NULL )
+	{
 		delete _spacer;
+		_spacer = NULL;
+	}
 }
 
 
@@ -188,12 +205,15 @@ void _SwGuiCompVBoxLayout::setEnableSpacer(bool enable)
 {
 	if ( _enableSpacer == enable )
 		return;
+
 	_enableSpacer = enable;
+
 	if ( _layout != NULL )
 	{
 		if ( _enableSpacer )
 		{
 			_layout->addSpacerItem(_spacer);
+			_layout->setStretch(_layout->count()-1, 1);
 		}
 		else
 		{
@@ -333,6 +353,7 @@ QLayout & _SwGuiCompVBoxLayout::GetLayout()
 		if ( _enableSpacer )
 		{
 			_layout->addSpacerItem(_spacer);
+			_layout->setStretch(_layout->count() - 1, 1);
 		}
 		else
 		{
@@ -357,11 +378,15 @@ void _SwGuiCompVBoxLayout::LiberateLayout()
 	{
 		layout_it.value()->LiberateLayout();
 	}
-	if ( _enableSpacer )
+	if ( _enableSpacer && _layout)
 	{
 		_layout->removeItem(_spacer);
 	}
-	delete _layout;
-	_layout = NULL;
+	//_layout->setParent(NULL);
+	if ( _layout && _layout->parent() )
+	{
+		delete _layout;
+		_layout = NULL;
+	}
 }
 

@@ -191,11 +191,19 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 
     realPath=path;
     //Si le repertoire existe
-    if (QDir::isRelativePath(path)) 
+	if ( QDir::isRelativePath(path) )
 	{
-        realPath=qApp->applicationDirPath()+"/"+path;
-		if (!QFileInfo(realPath).exists())
-			realPath = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + path);
+		realPath = qApp->applicationDirPath() + "/" + path;
+		if ( !QFileInfo(realPath).exists() )
+		{
+			if ( !QDir(SW_APP->GetApplicationDirPath()).isRelative() )
+				realPath = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + path);
+			else
+			{
+				realPath = QDir::cleanPath(QDir::current().absolutePath() + "/" + SW_APP->GetApplicationDirPath() + "/" + path);
+				realPath = QDir::current().relativeFilePath(realPath);
+			}
+		}
 
     }
 

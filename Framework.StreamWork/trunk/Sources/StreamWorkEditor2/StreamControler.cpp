@@ -112,6 +112,7 @@ StreamControler::~StreamControler()
 	if ( !_isExistingStream )
 	{
 		SW_APP->DestroyStream(_rootComponent);
+		_rootComponent = nullptr;
 	}
 	//Destruction de la scene
 	delete _streamScene;
@@ -177,6 +178,7 @@ void StreamControler::loadStream(QString streamFileName)
 		if ( !_isExistingStream )
 		{
 			SW_APP->DestroyStream(_rootComponent);
+			_rootComponent = nullptr;
 		}
 		_isExistingStream = false;
 		//Enregistrement du composant
@@ -243,6 +245,7 @@ void StreamControler::loadExistingStream(QString streamFileName, StreamWork::SwC
 		if ( !_isExistingStream )
 		{
 			SW_APP->DestroyStream(_rootComponent);
+			_rootComponent = nullptr;
 		}
 		_isExistingStream = true;
 		//Enregistrement du composant
@@ -1269,47 +1272,81 @@ void StreamControler::loadVisualItem(QDomDocument & doc, QDomElement &node, SwCo
 	QList<TConnectorPosition> labelPositions;
 	for ( QDomElement cntnode = node.firstChildElement(QString(CL_CGCNTITEM_NODE));!cntnode.isNull();cntnode = cntnode.nextSiblingElement(QString(CL_CGCNTITEM_NODE)) )
 	{
-		labelConnectors.push_back(cntnode.attribute(CL_CGCNTITEM_ATT_NAME));
-		labelPositions.push_back(cntnode.attribute(CL_CGCNTITEM_ATT_POS) == "right" ? RIGHT : LEFT);
+		if (! labelConnectors.contains(cntnode.attribute(CL_CGCNTITEM_ATT_NAME)) )
+		{
+			labelConnectors.push_back(cntnode.attribute(CL_CGCNTITEM_ATT_NAME));
+			labelPositions.push_back(cntnode.attribute(CL_CGCNTITEM_ATT_POS) == "right" ? RIGHT : LEFT);
+		}
 	}
 
 	QList<ConnectorGraphicItem *> * clist = cgitem->getConnectors();
 	QList<ConnectorGraphicItem *> newConnector;
-	if ( labelConnectors.count() != clist->count() )
-	{
-		//On remove les items qui sont pas contenu dedans et on les stock pour la suite
-		for ( int i = 0; i < clist->count(); i++ )
-		{
-			int j = labelConnectors.indexOf((*clist)[i]->getName());
-			if ( j < 0 )
-			{
-				newConnector.append((*clist)[i]);
-				(*clist).removeAt(i);
-			}
-		}
 
-	}
+
 
 	QList<ConnectorGraphicItem *> original_list = (*clist);
-	for ( int i = 0; i < original_list.count(); i++ )
+	(*clist).clear();
+
+	for ( int i = 0; i < labelConnectors.count(); i++ )
 	{
-		int j = labelConnectors.indexOf(original_list[i]->getName());
-		if ( j >= 0 )
+		for ( int j = 0; j < original_list.count(); j++ )
 		{
-			(*clist)[j] = original_list[i];
-			(*clist)[j]->setParentPosition(labelPositions[j]);
-		}
-		else
-		{
-			newConnector.append(original_list[i]);
+			if ( original_list[j]->getName() == labelConnectors[i] )
+			{
+				(*clist).append(original_list[j]);
+				(*clist).last()->setParentPosition(labelPositions[i]);
+			}
 		}
 	}
 
-	for ( auto * item : newConnector )
+	for ( int j = 0; j < original_list.count(); j++ )
 	{
-		item->setParentPosition(UNDEFINED);
-		(*clist).append(item);
+		if ( !(*clist).contains(original_list[j]) )
+		{
+			original_list[j]->setParentPosition(UNDEFINED);
+			(*clist).append(original_list[j]);
+		}
 	}
+
+// 	QList<int> indexToRemove;
+// 	if ( labelConnectors.count() != clist->count() )
+// 	{
+// 		//On remove les items qui sont pas contenu dedans et on les stock pour la suite
+// 		for ( int i = 0; i < clist->count(); i++ )
+// 		{
+// 			int j = labelConnectors.indexOf((*clist)[i]->getName());
+// 			if ( j < 0 )
+// 			{
+// 				newConnector.append((*clist)[i]);
+// 				indexToRemove.push_front(i);
+// 			}
+// 		}
+// 	}
+// 
+// 	for (auto i : indexToRemove )
+// 		(*clist).removeAt(i);
+// 
+// 
+// 	QList<ConnectorGraphicItem *> original_list = (*clist);
+// 	(*clist).clear();
+// 	for ( int i = 0; i < original_list.count(); i++ )
+// 	{
+// 		int j = labelConnectors.indexOf(original_list[i]->getName());
+// 		if ( j >= 0 )
+// 		{
+// 			(*clist).last()->setParentPosition(labelPositions[j]);
+// 		}
+// 		else
+// 		{
+// 			//newConnector.append(original_list[i]);
+// 		}
+// 	}
+// 
+// 	for ( auto * item : newConnector )
+// 	{
+// 		item->setParentPosition(UNDEFINED);
+// 		(*clist).append(item);
+// 	}
 
 	cgitem->updateAttributs();
 
