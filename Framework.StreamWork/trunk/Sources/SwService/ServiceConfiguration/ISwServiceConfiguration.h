@@ -78,8 +78,14 @@ namespace StreamWork
              *			  un XML file pour la configuration
              * @Param	: QString : nom de la configuration concernée
              */
-			virtual bool saveConfigurationFile( QString confName ) = 0;
-
+            virtual bool saveConfigurationFile(QString confName) = 0;
+	        
+             /**
+             * @brief	: dans le cas autoSave, permet de retenir une propriete qui sera ensuite sauvegardee dans le xml à la fermeture
+             * @brief   : a utiliser dans le cas par exemple de la sauvegarde d'une property dont le composant sera delete avant le confCollector a la fermeture du stream
+             * @Param	: QString : nom de la configuration concernée, ISwProperty propriete concernée, QString prefix concerné
+             */
+            virtual void saveOnePropertyOnConf(QString confName, ISwProperty *p, QString propCustomName, QString prefix) = 0;
 
 			/**
              * @brief	: permet de créer un XML file pour la configuration

@@ -45,7 +45,9 @@ const QString CFM_XML_PROPERTY_NAME		= "pname";
 //-----------------------------------------------------------------------
 SwServiceSaveConfiguration::SwServiceSaveConfiguration()
 {
-
+    _alreadyDestroyedPropertiesToSaveDoc = QDomDocument("tmp");
+    _alreadyDestroyedPropertiesToSaveRootElt = _alreadyDestroyedPropertiesToSaveDoc.createElement("tmp");
+    _alreadyDestroyedPropertiesToSaveDoc.appendChild(_alreadyDestroyedPropertiesToSaveRootElt);
 }
 
 //-----------------------------------------------------------------------
@@ -1460,6 +1462,7 @@ void StreamWork::SwCore::SwServiceSaveConfiguration::onPropertyDeleted(ISwProper
 
 
 
+
 //-------------------------------------------------------------------------
 // Private Méthodes
 //-------------------------------------------------------------------------
@@ -1796,10 +1799,32 @@ void SwServiceSaveConfiguration::createQDomProfile(QString confName, QDomDocumen
 				// Pour chaque * ISwProperty faire appel à la méthode SaveProperty de SwProperyPersistent_ToolBox
 				SwPropertyPersistentToolbox::SaveProperty(elt_config, doc, it_props.key(), it_props.value(), it_prefixes.key(), newDefaultValue);
 			}
+
+
+            //ajouter ici parcours liste de string saves et les ajouter dans le dom
+            //recuperer elt
+            //ajout au pere
+            QDomNodeList childs =  _alreadyDestroyedPropertiesToSaveRootElt.childNodes();
+            QDomNode node = _alreadyDestroyedPropertiesToSaveRootElt.firstChild();
+            while (!node.isNull())
+            {
+                QDomNode nextSibling = node.nextSibling();
+                elt_config.appendChild(node);//reparentage donc node.nextSibling doit etre fait avant
+                node = nextSibling;
+            }
+            
 		}
 	}
 }
 
+//-------------------------------------------------------------------------
+void StreamWork::SwCore::SwServiceSaveConfiguration::saveOnePropertyOnConf(QString confName, ISwProperty *p, QString propCustomName, QString prefix)
+{
+    QVariant newDefaultValue = QVariant();
+
+    //ajout de la propriété a sauver comme child de _alreadyDestroyedPropertiesToSaveRootElt
+    SwPropertyPersistentToolbox::SaveProperty(_alreadyDestroyedPropertiesToSaveRootElt, _alreadyDestroyedPropertiesToSaveDoc, propCustomName, p, prefix, newDefaultValue);
+}
 
 //-------------------------------------------------------------------------
 void SwServiceSaveConfiguration::notifyServiceListeners(QString confName, bool profilesNotif)

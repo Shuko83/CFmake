@@ -1,6 +1,7 @@
 #include "_SwServiceConfigurationPluginFactory_Class.h"
 #include "SwApplication.h"
 #include "SwMacros.h"
+#include "SwConfPushButton.h"
 
 using namespace StreamWork::SwCore;
 
@@ -22,6 +23,8 @@ void _SwServiceConfigurationPluginFactory_Class::Initialize()
 {
 	_serviceconfiguration = new SwServiceSaveConfiguration();
 	SW_APP->RegisterService(_serviceconfiguration);
+
+    RegisterComponent("SwConfPushButton", "Permet d'instancier un PushButton pour declencher la sauvegarde de la conf");
 }
 
 //----------------------------------------------------------------------------------------------
@@ -33,6 +36,7 @@ void _SwServiceConfigurationPluginFactory_Class::Liberate()
 ///----------------------------------------------------------------------------------------------
 SwComponent_Class * _SwServiceConfigurationPluginFactory_Class::CreateInstanceOf(QString name)
 {
+    SW_PUBLISH_COMPONENT("SwConfPushButton",SwConfPushButton)
 	return NULL;
 }
 

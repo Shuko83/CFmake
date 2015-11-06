@@ -3,6 +3,8 @@
     <Dependencies>
         <Artifact name="QsException"/>
         <Artifact name="SwCore"/>
+		<Artifact name="SwFoundation"/>
+		<Artifact name="SwGui"/>
     </Dependencies>
     <QTDependencies>
         <Module name="core"/>
