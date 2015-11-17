@@ -432,7 +432,7 @@ void SwDockWidget_ToolBarWindow::closeToolBar()
 {
 	//Demande de confirmation avant fermeture
 	QMessageBox msgBox;
-	msgBox.setText("Etes-vous sûr de vouloir fermer la SwDockWidget_ToolBar?");
+	msgBox.setText("Are you sure you want to close the SwDockWidget_ToolBar?");
 	msgBox.setStandardButtons(QMessageBox::Yes |QMessageBox::No);
 	msgBox.setDefaultButton(QMessageBox::No);
 	int ret = msgBox.exec();
