@@ -582,26 +582,28 @@ protected:
 			 * @return   : HistoryIndex à utiliser dans le finalizer
 			 */
 			quint64 getHistoryIndex();
-	
-private:
+
+protected:
 
 			//---------------------------------------------------------------------
 			// Interface ISwPersistentConfigurable
 			//---------------------------------------------------------------------         
 
 			/**
-			 * @brief	: Quand un service est ajouté
-			 *
-			 * @param	: ISwService * service - pointeur sur le service
-			 */
-			void OnRegisterService( ISwService * service );
+			* @brief	: Quand un service est ajouté
+			*
+			* @param	: ISwService * service - pointeur sur le service
+			*/
+			void OnRegisterService(ISwService * service);
 			/**
-			 * @brief	: Quand un service est supprimé
-			 *
-			 * @param	: ISwService * service - Pointeur sur le service
-			 */
-			void OnUnregisterService( ISwService * service );
+			* @brief	: Quand un service est supprimé
+			*
+			* @param	: ISwService * service - Pointeur sur le service
+			*/
+			void OnUnregisterService(ISwService * service);
 
+	
+private:
 
             /**
              * @brief    : evenement sur changement d'activation
@@ -751,7 +753,7 @@ private:
 			bool _isOwner;
 			bool _isInitialized;
 			quint64				  _historyIndex;
-        
+
         };
     }
 }

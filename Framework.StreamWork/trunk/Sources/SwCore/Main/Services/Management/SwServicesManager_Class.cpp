@@ -134,7 +134,7 @@ void SwServicesManager_Class::AddServicesManagerObserver( ISwServicesManager_Lis
 void SwServicesManager_Class::RemoveServicesManagerObserver( ISwServicesManager_Listener * observer )
 {
 	int index = _servicesObservers.indexOf( observer );
-	if ( index > 0 )
+	if ( index >= 0 )
 		_servicesObservers.removeAt( index );
 }
 

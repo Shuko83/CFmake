@@ -14,10 +14,10 @@
 #include "ISwServiceOwnerConfigurable.h"
 #include "ISwServiceOwner.h"
 
+
 using namespace StreamWork;
 using namespace StreamWork::SwFoundation;
 using namespace StreamWork::SwCore;
-
 
 
 //-------------------------------------------------------------------------
@@ -574,16 +574,16 @@ void SwAssistedComponent::setActive(bool active)
 //-------------------------------------------------------------------------
 void SwAssistedComponent::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) 
 {    
-	if (!_disable_service)
-		eventBeforeInterfaceAvailability(interface_name,provider_host);
+	if ( !_disable_service )
+		eventBeforeInterfaceAvailability(interface_name, provider_host);
 }
 
 //-------------------------------------------------------------------------
 void SwAssistedComponent::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host)
 {    
-	if (!_disable_service)
-		eventAfterInterfaceAvailability(interface_name,provider_host);
-}            
+	if ( !_disable_service )
+		eventAfterInterfaceAvailability(interface_name, provider_host);
+}
 
 //-------------------------------------------------------------------------
 void SwAssistedComponent::OnReceiveData(SwPin * src,SwData_Class * data)
