@@ -169,6 +169,10 @@ void SwDockWidget_MainArea::setMenu()
 		_lockAction->setEnabled(true);
 		_menuBar->addAction(_lockAction);
 		connect(_lockAction, SIGNAL(toggled(bool)), this, SLOT(setLock(bool)));
+
+        QAction *aboutAction = new QAction(this);
+        aboutAction->setText(("V1.5.0"));
+        _menuBar->addAction(aboutAction);
 	}
 }
 
