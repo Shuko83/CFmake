@@ -32,7 +32,7 @@ _SwGuiQActionToWidget::_SwGuiQActionToWidget() :Component(), _action(0)
 	//INITIALIZER LES AUTRES ATTRIBUTS DE LA CLASSE
 	_isVisible = false;
 	_stayOnTop = false;
-	_visibleName = "Default visible";
+	_showName = "Default visible";
 	_hiddenName = "Default hidden";
 
 	_action.setCheckable(true); //rend l'action checkable (du coup utiliser le SIGNAL cganged() sinon triggered()
@@ -124,19 +124,19 @@ QAction & _SwGuiQActionToWidget::GetAction()
 
 
 //-----------------------------------------------------------------------
-QString _SwGuiQActionToWidget::getVisibleName()
+QString _SwGuiQActionToWidget::getShowName()
 {
-	return _visibleName;
+	return _showName;
 }
 
 
 //-----------------------------------------------------------------------
-void _SwGuiQActionToWidget::setVisibleName(QString name)
+void _SwGuiQActionToWidget::setShowName(QString name)
 {
 	if ( name != "" )
 	{
-		_visibleName = name;
-		_action.setText(_visibleName);
+		_showName = name;
+		_action.setText(_showName);
 	}
 }
 
@@ -231,8 +231,8 @@ void _SwGuiQActionToWidget::ManageAction()
 
 		if ( isChecked )
 		{
-			_hostWidget->setWindowTitle(_visibleName); //affecte le titre de l'action à la fenetre
-			setVisibleName(_visibleName);//change le nom du menu			
+			_hostWidget->setWindowTitle(_showName); //affecte le titre de l'action à la fenetre
+			setShowName(_showName);//change le nom du menu			
 		}
 		else
 		{

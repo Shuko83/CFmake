@@ -394,11 +394,12 @@ void MainWindow::onQuit()
 		qApp->exit(0);
 }
 /** @brief sur close event */
-void MainWindow::closeEvent(QCloseEvent *event) {   
+void MainWindow::closeEvent(QCloseEvent *event) 
+{   
 	QSettings settings;
-	if (_streamControler->getRootItem()->_getReferencesNb()>0) {
+	if (_streamControler->getRootItem()->_getReferencesNb()>0) 
 		_streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
-	}
+	
 	settings.setValue("geometry", saveGeometry());
 	settings.setValue("windowState", saveState());
 	settings.setValue("history",_history);
@@ -410,6 +411,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 	nbWindows--;
 	if (nbWindows==0)
 		qApp->exit(0);
+
 }
 /** @brief sur affichage de la liste des plugins */
 void MainWindow::onDisplayPluginList() {

@@ -13,7 +13,10 @@
 #include <ISwProperty.h>
 #include "ISwServiceOwnerConfigurable.h"
 #include "ISwServiceOwner.h"
+#include "QCoreApplication"
 
+#include <QElapsedTimer>
+#include <QFile>
 
 using namespace StreamWork;
 using namespace StreamWork::SwFoundation;
@@ -398,6 +401,8 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 	_isOwner					= false;
 	_isInitialized				= false;
 
+	_doCheckTimer = qApp->arguments().contains("-checktime", Qt::CaseInsensitive);
+
 }
 
 //-------------------------------------------------------------------------
@@ -405,34 +410,26 @@ SwAssistedComponent::~SwAssistedComponent()
 {    
 	_disable_service=true;
 
-	auto list = _mapIConsummed.keys();
 	//Clear Consummed Interface
-	for ( QString name : list )
+	for ( QString name : _mapIConsummed.keys() )
+		unconsummeInterface(name);
+
+	for ( auto name : _mapIConsummedWithCallBack.keys() )
 		unconsummeInterface(name);
 
 	//Clear provided interface
 	for (QString providedInterfaceName : _listIProvided)
-	{
 		unprovideInterface(providedInterfaceName);
-	}
 
 	if (_allreadyListenerOfService )
 		SW_APP->RemoveServicesManagerObserver( this );
 
 	//clear registrer service
 
-
-	//Clear consummed interface
-	/*QStringList tmpList2 = _mapIConsummed.keys();
-	foreach(QString key, tmpList2)
-		unconsummeInterface(key);*/
-
 	//Clear pin
 	QList<SwPin*> tmpList3 = _listPin;
 	foreach(SwPin *pin ,tmpList3)
-	{
 		unregisterPin(pin);
-	}
 
 	//Desenregistrement des services
 	if(_isConsumer && _consumer_service)
@@ -500,6 +497,12 @@ SwAssistedComponent::~SwAssistedComponent()
 //-------------------------------------------------------------------------
 void SwAssistedComponent::InitializeResources() throw(SwException) 
 {  
+	QElapsedTimer *timer = nullptr;
+	if ( _doCheckTimer )
+	{
+		timer = new QElapsedTimer();
+		timer->start();
+	}
 	_isInitialized = true;
 	//Creation des services
 	if(_isConsumer)
@@ -557,6 +560,15 @@ void SwAssistedComponent::InitializeResources() throw(SwException)
 			_shortcuts_service->registerCommand(nameShortcut,this);
 		}
 	}
+
+	if ( _doCheckTimer && timer )
+	{
+		QFile debugFile("log.csv");
+		debugFile.open(QIODevice::Append);
+		debugFile.write(QString(GetFactoryComponentName() + ";" + QString::number(timer->elapsed()) + "\n").toLatin1());
+		debugFile.close();
+		delete timer;
+	}
 }
 
 //-------------------------------------------------------------------------
@@ -574,15 +586,48 @@ void SwAssistedComponent::setActive(bool active)
 //-------------------------------------------------------------------------
 void SwAssistedComponent::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) 
 {    
+	QElapsedTimer *timer = nullptr;
+	if ( _doCheckTimer )
+	{
+		timer = new QElapsedTimer();
+		timer->start();
+	}
+
 	if ( !_disable_service )
 		eventBeforeInterfaceAvailability(interface_name, provider_host);
+
+	if ( _doCheckTimer && timer )
+	{
+		QFile debugFile("log.csv");
+		debugFile.open(QIODevice::Append);
+		debugFile.write(QString(GetFactoryComponentName() + ";;;" + QString::number(timer->elapsed()) + "\n").toLatin1());
+		debugFile.close();
+		delete timer;
+	}
 }
 
 //-------------------------------------------------------------------------
 void SwAssistedComponent::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host)
 {    
+	QElapsedTimer *timer = nullptr;
+	if ( _doCheckTimer )
+	{
+		timer = new QElapsedTimer();
+		timer->start();
+	}
+
+
 	if ( !_disable_service )
 		eventAfterInterfaceAvailability(interface_name, provider_host);
+
+	if ( _doCheckTimer && timer )
+	{
+		QFile debugFile("log.csv");
+		debugFile.open(QIODevice::Append);
+		debugFile.write(QString(GetFactoryComponentName() + ";;;;" + QString::number(timer->elapsed()) + "\n").toLatin1());
+		debugFile.close();
+		delete timer;
+	}
 }
 
 //-------------------------------------------------------------------------

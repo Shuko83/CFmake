@@ -10,6 +10,9 @@
 #include <SwProperties_Class.h>
 #include <SwPins_Manager_Class.h>
 #include <ISwProperty.h>
+#include <QElapsedTimer>
+#include "QCoreApplication"
+#include <QFile>
 
 using namespace StreamWork::SwCore;
 
@@ -20,6 +23,7 @@ Component::Component() :SwComponent_Class()
 	_consumer_service = NULL;
 	_properties_service = NULL;
 	_disable_service = false;
+	_doCheckTimer = qApp->arguments().contains("-checktime", Qt::CaseInsensitive);
 }
 
 //-----------------------------------------------------------------------
@@ -42,6 +46,12 @@ Component::~Component()
 //-----------------------------------------------------------------------
 void Component::InitializeResources() throw(SwException)
 {
+	QElapsedTimer *timer = nullptr;
+	if ( _doCheckTimer )
+	{
+		timer = new QElapsedTimer();
+		timer->start();
+	}
 
 	//Creation des service
 	_consumer_service = new SwInterfaces_Consumer_Class(this);
@@ -58,6 +68,15 @@ void Component::InitializeResources() throw(SwException)
 	_consumer_service->AttachInterfacesConsumerObserver(this);
 
 	initializeComponent();
+
+	if ( _doCheckTimer && timer )
+	{
+		QFile debugFile("log.csv");
+		debugFile.open(QIODevice::Append);
+		debugFile.write(QString(GetFactoryComponentName() + ";" + QString::number(timer->elapsed()) + "\n").toLatin1());
+		debugFile.close();
+		delete timer;
+	}
 
 }
 
@@ -80,15 +99,47 @@ void Component::OnPropertyChange(ISwProperty * property)
 //-----------------------------------------------------------------------
 void Component::BeforeInterfaceAvailabilityChange(QString interface_name, SwComponent_Class * provider_host)
 {
+	QElapsedTimer *timer = nullptr;
+	if ( _doCheckTimer )
+	{
+		timer = new QElapsedTimer();
+		timer->start();
+	}
+
 	if ( !_disable_service )
 		eventBeforeInterfaceAvailability(interface_name, provider_host);
+
+	if ( _doCheckTimer && timer )
+	{
+		QFile debugFile("log.csv");
+		debugFile.open(QIODevice::Append);
+		debugFile.write(QString(GetFactoryComponentName() + ";;;" + QString::number(timer->elapsed()) + "\n").toLatin1());
+		debugFile.close();
+		delete timer;
+	}
 }
 
 //-----------------------------------------------------------------------
 void Component::AfterInterfaceAvailabilityChange(QString interface_name, SwComponent_Class * provider_host)
 {
+	QElapsedTimer *timer = nullptr;
+	if ( _doCheckTimer )
+	{
+		timer = new QElapsedTimer();
+		timer->start();
+	}
+
 	if ( !_disable_service )
 		eventAfterInterfaceAvailability(interface_name, provider_host);
+
+	if ( _doCheckTimer && timer )
+	{
+		QFile debugFile("log.csv");
+		debugFile.open(QIODevice::Append);
+		debugFile.write(QString(GetFactoryComponentName() + ";;;;" + QString::number(timer->elapsed()) + "\n").toLatin1());
+		debugFile.close();
+		delete timer;
+	}
 }
 
 //-----------------------------------------------------------------------

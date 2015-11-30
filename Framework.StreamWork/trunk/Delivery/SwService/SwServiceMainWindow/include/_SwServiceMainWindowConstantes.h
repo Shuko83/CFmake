@@ -1,0 +1,9 @@
+#pragma once
+
+#include <QGlobal.h>
+
+#ifdef SWSERVICEMAINWINDOW_LIB
+# define BUILD_SERVICEMAINWINDOW Q_DECL_EXPORT
+#else
+# define BUILD_SERVICEMAINWINDOW Q_DECL_IMPORT
+#endif

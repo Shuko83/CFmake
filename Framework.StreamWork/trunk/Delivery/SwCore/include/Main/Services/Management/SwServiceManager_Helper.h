@@ -18,14 +18,15 @@ public:
 	SERVICE_TYPE * getService();
 	void setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)());						// ATTENTION: ne peut être appelée qu'une seule fois
 	void setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(QString serviceName));   // ATTENTION: ne peut être appelée qu'une seule fois
+	void setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(QString serviceName,bool isEnable));   // ATTENTION: ne peut être appelée qu'une seule fois
 
 private:
 	QString _serviceName;
 	SERVICE_TYPE * _service;
-	std::function<void(QString serviceName)> _callback;
+	std::function<void(QString serviceName, bool isEnabled)> _callback;
 
 	void registerService(QString serviceName);
-	void setService(StreamWork::SwCore::ISwService * service);
+	void notify(StreamWork::SwCore::ISwService * service, bool isEnabled);
 
 	virtual void OnRegisterService(StreamWork::SwCore::ISwService * service);
 	virtual void OnUnregisterService(StreamWork::SwCore::ISwService * service);
@@ -54,25 +55,34 @@ SERVICE_TYPE * SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::getService()
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
-void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(StreamWork::SwCore::ISwService * service)
+void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::notify(StreamWork::SwCore::ISwService * service,bool isEnabled)
 {
 	_service = dynamic_cast<SERVICE_TYPE *> (service);
-	_callback(_serviceName);
+	_callback(_serviceName,isEnabled);
 }
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
 void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)())
 {
-	_callback = ([&](QString serviceName)->void { (thisPointer->*callback)(); });
+	_callback = ([=](QString serviceName2, bool isEnabled)->void { (thisPointer->*callback)(); });
 	registerService(serviceName);
 }
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE, typename YOUR_CLASS>
-void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(QString serviceName))
+void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(QString ))
 {
-	_callback = ([&](QString serviceName)->void { (thisPointer->*callback)(serviceName); });
+	_callback = ([=](QString serviceName2, bool isEnabled)->void { (thisPointer->*callback)(serviceName2); });
+	registerService(serviceName);
+}
+
+
+//-----------------------------------------------------------------------
+template <typename SERVICE_TYPE, typename YOUR_CLASS>
+void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(QString , bool ))
+{
+	_callback = ([=](QString serviceName2, bool isEnabled)->void { (thisPointer->*callback)(serviceName2,isEnabled); });
 	registerService(serviceName);
 }
 
@@ -87,7 +97,7 @@ void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::registerService(QString 
 	_service = dynamic_cast<SERVICE_TYPE *> (service);
 
 	if (_service)
-		setService(service);
+		notify(service,true);
 }
 
 //---------------------------------------------------------------------------------
@@ -95,7 +105,7 @@ template <typename SERVICE_TYPE, typename YOUR_CLASS>
 void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::OnUnregisterService(StreamWork::SwCore::ISwService * service)
 {
 	if (service->GetServiceName() == _serviceName)
-		setService(service);
+		notify(service,false);
 }
 
 //---------------------------------------------------------------------------------
@@ -103,6 +113,6 @@ template <typename SERVICE_TYPE, typename YOUR_CLASS>
 void SwServiceManager_Helper<SERVICE_TYPE, YOUR_CLASS>::OnRegisterService(StreamWork::SwCore::ISwService * service)
 {
 	if (service->GetServiceName() == _serviceName)
-		setService(service);
+		notify(service,true);
 }
 

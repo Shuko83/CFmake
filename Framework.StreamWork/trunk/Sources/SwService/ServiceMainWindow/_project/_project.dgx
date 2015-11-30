@@ -1,0 +1,10 @@
+<Project name="SwServiceMainWindow" path="SwService.SwServiceMainWindow">
+    <Target type="SHARED_LIB" ext="swdl"/>
+    <Dependencies>
+        <Artifact name="SwCore"/>
+    </Dependencies>
+    <QTDependencies>
+        <Module name="core"/>
+        <Module name="widgets"/>
+    </QTDependencies>
+</Project>

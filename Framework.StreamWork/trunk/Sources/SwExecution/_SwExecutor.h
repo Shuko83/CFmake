@@ -140,5 +140,6 @@ protected:
 
 	ISwExecution_Service * _executor;
 
+	bool _doCheckTimer;
 };
 #endif 

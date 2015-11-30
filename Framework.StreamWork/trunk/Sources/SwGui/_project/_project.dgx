@@ -6,6 +6,7 @@
         <Artifact name="SwFoundation"/>
         <Artifact name="SwServiceTools" link="false"/>
         <Artifact name="SwServiceShortcut" link="false"/>
+        <Artifact name="SwServiceMainWindow"/>
         <Artifact name="SwExecution"/>
 		<Artifact name="QsGui"/>
 		<Artifact name="QsCore"/>

@@ -26,7 +26,7 @@ namespace SwServiceAlias
 	//---------------------------------------------------------------------------------
 	void SwServiceAliasPluginFactory_Class::Liberate()
 	{
-		SW_APP->UnregisterService(_aliasService->GetServiceName());
+
 	}
 
 	//---------------------------------------------------------------------------------

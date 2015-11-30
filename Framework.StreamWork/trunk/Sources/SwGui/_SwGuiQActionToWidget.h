@@ -19,6 +19,7 @@
 #include <ISwAction.h>
 #include <ISwWidget.h>
 #include "_SwContainerCloseableWidget.h"
+#include "ISwQMainWindow.h"
 
 //Check namespace needed (for exemple ISwAction need namespace StreamWork::SwGui)
 using namespace StreamWork::SwCore;
@@ -53,8 +54,8 @@ public:
     } WindowFlag;
 
 	// Properties accessors
-	QString getVisibleName();
-    void setVisibleName (QString name);
+	QString getShowName();
+	void setShowName(QString name);
 	QString getHiddenName();
     void setHiddenName (QString name);	
 	WindowFlag getFlag();
@@ -68,9 +69,9 @@ public slots:
 		
 protected:
     /** @brief Property value identUndefinedColor */
-	Q_PROPERTY (QString visible_name
-        READ getVisibleName
-        WRITE setVisibleName);
+	Q_PROPERTY (QString show_name
+        READ getShowName
+        WRITE setShowName);
 
 	Q_PROPERTY (QString hidden_name
         READ getHiddenName
@@ -96,6 +97,7 @@ protected:
 	//--------------------------------------------------------------
     /** @brief Interface Widget*/
 	ISwWidget * _i_Widget;
+	ISwQMainWindow * _iSwQMainWindow;
 
  	//--------------------------------------------------------------
 	//Pins
@@ -124,7 +126,7 @@ private:
 	QAction _action;
 	QWidget * _widget;
 	_SwContainerCloseableWidget * _hostWidget;//création d'un conteneur qui encapsule la widget pour capter l'event close widget
-	QString _visibleName;
+	QString _showName;
 	QString _hiddenName;
 	bool _isVisible;
 	bool _stayOnTop;

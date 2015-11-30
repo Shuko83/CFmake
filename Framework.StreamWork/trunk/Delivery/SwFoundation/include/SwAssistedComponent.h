@@ -583,7 +583,6 @@ protected:
 			 */
 			quint64 getHistoryIndex();
 
-protected:
 
 			//---------------------------------------------------------------------
 			// Interface ISwPersistentConfigurable
@@ -753,6 +752,9 @@ private:
 			bool _isOwner;
 			bool _isInitialized;
 			quint64				  _historyIndex;
+
+			//Enable log of time
+			bool _doCheckTimer;
 
         };
     }

@@ -13,6 +13,7 @@
         <Artifact name="SwServiceShortcut"		  	link="false" />
         <Artifact name="SwServiceConfiguration"		link="false" />
         <Artifact name="SwServiceUnitSI"		    link="false" />
+		<Artifact name="SwServiceMainWindow"		link="false" />
     </Dependencies>
     <QTDependencies>
         <Module name="core"/>

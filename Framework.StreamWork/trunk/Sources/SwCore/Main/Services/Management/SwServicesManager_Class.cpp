@@ -9,6 +9,7 @@
 #include "SwMacros.h"
 #include "SwServicesManager_Class.h"
 #include <QCoreApplication>
+#include "qmessagebox.h"
 
 using namespace StreamWork::SwCore;
 
@@ -78,7 +79,8 @@ void SwServicesManager_Class::RegisterService( ISwService * service ) throw(SwEx
 		if ( (service->GetServiceName() == "CheckLicense" || service->GetServiceName() == "ProductKeyService") && QCoreApplication::applicationName() == "StreamWorkEditor2" )
 			return;
 		QString msg = QString( "A service with %1 already registered" ).arg( service->GetServiceName() );
-		LAUNCH_SWEXCEPTION( "SwCore", msg );
+		QMessageBox::critical(NULL,"SwCore", msg );
+		return;
 	}
 	_services.insert( service->GetServiceName(), service );
 	_ordered_services.push_back( service->GetServiceName() );
