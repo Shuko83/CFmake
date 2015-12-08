@@ -29,6 +29,7 @@
 #include "SwGuiEnumIntComboBox.h"
 #include "SwGuiStringLineEdit.h"
 #include "_QRcViewer.h"
+#include "..\SwCore\Main\SwMacros.h"
 
 using namespace StreamWork::SwGui;
 using namespace StreamWork::SwCore;
@@ -111,7 +112,8 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent, const QStyleOpt
 		hl->addWidget(b);
 		connect(b, SIGNAL(clicked(bool)), this, SLOT(onFileClick(bool)));
 		currentFileDescriptor = originalValue.value<SwFileDescriptor>();
-		_fdialog->selectFile(currentFileDescriptor.getFileName());
+		_fdialog->setDirectory(QFileInfo(currentFileDescriptor.getDoubleDottedPath()).absoluteDir());
+		_fdialog->selectFile(currentFileDescriptor.getDoubleDottedPath());
 		currentWidgetFileDescriptor = w;
 		oldFileDescriptor = currentFileDescriptor;
 		return w;
@@ -354,7 +356,8 @@ void SwGuiDefaultItemDelegate::setEditorData(QWidget *editor, const QModelIndex 
 	if ( qMetaTypeId<SwFileDescriptor>() == value.userType() )
 	{
 		currentFileDescriptor = value.value<SwFileDescriptor>();
-		_fdialog->selectFile(currentFileDescriptor.getFileName());
+		_fdialog->selectFile(currentFileDescriptor.getDoubleDottedPath());
+		_fdialog->setDirectory(QFileInfo(currentFileDescriptor.getDoubleDottedPath()).absoluteDir());
 		oldFileDescriptor = currentFileDescriptor;
 		return;
 	}
@@ -627,11 +630,13 @@ void SwGuiDefaultItemDelegate::onColorClick(bool checked)
 //------------------------------------------------------------------------------
 void SwGuiDefaultItemDelegate::onFileLoad(const QString & filename)
 {
-	currentFileDescriptor.setFileName(filename);
+	//On met le path relative a swapp applicationdirpath
+
+	QDir tmp (SW_APP->GetApplicationDirPath());
+	currentFileDescriptor.setFileName(tmp.relativeFilePath(filename));
 	if ( QLineEdit *label = qobject_cast<QLineEdit *>(currentWidgetFileDescriptor->children().at(1)) )
-	{
 		label->setText(currentFileDescriptor.getFileName());
-	}
+
 	commitData(currentWidgetFileDescriptor);
 	emit closeEditor(currentWidgetFileDescriptor);
 }
