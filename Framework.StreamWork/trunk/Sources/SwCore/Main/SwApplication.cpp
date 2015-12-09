@@ -209,7 +209,7 @@ void SwApplication::SetApplicationDirPath(const QString & path)
 	_applicationDirPath = path;
 	//ajout des paths pour la banque de plugins
 	_bank->AddPath(_applicationDirPath);
-	_bank->AddPath(_applicationDirPath + "/sw_plugins");
+	//_bank->AddPath(_applicationDirPath + "/sw_plugins");
 }
 
 //-----------------------------------------------------------------------

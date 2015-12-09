@@ -204,7 +204,6 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 				realPath = QDir::current().relativeFilePath(realPath);
 			}
 		}
-
     }
 
     //Si le path existe deja,
@@ -221,25 +220,29 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
     qstrMessage+=";";
     qstrMessage+=pathDir.canonicalPath();
 
-    bool result=setenv(VARNAME_PATH, qstrMessage.toStdString().c_str(), true);
+    /*bool result=*/setenv(VARNAME_PATH, qstrMessage.toStdString().c_str(), true);
    
-    if (!result) 
+    /* Flood pour rien
+	if (!result) 
 		SW_APP->Logger().Log(LogLvl_Warning,QString("Failed to set PATH environment variable (pathSize : %1)\n").arg(qstrMessage.length()));
     else
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("PATH= %1\n").arg(qstrMessage));
-
+	*/
 
 	//Ajout a la liste des path
     if (SW_APP->IsVerbose())
 		SW_APP->Logger().Log(LogLvl_Debug,QString("Adding path %1\n").arg(realPath));
+
     _paths.insert(realPath,registerable);
     _plugins_paths.insert(realPath,set_of_plugins);
     itpp=_plugins_paths.find(realPath);
     _has_changed=true;
     //Si le repertoire existe
     QDir dir(realPath);
-    if (!dir.exists()) {
+    if (!dir.exists()) 
+	{
         //Il n'existe pas on ne fait rien
+		qCritical() << __FUNCTION__ << " Directory in devpath, doesn't exist <" + realPath+">";
         return;
     }
     //Operation de mise a jour
