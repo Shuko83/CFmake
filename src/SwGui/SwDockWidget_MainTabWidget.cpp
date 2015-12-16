@@ -66,7 +66,7 @@ void SwDockWidget_MainTabWidget::closeTab(int index)
 	if (!empty)
 	{
 		QMessageBox msgBox;
-		msgBox.setText("Are you sur you want to close " + tabText(index) + " tab?");
+		msgBox.setText("Are you sure you want to close " + tabText(index) + " tab?");
 		msgBox.setStandardButtons(QMessageBox::Yes |QMessageBox::No);
 		msgBox.setDefaultButton(QMessageBox::No);
 		int ret = msgBox.exec();
