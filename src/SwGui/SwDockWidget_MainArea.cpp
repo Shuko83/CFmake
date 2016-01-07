@@ -4,6 +4,8 @@
 #include "SwDockWidget_MainDockMenuAction.h"
 #include "SwDockWidget_MainDockConfiguration.h"
 
+#include "ExceptionManager.h"
+
 //Qt
 #include <QtCore/QTime>
 #include <QStackedWidget>
@@ -170,9 +172,12 @@ void SwDockWidget_MainArea::setMenu()
 		_menuBar->addAction(_lockAction);
 		connect(_lockAction, SIGNAL(toggled(bool)), this, SLOT(setLock(bool)));
 
-        QAction *aboutAction = new QAction(this);
-        aboutAction->setText(("V1.5.0"));
-        _menuBar->addAction(aboutAction);
+		if (qApp->applicationName() == "MonitoringL22")
+		{
+			QAction *aboutAction = new QAction(this);
+			aboutAction->setText(("V1.5.0"));
+			_menuBar->addAction(aboutAction);
+		}        
 	}
 }
 
@@ -526,6 +531,8 @@ void SwDockWidget_MainArea::closeEvent(QCloseEvent * event )
 //-----------------------------------------------------------------------------
 bool SwDockWidget_MainArea::close()
 {
+	EXCEPTION_TRY();
+
 	//Masquage de la fenetre
 	hide();
 
@@ -549,9 +556,11 @@ bool SwDockWidget_MainArea::close()
 	}
 
 	if (_quitOnClose)
-		exit(0);	
+		qApp->quit();	
 
 	return true;
+
+	EXCEPTION_CATCH();
 }
 
 //-----------------------------------------------------------------------------
