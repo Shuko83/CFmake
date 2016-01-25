@@ -3,6 +3,7 @@
     <Dependencies>
 		<Artifact link="false" name="QsGui"/>
 		<Artifact link="false" name="QsCore"/>
+		<Artifact name="QsLog"/>
         <Artifact name="QsException"/>
         <Artifact name="SwCore"/>
         <Artifact name="SwGui"/>

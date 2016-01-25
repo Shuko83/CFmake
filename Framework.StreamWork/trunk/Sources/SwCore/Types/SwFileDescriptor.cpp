@@ -99,7 +99,11 @@ QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
 	tmpS.replace("::", "");
 	QString relativePathString = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + tmpS);
 	QString relativePathStringDoubleDot = QDir::cleanPath(qApp->applicationDirPath() +"/"+ pathAsWritten.mid(indexOfSeparator+2));
-	QString qrcPathString = ":" + pathAsWritten.mid(indexOfSeparator+2 );
+
+	QString qrcPathString = ":/" + pathAsWritten;
+	if (indexOfSeparator != -1 )
+		qrcPathString = ":" + pathAsWritten.mid(indexOfSeparator + 2);
+
 	QString absolutePath = pathAsWritten;
 	absolutePath.remove("::");
 	qrcPathString = qrcPathString.replace("\\", "/");

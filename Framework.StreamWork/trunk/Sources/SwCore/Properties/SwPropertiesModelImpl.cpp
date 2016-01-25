@@ -553,6 +553,12 @@ QModelIndex SwPropertiesModelImpl::index(int row, int column, const QModelIndex 
 //-------------------------------------------------------------------------
 QModelIndex SwPropertiesModelImpl::parent(const QModelIndex & index) const
 {
+	//AAY Correction Can't select index cf : https://forum.qt.io/topic/26881/solved-qtreeview-qabstractitemmodel-and-selections/7
+	// I have solved.
+	// In the implementation of QAbstractItemModel::parent(), i was doing return createIndex(parent_row, index.colum()).
+	// In this case the parent is not the same when selecting all cells in a row(default selection mode)!
+	// So the parent should always be column 0, and the correct implementations should return createIndex(parent_row, 0).
+
 	PropertyItem * iindex = 0;
 	PropertyItem * iparent = 0;
 	int index_parent;
@@ -569,12 +575,11 @@ QModelIndex SwPropertiesModelImpl::parent(const QModelIndex & index) const
 	iparent = iindex->_parent;
 	//Si le parent du parent est null, c'est le composant racine
 	if ( iparent == NULL )
-	{
-		return createIndex(0, index.column(), (void *) iindex);
-	}
+		return createIndex(0, 0, (void *) iindex);
+
 	//Sinon il faut calculer l'index
 	index_parent = iparent->_showChildrens.indexOf(iindex);
-	return createIndex(index_parent, index.column(), (void *) iindex);
+	return createIndex(index_parent, 0, (void *) iindex);
 }
 
 //--------------------------------------------------------------
