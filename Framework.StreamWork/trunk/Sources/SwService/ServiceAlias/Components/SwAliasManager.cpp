@@ -23,7 +23,7 @@ namespace SwServiceAlias
 	{
 		_alertServiceHelper = new SwServiceManager_Helper<StreamWork::SwCore::ISwServiceAlert, SwAliasManager>();
 
-		_roamingPath = QDir::homePath() + QDir::separator() + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "diginext" + QDir::separator() + "Starlinx" + QDir::separator() + "Alias" + QDir::separator();
+		_roamingPath = QDir::homePath() + QDir::separator() + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "diginext" + QDir::separator() + "StarlinxV2" + QDir::separator() + "Alias" + QDir::separator();
 		QDir dir;
 		if (!dir.exists(_roamingPath))
 		{
