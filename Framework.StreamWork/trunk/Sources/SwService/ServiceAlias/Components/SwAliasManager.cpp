@@ -537,19 +537,24 @@ namespace SwServiceAlias
 		switch (type)
 		{
 		case Enums::SwSourceType::TN:
-			track->getId()->getL16TnValidator()->modelToHmi(track->getId()->getL16Tn(), result);
+			if (track->getId()->isAvailable(gusa::model::interactionInterface::IDesignatorFields::L16Tn))
+				track->getId()->getL16TnValidator()->modelToHmi(track->getId()->getL16Tn(), result);
 			break;
 		case Enums::SwSourceType::VCS:
-			track->getVoiceCallSignValidator()->modelToHmi(track->getVoiceCallSign(), result);
+			if (track->isAvailable(gusa::model::interactionInterface::ITrackFields::VoiceCallSign))
+				track->getVoiceCallSignValidator()->modelToHmi(track->getVoiceCallSign(), result);
 			break;
 		case Enums::SwSourceType::IFF1:
-			track->getIff()->getMode1Validator()->modelToHmi(track->getIff()->getMode1(), result);
+			if (track->getIff()->isAvailable(gusa::model::interactionInterface::IIffFields::Mode1))
+				track->getIff()->getMode1Validator()->modelToHmi(track->getIff()->getMode1(), result);
 			break;
 		case Enums::SwSourceType::IFF2:
-			track->getIff()->getMode2Validator()->modelToHmi(track->getIff()->getMode2(), result);
+			if (track->getIff()->isAvailable(gusa::model::interactionInterface::IIffFields::Mode2))
+				track->getIff()->getMode2Validator()->modelToHmi(track->getIff()->getMode2(), result);
 			break;
 		case Enums::SwSourceType::IFF3:
-			track->getIff()->getMode3Validator()->modelToHmi(track->getIff()->getMode3(), result);
+			if (track->getIff()->isAvailable(gusa::model::interactionInterface::IIffFields::Mode3))
+				track->getIff()->getMode3Validator()->modelToHmi(track->getIff()->getMode3(), result);
 			break;
 		default:
 			break;
