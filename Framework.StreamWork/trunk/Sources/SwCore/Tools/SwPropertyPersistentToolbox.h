@@ -13,6 +13,7 @@
   */
 #include <QObject>
 #include <QByteArray>
+#include <QVariant>
 /*
  * INCLUDES LOCAUX
  */

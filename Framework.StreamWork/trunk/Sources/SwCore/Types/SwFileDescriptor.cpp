@@ -6,6 +6,8 @@
 
 #include "SwFileDescriptor.h"
 #include "SwMacros.h"
+#include <QApplication>
+#include <QDir>
 
 using namespace StreamWork::SwCore;
 

@@ -1,6 +1,6 @@
 #include "_SwResponse.h"
 #include "ErrorEnd.h"
-
+#include <QDebug>
 
 
 

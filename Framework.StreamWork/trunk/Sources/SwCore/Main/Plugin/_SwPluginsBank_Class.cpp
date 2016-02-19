@@ -15,11 +15,15 @@
 #include <QDomDocument>
 #include <QDomElement>
 #include <QDateTime>
+#include <QApplication>
+#include <QDebug>
+
 #include "_SwPluginsBank_Class.h"
 #include "SwApplication.h"
 #include "SwMacros.h"
 #include "SwData_Class.h"
 #include "_SwTreeItem.h"
+
 
 #include <stdlib.h> 
 
