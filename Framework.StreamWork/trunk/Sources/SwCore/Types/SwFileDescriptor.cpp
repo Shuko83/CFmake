@@ -99,22 +99,59 @@ QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
 	int indexOfSeparator = pathAsWritten.indexOf("::");
 	QString tmpS = pathAsWritten;
 	tmpS.replace("::", "");
-	QString relativePathString = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + tmpS);
-	QString relativePathStringDoubleDot = QDir::cleanPath(qApp->applicationDirPath() +"/"+ pathAsWritten.mid(indexOfSeparator+2));
+	
+	QString relativePathString;
+	QString relativePathStringDoubleDot;
+	QString absolutePath;
+	QString qrcPathString;
 
-	QString qrcPathString = ":/" + pathAsWritten;
-	if (indexOfSeparator != -1 )
-		qrcPathString = ":" + pathAsWritten.mid(indexOfSeparator + 2);
 
-	QString absolutePath = pathAsWritten;
-	absolutePath.remove("::");
-	qrcPathString = qrcPathString.replace("\\", "/");
+	// Gestion d'un répertoire optionnel pour les cas ou l'arborescence n'est pas la même en 
+	// dev local que dans un répertoire d'execution de l'appli
+	QString relativePathStringWithOptionalFolderDoubleDot;
+	QString relativePathStringWithOptionalFolder;
+	QString absolutePathWithOptionalFolder;
+	if (tmpS.contains("(") && tmpS.contains(")"))
+	{
+		int indexOfOpenBracet = pathAsWritten.indexOf("(");
+		int indexOfCloseBracet = pathAsWritten.indexOf(")");
+		QString optfolderName = tmpS.mid(indexOfOpenBracet , indexOfCloseBracet - indexOfOpenBracet -2 );
+		QString tmpS2 = tmpS;
+		tmpS2.replace("(", "").replace(")", "");
+
+		relativePathStringWithOptionalFolderDoubleDot = QDir::cleanPath(qApp->applicationDirPath() + "/" + pathAsWritten.mid(indexOfSeparator + 2).replace("(", "").replace(")", ""));
+		relativePathStringWithOptionalFolder = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + tmpS2);							
+		absolutePathWithOptionalFolder = pathAsWritten.remove("::").remove("(").remove(")");
+		
+		tmpS.remove("(").remove(")").remove(optfolderName);
+		pathAsWritten.remove("(").remove(")").remove(optfolderName);
+	}
+	else
+	{
+		qrcPathString = ":/" + pathAsWritten;
+		if (indexOfSeparator != -1)
+			qrcPathString = ":" + pathAsWritten.mid(indexOfSeparator + 2);
+		qrcPathString = qrcPathString.replace("\\", "/");
+	}
+
+	relativePathString = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + tmpS);
+	relativePathStringDoubleDot = QDir::cleanPath(qApp->applicationDirPath() + "/" + pathAsWritten.mid(indexOfSeparator + 2));
+
+	absolutePath = pathAsWritten.remove("::");
+	
+	
 
 	if ( QFile::exists(absolutePath) )
 	{
 		if ( relativeExists )
 			*relativeExists = false;
 		return  QDir::cleanPath(absolutePath);
+	}
+	else if (QFile::exists(absolutePathWithOptionalFolder))
+	{
+		if (relativeExists)
+			*relativeExists = false;
+		return  QDir::cleanPath(absolutePathWithOptionalFolder);
 	}
 	else if ( QFile::exists(relativePathString) )
 	{
@@ -137,6 +174,20 @@ QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
 		if ( relativeExists )
 			*relativeExists = true;
 		return qrcPathString;
+	}
+	else if (QFile::exists(relativePathStringWithOptionalFolderDoubleDot))
+	{ 
+		//search in relative with optionnal folder :
+		if (relativeExists)
+			*relativeExists = true;
+		return  QDir::cleanPath(relativePathStringWithOptionalFolderDoubleDot);
+	}
+	else if (QFile::exists(relativePathStringWithOptionalFolder))
+	{
+		//search in relative to swAPP with optionnal folder :
+		if (relativeExists)
+			*relativeExists = true;
+		return  QDir::cleanPath(relativePathStringWithOptionalFolder);
 	}
 	
 	//On dit que c'est absolute quand meme
