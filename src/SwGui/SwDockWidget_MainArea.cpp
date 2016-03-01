@@ -172,10 +172,10 @@ void SwDockWidget_MainArea::setMenu()
 		_menuBar->addAction(_lockAction);
 		connect(_lockAction, SIGNAL(toggled(bool)), this, SLOT(setLock(bool)));
 
-		if (qApp->applicationName() == "MonitoringL22")
+		if (qApp->applicationName() == "MonitoringL22" ||qApp->applicationName() == "MonitoringL22_Spy")
 		{
 			QAction *aboutAction = new QAction(this);
-			aboutAction->setText(("V1.5.0"));
+			aboutAction->setText(("V1.6.0"));
 			_menuBar->addAction(aboutAction);
 		}        
 	}
