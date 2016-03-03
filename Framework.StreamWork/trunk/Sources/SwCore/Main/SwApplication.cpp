@@ -152,7 +152,7 @@ void SwApplication::readParameters()
 			QDir dir(args[i + 1]);
 			if ( !dir.exists() )
 			{
-				LAUNCH_SWEXCEPTION("swapplication", QString("Plugin path %1 doesn't exist").arg(args[i + 1]));
+				qCritical() << QString("Plugin path %1 doesn't exist").arg(args[i + 1]);
 			}
 			else
 			{
@@ -165,7 +165,7 @@ void SwApplication::readParameters()
 			QFile file(args[i + 1]);
 			if ( !file.exists() )
 			{
-				LAUNCH_SWEXCEPTION("swapplication", QString("Plugin path %1 doesn't exist").arg(args[i + 1]));
+				qCritical() << QString("Plugin path %1 doesn't exist").arg(args[i + 1]);
 			}
 			else
 			{
@@ -178,7 +178,7 @@ void SwApplication::readParameters()
 			QDir dir(args[i + 1]);
 			if ( !dir.exists() )
 			{
-				LAUNCH_SWEXCEPTION("swapplication", QString("application dir path %1 doesn't exist").arg(args[i + 1]));
+				qCritical() << QString("application dir path %1 doesn't exist").arg(args[i + 1]);
 			}
 			else
 			{
