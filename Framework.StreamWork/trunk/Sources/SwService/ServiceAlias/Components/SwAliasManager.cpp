@@ -546,15 +546,15 @@ namespace SwServiceAlias
 			break;
 		case Enums::SwSourceType::IFF1:
 			if (track->getIff()->isAvailable(gusa::model::interactionInterface::IIffFields::Mode1))
-				track->getIff()->getMode1Validator()->modelToHmi(track->getIff()->getMode1(), result);
+				track->getIff()->getMode1Validator()->modelToHmi(track->getIff()->getMode1(), result, {}, {}, {}, true, Protocol_All);
 			break;
 		case Enums::SwSourceType::IFF2:
 			if (track->getIff()->isAvailable(gusa::model::interactionInterface::IIffFields::Mode2))
-				track->getIff()->getMode2Validator()->modelToHmi(track->getIff()->getMode2(), result);
+				track->getIff()->getMode2Validator()->modelToHmi(track->getIff()->getMode2(), result, {}, {}, {}, true, Protocol_All);
 			break;
 		case Enums::SwSourceType::IFF3:
 			if (track->getIff()->isAvailable(gusa::model::interactionInterface::IIffFields::Mode3))
-				track->getIff()->getMode3Validator()->modelToHmi(track->getIff()->getMode3(), result);
+				track->getIff()->getMode3Validator()->modelToHmi(track->getIff()->getMode3(), result, {}, {}, {}, true, Protocol_All);
 			break;
 		default:
 			break;
