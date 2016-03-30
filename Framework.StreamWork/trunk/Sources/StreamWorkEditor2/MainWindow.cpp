@@ -36,6 +36,7 @@ static QMap<SwComponent_Class *,MainWindow *> _editors;
 MainWindow::MainWindow(bool loadStream /*= true*/):QMainWindow(),_streamControler(0) {
 	_streamSourceOpener=0;
 	setWindowTitle("StreamWorkEditor V2");
+	setObjectName("StreamWorkEditor");
 	setTabPosition(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea,QTabWidget::North);
 	setMinimumSize(400,300);
 	setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowTabbedDocks | QMainWindow::AllowNestedDocks);

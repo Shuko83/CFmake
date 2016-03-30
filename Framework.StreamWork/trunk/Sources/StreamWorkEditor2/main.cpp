@@ -41,12 +41,12 @@ Build on %2 at %3\n";
 
 int main(int argc, char *argv[])
 {
-	//Log Color
-	QsLogger->start();
-
 	//Warning do not move this line . It must be the first thing to do
 	//To be able to save QDomDocument attribute with the same order
 	qputenv("QT_HASH_SEED", "12378");
+
+	//Log Color
+	QsLogger->start();
 	
 	QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	QApplication app(argc, argv);
@@ -106,8 +106,8 @@ int main(int argc, char *argv[])
                     doNewStream=false;
                 }
             }
-			if (liste_arg[i] == "-stylesheet")
-				style = liste_arg[i + 1];
+			if (liste_arg[i] == "-NoStreamworkStyle")
+				style = "NoStreamworkStyle";
         }
 
 		if (style == "")
