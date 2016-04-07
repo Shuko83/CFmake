@@ -104,11 +104,11 @@ void SwServicesManager_Class::UnregisterService( QString service_name ) throw(Sw
 		LAUNCH_SWEXCEPTION( "SwCore", msg );
 	}
 	//qDebug("------- > UnregisterService: %s",it.value()->GetServiceName().toLatin1().data());
+	it.value()->Liberate();
 	for ( int i = 0; i < _servicesObservers.count(); i++ )
 	{
 		_servicesObservers[i]->OnUnregisterService( it.value() );
 	}
-	it.value()->Liberate();
 	_services.erase( it );
 	itd = _ordered_services.begin();
 	while ( itd != _ordered_services.end() )
