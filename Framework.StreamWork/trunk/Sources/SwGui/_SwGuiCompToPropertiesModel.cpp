@@ -75,7 +75,7 @@ void _SwGuiCompToPropertiesModel::InitializeResources() throw(SwException) {
 void _SwGuiCompToPropertiesModel::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     if (_handle!=NULL && interface_name==QString("ComponentProvider")) {
         _handle->OnProvidedComponentChange.idisconnect(*this,&_SwGuiCompToPropertiesModel::OnProvidedComponentChange);
-        _model->SetProperties(NULL,QString());
+        _model->SetProperties(NULL);
         _provider_service->SetInterfaceUnavailable("Model");
         if (_provided_component!=NULL) {
             _provided_component=NULL;
@@ -97,7 +97,7 @@ void _SwGuiCompToPropertiesModel::OnProvidedComponentChange(ISwComponentProvider
 	ISwProperties * properties;
 
     if (_provided_component!=NULL) {
-        _model->SetProperties(NULL,QString());
+        _model->SetProperties(NULL);
         _provider_service->SetInterfaceUnavailable("Model");
         _provided_component=NULL;
     }
@@ -108,7 +108,7 @@ void _SwGuiCompToPropertiesModel::OnProvidedComponentChange(ISwComponentProvider
     _provided_component=component;
     properties=dynamic_cast<ISwProperties *>(_provided_component->QueryService(CG_SW_SERVICE_PROPERTIES));
     if (properties!=NULL) {
-        _model->SetProperties(properties,_provided_component->GetName());
+        _model->SetProperties(properties);
         _provider_service->SetInterfaceAvailable("Model");
     }
 }

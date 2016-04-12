@@ -210,7 +210,7 @@ void SwPropertiesModelImpl::DestroyItem(ISwProperty * property, QString customCo
 
 
 //-------------------------------------------------------------------------
-void SwPropertiesModelImpl::SetProperties(ISwProperties * properties, QString rootName, QString rootLabel)
+void SwPropertiesModelImpl::SetProperties(ISwProperties * properties)
 {
 	QList<ISwProperty *> properties_list;
 	QMap<SwCore::ISwProperties *, PropertyItem *>::iterator itp;
@@ -244,8 +244,7 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties, QString ro
 			_properties->GetOnCreateProperty().iconnect(*this, &SwPropertiesModelImpl::OnCreateProperty);
 			_properties->GetOnDestroyProperty().iconnect(*this, &SwPropertiesModelImpl::OnDestroyProperty);
 			//Creation des items
-			_root_item = new PropertyItem(this, rootName);
-			_rootLabel = rootLabel;
+			_root_item = new PropertyItem(this, QString());
 			_map_properties_to_item.insert(_properties, _root_item);
 			properties_list = _properties->GetProperties();
 			for ( int i = 0; i < properties_list.count(); i++ )
@@ -334,9 +333,15 @@ int SwPropertiesModelImpl::rowCount(const QModelIndex & parent) const
 
 	if ( (_properties == 0 && _map_properties_to_item.size() == 0) )
 		return 0;
-	if ( !parent.isValid() )
-		return 1;
-	iparent = (PropertyItem *) parent.internalPointer();
+
+	if (!parent.isValid())
+	{
+		iparent = _root_item;
+	}
+	else
+	{
+		iparent = (PropertyItem *) parent.internalPointer();
+	}
 	return iparent->_childrens.count();
 }
 
@@ -368,20 +373,6 @@ QVariant SwPropertiesModelImpl::data(const QModelIndex & index, int role) const
 	if ( (_properties == 0 && _map_properties_to_item.size() == 0) || !index.isValid() )
 		return QVariant();
 	item = (PropertyItem *) index.internalPointer();
-	if ( item == _root_item )
-	{
-		if ( role == Qt::DisplayRole && index.column() == 0 )
-		{
-			if ( _rootLabel.isEmpty() )
-				return QVariant(QString("Component"));
-			else
-				return QVariant(_rootLabel);
-		}
-		if ( role == Qt::DisplayRole && index.column() == 1 )
-		{
-			return QVariant(item->_label);
-		}
-	}
 
 	//pas d'edition sur la premeire colone
 	if ( index.column() == 0 )
@@ -539,10 +530,15 @@ QModelIndex SwPropertiesModelImpl::index(int row, int column, const QModelIndex 
 
 	if ( (_properties == 0 && _map_properties_to_item.size() == 0) )
 		return QModelIndex();
-	if ( !parent.isValid() )
-		return createIndex(row, column, (void *) _root_item);
+	if (!parent.isValid())
+	{
+		iparent = _root_item;
+	}
+	else
+	{
+		iparent = (PropertyItem *) parent.internalPointer();
+	}
 
-	iparent = (PropertyItem *) parent.internalPointer();
 	if ( iparent->_showChildrens.size() <= row )
 	{
 		return QModelIndex();
@@ -568,18 +564,12 @@ QModelIndex SwPropertiesModelImpl::parent(const QModelIndex & index) const
 		return QModelIndex();
 	iindex = (PropertyItem *) index.internalPointer();
 	iparent = iindex->_parent;
-	if ( iparent == NULL )
+	if ( iparent == _root_item )
 		return QModelIndex();
-	//Calcul de l'indice du parent
-	iindex = iparent;
-	iparent = iindex->_parent;
-	//Si le parent du parent est null, c'est le composant racine
-	if ( iparent == NULL )
-		return createIndex(0, 0, (void *) iindex);
 
-	//Sinon il faut calculer l'index
+	//Calcul de l'indice du parent
 	index_parent = iparent->_showChildrens.indexOf(iindex);
-	return createIndex(index_parent, 0, (void *) iindex);
+	return createIndex(index_parent, 0, (void *)iparent);
 }
 
 //--------------------------------------------------------------
@@ -811,12 +801,8 @@ void SwPropertiesModelImpl::PropertyItem::OnPropertyChange(ISwProperty * propert
 	int index;
 	QModelIndex mindex;
 
-	if ( _parent == NULL )
-		mindex = _host->createIndex(0, 1, (void *) _host->_root_item);
-	else
-	{
-		index = _parent->_showChildrens.indexOf(this);
-		mindex = _host->createIndex(0, index, (void *)this);
-	}
+	index = _parent->_showChildrens.indexOf(this);
+	mindex = _host->createIndex(0, index, (void *)this);
+
 	_host->dataChanged(mindex, mindex);
 }

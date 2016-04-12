@@ -75,8 +75,6 @@ namespace StreamWork
             PropertyItem * _action_item;
             /** @brief : Map des PropertyItem relatif aux properties de controlleurs */
             QMap<ISwProperties *,PropertyItem *> _map_properties_to_item;
-            /** @brief : Label du root */
-            QString _rootLabel;
 
         protected:
 			/** @brief : creation d'un item */
@@ -92,7 +90,7 @@ namespace StreamWork
 			~SwPropertiesModelImpl();
 
 			/** @brief : definit les propriétés via un ISwProperties */
-            void SetProperties(SwCore::ISwProperties * properties,QString rootName=QString(),QString rootLabel=QString());
+            void SetProperties(SwCore::ISwProperties * properties);
 
 			/** @brief : callback avant changement */
             void OnBeforeChange(SwCore::ISwProperties * properties);
