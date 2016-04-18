@@ -537,8 +537,6 @@ void SwDockWidget_MainArea::closeEvent(QCloseEvent * event )
 //-----------------------------------------------------------------------------
 bool SwDockWidget_MainArea::close()
 {
-	EXCEPTION_TRY();
-
 	//Masquage de la fenetre
 	hide();
 
@@ -565,8 +563,6 @@ bool SwDockWidget_MainArea::close()
 		qApp->quit();	
 
 	return true;
-
-	EXCEPTION_CATCH();
 }
 
 //-----------------------------------------------------------------------------
