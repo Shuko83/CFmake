@@ -30,7 +30,7 @@ namespace SwServiceAlias
 			dir.mkpath(_roamingPath);
 		}
 
-		_xsdFile.setFileName("::Ressources/Alias.xsd");
+		_xsdFile.setFileName("::/Ressources/Alias.xsd");
 
 		// À mettre en dernier pour que toutes les variables soient initialisées
 		_alertServiceHelper->setService(CG_SW_SERVICE_ALERT, this, &SwAliasManager::onServiceAlertManagerAvailable);

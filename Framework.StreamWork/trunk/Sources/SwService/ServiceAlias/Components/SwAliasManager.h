@@ -65,8 +65,6 @@ namespace SwServiceAlias
 	{
 		Q_OBJECT;
 
-		Q_PROPERTY(StreamWork::SwCore::SwFileDescriptor XsdFile READ getXsdFile WRITE setXsdFile);
-
 	public:
 		/**
 		 * @fn		SwServiceAlias::SwAliasManager::SwAliasManager()
