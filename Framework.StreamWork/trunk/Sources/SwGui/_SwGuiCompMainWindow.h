@@ -63,11 +63,12 @@ public :
 		Fixed = 2
 	};
 
-	Q_ENUMS(PathType)
-		Q_PROPERTY(QString relativePath READ getRelativePath WRITE setRelativePath)
-		Q_PROPERTY(QString absolutePath READ getAbsolutePath WRITE setAbsolutePath)
-		Q_PROPERTY(PathType pathType READ getPathType WRITE setPathType)
-	
+	Q_ENUMS(PathType);
+	Q_PROPERTY(QString relativePath READ getRelativePath WRITE setRelativePath);
+	Q_PROPERTY(QString absolutePath READ getAbsolutePath WRITE setAbsolutePath);
+	Q_PROPERTY(PathType pathType READ getPathType WRITE setPathType);
+	Q_PROPERTY(bool quitOnClose READ getQuitOnClose WRITE setQuitOnClose);
+
 protected:
     /* fenetre principale */
 	SwDockWidget_MainWindow * _mainWindow;
@@ -137,6 +138,7 @@ protected:
 	QString _relativePath;
 	QString _absolutePath;
 	PathType _pathType;
+	bool _quitOnClose;
 
 	// --- Fichier de configuration --
 	//Nom du fichier de configuration
@@ -221,6 +223,10 @@ public:
 	/** @brief Property value pathType */
 	PathType getPathType();
 	void setPathType(PathType val);
+
+	/** @brief Property value Quit On close */
+	bool getQuitOnClose();
+	void setQuitOnClose(bool val);
 
 private:
     void showChanged();

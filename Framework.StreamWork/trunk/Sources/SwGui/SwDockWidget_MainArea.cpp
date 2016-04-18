@@ -66,12 +66,12 @@ SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar
 
 	//Correctif maindock indédockable (Test si conforme mais règle le soucis : Ne déparente pas la fenêtre)
 	//_secondScreenMainDock->setAlwaysOnTop(false);
-
+	_quitOnClose = false;
 	//Fichier de configuration par defaut mis lors du load
 
 	//Creation d'un widget vide provisoire
 	_emptyWidget = new QWidget(this);
-	setMainWidget(_emptyWidget);
+	setMainWidget(_emptyWidget, _quitOnClose);
 
 	//Initialisation
 	init();
@@ -104,7 +104,7 @@ void SwDockWidget_MainArea::init()
 
 //-----------------------------------------------------------------------------
 //Enregistrement du widget principal
-void SwDockWidget_MainArea::setMainWidget(QWidget * widget)
+void SwDockWidget_MainArea::setMainWidget(QWidget * widget, bool quitOnClose)
 {
 	if (widget)
 	{
@@ -139,6 +139,8 @@ void SwDockWidget_MainArea::setMainWidget(QWidget * widget)
 		//Mise a jour du widget dans les toolbar
 		SwDockWidget_ToolBarWindow::updateMainWidget();
 	}
+
+	_quitOnClose = quitOnClose;
 }
 
 //-----------------------------------------------------------------------------
@@ -537,6 +539,8 @@ void SwDockWidget_MainArea::closeEvent(QCloseEvent * event )
 //-----------------------------------------------------------------------------
 bool SwDockWidget_MainArea::close()
 {
+//	EXCEPTION_TRY();
+
 	//Masquage de la fenetre
 	hide();
 
@@ -563,6 +567,8 @@ bool SwDockWidget_MainArea::close()
 		qApp->quit();	
 
 	return true;
+
+	//EXCEPTION_CATCH();
 }
 
 //-----------------------------------------------------------------------------
@@ -671,11 +677,11 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 					_isMovingDock = false;
 					_movingDock = "";
 
-					//Ajout du dock si necessaire
-					managePinDock(obj, getDockableWidget(/*obj*/));
-
 					//Masquage des fleches de positionnement
 					hideArrows();
+
+					//Ajout du dock si necessaire
+					managePinDock(obj, getDockableWidget(/*obj*/));
 
 					//Mise a jour des docks principaux
 					updateMainDock();
@@ -1131,6 +1137,7 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 				if(_centerDockBtn->isVisible() && QRect(_centerDockBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 				{
 					int index = mainDock->currentIndex();
+					//Si l'onglet en cours est vide
 					mainDock->insertWidget(index, qobject_cast<QWidget*>(obj));
 				}
 			}

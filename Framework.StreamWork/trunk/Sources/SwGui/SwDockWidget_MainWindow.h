@@ -21,7 +21,7 @@ public:
 	void restoreConfiguration();
 	void loadConfiguration(QString filePath);
 
-	void setMainWidget(QWidget * widget);
+	void setMainWidget(QWidget * widget, bool quitOnClose);
 	QWidget * getMainWidget();
 
 	void addDockWidget(QWidget * dock, QString menuName = "");
