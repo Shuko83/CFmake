@@ -29,6 +29,9 @@ namespace SwServiceAlias
 		{
 			dir.mkpath(_roamingPath);
 		}
+
+		_xsdFile.setFileName("::Ressources/Alias.xsd");
+
 		// À mettre en dernier pour que toutes les variables soient initialisées
 		_alertServiceHelper->setService(CG_SW_SERVICE_ALERT, this, &SwAliasManager::onServiceAlertManagerAvailable);
 	}
@@ -356,7 +359,7 @@ namespace SwServiceAlias
 	void SwAliasManager::onServiceAlertManagerAvailable()
 	{
 		_alertManager = _alertServiceHelper->getService();
-		_aliasManager = new AliasManager::AliasManager(*(_alertManager->getAlertManager()), QString("C:/tt4/Libraries/Components/Sources/AliasManager/Source/Alias.xsd"));
+		_aliasManager = new AliasManager::AliasManager(*(_alertManager->getAlertManager()), QString(_xsdFile.getDoubleDottedPath()));
 
 		loadAliasOrder();
 		loadAliasFastAction();

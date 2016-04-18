@@ -11,6 +11,7 @@
 #include "ISwServiceAlert.h"
 #include "SwServiceManager_Helper.h"
 #include "AliasManager.h"
+#include "SwFileDescriptor.h"
 
 /**
  * @namespace	SwServiceAlias
@@ -63,6 +64,8 @@ namespace SwServiceAlias
 	class SwAliasManager : public QObject, public ISwAliasManager
 	{
 		Q_OBJECT;
+
+		Q_PROPERTY(StreamWork::SwCore::SwFileDescriptor XsdFile READ getXsdFile WRITE setXsdFile);
 
 	public:
 		/**
@@ -316,6 +319,9 @@ namespace SwServiceAlias
 		**/
 		void onServiceAlertManagerAvailable();
 
+		StreamWork::SwCore::SwFileDescriptor getXsdFile() const { return _xsdFile; }
+		void setXsdFile(StreamWork::SwCore::SwFileDescriptor val) { _xsdFile = val; }
+
 	private:
 		/**
 		 * @fn		void SwServiceAlias::SwAliasManager::loadAliasOrder()
@@ -403,5 +409,7 @@ namespace SwServiceAlias
 		 * @brief	Chemin de sauvegarde des informations du service (alias et ordre)
 		 **/
 		QString _roamingPath;
+
+		StreamWork::SwCore::SwFileDescriptor _xsdFile;
 	};
 }  // namespace SwServiceAlias
