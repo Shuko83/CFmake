@@ -67,8 +67,6 @@ namespace StreamWork
         protected:
             /** @brief :  Handle Propriétés */
             SwCore::ISwProperties * _properties;
-            /** @brief : brief changement en cours */
-            bool _change_in_progress;
             /** @brief : Root Item */
             PropertyItem * _root_item;
             /** @brief : Action item */
@@ -76,12 +74,16 @@ namespace StreamWork
             /** @brief : Map des PropertyItem relatif aux properties de controlleurs */
             QMap<ISwProperties *,PropertyItem *> _map_properties_to_item;
 
+			bool _inResetModel;
+
         protected:
 			/** @brief : creation d'un item */
             void CreateItem(SwCore::ISwProperty * property, QString customConstructedPropertyName = "");
 
 			/** @brief : destruction d'un item */
             void DestroyItem(SwCore::ISwProperty * property, QString customConstructedPropertyName = "");
+
+			void emitDataChanged(PropertyItem* itemChanged);
 
 		public:
 			/** @brief : constructeur */
@@ -92,10 +94,6 @@ namespace StreamWork
 			/** @brief : definit les propriétés via un ISwProperties */
             void SetProperties(SwCore::ISwProperties * properties);
 
-			/** @brief : callback avant changement */
-            void OnBeforeChange(SwCore::ISwProperties * properties);
-			/** @brief : callback apres changement */
-            void OnAfterChange(SwCore::ISwProperties * properties);
 			/** @brief : callback sur creation de propriétés */
             void OnCreateProperty(SwCore::ISwProperties * properties,SwCore::ISwProperty * property);
 			/** @brief : ccallback sur destruction de propriétés*/

@@ -40,7 +40,7 @@ SwPropertiesModelImpl::SwPropertiesModelImpl(QObject * parent) :QAbstractItemMod
 	_root_item = NULL;
 	_properties = NULL;
 	_action_item = NULL;
-	_change_in_progress = false;
+	_inResetModel = false;
 }
 
 
@@ -51,8 +51,6 @@ SwPropertiesModelImpl::~SwPropertiesModelImpl()
 	if ( _properties != 0 )
 	{
 		//Desenregistrement des signaux
-		_properties->GetOnBeforePropertiesChange().idisconnect(*this, &SwPropertiesModelImpl::OnBeforeChange);
-		_properties->GetOnAfterPropertiesChange().idisconnect(*this, &SwPropertiesModelImpl::OnAfterChange);
 		_properties->GetOnCreateProperty().idisconnect(*this, &SwPropertiesModelImpl::OnCreateProperty);
 		_properties->GetOnDestroyProperty().idisconnect(*this, &SwPropertiesModelImpl::OnDestroyProperty);
 
@@ -94,19 +92,21 @@ void  SwPropertiesModelImpl::CreateItem(ISwProperty * property, QString customCo
 		it = item->_childrens.find(liste[i]);
 		if ( it == item->_childrens.end() )
 		{
-			if ( i == liste_size - 1 )
+			insert_index = item->_showChildrens.count();
+			if (i == liste_size - 1)
 				c_item = new PropertyItem(this, liste[i], property);
 			else
 				c_item = new PropertyItem(this, liste[i]);
 			c_item->_parent = item;
+
+			if (!_inResetModel)
+				beginInsertRows(parent(createIndex(insert_index, 0, static_cast<void *>(c_item))), insert_index, insert_index);
+
 			item->_childrens.insert(liste[i], c_item);
 			item->_showChildrens.push_back(c_item);
-			if ( _change_in_progress )
-			{
-				insert_index = item->_showChildrens.count() - 1;
-				beginInsertRows(parent(createIndex(insert_index, 0, (void *) c_item)), insert_index, insert_index);
+			
+			if (!_inResetModel)
 				endInsertRows();
-			}
 		}
 		else
 		{
@@ -149,7 +149,6 @@ void SwPropertiesModelImpl::DestroyItem(ISwProperty * property, QString customCo
 	QMap<QString, PropertyItem *>::iterator its;
 	int remove_index;
 	QModelIndex parent_qindex = QModelIndex();
-	bool signalEndRemove;
 
 	QMap<SwCore::ISwProperties *, PropertyItem *>::iterator itp;
 
@@ -166,19 +165,24 @@ void SwPropertiesModelImpl::DestroyItem(ISwProperty * property, QString customCo
 			if ( i == liste_size - 1 )
 			{
 				d_item = c_item;
+
 				if ( d_item->_childrens.count()>0 )
 				{
 					d_item->_property = NULL;
+					if (!_inResetModel)
+						emitDataChanged(d_item);
 					return;
 				}
+
 				c_item = c_item->_parent;
+
 				//Change
 				while ( c_item != _root_item && c_item->_property == NULL && c_item->_childrens.count() == 1 )
 				{
 					d_item = c_item;
 					c_item = c_item->_parent;
 				}
-				signalEndRemove = false;
+
 				remove_index = c_item->_showChildrens.indexOf(d_item);
 				its = c_item->_childrens.begin();
 				while ( its.value() != d_item )
@@ -186,20 +190,20 @@ void SwPropertiesModelImpl::DestroyItem(ISwProperty * property, QString customCo
 					//remove_index++;
 					its++;
 				}
-				if ( _change_in_progress )
-				{
-					parent_qindex = parent(createIndex(remove_index, 0, (void *) its.value()));
+
+				parent_qindex = parent(createIndex(remove_index, 0, static_cast<void *>(d_item)));
+
+				if (!_inResetModel)
 					beginRemoveRows(parent_qindex, remove_index, remove_index);
-					signalEndRemove = true;
-				}
-				delete d_item;
+
 				c_item->_childrens.erase(its);
 				c_item->_showChildrens.removeAt(remove_index);
-				if ( signalEndRemove && parent_qindex.isValid() )
-				{
 
+				delete d_item;
+				
+				if (!_inResetModel)
 					endRemoveRows();
-				}
+
 				return;
 			}
 		}
@@ -219,13 +223,12 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties)
 	{
 		//Signal avant changement
 		beginResetModel();
+		_inResetModel = true;
 
 		//Si l'ancienne collection de propriétés est definie
 		if ( _properties != NULL )
 		{
 			//Desenregistrement des signaux
-			_properties->GetOnBeforePropertiesChange().idisconnect(*this, &SwPropertiesModelImpl::OnBeforeChange);
-			_properties->GetOnAfterPropertiesChange().idisconnect(*this, &SwPropertiesModelImpl::OnAfterChange);
 			_properties->GetOnCreateProperty().idisconnect(*this, &SwPropertiesModelImpl::OnCreateProperty);
 			_properties->GetOnDestroyProperty().idisconnect(*this, &SwPropertiesModelImpl::OnDestroyProperty);
 			itp = _map_properties_to_item.find(_properties);
@@ -234,13 +237,13 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties)
 			//Destruction des items
 			delete _root_item;
 		}
+
 		//Enregistrement de la nouvelle collection de propriétés
 		_properties = properties;
+
 		if ( _properties != NULL )
 		{
 			//Enregistrement des signaux
-			_properties->GetOnBeforePropertiesChange().iconnect(*this, &SwPropertiesModelImpl::OnBeforeChange);
-			_properties->GetOnAfterPropertiesChange().iconnect(*this, &SwPropertiesModelImpl::OnAfterChange);
 			_properties->GetOnCreateProperty().iconnect(*this, &SwPropertiesModelImpl::OnCreateProperty);
 			_properties->GetOnDestroyProperty().iconnect(*this, &SwPropertiesModelImpl::OnDestroyProperty);
 			//Creation des items
@@ -255,26 +258,9 @@ void SwPropertiesModelImpl::SetProperties(ISwProperties * properties)
 
 		}
 		//Signal apres changement
+		_inResetModel = false;
 		endResetModel();
 	}
-}
-
-//-------------------------------------------------------------------------
-void SwPropertiesModelImpl::OnBeforeChange(ISwProperties * properties)
-{
-	//A Revoir pour la destrcution
-	//emit layoutAboutToBeChanged();
-	//modelAboutToBeReset();
-	//reset();
-	_change_in_progress = true;
-}
-
-//-------------------------------------------------------------------------
-void SwPropertiesModelImpl::OnAfterChange(ISwProperties * properties)
-{
-	//emit layoutChanged();
-	//modelReset();
-	_change_in_progress = false;
 }
 
 //-------------------------------------------------------------------------
@@ -301,7 +287,7 @@ Qt::ItemFlags SwPropertiesModelImpl::flags(const QModelIndex & index) const
 
 	if ( (_properties == 0 && _map_properties_to_item.size() == 0) || !index.isValid() )
 		return Qt::ItemFlags(Qt::ItemIsEnabled);
-	item = (PropertyItem *) index.internalPointer();
+	item = static_cast<PropertyItem *>(index.internalPointer());
 	if ( item->_property == NULL )
 	{
 		return Qt::ItemFlags(Qt::ItemIsEnabled);
@@ -340,7 +326,7 @@ int SwPropertiesModelImpl::rowCount(const QModelIndex & parent) const
 	}
 	else
 	{
-		iparent = (PropertyItem *) parent.internalPointer();
+		iparent = static_cast<PropertyItem *>(parent.internalPointer());
 	}
 	return iparent->_childrens.count();
 }
@@ -372,7 +358,7 @@ QVariant SwPropertiesModelImpl::data(const QModelIndex & index, int role) const
 
 	if ( (_properties == 0 && _map_properties_to_item.size() == 0) || !index.isValid() )
 		return QVariant();
-	item = (PropertyItem *) index.internalPointer();
+	item = static_cast<PropertyItem *>(index.internalPointer());
 
 	//pas d'edition sur la premeire colone
 	if ( index.column() == 0 )
@@ -493,7 +479,7 @@ bool SwPropertiesModelImpl::setData(const QModelIndex & index, const QVariant & 
 
 	if ( (_properties == 0 && _map_properties_to_item.size() == 0) || !index.isValid() || role != Qt::EditRole )
 		return false;
-	item = (PropertyItem *) index.internalPointer();
+	item = static_cast<PropertyItem *>(index.internalPointer());
 	if ( item->_property == NULL )
 		return false;
 	ivalue = item->_property->GetValue();
@@ -536,14 +522,14 @@ QModelIndex SwPropertiesModelImpl::index(int row, int column, const QModelIndex 
 	}
 	else
 	{
-		iparent = (PropertyItem *) parent.internalPointer();
+		iparent = static_cast<PropertyItem *>(parent.internalPointer());
 	}
 
 	if ( iparent->_showChildrens.size() <= row )
 	{
 		return QModelIndex();
 	}
-	return createIndex(row, column, (void *) iparent->_showChildrens.at(row));
+	return createIndex(row, column, static_cast<void *>(iparent->_showChildrens.at(row)));
 }
 
 //-------------------------------------------------------------------------
@@ -562,14 +548,15 @@ QModelIndex SwPropertiesModelImpl::parent(const QModelIndex & index) const
 
 	if ( (_properties == 0 && _map_properties_to_item.size() == 0) || !index.isValid() )
 		return QModelIndex();
-	iindex = (PropertyItem *) index.internalPointer();
+
+	iindex = static_cast<PropertyItem *>(index.internalPointer());
 	iparent = iindex->_parent;
 	if ( iparent == _root_item )
 		return QModelIndex();
 
 	//Calcul de l'indice du parent
-	index_parent = iparent->_showChildrens.indexOf(iindex);
-	return createIndex(index_parent, 0, (void *)iparent);
+	index_parent = iparent->_parent->_showChildrens.indexOf(iparent);
+	return createIndex(index_parent, 0, static_cast<void *>(iparent));
 }
 
 //--------------------------------------------------------------
@@ -754,6 +741,17 @@ bool SwPropertiesModelImpl::isSupportedType(QVariant & val)
 	return false;
 }
 
+void SwPropertiesModelImpl::emitDataChanged(PropertyItem* itemChanged)
+{
+	int index;
+	QModelIndex mindex;
+
+	index = itemChanged->_parent->_showChildrens.indexOf(itemChanged);
+	mindex = createIndex(index, 1, static_cast<void *>(itemChanged));
+
+	emit dataChanged(mindex, mindex);
+}
+
 //---------------------------------------------------------------------
 // PropertyItem
 //---------------------------------------------------------------------
@@ -797,12 +795,5 @@ SwPropertiesModelImpl::PropertyItem::~PropertyItem()
 //-------------------------------------------------------------------------
 void SwPropertiesModelImpl::PropertyItem::OnPropertyChange(ISwProperty * property)
 {
-	QMap<QString, PropertyItem *>::const_iterator it;
-	int index;
-	QModelIndex mindex;
-
-	index = _parent->_showChildrens.indexOf(this);
-	mindex = _host->createIndex(0, index, (void *)this);
-
-	_host->dataChanged(mindex, mindex);
+	_host->emitDataChanged(this);
 }
