@@ -676,7 +676,7 @@ void _SwGuiCompMainWindow::interfaceAvailable(QString interfaceName)
 			foreach(SwDockWidget_DockWidget * dock, widget->GetListDockWidget())
 			{
 				if ( dock && _mainWindow )
-					_mainWindow->addDockWidget(dock, widget->getName());
+					_mainWindow->addDockWidget(dock, widget->getDockWidgetName());
 			}
 		}
 		return;
@@ -772,7 +772,7 @@ void _SwGuiCompMainWindow::interfaceUnavailable(QString interfaceName)
 					_mainWindow->removeDockWidget(dock);
 			}
 			//Suppression du menu
-			_mainWindow->removeMenu(widget->getName());
+			_mainWindow->removeMenu(widget->getDockWidgetName());
 		}
 		listdockwidget_it.value() = NULL;
 		return;

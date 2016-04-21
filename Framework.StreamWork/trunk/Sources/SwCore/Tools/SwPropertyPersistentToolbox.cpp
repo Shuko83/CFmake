@@ -480,7 +480,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 				}
 			}
 		}
-		inProperty->SetValue(QVariant(QString("")));   
+			inProperty->SetValue(QVariant(QString("")));   
 		return;
 	}
 

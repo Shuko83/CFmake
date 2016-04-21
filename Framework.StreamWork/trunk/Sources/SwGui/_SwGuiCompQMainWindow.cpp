@@ -13,6 +13,9 @@
 #include "_SwGuiCompQMainWindow.h"
 #include <QEvent>
 
+#include "ISwServiceShortcuts.h"
+#include <SwApplication.h>
+
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
@@ -27,6 +30,7 @@ using namespace StreamWork::SwGui;
 #define SW_SHOW_FULLSCREEN 2
 #define SW_SHOW_MAXIMIZED 3
 #define SW_SHOW_MINIMIZED 4
+#define TOGGLE_FULLSCREEN "Show Fullscreen"
 
 //-----------------------------------------------------------------------
 _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
@@ -59,6 +63,11 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
 	_show_mode.FromInt(SW_SHOW_NORMAL);
 	_useAsWidget = false;
 	SW_APP->AddServicesManagerObserver(this);
+
+	// Shortcuts
+	ISwServiceShortcuts* serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
+	if (serviceShortcuts)
+		serviceShortcuts->registerCommand("Affichage" ,TOGGLE_FULLSCREEN, this);		
 }
 
 //-----------------------------------------------------------------------
@@ -127,6 +136,9 @@ _SwGuiCompQMainWindow::~_SwGuiCompQMainWindow()
 	if ( _handle_central_widget != NULL )
 		_handle_central_widget->GetWidget().setParent(NULL);
 
+	ISwServiceShortcuts* serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
+	if (serviceShortcuts)
+		serviceShortcuts->unregisterCommand("Affichage", TOGGLE_FULLSCREEN, this);
 }
 
 
@@ -602,6 +614,19 @@ void _SwGuiCompQMainWindow::notify(QEvent * event)
 
 	foreach(itObs, _iSwEvent)
 		itObs->onEvent(event);
+}
+
+//---------------------------------------------------------------------------------
+void _SwGuiCompQMainWindow::processCommand(QString name)
+{
+	if (name == TOGGLE_FULLSCREEN)
+	{
+		if (_show_mode.ToInt() == SW_SHOW_FULLSCREEN)
+			_show_mode.FromInt(SW_SHOW_MAXIMIZED);
+		else
+			_show_mode.FromInt(SW_SHOW_FULLSCREEN);
+		showChanged();
+	}
 }
 
 //-----------------------------------------------------------------------

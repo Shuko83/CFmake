@@ -25,6 +25,7 @@
 #include "ISwToolBar.h"
 #include "ISwQDockWidget.h"
 #include "ISwWidget.h"
+#include "ISwShortcut.h"
 /*
   * INCLUDES LOCAUX
   */
@@ -42,7 +43,13 @@ using namespace StreamWork::SwGui;
 	\class _SwGuiCompQMainWindow
 	\brief _SwGuiMainWindow generant une QMainWindow
 	*/
-class _SwGuiCompQMainWindow : public Component, public QMainWindow, public ISwQMainWindow, public ISwWidget, public ISwEvent, public ISwServicesManager_Listener
+class _SwGuiCompQMainWindow :	public Component,
+								public QMainWindow,
+								public ISwQMainWindow,
+								public ISwWidget,
+								public ISwEvent,
+								public ISwServicesManager_Listener,
+								public ISwShortcut
 {
 protected:
 	/* fenetre principale */
@@ -137,6 +144,11 @@ public:
 	void addObserver(ISwEventObserver * obs);
 	void removeObserver(ISwEventObserver * obs);
 	void notify(QEvent * event);
+
+	//---------------------------------------------------------------------
+	// Interface ISwShortcut
+	//---------------------------------------------------------------------	
+	void processCommand(QString name) final;
 
 private:
 	void showChanged();

@@ -387,8 +387,7 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 	_ownerConf_service			= NULL;
 	_executable_service			= NULL;
 	_pins_service				= NULL;
-
-	_componentNameShortcut		= "ERROR";
+	
 	_disable_service			= false;
 	_allreadyListenerOfService  = false;
 
@@ -483,11 +482,12 @@ SwAssistedComponent::~SwAssistedComponent()
 	}
 
 	//Unregister all Shortcuts
-	if(_shortcuts_service && !_listShortcut.isEmpty())
+	if (_shortcuts_service && !_mapShortcutNameWithCategory.isEmpty())
 	{
-		foreach(QString nameShortcut,_listShortcut)
+		for(QString nameShortcut : _mapShortcutNameWithCategory)
 		{
-			_shortcuts_service->unregisterCommand(nameShortcut,this);
+			QString category = _mapShortcutNameWithCategory[nameShortcut];
+			_shortcuts_service->unregisterCommand(category, nameShortcut, this);
 		}
 	}
 	_shortcuts_service = NULL;
@@ -551,15 +551,6 @@ void SwAssistedComponent::InitializeResources() throw(SwException)
 	_shortcuts_service		= dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
 
 	initializeComponent();
-
-	//Register all Shortcuts
-	if(_shortcuts_service && !_listShortcut.isEmpty())
-	{
-		foreach(QString nameShortcut,_listShortcut)
-		{
-			_shortcuts_service->registerCommand(nameShortcut,this);
-		}
-	}
 
 	if ( _doCheckTimer && timer )
 	{
@@ -753,33 +744,15 @@ void SwAssistedComponent::OnUnregisterService( ISwService * service )
 		_mapServiceWithCallBack[name]( service );
 }
 
-
 //-------------------------------------------------------------------------
 void SwAssistedComponent::processCommand( QString name )
 {
+	QHash<QString, std::function<void()> >::iterator it = _mapShortcutWithCallBack.find(name);
 
-}
-
-//-------------------------------------------------------------------------
-QString SwAssistedComponent::getName()
-{
-	return _componentNameShortcut;
-}
-
-//-------------------------------------------------------------------------
-void SwAssistedComponent::addShortcut( QString name )
-{
-	_listShortcut.append(name);
-}
-
-//-------------------------------------------------------------------------
-void SwAssistedComponent::removeShortcut( QString name )
-{
-	if(_shortcuts_service && !_listShortcut.contains(name))
+	if (it != _mapShortcutWithCallBack.end())
 	{
-		_shortcuts_service->unregisterCommand(name,this);
-
-		_listShortcut.removeOne(name);
+		std::function<void()> shortcutFunction = *it;
+		shortcutFunction();
 	}
 }
 
@@ -812,12 +785,6 @@ void SwAssistedComponent::eventActivationChanged()
 	{
 		deactivation();
 	}
-}
-
-//-------------------------------------------------------------------------
-void SwAssistedComponent::setComponentNameForShortcut( QString name )
-{
-	_componentNameShortcut = name;
 }
 
 //-------------------------------------------------------------------------

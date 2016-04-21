@@ -63,7 +63,7 @@ namespace StreamWork {
 			public SwComponent_Class,
 			virtual public ISwInterfaces_ConsumerObserver,
 			virtual public ISwPin_Listener,
-			virtual public ISwShortcut,
+			virtual private ISwShortcut,
 			virtual public ISwPersistent,
 			virtual public ISwPersistentConfigurable,
 			virtual public ISwServicesManager_Listener
@@ -82,17 +82,17 @@ namespace StreamWork {
              */
             virtual ~SwAssistedComponent();
 
+
 			/**
 			 * Activation des services 
 			 */
-			void setExecutableServiceAvaibility(bool val);
-			void setConsumerServiceAvaibility(bool val);
-			void setProviderServiceAvaibility(bool val);
-			void setPropertyServiceAvaibility(bool val);
-			void setPinServiceAvaibility(bool val);
-			void setOwnerConfigurableServiceAvaibility(bool val);
-			void setOwnerServiceAvaibility(bool val);
-
+			void setExecutableServiceAvaibility(bool val);							//_isExecutable = false;
+			void setConsumerServiceAvaibility(bool val);							//_isConsumer = true;
+			void setProviderServiceAvaibility(bool val);							//_isProvider = true;
+			void setPropertyServiceAvaibility(bool val);							//_isProperty = true;
+			void setPinServiceAvaibility(bool val);									//_isPin = false;
+			void setOwnerConfigurableServiceAvaibility(bool val);					//_isOwnerConf = false;
+			void setOwnerServiceAvaibility(bool val);								//_isOwner = false;
 
 			/**
 			 * @brief    : Permet de récuperer un pointerur sur une ISwProperty
@@ -158,32 +158,26 @@ namespace StreamWork {
 
 
 			//------------------------------------------------------------------
-			// Interface ISwShortcut
-			//------------------------------------------------------------------
+			// Utilisation des shortcuts (ISwShortcut)
+			//------------------------------------------------------------------		
 
 			/**
-			 * @brief    : Setter du nom du composant pour les raccourcis
-			 * @param	 : QString name - Nom du composant
-			 */
-			void setComponentNameForShortcut(QString name);
-
-		    /**
-			 * @brief    : Callback d'appel avec en parametre le nom associé a la commande
-			 * @param	 : QString name - nom de la commande appelée
-			 */
-		    virtual void processCommand(QString name);
+			* @brief    : Callback d'appel avec en parametre le nom associé a la commande
+			* @param	 : QString name - nom de la commande appelée
+			*/
+			template<typename T> inline void registerShortcut(QString shortcutCategory, QString shortcutName,  void (T::*shortcutCallback)())
+			{
+				registerInternalShortcut(shortcutCategory, shortcutName, [=](){(static_cast<T*>(this)->*shortcutCallback)(); });
+			}
 
 			/**
-			 * @brief    : Permet d'ajouter un raccourci au composant
-			 * @param	 : QString name - Nom de la commande
-			 */
-			void addShortcut(QString name);
-
-			/**
-			 * @brief    : Supprimer une raccourci déjç enregistré
-			 * @param	 : QString name - Nom de la commande
-			 */
-			void removeShortcut(QString name);
+			* @brief    : Callback d'appel avec en parametre le nom associé a la commande
+			* @param	 : QString name - nom de la commande appelée
+			*/
+			template<typename T, typename MEMBER> inline void registerShortcut(QString shortcutCategory, QString shortcutName, T* ptr, MEMBER shortcutCallback)
+			{
+				registerInternalShortcut(shortcutCategory, shortcutName, [=](){(ptr->*shortcutCallback)(); });
+			}
 
 			//----------------------------------------------------
 			// Interface ISwExecutable_Service
@@ -642,30 +636,31 @@ private:
              */
             void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
 
-			//------------------------------------------------------------------
-			// Interface ISwShortcut
-			//------------------------------------------------------------------
-
-			/**
-			 * @brief    : Retourne le nom associé au composant
-			 * @return   : QString - le nom d'affichage pour le shortcut groupbox
-			 */
-		    virtual QString getName(); 
-
 			/**
 	         * @brief    : Callback sur reception d'une data
 	         * @param	 : SwPin * src - Pointeur sur le pin
 	         * @param	 : SwData_Class * data - pointeur sur les data
 	         * @note	 : note a surcharger pour receptionner les data
 	         */
-	        void OnReceiveData(SwPin * src,SwData_Class * data);  
+			void OnReceiveData(SwPin * src,SwData_Class * data); 
 
-            /**
+			/**
              * @brief    : Active l'observabilité d'une propriété notifié par "eventPropertyChange"
              * @param	 : ISwProperty * property - Pointeur sur une propriété
              */
             //void enableListeningChangeForProperty(ISwProperty * property);			
 
+
+ 			//------------------------------------------------------------------
+			// Interface ISwShortcut
+			//------------------------------------------------------------------
+
+			/**
+			 * @brief    : Callback d'appel avec en parametre le nom associé a la commande
+			 * @param	 : QString name - nom de la commande appelée
+			 */
+		    void processCommand(QString name) final;
+			         
 			//------------------------------------------------------------------
 			// Template pour la gestion des interfaces
 			//------------------------------------------------------------------
@@ -684,6 +679,23 @@ private:
 			{
 				getIConsumerService().RegisterConsumedInterface<T>(interfaceName, interfaceHandle);
 				_mapIConsummedWithCallBack.insert(interfaceName, callback);
+			}
+
+
+			inline void registerInternalShortcut(QString shortcutCategory, QString shortcutName,  std::function<void()> shortcutCallback)
+			{
+				ISwServiceShortcuts* serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
+				if (serviceShortcuts){
+					serviceShortcuts->registerCommand(shortcutCategory, shortcutName, this);
+
+					_mapShortcutNameWithCategory.insert(shortcutName, shortcutCategory);
+					_mapShortcutWithCallBack.insert(shortcutName, shortcutCallback);
+				}
+				else
+					qCritical() << "Unable to register shortcut, because the service is not available -> Faire le TODO";
+
+				//TODO : S'abonner à la notif de dispo du service && si service pas dispo -> On enregistre en temporaire
+				// Quand service dispo on registerCommand sur les temporaire
 			}
 
 			/**
@@ -717,9 +729,6 @@ private:
             /* desactivation des services */
             bool _disable_service;
 
-			/* Liste des shortcuts definis */
-			QList<QString> _listShortcut;
-
 			/* Liste des interfaces produites */
 			QList<QString> _listIProvided;
 
@@ -732,8 +741,9 @@ private:
 			QHash<QString, std::function<void(ISwService*)>> _mapServiceWithCallBack;
 			bool _allreadyListenerOfService;
 
-			/* Nom du composant pour les raccourcis*/
-			QString _componentNameShortcut;
+			QHash<QString, std::function<void()>> _mapShortcutWithCallBack;
+			QHash<QString, QString> _mapShortcutNameWithCategory;
+			
 
 			/* Liste des pin enregistrée*/
 			QList<SwPin*> _listPin;

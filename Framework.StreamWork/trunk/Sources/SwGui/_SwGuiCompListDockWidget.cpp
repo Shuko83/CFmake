@@ -156,7 +156,7 @@ void _SwGuiCompListDockWidget::removeDockWidgetListener(ISwListDockWidgetListene
 		_listListener.removeOne(observer);
 }
 
-QString _SwGuiCompListDockWidget::getName()
+QString _SwGuiCompListDockWidget::getDockWidgetName()
 {
 	return _name;
 }

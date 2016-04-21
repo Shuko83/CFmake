@@ -33,14 +33,14 @@ namespace StreamWork
             * @param	 : QString  commandName - le nom de la commande
             * @param	 : ISwShortcut * shortcut - Pointeur sur le shortcut
             */
-           virtual void add(QString  commandName, ISwShortcut *shortcut) = 0 ; 
+			virtual void add(QString categoryName,  QString commandName, ISwShortcut *shortcut) = 0;
 
 		    /**
             * @brief    : Méthode appelée lors du desenregistrement d'un shortcut
             * @param	 : QString  commandName - le nom de la commande
             * @param	 : ISwShortcut * shortcut - Pointeur sur le shortcut
             */
-           virtual void remove(QString  commandName, ISwShortcut *shortcut) = 0 ; 
+			virtual void remove(QString categoryName, QString  commandName, ISwShortcut *shortcut) = 0;
         };
     }
 }

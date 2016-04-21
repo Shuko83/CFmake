@@ -51,13 +51,13 @@ namespace StreamWork
 			 * @param	 : QString command - Nom de la commande
 			 * @param	 : ISwShortcut * obj - Pointeur sur l'objet
 			 */
-			virtual void registerCommand(QString command, ISwShortcut *obj) = 0;
+			virtual void registerCommand(QString category, QString command, ISwShortcut *obj) = 0;
 
 			/**
 			 * @brief    : Permet de desenregistré une commande dans le service
 			 * @param	 : QString command - Nom de la commande
 			 */
-			virtual void unregisterCommand(QString command, ISwShortcut *obj) = 0;
+			virtual void unregisterCommand(QString category, QString command, ISwShortcut *obj) = 0;
 
 			/**
 			 * @brief    : Permet d'enregistrer un périphérique 
@@ -150,14 +150,14 @@ namespace StreamWork
 			 * @return   : QString - Retourne Name
 			 * @param	 : QString val - Une combinaison de Name + SC_SEP + commandName
 			 */
-			virtual QString getName(QString val) = 0;
+			virtual QString getCategory(QString val) = 0;
 
 			/**
 			 * @brief    : Retourne le texte après le SC_SEP
 			 * @return   : QString - Retourne commandName
 			 * @param	 : QString val - Une combinaison de Name + SC_SEP + commandName
 			 */
-			virtual QString getParameter(QString val) = 0;
+			virtual QString getShortcutName(QString val) = 0;
 
 			/**
 			 * @brief    : Genere un nom "prefix+SC_SEP+suffix)

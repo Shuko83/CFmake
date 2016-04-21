@@ -30,7 +30,7 @@ class _SwGuiCompListDockWidget : public SwAssistedComponent, public ISwListDockW
 {
 	Q_OBJECT
 	Q_PROPERTY(uint widgetNumber READ getWidgetNumber WRITE setWidgetNumber)
-	Q_PROPERTY(QString name READ getName WRITE setName)
+	Q_PROPERTY(QString name READ getDockWidgetName WRITE setName)
 
 public:
 	_SwGuiCompListDockWidget();
@@ -53,7 +53,7 @@ public:
 	virtual QList<SwDockWidget_DockWidget*> GetListDockWidget();
 	virtual void addDockWidgetListener(ISwListDockWidgetListener * observer);
 	virtual void removeDockWidgetListener(ISwListDockWidgetListener * observer);
-	virtual QString getName();
+	virtual QString getDockWidgetName();
 
 private:
 	unsigned int _widgetNumber;
