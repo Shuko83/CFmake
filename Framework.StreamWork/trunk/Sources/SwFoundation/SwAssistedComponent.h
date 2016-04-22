@@ -254,6 +254,30 @@ namespace StreamWork {
 			@brief Methode simplifiant la consomation d'interface
 
 			@details
+			- set automatique du pointeur
+			- fini les appels à getInterface avec le nom de l'interface
+			- Pratique quand aucun traitmenent specifique a la dispo/indispo de l'interface
+
+			exemple :
+			.h :
+			ISwWidget * _i_widget;
+			constructor :
+			_i_widget = 0;
+			initializeComponent :
+			consumeInterface("ISwWidget", &_i_widget);
+
+			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
+			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
+			*/
+			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle)
+			{
+				registerInterfaceCallback(interfaceName, interfaceHandle, [=](CALLBACK_EVENT eventType)->void {});
+			}
+
+			/**
+			@brief Methode simplifiant la consomation d'interface
+
+			@details
 					- A chaque interface sa methode de disponibilité
 					- set automatique du pointeur
 					- notifie avant de changer le pointeur et aprés avoir changé le pointeur
@@ -402,7 +426,6 @@ namespace StreamWork {
 				*handle_interface = NULL;
 				getIConsumerService().RegisterConsumedInterface<T>(pinterface_name,(T**)handle_interface);
 				_mapIConsummed.insert(pinterface_name,handle_interface);
-				
 			}
 
 			/**
