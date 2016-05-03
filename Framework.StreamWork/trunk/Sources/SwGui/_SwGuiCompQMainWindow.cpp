@@ -67,7 +67,7 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
 	// Shortcuts
 	ISwServiceShortcuts* serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
 	if (serviceShortcuts)
-		serviceShortcuts->registerCommand("Affichage" ,TOGGLE_FULLSCREEN, this);		
+		serviceShortcuts->registerCommand("Display" ,TOGGLE_FULLSCREEN, this);		
 }
 
 //-----------------------------------------------------------------------
@@ -138,7 +138,7 @@ _SwGuiCompQMainWindow::~_SwGuiCompQMainWindow()
 
 	ISwServiceShortcuts* serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
 	if (serviceShortcuts)
-		serviceShortcuts->unregisterCommand("Affichage", TOGGLE_FULLSCREEN, this);
+		serviceShortcuts->unregisterCommand("Display", TOGGLE_FULLSCREEN, this);
 }
 
 
