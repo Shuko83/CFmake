@@ -8,4 +8,6 @@ greaterThan(QT_MINOR_VERSION, 4): {
 	linux: LIBS += -lopengl32
 }
 
+QMAKE_LFLAGS += /LARGEADDRESSAWARE
+
 RC_ICONS = ..\StreamWorkEditor2.ico
