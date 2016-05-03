@@ -322,6 +322,15 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 					}
 				}
 				break;
+
+			case QVariant::KeySequence:
+				text_node = doc.createTextNode(qvariant_cast<QKeySequence>(var).toString());
+				if (!text_node.isNull())
+				{
+					elt.appendChild(text_node);
+					save_done = true;
+				}
+				break;
 			default:
 				break;
 		}

@@ -315,6 +315,8 @@ namespace StreamWork
 		
 		private:
 
+			bool _hasCreatedFactoryFile;
+
 			/** @brief : QHash<confName, ISwConfSaver*> */
 			QHash<QString, ISwConfSaver*> _confSavers;
 
@@ -353,10 +355,17 @@ namespace StreamWork
 			* @brief : permets de parser le fichier des confs
 			* @Param : QString : nom de la configuration concernée
 			* @Param : QString : fichier à parser contenant les données de conf
-			* @Param : bool : true s'il n'y avait pas de fichier de config 
+			* @Param : bool : true s'il n'y avait pas de fichier de config
 			*			et qu'il a du être créé pour la premiere fois (need un parse à nouveau)
 			*/
 			QString parseConfigurationFile(QString confName, QString inConfigFileToParse);
+
+			/**
+			* @brief : Crée un profile de conf par défaut (a partir des factory settings)
+			* @Param : QString : nom de la configuration concernée
+			* @Param : QDomElemment : root_node
+			*/
+			void createDefaultFromFactory(QString confName, QDomElement &root_node);
 
 			/**
 			* @brief : permets de parser le fichier des confs
