@@ -91,6 +91,7 @@ void _SwServiceShortcuts::unregisterCommand(QString category, QString command, I
 			}
 
 			_mapShortcuts.remove(cName);
+			_shortcutsName.removeOne(command);
 		}
 	}
 }

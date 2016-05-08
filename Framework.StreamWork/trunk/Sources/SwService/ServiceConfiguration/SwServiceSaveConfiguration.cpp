@@ -1076,8 +1076,8 @@ ISwProperty* SwServiceSaveConfiguration::getProperty(QString confName, QString p
 			if (collector)
 				returnedProp = collector->getProperty(decoratedName);
 		}
-		//else
-		//qDebug() << "Prefix " << prefix<<" not registered in confCollector for configuration " <<confName;
+		else
+			qDebug() << "Prefix " << prefix<<" not registered in confCollector for configuration " <<confName;
 	}
 	else
 		qDebug() << "Configuration " << confName << " not registered in confCollectors";
@@ -1787,12 +1787,10 @@ void SwServiceSaveConfiguration::createQDomProfile(QString confName, QDomDocumen
 				if (inNewDefaultValues.size() > 0)
 				{
 					// find propery in newDefaultValues le "decoratedNameNewDefaultProfile"
-					QString decoratedNameNewDefaultProfile = it_props.value()->GetRealName();
+					QString decoratedNameNewDefaultProfile = it_props.key();
 					QHash<QString, QString>::iterator it_property = inNewDefaultValues.find(decoratedNameNewDefaultProfile);
-					if (it_property != inNewDefaultValues.end())
-					{
-						newDefaultValue = it_property.value();
-					}
+					if (it_property != inNewDefaultValues.end() && it_property.value() != "")
+						newDefaultValue = SwPropertyPersistentToolbox::createQVariantFromString(it_props.value(), it_property.value());
 				}
 
 				// Pour chaque * ISwProperty faire appel à la méthode SaveProperty de SwProperyPersistent_ToolBox

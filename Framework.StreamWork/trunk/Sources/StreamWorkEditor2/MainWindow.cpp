@@ -387,7 +387,6 @@ void MainWindow::onQuit()
 		_streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
 	}
 
-
 	qApp->disconnect(qApp, SIGNAL(lastWindowClosed()), this, SLOT(onQuit()));
 	this->deleteLater();
 	nbWindows--;
@@ -397,6 +396,14 @@ void MainWindow::onQuit()
 /** @brief sur close event */
 void MainWindow::closeEvent(QCloseEvent *event) 
 {   
+	//Si on est le master, on ferme les autres editors avant de se fermer
+	if (_isMasterWindow)
+	{
+		for (auto * main : _editors.values())
+			main->close();
+	}
+
+
 	QSettings settings;
 	if (_streamControler->getRootItem()->_getReferencesNb()>0) 
 		_streamControler->getRootItem()->OnDestroy.idisconnect(*this,&MainWindow::internalClose);
@@ -554,5 +561,11 @@ void MainWindow::clearServices()
  	{
  		_serviceShortcuts->clearShortcutsService();
  	}
+}
+
+//-----------------------------------------------------------------------
+void MainWindow::setIsMasterWindow(bool val)
+{
+	_isMasterWindow = val;
 }
 

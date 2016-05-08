@@ -292,8 +292,12 @@ void StreamControler::saveStream()
 		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(_streamFileName));
 		return;
 	}
-	//Ecriture du fichier
-	file.write(stream_desc);
+
+	//Enregistrement des fichiers en UTF-8
+	QTextStream ts(&file);
+	ts.setCodec("UTF-8");
+	ts << stream_desc;
+
 	//Fermeture du fichier
 	file.close();
 

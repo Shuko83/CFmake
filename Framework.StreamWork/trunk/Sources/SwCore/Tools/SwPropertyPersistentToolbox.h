@@ -69,6 +69,7 @@ namespace StreamWork
             */
 	        static void SavePropertyExtended(QDomElement & parent_property_node,QDomDocument &doc, QString name, ISwProperties * properties, bool forceSave);
 
+			static QVariant createQVariantFromString(ISwProperty* prop, QString value);
 
 		private:
 			/*  @brief : méthode interne pour sauvegarder une property au bon format selon son type
@@ -87,6 +88,7 @@ namespace StreamWork
 			 * @param : var, QVariant contenant la valeur de la propriété
 			 */
 			static void createProperty(QDomElement & parent_property_node, QDomDocument &doc, ISwProperty * inProperty, QDomElement &elt, QVariant var);
+
        };
     }
 }

@@ -57,13 +57,14 @@ bool										_isCheck = false;
 //-----------------------------------------------------------------------
 SwApplication::SwApplication() :SwServicesManager_Class()
 {
+	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 	_startPath = QDir::currentPath();
 
-	if ( dynamic_cast<QApplication *>(qApp) != NULL )
+	if (dynamic_cast<QApplication *>(qApp) != NULL)
 		_isGuiApp = true;
 	else
 		_isGuiApp = false;
-	
+
 	//Initialisation des types
 	Initialize_Types();
 	//Pas d'affichage
@@ -99,16 +100,16 @@ SwApplication::~SwApplication()
 //-----------------------------------------------------------------------
 SwApplication * SwApplication::GetInstance()
 {
-	if ( _singleton == NULL )
+	if (_singleton == NULL)
 	{
 		QString appName = QCoreApplication::applicationName();
-		if ( appName.isEmpty() )
+		if (appName.isEmpty())
 		{
 			QStringList names = QCoreApplication::applicationFilePath().split(QRegExp("[\\\\/]"));
-			if ( names.count() > 0 )
+			if (names.count() > 0)
 			{
 				QStringList namep = names[names.count() - 1].split(".");
-				if ( namep.count() > 0 )
+				if (namep.count() > 0)
 				{
 					QCoreApplication::setApplicationName(namep[0]);
 					QCoreApplication::setOrganizationName("Diginext");
@@ -132,13 +133,13 @@ void SwApplication::readParameters()
 	int nbArgs = args.count();
 	bool isAppDirPathChanged = false;
 
-	for ( int i = 1; i < nbArgs; i++ )
+	for (int i = 1; i < nbArgs; i++)
 	{
 		//debug
-		if ( args[i] == "-d" )
+		if (args[i] == "-d")
 			this->Verbose();
-		
-		if ( args[i] == "-checktime" )
+
+		if (args[i] == "-checktime")
 		{
 			QFile debugFile("log.csv");
 			debugFile.open(QIODevice::WriteOnly);
@@ -147,10 +148,10 @@ void SwApplication::readParameters()
 		}
 
 		//Ajout d'un path
-		if ( args[i] == "-ppath" && i + 1 < nbArgs )
+		if (args[i] == "-ppath" && i + 1 < nbArgs)
 		{
 			QDir dir(args[i + 1]);
-			if ( !dir.exists() )
+			if (!dir.exists())
 			{
 				qCritical() << QString("Plugin path %1 doesn't exist").arg(args[i + 1]);
 			}
@@ -160,10 +161,10 @@ void SwApplication::readParameters()
 			}
 		}
 		//Ajout d'un descripteur de paths
-		else if ( args[i] == "-pdesc" && i + 1 < nbArgs )
+		else if (args[i] == "-pdesc" && i + 1 < nbArgs)
 		{
 			QFile file(args[i + 1]);
-			if ( !file.exists() )
+			if (!file.exists())
 			{
 				qCritical() << QString("Plugin path %1 doesn't exist").arg(args[i + 1]);
 			}
@@ -173,10 +174,10 @@ void SwApplication::readParameters()
 			}
 		}
 		//Modification de l'application dir path
-		else if ( args[i] == "-appDirPath" && i + 1 < nbArgs )
+		else if (args[i] == "-appDirPath" && i + 1 < nbArgs)
 		{
 			QDir dir(args[i + 1]);
-			if ( !dir.exists() )
+			if (!dir.exists())
 			{
 				qCritical() << QString("application dir path %1 doesn't exist").arg(args[i + 1]);
 			}
@@ -188,7 +189,7 @@ void SwApplication::readParameters()
 		}
 	}   //fin for     
 
-	if ( !isAppDirPathChanged )
+	if (!isAppDirPathChanged)
 	{
 		//s'il n'y a pas eu de changement de l'appli dir path: on affecte celui par defaut
 		this->SetApplicationDirPath(qApp->applicationDirPath());
@@ -229,7 +230,7 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 	SwComponent_ClassPtr root_component;
 
 	FinalizeInitialisation();
-	if ( _is_launch )
+	if (_is_launch)
 	{
 		LAUNCH_SWEXCEPTION("SwCore", "Only one launch can be done simultaneously");
 	}
@@ -238,46 +239,46 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 	//creation du document xml
 	QDomDocument doc;
 	//parsing xml du document
-	if ( !doc.setContent(stream_desc, &xml_error, &error_line, &error_column) )
+	if (!doc.setContent(stream_desc, &xml_error, &error_line, &error_column))
 	{
 		QString msg = QString("XML Parsing:%1 at position %2,%3\n%4").arg(xml_error).arg(error_line).arg(error_column).arg(stream_desc);
 		LAUNCH_SWEXCEPTION("SwCore", msg)
 	}
 	//Construction du stream
 	SwLoader_Class loader;
-	if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Info, QString("Loading stream\n"));
+	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("Loading stream\n"));
 	root_component = loader.Load(doc);
-	if ( root_component == 0 )
+	if (root_component == 0)
 	{
 		LAUNCH_SWEXCEPTION("SwCore", "Unable to build stream or stream is empty");
 	}
 	//Enregistrement du composant
-	if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Info, QString("Registering stream\n"));
+	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("Registering stream\n"));
 	AddNewStream(root_component);
 	//Si c'est une application GUI lancer la boucle d'execution
-	if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Info, QString("Launching application execution\n"));
+	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("Launching application execution\n"));
 	//Check service
 	ISwCheckService * cservice = dynamic_cast<ISwCheckService *>(QueryService(CG_SW_CHECK_SERVICE));
-	if ( cservice != 0 )
+	if (cservice != 0)
 	{
 		cservice->check();
 	}
 	//Indication des mises a jours
-	if ( _bank->updateHaveDone() )
+	if (_bank->updateHaveDone())
 	{
 		_bank->displayUpdate();
 	}
 	//Lancement
-	if ( _isGuiApp )
+	if (_isGuiApp)
 	{
-		if ( _executor != NULL )
+		if (_executor != NULL)
 			result = _executor->StreamExecute();
 		result = qApp->exec();
 	}
 	else
 	{
 		//Sinon execution du stream
-		if ( _executor != NULL )
+		if (_executor != NULL)
 		{
 			result = _executor->StreamExecute();
 		}
@@ -287,16 +288,16 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 			cout << "No Executor found!!!" << endl;
 		}
 	}
-	if ( _executor2 != 0 )
+	if (_executor2 != 0)
 	{
 		_executor2->StreamStop();
 	}
 	//Fin
-	if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Info, QString("Destroying all streams\n"));
+	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("Destroying all streams\n"));
 	//Destruction des streams
 	_streams.clear();
 	//Destruction du singleton
-	if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Info, QString("End of application execution\n"));
+	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("End of application execution\n"));
 	root_component = 0;
 	delete this;
 	_is_launch = false;
@@ -307,12 +308,12 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 //-----------------------------------------------------------------------
 void SwApplication::FinalizeInitialisation()
 {
-	if ( _initialisationFinalized )
+	if (_initialisationFinalized)
 		return;
 
 	QMap<QString, SwPluginFactory_Class *> * plugins = _bank->GetAllPlugins();
 	QMap<QString, SwPluginFactory_Class *>::iterator it = plugins->begin();
-	while ( it != plugins->end() )
+	while (it != plugins->end())
 	{
 		it.value()->FinalizeInitialisation();
 		it++;
@@ -331,25 +332,25 @@ void SwApplication::RegisterExecutor(ISwExecutor * executor)
 //-----------------------------------------------------------------------
 ISwPluginsBank & SwApplication::ComponentsBank()
 {
-	return *((ISwPluginsBank *) _bank);
+	return *((ISwPluginsBank *)_bank);
 }
 
 //-----------------------------------------------------------------------
 ISwComplexeTypeAdaptersFactoriesBank & SwApplication::CTFactoriesBank()
 {
-	return *((ISwComplexeTypeAdaptersFactoriesBank *) _ctadaptersbank);
+	return *((ISwComplexeTypeAdaptersFactoriesBank *)_ctadaptersbank);
 }
 
 //-----------------------------------------------------------------------
 ISwLogger & SwApplication::Logger()
 {
-	return *((ISwLogger *) &_logger);
+	return *((ISwLogger *)&_logger);
 }
 
 //-----------------------------------------------------------------------
 ISwAlerter & SwApplication::Alerter()
 {
-	return *((ISwAlerter *) &_alerter);
+	return *((ISwAlerter *)&_alerter);
 }
 
 //-----------------------------------------------------------------------
@@ -402,13 +403,13 @@ void SwApplication::DestroyStream(SwComponent_Class * stream_root)  throw(SwExce
 	QSet<SwComponent_ClassPtr>::iterator it;
 
 	it = _streams.find(SwComponent_ClassPtr(stream_root));
-	if ( it == _streams.end() )
+	if (it == _streams.end())
 	{
 		//LAUNCH_SWEXCEPTION("SwCore","Trying to destroy undefined stream");            
 	}
 	else
 	{
-		if ( _current_stream == it ) _current_stream++;
+		if (_current_stream == it) _current_stream++;
 		//(*it)->Release();
 		_streams.erase(it);
 	}
@@ -420,7 +421,7 @@ SwComponent_Class * SwApplication::GetFirstStream()
 	SwComponent_Class * stream;
 	_current_stream = _streams.begin();
 	//Sommes nous la fin
-	if ( _current_stream == _streams.end() )
+	if (_current_stream == _streams.end())
 	{
 		return NULL;//Oui
 	}
@@ -437,7 +438,7 @@ SwComponent_Class * SwApplication::GetNextStream()
 {
 	SwComponent_Class * stream;
 	//Sommes nous la fin
-	if ( _current_stream == _streams.end() )
+	if (_current_stream == _streams.end())
 	{
 		return NULL;//Oui
 	}
@@ -456,12 +457,12 @@ SwComponent_Class * SwApplication::GetNextStream()
 bool SwApplication::LaunchAutoStart()
 {
 	QStringList liste_arg = QCoreApplication::instance()->arguments();
-	for ( int i = 0; i < liste_arg.count(); i++ )
+	for (int i = 0; i < liste_arg.count(); i++)
 	{
-		if ( liste_arg[i] == "-autostart" )
+		if (liste_arg[i] == "-autostart")
 		{
 			i = liste_arg.count();
-			if ( _executor != NULL )
+			if (_executor != NULL)
 			{
 				_executor->StreamExecute();
 				_executor = 0;
@@ -475,7 +476,7 @@ bool SwApplication::LaunchAutoStart()
 //-----------------------------------------------------------------------
 void SwApplication::StopLaunch()
 {
-	if ( _executor2 != 0 )
+	if (_executor2 != 0)
 	{
 		_executor2->StreamStop();
 		_executor2 = 0;
@@ -531,6 +532,7 @@ void SwApplication::Initialize_Types()
 	qRegisterMetaType<StreamWork::SwCore::SwIpV4Address>("StreamWork::SwCore::SwIpV4Address");
 	//Et de ses methodes de serialisation
 	qRegisterMetaTypeStreamOperators<StreamWork::SwCore::SwIpV4Address>("StreamWork::SwCore::SwIpV4Address");
+
 }
 
 //-----------------------------------------------------------------------
@@ -541,14 +543,14 @@ void SwApplication::waitOnRestart()
 	unsigned int processId = 0;
 	QStringList liste_arg = qApp->arguments();
 	int nb_args = liste_arg.count();
-	for ( int i = 1; i < nb_args && processId == 0; i++ )
+	for (int i = 1; i < nb_args && processId == 0; i++)
 	{
-		if ( liste_arg[i] == "-restart" && i + 1 < nb_args )
+		if (liste_arg[i] == "-restart" && i + 1 < nb_args)
 		{
 			processId = liste_arg[i + 1].toUInt();
 		}
 	}
-	if ( processId == 0 )
+	if (processId == 0)
 		return;
 #ifdef Q_OS_WIN
 	//Recherche du process origine,
@@ -556,18 +558,18 @@ void SwApplication::waitOnRestart()
 	DWORD aProcesses[1024], cbNeeded, cProcesses;
 	bool start = false;
 	SW_DEBUG("Waiting to restart");
-	while ( !start )
+	while (!start)
 	{
-		SwTime_ToolBox::InternalSleep((unsigned long) 50); //50 ms d'attente  
-		if ( !EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded) )
+		SwTime_ToolBox::InternalSleep((unsigned long)50); //50 ms d'attente  
+		if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))
 			return;
 		start = true;
 		// Calculate how many process identifiers were returned.
 		cProcesses = cbNeeded / sizeof(DWORD);
 		// Print the name and process identifier for each process.
-		for ( unsigned int i = 0; i < cProcesses; i++ )
+		for (unsigned int i = 0; i < cProcesses; i++)
 		{
-			if ( aProcesses[i] == processId )
+			if (aProcesses[i] == processId)
 				start = false;
 		}
 	}
@@ -586,9 +588,9 @@ StreamWork::SwCore::ISwService *  queryService(QString name)
 //-----------------------------------------------------------------------
 void SwApplication::raiseQueryError(QString serviceName)
 {
-	if ( _missingServices.find(serviceName) == _missingServices.end() )
+	if (_missingServices.find(serviceName) == _missingServices.end())
 	{
-		if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Debug, QString("the service " + serviceName + " hasn't been loaded, check the presence of the dll"));
+		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug, QString("the service " + serviceName + " hasn't been loaded, check the presence of the dll"));
 		_missingServices.insert(serviceName);
 	}
 }

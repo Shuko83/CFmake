@@ -484,10 +484,12 @@ SwAssistedComponent::~SwAssistedComponent()
 	//Unregister all Shortcuts
 	if (_shortcuts_service && !_mapShortcutNameWithCategory.isEmpty())
 	{
-		for(QString nameShortcut : _mapShortcutNameWithCategory)
+		auto itBegin = _mapShortcutNameWithCategory.constBegin();
+		auto itEnd = _mapShortcutNameWithCategory.constEnd();
+
+		for (; itBegin != itEnd; itBegin++)
 		{
-			QString category = _mapShortcutNameWithCategory[nameShortcut];
-			_shortcuts_service->unregisterCommand(category, nameShortcut, this);
+			_shortcuts_service->unregisterCommand(itBegin.value(), itBegin.key(), this);
 		}
 	}
 	_shortcuts_service = NULL;

@@ -33,7 +33,7 @@ _SwServiceUnitSI::_SwServiceUnitSI()
 
 	QList<SiEnums::SiUnit> angleList = ServiceUnitSI::getUnitListFamily(SiEnums::SiUnitFamilyAngle);
 	foreach(SiEnums::SiUnit angle, angleList)
-		angleUnits.AddKey((int)angle,SiEnums::units[(int)angle].suffix);
+		angleUnits.AddKey((int)angle, QString::fromLatin1(SiEnums::units[(int)angle].suffix));
 
 	QList<SiEnums::SiUnit> distanceList = ServiceUnitSI::getUnitListFamily(SiEnums::SiUnitFamilyDistance);
 	foreach(SiEnums::SiUnit distance, distanceList)

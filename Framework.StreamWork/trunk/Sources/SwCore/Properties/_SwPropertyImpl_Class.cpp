@@ -212,7 +212,10 @@ bool _SwPropertyImpl_Class::IsVisible()
 //-----------------------------------------------------------------------
 bool _SwPropertyImpl_Class::IsEditable()
 {
-	return _is_editable && _hosting_service->GetPropertiesEdition();
+	if (_hosting_service)
+		return _is_editable && _hosting_service->GetPropertiesEdition();
+	else
+		return _is_editable;
 }
 
 //-----------------------------------------------------------------------

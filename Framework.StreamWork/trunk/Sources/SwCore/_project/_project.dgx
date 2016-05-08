@@ -1,6 +1,7 @@
 <Project name="SwCore" path="SwCore">
     <Target type="SHARED_LIB"/>
     <Dependencies>
+		<Artifact name="QsLog"/>
         <Artifact name="QsException"/>
 		<Artifact name="QsCore" link="false"/>
 		<Artifact name="QsGui" link="false"/>

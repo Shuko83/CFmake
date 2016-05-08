@@ -1,7 +1,7 @@
-/*!
+ï»¿/*!
 \file SwPropertyPersistentToolbox.cpp
 \date 18/04/2006
-\brief boite a outil pour l'enregistrement des propriétés
+\brief boite a outil pour l'enregistrement des propriÃ©tÃ©s
 \author  Big
 \version 1.0
  */
@@ -18,6 +18,8 @@
 #include <QDomImplementation>
 #include <QByteArray>
 #include <QSizePolicy>
+#include "QsLog.h"
+
 /*
  * INCLUDES LOCAUX
  */
@@ -60,9 +62,7 @@ using namespace StreamWork::SwCore;
 #define CL_XML_ATT_UUID_L "idl"
 
 
-
-
-
+QS_CATEGORY(SwCore_Save)
 //-------------------------------------------------------------------------
 void SwPropertyPersistentToolbox::LoadProperty(QDomElement & property_node,ISwProperties * properties) 
 {
@@ -81,7 +81,6 @@ void SwPropertyPersistentToolbox::LoadProperty(QDomElement & property_node,ISwPr
 	setProperty(property_node, property);
 }
 
-
 //-------------------------------------------------------------------------
 void SwPropertyPersistentToolbox::LoadProperty(QDomElement & property_node, ISwProperty * inProperty)
 {
@@ -94,15 +93,11 @@ void SwPropertyPersistentToolbox::LoadProperty(QDomElement & property_node, ISwP
 	setProperty(property_node, inProperty);
 }
 
-
-
-
 //-------------------------------------------------------------------------
 void SwPropertyPersistentToolbox::SaveProperty(QDomElement & parent_property_node,QDomDocument &doc, QString name,ISwProperties * properties) 
 {
     SavePropertyExtended(parent_property_node, doc, name, properties, false);
 }
-
 
 //-------------------------------------------------------------------------
 void SwPropertyPersistentToolbox::SaveProperty( QDomElement & parent_property_node, QDomDocument &doc, QString propCustomName, ISwProperty * inProperty, QString prefix, QVariant overWriteValue )
@@ -120,17 +115,16 @@ void SwPropertyPersistentToolbox::SaveProperty( QDomElement & parent_property_no
 	elt.setAttribute(CL_XML_ATT_PREFIX, prefix);
 	elt.setAttribute(CL_XML_ATT_NAME, propCustomName);
 
-	//Si la propriété existe
+	//Si la propriÃ©tÃ© existe
 	if (inProperty)
 		var = inProperty->GetValue();
 
 	if (overWriteValue.isValid())
 		var = overWriteValue;
 
-	// Récupératin de la valeur de la property
+	// RÃ©cupÃ©ratin de la valeur de la property
 	createProperty(parent_property_node, doc, inProperty, elt, var);
 }
-
 
 //-------------------------------------------------------------------------
 void SwPropertyPersistentToolbox::SavePropertyExtended(QDomElement & parent_property_node, QDomDocument &doc, QString name, ISwProperties * properties, bool forceSave) 
@@ -147,7 +141,7 @@ void SwPropertyPersistentToolbox::SavePropertyExtended(QDomElement & parent_prop
 	ISwSnapShotPropertiesService * snapshotService=dynamic_cast<ISwSnapShotPropertiesService *>(properties->GetHostComponent()->QueryService(CG_SW_SNAPSHOPPROPERTY_SERVICE));
 
 	property = dynamic_cast<_SwPropertyImpl_Class *>(properties->GetProperty(name));
-	//Si la propriété n'existe pas et qu'elle n'est pas editable (on ne peut ecrire dedans) ou qu'elle n'a pas changer (valeur usine)
+	//Si la propriÃ©tÃ© n'existe pas et qu'elle n'est pas editable (on ne peut ecrire dedans) ou qu'elle n'a pas changer (valeur usine)
 	//ou que c'est un type complexe
 	if (property==NULL || property->GetComplexeTypeAdapters()!=NULL || /*!property->IsEditable() || */ (!forceSave && !property->HasChanged()) ) 
 	{
@@ -184,12 +178,9 @@ void SwPropertyPersistentToolbox::SavePropertyExtended(QDomElement & parent_prop
 	elt.setAttribute(CL_XML_ATT_NAME, QString(property->GetRealName()));
 
 
-	// création de la property et ajout dans le QDomElement elt
+	// crÃ©ation de la property et ajout dans le QDomElement elt
 	createProperty(parent_property_node, doc, property, elt, var);
 }
-
-
-
 
 //-------------------------------------------------------------------------
 void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_node, QDomDocument &doc, ISwProperty * inProperty, QDomElement &elt, QVariant var) 
@@ -402,7 +393,7 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 			save_done=true;
 		}
 	}    
-	//Si la propriete n'a pas ete enregistrée
+	//Si la propriete n'a pas ete enregistrÃ©e
 	if (!save_done) 
 	{
 		//Si le save n'a pas reussi alors log
@@ -431,10 +422,6 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 		parent_property_node.appendChild(elt);
 	}
 }
-
-
-
-
 
 //-------------------------------------------------------------------------
 void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwProperty * inProperty) 
@@ -699,4 +686,170 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 
 	if (!valueSetted)
 		qDebug() << "ERROR in SwPropertyPersistentToolbox::setProperty() : " << inProperty->GetName() << " cannot be setted because QVariant Type is unknown " << var.type();
+}
+
+
+
+
+//-----------------------------------------------------------------------
+QVariant SwPropertyPersistentToolbox::createQVariantFromString(ISwProperty* prop, QString value)
+{
+	QVariant var = prop->GetValue();
+	QVariant tmp;
+	
+
+
+	if ((var.canConvert(QVariant::String) && var.type() != QVariant::Color) || (var.userType() == qMetaTypeId<ulong>()))
+	{
+		tmp = value;
+		tmp.convert(var.type());
+	}
+	else
+	{
+
+		switch (var.type())
+		{
+			case QVariant::Point:
+			{
+				auto values = value.remove("(").remove(")").split(",");
+				if (values.count() == 2)
+				{
+					QPoint p;
+					p.setX(values[0].toInt());
+					p.setY(values[1].toInt());
+					tmp = p;
+				}
+				break;
+			}
+			case QVariant::Size:
+			{
+				auto values = value.remove("(").remove(")").split(",");
+				if (values.count() == 2)
+				{
+					QSize s;
+					s.setWidth(values[0].toInt());
+					s.setHeight(values[1].toInt());
+					tmp = s;
+				}
+
+				break;
+			}
+			case QVariant::Rect:
+			{
+				auto values = value.remove("(").remove(")").split(",");
+				if (values.count() == 4)
+				{
+					QRect r;
+					r.setX(values[0].toInt());
+					r.setY(values[1].toInt());
+					r.setWidth(values[2].toInt());
+					r.setHeight(values[3].toInt());
+					tmp = r;
+				}
+				break;
+			}
+			case QVariant::RectF:
+			{
+				auto values = value.remove("(").remove(")").split(",");
+				if (values.count() == 4)
+				{
+					QRectF r;
+					r.setX(values[0].toDouble());
+					r.setY(values[1].toDouble());
+					r.setWidth(values[2].toDouble());
+					r.setHeight(values[3].toDouble());
+					tmp = r;
+				}
+				break;
+			}
+			case QVariant::ByteArray:
+			{
+				tmp = QByteArray::fromHex(value.toLatin1());
+				break;
+			}
+			case QVariant::Color:
+			{
+				QString text = value;
+				QString alpha = "";
+				if (text.length() == 9)
+				{
+					alpha = text.right(2);
+					text = text.left(7);
+				}
+				QVariant var = text;
+				QColor color = qvariant_cast<QColor>(var);
+				if (alpha.length())
+				{
+					bool ok = false;
+					color.setAlpha(alpha.toInt(&ok, 16));
+				}
+
+				tmp.setValue(color);
+				break;
+			}
+			default:
+				break;
+		}
+	}
+	
+
+	if (var.userType() == qMetaTypeId<SwEnum>())
+	{
+		SwEnum enum_value = var.value<SwEnum>();
+		enum_value.FromString(value);
+		tmp.setValue(enum_value);
+	}
+	else if (var.userType() == qMetaTypeId<SwIntegerEnum>())
+	{
+		SwIntegerEnum enum_value = var.value<SwIntegerEnum>();
+		enum_value.fromString(value);
+		tmp.setValue(enum_value);
+	}
+	//Type SwInteger
+	else if (var.userType() == qMetaTypeId<SwInteger>())
+	{
+		SwInteger int_value = var.value<SwInteger>();
+		int_value.setValue(value.toInt());
+		tmp.setValue(int_value);
+	}
+	//Type SwString
+	else if (var.userType() == qMetaTypeId<SwString>())
+	{
+		SwString string_value = var.value<SwString>();
+		string_value.fromString(value);
+		tmp.setValue(string_value);
+	}
+	//Type SwDouble
+	else if (var.userType() == qMetaTypeId<SwDouble>())
+	{
+		SwDouble double_value = var.value<SwDouble>();
+		double_value.setValue(value.toDouble());
+		tmp.setValue(double_value);
+	}
+	//Type SwFileDescriptor
+	else if (var.userType() == qMetaTypeId<SwFileDescriptor>())
+	{
+		SwFileDescriptor fd = var.value<SwFileDescriptor>();
+		fd.setFileName(value);
+		tmp.setValue(fd);
+	}
+	//Type SwIconDescriptor
+	else if (var.userType() == qMetaTypeId<SwIconDescriptor>())
+	{
+		SwIconDescriptor idesc = var.value<SwIconDescriptor>();
+		idesc.setPath(value);
+		tmp.setValue(idesc);
+	}
+	//Type SwIpV4Address
+	else if (var.userType() == qMetaTypeId<SwIpV4Address>())
+	{
+		SwIpV4Address ipv4 = var.value<SwIpV4Address>();
+		ipv4.FromString(value);
+		tmp.setValue(ipv4);
+	}
+
+	if (!tmp.isValid())
+		qCWarning(SwCore_Save) << "Unable to map the property <" + prop->GetRealName() + ">";
+
+	return tmp;
 }
