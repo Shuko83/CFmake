@@ -1,13 +1,10 @@
 #include "SwConfPushButton.h"
 
-
-
 SwConfPushButton::SwConfPushButton()
 {
     _confName = "";
-    _iSwServiceConfiguration = 0;
-    _swServiceConfigurationHelper = new SwServiceManager_Helper<ISwServiceConfiguration, SwConfPushButton>;
-    _swServiceConfigurationHelper->setService(CG_SW_SERVICE_SAVECONFIGURATION, this, &SwConfPushButton::onServiceConfigurationChange);
+    _swServiceConfigurationHelper = new SwServiceManager_Helper<ISwServiceConfiguration>;
+    _swServiceConfigurationHelper->setService(CG_SW_SERVICE_SAVECONFIGURATION);
 
     connect(&_pb, &QPushButton::clicked, this, &SwConfPushButton::onClicked);
 }
@@ -15,23 +12,15 @@ SwConfPushButton::SwConfPushButton()
 SwConfPushButton::~SwConfPushButton()
 {
     unprovideInterface("ISwWidget");
-}
 
-
-
-void SwConfPushButton::onServiceConfigurationChange()
-{
-    if (_swServiceConfigurationHelper)
-    {
-        _iSwServiceConfiguration = _swServiceConfigurationHelper->getService();
-    }
+	delete _swServiceConfigurationHelper;
 }
 
 void SwConfPushButton::onClicked()
 {
-    if (_iSwServiceConfiguration)
+	if (_swServiceConfigurationHelper->getService())
     {
-        _iSwServiceConfiguration->saveConfigurationFile(_confName);
+		_swServiceConfigurationHelper->getService()->saveConfigurationFile(_confName);
     }
 }
 
@@ -46,5 +35,3 @@ QWidget & SwConfPushButton::GetWidget()
 {
     return _pb;
 }
-
-

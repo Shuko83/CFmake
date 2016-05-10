@@ -19,9 +19,9 @@ namespace SwServiceAlias
 {
 	//---------------------------------------------------------------------------------
 	SwAliasManager::SwAliasManager()
-		: _aliasManager(nullptr), _alertManager(nullptr)
+		: _aliasManager(nullptr)
 	{
-		_alertServiceHelper = new SwServiceManager_Helper<StreamWork::SwCore::ISwServiceAlert, SwAliasManager>();
+		_alertServiceHelper = new SwServiceManager_Helper<StreamWork::SwCore::ISwServiceAlert>();
 
 		_roamingPath = QDir::homePath() + QDir::separator() + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "diginext" + QDir::separator() + "StarlinxV2" + QDir::separator() + "Alias" + QDir::separator();
 		QDir dir;
@@ -39,11 +39,6 @@ namespace SwServiceAlias
 	//---------------------------------------------------------------------------------
 	SwAliasManager::~SwAliasManager()
 	{
-		saveAutoAlias();
-		saveAliasFastAction();
-		saveAliasOrder();
-
-		delete _aliasManager;
 		delete _alertServiceHelper;
 	}
 
@@ -356,16 +351,28 @@ namespace SwServiceAlias
 	}
 
 	//---------------------------------------------------------------------------------
-	void SwAliasManager::onServiceAlertManagerAvailable()
+	void SwAliasManager::onServiceAlertManagerAvailable(bool available)
 	{
-		_alertManager = _alertServiceHelper->getService();
-		_aliasManager = new AliasManager::AliasManager(*(_alertManager->getAlertManager()), QString(_xsdFile.getDoubleDottedPath()));
+		if (available)
+		{
+			_aliasManager = new AliasManager::AliasManager(*(_alertServiceHelper->getService()->getAlertManager()), QString(_xsdFile.getDoubleDottedPath()));
 
-		loadAliasOrder();
-		loadAliasFastAction();
-		loadAutoAlias();
+			loadAliasOrder();
+			loadAliasFastAction();
+			loadAutoAlias();
 
-		SW_APP->RegisterService(this);
+			SW_APP->RegisterService(this);
+		}
+		else
+		{
+			SW_APP->UnregisterService(this->GetServiceName());
+
+			saveAutoAlias();
+			saveAliasFastAction();
+			saveAliasOrder();
+
+			delete _aliasManager;
+		}
 	}
 
 	//---------------------------------------------------------------------------------

@@ -61,7 +61,7 @@ _SwGuiCompQWidgetToQDialog::~_SwGuiCompQWidgetToQDialog()
 //-------------------------------------------------------------------------
 void _SwGuiCompQWidgetToQDialog::initializeComponent() throw(SwException)
 {
-	_helper = new SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow, _SwGuiCompQWidgetToQDialog>();
+	_helper = new SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow>();
 	_helper->setService(CG_SW_SERVICE_MAINWINDOW, this, &_SwGuiCompQWidgetToQDialog::onService);
 
 	consummeInterface<ISwWidget>(ISWWIDGET_INTERFACE_NAME);
@@ -99,22 +99,19 @@ void _SwGuiCompQWidgetToQDialog::interfaceUnavailable(QString interfaceName)
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiCompQWidgetToQDialog::onService(QString servicename, bool isEnabled)
+void _SwGuiCompQWidgetToQDialog::onService(bool available)
 {
-	if ( servicename == CG_SW_SERVICE_MAINWINDOW )
+	if (available)
 	{
-		if ( isEnabled )
-		{
-			_container.setParent(_helper->getService()->getMainWindow());
-			if ( _enableMaximize )
-				_container.setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
-			else
-				_container.setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
-
-		}
+		_container.setParent(_helper->getService()->getMainWindow());
+		if (_enableMaximize)
+			_container.setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
 		else
-			_container.setParent(nullptr);
+			_container.setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
+
 	}
+	else
+		_container.setParent(nullptr);
 }
 
 //-----------------------------------------------------------------------

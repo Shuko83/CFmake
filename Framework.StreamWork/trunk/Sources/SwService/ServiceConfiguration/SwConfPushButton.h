@@ -23,8 +23,6 @@ public:
     SwConfPushButton();
     ~SwConfPushButton();
 
-
-    void onServiceConfigurationChange();
     void initializeComponent();
 
     QString getConfName() const { return _confName; }
@@ -40,10 +38,7 @@ private:
     QPushButton _pb;
 
     //Service de conf
-    ISwServiceConfiguration * _iSwServiceConfiguration;
-    SwServiceManager_Helper<ISwServiceConfiguration, SwConfPushButton> * _swServiceConfigurationHelper;
+    SwServiceManager_Helper<ISwServiceConfiguration> * _swServiceConfigurationHelper;
 
     QString _confName;
 };
-
-

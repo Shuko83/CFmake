@@ -85,7 +85,7 @@ public:
 
 	virtual void interfaceUnavailable(QString interfaceName);
 
-	void onService(QString servicename, bool isEnabled);
+	void onService(bool available);
 
 	virtual QAction & GetAction();
 
@@ -95,6 +95,6 @@ protected:
 	bool _enableMaximize;
 
 	QAction *_action;
-	SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow, _SwGuiCompQWidgetToQDialog> *_helper;
+	SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow> *_helper;
 };
 

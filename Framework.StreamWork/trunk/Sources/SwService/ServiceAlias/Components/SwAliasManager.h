@@ -315,7 +315,7 @@ namespace SwServiceAlias
 		* @fn		void SwServiceAlias::SwAliasManager::onServiceAlertManagerAvailable()
 		* @brief	Callback lors de la disponibilité du service d'alerte
 		**/
-		void onServiceAlertManagerAvailable();
+		void onServiceAlertManagerAvailable(bool available);
 
 		StreamWork::SwCore::SwFileDescriptor getXsdFile() const { return _xsdFile; }
 		void setXsdFile(StreamWork::SwCore::SwFileDescriptor val) { _xsdFile = val; }
@@ -392,16 +392,10 @@ namespace SwServiceAlias
 		QList<Enums::SwSourceType> _secondaryOrder;
 
 		/**
-		 * @var		_alertManager
-		 * @brief	Pointeur vers le service d'alerte
-		 **/
-		StreamWork::SwCore::ISwServiceAlert *_alertManager;
-
-		/**
 		 * @var		_alertServiceHelper
 		 * @brief	Pointeur de gestion de la disponibilité du service d'alerte
 		 **/
-		SwServiceManager_Helper<StreamWork::SwCore::ISwServiceAlert, SwAliasManager> *_alertServiceHelper;
+		SwServiceManager_Helper<StreamWork::SwCore::ISwServiceAlert> *_alertServiceHelper;
 		/**
 		 * @var		_roamingPath
 		 * @brief	Chemin de sauvegarde des informations du service (alias et ordre)
