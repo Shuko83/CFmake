@@ -167,6 +167,12 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent, const QStyleOpt
 		return cbox;
 	}
 
+	if (originalValue.type() == QVariant::KeySequence)
+	{
+		QKeySequenceEdit * keySeqEdit = new QKeySequenceEdit(parent);		
+		return keySeqEdit;
+	}
+
 	if ( qMetaTypeId<SwIntegerEnum>() == originalValue.userType() )
 	{
 		SwIntegerEnum venum = originalValue.value<SwIntegerEnum>();
@@ -408,6 +414,13 @@ void SwGuiDefaultItemDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 	if ( originalValue.type() == QVariant::Color )
 	{
 		model->setData(index, QVariant(currentColor), Qt::EditRole);
+		return;
+	}
+
+	if (originalValue.type() == QVariant::KeySequence)
+	{
+		QKeySequenceEdit * keySeqEdit = qobject_cast<QKeySequenceEdit *>(editor);
+		model->setData(index, QVariant(keySeqEdit->keySequence().toString()), Qt::EditRole);
 		return;
 	}
 

@@ -627,6 +627,8 @@ QString SwPropertiesModelImpl::displayText(const QVariant &value)
 			return value.toStringList().join(",");
 		case QVariant::Time:
 			return value.toTime().toString(Qt::ISODate);
+		case QVariant::KeySequence:
+			return value.toString();
 		case QVariant::UserType:
 			if ( qMetaTypeId<SwEnum>() == value.userType() )
 			{
@@ -697,6 +699,7 @@ bool SwPropertiesModelImpl::isSupportedType(QVariant & val)
 		case QVariant::Time:
 		case QVariant::UInt:
 		case QVariant::ULongLong:
+		case QVariant::KeySequence:
 			return true;
 		case QVariant::UserType:
 			if ( qMetaTypeId<SwEnum>() == val.userType() )
