@@ -23,7 +23,7 @@ namespace SwServiceAlias
 	{
 		_alertServiceHelper = new SwServiceManager_Helper<StreamWork::SwCore::ISwServiceAlert>();
 
-		_roamingPath = QDir::homePath() + QDir::separator() + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "diginext" + QDir::separator() + "StarlinxV2" + QDir::separator() + "Alias" + QDir::separator();
+		_roamingPath = QDir::homePath() + QDir::separator() + "AppData" + QDir::separator() + "Roaming" + QDir::separator() + "DIGINEXT" + QDir::separator() + "StarlinxV2" + QDir::separator() + "Alias" + QDir::separator();
 		QDir dir;
 		if (!dir.exists(_roamingPath))
 		{
@@ -365,7 +365,8 @@ namespace SwServiceAlias
 		}
 		else
 		{
-			SW_APP->UnregisterService(this->GetServiceName());
+			//Probleme de crasha la fermerture
+			//SW_APP->UnregisterService(this->GetServiceName());
 
 			saveAutoAlias();
 			saveAliasFastAction();
