@@ -1,0 +1,4 @@
+BaseDir=..
+Sources/ISwServiceContextMenu.h
+Sources/SwServiceContextMenu.h
+Sources/SwServiceContextMenuConstantes.h

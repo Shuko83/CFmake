@@ -1,0 +1,9 @@
+#pragma once
+
+#include <QGlobal.h>
+
+#ifdef SWSERVICECONTEXTMENU_LIB
+# define BUILD_SWSERVICECONTEXTMENU Q_DECL_EXPORT
+#else
+# define BUILD_SWSERVICECONTEXTMENU Q_DECL_IMPORT
+#endif
