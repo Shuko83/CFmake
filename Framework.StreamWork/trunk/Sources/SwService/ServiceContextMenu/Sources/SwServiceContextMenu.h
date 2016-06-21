@@ -3,6 +3,7 @@
 /**
 * INCLUDES GLOBAUX
 */
+#include <tuple>
 #include <QObject>
 #include <QWidget>
 
@@ -34,7 +35,13 @@ namespace StreamWork
 
 			void registerContextAction(Action::IAction * action) override { ContextMenu::registerContextAction(action); };
 			void registerContextAction(QAction * action) override { ContextMenu::registerContextAction(action); };
-			QMenu * getMenu() override { return ContextMenu::getMenu();};			
+			QMenu * getMenu() override { return ContextMenu::getMenu();};	
+
+			void setMenuRequestCartoPosition(double latitude, double longitude, double altitude) override;
+			std::tuple<double, double, double> getMenuRequestCartoPosition() override;
+
+		private:
+			std::tuple<double, double, double> _requestCartoPosition; //latitude, longitude et altitude (deg decimal, deg decimal et mètre) 
 		};
 	}
 }

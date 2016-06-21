@@ -3,19 +3,21 @@
 #include <QDebug>
 
 ContextMenuEditorWidget::ContextMenuEditorWidget(QWidget *parent)
-	: QDialog(parent)
+	: QWidget(parent)
 {
 	ui.setupUi(this);
 
-	connect(ui.buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-	connect(ui.buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-
 	connect(ui.pb_separator, &QPushButton::pressed, this, &ContextMenuEditorWidget::insertSeparator);
 	connect(ui.pb_subMenu, &QPushButton::pressed, this, &ContextMenuEditorWidget::insertSubMenu);
+	connect(ui.pb_title, &QPushButton::pressed, this, &ContextMenuEditorWidget::insertTitle);
 
 	//Not coded yet, are categories useful?
 	//connect(ui.pb_category, &QPushButton::pressed, this, &ContextMenuEditorWidget::insertCategory);
 	ui.pb_category->setVisible(false);
+
+	connect(ui.pb_ok, &QPushButton::pressed, this, &ContextMenuEditorWidget::okPushed);
+	connect(ui.pb_cancel, &QPushButton::pressed, this, &ContextMenuEditorWidget::cancelPushed);
+	connect(ui.pb_apply, &QPushButton::pressed, this, &ContextMenuEditorWidget::applyPushed);
 }
 
 ContextMenuEditorWidget::~ContextMenuEditorWidget()
@@ -47,15 +49,6 @@ void ContextMenuEditorWidget::insertSeparator()
 }
 
 //---------------------------------------------------------------------------------
-void ContextMenuEditorWidget::insertCategory()
-{
-	QTextCursor textCursor = ui.textEdit->textCursor();
-
-	textCursor.insertText(categoryBeginMark + "defaultCategory\n");
-	textCursor.insertText(categoryEndMark);
-}
-
-//---------------------------------------------------------------------------------
 void ContextMenuEditorWidget::insertSubMenu()
 {
 	QTextCursor textCursor = ui.textEdit->textCursor();
@@ -81,4 +74,12 @@ void ContextMenuEditorWidget::insertSubMenu()
 		textCursor.setPosition(selectionEndPosition);
 		textCursor.insertText("\n" + submenuEndMark);
 	}
+}
+
+//---------------------------------------------------------------------------------
+void ContextMenuEditorWidget::insertTitle()
+{
+	QTextCursor textCursor = ui.textEdit->textCursor();
+
+	textCursor.insertText(titleMark);
 }

@@ -52,6 +52,10 @@ namespace StreamWork
 			* @note     : au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(this).name()
 			*/
 			virtual QString GetServiceRealName() override{ return QString(typeid(this).name()); }
+
+			//Methode specifique a Sx
+			virtual void setMenuRequestCartoPosition(double, double, double) = 0;		
+			virtual std::tuple<double, double, double> getMenuRequestCartoPosition() = 0;
 		};
 	}
 }

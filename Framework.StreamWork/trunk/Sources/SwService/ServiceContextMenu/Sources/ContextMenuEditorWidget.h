@@ -10,12 +10,11 @@ static const QString separatorMark = "------------------";
 
 static const QString submenuBeginMark = "SubMenuBegin#";
 static const QString submenuEndMark = "SubMenuEnd";
-static const QString subMenuIndent = "\t";
+static const QString subMenuIndent = "     ";
 
-static const QString categoryBeginMark = "CategoryBegin#";
-static const QString categoryEndMark = "CategoryEnd";
+static const QString titleMark = "Title#";
 
-class ContextMenuEditorWidget : public QDialog
+class ContextMenuEditorWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -25,13 +24,18 @@ public:
 
 	void addLineToTextEdit(const QString &text);
 	QStringList getLines();
+	
+signals:
+	void okPushed();
+	void cancelPushed();
+	void applyPushed();
 
 private:
 	Ui::ContextMenuEditorWidget ui;
 
-	void insertSeparator();
-	void insertCategory();
+	void insertSeparator();	
 	void insertSubMenu();
+	void insertTitle();
 };
 
 #endif // CONTEXTMENUEDITORWIDGET_H

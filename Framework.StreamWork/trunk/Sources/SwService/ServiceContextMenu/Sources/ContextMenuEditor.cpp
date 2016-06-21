@@ -2,6 +2,8 @@
 
 #include "ISwServiceContextMenu.h"
 
+#include "TitleWidgetAction.h"
+
 #include <QApplication>
 
 static const QString newActionHtml = "<font color=\"LimeGreen \">";
@@ -18,51 +20,64 @@ ContextMenuEditor::ContextMenuEditor() :_editedMenu(nullptr),
 	_contextMenuServiceHelper->setService(CG_SW_SERVICE_CONTEXT_MENU, this, &ContextMenuEditor::onContextMenuServiceChange);	
 
 	_mainWindowServicehelper = new SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow>();
-	_mainWindowServicehelper->setService(CG_SW_SERVICE_MAINWINDOW);
+	_mainWindowServicehelper->setService(CG_SW_SERVICE_MAINWINDOW);		
 }
 
 //---------------------------------------------------------------------------------
 void ContextMenuEditor::AdminSetup()
-{
-	ContextMenuEditorWidget * _editorWidget = new ContextMenuEditorWidget();
-	bool isSubMenuAction = false;
+{	
+	_editorWidget = new ContextMenuEditorWidget();
+
+	connect(_editorWidget, &ContextMenuEditorWidget::okPushed, this, &ContextMenuEditor::onOkPushed);
+	connect(_editorWidget, &ContextMenuEditorWidget::cancelPushed, this, &ContextMenuEditor::onCancelPushed);
+	connect(_editorWidget, &ContextMenuEditorWidget::applyPushed, this, &ContextMenuEditor::onApplyPushed);
+
+	int subMenuLevel = 0;
 
 	for (auto line : _editedMenuAsText)
 	{	
 		QString formattedLine = "";
 
+		//ACTION
 		if (line.contains(actionPrefix))
 		{						
-			QString actionName;
-			
-			if (isSubMenuAction)
-				actionName = line.right(line.length() - actionPrefix.length() - subMenuIndent.length());
-			else
-				actionName = line.right(line.length() - actionPrefix.length());
+			QString actionName;			
+			actionName = line.right(line.length() - actionPrefix.length());
 
 			bool actionIsNoMoreRegistered = (_contextMenuServiceHelper->getService()->getAction(actionName) == nullptr);
 					
 			if (actionIsNoMoreRegistered)
 				formattedLine += deletedActionHtml;
 
+			formattedLine += subMenuIndent.repeated(subMenuLevel);
+
 			formattedLine += line;
 
 			if (actionIsNoMoreRegistered)
 				formattedLine += endHtml;
 		}
+		//SEPARATOR
 		else if (line.contains(separatorMark))
 		{
 			formattedLine = line;		
 		}
+		//SUBMENU
 		else if (line.contains(submenuBeginMark))
 		{
-			formattedLine = line;
-			isSubMenuAction = true;
+			subMenuLevel++;
+			formattedLine += subMenuIndent.repeated(subMenuLevel);
+			formattedLine += line;
 		}
 		else if (line.contains(submenuEndMark))
 		{
-			formattedLine = line;
-			isSubMenuAction = false;
+			formattedLine += subMenuIndent.repeated(subMenuLevel);
+			formattedLine += line;
+			subMenuLevel--;
+		}
+		//TITLE
+		else if (line.contains(titleMark))
+		{			
+			formattedLine = line;			
 		}
 
 		_editorWidget->addLineToTextEdit(formattedLine);
@@ -72,9 +87,16 @@ void ContextMenuEditor::AdminSetup()
 	QList<QAction*> actions = _contextMenuServiceHelper->getService()->getActions();
 	for (auto action : actions)
 	{
-		QString newLine = actionPrefix + action->text();
+		//QString newLine = actionPrefix + action->text();
+		QString newLine = actionPrefix + _contextMenuServiceHelper->getService()->getActionNonHumanName(action);
 
-		bool isUnsavedAction = !(_editedMenuAsText.contains(newLine) || _editedMenuAsText.contains(subMenuIndent + newLine));
+		bool isUnsavedAction =	 !(_editedMenuAsText.contains(newLine)	//maniere plus elegante de faire?
+								 ||_editedMenuAsText.contains(subMenuIndent + newLine)
+								 ||_editedMenuAsText.contains(subMenuIndent.repeated(2) + newLine)
+								 ||_editedMenuAsText.contains(subMenuIndent.repeated(3) + newLine)
+								 ||_editedMenuAsText.contains(subMenuIndent.repeated(4) + newLine)
+								 ||_editedMenuAsText.contains(subMenuIndent.repeated(5) + newLine)
+								 );
 
 		//Si l'action n'est pas présente dans le menu sauvegardée on la colore en vert dans l'editor
 		if (isUnsavedAction)
@@ -84,21 +106,15 @@ void ContextMenuEditor::AdminSetup()
 		}		
 	}
 
-	if (_editorWidget->exec() == QDialog::Accepted)
-	{		
-		_editedMenuAsText = _editorWidget->getLines();
-		_menuReady = false;	//Le menu vient d'être édité on doit le recréer
-	}
-
-	delete _editorWidget;
+	_editorWidget->show();
 }
 
 //---------------------------------------------------------------------------------
 void ContextMenuEditor::Load(QDomElement & elt, ISwFinalizerManager & finalizerManager)
 {
 	QDomElement elt_ent;
-
-	bool subMenuAction = false;	
+	
+	int subMenuLevel = 0;
 
 	for (elt_ent = elt.firstChildElement(); !elt_ent.isNull(); elt_ent = elt_ent.nextSiblingElement())
 	{
@@ -107,10 +123,7 @@ void ContextMenuEditor::Load(QDomElement & elt, ISwFinalizerManager & finalizerM
 		{
 			QString action = elt_ent.attribute("Name");
 			QString actionText = "";
-
-			if (subMenuAction)
-				actionText = subMenuIndent;
-
+		
 			actionText += actionPrefix + action;
 
 			_editedMenuAsText.append(actionText);
@@ -123,29 +136,28 @@ void ContextMenuEditor::Load(QDomElement & elt, ISwFinalizerManager & finalizerM
 		//SUBMENU
 		else if (elt_ent.nodeName() == "SubMenuBegin")
 		{
+			subMenuLevel++;
 			QString title = elt_ent.attribute("Name");
 			_editedMenuAsText.append(submenuBeginMark + title);
-			subMenuAction = true;
 		}
 		else if (elt_ent.nodeName() == "SubMenuEnd")
 		{
 			QString title = elt_ent.attribute("Name");
 			_editedMenuAsText.append(submenuEndMark);
-			subMenuAction = false;
+			subMenuLevel--;
 		}
-		//CATEGORY
-		/*
-		else if (elt_ent.nodeName() == "CategoryBegin")
+		//TITLE		
+		else if (elt_ent.nodeName() == "Title")
 		{
 			QString title = elt_ent.attribute("Name");
-			_editedMenuAsText.append(categoryBeginMark + title);
+			_editedMenuAsText.append(titleMark + title);
 		}
-		else if (elt_ent.nodeName() == "CategoryEnd")
-		{
-			QString title = elt_ent.attribute("Name");
-			_editedMenuAsText.append(categoryEndMark);
-		}*/
+
 	}
+
+	/*qDebug() << "After Load";
+	for (auto line : _editedMenuAsText)
+		qDebug() << line;*/
 }
 
 //---------------------------------------------------------------------------------
@@ -183,21 +195,14 @@ void ContextMenuEditor::Save(QDomElement &elt, QDomDocument &doc)
 			QString titleName = line.right(line.length() - line.indexOf("#") - 1);			
 			elt.appendChild(elt_ent);
 		}
-		//CATEGORY
-		/*else if (line.contains(categoryBeginMark))
+		//TITLE
+		else if (line.contains(titleMark))
 		{
-			elt_ent = doc.createElement("CategoryBegin");
+			elt_ent = doc.createElement("Title");
 			QString titleName = line.right(line.length() - line.indexOf("#") - 1);
 			elt_ent.setAttribute("Name", titleName);
 			elt.appendChild(elt_ent);
 		}
-		else if (line.contains(categoryEndMark))
-		{
-			elt_ent = doc.createElement("CategoryEnd");
-			QString titleName = line.right(line.length() - line.indexOf("#") - 1);
-			elt.appendChild(elt_ent);
-		}*/
-
 	}
 }
 
@@ -211,29 +216,30 @@ QMenu* ContextMenuEditor::getMenu()
 	{
 		_editedMenu = new QMenu(_mainWindowServicehelper->getService()->getMainWindow());
 
-		//Submenu data		
-		bool submenuEnabled = false;		
-		QMenu *currentSubMenu;
+		//Submenu data				
+		int subMenuLevel = 0;
+		
+		QList<QMenu*> currentSubMenus;
 
 		for (auto menuElementString : _editedMenuAsText)
 		{		
 			//ACTION
 			if (menuElementString.contains(actionPrefix))
 			{
-
-				if (submenuEnabled)
-					menuElementString = menuElementString.right(menuElementString.length() - actionPrefix.length() - subMenuIndent.length());
-				else
-					menuElementString = menuElementString.right(menuElementString.length() - actionPrefix.length());
+				menuElementString = menuElementString.right(menuElementString.length() - actionPrefix.length());
 
 				QAction * action = _contextMenuServiceHelper->getService()->getAction(menuElementString);			
 
 				if (action)
 				{
-					if (submenuEnabled)
-						currentSubMenu->addAction(action);
+					if (subMenuLevel != 0)
+						currentSubMenus.last()->addAction(action);
 					else
-						_editedMenu->addAction(action);				
+						_editedMenu->addAction(action);
+				}
+				else
+				{
+					qDebug() << "Action " << menuElementString << " not found in contextMenuService";
 				}
 			}
 			//SEPARATOR
@@ -246,30 +252,46 @@ QMenu* ContextMenuEditor::getMenu()
 			{
 				menuElementString = menuElementString.right(menuElementString.length() - submenuBeginMark.length());
 				QString subMenuName = menuElementString;
+			
+				subMenuLevel++;
 
-				submenuEnabled = true;
-				currentSubMenu = new QMenu(_editedMenu);
-				currentSubMenu->setTitle(subMenuName);
+				QMenu* newSubMenu;
+				if (subMenuLevel == 1)
+					newSubMenu = new QMenu(_editedMenu);
+				else
+					newSubMenu = new QMenu(currentSubMenus.last());
 
-				_editedMenu->addMenu(currentSubMenu);
+				newSubMenu->setTitle(subMenuName);				
+
+				if (subMenuLevel == 1)
+					_editedMenu->addMenu(newSubMenu);
+				else
+					currentSubMenus.last()->addMenu(newSubMenu);
+
+				currentSubMenus.append(newSubMenu);
 			}
 			else if (menuElementString.contains(submenuEndMark))
-			{
-				submenuEnabled = false;				
+			{				
+				subMenuLevel--;
+				currentSubMenus.removeLast();
 			}
-			//CATEGORY
-			/*else if (menuElementString.contains(categoryBeginMark))
+			//TITLE
+			else if (menuElementString.contains(titleMark))
 			{
-			menuElementString = menuElementString.right(menuElementString.length() - categoryBeginMark.length());
-			categoryEnabled = true;
-			currentActionGroup = new QActionGroup(_editedMenu);
-			categoryName = menuElementString;
+				menuElementString = menuElementString.right(menuElementString.length() - titleMark.length());
+				TitleWidgetAction * newTitle;
+
+				//A refactoriser
+				if (subMenuLevel == 0)
+					newTitle = new TitleWidgetAction(_editedMenu, menuElementString);
+				else
+					newTitle = new TitleWidgetAction(currentSubMenus.last(), menuElementString);
+				
+				if (subMenuLevel == 0)
+					_editedMenu->addAction(newTitle);
+				else
+					currentSubMenus.last()->addAction(newTitle);
 			}
-			else if (menuElementString.contains(categoryEndMark))
-			{
-			categoryEnabled = false;
-			categoryName = "none";
-			}*/
 		
 		}
 		_menuReady = true;
@@ -281,5 +303,36 @@ QMenu* ContextMenuEditor::getMenu()
 void ContextMenuEditor::onContextMenuServiceChange(bool available)
 {
 	_contextMenuServiceHelper->getService()->setMenuEditor(this);
+}
+
+//---------------------------------------------------------------------------------
+void ContextMenuEditor::onOkPushed()
+{
+	onApplyPushed();
+
+	delete _editorWidget;
+}
+
+//---------------------------------------------------------------------------------
+void ContextMenuEditor::onCancelPushed()
+{
+	delete _editorWidget;
+}
+
+//---------------------------------------------------------------------------------
+void ContextMenuEditor::onApplyPushed()
+{
+	QStringList formattedLines = _editorWidget->getLines();
+	QStringList unformattedLines;
+
+	for (auto formattedLine : formattedLines)
+	{		
+		QString unformattedLine = formattedLine.replace(subMenuIndent, "");
+		unformattedLines.append(unformattedLine);
+	}
+
+	_editedMenuAsText = unformattedLines;
+
+	_menuReady = false;	//Le menu vient d'être édité on doit le recréer
 }
 

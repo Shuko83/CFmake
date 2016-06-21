@@ -37,11 +37,16 @@ public:
 
 private:
 	QMenu* _editedMenu;
-	QStringList  _editedMenuAsText; //contient le texte a parser pour créer le QMenu
+	QStringList  _editedMenuAsText; //contient le texte a parser pour créer le QMenu (sans le formattage d'affichage de l'editor)
 	bool _menuReady;
+	ContextMenuEditorWidget * _editorWidget;
 
 	SwServiceManager_Helper<IEditableContextMenu> * _contextMenuServiceHelper;
 	SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow> *_mainWindowServicehelper;
 
 	void onContextMenuServiceChange(bool available);	
+
+	void onOkPushed();
+	void onCancelPushed();
+	void onApplyPushed();
 };
