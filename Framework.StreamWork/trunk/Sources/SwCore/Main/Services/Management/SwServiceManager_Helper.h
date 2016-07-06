@@ -15,7 +15,7 @@ public:
 	SwServiceManager_Helper();
 	~SwServiceManager_Helper();
 
-	SERVICE_TYPE * getService();
+	SERVICE_TYPE * getService() const;
 
 	template <typename YOUR_CLASS>
 	void setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(bool available));	// ATTENTION: ne peut être appelée qu'une seule fois
@@ -50,7 +50,7 @@ SwServiceManager_Helper<SERVICE_TYPE>::~SwServiceManager_Helper()
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE>
-SERVICE_TYPE * SwServiceManager_Helper<SERVICE_TYPE>::getService()
+SERVICE_TYPE * SwServiceManager_Helper<SERVICE_TYPE>::getService() const
 {
 	return _service;
 }
