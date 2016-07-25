@@ -221,8 +221,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 	QDir pathDir(realPath);
 	QString qstrMessage(getenv ("PATH"));
     
-    qstrMessage+=";";
-    qstrMessage+=pathDir.canonicalPath();
+	qstrMessage.prepend(pathDir.canonicalPath()+";");
 
     /*bool result=*/setenv(VARNAME_PATH, qstrMessage.toStdString().c_str(), true);
    
