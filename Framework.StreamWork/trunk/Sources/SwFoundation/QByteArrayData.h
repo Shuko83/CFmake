@@ -38,7 +38,7 @@ namespace StreamWork
 			QByteArrayData ();
 			virtual ~QByteArrayData();		
 
-			void setData (QByteArray &data);
+			void setData (const QByteArray &data);
 			QByteArray & getData();
 
 			//---------------------------------------------------------------------

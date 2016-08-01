@@ -17,7 +17,7 @@ using namespace StreamWork::SwCore;
 _SwManagedConfiguration::_SwManagedConfiguration()
 {
   _model=new SwPropertiesModelImpl(NULL);
-  _model->SetProperties(0,QString());
+  _model->SetProperties(0);
   _name = "";
   _configuration = 0;
   _loaded = false;
@@ -40,7 +40,7 @@ _SwManagedConfiguration::~_SwManagedConfiguration()
 
   if (_model != 0)
   {
-    _model->SetProperties(0,QString());
+    _model->SetProperties(0);
     delete _model;
   }
   _model = 0;
@@ -85,10 +85,10 @@ void _SwManagedConfiguration::registerOwnerConfigurableListener()
 /** @brief sur changement des propriétés*/
 void _SwManagedConfiguration::OnPropertiesChanged(ISwConfiguration * configuration)
 {
-    _model->SetProperties(0,QString());
+    _model->SetProperties(0);
     if (_configuration != 0)
     {
-        _model->SetProperties(_configuration->getProperties(),this->getName());
+        _model->SetProperties(_configuration->getProperties());
     }
     unregisterOwnerConfigurableListener();
     registerOwnerConfigurableListener();
@@ -120,14 +120,14 @@ void _SwManagedConfiguration::setConfiguration(ISwConfiguration * configuration,
   }
 
   if (_model != 0)
-    _model->SetProperties(0,QString());  
+    _model->SetProperties(0);  
 
   _configuration = configuration;
    
   if (_configuration != 0)
   {
     _configuration->addListener(this);
-    _model->SetProperties(configuration->getProperties(),name);
+    _model->SetProperties(configuration->getProperties());
     configuration->setActivated(false);
     registerOwnerConfigurableListener();
     
@@ -153,10 +153,10 @@ QString _SwManagedConfiguration::getName()
 void    _SwManagedConfiguration::setName(QString name)
 {
   _name = name;
-  _model->SetProperties(0,QString());
+  _model->SetProperties(0);
   if (_configuration != 0)
   {
-    _model->SetProperties(_configuration->getProperties(),name);
+    _model->SetProperties(_configuration->getProperties());
     _configuration->setActivated(false);
   }
 }
