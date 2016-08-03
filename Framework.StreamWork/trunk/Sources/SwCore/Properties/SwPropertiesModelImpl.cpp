@@ -630,6 +630,21 @@ QString SwPropertiesModelImpl::displayText(const QVariant &value)
 		case QVariant::KeySequence:
 			return value.toString();
 		case QVariant::UserType:
+			if (QMetaType::typeFlags(value.userType()) & QMetaType::IsEnumeration)
+			{
+				const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(value.userType());
+				if (metaEnumMetaObject)
+				{
+					QString metaEnumName = QMetaType::typeName(value.userType());
+					metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+					QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
+
+					if (metaEnum.isFlag())
+						return metaEnum.valueToKeys(*(int*)value.data());
+					else
+						return metaEnum.valueToKey(*(int*)value.data());
+				}
+			}
 			if ( qMetaTypeId<SwEnum>() == value.userType() )
 			{
 				SwEnum venum = value.value<SwEnum>();
@@ -702,6 +717,10 @@ bool SwPropertiesModelImpl::isSupportedType(QVariant & val)
 		case QVariant::KeySequence:
 			return true;
 		case QVariant::UserType:
+			if (QMetaType::typeFlags(val.userType()).testFlag(QMetaType::IsEnumeration) && QMetaType::metaObjectForType(val.userType()))
+			{
+				return true;
+			}
 			if ( qMetaTypeId<SwEnum>() == val.userType() )
 			{
 				return true;

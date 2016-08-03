@@ -332,6 +332,21 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 	//----------------------------------------------------------
 	if (!save_done) 
 	{
+		//Type QEnum
+		if (QMetaType::typeFlags(var.userType()) & QMetaType::IsEnumeration && QMetaType::metaObjectForType(var.userType())) {
+			const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(var.userType());
+			QString metaEnumName = QMetaType::typeName(var.userType());
+			metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+			QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
+
+			elt.setAttribute(CL_XML_ATT_ENUM, QString("%1").arg(*(int*)var.data()));
+			if (metaEnum.isFlag())
+				elt.setAttribute(CL_XML_ATT_ENUM_STRING, QString("%1").arg(QString(metaEnum.valueToKeys(*(int*)var.data()))));
+			else
+				elt.setAttribute(CL_XML_ATT_ENUM_STRING, QString("%1").arg(QString(metaEnum.valueToKey(*(int*)var.data()))));
+
+			save_done = true;
+		}
 		//Type SwEnum
         if (var.userType()==qMetaTypeId<SwEnum>()) {
             SwEnum enum_value=var.value<SwEnum>();
@@ -591,8 +606,14 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 	//----------------------------------------------------------
 	// Gestion des types user
 	//----------------------------------------------------------
-	 //Type SwEnum
-    if (var.userType()==qMetaTypeId<SwEnum>() && property_node.hasAttribute(CL_XML_ATT_ENUM)) {
+	// Type QEnum
+	if (QMetaType::typeFlags(var.userType()) & QMetaType::IsEnumeration && QMetaType::metaObjectForType(var.userType()) && property_node.hasAttribute(CL_XML_ATT_ENUM)) {
+		int evalue = property_node.attribute(CL_XML_ATT_ENUM).toInt();
+		inProperty->SetValue(QVariant(var.userType(), &evalue), true);
+		valueSetted = true;
+	}
+	//Type SwEnum
+    else if (var.userType()==qMetaTypeId<SwEnum>() && property_node.hasAttribute(CL_XML_ATT_ENUM)) {
         int evalue=property_node.attribute(CL_XML_ATT_ENUM).toInt();
         SwEnum enum_value=var.value<SwEnum>();        
         if (property_node.hasAttribute(CL_XML_ATT_ENUM_STRING) && !enum_value.IsFlag()) {
@@ -792,8 +813,32 @@ QVariant SwPropertyPersistentToolbox::createQVariantFromString(ISwProperty* prop
 		}
 	}
 	
+	if (QMetaType::typeFlags(var.userType()) & QMetaType::IsEnumeration && QMetaType::metaObjectForType(var.userType()))
+	{
+		const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(var.userType());
+		QString metaEnumName = QMetaType::typeName(var.userType());
+		metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+		QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
 
-	if (var.userType() == qMetaTypeId<SwEnum>())
+		int enum_value;
+
+		if (metaEnum.isFlag())
+			enum_value = metaEnum.keysToValue(value.toLatin1().constData());
+		else
+			enum_value = metaEnum.keyToValue(value.toLatin1().constData());
+
+		if (enum_value == -1)
+		{
+			void * default_enum = QMetaType::create(var.userType());
+
+			tmp = QVariant(var.userType(), default_enum);
+
+			QMetaType::destroy(var.userType(), default_enum);
+		}
+		else
+			tmp = QVariant(var.userType(), &enum_value);
+	}
+	else if (var.userType() == qMetaTypeId<SwEnum>())
 	{
 		SwEnum enum_value = var.value<SwEnum>();
 		enum_value.FromString(value);

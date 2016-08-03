@@ -137,7 +137,10 @@ bool _SwPropertyImpl_Class::checkForUserType(const QVariant & val)
 		QString s = QString("Unable to change property %1 because types are different %2!=%3").arg(_name).arg(QString(_value.typeName())).arg(QString(val.typeName()));
 		LAUNCH_SWEXCEPTION("SwCore", s);
 	}
-
+	if (QMetaType::typeFlags(val.userType()) & QMetaType::IsEnumeration && QMetaType::metaObjectForType(val.userType()))
+	{
+		return *(int*)val.data() == *(int*)_value.data();
+	}
 	if ( val.userType() == qMetaTypeId<SwEnum>() )
 	{
 		return (val.value<SwEnum>() == _value.value<SwEnum>());

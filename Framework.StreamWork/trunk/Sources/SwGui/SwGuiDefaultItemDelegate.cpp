@@ -228,8 +228,27 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent, const QStyleOpt
 		return w;
 	}
 
+	if (QMetaType::typeFlags(originalValue.userType()) & QMetaType::IsEnumeration)
+	{
+		const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(originalValue.userType());
+		if (metaEnumMetaObject)
+		{
+			QString metaEnumName = QMetaType::typeName(originalValue.userType());
+			metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+			QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
 
+			QComboBox * cbox = new QComboBox(parent);
+			for (int i = 0; i < metaEnum.keyCount(); i++)
+			{
+				int intValue = metaEnum.value(i);
+				cbox->addItem(metaEnum.key(i), QVariant(originalValue.userType(), &intValue));
+			}
+			cbox->setCurrentIndex(cbox->findData(originalValue));
+			cbox->setFrame(false);
 
+			return cbox;
+		}
+	}
 
 	QLineEdit *lineEdit = new QLineEdit(parent);
 	lineEdit->setFrame(false);
@@ -377,6 +396,13 @@ void SwGuiDefaultItemDelegate::setEditorData(QWidget *editor, const QModelIndex 
 		return;
 	}
 
+	if (QMetaType::typeFlags(value.userType()) & QMetaType::IsEnumeration && QMetaType::metaObjectForType(value.userType()))
+	{
+		QComboBox * cbox = qobject_cast<QComboBox *>(editor);
+		cbox->setCurrentIndex(cbox->findData(value));
+		return;
+	}
+
 
 	/*    if (qMetaTypeId<SwUUID>()==value.userType()) {
 			SwUUID id=value.value<SwUUID>();
@@ -502,6 +528,13 @@ void SwGuiDefaultItemDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 		QVariant new_val;
 		new_val.setValue(cbox->GetDouble());
 		model->setData(index, new_val, Qt::EditRole);
+		return;
+	}
+
+	if (QMetaType::typeFlags(originalValue.userType()) & QMetaType::IsEnumeration && QMetaType::metaObjectForType(originalValue.userType()))
+	{
+		QComboBox * cbox = qobject_cast<QComboBox *>(editor);
+		model->setData(index, cbox->currentData(), Qt::EditRole);
 		return;
 	}
 
