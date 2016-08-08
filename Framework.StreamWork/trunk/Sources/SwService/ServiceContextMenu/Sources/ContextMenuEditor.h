@@ -15,6 +15,7 @@
 #include "ISwServiceMainWindow.h"
 #include "IMenuEditor.h"
 #include "IEditableContextMenu.h"
+#include "ContextMenuWidget.h"
 
 
 class ContextMenuEditor : public StreamWork::SwFoundation::SwAssistedComponent,
@@ -33,10 +34,10 @@ public:
 	void Save(QDomElement&, QDomDocument&) override;
 
 	//Interface de IMenuEditor
-	QMenu* getMenu() override;
+	ContextMenuWidget* getMenu() override;
 
 private:
-	QMenu* _editedMenu;
+	ContextMenuWidget* _editedMenu;
 	QStringList  _editedMenuAsText; //contient le texte a parser pour créer le QMenu (sans le formattage d'affichage de l'editor)
 	bool _menuReady;
 	ContextMenuEditorWidget * _editorWidget;

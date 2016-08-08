@@ -207,19 +207,19 @@ void ContextMenuEditor::Save(QDomElement &elt, QDomDocument &doc)
 }
 
 //---------------------------------------------------------------------------------
-QMenu* ContextMenuEditor::getMenu()
+ContextMenuWidget* ContextMenuEditor::getMenu()
 {
 	if (_editedMenuAsText.count() == 0)
 		return nullptr;	
 
 	if (!_menuReady)
 	{
-		_editedMenu = new QMenu(_mainWindowServicehelper->getService()->getMainWindow());
+		_editedMenu = new ContextMenuWidget(_mainWindowServicehelper->getService()->getMainWindow());
 
 		//Submenu data				
 		int subMenuLevel = 0;
 		
-		QList<QMenu*> currentSubMenus;
+		QList<ContextMenuWidget*> currentSubMenus;
 
 		for (auto menuElementString : _editedMenuAsText)
 		{		
@@ -255,11 +255,11 @@ QMenu* ContextMenuEditor::getMenu()
 			
 				subMenuLevel++;
 
-				QMenu* newSubMenu;
+				ContextMenuWidget* newSubMenu;
 				if (subMenuLevel == 1)
-					newSubMenu = new QMenu(_editedMenu);
+					newSubMenu = new ContextMenuWidget(_editedMenu);
 				else
-					newSubMenu = new QMenu(currentSubMenus.last());
+					newSubMenu = new ContextMenuWidget(currentSubMenus.last());
 
 				newSubMenu->setTitle(subMenuName);				
 
