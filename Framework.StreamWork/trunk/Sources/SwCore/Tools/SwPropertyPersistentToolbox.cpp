@@ -533,6 +533,7 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 			inProperty->SetValue( r, true );
 			valueSetted = true;
 		}
+		break;
 	case QVariant::RectF:
 		if (property_node.hasAttribute(CL_XML_ATT_POINT_X) && property_node.hasAttribute(CL_XML_ATT_POINT_Y) &&
 			property_node.hasAttribute(CL_XML_ATT_SIZE_WIDTH) && property_node.hasAttribute(CL_XML_ATT_SIZE_HEIGHT)) 
