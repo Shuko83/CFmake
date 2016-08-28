@@ -19,18 +19,18 @@
 using namespace StreamWork::SwCore;
 
 const char * VL_Help = "Usage: %1 [options]\n\
-					       -h						this help\n\
-						       -v						informations about this application\n\
-							       -d						display core actions\n\
-								       -ppath path				plugin path\n\
-									       -pdesc pathdesc			plugin paths descriptor\n\
-										       -stream streamfile		stream will be read in the specified path\n\
-											   	-models modelFile		file where all models are described\n\
-													-autostart				Start automatically the executor in the stream witch is in Timer/MainEntry mode\n\
-														-appDirPath				The application dir path \n\
-														    -log logfile			logs will be write in the specified file\n\
-																-stylesheet styleFile	Add stylesheet to qapplication\n\
-																";
+					   -h						this help\n\
+					   -v						informations about this application\n\
+					   -d						display core actions\n\
+					   -ppath path				plugin path\n\
+					   -pdesc pathdesc			plugin paths descriptor\n\
+					   -stream streamfile		stream will be read in the specified path\n\
+					   -models modelFile		file where all models are described\n\
+					   -autostart				Start automatically the executor in the stream witch is in Timer/MainEntry mode\n\
+					   -appDirPath				The application dir path \n\
+					   -log logfile			logs will be write in the specified file\n\
+					   -stylesheet styleFile	Add stylesheet to qapplication\n\
+					   ";
 
 const char * VL_Version = "%1\n\
 						  Version 0.0.1\n\
