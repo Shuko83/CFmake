@@ -145,6 +145,9 @@ ISwConfCollector* SwServiceSaveConfiguration::getConfCollector(QString confName,
 			confCol = it2.value();
 		}
 	}
+	if (!confCol)
+		qWarning() << "Could not find ConfCollector confName=" << confName << "prefix=" << prefix;
+
 	return confCol;
 }
 
@@ -193,13 +196,24 @@ bool SwServiceSaveConfiguration::registerConfCollector(QString confName, QString
 				QHash<QString, ISwProperty*> propertiesToMerge = confCollector->getProperties();
 
 				QHashIterator<QString, ISwProperty*> it_properties(propertiesToMerge);
+				ret = true;
 				while (it_properties.hasNext())
 				{
 					it_properties.next();
 					ISwProperty* propertyToMerge = it_properties.value();
-					it.value().value(prefix)->addExternalProperty(it_properties.key(), propertyToMerge);
+					auto collector = it.value().value(prefix);
+					bool retInsertion = collector->addExternalProperty(it_properties.key(), propertyToMerge);
+					if (!retInsertion)
+					{
+						// Ce warning se déclenche si on veut fusionner des Collectors de type différents.
+						// Il faut alors renommer un ConfCollector en lui ajoutant un suffixe,
+						// par ex pour la page de Conf "SensorParameters" : "SensorParameters" (Collector classique) et "SensorParameters2" (Collector GUSA)
+						qWarning() << "Echec fusion collector" << prefix << "(Echec insertion propriete" << propertyToMerge->GetName() << ")";
+						ret = false;
+					}
+
 				}
-				ret = true;
+				
 			}
 			// Sinon, on lui rajoute un confCollector
 			else
@@ -1075,6 +1089,26 @@ ISwProperty* SwServiceSaveConfiguration::getProperty(QString confName, QString p
 			ISwConfCollector *collector = it2.value();
 			if (collector)
 				returnedProp = collector->getProperty(decoratedName);
+			if (!returnedProp)
+			{
+				// Hack : Si on n'a pas touvé la propriété, on considère alors les ConfCollector dont le nom contient prefix.
+				QStringList collectorNames = it->keys();
+				for (QString collectorName : collectorNames)
+				{
+					if (!collectorName.startsWith(prefix))
+						continue;
+					if (collectorName == prefix)
+						continue; // déjà testé
+
+					ISwConfCollector *collector = it->value(collectorName);
+					if (collector)
+					{
+						returnedProp = collector->getProperty(decoratedName);
+						if (returnedProp)
+							break;
+					}
+				}
+			}
 		}
 		else
 			qDebug() << "Prefix " << prefix<<" not registered in confCollector for configuration " <<confName;
