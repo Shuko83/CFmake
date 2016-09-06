@@ -90,6 +90,8 @@ namespace SwServiceAlias
 		 **/
 		QString getPrimaryAlias(gusa::model::interactionInterface::ITrack *track) const override;
 
+		QString getPrimaryAlias(QString tn, QString vcs, QString iff1, QString iff2, QString iff3) const override;
+
 		/**
 		 * @fn		QString SwServiceAlias::SwAliasManager::getSecondaryAlias(gusa::model::interactionInterface::ITrack *track)
 		 * @brief	Récupérer l'alias secondaire lié à la piste indiquée en prenant en compte l'ordre de priorité des alias
@@ -102,6 +104,8 @@ namespace SwServiceAlias
 		 **/
 		QString getSecondaryAlias(gusa::model::interactionInterface::ITrack *track) const override;
 
+		QString getSecondaryAlias(QString tn, QString vcs, QString iff1, QString iff2, QString iff3) const override;
+
 		/**
 		 * @fn		bool SwServiceAlias::SwAliasManager::isExist(gusa::model::interactionInterface::ITrack *track)
 		 * @brief	Indiquer si un alias existe pour la piste indiquée
@@ -113,6 +117,8 @@ namespace SwServiceAlias
 		 * @sa	SwServiceAlias::ISxAliasUser::isExist(gusa::model::interactionInterface::ITrack*)
 		 **/
 		bool isExist(gusa::model::interactionInterface::ITrack *track) const override;
+
+		bool isExist(QString tn, QString vcs, QString iff1, QString iff2, QString iff3) const override;
 
 		/**
 		 * @fn		bool SwServiceAlias::SwAliasManager::isExist(QString number, Enums::SwSourceType type)

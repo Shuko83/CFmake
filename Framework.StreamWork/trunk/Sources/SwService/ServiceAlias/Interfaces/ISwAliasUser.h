@@ -30,6 +30,8 @@ namespace SwServiceAlias
 		 **/
 		virtual QString getPrimaryAlias(gusa::model::interactionInterface::ITrack *track) const = 0;
 
+		virtual QString getPrimaryAlias(QString tn, QString vcs, QString iff1, QString iff2, QString iff3) const = 0;
+
 		/**
 		 * @fn		virtual QString SwServiceAlias::ISwAliasUser::getSecondaryAlias(gusa::model::interactionInterface::ITrack *track)
 		 * @brief	Récupérer l'alias secondaire lié à la piste indiquée en prenant en compte l'ordre de priorité des alias
@@ -40,6 +42,8 @@ namespace SwServiceAlias
 		 **/
 		virtual QString getSecondaryAlias(gusa::model::interactionInterface::ITrack *track) const = 0;
 
+		virtual QString getSecondaryAlias(QString tn, QString vcs, QString iff1, QString iff2, QString iff3) const = 0;
+
 		/**
 		 * @fn		virtual bool SwServiceAlias::ISwAliasUser::isExist(gusa::model::interactionInterface::ITrack *track)
 		 * @brief	Indiquer si un alias existe pour la piste indiquée
@@ -49,6 +53,8 @@ namespace SwServiceAlias
 		 * @return	bool	@b True si un alias existe, sinon @b False
 		 **/
 		virtual bool isExist(gusa::model::interactionInterface::ITrack *track) const = 0;
+
+		virtual bool isExist(QString tn, QString vcs, QString iff1, QString iff2, QString iff3) const = 0;
 
 		/**
 		 * @fn		virtual void SwServiceAlias::ISwAliasUser::registerObserver(IAliasObserver *obs)

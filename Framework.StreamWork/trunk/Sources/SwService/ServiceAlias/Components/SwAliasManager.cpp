@@ -45,10 +45,20 @@ namespace SwServiceAlias
 	//---------------------------------------------------------------------------------
 	QString SwAliasManager::getPrimaryAlias(gusa::model::interactionInterface::ITrack *track) const
 	{
+		return getPrimaryAlias(getNumber(track, Enums::SwSourceType::TN),
+			getNumber(track, Enums::SwSourceType::VCS),
+			getNumber(track, Enums::SwSourceType::IFF1),
+			getNumber(track, Enums::SwSourceType::IFF2),
+			getNumber(track, Enums::SwSourceType::IFF3));
+	}
+
+	//---------------------------------------------------------------------------------
+	QString SwAliasManager::getPrimaryAlias(QString tn, QString vcs, QString iff1, QString iff2, QString iff3) const
+	{
 		POINTER_UNAVAILABLE(_aliasManager, QString());
 
 		// Recherche dans la liste des fast action
-		QString numberFA = getNumber(track, Enums::SwSourceType::TN);
+		QString numberFA = tn;
 		QString numberFARange = numberFA;
 		numberFARange.replace(numberFA.count() - 1, 1, CHAR_RANGE);
 
@@ -65,7 +75,29 @@ namespace SwServiceAlias
 		// Recherche par ordre de priorité
 		for (QList<Enums::SwSourceType>::const_iterator ite = _primaryOrder.begin(); ite != _primaryOrder.end(); ++ite)
 		{
-			QString number = getNumber(track, *ite);
+			QString number;
+
+			switch (*ite)
+			{
+			case Enums::SwSourceType::TN:
+				number = tn;
+				break;
+			case Enums::SwSourceType::VCS:
+				number = vcs;
+				break;
+			case Enums::SwSourceType::IFF1:
+				number = iff1;
+				break;
+			case Enums::SwSourceType::IFF2:
+				number = iff2;
+				break;
+			case Enums::SwSourceType::IFF3:
+				number = iff3;
+				break;
+			default:
+				break;
+			}
+
 			QString aliasRange = _aliasManager->tryGetRangeAlias(number, static_cast<unsigned int>(*ite));
 
 			// Un alias spécifique est prioritaire sur un alias de plage
@@ -85,12 +117,44 @@ namespace SwServiceAlias
 	//---------------------------------------------------------------------------------
 	QString SwAliasManager::getSecondaryAlias(gusa::model::interactionInterface::ITrack *track) const
 	{
+		return getSecondaryAlias(getNumber(track, Enums::SwSourceType::TN),
+			getNumber(track, Enums::SwSourceType::VCS),
+			getNumber(track, Enums::SwSourceType::IFF1),
+			getNumber(track, Enums::SwSourceType::IFF2),
+			getNumber(track, Enums::SwSourceType::IFF3));
+	}
+
+	//---------------------------------------------------------------------------------
+	QString SwAliasManager::getSecondaryAlias(QString tn, QString vcs, QString iff1, QString iff2, QString iff3) const
+	{
 		POINTER_UNAVAILABLE(_aliasManager, QString());
 
 		// Recherche par ordre de priorité
 		for (QList<Enums::SwSourceType>::const_iterator ite = _secondaryOrder.begin(); ite != _secondaryOrder.end(); ++ite)
 		{
-			QString number = getNumber(track, *ite);
+			QString number;
+
+			switch (*ite)
+			{
+			case Enums::SwSourceType::TN:
+				number = tn;
+				break;
+			case Enums::SwSourceType::VCS:
+				number = vcs;
+				break;
+			case Enums::SwSourceType::IFF1:
+				number = iff1;
+				break;
+			case Enums::SwSourceType::IFF2:
+				number = iff2;
+				break;
+			case Enums::SwSourceType::IFF3:
+				number = iff3;
+				break;
+			default:
+				break;
+			}
+
 			QString aliasRange = _aliasManager->tryGetRangeAlias(number, static_cast<unsigned int>(*ite));
 
 			// Un alias spécifique est prioritaire sur un alias de plage
@@ -110,29 +174,39 @@ namespace SwServiceAlias
 	//---------------------------------------------------------------------------------
 	bool SwAliasManager::isExist(gusa::model::interactionInterface::ITrack *track) const
 	{
+		return isExist(getNumber(track, Enums::SwSourceType::TN),
+			getNumber(track, Enums::SwSourceType::VCS),
+			getNumber(track, Enums::SwSourceType::IFF1),
+			getNumber(track, Enums::SwSourceType::IFF2),
+			getNumber(track, Enums::SwSourceType::IFF3));
+	}
+
+	//---------------------------------------------------------------------------------
+	bool SwAliasManager::isExist(QString tn, QString vcs, QString iff1, QString iff2, QString iff3) const
+	{
 		POINTER_UNAVAILABLE(_aliasManager, false);
 
 		bool result = false;
 		QString number;
 		unsigned int type;
 
-		number = getNumber(track, Enums::SwSourceType::TN);
+		number = tn;
 		type = static_cast<unsigned int>(Enums::SwSourceType::TN);
 		result |= _aliasManager->isExist(number, type);
 
-		number = getNumber(track, Enums::SwSourceType::VCS);
+		number = vcs;
 		type = static_cast<unsigned int>(Enums::SwSourceType::VCS);
 		result |= _aliasManager->isExist(number, type);
 
-		number = getNumber(track, Enums::SwSourceType::IFF1);
+		number = iff1;
 		type = static_cast<unsigned int>(Enums::SwSourceType::IFF1);
 		result |= _aliasManager->isExist(number, type);
 
-		number = getNumber(track, Enums::SwSourceType::IFF2);
+		number = iff2;
 		type = static_cast<unsigned int>(Enums::SwSourceType::IFF2);
 		result |= _aliasManager->isExist(number, type);
 
-		number = getNumber(track, Enums::SwSourceType::IFF3);
+		number = iff3;
 		type = static_cast<unsigned int>(Enums::SwSourceType::IFF3);
 		result |= _aliasManager->isExist(number, type);
 
