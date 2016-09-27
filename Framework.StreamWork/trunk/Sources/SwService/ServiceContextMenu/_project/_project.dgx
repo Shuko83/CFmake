@@ -5,7 +5,8 @@
 		<Artifact name="SwFoundation"/>	
 		<Artifact name="SwExecution"/>	
 		<Artifact name="SwGui"/>
-		<Artifact name="ContextMenu"/>
+		<Artifact name="ContextMenu"/>		
+		<Artifact name="SwActionService"/>	
     </Dependencies>	
 	<QTDependencies>
         <Module name="core"/>
