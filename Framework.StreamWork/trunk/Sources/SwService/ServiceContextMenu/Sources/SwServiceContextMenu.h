@@ -42,12 +42,14 @@ namespace StreamWork
 
 			void enableContextMenu(bool enable) override{ ContextMenu::enableContextMenu(enable); };
 
-			void setMenuRequestCartoPosition(double latitude, double longitude, double altitude) override;
-			std::tuple<double, double, double> getMenuRequestCartoPosition() override;
+			void setMenuRequestCartoPosition(QVector3D geoPos) override;
+			void resetMenuRequestCartoPosition() override;
+			bool isMenuRequestCartoPositionValid() override;
+			QVector3D getMenuRequestCartoPosition() override;
 
 		private:
 
-			std::tuple<double, double, double> _requestCartoPosition; //latitude, longitude et altitude (deg decimal, deg decimal et mètre) 
+			QVector3D _requestCartoPosition; //latitude, longitude et altitude (deg decimal, deg decimal et mètre) 
 
 			bool _hasBeenInitialized;
 

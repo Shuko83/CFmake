@@ -13,13 +13,28 @@ StreamWork::Service::SwServiceContextMenu::~SwServiceContextMenu()
 }
 
 //---------------------------------------------------------------------------------
-void StreamWork::Service::SwServiceContextMenu::setMenuRequestCartoPosition(double latitude, double longitude, double altitude)
+void StreamWork::Service::SwServiceContextMenu::setMenuRequestCartoPosition(QVector3D geoPos)
 {
-	_requestCartoPosition = std::make_tuple(latitude, longitude, altitude);
+	_requestCartoPosition = geoPos;
 }
 
 //---------------------------------------------------------------------------------
-std::tuple<double, double, double> StreamWork::Service::SwServiceContextMenu::getMenuRequestCartoPosition()
+void StreamWork::Service::SwServiceContextMenu::resetMenuRequestCartoPosition()
+{
+	_requestCartoPosition = QVector3D(NAN, NAN, NAN);
+}
+
+//---------------------------------------------------------------------------------
+bool StreamWork::Service::SwServiceContextMenu::isMenuRequestCartoPositionValid()
+{
+	if (isnan(_requestCartoPosition.x()) && isnan(_requestCartoPosition.y()) && isnan(_requestCartoPosition.z()))
+		return false;
+	
+	return true;
+}
+
+//---------------------------------------------------------------------------------
+QVector3D StreamWork::Service::SwServiceContextMenu::getMenuRequestCartoPosition()
 {
 	return _requestCartoPosition;
 }

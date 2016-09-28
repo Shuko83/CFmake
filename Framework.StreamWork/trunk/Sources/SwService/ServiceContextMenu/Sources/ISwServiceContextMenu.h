@@ -15,6 +15,7 @@
 * INCLUDES LOCAUX
 */
 #include "ISwService.h"
+#include <QVector3D>
 
 using namespace StreamWork::SwCore;
 
@@ -54,8 +55,10 @@ namespace StreamWork
 			virtual QString GetServiceRealName() override{ return QString(typeid(this).name()); }
 
 			//Methode specifique a Sx
-			virtual void setMenuRequestCartoPosition(double, double, double) = 0;		
-			virtual std::tuple<double, double, double> getMenuRequestCartoPosition() = 0;
+			virtual void setMenuRequestCartoPosition(QVector3D geoPos) = 0;		
+			virtual void resetMenuRequestCartoPosition() = 0;
+			virtual bool isMenuRequestCartoPositionValid() = 0;
+			virtual QVector3D getMenuRequestCartoPosition() = 0;
 		};
 	}
 }
