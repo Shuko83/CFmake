@@ -139,15 +139,7 @@ QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
 
 	absolutePath = pathAsWritten.remove("::");
 	
-	
-
-	if ( QFile::exists(absolutePath) )
-	{
-		if ( relativeExists )
-			*relativeExists = false;
-		return  QDir::cleanPath(absolutePath);
-	}
-	else if (QFile::exists(absolutePathWithOptionalFolder))
+	if (QFile::exists(absolutePathWithOptionalFolder))
 	{
 		if (relativeExists)
 			*relativeExists = false;
@@ -188,6 +180,12 @@ QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
 		if (relativeExists)
 			*relativeExists = true;
 		return  QDir::cleanPath(relativePathStringWithOptionalFolder);
+	}
+	else if (QFile::exists(absolutePath))
+	{
+		if (relativeExists)
+			*relativeExists = false;
+		return  QDir::cleanPath(absolutePath);
 	}
 	
 	//On dit que c'est absolute quand meme
