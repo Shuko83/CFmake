@@ -38,8 +38,6 @@ QColor ManageLinkColor::getColorForInterface( QString interfaceName )
 		}
 	}
 	return QColor(hexColor);
-	
-
 }
 
 //-----------------------------------------------------------------------
@@ -54,7 +52,7 @@ void ManageLinkColor::loadStaticColor()
 				_mapColor.insert(val, settings.value(val).toString());
 	}
 
-	if(_mapColor.count() == 12) // moche mais pour erase les anciennes valeurs locales
+	if(_mapColor.count() == 0) // moche mais pour erase les anciennes valeurs locales
 	{
 		_mapColor.clear();
 		_mapColor.insert("ISwWidget", "#9E6DFF");
@@ -66,17 +64,10 @@ void ManageLinkColor::loadStaticColor()
 		_mapColor.insert("IGuReplay", "#FDFF55");
 		_mapColor.insert("ISxDatabase", "#2d2dff");
 		_mapColor.insert("ISwEvent", "#24cd1c");
-		//_mapColor.insert("IPlgContext","#e95a1a"); //rdyToUse
-
-
-		//_mapColor.insert("ISwQDockWidget", "#FDFF55");
-		//_mapColor.insert("ISwDockWidget", "#FDFF55");
-		//_mapColor.insert("IPlgGlobalContext", "#2d2dff");
-		//_mapColor.insert("IDataLink", "#24cd1c");
-		//_mapColor.insert("ITdlDbRootFacade", "#6f0cae");
-		//_mapColor.insert("IProtocolProvider", "#e52da6");
-		//_mapColor.insert("IExchangeObjectProvider", "#ff0000");
-
+		_mapColor.insert("ICartoSDK", "#2d2dff");
+		_mapColor.insert("ICartoProperties", "#e52da6");
+		_mapColor.insert("IVgeoObjectsManager", "#50e616");
+		_mapColor.insert("ISxDBAccess", "#0391da");
 
 		QSettings settings(ColorIni, QSettings::IniFormat);
 		for (QString val : _mapColor.keys())
