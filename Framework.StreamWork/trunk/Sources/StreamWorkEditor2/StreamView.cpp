@@ -9,6 +9,10 @@
 #include "MainWindow.h"
 #include "MenuManager.h"
 
+#define MAX_SCALE 10 // Zoom max
+#define MIN_SCALE 0.3 // Zoom min
+#define SCALE_STEP 1.10 // Facteur de zoom par coup de molette (1.10 == 10% par coup de molette)
+#define WHEEL_STEP 120.0 // Valeur de QWheelEvent::delta() pour un coup de molette (cf doc QT : 8 * 15)
 
 //-----------------------------------------------------------------------
 StreamView::StreamView(QWidget * parent) :QGraphicsView(parent)
@@ -16,7 +20,6 @@ StreamView::StreamView(QWidget * parent) :QGraphicsView(parent)
 	//setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
 	setStyleSheet("QGraphicsView { background:#323232 }");
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
-	setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
 	setResizeAnchor(QGraphicsView::AnchorViewCenter);
 	setDragMode(QGraphicsView::RubberBandDrag);
 	setAcceptDrops(true);
@@ -239,26 +242,50 @@ void StreamView::mouseReleaseEvent(QMouseEvent * e)
 //-----------------------------------------------------------------------
 void StreamView::wheelEvent(QWheelEvent *event)
 {
-	if ( event->modifiers() & Qt::ControlModifier )
-	{
-		scaleView(pow((double) 2, -event->delta() / 240.0));
-		event->accept();
-		return;
-	}
-	QGraphicsView::wheelEvent(event);
+	QPoint vpos1 = event->pos();
+	QPointF spos1 = mapToScene(vpos1);
+
+	scaleView(pow(SCALE_STEP, event->delta() / WHEEL_STEP));
+
+	QPoint vpos2 = mapFromScene(spos1);
+	QPoint dp = vpos2 - vpos1;
+	scrollView(-dp);
+
+	event->accept();
 }
 
 //-----------------------------------------------------------------------
 void StreamView::scaleView(qreal scaleFactor)
 {
-	qreal factor = matrix().scale(scaleFactor, scaleFactor).mapRect(QRectF(0, 0, 1, 1)).width();
-	if ( factor < 0.3 || factor > 10 )
-		return;
-
 	_scaleFactor *= scaleFactor;
 
-	scale(scaleFactor, scaleFactor);
+	if (_scaleFactor > MAX_SCALE)
+	{
+		_scaleFactor = MAX_SCALE;
+	}
+	else if (_scaleFactor < MIN_SCALE)
+	{
+		_scaleFactor = MIN_SCALE;
+	}
 
+	setTransform(QTransform(_scaleFactor, 0, 0, _scaleFactor, 0, 0));
+}
+
+//---------------------------------------------------------------------------------
+void StreamView::scrollView(QPoint dp)
+{
+	QScrollBar* hscroll = horizontalScrollBar();
+	QScrollBar* vscroll = verticalScrollBar();
+	if (hscroll)
+	{
+		int v = hscroll->value();
+		hscroll->setValue(v - dp.x());
+	}
+	if (vscroll)
+	{
+		int v = vscroll->value();
+		vscroll->setValue(v - dp.y());
+	}
 }
 
 //-----------------------------------------------------------------------
@@ -292,16 +319,10 @@ void StreamView::clearAndHideSearchBox()
 	_searchEdit->setText("");
 
 	//Reset all states
-	QMatrix mat = matrix();
-	mat.reset();
-	setMatrix(mat);
-	QTransform trans = transform();
-	trans.reset();
-	setTransform(trans);
-
-	centerOn(_previousCenter);
 	_scaleFactor = _previousScaleFactor;
-	scale(_scaleFactor, _scaleFactor);
+
+	setTransform(QTransform(_scaleFactor, 0, 0, _scaleFactor, 0, 0));
+	centerOn(_previousCenter);
 }
 
 //-----------------------------------------------------------------------

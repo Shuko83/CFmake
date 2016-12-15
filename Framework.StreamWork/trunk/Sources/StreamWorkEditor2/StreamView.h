@@ -79,7 +79,9 @@ protected:
     /* \brief Reception d'un evenement roulette de souris */
     void wheelEvent(QWheelEvent *event);
     /* \brief Retaillage de la vue */
-    void scaleView(qreal scaleFactor);
+	void scaleView(qreal scaleFactor);
+	/* \brief Deplacement de la vue */
+	void scrollView(QPoint dp);
 private:
     /** @brief Controler hote */
     StreamControler * _controler;
@@ -93,7 +95,7 @@ private:
 	qreal _previousScaleFactor;
 	qreal _scaleFactor;
 
-QGraphicsRectItem * test;
+	QGraphicsRectItem * test;
 };
 
 #endif
