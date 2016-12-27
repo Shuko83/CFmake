@@ -1823,7 +1823,7 @@ void SwServiceSaveConfiguration::createQDomProfile(QString confName, QDomDocumen
 					// find propery in newDefaultValues le "decoratedNameNewDefaultProfile"
 					QString decoratedNameNewDefaultProfile = it_props.key();
 					QHash<QString, QString>::iterator it_property = inNewDefaultValues.find(decoratedNameNewDefaultProfile);
-					if (it_property != inNewDefaultValues.end() && it_property.value() != "")
+					if (it_property != inNewDefaultValues.end())
 						newDefaultValue = SwPropertyPersistentToolbox::createQVariantFromString(it_props.value(), it_property.value());
 				}
 
