@@ -34,3 +34,4 @@ cd ../ServiceShortcut
 call generatevcproj.bat
 cd ../ServiceTools
 call generatevcproj.bat
+cd ../../
