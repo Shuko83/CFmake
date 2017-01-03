@@ -19,7 +19,6 @@
   * INCLUDES LOCAUX
   */
 #include "SwException.h"
-#include "SwMacros.h"
 #include "ISwService.h"
 #include "ISwServicesManager_Listener.h"
 

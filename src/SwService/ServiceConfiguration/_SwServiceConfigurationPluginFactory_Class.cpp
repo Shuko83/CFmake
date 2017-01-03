@@ -1,78 +1,81 @@
 #include "_SwServiceConfigurationPluginFactory_Class.h"
-
 #include "SwApplication.h"
-
+#include "SwMacros.h"
+#include "SwConfPushButton.h"
 
 using namespace StreamWork::SwCore;
 
 //----------------------------------------------------------------------------------------------
-_SwServiceConfigurationPluginFactory_Class::_SwServiceConfigurationPluginFactory_Class():SwPluginFactory_Class() 
+_SwServiceConfigurationPluginFactory_Class::_SwServiceConfigurationPluginFactory_Class() :SwPluginFactory_Class()
 {
 
 }
 
 //----------------------------------------------------------------------------------------------
-_SwServiceConfigurationPluginFactory_Class::~_SwServiceConfigurationPluginFactory_Class() 
+_SwServiceConfigurationPluginFactory_Class::~_SwServiceConfigurationPluginFactory_Class()
 {
 	//SW_APP->UnregisterService(_serviceconfiguration->GetServiceName());
 	delete _serviceconfiguration;
 }
 
 //----------------------------------------------------------------------------------------------
-void _SwServiceConfigurationPluginFactory_Class::Initialize() 
+void _SwServiceConfigurationPluginFactory_Class::Initialize()
 {
 	_serviceconfiguration = new SwServiceSaveConfiguration();
-    SW_APP->RegisterService(_serviceconfiguration);
+	SW_APP->RegisterService(_serviceconfiguration);
+
+    RegisterComponent("SwConfPushButton", "Permet d'instancier un PushButton pour declencher la sauvegarde de la conf");
 }
 
 //----------------------------------------------------------------------------------------------
-void _SwServiceConfigurationPluginFactory_Class::Liberate() 
+void _SwServiceConfigurationPluginFactory_Class::Liberate()
 {
 
 }
 
 ///----------------------------------------------------------------------------------------------
-SwComponent_Class * _SwServiceConfigurationPluginFactory_Class::CreateInstanceOf(QString name) 
+SwComponent_Class * _SwServiceConfigurationPluginFactory_Class::CreateInstanceOf(QString name)
 {
-    return NULL;
+    SW_PUBLISH_COMPONENT("SwConfPushButton",SwConfPushButton)
+	return NULL;
 }
 
 //----------------------------------------------------------------------------------------------
-SwData_Class * _SwServiceConfigurationPluginFactory_Class::CreateInstanceOf(const SwUUID & type_id) 
+SwData_Class * _SwServiceConfigurationPluginFactory_Class::CreateInstanceOf(const SwUUID & type_id)
 {
-    return NULL;
+	return NULL;
 }
 
 //----------------------------------------------------------------------------------------------
-QIcon _SwServiceConfigurationPluginFactory_Class::CreateIconOf(QString name) const 
+QIcon _SwServiceConfigurationPluginFactory_Class::CreateIconOf(QString name) const
 {
-    QIcon ico;
-    return ico;
+	QIcon ico;
+	return ico;
 }
 
 //----------------------------------------------------------------------------------------------
 QString _SwServiceConfigurationPluginFactory_Class::GetPluginVersion()
 {
-    QString build;
-    build=QString("%1 %2").arg(__DATE__).arg(__TIME__);
-    build=build.toUpper();
-    build.replace(QRegExp("[ |:]+"), ".");
+	QString build;
+	build = QString("%1 %2").arg(__DATE__).arg(__TIME__);
+	build = build.toUpper();
+	build.replace(QRegExp("[ |:]+"), ".");
 #ifndef QT_NO_DEBUG
-    build+=" (Debug)";
+	build += " (Debug)";
 #else 
-    build+=" (Release)";
+	build+=" (Release)";
 #endif
-    return build;
+	return build;
 }
 
 //----------------------------------------------------------------------------------------------
 double _SwServiceConfigurationPluginFactory_Class::GetPluginCompilationDate()
-{	
+{
 	//recup de la date à partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
 	//recup de l'heure à partir de __TIME__
 	QString strTime = __TIME__;
-	QTime time = time.fromString(strTime,"hh:mm:ss");
+	QTime time = time.fromString(strTime, "hh:mm:ss");
 
 	QDateTime finalDateTime;
 	//set la date dans QDateTime

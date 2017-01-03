@@ -343,6 +343,9 @@
         </property>
         <item>
          <widget class="QPushButton" name="outToolBarBtn">
+          <property name="toolTip">
+           <string>Remove from toolbar</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">border:none</string>
           </property>
@@ -353,6 +356,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="toToolBarBtn">
+          <property name="toolTip">
+           <string>Add in toolbar</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">border:none</string>
           </property>
@@ -374,6 +380,9 @@
             <width>16777215</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Close dock</string>
           </property>
           <property name="styleSheet">
            <string notr="true">border:none</string>

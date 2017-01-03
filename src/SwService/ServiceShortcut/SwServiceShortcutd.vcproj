@@ -3,218 +3,328 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwServiceShortcutd"
-	ProjectGUID="{29DBE695-5BE6-3B7E-A454-3BC61353E6E9}"
-	Keyword="Qt4VSv1.0">
+	ProjectGUID="{2003F070-EB5E-36EF-8E0F-83979705E323}"
+	Keyword="Qt4VSv1.0"
+	TargetFrameworkVersion="0"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32" />
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="."
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			ConfigurationType="2"
 			IntermediateDirectory="GeneratedFiles\objd\"
-			UseOfMfc="0">
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\..\SwCore&quot;,&quot;..\..\SwCore\Component\Base&quot;,&quot;..\..\SwCore\Component\Interfaces&quot;,&quot;..\..\SwCore\Component\Pin&quot;,&quot;..\..\SwCore\Main&quot;,&quot;..\..\SwCore\Main\Plugin&quot;,&quot;..\..\SwCore\Main\Services\Management&quot;,&quot;..\..\SwCore\SwRef&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools\Exception&quot;,&quot;..\..\SwCore\Tools\Log&quot;,&quot;..\..\SwCore\Tools\Signal&quot;,&quot;..\..\SwCore\Types&quot;,&quot;..\..\SwCore\Types\UserType&quot;,&quot;.&quot;,&quot;..\..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
-				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
-				AssemblerListingLocation="GeneratedFiles\objd\"
-				BasicRuntimeChecks="3"
-				BufferSecurityCheck="false"
-				DebugInformationFormat="4"
-				ExceptionHandling="2"
-				ForcedIncludeFiles="StdAfx.h"
-				GeneratePreprocessedFile="0"
-				ObjectFile="GeneratedFiles\objd\"
-				Optimization ="0"
-				PrecompiledHeaderFile="$(IntDir)\SwServiceShortcutd.pch"
-				PrecompiledHeaderThrough="StdAfx.h"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
-				ProgramDataBaseFileName="$(IntDir)\SwServiceShortcut_vc.pdb"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="true"
-				SuppressStartupBanner="true"
-				TreatWChar_tAsBuiltInType="false"
-				UsePrecompiledHeader="2"
-				WarningLevel="3" />
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool" />
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="../../../\lib\vc\debug\SwCored.lib C:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut/../../../../../Libraries/ExceptionManager/\lib\vc\debug\ExceptionManagerd.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../../\lib\vc\debug,C:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut/../../../../../Libraries/ExceptionManager/\lib\vc\debug"
-				GenerateDebugInformation="true"
-				IgnoreImportLibrary="true"
-				LinkTimeCodeGeneration="0"
-				OutputFile="..\..\..\lib\vc\debug\service\SwServiceShortcutd.swdld"
-				ProgramDatabaseFile="./../../../\bin\vc\debug/service/SwServiceShortcutd.pdb"
-				SubSystem="0"
-				SuppressStartupBanner="true" />
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
+				WarningLevel="0"
 				DefaultCharType="0"
 				EnableErrorChecks="1"
-				WarningLevel="0" />
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\..\bin\vc\debug\service&quot;"
-				Description="Copy SwServiceShortcutd.swdld to ..\..\..\bin\vc\debug\service" />
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.3\include\QtCore&quot;,&quot;c:\Qt\4.7.3\include\QtGui&quot;,&quot;c:\Qt\4.7.3\include&quot;,&quot;.&quot;,&quot;..\..\SwCore&quot;,&quot;..\..\SwCore\Component\Base&quot;,&quot;..\..\SwCore\Component\Interfaces&quot;,&quot;..\..\SwCore\Component\Pin&quot;,&quot;..\..\SwCore\Main&quot;,&quot;..\..\SwCore\Main\Plugin&quot;,&quot;..\..\SwCore\Main\Services\Management&quot;,&quot;..\..\SwCore\SwRef&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools\Exception&quot;,&quot;..\..\SwCore\Tools\Log&quot;,&quot;..\..\SwCore\Tools\Signal&quot;,&quot;..\..\SwCore\Types&quot;,&quot;..\..\SwCore\Types\UserType&quot;,&quot;.&quot;,&quot;..\..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.3\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.3\mkspecs\win32-msvc2008"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				GeneratePreprocessedFile="0"
+				ExceptionHandling="2"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="StdAfx.h"
+				PrecompiledHeaderFile="$(IntDir)\SwServiceShortcutd.pch"
+				AssemblerListingLocation="GeneratedFiles\objd\"
+				ObjectFile="GeneratedFiles\objd\"
+				ProgramDataBaseFileName="$(IntDir)\SwServiceShortcut_vc.pdb"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="4"
+				ForcedIncludeFiles="StdAfx.h"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool" />
-			<Tool
-				Name="VCPreLinkEventTool" />
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,QT_DLL,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="../../../\lib\vc\debug\SwCored.lib C:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut/../../../../../Libraries/ExceptionManager/\lib\vc\debug\ExceptionManagerd.lib c:\Qt\4.7.3\lib\QtGuid4.lib c:\Qt\4.7.3\lib\QtCored4.lib"
+				OutputFile="..\..\..\lib\vc\debug\service\SwServiceShortcutd.swdld"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,../../../\lib\vc\debug,C:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut/../../../../../Libraries/ExceptionManager/\lib\vc\debug"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile="./../../../\bin\vc\debug/service/SwServiceShortcutd.pdb"
+				SubSystem="0"
+				LinkTimeCodeGeneration="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy SwServiceShortcutd.swdld to ..\..\..\bin\vc\debug\service"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\..\bin\vc\debug\service&quot;"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="."
-			ATLMinimizesCRunTimeLibraryUsage="false"
-			ConfigurationType="2"
 			IntermediateDirectory="GeneratedFiles\obj\"
-			UseOfMfc="0">
+			ConfigurationType="2"
+			UseOfMFC="0"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\..\SwCore&quot;,&quot;..\..\SwCore\Component\Base&quot;,&quot;..\..\SwCore\Component\Interfaces&quot;,&quot;..\..\SwCore\Component\Pin&quot;,&quot;..\..\SwCore\Main&quot;,&quot;..\..\SwCore\Main\Plugin&quot;,&quot;..\..\SwCore\Main\Services\Management&quot;,&quot;..\..\SwCore\SwRef&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools\Exception&quot;,&quot;..\..\SwCore\Tools\Log&quot;,&quot;..\..\SwCore\Tools\Signal&quot;,&quot;..\..\SwCore\Types&quot;,&quot;..\..\SwCore\Types\UserType&quot;,&quot;.&quot;,&quot;..\..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
-				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
-				AssemblerListingLocation="GeneratedFiles\obj\"
-				BasicRuntimeChecks="3"
-				BufferSecurityCheck="false"
-				DebugInformationFormat="3"
-				ExceptionHandling="2"
-				ForcedIncludeFiles="StdAfx.h"
-				GeneratePreprocessedFile="0"
-				ObjectFile="GeneratedFiles\obj\"
-				Optimization ="0"
-				PrecompiledHeaderFile="$(IntDir)\SwServiceShortcut.pch"
-				PrecompiledHeaderThrough="StdAfx.h"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
-				ProgramDataBaseFileName="$(IntDir)\SwServiceShortcut_vc.pdb"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="true"
-				SuppressStartupBanner="true"
-				TreatWChar_tAsBuiltInType="false"
-				UsePrecompiledHeader="2"
-				WarningLevel="3" />
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool" />
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="../../../\lib\vc\release\SwCore.lib C:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut/../../../../../Libraries/ExceptionManager/\lib\vc\release\ExceptionManager.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../../\lib\vc\release,C:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut/../../../../../Libraries/ExceptionManager/\lib\vc\release"
-				GenerateDebugInformation="false"
-				IgnoreImportLibrary="true"
-				LinkIncremental="1"
-				LinkTimeCodeGeneration="0"
-				OutputFile="..\..\..\lib\vc\release\service\SwServiceShortcut.swdl"
-				ProgramDatabaseFile=""
-				SubSystem="0"
-				SuppressStartupBanner="true" />
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
+				WarningLevel="0"
 				DefaultCharType="0"
 				EnableErrorChecks="1"
-				WarningLevel="0" />
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"
-				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\..\bin\vc\release\service&quot;"
-				Description="Copy SwServiceShortcut.swdl to ..\..\..\bin\vc\release\service" />
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.3\include\QtCore&quot;,&quot;c:\Qt\4.7.3\include\QtGui&quot;,&quot;c:\Qt\4.7.3\include&quot;,&quot;.&quot;,&quot;..\..\SwCore&quot;,&quot;..\..\SwCore\Component\Base&quot;,&quot;..\..\SwCore\Component\Interfaces&quot;,&quot;..\..\SwCore\Component\Pin&quot;,&quot;..\..\SwCore\Main&quot;,&quot;..\..\SwCore\Main\Plugin&quot;,&quot;..\..\SwCore\Main\Services\Management&quot;,&quot;..\..\SwCore\SwRef&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools\Exception&quot;,&quot;..\..\SwCore\Tools\Log&quot;,&quot;..\..\SwCore\Tools\Signal&quot;,&quot;..\..\SwCore\Types&quot;,&quot;..\..\SwCore\Types\UserType&quot;,&quot;.&quot;,&quot;..\..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.3\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.3\mkspecs\win32-msvc2008"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				GeneratePreprocessedFile="0"
+				ExceptionHandling="2"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="StdAfx.h"
+				PrecompiledHeaderFile="$(IntDir)\SwServiceShortcut.pch"
+				AssemblerListingLocation="GeneratedFiles\obj\"
+				ObjectFile="GeneratedFiles\obj\"
+				ProgramDataBaseFileName="$(IntDir)\SwServiceShortcut_vc.pdb"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
+				ForcedIncludeFiles="StdAfx.h"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool" />
-			<Tool
-				Name="VCPreLinkEventTool" />
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,_CRT_SECURE_NO_WARNINGS,_WINDOWS,_WIN32_PLATEFORM_,QT_LARGEFILE_SUPPORT,_CRT_SECURE_NO_WARNINGS,ENABLE_EXCEPTIONS,QT_DLL,QT_NO_DEBUG,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalDependencies="../../../\lib\vc\release\SwCore.lib C:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut/../../../../../Libraries/ExceptionManager/\lib\vc\release\ExceptionManager.lib c:\Qt\4.7.3\lib\QtGui4.lib c:\Qt\4.7.3\lib\QtCore4.lib"
+				OutputFile="..\..\..\lib\vc\release\service\SwServiceShortcut.swdl"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,../../../\lib\vc\release,C:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut/../../../../../Libraries/ExceptionManager/\lib\vc\release"
+				GenerateDebugInformation="false"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				LinkTimeCodeGeneration="0"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Copy SwServiceShortcut.swdl to ..\..\..\bin\vc\release\service"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..\..\bin\vc\release\service&quot;"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath="StdAfx.cpp">
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						ForcedIncludeFiles="$(NOINHERIT)"
-						PrecompiledHeaderThrough="$(INHERIT)"
-						UsePrecompiledHeader="1" />
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						ForcedIncludeFiles="$(NOINHERIT)"
-						PrecompiledHeaderThrough="$(INHERIT)"
-						UsePrecompiledHeader="1" />
-				</FileConfiguration>
+				RelativePath="_SwServiceShortcutPluginFactory_Class.cpp"
+				>
 			</File>
 			<File
-				RelativePath="_SwServiceShortcutPluginFactory_Class.cpp" />
+				RelativePath="_SwServiceShortcuts.cpp"
+				>
+			</File>
 			<File
-				RelativePath="_SwServiceShortcuts.cpp" />
+				RelativePath="StdAfx.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="$(INHERIT)"
+						ForcedIncludeFiles="$(NOINHERIT)"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="$(INHERIT)"
+						ForcedIncludeFiles="$(NOINHERIT)"
+					/>
+				</FileConfiguration>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 			<File
-				RelativePath="ISwDevice.h" />
+				RelativePath="_SwServiceShortcutPluginFactory_Class.h"
+				>
+			</File>
 			<File
-				RelativePath="ISwDeviceObserver.h" />
-			<File
-				RelativePath="ISwServiceShortcuts.h" />
-			<File
-				RelativePath="ISwShortcut.h" />
-			<File
-				RelativePath="ISwShortcutObserver.h" />
-			<File
-				RelativePath="StdAfx.h" />
-			<File
-				RelativePath="_SwServiceShortcutPluginFactory_Class.h" />
-			<File
-				RelativePath="_SwServiceShortcuts.h">
+				RelativePath="_SwServiceShortcuts.h"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwServiceShortcuts.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwServiceShortcuts.h -o GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
 						Description="MOC _SwServiceShortcuts.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.3\include\QtCore&quot; -I&quot;c:\Qt\4.7.3\include\QtGui&quot; -I&quot;c:\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.3\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwServiceShortcuts.h -o GeneratedFiles\moc\moc__SwServiceShortcuts.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwServiceShortcuts.h"
 						Outputs="GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
-						Path="c:\Qt\4.7.1\bin" />
+					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release|Win32"
+					>
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;_SwServiceShortcuts.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwServiceShortcuts.h -o GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
 						Description="MOC _SwServiceShortcuts.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.3\include\QtCore&quot; -I&quot;c:\Qt\4.7.3\include\QtGui&quot; -I&quot;c:\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.3\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwServiceShortcuts.h -o GeneratedFiles\moc\moc__SwServiceShortcuts.cpp&#x0D;&#x0A;"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwServiceShortcuts.h"
 						Outputs="GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
-						Path="c:\Qt\4.7.1\bin" />
+					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="ISwDevice.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwDeviceObserver.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwServiceShortcuts.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwShortcut.h"
+				>
+			</File>
+			<File
+				RelativePath="ISwShortcutObserver.h"
+				>
+			</File>
+			<File
+				RelativePath="StdAfx.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Generated Files"
 			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
-			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}"
+			>
 			<Filter
 				Name="GeneratedFiles"
-				Filter="">
+				>
 				<Filter
 					Name="moc"
-					Filter="">
+					>
 					<File
-						RelativePath="GeneratedFiles\moc\moc__SwServiceShortcuts.cpp" />
+						RelativePath="GeneratedFiles\moc\moc__SwServiceShortcuts.cpp"
+						>
+					</File>
 				</Filter>
 			</Filter>
 		</Filter>

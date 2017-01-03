@@ -15,34 +15,44 @@ PRECOMPILED_SOURCE = StdAfx.cpp
 }
 
 	
-HEADERS += *.h
-SOURCES += *.cpp
-FORMS += *.ui
+HEADERS += $$files(*.h)
+SOURCES += $$files(*.cpp)
+FORMS += $$files(*.ui)
+HEADERS += $$files(ComponentTools/*.h)
+SOURCES += $$files(ComponentTools/*.cpp)
+FORMS += $$files(ComponentTools/*.ui)
 	
 RESOURCES += _resources/SwGuiRsc.qrc
 
 DEFINES += SWGUI_LIB
 
 INCLUDEPATH += ./\
+    ./ComponentTools \
     ../SwCore/ \
     ../SwExecution/ \
 	../SwFoundation/ \
-	../SWService/ServiceShortcut/ \
-	../SwService/ServiceImpl/ \
+	../SwService/ServiceShortcut/ \
+	../SwService/ServiceTools/ \
+	../SwService/ServiceMainWindow/ \
+	$$PROJECTS_PATH/Libraries/Qst/src/QsGui/ \
+	$$PROJECTS_PATH/Libraries/Qst/src/QsCore/ \
+	$$PROJECTS_PATH/Libraries/Components/src/CssLoader
     
 DESTDIR = ./../../$$LIB_PATH
 DLLDESTDIR=  ./../../$$BIN_PATH
 
 LIBS += -L"../../$$LIB_PATH"
+LIBS += -L"../../$$LIB_PATH/service"
+LIBS += -L"$$PROJECTS_PATH/Libraries/Qst/$$LIB_PATH"
 
 CONFIG(debug, debug|release) {
 	
-	LIBS += -lSwCored -lSwFoundationd
+	LIBS += -lSwCored -lSwFoundationd -lQsGuid -lSwServiceMainWindowd
 	TARGET_EXT = .swdld
 } 
 
 CONFIG(release, debug|release) {	
-	LIBS += -lSwCore -lSwFoundation
+	LIBS += -lSwCore -lSwFoundation -lQsGui -lSwServiceMainWindow
 	TARGET_EXT = .swdl
 }
 

@@ -13,7 +13,7 @@
 //Export via les DLL
 #include <SwMacros.h>
 
-#ifdef SWDATASBASE_LIB
+#ifdef SWDATABASE_LIB
     #define SWDATASBASE_EXPORT Q_DECL_EXPORT
 	#define SWDATASBASE_DECLARE_UUID(name) SW_EXTERN_C Q_DECL_EXPORT const StreamWork::SwCore::SwUUID name;
 #else

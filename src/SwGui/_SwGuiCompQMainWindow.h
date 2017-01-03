@@ -4,7 +4,7 @@
  \version 1.0
  \date 23-août-2006 18:59:26
  \author F.Bighelli
-*/
+ */
 
 #ifndef ___SwGuiCompQMainWindow_H
 #define ___SwGuiCompQMainWindow_H
@@ -25,111 +25,118 @@
 #include "ISwToolBar.h"
 #include "ISwQDockWidget.h"
 #include "ISwWidget.h"
+#include "ISwShortcut.h"
 /*
   * INCLUDES LOCAUX
   */
 #include "ISwQMainWindow.h"
 #include "ISwEvent.h"
 #include "ISwEventObserver.h"
+#include "SwServiceManager_Helper.h"
+#include "ICssThemesSelector.h"
+#include "_SwServiceMainWindow.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 /*!
-	\class _SwGuiCompQMainWindow 
+	\class _SwGuiCompQMainWindow
 	\brief _SwGuiMainWindow generant une QMainWindow
-*/
-class _SwGuiCompQMainWindow : public Component, public QMainWindow, public ISwQMainWindow , public ISwWidget, public ISwEvent
+	*/
+class _SwGuiCompQMainWindow :	public Component,
+								public QMainWindow,
+								public ISwQMainWindow,
+								public ISwWidget,
+								public ISwEvent,
+								public ISwServicesManager_Listener,
+								public ISwShortcut
 {
 protected:
-    /* fenetre principale */
-    //QMainWindow * _main_window;
-    /* show */
-    SwEnum _show_mode;
-    ISwProperty * _show_property;
-    // --- Menus ---
-    /* nombre de menus */
-    uint _menus_nb;
-    /* propriété nombre de menu */
-    ISwProperty * _menus_nb_property;
-    /* map des interfaces menus*/
-    QMap<QString,ISwMenu *> _menus;
-    /* handle temporaire d'interface menus*/
-    ISwMenu * _tmp_handle_menu;
-    // --- Actions ---
-    /* nombre d'actions */
-    uint _actions_nb;
-    /* propriété nombre d'actions*/
-    ISwProperty * _actions_nb_property;
-    /* map des interfaces actions*/
-    QMap<QString,ISwAction *> _actions;
-    /* handle temporaire d'interface menus*/
-    ISwAction * _tmp_handle_action;
-    // --- ToolBars ---
-    /* default toolbar position */
-    SwEnum _default_toolbar_position;
-    /* nombre de toolbars */
-    uint _toolbars_nb;
-    /* propriété nombre de toolbars */
-    ISwProperty * _toolbars_nb_property;
-    /* map des interfaces toolbars*/
-    QMap<QString,ISwToolBar *> _toolbars;
-    /* map des properties positions toolbars*/
-    QMap<QString,ISwProperty *> _toolbar_positions;
-    /* handle temporaire d'interface toolbar*/
-    ISwToolBar * _tmp_handle_toolbar;
-    // --- DockWidgets ---
-    /* default dockwidget position */
-    SwEnum _default_dockwidget_position;
-    /* nombre de dockwidgets */
-    uint _dockwidgets_nb;
-    /* propriété nombre de dockwidgets */
-    ISwProperty * _dockwidgets_nb_property;
-    /* map des interfaces dockwidgets*/
-    QMap<QString,ISwQDockWidget *> _dockwidgets;
-    /* map des properties positions dockwidgets*/
-    QMap<QString,ISwProperty *> _dockwidget_positions;
-    /* handle temporaire d'interface dockwidget*/
-    ISwQDockWidget * _tmp_handle_dockwidget;
-    // --- Central Widget ---
-    /* widget central */
-    ISwWidget * _handle_central_widget;
-    /* choix du type d'interface Widget ou MainWindow*/
-    bool  _useAsWidget;
-    /* propriété nombre d'actions*/
-    ISwProperty * _use_aswidget_property;   
+	/* fenetre principale */
+	//QMainWindow * _main_window;
+	/* show */
+	SwEnum _show_mode;
+	ISwProperty * _show_property;
+	// --- Menus ---
+	/* nombre de menus */
+	uint _menus_nb;
+	/* propriété nombre de menu */
+	ISwProperty * _menus_nb_property;
+	/* map des interfaces menus*/
+	QMap<QString, ISwMenu *> _menus;
+	/* handle temporaire d'interface menus*/
+	ISwMenu * _tmp_handle_menu;
+	// --- Actions ---
+	/* nombre d'actions */
+	uint _actions_nb;
+	/* propriété nombre d'actions*/
+	ISwProperty * _actions_nb_property;
+	/* map des interfaces actions*/
+	QMap<QString, ISwAction *> _actions;
+	/* handle temporaire d'interface menus*/
+	ISwAction * _tmp_handle_action;
+	// --- ToolBars ---
+	/* default toolbar position */
+	SwEnum _default_toolbar_position;
+	/* nombre de toolbars */
+	uint _toolbars_nb;
+	/* propriété nombre de toolbars */
+	ISwProperty * _toolbars_nb_property;
+	/* map des interfaces toolbars*/
+	QMap<QString, ISwToolBar *> _toolbars;
+	/* map des properties positions toolbars*/
+	QMap<QString, ISwProperty *> _toolbar_positions;
+	/* handle temporaire d'interface toolbar*/
+	ISwToolBar * _tmp_handle_toolbar;
+	// --- DockWidgets ---
+	/* default dockwidget position */
+	SwEnum _default_dockwidget_position;
+	/* nombre de dockwidgets */
+	uint _dockwidgets_nb;
+	/* propriété nombre de dockwidgets */
+	ISwProperty * _dockwidgets_nb_property;
+	/* map des interfaces dockwidgets*/
+	QMap<QString, ISwQDockWidget *> _dockwidgets;
+	/* map des properties positions dockwidgets*/
+	QMap<QString, ISwProperty *> _dockwidget_positions;
+	/* handle temporaire d'interface dockwidget*/
+	ISwQDockWidget * _tmp_handle_dockwidget;
+	// --- Central Widget ---
+	/* widget central */
+	ISwWidget * _handle_central_widget;
+	/* choix du type d'interface Widget ou MainWindow*/
+	bool  _useAsWidget;
+	/* propriété nombre d'actions*/
+	ISwProperty * _use_aswidget_property;
 
 	QList<ISwEventObserver*> _iSwEvent;
-public:
-    /*! \brief Constructeur */
-    _SwGuiCompQMainWindow();
-    /*! \brief Destructeur */
-    virtual ~_SwGuiCompQMainWindow();
 
-    /*! \brief Initialisation du composant */
-    virtual void initializeComponent() throw(SwException);
-     /*! \brief Callback sur les changements de propriétés*/
-    void eventPropertyChange(ISwProperty * property);
-    
-    //---------------------------------------------------------------------
-    // Interface ISwQMainWindow
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le nom du service
-    \return le nom du service */
+	StreamWork::Service::_SwServiceMainWindow *_mainWindowService;
+public:
+
+	/*! \brief Constructeur */
+	_SwGuiCompQMainWindow();
+	/*! \brief Destructeur */
+	virtual ~_SwGuiCompQMainWindow();
+
+	/*! \brief Initialisation du composant */
+	virtual void initializeComponent() throw(SwException);
+	/*! \brief Callback sur les changements de propriétés*/
+	void eventPropertyChange(ISwProperty * property);
+
+	//---------------------------------------------------------------------
+	// Interface ISwQMainWindow
+	//---------------------------------------------------------------------
 	virtual QMainWindow & GetMainWindow();
-	    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-	            /*! \brief Renvoie le widget
-            \return le widget */
+	//---------------------------------------------------------------------
+	// Interface ISwWidget
+	//---------------------------------------------------------------------
 	virtual QWidget & GetWidget();
-    //---------------------------------------------------------------------
-    // Interface ISwInterfaces_ConsumerObserver
-    //---------------------------------------------------------------------
-	/*! \brief Avant changement de la disponibilité de l'interface */
-	virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);            
-	/*! \brief Apres changement de la disponibilité de l'interface */
-	virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
+	//---------------------------------------------------------------------
+	// Interface ISwInterfaces_ConsumerObserver
+	//---------------------------------------------------------------------
+	virtual void eventBeforeInterfaceAvailability(QString interface_name, SwComponent_Class * provider_host);
+	virtual void eventAfterInterfaceAvailability(QString interface_name, SwComponent_Class * provider_host);
 
 	//---------------------------------------------------------------------
 	// Interface ISwEvent
@@ -138,9 +145,19 @@ public:
 	void removeObserver(ISwEventObserver * obs);
 	void notify(QEvent * event);
 
+	//---------------------------------------------------------------------
+	// Interface ISwShortcut
+	//---------------------------------------------------------------------	
+	void processCommand(QString name) final;
+
 private:
-    void showChanged();
+	void showChanged();
 protected:
 	void closeEvent(QCloseEvent* event);
+
+	virtual void OnRegisterService(ISwService * service);
+
+	virtual void OnUnregisterService(ISwService * service);
+
 };
 #endif 

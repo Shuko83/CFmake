@@ -65,6 +65,8 @@ public:
     const QMap<QString,_SwModelsList::_ModelDesc> * GetModelList() const;
     /*! \brief getModelsPath */
     QString getModelPaths();
+	/*! \brief check if the model name exist */
+	bool checkModelName(QString modelName);
     /** @brief add model */
     void addModel(QString hostComponent,QString modelName);
 

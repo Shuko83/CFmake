@@ -119,7 +119,9 @@ CONFIG(release, debug|release) {
 
 INCLUDEPATH += \
 	../SwService/ServiceImpl \
-	../SwService/ServiceConfiguration
+	../SwService/ServiceConfiguration \
+	$$PROJECTS_PATH\Libraries\Qst\src\QsGui \
+	$$PROJECTS_PATH\Libraries\Qst\src\QsCore
 #	$$PROJECTS_PATH/Libraries/GeographicLib/src \
 #	$$PROJECTS_PATH/Libraries/AlertManager/src/Interface/\
 #	$$PROJECTS_PATH/Libraries/AlertManager/src/\

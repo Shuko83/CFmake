@@ -1,0 +1,18 @@
+/*-----------------------------------------------------------------------------*/
+/*QTreeView et QTreeWidget par héritage*/
+
+QTreeView[Modified="true"]::item
+{
+	color : blue;
+	font : bold;
+}
+
+QTreeView[Controled="true"]::item
+{
+	font : italic;
+}
+
+QTreeView::item:disabled
+{
+	color : darkgrey;
+}

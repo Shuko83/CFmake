@@ -41,17 +41,12 @@ private:
 	void loadStaticColor();
 
 
-public slots:
-	void onDbStatusChange();
-
 signals:
 	void colorHasChange();
 		
 private :
 	ManageLinkColor();
 	~ManageLinkColor();
-
-	void loadColor();
 
 	static ManageLinkColor * _instance;
 	QMap<QString,QString> _mapColor; // <Interface,ColorHex>

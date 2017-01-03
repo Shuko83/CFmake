@@ -35,7 +35,7 @@ class _SwModelExportedInterfaceP : public _SwModelExportedEntity, public ISwInte
         /*! \brief Indique que l'interface est crée*/
         bool _interface_created;
         /*! brief last path */
-        QString _lastPath;
+		QString _lastPath;
         /*! last interface */
         QString _lastInterface;
 	protected:

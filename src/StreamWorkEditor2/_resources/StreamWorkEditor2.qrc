@@ -9,5 +9,6 @@
         <file>editdelete.png</file>
         <file>reset.png</file>
         <file>settings.png</file>
+        <file alias="css_file">StreamWork.css</file>
     </qresource>
 </RCC>

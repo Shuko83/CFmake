@@ -40,17 +40,10 @@ WidgetFactory * WidgetFactory::getInstance() {
     return _instance;
 }
 
-
-QWidget * WidgetFactory::buildDocBlankView()
-{
-	return new EditDoc();
-}
-
-
 /** @brief Construction widget representant les composants disponibles*/
 QWidget * WidgetFactory::buildPluginsBankView(bool isGraphViewHosted) {
     
-	PluginOverview * w = new PluginOverview(NULL,isGraphViewHosted,_graphPalette);
+	PluginOverview * w = new PluginOverview(isGraphViewHosted,_graphPalette);
     return w;
 }
 /** @brief Construction widget vue en arbre*/

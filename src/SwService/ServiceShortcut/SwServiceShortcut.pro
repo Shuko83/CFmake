@@ -19,7 +19,7 @@ PRECOMPILED_SOURCE = StdAfx.cpp
 
 QMAKE_CXXFLAGS += /MP
 				
-HEADERS += *.h 
+HEADERS += $$files(*.h )
 
 
 SOURCES += *.cpp 

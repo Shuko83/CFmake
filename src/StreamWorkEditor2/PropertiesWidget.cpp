@@ -9,8 +9,10 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
-/** @brief Constructor */
-PropertiesWidget::PropertiesWidget():QWidget(0),_pixmapTextColor(10,10),_pixmapBgColor(10,10) {
+
+//-----------------------------------------------------------------------
+PropertiesWidget::PropertiesWidget() :QWidget(0), _pixmapTextColor(10, 10), _pixmapBgColor(10, 10)
+{
     //setWindowOpacity(0.9);
     setEnabled(false);
     setWindowModality(Qt::ApplicationModal);
@@ -42,8 +44,10 @@ PropertiesWidget::PropertiesWidget():QWidget(0),_pixmapTextColor(10,10),_pixmapB
     formLayout->addWidget(_pView,3,0,1,5);
     _cgi=0;
 }
-/** @brief Composant en cours d'edition*/
-void PropertiesWidget::setSelectedGraphicComponent(ComponentGraphicItem * cgi) {
+
+//-----------------------------------------------------------------------
+void PropertiesWidget::setSelectedGraphicComponent(ComponentGraphicItem * cgi)
+{
     if (_cgi!=0) {
         nameChangedAndValid();
     }
@@ -67,14 +71,18 @@ void PropertiesWidget::setSelectedGraphicComponent(ComponentGraphicItem * cgi) {
     }
     _cgi=cgi;
 }
-/** @brief montre le widget */
-void PropertiesWidget::showProperties(QWidget * srcWidget) {
+
+//-----------------------------------------------------------------------
+void PropertiesWidget::showProperties(QWidget * srcWidget)
+{
     resize(srcWidget->width()-80,srcWidget->height()-80);
     move(srcWidget->mapToGlobal(QPoint(0,0))+QPoint(40,20));
     show();
 }
-/** @brief sur changement du nom */
-void PropertiesWidget::nameChanged ( const QString & text ) {
+
+//-----------------------------------------------------------------------
+void PropertiesWidget::nameChanged(const QString & text)
+{
     if (_cgi==0)
         return;
     SwComponent_Class * component=_cgi->getComponent();
@@ -87,35 +95,47 @@ void PropertiesWidget::nameChanged ( const QString & text ) {
     }
 
 }   
-/** @brief sur fin changement du nom */
-void PropertiesWidget::nameChangedAndValid() {
+
+//-----------------------------------------------------------------------
+void PropertiesWidget::nameChangedAndValid()
+{
     if (_cgi==0)
         return;
     SwComponent_Class * component=_cgi->getComponent();
     SwComponent_Class * parent=component->GetParent();
-    SwComponent_Class * achild=parent->GetChild(_nameEdit->text());
-    if (achild==0 && component->CheckNameValidity(_nameEdit->text())) {
-        component->SetName(_nameEdit->text());
-    }
+	if ( parent )
+	{
+		SwComponent_Class * achild = parent->GetChild(_nameEdit->text());
+		if ( achild == 0 && component->CheckNameValidity(_nameEdit->text()) ) {
+			component->SetName(_nameEdit->text());
+		}
+	}
+    
 }
-/** @brief on color click */
-void PropertiesWidget::onColorClick() {
+
+//-----------------------------------------------------------------------
+void PropertiesWidget::onColorClick()
+{
     QColor returnColor=QColorDialog::getColor (_cgi->getColor(),0);
     if(returnColor.isValid()) {
         _cgi->setColor(returnColor);
         setBgColorToButton(_cgi->getColor());
     }
 }
-/** @brief on text color click */
-void PropertiesWidget::onTextColorClick() {
+
+//-----------------------------------------------------------------------
+void PropertiesWidget::onTextColorClick()
+{
     QColor returnColor=QColorDialog::getColor (_cgi->getTextColor(),0);
     if(returnColor.isValid()) {
         _cgi->setTextColor(returnColor);
         setTextColorToButton(_cgi->getTextColor());
     }
 }
-/** @brief change la couleur du bouton */
-void PropertiesWidget::setTextColorToButton(const QColor & color) {
+
+//-----------------------------------------------------------------------
+void PropertiesWidget::setTextColorToButton(const QColor & color)
+{
     _pixmapTextColor.fill(color);
     QPainter p(&_pixmapTextColor);
     p.setPen(QPen(QColor(Qt::black)));
@@ -123,8 +143,10 @@ void PropertiesWidget::setTextColorToButton(const QColor & color) {
     _buttonTextColor->setIcon(QIcon(_pixmapTextColor));
     _buttonTextColor->setText(color.name().toUpper());
 }
-/** @brief change la couleur du bouton */
-void PropertiesWidget::setBgColorToButton(const QColor & color) {
+
+//-----------------------------------------------------------------------
+void PropertiesWidget::setBgColorToButton(const QColor & color)
+{
     _pixmapBgColor.fill(color);
     QPainter p(&_pixmapBgColor);
     p.setPen(QPen(QColor(Qt::black)));
@@ -132,8 +154,10 @@ void PropertiesWidget::setBgColorToButton(const QColor & color) {
     _buttonBgColor->setIcon(QIcon(_pixmapBgColor));
     _buttonBgColor->setText(color.name().toUpper());
 }
-/** @brief on text color click */
-void PropertiesWidget::onReset( const QModelIndex & index ) {
+
+//-----------------------------------------------------------------------
+void PropertiesWidget::onReset(const QModelIndex & index)
+{
     if (!index.isValid() || index.column()!=0) 
         return;
     QVariant value = index.model()->data(index, Qt::UserRole);

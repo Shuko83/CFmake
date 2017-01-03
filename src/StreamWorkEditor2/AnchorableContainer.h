@@ -7,7 +7,7 @@
 #ifndef _ANCHORABLECONTAINER_H
 #define _ANCHORABLECONTAINER_H
 
-#include <QtCore>
+#include <QObject>
 #include "IAnchorable.h"
 
 /**

@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9,00"
+	Name="SwModel2"
+	ProjectGUID="{CF78B2DE-4DF5-3A90-935B-C4F47A39D09E}"
+	Keyword="Qt4VSv1.0">
+	<Platforms>
+		<Platform
+			Name="Win32" />
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="debug\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot;,&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot;,&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot;,&quot;..\..\..\..\Qt\4.7.3\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot;,&quot;debug&quot;,..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008"
+				AdditionalOptions="-Zm200 -w34100 -w34189"
+				AssemblerListingLocation="debug\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="3"
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="debug\"
+				Optimization ="4"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWMODEL2_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SwCored.lib SwExecutiond.lib c:\Qt\4.7.3\lib\QtXmld4.lib c:\Qt\4.7.3\lib\QtGuid4.lib c:\Qt\4.7.3\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,../../"
+				GenerateDebugInformation="true"
+				IgnoreImportLibrary="true"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\SwModel2.swdld"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..&quot;"
+				Description="Copy SwModel2.swdld to ..\.." />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWMODEL2_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="release\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot;,&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot;,&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot;,&quot;..\..\..\..\Qt\4.7.3\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot;,&quot;release&quot;,..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008"
+				AdditionalOptions="-Zm200 -w34100 -w34189"
+				AssemblerListingLocation="release\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="0"
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="release\"
+				Optimization ="2"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWMODEL2_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SwCore.lib SwExecution.lib c:\Qt\4.7.3\lib\QtXml4.lib c:\Qt\4.7.3\lib\QtGui4.lib c:\Qt\4.7.3\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,../../"
+				GenerateDebugInformation="false"
+				IgnoreImportLibrary="true"
+				LinkIncremental="1"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\SwModel2.swdl"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..&quot;"
+				Description="Copy SwModel2.swdl to ..\.." />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWMODEL2_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath="SwModelsListAccess.cpp" />
+			<File
+				RelativePath="_SwExportStreamTreeModel.cpp" />
+			<File
+				RelativePath="_SwModelExportTreeView.cpp" />
+			<File
+				RelativePath="_SwModelExportedActivable.cpp" />
+			<File
+				RelativePath="_SwModelExportedEntitiesModel.cpp" />
+			<File
+				RelativePath="_SwModelExportedEntity.cpp" />
+			<File
+				RelativePath="_SwModelExportedExecutable.cpp" />
+			<File
+				RelativePath="_SwModelExportedInterfaceC.cpp" />
+			<File
+				RelativePath="_SwModelExportedInterfaceP.cpp" />
+			<File
+				RelativePath="_SwModelExportedOwnerConfigurable.cpp" />
+			<File
+				RelativePath="_SwModelExportedPin.cpp" />
+			<File
+				RelativePath="_SwModelExportedProperty.cpp" />
+			<File
+				RelativePath="_SwModelHostExportSelector.cpp" />
+			<File
+				RelativePath="_SwModelHostSelector.cpp" />
+			<File
+				RelativePath="_SwModelHost_Class.cpp" />
+			<File
+				RelativePath="_SwModelPluginFactory_Class.cpp" />
+			<File
+				RelativePath="_SwModelStreamTreeModel.cpp" />
+			<File
+				RelativePath="_SwModel_Class.cpp" />
+			<File
+				RelativePath="_SwModelsList.cpp" />
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath="ISwModelHostModifier.h" />
+			<File
+				RelativePath="ISwModelService.h" />
+			<File
+				RelativePath="SwModel2Constantes.h" />
+			<File
+				RelativePath="SwModelsListAccess.h" />
+			<File
+				RelativePath="_ISwModelsListListener.h" />
+			<File
+				RelativePath="_SwExportStreamTreeModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwExportStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwExportStreamTreeModel.h -o debug\moc__SwExportStreamTreeModel.cpp"
+						Description="MOC _SwExportStreamTreeModel.h"
+						Outputs="debug\moc__SwExportStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwExportStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwExportStreamTreeModel.h -o release\moc__SwExportStreamTreeModel.cpp"
+						Description="MOC _SwExportStreamTreeModel.h"
+						Outputs="release\moc__SwExportStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelExportTreeView.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelExportTreeView.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelExportTreeView.h -o debug\moc__SwModelExportTreeView.cpp"
+						Description="MOC _SwModelExportTreeView.h"
+						Outputs="debug\moc__SwModelExportTreeView.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelExportTreeView.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelExportTreeView.h -o release\moc__SwModelExportTreeView.cpp"
+						Description="MOC _SwModelExportTreeView.h"
+						Outputs="release\moc__SwModelExportTreeView.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelExportedActivable.h" />
+			<File
+				RelativePath="_SwModelExportedEntitiesModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelExportedEntitiesModel.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelExportedEntitiesModel.h -o debug\moc__SwModelExportedEntitiesModel.cpp"
+						Description="MOC _SwModelExportedEntitiesModel.h"
+						Outputs="debug\moc__SwModelExportedEntitiesModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelExportedEntitiesModel.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelExportedEntitiesModel.h -o release\moc__SwModelExportedEntitiesModel.cpp"
+						Description="MOC _SwModelExportedEntitiesModel.h"
+						Outputs="release\moc__SwModelExportedEntitiesModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelExportedEntity.h" />
+			<File
+				RelativePath="_SwModelExportedExecutable.h" />
+			<File
+				RelativePath="_SwModelExportedInterfaceC.h" />
+			<File
+				RelativePath="_SwModelExportedInterfaceP.h" />
+			<File
+				RelativePath="_SwModelExportedOwnerConfigurable.h" />
+			<File
+				RelativePath="_SwModelExportedPin.h" />
+			<File
+				RelativePath="_SwModelExportedProperty.h" />
+			<File
+				RelativePath="_SwModelHostExportSelector.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelHostExportSelector.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelHostExportSelector.h -o debug\moc__SwModelHostExportSelector.cpp"
+						Description="MOC _SwModelHostExportSelector.h"
+						Outputs="debug\moc__SwModelHostExportSelector.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelHostExportSelector.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelHostExportSelector.h -o release\moc__SwModelHostExportSelector.cpp"
+						Description="MOC _SwModelHostExportSelector.h"
+						Outputs="release\moc__SwModelHostExportSelector.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelHostSelector.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelHostSelector.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelHostSelector.h -o debug\moc__SwModelHostSelector.cpp"
+						Description="MOC _SwModelHostSelector.h"
+						Outputs="debug\moc__SwModelHostSelector.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelHostSelector.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelHostSelector.h -o release\moc__SwModelHostSelector.cpp"
+						Description="MOC _SwModelHostSelector.h"
+						Outputs="release\moc__SwModelHostSelector.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModelHost_Class.h" />
+			<File
+				RelativePath="_SwModelPluginFactory_Class.h" />
+			<File
+				RelativePath="_SwModelStreamTreeModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelStreamTreeModel.h -o debug\moc__SwModelStreamTreeModel.cpp"
+						Description="MOC _SwModelStreamTreeModel.h"
+						Outputs="debug\moc__SwModelStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwModelStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWMODEL2_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwModelStreamTreeModel.h -o release\moc__SwModelStreamTreeModel.cpp"
+						Description="MOC _SwModelStreamTreeModel.h"
+						Outputs="release\moc__SwModelStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwModel_Class.h" />
+			<File
+				RelativePath="_SwModelsList.h" />
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			<File
+				RelativePath="debug\moc__SwExportStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwExportStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelExportTreeView.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelExportTreeView.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelExportedEntitiesModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelExportedEntitiesModel.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelHostExportSelector.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelHostExportSelector.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelHostSelector.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelHostSelector.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwModelStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwModelStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\qrc_SwModel2Rsc.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\qrc_SwModel2Rsc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="qrc;*"
+			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
+			ParseFiles="false">
+			<File
+				RelativePath="_resources\SwModel2Rsc.qrc">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\rcc.exe;_resources\SwModel2Rsc.qrc;_resources\images\connector.png;_resources\images\executor.png;_resources\images\interface_in.png;_resources\images\interface_out.png;_resources\images\model.png;_resources\images\model_host.png;_resources\images\property.png"
+						CommandLine="C:\Qt\4.7.3\bin\rcc.exe -name SwModel2Rsc _resources\SwModel2Rsc.qrc -o debug\qrc_SwModel2Rsc.cpp"
+						Description="RCC _resources\SwModel2Rsc.qrc"
+						Outputs="debug\qrc_SwModel2Rsc.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\rcc.exe;_resources\SwModel2Rsc.qrc;_resources\images\connector.png;_resources\images\executor.png;_resources\images\interface_in.png;_resources\images\interface_out.png;_resources\images\model.png;_resources\images\model_host.png;_resources\images\property.png"
+						CommandLine="C:\Qt\4.7.3\bin\rcc.exe -name SwModel2Rsc _resources\SwModel2Rsc.qrc -o release\qrc_SwModel2Rsc.cpp"
+						Description="RCC _resources\SwModel2Rsc.qrc"
+						Outputs="release\qrc_SwModel2Rsc.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_resources\images\connector.png" />
+			<File
+				RelativePath="_resources\images\executor.png" />
+			<File
+				RelativePath="_resources\images\interface_in.png" />
+			<File
+				RelativePath="_resources\images\interface_out.png" />
+			<File
+				RelativePath="_resources\images\model.png" />
+			<File
+				RelativePath="_resources\images\model_host.png" />
+			<File
+				RelativePath="_resources\images\property.png" />
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

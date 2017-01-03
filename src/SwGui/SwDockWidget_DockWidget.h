@@ -1,6 +1,8 @@
 #ifndef SWDOCKWIDGET_DOCKWIDGET_H
 #define SWDOCKWIDGET_DOCKWIDGET_H
 
+#include <qglobal.h>
+
 #if QT_VERSION >= 0x050000
 #include <QtWidgets>
 #else
@@ -77,6 +79,7 @@ public:
 	QWidget * getTabWidget();
 	QWidget * getToolBarItem();
 	QAction * getMenuAction();
+	QString getToolbarItemName();
 
 	//Mutateurs
 	void returnToMainArea();
@@ -88,6 +91,7 @@ public:
 	virtual void releaseLock();
 	void setToolBarItem(QWidget * toolbar);
 	void setMenuAction(QAction * action);
+	void setToolbarItemName(QString name);
 
 	//Autre options
 	void hideFrame();
@@ -96,6 +100,9 @@ public:
 	void showShadow(int area);
 	void hideShadow();
 	int getShadowSize();
+
+	//Interface ISwDockWidget
+	SwDockWidget_DockWidget & GetDockWidget();
 
 protected:
 	virtual void mouseReleaseEvent( QMouseEvent * event );
@@ -121,6 +128,7 @@ private:
 	void updateBtn();
 	QPoint getAdjustedPosition(int x, int y);
 
+
 protected:
 	QWidget * _widget; //Widget contenu dans le SwDockWidget_DockWidget
 	Ui::DockWidget* ui;
@@ -128,6 +136,7 @@ protected:
 private:
 	QString _title; //Titre du Dock
 	QWidget * _emptyWidget;
+	QString _toolBarItemName; //Nom affiche dans la toolbar
 
 	//Options du dock
 	bool _canBeClose; //Fermeture autorisee

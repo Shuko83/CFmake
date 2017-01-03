@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A6A9652D-FC9A-33C2-8987-B89A17B197F4}</ProjectGuid>
+    <ProjectGuid>{3483B872-5600-3D05-851A-E1893CAA6DFC}</ProjectGuid>
     <RootNamespace>SwServiceShortcut</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>
@@ -60,8 +60,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">
     <ClCompile>
-      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\..\SwCore&quot;;&quot;..\..\SwCore\Component\Base&quot;;&quot;..\..\SwCore\Component\Interfaces&quot;;&quot;..\..\SwCore\Component\Pin&quot;;&quot;..\..\SwCore\Main&quot;;&quot;..\..\SwCore\Main\Plugin&quot;;&quot;..\..\SwCore\Main\Services\Management&quot;;&quot;..\..\SwCore\SwRef&quot;;&quot;..\..\SwCore\Tools&quot;;&quot;..\..\SwCore\Tools&quot;;&quot;..\..\SwCore\Tools\Exception&quot;;&quot;..\..\SwCore\Tools\Log&quot;;&quot;..\..\SwCore\Tools\Signal&quot;;&quot;..\..\SwCore\Types&quot;;&quot;..\..\SwCore\Types\UserType&quot;;&quot;.&quot;;&quot;..\..\..\..\ExceptionManager\src&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtWidgets&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;GeneratedFiles_QT5\moc&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;.;..\..\SwCore;..\..\SwCore\Component\Base;..\..\SwCore\Component\Interfaces;..\..\SwCore\Component\Pin;..\..\SwCore\Main;..\..\SwCore\Main\Plugin;..\..\SwCore\Main\Services\Management;..\..\SwCore\SwRef;..\..\SwCore\Tools;..\..\SwCore\Tools;..\..\SwCore\Tools\Exception;..\..\SwCore\Tools\Log;..\..\SwCore\Tools\Signal;..\..\SwCore\Types;..\..\SwCore\Types\UserType;.;..\..\..\..\ExceptionManager\src;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtWidgets;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zc:strictStrings -w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>GeneratedFiles_QT5\obj\</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BrowseInformation>false</BrowseInformation>
@@ -74,7 +74,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)\SwServiceShortcut.pch</PrecompiledHeaderOutputFile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)\SwServiceShortcut_vc.pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -84,8 +84,8 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\..\\lib\vc\release_QT5\SwCore.lib;C:\Projects\Libraries\StreamWork\src\SwService\ServiceShortcut\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5\ExceptionManager.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgets.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Gui.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\\lib\vc\release_QT5;C:\Projects\Libraries\StreamWork\src\SwService\ServiceShortcut\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>..\..\..\\lib\vc\release_QT5\SwCore.lib;C:\StreamworkDev\Libraries\StreamWork\src\SwService\ServiceShortcut\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5\ExceptionManager.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Widgets.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Gui.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\\lib\vc\release_QT5;C:\StreamworkDev\Libraries\StreamWork\src\SwService\ServiceShortcut\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5;C:\Qt\Qt5.5.0\5.5\msvc2013\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -93,6 +93,7 @@
       <LinkIncremental>false</LinkIncremental>
       <OutputFile>$(OutDir)\SwServiceShortcut.swdl</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Link>
     <Midl>
@@ -101,17 +102,17 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\..\bin\vc\release_QT5\service&quot;</Command>
+      <Command>copy &quot;$(TargetPath)&quot; ..\..\..\bin\vc\release_QT5\service</Command>
       <Message>Copy SwServiceShortcut.swdl to ..\..\..\bin\vc\release_QT5\service</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
     <ClCompile>
-      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\..\SwCore&quot;;&quot;..\..\SwCore\Component\Base&quot;;&quot;..\..\SwCore\Component\Interfaces&quot;;&quot;..\..\SwCore\Component\Pin&quot;;&quot;..\..\SwCore\Main&quot;;&quot;..\..\SwCore\Main\Plugin&quot;;&quot;..\..\SwCore\Main\Services\Management&quot;;&quot;..\..\SwCore\SwRef&quot;;&quot;..\..\SwCore\Tools&quot;;&quot;..\..\SwCore\Tools&quot;;&quot;..\..\SwCore\Tools\Exception&quot;;&quot;..\..\SwCore\Tools\Log&quot;;&quot;..\..\SwCore\Tools\Signal&quot;;&quot;..\..\SwCore\Types&quot;;&quot;..\..\SwCore\Types\UserType&quot;;&quot;.&quot;;&quot;..\..\..\..\ExceptionManager\src&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtWidgets&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;GeneratedFiles_QT5\moc&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;.;..\..\SwCore;..\..\SwCore\Component\Base;..\..\SwCore\Component\Interfaces;..\..\SwCore\Component\Pin;..\..\SwCore\Main;..\..\SwCore\Main\Plugin;..\..\SwCore\Main\Services\Management;..\..\SwCore\SwRef;..\..\SwCore\Tools;..\..\SwCore\Tools;..\..\SwCore\Tools\Exception;..\..\SwCore\Tools\Log;..\..\SwCore\Tools\Signal;..\..\SwCore\Types;..\..\SwCore\Types\UserType;.;..\..\..\..\ExceptionManager\src;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtWidgets;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>GeneratedFiles_QT5\objd\</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BrowseInformation>false</BrowseInformation>
@@ -124,7 +125,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)\SwServiceShortcutd.pch</PrecompiledHeaderOutputFile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)\SwServiceShortcut_vc.pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -134,8 +135,8 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\..\\lib\vc\debug_QT5\SwCored.lib;C:\Projects\Libraries\StreamWork\src\SwService\ServiceShortcut\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Guid.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\\lib\vc\debug_QT5;C:\Projects\Libraries\StreamWork\src\SwService\ServiceShortcut\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>..\..\..\\lib\vc\debug_QT5\SwCored.lib;C:\StreamworkDev\Libraries\StreamWork\src\SwService\ServiceShortcut\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Guid.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\\lib\vc\debug_QT5;C:\StreamworkDev\Libraries\StreamWork\src\SwService\ServiceShortcut\..\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5;C:\Qt\Qt5.5.0\5.5\msvc2013\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -143,6 +144,7 @@
       <OutputFile>$(OutDir)\SwServiceShortcutd.swdld</OutputFile>
       <ProgramDatabaseFile>./../../../\bin\vc\debug_QT5/service/SwServiceShortcutd.pdb</ProgramDatabaseFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Link>
     <Midl>
@@ -151,20 +153,18 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;_CRT_SECURE_NO_WARNINGS;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;QT_WIDGETS_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\..\bin\vc\debug_QT5\service&quot;</Command>
+      <Command>copy &quot;$(TargetPath)&quot; ..\..\..\bin\vc\debug_QT5\service</Command>
       <Message>Copy SwServiceShortcutd.swdld to ..\..\..\bin\vc\debug_QT5\service</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
       <ForcedIncludeFiles Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">$(NOINHERIT)</ForcedIncludeFiles>
-      <PrecompiledHeaderFile Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">StdAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">Create</PrecompiledHeader>
       <ForcedIncludeFiles Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">$(NOINHERIT)</ForcedIncludeFiles>
-      <PrecompiledHeaderFile Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">StdAfx.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
@@ -198,11 +198,11 @@
   <ItemGroup>
     <CustomBuild Include="_SwServiceShortcuts.h">
       <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwServiceShortcuts.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/Projects/Libraries/StreamWork/src/SwCore -IC:/Projects/Libraries/StreamWork/src/SwCore/Component/Base -IC:/Projects/Libraries/StreamWork/src/SwCore/Component/Interfaces -IC:/Projects/Libraries/StreamWork/src/SwCore/Component/Pin -IC:/Projects/Libraries/StreamWork/src/SwCore/Main -IC:/Projects/Libraries/StreamWork/src/SwCore/Main/Plugin -IC:/Projects/Libraries/StreamWork/src/SwCore/Main/Services/Management -IC:/Projects/Libraries/StreamWork/src/SwCore/SwRef -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools/Exception -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools/Log -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools/Signal -IC:/Projects/Libraries/StreamWork/src/SwCore/Types -IC:/Projects/Libraries/StreamWork/src/SwCore/Types/UserType -IC:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/Projects/Libraries/ExceptionManager/src -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtWidgets -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwServiceShortcuts.h -o GeneratedFiles_QT5\moc\moc__SwServiceShortcuts.cpp</Command>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.5.0/5.5/msvc2013/mkspecs/win32-msvc2013 -IC:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Component/Base -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Component/Interfaces -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Component/Pin -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Main -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Main/Plugin -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Main/Services/Management -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/SwRef -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools/Exception -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools/Log -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools/Signal -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Types -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Types/UserType -IC:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/StreamworkDev/Libraries/ExceptionManager/src -IC:/Qt/Qt5.5.0/5.5/msvc2013/include -IC:/Qt/Qt5.5.0/5.5/msvc2013/include/QtWidgets -IC:/Qt/Qt5.5.0/5.5/msvc2013/include/QtGui -IC:/Qt/Qt5.5.0/5.5/msvc2013/include/QtANGLE -IC:/Qt/Qt5.5.0/5.5/msvc2013/include/QtCore _SwServiceShortcuts.h -o GeneratedFiles_QT5\moc\moc__SwServiceShortcuts.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwServiceShortcuts.h</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwServiceShortcuts.cpp;%(Outputs)</Outputs>
       <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwServiceShortcuts.h;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/mkspecs/win32-msvc2013 -IC:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/Projects/Libraries/StreamWork/src/SwCore -IC:/Projects/Libraries/StreamWork/src/SwCore/Component/Base -IC:/Projects/Libraries/StreamWork/src/SwCore/Component/Interfaces -IC:/Projects/Libraries/StreamWork/src/SwCore/Component/Pin -IC:/Projects/Libraries/StreamWork/src/SwCore/Main -IC:/Projects/Libraries/StreamWork/src/SwCore/Main/Plugin -IC:/Projects/Libraries/StreamWork/src/SwCore/Main/Services/Management -IC:/Projects/Libraries/StreamWork/src/SwCore/SwRef -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools/Exception -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools/Log -IC:/Projects/Libraries/StreamWork/src/SwCore/Tools/Signal -IC:/Projects/Libraries/StreamWork/src/SwCore/Types -IC:/Projects/Libraries/StreamWork/src/SwCore/Types/UserType -IC:/Projects/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/Projects/Libraries/ExceptionManager/src -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtWidgets -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtGui -IC:/Qt/Qt5.3.0/5.3/msvc2013_opengl/include/QtCore _SwServiceShortcuts.h -o GeneratedFiles_QT5\moc\moc__SwServiceShortcuts.cpp</Command>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 -IC:/Qt/Qt5.5.0/5.5/msvc2013/mkspecs/win32-msvc2013 -IC:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Component/Base -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Component/Interfaces -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Component/Pin -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Main -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Main/Plugin -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Main/Services/Management -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/SwRef -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools/Exception -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools/Log -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Tools/Signal -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Types -IC:/StreamworkDev/Libraries/StreamWork/src/SwCore/Types/UserType -IC:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceShortcut -IC:/StreamworkDev/Libraries/ExceptionManager/src -IC:/Qt/Qt5.5.0/5.5/msvc2013/include -IC:/Qt/Qt5.5.0/5.5/msvc2013/include/QtWidgets -IC:/Qt/Qt5.5.0/5.5/msvc2013/include/QtGui -IC:/Qt/Qt5.5.0/5.5/msvc2013/include/QtANGLE -IC:/Qt/Qt5.5.0/5.5/msvc2013/include/QtCore _SwServiceShortcuts.h -o GeneratedFiles_QT5\moc\moc__SwServiceShortcuts.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
       <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwServiceShortcuts.h</Message>
       <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwServiceShortcuts.cpp;%(Outputs)</Outputs>
     </CustomBuild>

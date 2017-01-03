@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwServiceConfigurationd"
-	ProjectGUID="{654ABFD2-7319-3E6A-AB8E-9E68899ED7BB}"
+	ProjectGUID="{553B704E-8644-33A8-84A6-38A0CD7A42C4}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
@@ -19,7 +19,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\..\SwCore\Component\Base&quot;,&quot;..\..\SwCore\Component\Interfaces&quot;,&quot;..\..\SwCore\Component\Pin&quot;,&quot;..\..\SwCore\Component\Services&quot;,&quot;..\..\SwCore\Main&quot;,&quot;..\..\SwCore\Main\Plugin&quot;,&quot;..\..\SwCore\Main\Services\Management&quot;,&quot;..\..\SwCore\Properties&quot;,&quot;..\..\SwCore\SwRef&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools\Exception&quot;,&quot;..\..\SwCore\Tools\Log&quot;,&quot;..\..\SwCore\Tools\Signal&quot;,&quot;..\..\SwCore\Types&quot;,&quot;..\..\SwCore\Types\UserType&quot;,&quot;..\..\SwCore&quot;,&quot;.&quot;,&quot;..\..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.3\include\QtCore&quot;,&quot;c:\Qt\4.7.3\include\QtGui&quot;,&quot;c:\Qt\4.7.3\include\QtXml&quot;,&quot;c:\Qt\4.7.3\include&quot;,&quot;.&quot;,&quot;..\..\SwCore\Component\Base&quot;,&quot;..\..\SwCore\Component\Interfaces&quot;,&quot;..\..\SwCore\Component\Pin&quot;,&quot;..\..\SwCore\Component\Services&quot;,&quot;..\..\SwCore\Main&quot;,&quot;..\..\SwCore\Main\Plugin&quot;,&quot;..\..\SwCore\Main\Services\Management&quot;,&quot;..\..\SwCore\Properties&quot;,&quot;..\..\SwCore\SwRef&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools\Exception&quot;,&quot;..\..\SwCore\Tools\Log&quot;,&quot;..\..\SwCore\Tools\Signal&quot;,&quot;..\..\SwCore\Types&quot;,&quot;..\..\SwCore\Types\UserType&quot;,&quot;..\..\SwCore&quot;,&quot;.&quot;,&quot;..\..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.3\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.3\mkspecs\win32-msvc2008"
 				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
 				AssemblerListingLocation="GeneratedFiles\objd\"
 				BasicRuntimeChecks="3"
@@ -44,8 +44,8 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../../\lib\vc\debug\SwCored.lib C:/Projects/Libraries/StreamWork/src/SwService/ServiceConfiguration/../../../../../Libraries/ExceptionManager/\lib\vc\debug\ExceptionManagerd.lib c:\Qt\4.7.1\lib\QtXmld4.lib c:\Qt\4.7.1\lib\QtGuid4.lib c:\Qt\4.7.1\lib\QtCored4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../../\lib\vc\debug,C:/Projects/Libraries/StreamWork/src/SwService/ServiceConfiguration/../../../../../Libraries/ExceptionManager/\lib\vc\debug"
+				AdditionalDependencies="../../../\lib\vc\debug\SwCored.lib C:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceConfiguration/../../../../../Libraries/ExceptionManager/\lib\vc\debug\ExceptionManagerd.lib c:\Qt\4.7.3\lib\QtXmld4.lib c:\Qt\4.7.3\lib\QtGuid4.lib c:\Qt\4.7.3\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,../../../\lib\vc\debug,C:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceConfiguration/../../../../../Libraries/ExceptionManager/\lib\vc\debug"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
 				LinkTimeCodeGeneration="0"
@@ -79,7 +79,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.1\include\QtCore&quot;,&quot;c:\Qt\4.7.1\include\QtGui&quot;,&quot;c:\Qt\4.7.1\include\QtXml&quot;,&quot;c:\Qt\4.7.1\include&quot;,&quot;.&quot;,&quot;..\..\SwCore\Component\Base&quot;,&quot;..\..\SwCore\Component\Interfaces&quot;,&quot;..\..\SwCore\Component\Pin&quot;,&quot;..\..\SwCore\Component\Services&quot;,&quot;..\..\SwCore\Main&quot;,&quot;..\..\SwCore\Main\Plugin&quot;,&quot;..\..\SwCore\Main\Services\Management&quot;,&quot;..\..\SwCore\Properties&quot;,&quot;..\..\SwCore\SwRef&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools\Exception&quot;,&quot;..\..\SwCore\Tools\Log&quot;,&quot;..\..\SwCore\Tools\Signal&quot;,&quot;..\..\SwCore\Types&quot;,&quot;..\..\SwCore\Types\UserType&quot;,&quot;..\..\SwCore&quot;,&quot;.&quot;,&quot;..\..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.1\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.1\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories="&quot;c:\Qt\4.7.3\include\QtCore&quot;,&quot;c:\Qt\4.7.3\include\QtGui&quot;,&quot;c:\Qt\4.7.3\include\QtXml&quot;,&quot;c:\Qt\4.7.3\include&quot;,&quot;.&quot;,&quot;..\..\SwCore\Component\Base&quot;,&quot;..\..\SwCore\Component\Interfaces&quot;,&quot;..\..\SwCore\Component\Pin&quot;,&quot;..\..\SwCore\Component\Services&quot;,&quot;..\..\SwCore\Main&quot;,&quot;..\..\SwCore\Main\Plugin&quot;,&quot;..\..\SwCore\Main\Services\Management&quot;,&quot;..\..\SwCore\Properties&quot;,&quot;..\..\SwCore\SwRef&quot;,&quot;..\..\SwCore\Tools&quot;,&quot;..\..\SwCore\Tools\Exception&quot;,&quot;..\..\SwCore\Tools\Log&quot;,&quot;..\..\SwCore\Tools\Signal&quot;,&quot;..\..\SwCore\Types&quot;,&quot;..\..\SwCore\Types\UserType&quot;,&quot;..\..\SwCore&quot;,&quot;.&quot;,&quot;..\..\..\..\ExceptionManager\src&quot;,&quot;c:\Qt\4.7.3\include\ActiveQt&quot;,&quot;GeneratedFiles\moc&quot;,c:\Qt\4.7.3\mkspecs\win32-msvc2008"
 				AdditionalOptions="-Zm200 /MP /MP -w34100 -w34189"
 				AssemblerListingLocation="GeneratedFiles\obj\"
 				BasicRuntimeChecks="3"
@@ -104,8 +104,8 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="../../../\lib\vc\release\SwCore.lib C:/Projects/Libraries/StreamWork/src/SwService/ServiceConfiguration/../../../../../Libraries/ExceptionManager/\lib\vc\release\ExceptionManager.lib c:\Qt\4.7.1\lib\QtXml4.lib c:\Qt\4.7.1\lib\QtGui4.lib c:\Qt\4.7.1\lib\QtCore4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.1\lib,../../../\lib\vc\release,C:/Projects/Libraries/StreamWork/src/SwService/ServiceConfiguration/../../../../../Libraries/ExceptionManager/\lib\vc\release"
+				AdditionalDependencies="../../../\lib\vc\release\SwCore.lib C:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceConfiguration/../../../../../Libraries/ExceptionManager/\lib\vc\release\ExceptionManager.lib c:\Qt\4.7.3\lib\QtXml4.lib c:\Qt\4.7.3\lib\QtGui4.lib c:\Qt\4.7.3\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,../../../\lib\vc\release,C:/StreamworkDev/Libraries/StreamWork/src/SwService/ServiceConfiguration/../../../../../Libraries/ExceptionManager/\lib\vc\release"
 				GenerateDebugInformation="false"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
@@ -157,6 +157,8 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="SwConfPushButton.cpp" />
+			<File
 				RelativePath="SwServiceSaveConfiguration.cpp" />
 			<File
 				RelativePath="_SwServiceConfigurationPluginFactory_Class.cpp" />
@@ -176,32 +178,38 @@
 			<File
 				RelativePath="ISwConfigListener.h" />
 			<File
+				RelativePath="ISwConfigurationManager.h" />
+			<File
+				RelativePath="ISwPropertiesObserver.h" />
+			<File
 				RelativePath="ISwServiceConfiguration.h" />
 			<File
 				RelativePath="StdAfx.h" />
 			<File
-				RelativePath="SwServiceSaveConfiguration.h">
+				RelativePath="SwConfPushButton.h">
 				<FileConfiguration
 					Name="Debug|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwServiceSaveConfiguration.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Component\Services&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\Properties&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\SwCore&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwServiceSaveConfiguration.h -o GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp"
-						Description="MOC SwServiceSaveConfiguration.h"
-						Outputs="GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp"
-						Path="c:\Qt\4.7.1\bin" />
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;SwConfPushButton.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.3\include\QtCore&quot; -I&quot;c:\Qt\4.7.3\include\QtGui&quot; -I&quot;c:\Qt\4.7.3\include\QtXml&quot; -I&quot;c:\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Component\Services&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\Properties&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\SwCore&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.3\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwConfPushButton.h -o GeneratedFiles\moc\moc_SwConfPushButton.cpp"
+						Description="MOC SwConfPushButton.h"
+						Outputs="GeneratedFiles\moc\moc_SwConfPushButton.cpp"
+						Path="c:\Qt\4.7.3\bin" />
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|Win32">
 					<Tool
 						Name="VCCustomBuildTool"
-						AdditionalDependencies="C:\Qt\4.7.1\bin\moc.exe;SwServiceSaveConfiguration.h"
-						CommandLine="C:\Qt\4.7.1\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.1\include\QtCore&quot; -I&quot;c:\Qt\4.7.1\include\QtGui&quot; -I&quot;c:\Qt\4.7.1\include\QtXml&quot; -I&quot;c:\Qt\4.7.1\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Component\Services&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\Properties&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\SwCore&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.1\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.1\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwServiceSaveConfiguration.h -o GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp"
-						Description="MOC SwServiceSaveConfiguration.h"
-						Outputs="GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp"
-						Path="c:\Qt\4.7.1\bin" />
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;SwConfPushButton.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DENABLE_EXCEPTIONS -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;c:\Qt\4.7.3\include\QtCore&quot; -I&quot;c:\Qt\4.7.3\include\QtGui&quot; -I&quot;c:\Qt\4.7.3\include\QtXml&quot; -I&quot;c:\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\..\SwCore\Component\Base&quot; -I&quot;..\..\SwCore\Component\Interfaces&quot; -I&quot;..\..\SwCore\Component\Pin&quot; -I&quot;..\..\SwCore\Component\Services&quot; -I&quot;..\..\SwCore\Main&quot; -I&quot;..\..\SwCore\Main\Plugin&quot; -I&quot;..\..\SwCore\Main\Services\Management&quot; -I&quot;..\..\SwCore\Properties&quot; -I&quot;..\..\SwCore\SwRef&quot; -I&quot;..\..\SwCore\Tools&quot; -I&quot;..\..\SwCore\Tools\Exception&quot; -I&quot;..\..\SwCore\Tools\Log&quot; -I&quot;..\..\SwCore\Tools\Signal&quot; -I&quot;..\..\SwCore\Types&quot; -I&quot;..\..\SwCore\Types\UserType&quot; -I&quot;..\..\SwCore&quot; -I&quot;.&quot; -I&quot;..\..\..\..\ExceptionManager\src&quot; -I&quot;c:\Qt\4.7.3\include\ActiveQt&quot; -I&quot;GeneratedFiles\moc&quot; -Ic:\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 SwConfPushButton.h -o GeneratedFiles\moc\moc_SwConfPushButton.cpp"
+						Description="MOC SwConfPushButton.h"
+						Outputs="GeneratedFiles\moc\moc_SwConfPushButton.cpp"
+						Path="c:\Qt\4.7.3\bin" />
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath="SwServiceSaveConfiguration.h" />
 			<File
 				RelativePath="_SwServiceConfigurationPluginFactory_Class.h" />
 		</Filter>
@@ -216,7 +224,7 @@
 					Name="moc"
 					Filter="">
 					<File
-						RelativePath="GeneratedFiles\moc\moc_SwServiceSaveConfiguration.cpp" />
+						RelativePath="GeneratedFiles\moc\moc_SwConfPushButton.cpp" />
 				</Filter>
 			</Filter>
 		</Filter>

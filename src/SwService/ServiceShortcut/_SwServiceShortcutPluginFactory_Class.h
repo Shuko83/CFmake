@@ -6,6 +6,7 @@
   */
 #include <QString>
 #include <QMap>
+
 /*
   * INCLUDES LOCAUX
   */

@@ -43,46 +43,55 @@ _SwServiceShortcuts::~_SwServiceShortcuts()
 
 
 //-------------------------------------------------------------------------
-void _SwServiceShortcuts::registerCommand( QString command, ISwShortcut *obj )
+void _SwServiceShortcuts::registerCommand( QString category, QString command, ISwShortcut *obj )
 {
 	if(obj && command != "")
 	{
 
 #ifdef _DEBUGAA
-		qDebug() << "[Shortcut Services] - Register Command ("  <<obj->getName()<<","<<command<<")" ;
+		qDebug() << "[Shortcut Services] - Register Command ("  <<obj->getCategory()<<","<<command<<")" ;
 #endif
+		if (_shortcutsName.indexOf(command) == -1)
+			_shortcutsName.push_back(command);
+		else
+		{
+			qCritical() << "A shortcut named " << command << " is already registered! the <"+category+"."+command+"> is ignored.";
+			return;
+		}
 
-		QString cName = generateCombinedName(obj->getName(),command);
+		QString cName = generateCombinedName(category, command);
+		
 		_mapShortcuts.insert(cName,obj);
 
 		//Notify observer
 		foreach(ISwShortcutObserver *obs, _listObs)
 		{
-			obs->add(command,obj);
+			obs->add(category, command, obj);
 		}
 	}
 }
 
 //-------------------------------------------------------------------------
-void _SwServiceShortcuts::unregisterCommand( QString command, ISwShortcut *obj )
+void _SwServiceShortcuts::unregisterCommand(QString category, QString command, ISwShortcut *obj)
 {
 	if(obj && command != "")
 	{
-		QString cName = generateCombinedName(obj->getName(),command);
+		QString cName = generateCombinedName(category, command);
 
 		if(_mapShortcuts.contains(cName))
 		{
 
 #ifdef _DEBUGAA
-			qDebug() << "[Shortcut Services] - Unregister Command ("  <<obj->getName()<<","<<command<<")" ;
+			qDebug() << "[Shortcut Services] - Unregister Command ("  <<obj->getCategory()<<","<<command<<")" ;
 #endif
 			//Notify observer
 			foreach(ISwShortcutObserver *obs, _listObs)
 			{
-				obs->remove(command,obj);
+				obs->remove(category, command, obj);
 			}
 
 			_mapShortcuts.remove(cName);
+			_shortcutsName.removeOne(command);
 		}
 	}
 }
@@ -139,9 +148,9 @@ void _SwServiceShortcuts::notify(QString entryName, ISwDevice *device)
 				if(lShortcut)
 				{
 #ifdef _DEBUGAA
-					qDebug() << "[Shortcut Services] - ProcessCommand ("<< getParameter(it.key()) <<","<<lShortcut->getName() << ")";
+					qDebug() << "[Shortcut Services] - ProcessCommand ("<< getShortcutName(it.key()) <<","<<lShortcut->getCategory() << ")";
 #endif
-					lShortcut->processCommand(getParameter(it.key()));
+					lShortcut->processCommand(getShortcutName(it.key()));
 				}
 			}
  		}
@@ -153,7 +162,7 @@ void _SwServiceShortcuts::bind( QString swdevice, QString shortcut )
 {
 
 #ifdef _DEBUGAA
-	qDebug() << "[Shortcut Services] - bind Devices ("  << getName(swdevice)<< ","<< getParameter(swdevice) <<") on ("<< getName(shortcut)<<","<< getParameter(shortcut)<<")" ;
+	qDebug() << "[Shortcut Services] - bind Devices ("  << getCategory(swdevice)<< ","<< getShortcutName(swdevice) <<") on ("<< getCategory(shortcut)<<","<< getShortcutName(shortcut)<<")" ;
 #endif
 
 	//On a deja un raccourci pour cette touche on ajoute a la liste
@@ -177,7 +186,7 @@ void _SwServiceShortcuts::bindKeyboard( QString sequence, QString shortcut, QWid
 {
 
 #ifdef _DEBUGAA
-	qDebug() << "[Shortcut Services] - bind keyboard ("  <<sequence <<") on ("<< getName(shortcut) <<","<< getParameter(shortcut)<<")" ;
+	qDebug() << "[Shortcut Services] - bind keyboard ("  <<sequence <<") on ("<< getCategory(shortcut) <<","<< getShortcutName(shortcut)<<")" ;
 #endif
 
 	//On a deja un raccourci pour cette touche on ajoute a la liste
@@ -230,7 +239,11 @@ void _SwServiceShortcuts::registerShortcutObserver( ISwShortcutObserver * obs )
 	{
 		if(it.value())
 		{
-			obs->add(getParameter(it.key()),it.value());
+
+			QString category = getCategory(it.key());
+			QString name = getShortcutName(it.key());
+
+			obs->add(category, name, it.value());	//renommer getCategory et getShortcutName....
 		}
 	}
 }
@@ -263,13 +276,13 @@ QMap<QString,QList<QString>> _SwServiceShortcuts::getBindedKeyboard()
 }
 
 //-------------------------------------------------------------------------
-QString _SwServiceShortcuts::getName( QString val )
+QString _SwServiceShortcuts::getCategory( QString val )
 {
 	return val.mid(0,val.indexOf(SC_SEP));
 }
 
 //-------------------------------------------------------------------------
-QString _SwServiceShortcuts::getParameter( QString val )
+QString _SwServiceShortcuts::getShortcutName( QString val )
 {
 	return val.mid(val.indexOf(SC_SEP)+QString(SC_SEP).length());
 }
@@ -388,9 +401,9 @@ void _SwServiceShortcuts::shortcutSlot()
 				if(lShortcut)
 				{
 #ifdef _DEBUGAA
-					qDebug() << "[Shortcut Services] Keyboard - ProcessCommand ("<< getParameter(it.key()) <<","<<lShortcut->getName() << ")";
+					qDebug() << "[Shortcut Services] Keyboard - ProcessCommand ("<< getShortcutName(it.key()) <<","<<lShortcut->getCategory() << ")";
 #endif
-					lShortcut->processCommand(getParameter(it.key()));
+					lShortcut->processCommand(getShortcutName(it.key()));
 				}
 			}
 		}

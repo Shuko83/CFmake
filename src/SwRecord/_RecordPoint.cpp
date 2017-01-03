@@ -11,6 +11,7 @@
 #include <SwMacros.h>
 #include "_RecordPoint.h"
 #include "ISwServiceRecording.h"
+#include "ISwProperty.h"
 #include <QXmlStreamWriter>
 #include "SwAddress_ToolBox.h"
 #include "_SwConfigurationSelector.h"

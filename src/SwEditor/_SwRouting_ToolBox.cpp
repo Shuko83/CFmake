@@ -41,7 +41,7 @@ void  _SwRouting_ToolBox::Reset() {
 }
 
 /*! \brief Initialize*/
-void _SwRouting_ToolBox::AddDifficulty(QRectF & area) {
+void _SwRouting_ToolBox::AddDifficulty(QRectF & /*area*/) {
     //Not implemented
 }
 /*! \brief outils*/

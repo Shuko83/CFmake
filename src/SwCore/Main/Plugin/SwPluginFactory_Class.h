@@ -35,6 +35,8 @@
 #include <QString>
 #include <QMap>
 #include <QMultiMap>
+#include <QDate>
+#include <QLocale>
 /*
   * INCLUDES LOCAUX
   */

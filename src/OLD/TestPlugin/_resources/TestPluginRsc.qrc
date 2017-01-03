@@ -1,5 +1,0 @@
-<RCC>
- <qresource prefix="/TestPlugin">
-  <file>DefaultContent.txt</file>
- </qresource>
-</RCC>

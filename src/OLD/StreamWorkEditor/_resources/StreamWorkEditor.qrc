@@ -1,6 +1,0 @@
-<RCC>
- <qresource prefix="/StreamWorkEditor">
-  <file>editor3.xml</file>
-  <file>splash.png</file>
- </qresource>
-</RCC>

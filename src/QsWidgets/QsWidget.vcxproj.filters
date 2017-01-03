@@ -1,0 +1,1667 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;moc;h;def;odl;idl;res;</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files\QsSmartCombo" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files\QsSmartCombo\CustomListWidget" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSmartCombo\CustomListWidget\BaseCustomListWidget.cpp">
+      <Filter>Source Files\QsSmartCombo\CustomListWidget</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSmartCombo\CustomListWidget\SearchCustomListWidget.cpp">
+      <Filter>Source Files\QsSmartCombo\CustomListWidget</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSmartCombo\CustomListWidget\SearchView.cpp">
+      <Filter>Source Files\QsSmartCombo\CustomListWidget</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSmartCombo\CustomListWidget\SmartCustomListWidget.cpp">
+      <Filter>Source Files\QsSmartCombo\CustomListWidget</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSmartCombo\CustomDelegate.cpp">
+      <Filter>Source Files\QsSmartCombo</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSmartCombo\CustomDoubleValidator.cpp">
+      <Filter>Source Files\QsSmartCombo</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSmartCombo\QsBaseComboBox.cpp">
+      <Filter>Source Files\QsSmartCombo</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files\QsTreeView" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTreeView\QsTreeViewDialog.cpp">
+      <Filter>Source Files\QsTreeView</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTreeView\QsTreeViewHeader.cpp">
+      <Filter>Source Files\QsTreeView</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTreeView\QsTreeViewProxy.cpp">
+      <Filter>Source Files\QsTreeView</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsButget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsButgetInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsCheckBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsCheckBoxInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsComboBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsComboBoxInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsCoordinateLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsCoordinateLineInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsDockWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsDockWidgetInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsDoubleSpinBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsDoubleSpinBoxInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsDoubleSpinBoxSI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsFrameBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsFrameBaseInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsFrameInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsGroupBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsGroupBoxInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsGroupRadio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsGroupRadioInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsInterfaceAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsLabel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsLabelInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsLabelTitle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsLabelTitleInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsLineEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsLineEditInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsListWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsListWidgetInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsPositionInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsPushButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsPushButtonInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsRadioButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsRadioButtonInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsScrollArea.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsScrollAreaInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSearchComboBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSearchComboBoxInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSimpleUnit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSimpleUnitInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSlider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSliderInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSmartComboBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSmartComboBoxInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSpinBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsSpinBoxInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTabWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTabWidgetInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTableWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTableWidgetInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTextEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTextEditInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsThumbWheel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsThumbWheelInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsToolButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsToolButtonInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTreeView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsTreeViewInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsWidgetInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QsWidgetsPlugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="QtThumbWheel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files\QsSmartCombo" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files\QsSmartCombo\CustomListWidget" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSmartCombo\CustomListWidget\BaseCustomListWidget.h">
+      <Filter>Header Files\QsSmartCombo\CustomListWidget</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSmartCombo\CustomListWidget\SearchCustomListWidget.h">
+      <Filter>Header Files\QsSmartCombo\CustomListWidget</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSmartCombo\CustomListWidget\SearchView.h">
+      <Filter>Header Files\QsSmartCombo\CustomListWidget</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSmartCombo\CustomListWidget\SmartCustomListWidget.h">
+      <Filter>Header Files\QsSmartCombo\CustomListWidget</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsSmartCombo\CustomDelegate.h">
+      <Filter>Header Files\QsSmartCombo</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsSmartCombo\CustomDoubleValidator.h">
+      <Filter>Header Files\QsSmartCombo</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSmartCombo\QsBaseComboBox.h">
+      <Filter>Header Files\QsSmartCombo</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files\QsTreeView" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsTreeView\QsTreeViewDialog.h">
+      <Filter>Header Files\QsTreeView</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsTreeView\QsTreeViewHeader.h">
+      <Filter>Header Files\QsTreeView</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsTreeView\QsTreeViewProxy.h">
+      <Filter>Header Files\QsTreeView</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsButget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsButgetInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsCheckBox.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsCheckBoxInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsComboBox.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsComboBoxInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsCoordinateLine.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsCoordinateLineInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsDockWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsDockWidgetInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsDoubleSpinBox.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsDoubleSpinBoxInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsDoubleSpinBoxSI.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsFrame.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsFrameBase.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsFrameBaseInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsFrameInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsGroupBox.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsGroupBoxInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsGroupRadio.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsGroupRadioInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsInterfaceAdapter.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsLabel.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsLabelInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsLabelTitle.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsLabelTitleInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsLineEdit.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsLineEditInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsListWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsListWidgetInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsPosition.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsPositionInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsPushButton.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsPushButtonInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsRadioButton.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsRadioButtonInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsScrollArea.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsScrollAreaInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSearchComboBox.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsSearchComboBoxInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSimpleUnit.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsSimpleUnitInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSlider.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsSliderInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSmartComboBox.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsSmartComboBoxInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSpinBox.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsSpinBoxInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsTabWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsTabWidgetInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsTableWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsTableWidgetInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsTextEdit.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsTextEditInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsThumbWheel.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsThumbWheelInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsToolButton.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsToolButtonInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsTreeView.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsTreeViewInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsWidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsWidgetInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsWidgetsPlugin.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QsWidgets_Global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QtThumbWheel.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Generated Files\GeneratedFiles_QT5" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Generated Files\GeneratedFiles_QT5\moc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_BaseCustomListWidget.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsBaseComboBox.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsButget.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsCheckBox.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsComboBox.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsCoordinateLine.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsDockWidget.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsDoubleSpinBox.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsDoubleSpinBoxSI.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsFrame.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsFrameBase.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsGroupBox.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsGroupRadio.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsInterfaceAdapter.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsLabel.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsLabelTitle.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsLineEdit.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsListWidget.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsPosition.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsPushButton.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsRadioButton.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsScrollArea.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsSearchComboBox.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsSimpleUnit.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsSlider.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsSmartComboBox.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsSpinBox.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsTabWidget.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsTableWidget.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsTextEdit.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsThumbWheel.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsToolButton.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsTreeView.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsTreeViewHeader.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsTreeViewProxy.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsWidget.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QsWidgetsPlugin.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_QtThumbWheel.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_SearchCustomListWidget.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_SearchView.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_SmartCustomListWidget.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Generated Files\GeneratedFiles_QT5\rcc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\rcc\qrc_QtPluginsRsc.cpp">
+      <Filter>Generated Files\GeneratedFiles_QT5\rcc</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Generated Files\GeneratedFiles_QT5\ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles_QT5\ui\ui_QsBaseComboBox.h">
+      <Filter>Generated Files\GeneratedFiles_QT5\ui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles_QT5\ui\ui_QsPosition.h">
+      <Filter>Generated Files\GeneratedFiles_QT5\ui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles_QT5\ui\ui_QsSimpleUnit.h">
+      <Filter>Generated Files\GeneratedFiles_QT5\ui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles_QT5\ui\ui_QsTreeViewDialog.h">
+      <Filter>Generated Files\GeneratedFiles_QT5\ui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GeneratedFiles_QT5\ui\ui_SearchView.h">
+      <Filter>Generated Files\GeneratedFiles_QT5\ui</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Form Files\QsSmartCombo" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Form Files\QsSmartCombo\CustomListWidget" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSmartCombo\CustomListWidget\SearchView.ui">
+      <Filter>Form Files\QsSmartCombo\CustomListWidget</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Form Files\QsTreeView" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsTreeView\QsTreeViewDialog.ui">
+      <Filter>Form Files\QsTreeView</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsBaseComboBox.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsPosition.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="QsSimpleUnit.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resource Files\_resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resource Files\_resources\QsIcons" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsButget.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsCheckBox.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsComboBox.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsCoordinateLine.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsDockWidget.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsDoubleSpinBox.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsFrame.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsFrameBase.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsGroupBox.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsLabel.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsLabelTitle.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsLineEdit.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsListWidget.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsPushButton.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsRadioButton.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsScrollArea.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsSlider.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsSpinBox.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsTabWidget.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsTableWidget.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsTextEdit.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsThumbWheel.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsToolButton.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\QsIcons\QsWidget.png">
+      <Filter>Resource Files\_resources\QsIcons</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Resource Files\_resources\images" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Check_off.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Check_off_hover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Check_on.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Check_on_disable.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Check_on_hover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Check_on_tri.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Check_on_tri_hover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Clean.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\DefaultContent.txt">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\ExportCfg.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Less.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\LoadCfg.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\NotView.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\RadioOff.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\RadioOffHover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\RadioOn.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\RadioOnHover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\SaveCfg.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\View.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\Zooming.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\add.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\apply.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\apply_black.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\apply_blue.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\apply_grey.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\apply_white.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\arrowDown.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\arrowDownYellow.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\arrowLeft.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\arrowRight.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\arrowUp.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\arrowUpYellow.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\bin_off.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\bin_on.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\bin_on_hover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\blueBubble.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\cancel.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\changeUnit.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\changeUnit_disabled.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\changeUnit_hover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\checkedBox.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\close.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\closeLogin.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\closeLoginHover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\closeTD.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\colorDisabled_large.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\colorDisabled_small.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\color_large.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\color_small.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\conf.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\deconnectez-vous-mon-profil-icone-5679-128.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\del.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\delete_point.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\delete_point_disabled.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\delete_point_on.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\download.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\dropDown.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\dropDownDisabled.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\dropDownHover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\dropUp.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\insert_point.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\insert_point_on.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\leftDock.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\lock.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\lock_open.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\login.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\loop_gray.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\loop_white.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\open.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\pick_off.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\pick_on.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\remove.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\resize.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\restart.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\rightDock.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\save.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\saveBlack.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\signIn.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\signInDisabled.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\signInHover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\start.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\stop.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\time.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\uncheckedBox.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\users.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\warning.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\warning_hover.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\images\whiteBubble.png">
+      <Filter>Resource Files\_resources\images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="_resources\QtPluginsRsc.qrc">
+      <Filter>Resource Files\_resources</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

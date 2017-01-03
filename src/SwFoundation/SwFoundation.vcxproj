@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Release|Win32">
@@ -16,7 +16,7 @@
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <PlatformToolSet>v120</PlatformToolSet>
     <OutputDirectory>..\..\lib\vc\release_QT5\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -25,7 +25,7 @@
     <IntermediateDirectory>GeneratedFiles_QT5\obj\</IntermediateDirectory>
     <PrimaryOutput>SwFoundation</PrimaryOutput>
   </PropertyGroup>
-  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <PlatformToolSet>v120</PlatformToolSet>
     <OutputDirectory>..\..\lib\vc\debug_QT5\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -36,32 +36,32 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
-  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
-  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">..\..\lib\vc\release_QT5\</OutDir>
-    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\obj\</IntDir>
-    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwFoundation</TargetName>
-    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">.swdl</TargetExt>
-    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</IgnoreImportLibrary>
-    <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">false</LinkIncremental>
-    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</PostBuildEventUseInBuild>
-    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">..\..\lib\vc\debug_QT5\</OutDir>
-    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\objd\</IntDir>
-    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwFoundationd</TargetName>
-    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">.swdld</TargetExt>
-    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</IgnoreImportLibrary>
-    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</PostBuildEventUseInBuild>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\lib\vc\release_QT5\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\obj\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SwFoundation</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.swdl</TargetExt>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</PostBuildEventUseInBuild>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\lib\vc\debug_QT5\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\objd\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SwFoundationd</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.swdld</TargetExt>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</PostBuildEventUseInBuild>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwGui&quot;;&quot;..\SwExecution&quot;;&quot;..\SWService\ServiceShortcut&quot;;&quot;..\SwService\ServiceImpl&quot;;&quot;..\SwService\ServiceUnitSI&quot;;&quot;.&quot;;&quot;..\..\..\ExceptionManager\src&quot;;&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwCore\Component&quot;;&quot;..\SwCore\Component\Base&quot;;&quot;..\SwCore\Component\Interfaces&quot;;&quot;..\SwCore\Component\Pin&quot;;&quot;..\SwCore\Component\Services&quot;;&quot;..\SwCore\Component\Services\ServiceImpl&quot;;&quot;..\SwCore\Extensions&quot;;&quot;..\SwCore\Main&quot;;&quot;..\SwCore\Main\Connexion&quot;;&quot;..\SwCore\Main\Plugin&quot;;&quot;..\SwCore\Main\Serialization&quot;;&quot;..\SwCore\Main\Services&quot;;&quot;..\SwCore\Main\Services\Management&quot;;&quot;..\SwCore\Properties&quot;;&quot;..\SwCore\SwRef&quot;;&quot;..\SwCore\Tools&quot;;&quot;..\SwCore\Tools\Exception&quot;;&quot;..\SwCore\Tools\Log&quot;;&quot;..\SwCore\Tools\Signal&quot;;&quot;..\SwCore\Types&quot;;&quot;..\SwCore\Types\UserType&quot;;&quot;..\SwService\ServiceAlert&quot;;&quot;..\SwService\ServiceConfiguration&quot;;&quot;..\SwService\ServiceImpl&quot;;&quot;..\SwService\ServiceShortcut&quot;;&quot;..\SwService\ServiceUnitSI&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtXml&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;GeneratedFiles_QT5\moc&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;.;..\SwCore;..\SwGui;..\SwExecution;..\SwService\ServiceShortcut;../SwService/ServiceImpl;..\SwService\ServiceTools;..\..\..\..\Modules\Streamwork\src\SwServiceUnitSI;..\..\..\ServiceUnitSI\src;../SwService/SwServiceUnitSI;.;..\..\..\ExceptionManager\src;.;..\SwCore;..\SwCore\Component;..\SwCore\Component\Base;..\SwCore\Component\Interfaces;..\SwCore\Component\Pin;..\SwCore\Component\Services;..\SwCore\Component\Services\ServiceImpl;..\SwCore\Extensions;..\SwCore\Main;..\SwCore\Main\Connexion;..\SwCore\Main\Plugin;..\SwCore\Main\Serialization;..\SwCore\Main\Services;..\SwCore\Main\Services\Management;..\SwCore\Properties;..\SwCore\SwRef;..\SwCore\Tools;..\SwCore\Tools\Exception;..\SwCore\Tools\Log;..\SwCore\Tools\Signal;..\SwCore\Types;..\SwCore\Types\UserType;C:/StreamworkDev/Libraries/StreamWork/src/SwFoundation/../../../../Libraries/StreamWork/src/SwService/ServiceAlert/;..\SwService\ServiceConfiguration;C:/StreamworkDev/Libraries/StreamWork/src/SwFoundation/../../../../Libraries/StreamWork/src/SwService/ServiceImpl/;..\SwService\ServiceShortcut;C:/StreamworkDev/Libraries/StreamWork/src/SwFoundation/../../../../Libraries/StreamWork/src/SwService/ServiceUnitSI/;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtXml;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zc:strictStrings -w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>GeneratedFiles_QT5\obj\</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BrowseInformation>false</BrowseInformation>
@@ -70,7 +70,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>GeneratedFiles_QT5\obj\</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)\SwFoundation_vc.pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -80,8 +80,8 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\\lib\vc\release_QT5\SwCore.lib;..\..\\lib\vc\release_QT5\SwExecution.lib;C:\Projects\Libraries\StreamWork\src\SwFoundation\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5\ExceptionManager.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Xml.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Gui.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\\lib\vc\release_QT5;C:\Projects\Libraries\StreamWork\src\SwFoundation\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>..\..\\lib\vc\release_QT5\SwCore.lib;..\..\\lib\vc\release_QT5\SwExecution.lib;C:\StreamworkDev\Libraries\StreamWork\src\SwFoundation\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5\ExceptionManager.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Gui.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Xml.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\\lib\vc\release_QT5;C:\StreamworkDev\Libraries\StreamWork\src\SwFoundation\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5;C:\Qt\Qt5.5.0\5.5\msvc2013\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -89,6 +89,7 @@
       <LinkIncremental>false</LinkIncremental>
       <OutputFile>$(OutDir)\SwFoundation.swdl</OutputFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Link>
     <Midl>
@@ -97,17 +98,17 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\release_QT5&quot;</Command>
+      <Command>copy "$(TargetPath)" ..\..\bin\vc\release_QT5</Command>
       <Message>Copy SwFoundation.swdl to ..\..\bin\vc\release_QT5</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwGui&quot;;&quot;..\SwExecution&quot;;&quot;..\SWService\ServiceShortcut&quot;;&quot;..\SwService\ServiceImpl&quot;;&quot;..\SwService\ServiceUnitSI&quot;;&quot;.&quot;;&quot;..\..\..\ExceptionManager\src&quot;;&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwCore\Component&quot;;&quot;..\SwCore\Component\Base&quot;;&quot;..\SwCore\Component\Interfaces&quot;;&quot;..\SwCore\Component\Pin&quot;;&quot;..\SwCore\Component\Services&quot;;&quot;..\SwCore\Component\Services\ServiceImpl&quot;;&quot;..\SwCore\Extensions&quot;;&quot;..\SwCore\Main&quot;;&quot;..\SwCore\Main\Connexion&quot;;&quot;..\SwCore\Main\Plugin&quot;;&quot;..\SwCore\Main\Serialization&quot;;&quot;..\SwCore\Main\Services&quot;;&quot;..\SwCore\Main\Services\Management&quot;;&quot;..\SwCore\Properties&quot;;&quot;..\SwCore\SwRef&quot;;&quot;..\SwCore\Tools&quot;;&quot;..\SwCore\Tools\Exception&quot;;&quot;..\SwCore\Tools\Log&quot;;&quot;..\SwCore\Tools\Signal&quot;;&quot;..\SwCore\Types&quot;;&quot;..\SwCore\Types\UserType&quot;;&quot;..\SwService\ServiceAlert&quot;;&quot;..\SwService\ServiceConfiguration&quot;;&quot;..\SwService\ServiceImpl&quot;;&quot;..\SwService\ServiceShortcut&quot;;&quot;..\SwService\ServiceUnitSI&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtXml&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;GeneratedFiles_QT5\moc&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;.;..\SwCore;..\SwGui;..\SwExecution;..\SwService\ServiceShortcut;../SwService/ServiceImpl;..\SwService\ServiceTools;..\..\..\..\Modules\Streamwork\src\SwServiceUnitSI;..\..\..\ServiceUnitSI\src;../SwService/SwServiceUnitSI;.;..\..\..\ExceptionManager\src;.;..\SwCore;..\SwCore\Component;..\SwCore\Component\Base;..\SwCore\Component\Interfaces;..\SwCore\Component\Pin;..\SwCore\Component\Services;..\SwCore\Component\Services\ServiceImpl;..\SwCore\Extensions;..\SwCore\Main;..\SwCore\Main\Connexion;..\SwCore\Main\Plugin;..\SwCore\Main\Serialization;..\SwCore\Main\Services;..\SwCore\Main\Services\Management;..\SwCore\Properties;..\SwCore\SwRef;..\SwCore\Tools;..\SwCore\Tools\Exception;..\SwCore\Tools\Log;..\SwCore\Tools\Signal;..\SwCore\Types;..\SwCore\Types\UserType;C:/StreamworkDev/Libraries/StreamWork/src/SwFoundation/../../../../Libraries/StreamWork/src/SwService/ServiceAlert/;..\SwService\ServiceConfiguration;C:/StreamworkDev/Libraries/StreamWork/src/SwFoundation/../../../../Libraries/StreamWork/src/SwService/ServiceImpl/;..\SwService\ServiceShortcut;C:/StreamworkDev/Libraries/StreamWork/src/SwFoundation/../../../../Libraries/StreamWork/src/SwService/ServiceUnitSI/;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtXml;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>GeneratedFiles_QT5\objd\</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BrowseInformation>false</BrowseInformation>
@@ -116,7 +117,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>GeneratedFiles_QT5\objd\</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)\SwFoundation_vc.pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -126,8 +127,8 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\\lib\vc\debug_QT5\SwCored.lib;..\..\\lib\vc\debug_QT5\SwExecutiond.lib;C:\Projects\Libraries\StreamWork\src\SwFoundation\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Xmld.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Guid.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\\lib\vc\debug_QT5;C:\Projects\Libraries\StreamWork\src\SwFoundation\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>..\..\\lib\vc\debug_QT5\SwCored.lib;..\..\\lib\vc\debug_QT5\SwExecutiond.lib;C:\StreamworkDev\Libraries\StreamWork\src\SwFoundation\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Guid.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Xmld.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\\lib\vc\debug_QT5;C:\StreamworkDev\Libraries\StreamWork\src\SwFoundation\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5;C:\Qt\Qt5.5.0\5.5\msvc2013\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -135,6 +136,7 @@
       <OutputFile>$(OutDir)\SwFoundationd.swdld</OutputFile>
       <ProgramDatabaseFile>./../../\bin\vc\debug_QT5/SwFoundationd.pdb</ProgramDatabaseFile>
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
+      <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
     </Link>
     <Midl>
@@ -143,10 +145,10 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SWFOUNDATION_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy  &quot;$(TargetPath)&quot; &quot;..\..\bin\vc\debug_QT5&quot;</Command>
+      <Command>copy "$(TargetPath)" ..\..\bin\vc\debug_QT5</Command>
       <Message>Copy SwFoundationd.swdld to ..\..\bin\vc\debug_QT5</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -167,14 +169,22 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SwAssistedComponent.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwAssistedComponent.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSWFOUNDATION_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp SwAssistedComponent.h -o GeneratedFiles_QT5\moc\moc_SwAssistedComponent.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC SwAssistedComponent.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_SwAssistedComponent.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwAssistedComponent.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSWFOUNDATION_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp SwAssistedComponent.h -o GeneratedFiles_QT5\moc\moc_SwAssistedComponent.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC SwAssistedComponent.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_SwAssistedComponent.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SwAssistedComponent.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -DSWFOUNDATION_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWFOUNDATION_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp SwAssistedComponent.h -o GeneratedFiles_QT5\moc\moc_SwAssistedComponent.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC SwAssistedComponent.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_SwAssistedComponent.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SwAssistedComponent.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -DSWFOUNDATION_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWFOUNDATION_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp SwAssistedComponent.h -o GeneratedFiles_QT5\moc\moc_SwAssistedComponent.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC SwAssistedComponent.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_SwAssistedComponent.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

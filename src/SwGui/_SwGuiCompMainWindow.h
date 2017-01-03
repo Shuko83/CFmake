@@ -26,7 +26,6 @@
 #include "ISwMenu.h"
 #include "ISwAction.h"
 #include "ISwToolBar.h"
-#include "ISwDockWidget.h"
 #include "ISwListDockWidget.h"
 #include "ISwWidget.h"
 #include "ISwListDockWidgetListener.h"
@@ -38,6 +37,7 @@
 #include "ISwMainWindow.h"
 #include "ISwEvent.h"
 #include "ISwEventObserver.h"
+#include "SwDockWidget_DockWidget.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -63,12 +63,12 @@ public :
 		Fixed = 2
 	};
 
-	Q_ENUMS(PathType)
-		Q_PROPERTY(QString relativePath READ getRelativePath WRITE setRelativePath)
-		Q_PROPERTY(QString absolutePath READ getAbsolutePath WRITE setAbsolutePath)
-		Q_PROPERTY(PathType pathType READ getPathType WRITE setPathType)
-		Q_PROPERTY(bool quitOnClose READ getQuitOnClose WRITE setQuitOnClose)
-	
+	Q_ENUMS(PathType);
+	Q_PROPERTY(QString relativePath READ getRelativePath WRITE setRelativePath);
+	Q_PROPERTY(QString absolutePath READ getAbsolutePath WRITE setAbsolutePath);
+	Q_PROPERTY(PathType pathType READ getPathType WRITE setPathType);
+	Q_PROPERTY(bool quitOnClose READ getQuitOnClose WRITE setQuitOnClose);
+
 protected:
     /* fenetre principale */
 	SwDockWidget_MainWindow * _mainWindow;
@@ -115,7 +115,7 @@ protected:
     /* propriété nombre de dockwidgets */
     ISwProperty * _dockwidgets_nb_property;
     /* map des interfaces dockwidgets*/
-    QMap<QString,ISwDockWidget *> _dockwidgets;
+	QMap<QString, SwDockWidget_DockWidget *> _dockwidgets;
 	/* nombre de listes de dockwidgets */
     uint _listdockwidgets_nb;
     /* propriété nombre de listes de dockwidgets */
@@ -189,8 +189,8 @@ public:
 	//----------------------------------------------------------------------------
 	// Interface ISwListDockWidgetListener
 	//----------------------------------------------------------------------------
-	virtual void addDockWidget(ISwDockWidget * widget, QString menuName);
-	virtual void removeDockWidget(ISwDockWidget *widget);
+	virtual void addDockWidget(SwDockWidget_DockWidget * widget, QString menuName);
+	virtual void removeDockWidget(SwDockWidget_DockWidget *widget);
 
 	//---------------------------------------------------------------------
 	// Gestion des Propriétés
@@ -224,7 +224,7 @@ public:
 	PathType getPathType();
 	void setPathType(PathType val);
 
-	/** @brief Property value quitOnClose */
+	/** @brief Property value Quit On close */
 	bool getQuitOnClose();
 	void setQuitOnClose(bool val);
 

@@ -14,7 +14,7 @@
 /*
   * INCLUDES GLOBAUX
   */
-#include <QItemDelegate>
+#include <QDynamicStyledItemDelegate.h>
 #include <QRegExp>
 #include <QFont>
 #include <QFileDialog>
@@ -30,7 +30,7 @@ namespace StreamWork
 		 \class SwGuiDefaultItemDelegate
 		 \brief ItemDelegate par defaut pour StreamWork
 		*/
-        class SWGUI_EXPORT SwGuiDefaultItemDelegate : public QItemDelegate {
+        class SWGUI_EXPORT SwGuiDefaultItemDelegate : public QDynamicStyledItemDelegate {
 			Q_OBJECT
         public:
             /*! \brief Constructeur */
@@ -39,10 +39,8 @@ namespace StreamWork
             ~SwGuiDefaultItemDelegate();
 
             /*! \brief Paint de l'item */
-            void paint(QPainter *painter, const QStyleOptionViewItem &option,
-                    const QModelIndex &index) const;
-            /*! \brief Permet de recuperer le rectangle englobant */
-            QRect textLayoutBounds(const QStyleOptionViewItemV2 &option) const;
+            void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+
             /*! \brief Cree un editeur pour un item donne */
             QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                                 const QModelIndex &index) const;
@@ -51,12 +49,6 @@ namespace StreamWork
             /*! \brief Mets a jour l'item avec le contenu de l'editeur */
             void setModelData(QWidget *editor, QAbstractItemModel *model,
                             const QModelIndex &index) const;
-
-            /*! \brief Permet de savoir si le type de l'item est support� */
-            static bool isSupportedType(QVariant & val/*=QVariant()*/);
-            /*! \brief Permet d'afficher l'item au format texte */
-            static QString displayText(const QVariant &value);
-
         private:
             mutable QRegExp boolExp;
             mutable QRegExp byteArrayExp;
@@ -66,8 +58,9 @@ namespace StreamWork
             mutable QRegExp dateTimeExp;
             mutable QRegExp doubleExp;
             mutable QRegExp pointExp;
-            mutable QRegExp rectExp;
-            mutable QRegExp signedIntegerExp;
+			mutable QRegExp rectExp;
+			mutable QRegExp rectFExp;
+			mutable QRegExp signedIntegerExp;
             mutable QRegExp sizeExp;
             mutable QRegExp timeExp;
             mutable QRegExp uuidExp;

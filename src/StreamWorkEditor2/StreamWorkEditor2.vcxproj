@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Release|Win32">
@@ -16,7 +16,7 @@
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <PlatformToolSet>v120</PlatformToolSet>
     <OutputDirectory>..\..\bin\vc\release_QT5\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -25,7 +25,7 @@
     <IntermediateDirectory>GeneratedFiles_QT5\obj\</IntermediateDirectory>
     <PrimaryOutput>StreamWorkEditor2</PrimaryOutput>
   </PropertyGroup>
-  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <PlatformToolSet>v120</PlatformToolSet>
     <OutputDirectory>..\..\bin\vc\debug_QT5\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -36,29 +36,29 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
-  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
-  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">..\..\bin\vc\release_QT5\</OutDir>
-    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\obj\</IntDir>
-    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">StreamWorkEditor2</TargetName>
-    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</IgnoreImportLibrary>
-    <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">false</LinkIncremental>
-    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</PostBuildEventUseInBuild>
-    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">..\..\bin\vc\debug_QT5\</OutDir>
-    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\objd\</IntDir>
-    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">StreamWorkEditor2d</TargetName>
-    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</IgnoreImportLibrary>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\bin\vc\release_QT5\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\obj\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StreamWorkEditor2</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</PostBuildEventUseInBuild>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\bin\vc\debug_QT5\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\objd\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StreamWorkEditor2d</TargetName>
+    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwGui&quot;;&quot;..\SwExecution&quot;;&quot;..\SwDoc&quot;;&quot;..\SwModel2&quot;;&quot;..\SwService\ServiceImpl&quot;;&quot;..\SwService\ServiceShortcut&quot;;&quot;..\SwService\ServiceUnitSI&quot;;&quot;..\SwService\ServiceConfiguration&quot;;&quot;.&quot;;&quot;..\..\..\ExceptionManager\src&quot;;&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwCore\Component&quot;;&quot;..\SwCore\Component\Base&quot;;&quot;..\SwCore\Component\Interfaces&quot;;&quot;..\SwCore\Component\Pin&quot;;&quot;..\SwCore\Component\Services&quot;;&quot;..\SwCore\Component\Services\ServiceImpl&quot;;&quot;..\SwCore\Extensions&quot;;&quot;..\SwCore\Main&quot;;&quot;..\SwCore\Main\Connexion&quot;;&quot;..\SwCore\Main\Plugin&quot;;&quot;..\SwCore\Main\Serialization&quot;;&quot;..\SwCore\Main\Services&quot;;&quot;..\SwCore\Main\Services\Management&quot;;&quot;..\SwCore\Properties&quot;;&quot;..\SwCore\SwRef&quot;;&quot;..\SwCore\Tools&quot;;&quot;..\SwCore\Tools\Exception&quot;;&quot;..\SwCore\Tools\Log&quot;;&quot;..\SwCore\Tools\Signal&quot;;&quot;..\SwCore\Types&quot;;&quot;..\SwCore\Types\UserType&quot;;&quot;..\SwService\ServiceAlert&quot;;&quot;..\SwService\ServiceConfiguration&quot;;&quot;..\SwService\ServiceImpl&quot;;&quot;..\SwService\ServiceShortcut&quot;;&quot;..\SwService\ServiceUnitSI&quot;;&quot;..\SwDoc\GeneratedFiles_QT5\ui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtPrintSupport&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtOpenGL&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtWidgets&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtXml&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;GeneratedFiles_QT5\moc&quot;;&quot;GeneratedFiles_QT5\ui&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;.;..\SwCore;..\SwGui;..\SwExecution;../SwDoc;..\SwModel2;../SwService/ServiceImpl;..\SwService\ServiceShortcut;../SwService/ServiceUnitSI;..\SwService\ServiceConfiguration;..\SwService\ServiceTools;..\..\..\Qst\src\QsGui;..\..\..\Qst\src\QsCore;..\..\..\Qst\src\QsLog;.;..\..\..\ExceptionManager\src;.;..\SwCore;..\SwCore\Component;..\SwCore\Component\Base;..\SwCore\Component\Interfaces;..\SwCore\Component\Pin;..\SwCore\Component\Services;..\SwCore\Component\Services\ServiceImpl;..\SwCore\Extensions;..\SwCore\Main;..\SwCore\Main\Connexion;..\SwCore\Main\Plugin;..\SwCore\Main\Serialization;..\SwCore\Main\Services;..\SwCore\Main\Services\Management;..\SwCore\Properties;..\SwCore\SwRef;..\SwCore\Tools;..\SwCore\Tools\Exception;..\SwCore\Tools\Log;..\SwCore\Tools\Signal;..\SwCore\Types;..\SwCore\Types\UserType;C:/StreamworkDev/Libraries/StreamWork/src/StreamWorkEditor2/../../../../Libraries/StreamWork/src/SwService/ServiceAlert/;..\SwService\ServiceConfiguration;C:/StreamworkDev/Libraries/StreamWork/src/StreamWorkEditor2/../../../../Libraries/StreamWork/src/SwService/ServiceImpl/;..\SwService\ServiceShortcut;C:/StreamworkDev/Libraries/StreamWork/src/StreamWorkEditor2/../../../../Libraries/StreamWork/src/SwService/ServiceUnitSI/;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtOpenGL;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtPrintSupport;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtWidgets;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtXml;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;GeneratedFiles_QT5\ui;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-Zc:strictStrings -w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>GeneratedFiles_QT5\obj\</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BrowseInformation>false</BrowseInformation>
@@ -67,7 +67,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>GeneratedFiles_QT5\obj\</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;SW_EDITOR;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_PRINTSUPPORT_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SW_EDITOR;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)\StreamWorkEditor2_vc.pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -77,9 +77,9 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;qtmain.lib;..\..\\lib\vc\release_QT5\SwCore.lib;..\..\\lib\vc\release_QT5\SwGui.lib;..\..\\lib\vc\release_QT5\SwDoc.lib;C:\Projects\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5\ExceptionManager.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5PrintSupport.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5OpenGL.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgets.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Xml.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Gui.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\\lib\vc\release_QT5;C:\Projects\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalOptions>&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>C:\Qt\Qt5.5.0\5.5\msvc2013\lib\qtmain.lib;shell32.lib;C:/Qt/Qt5.5.0/5.5/msvc2013/lib\Qt5Core.lib;opengl32.lib;..\..\\lib\vc\release_QT5\SwCore.lib;..\..\\lib\vc\release_QT5\SwGui.lib;C:\StreamworkDev\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\Qst\\lib\vc\release_QT5\QsLog.lib;C:\StreamworkDev\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5\ExceptionManager.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5OpenGL.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5PrintSupport.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Widgets.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Gui.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Xml.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Qt\Qt5.5.0\5.5\msvc2013\lib;C:/Qt/Qt5.5.0/5.5/msvc2013/lib;..\..\\lib\vc\release_QT5;C:\StreamworkDev\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\Qst\\lib\vc\release_QT5;C:\StreamworkDev\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\ExceptionManager\\lib\vc\release_QT5;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -88,7 +88,7 @@
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Windows</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <Version>1.23</Version>
+      <Version>1.2</Version>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
@@ -96,17 +96,17 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;SW_EDITOR;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_PRINTSUPPORT_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SW_EDITOR;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <PostBuildEvent>
       <Command>copy /y ..\..\..\..\Libraries\ExceptionManager\\bin\vc\release_QT5\ExceptionManager.dll ..\..\\bin\vc\release_QT5</Command>
       <Message>copy /y ..\..\..\..\Libraries\ExceptionManager\\bin\vc\release_QT5\ExceptionManager.dll ..\..\\bin\vc\release_QT5</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwGui&quot;;&quot;..\SwExecution&quot;;&quot;..\SwDoc&quot;;&quot;..\SwModel2&quot;;&quot;..\SwService\ServiceImpl&quot;;&quot;..\SwService\ServiceShortcut&quot;;&quot;..\SwService\ServiceUnitSI&quot;;&quot;..\SwService\ServiceConfiguration&quot;;&quot;.&quot;;&quot;..\..\..\ExceptionManager\src&quot;;&quot;.&quot;;&quot;..\SwCore&quot;;&quot;..\SwCore\Component&quot;;&quot;..\SwCore\Component\Base&quot;;&quot;..\SwCore\Component\Interfaces&quot;;&quot;..\SwCore\Component\Pin&quot;;&quot;..\SwCore\Component\Services&quot;;&quot;..\SwCore\Component\Services\ServiceImpl&quot;;&quot;..\SwCore\Extensions&quot;;&quot;..\SwCore\Main&quot;;&quot;..\SwCore\Main\Connexion&quot;;&quot;..\SwCore\Main\Plugin&quot;;&quot;..\SwCore\Main\Serialization&quot;;&quot;..\SwCore\Main\Services&quot;;&quot;..\SwCore\Main\Services\Management&quot;;&quot;..\SwCore\Properties&quot;;&quot;..\SwCore\SwRef&quot;;&quot;..\SwCore\Tools&quot;;&quot;..\SwCore\Tools\Exception&quot;;&quot;..\SwCore\Tools\Log&quot;;&quot;..\SwCore\Tools\Signal&quot;;&quot;..\SwCore\Types&quot;;&quot;..\SwCore\Types\UserType&quot;;&quot;..\SwService\ServiceAlert&quot;;&quot;..\SwService\ServiceConfiguration&quot;;&quot;..\SwService\ServiceImpl&quot;;&quot;..\SwService\ServiceShortcut&quot;;&quot;..\SwService\ServiceUnitSI&quot;;&quot;..\SwDoc\GeneratedFiles_QT5\ui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtPrintSupport&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtOpenGL&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtWidgets&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtXml&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtGui&quot;;&quot;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\include\QtCore&quot;;&quot;GeneratedFiles_QT5\moc&quot;;&quot;GeneratedFiles_QT5\ui&quot;;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm200 -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>.;.;..\SwCore;..\SwGui;..\SwExecution;../SwDoc;..\SwModel2;../SwService/ServiceImpl;..\SwService\ServiceShortcut;../SwService/ServiceUnitSI;..\SwService\ServiceConfiguration;..\SwService\ServiceTools;..\..\..\Qst\src\QsGui;..\..\..\Qst\src\QsCore;..\..\..\Qst\src\QsLog;.;..\..\..\ExceptionManager\src;.;..\SwCore;..\SwCore\Component;..\SwCore\Component\Base;..\SwCore\Component\Interfaces;..\SwCore\Component\Pin;..\SwCore\Component\Services;..\SwCore\Component\Services\ServiceImpl;..\SwCore\Extensions;..\SwCore\Main;..\SwCore\Main\Connexion;..\SwCore\Main\Plugin;..\SwCore\Main\Serialization;..\SwCore\Main\Services;..\SwCore\Main\Services\Management;..\SwCore\Properties;..\SwCore\SwRef;..\SwCore\Tools;..\SwCore\Tools\Exception;..\SwCore\Tools\Log;..\SwCore\Tools\Signal;..\SwCore\Types;..\SwCore\Types\UserType;C:/StreamworkDev/Libraries/StreamWork/src/StreamWorkEditor2/../../../../Libraries/StreamWork/src/SwService/ServiceAlert/;..\SwService\ServiceConfiguration;C:/StreamworkDev/Libraries/StreamWork/src/StreamWorkEditor2/../../../../Libraries/StreamWork/src/SwService/ServiceImpl/;..\SwService\ServiceShortcut;C:/StreamworkDev/Libraries/StreamWork/src/StreamWorkEditor2/../../../../Libraries/StreamWork/src/SwService/ServiceUnitSI/;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtOpenGL;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtPrintSupport;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtWidgets;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtXml;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;GeneratedFiles_QT5\ui;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>-w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>GeneratedFiles_QT5\objd\</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <BrowseInformation>false</BrowseInformation>
@@ -115,7 +115,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>GeneratedFiles_QT5\objd\</ObjectFileName>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_CONSOLE;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;SW_EDITOR;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;QT_PRINTSUPPORT_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SW_EDITOR;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <ProgramDataBaseFileName>$(IntDir)\StreamWorkEditor2_vc.pdb</ProgramDataBaseFileName>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -125,9 +125,9 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glu32.lib;opengl32.lib;gdi32.lib;user32.lib;..\..\\lib\vc\debug_QT5\SwCored.lib;..\..\\lib\vc\debug_QT5\SwGuid.lib;..\..\\lib\vc\debug_QT5\SwDocd.lib;C:\Projects\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5PrintSupportd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5OpenGLd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Xmld.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Guid.lib;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\\lib\vc\debug_QT5;C:\Projects\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5;C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalOptions>&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot; %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>opengl32.lib;..\..\\lib\vc\debug_QT5\SwCored.lib;..\..\\lib\vc\debug_QT5\SwGuid.lib;C:\StreamworkDev\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\Qst\\lib\vc\debug_QT5\QsLogd.lib;C:\StreamworkDev\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5OpenGLd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5PrintSupportd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Guid.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Xmld.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\\lib\vc\debug_QT5;C:\StreamworkDev\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\Qst\\lib\vc\debug_QT5;C:\StreamworkDev\Libraries\StreamWork\src\StreamWorkEditor2\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5;C:\Qt\Qt5.5.0\5.5\msvc2013\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'" %(AdditionalOptions)</AdditionalOptions>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreImportLibrary>true</IgnoreImportLibrary>
@@ -136,7 +136,7 @@
       <RandomizedBaseAddress>true</RandomizedBaseAddress>
       <SubSystem>Console</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <Version>1.23</Version>
+      <Version>1.2</Version>
     </Link>
     <Midl>
       <DefaultCharType>Unsigned</DefaultCharType>
@@ -144,7 +144,7 @@
       <WarningLevel>0</WarningLevel>
     </Midl>
     <ResourceCompile>
-      <PreprocessorDefinitions>_CONSOLE;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;SW_EDITOR;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;Q_WS_WIN;CPLUSPLUS11;QT_PRINTSUPPORT_LIB;QT_OPENGL_LIB;QT_WIDGETS_LIB;QT_XML_LIB;QT_GUI_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CONSOLE;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SW_EDITOR;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;QT_OPENGL_LIB;QT_PRINTSUPPORT_LIB;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -167,6 +167,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorPropertiesItemDelegate.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GlobalConf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicsLoaderV1.cpp" />
@@ -242,14 +245,22 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="AnchorableContainer.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">AnchorableContainer.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp AnchorableContainer.h -o GeneratedFiles_QT5\moc\moc_AnchorableContainer.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC AnchorableContainer.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_AnchorableContainer.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">AnchorableContainer.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp AnchorableContainer.h -o GeneratedFiles_QT5\moc\moc_AnchorableContainer.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC AnchorableContainer.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_AnchorableContainer.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AnchorableContainer.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp AnchorableContainer.h -o GeneratedFiles_QT5\moc\moc_AnchorableContainer.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC AnchorableContainer.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_AnchorableContainer.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AnchorableContainer.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp AnchorableContainer.h -o GeneratedFiles_QT5\moc\moc_AnchorableContainer.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC AnchorableContainer.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_AnchorableContainer.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -260,14 +271,22 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ComponentListModel.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">ComponentListModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ComponentListModel.h -o GeneratedFiles_QT5\moc\moc_ComponentListModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC ComponentListModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_ComponentListModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">ComponentListModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ComponentListModel.h -o GeneratedFiles_QT5\moc\moc_ComponentListModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC ComponentListModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_ComponentListModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ComponentListModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ComponentListModel.h -o GeneratedFiles_QT5\moc\moc_ComponentListModel.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC ComponentListModel.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_ComponentListModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ComponentListModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ComponentListModel.h -o GeneratedFiles_QT5\moc\moc_ComponentListModel.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC ComponentListModel.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_ComponentListModel.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -278,14 +297,42 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="EditorPropertiesItemDelegate.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">EditorPropertiesItemDelegate.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp EditorPropertiesItemDelegate.h -o GeneratedFiles_QT5\moc\moc_EditorPropertiesItemDelegate.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC EditorPropertiesItemDelegate.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_EditorPropertiesItemDelegate.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">EditorPropertiesItemDelegate.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp EditorPropertiesItemDelegate.h -o GeneratedFiles_QT5\moc\moc_EditorPropertiesItemDelegate.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC EditorPropertiesItemDelegate.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_EditorPropertiesItemDelegate.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">EditorPropertiesItemDelegate.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp EditorPropertiesItemDelegate.h -o GeneratedFiles_QT5\moc\moc_EditorPropertiesItemDelegate.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC EditorPropertiesItemDelegate.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_EditorPropertiesItemDelegate.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EditorPropertiesItemDelegate.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp EditorPropertiesItemDelegate.h -o GeneratedFiles_QT5\moc\moc_EditorPropertiesItemDelegate.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC EditorPropertiesItemDelegate.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_EditorPropertiesItemDelegate.cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="GlobalConf.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GlobalConf.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp GlobalConf.h -o GeneratedFiles_QT5\moc\moc_GlobalConf.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC GlobalConf.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_GlobalConf.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GlobalConf.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp GlobalConf.h -o GeneratedFiles_QT5\moc\moc_GlobalConf.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC GlobalConf.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_GlobalConf.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -314,14 +361,22 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="LegendView.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">LegendView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp LegendView.h -o GeneratedFiles_QT5\moc\moc_LegendView.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC LegendView.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_LegendView.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">LegendView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp LegendView.h -o GeneratedFiles_QT5\moc\moc_LegendView.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC LegendView.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_LegendView.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">LegendView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp LegendView.h -o GeneratedFiles_QT5\moc\moc_LegendView.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC LegendView.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_LegendView.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">LegendView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp LegendView.h -o GeneratedFiles_QT5\moc\moc_LegendView.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC LegendView.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_LegendView.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -329,50 +384,82 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="LogView.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">LogView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp LogView.h -o GeneratedFiles_QT5\moc\moc_LogView.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC LogView.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_LogView.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">LogView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp LogView.h -o GeneratedFiles_QT5\moc\moc_LogView.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC LogView.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_LogView.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">LogView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp LogView.h -o GeneratedFiles_QT5\moc\moc_LogView.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC LogView.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_LogView.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">LogView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp LogView.h -o GeneratedFiles_QT5\moc\moc_LogView.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC LogView.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_LogView.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MainWindow.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MainWindow.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp MainWindow.h -o GeneratedFiles_QT5\moc\moc_MainWindow.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC MainWindow.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_MainWindow.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MainWindow.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp MainWindow.h -o GeneratedFiles_QT5\moc\moc_MainWindow.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC MainWindow.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_MainWindow.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MainWindow.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp MainWindow.h -o GeneratedFiles_QT5\moc\moc_MainWindow.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC MainWindow.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_MainWindow.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MainWindow.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp MainWindow.h -o GeneratedFiles_QT5\moc\moc_MainWindow.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC MainWindow.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_MainWindow.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ManageLinkColor.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">ManageLinkColor.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ManageLinkColor.h -o GeneratedFiles_QT5\moc\moc_ManageLinkColor.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC ManageLinkColor.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_ManageLinkColor.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">ManageLinkColor.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ManageLinkColor.h -o GeneratedFiles_QT5\moc\moc_ManageLinkColor.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC ManageLinkColor.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_ManageLinkColor.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ManageLinkColor.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ManageLinkColor.h -o GeneratedFiles_QT5\moc\moc_ManageLinkColor.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC ManageLinkColor.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_ManageLinkColor.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ManageLinkColor.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ManageLinkColor.h -o GeneratedFiles_QT5\moc\moc_ManageLinkColor.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC ManageLinkColor.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_ManageLinkColor.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="MenuManager.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MenuManager.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp MenuManager.h -o GeneratedFiles_QT5\moc\moc_MenuManager.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC MenuManager.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_MenuManager.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MenuManager.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp MenuManager.h -o GeneratedFiles_QT5\moc\moc_MenuManager.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC MenuManager.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_MenuManager.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MenuManager.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp MenuManager.h -o GeneratedFiles_QT5\moc\moc_MenuManager.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC MenuManager.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_MenuManager.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MenuManager.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp MenuManager.h -o GeneratedFiles_QT5\moc\moc_MenuManager.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC MenuManager.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_MenuManager.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -380,134 +467,222 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="PluginOverview.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">PluginOverview.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PluginOverview.h -o GeneratedFiles_QT5\moc\moc_PluginOverview.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC PluginOverview.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_PluginOverview.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">PluginOverview.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PluginOverview.h -o GeneratedFiles_QT5\moc\moc_PluginOverview.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC PluginOverview.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_PluginOverview.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PluginOverview.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PluginOverview.h -o GeneratedFiles_QT5\moc\moc_PluginOverview.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC PluginOverview.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_PluginOverview.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PluginOverview.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PluginOverview.h -o GeneratedFiles_QT5\moc\moc_PluginOverview.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC PluginOverview.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_PluginOverview.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="PluginsListModel.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">PluginsListModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PluginsListModel.h -o GeneratedFiles_QT5\moc\moc_PluginsListModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC PluginsListModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_PluginsListModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">PluginsListModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PluginsListModel.h -o GeneratedFiles_QT5\moc\moc_PluginsListModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC PluginsListModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_PluginsListModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PluginsListModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PluginsListModel.h -o GeneratedFiles_QT5\moc\moc_PluginsListModel.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC PluginsListModel.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_PluginsListModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PluginsListModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PluginsListModel.h -o GeneratedFiles_QT5\moc\moc_PluginsListModel.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC PluginsListModel.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_PluginsListModel.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="PropertiesWidget.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">PropertiesWidget.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PropertiesWidget.h -o GeneratedFiles_QT5\moc\moc_PropertiesWidget.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC PropertiesWidget.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_PropertiesWidget.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">PropertiesWidget.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PropertiesWidget.h -o GeneratedFiles_QT5\moc\moc_PropertiesWidget.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC PropertiesWidget.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_PropertiesWidget.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PropertiesWidget.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PropertiesWidget.h -o GeneratedFiles_QT5\moc\moc_PropertiesWidget.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC PropertiesWidget.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_PropertiesWidget.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PropertiesWidget.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp PropertiesWidget.h -o GeneratedFiles_QT5\moc\moc_PropertiesWidget.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC PropertiesWidget.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_PropertiesWidget.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QInterestAreaTreeModel.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">QInterestAreaTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp QInterestAreaTreeModel.h -o GeneratedFiles_QT5\moc\moc_QInterestAreaTreeModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC QInterestAreaTreeModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_QInterestAreaTreeModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">QInterestAreaTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp QInterestAreaTreeModel.h -o GeneratedFiles_QT5\moc\moc_QInterestAreaTreeModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC QInterestAreaTreeModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_QInterestAreaTreeModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">QInterestAreaTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp QInterestAreaTreeModel.h -o GeneratedFiles_QT5\moc\moc_QInterestAreaTreeModel.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC QInterestAreaTreeModel.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_QInterestAreaTreeModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">QInterestAreaTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp QInterestAreaTreeModel.h -o GeneratedFiles_QT5\moc\moc_QInterestAreaTreeModel.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC QInterestAreaTreeModel.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_QInterestAreaTreeModel.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QStreamTreeModel.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">QStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp QStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc_QStreamTreeModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC QStreamTreeModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_QStreamTreeModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">QStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp QStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc_QStreamTreeModel.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC QStreamTreeModel.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_QStreamTreeModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">QStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp QStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc_QStreamTreeModel.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC QStreamTreeModel.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_QStreamTreeModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">QStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp QStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc_QStreamTreeModel.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC QStreamTreeModel.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_QStreamTreeModel.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="StreamControler.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">StreamControler.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamControler.h -o GeneratedFiles_QT5\moc\moc_StreamControler.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC StreamControler.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_StreamControler.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">StreamControler.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamControler.h -o GeneratedFiles_QT5\moc\moc_StreamControler.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC StreamControler.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_StreamControler.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StreamControler.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamControler.h -o GeneratedFiles_QT5\moc\moc_StreamControler.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC StreamControler.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_StreamControler.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StreamControler.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamControler.h -o GeneratedFiles_QT5\moc\moc_StreamControler.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC StreamControler.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_StreamControler.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="StreamScene.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">StreamScene.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamScene.h -o GeneratedFiles_QT5\moc\moc_StreamScene.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC StreamScene.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_StreamScene.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">StreamScene.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamScene.h -o GeneratedFiles_QT5\moc\moc_StreamScene.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC StreamScene.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_StreamScene.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StreamScene.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamScene.h -o GeneratedFiles_QT5\moc\moc_StreamScene.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC StreamScene.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_StreamScene.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StreamScene.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamScene.h -o GeneratedFiles_QT5\moc\moc_StreamScene.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC StreamScene.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_StreamScene.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="StreamView.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">StreamView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamView.h -o GeneratedFiles_QT5\moc\moc_StreamView.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC StreamView.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_StreamView.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">StreamView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamView.h -o GeneratedFiles_QT5\moc\moc_StreamView.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC StreamView.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_StreamView.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StreamView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamView.h -o GeneratedFiles_QT5\moc\moc_StreamView.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC StreamView.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_StreamView.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StreamView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp StreamView.h -o GeneratedFiles_QT5\moc\moc_StreamView.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC StreamView.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_StreamView.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="SwSplash.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwSplash.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp SwSplash.h -o GeneratedFiles_QT5\moc\moc_SwSplash.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC SwSplash.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_SwSplash.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwSplash.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp SwSplash.h -o GeneratedFiles_QT5\moc\moc_SwSplash.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC SwSplash.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_SwSplash.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SwSplash.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp SwSplash.h -o GeneratedFiles_QT5\moc\moc_SwSplash.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC SwSplash.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_SwSplash.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SwSplash.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp SwSplash.h -o GeneratedFiles_QT5\moc\moc_SwSplash.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC SwSplash.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_SwSplash.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="VerticalMultiAnchorableContainer.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">VerticalMultiAnchorableContainer.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp VerticalMultiAnchorableContainer.h -o GeneratedFiles_QT5\moc\moc_VerticalMultiAnchorableContainer.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC VerticalMultiAnchorableContainer.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_VerticalMultiAnchorableContainer.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">VerticalMultiAnchorableContainer.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp VerticalMultiAnchorableContainer.h -o GeneratedFiles_QT5\moc\moc_VerticalMultiAnchorableContainer.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC VerticalMultiAnchorableContainer.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_VerticalMultiAnchorableContainer.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VerticalMultiAnchorableContainer.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp VerticalMultiAnchorableContainer.h -o GeneratedFiles_QT5\moc\moc_VerticalMultiAnchorableContainer.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC VerticalMultiAnchorableContainer.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_VerticalMultiAnchorableContainer.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">VerticalMultiAnchorableContainer.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp VerticalMultiAnchorableContainer.h -o GeneratedFiles_QT5\moc\moc_VerticalMultiAnchorableContainer.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC VerticalMultiAnchorableContainer.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_VerticalMultiAnchorableContainer.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ViewNavigator.h">
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">ViewNavigator.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ViewNavigator.h -o GeneratedFiles_QT5\moc\moc_ViewNavigator.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC ViewNavigator.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc_ViewNavigator.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">ViewNavigator.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -DQ_WS_WIN -DCPLUSPLUS11 -DQT_PRINTSUPPORT_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ViewNavigator.h -o GeneratedFiles_QT5\moc\moc_ViewNavigator.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC ViewNavigator.h</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc_ViewNavigator.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ViewNavigator.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ViewNavigator.h -o GeneratedFiles_QT5\moc\moc_ViewNavigator.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC ViewNavigator.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc_ViewNavigator.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ViewNavigator.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSW_EDITOR -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_OPENGL_LIB -DQT_PRINTSUPPORT_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp ViewNavigator.h -o GeneratedFiles_QT5\moc\moc_ViewNavigator.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC ViewNavigator.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc_ViewNavigator.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -521,6 +696,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneratedFiles_QT5\moc\moc_EditorPropertiesItemDelegate.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc_GlobalConf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneratedFiles_QT5\moc\moc_LegendView.cpp" />
@@ -582,40 +760,67 @@
   <ItemGroup>
     <CustomBuild Include="_resources\LogView.ui">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_resources\LogView.ui;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\uic.exe _resources\LogView.ui -o GeneratedFiles_QT5\ui\ui_LogView.h</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">UIC _resources\LogView.ui</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\ui\ui_LogView.h;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_resources\LogView.ui;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\uic.exe _resources\LogView.ui -o GeneratedFiles_QT5\ui\ui_LogView.h</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">UIC _resources\LogView.ui</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\ui\ui_LogView.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_resources\LogView.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\uic.exe _resources\LogView.ui -o GeneratedFiles_QT5\ui\ui_LogView.h
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UIC _resources/LogView.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\ui\ui_LogView.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_resources\LogView.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\uic.exe _resources\LogView.ui -o GeneratedFiles_QT5\ui\ui_LogView.h
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UIC _resources/LogView.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\ui\ui_LogView.h;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="_resources\PluginOverview.ui">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_resources\PluginOverview.ui;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\uic.exe _resources\PluginOverview.ui -o GeneratedFiles_QT5\ui\ui_PluginOverview.h</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">UIC _resources\PluginOverview.ui</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\ui\ui_PluginOverview.h;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_resources\PluginOverview.ui;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\uic.exe _resources\PluginOverview.ui -o GeneratedFiles_QT5\ui\ui_PluginOverview.h</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">UIC _resources\PluginOverview.ui</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\ui\ui_PluginOverview.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_resources\PluginOverview.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\uic.exe _resources\PluginOverview.ui -o GeneratedFiles_QT5\ui\ui_PluginOverview.h
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">UIC _resources/PluginOverview.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\ui\ui_PluginOverview.h;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_resources\PluginOverview.ui;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\uic.exe _resources\PluginOverview.ui -o GeneratedFiles_QT5\ui\ui_PluginOverview.h
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">UIC _resources/PluginOverview.ui</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\ui\ui_PluginOverview.h;%(Outputs)</Outputs>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_resources\StreamWork.css" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="_resources\StreamWorkEditor2.qrc">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_resources\StreamWorkEditor2.qrc;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\mod_run.png;_resources\reset.png;_resources\mod_replay.png;_resources\splash.png;_resources\settings.png;_resources\modellistview.png;_resources\mod_run_disable.png;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o GeneratedFiles_QT5\rcc\qrc_StreamWorkEditor2.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">RCC _resources\StreamWorkEditor2.qrc</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_StreamWorkEditor2.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_resources\StreamWorkEditor2.qrc;_resources\mod_run.png;_resources\settings.png;_resources\modellistview.png;_resources\mod_run_disable.png;_resources\mod_replay.png;_resources\comp_toolbox.png;_resources\splash.png;_resources\reset.png;_resources\editdelete.png;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">C:\Qt\Qt5.3.0\5.3\msvc2013_opengl\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o GeneratedFiles_QT5\rcc\qrc_StreamWorkEditor2.cpp</Command>
-      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">RCC _resources\StreamWorkEditor2.qrc</Message>
-      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_StreamWorkEditor2.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_resources\StreamWorkEditor2.qrc;_resources\StreamWork.css;_resources\modellistview.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\mod_replay.png;_resources\reset.png;_resources\splash.png;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\settings.png;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o GeneratedFiles_QT5\rcc\qrc_StreamWorkEditor2.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">RCC _resources/StreamWorkEditor2.qrc</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\rcc\qrc_StreamWorkEditor2.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_resources\StreamWorkEditor2.qrc;_resources\StreamWork.css;_resources\modellistview.png;_resources\mod_run.png;_resources\mod_run_disable.png;_resources\mod_replay.png;_resources\reset.png;_resources\splash.png;_resources\comp_toolbox.png;_resources\editdelete.png;_resources\settings.png;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+if errorlevel 1 goto VCEnd
+C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name StreamWorkEditor2 _resources\StreamWorkEditor2.qrc -o GeneratedFiles_QT5\rcc\qrc_StreamWorkEditor2.cpp
+if errorlevel 1 goto VCEnd
+endlocal</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">RCC _resources/StreamWorkEditor2.qrc</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\rcc\qrc_StreamWorkEditor2.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

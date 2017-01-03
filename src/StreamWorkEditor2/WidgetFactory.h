@@ -14,7 +14,6 @@
 #endif
 #include "PropertiesWidget.h"
 #include "QStreamTreeModel.h"
-#include "..\SwDoc\EditDoc.h"
 
 /**
 @class WidgetFactory
@@ -33,8 +32,6 @@ public:
     QWidget * buildStreamTreeView(QStreamTreeModel * model);
     /** @brief Construction widget propriétés*/
     PropertiesWidget * buildPropertiesWidget();
-	/** @brief Construction widget documentation*/
-	QWidget * buildDocBlankView();
 	/** @brief Construction widget Color legend*/
 	QWidget * buildLegendView();
 

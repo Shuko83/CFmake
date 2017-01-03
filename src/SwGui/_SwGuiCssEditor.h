@@ -34,7 +34,8 @@ namespace StreamWork
 		*/     
 		class _SwGuiCssEditor : public Component, virtual public StreamWork::SwCore::ISwAdminSetup 
 		{
-			Q_OBJECT
+			Q_OBJECT;
+			Q_PROPERTY(QString StyleFile READ getStyle WRITE setStyle);
 
 		public:
 
@@ -67,33 +68,17 @@ namespace StreamWork
 			/*! \brief Permet d'acceder aux preferences d'administration via StreamWorkEditor*/
 			virtual void AdminSetup();
 
-
 			QString getStyle() ; 
 			
 		public slots:
 				void applyStyle();
 				void setStyle(QString val);
 
-		protected:
-
-			//--------------------------------------------------------------
-			//Properties
-			//--------------------------------------------------------------
-
-			/** @brief Property value Stylesheet as QString */
-			Q_PROPERTY (QString StyleFile READ getStyle WRITE setStyle);
-
-			//--------------------------------------------------------------
-			//Handle interfaces
-			//--------------------------------------------------------------
-
-			
 		private:
 			QString _styleFile;
 			QFileSystemWatcher _cssWatcher;	
 			
 		};
-
 	}
 }
 #endif

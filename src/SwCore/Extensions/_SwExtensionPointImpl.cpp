@@ -7,7 +7,7 @@
 #include "_SwExtensionPointImpl.h"
 #include "ISwInterfaces_Consumer.h" 
 #include "ISwInterfaces_Provider.h" 
-#include "_SwExtensionImpl.h"
+#include "SwExtensionImpl.h"
 
 using namespace StreamWork::SwCore;
 
@@ -47,7 +47,7 @@ ISwExtension * _SwExtensionPointImpl::getExtension() {
         while (!iname.isNull()) {
             if (!iname.isNull() && iname==_name && itype==_type) {
                 if (provider!=0) {
-                    return new _SwExtensionImpl(_type,_name,provider->GetHostComponent()->GetFactoryComponentName(),provider->GetHostComponent());
+                    return new SwExtensionImpl(_type,_name,provider->GetHostComponent()->GetFactoryComponentName(),provider->GetHostComponent());
                 } else {
                     return 0;
                 }

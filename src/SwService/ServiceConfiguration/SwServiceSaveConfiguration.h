@@ -7,12 +7,15 @@
 #ifndef _STREAMWORK_SWCORE__SWSERVICESAVECONFIGURATION_H
 #define _STREAMWORK_SWCORE__SWSERVICESAVECONFIGURATION_H
 
+#include <QDomElement>
+
 #include "ISwAdminConfiguration.h"
 #include "ISwServiceConfiguration.h"
-#include "ISwConfPropertiesObserver.h"
 #include "ISwConfigListener.h"
 
-#include <QDomElement>
+#include "ISwConfigurationManager.h"
+#include "ISwPropertiesObserver.h"
+#include "ISwProperty.h"
 
 
 namespace StreamWork 
@@ -22,12 +25,11 @@ namespace StreamWork
         /**
           @class SwServiceSaveConfiguration
         */
-        class SwServiceSaveConfiguration :  public QObject,
-											public ISwAdminConfiguration, 
-											public ISwServiceConfiguration ,
-											public ISwConfPropertiesObserver
+        class SwServiceSaveConfiguration :  public ISwAdminConfiguration, 
+											public ISwServiceConfiguration,
+											public ISwConfigurationManager,
+											public ISwPropertiesObserver
         {
-			Q_OBJECT
         public:
 
             /** @brief Constructor */
@@ -44,7 +46,7 @@ namespace StreamWork
 
 			/**
              * @brief	: Permet de récupérer tous les ConfCollectors registered
-             * @Return	: List<ISwConfCollector*>, liste des pointeurs sur les ConfCollectors
+             * @Return	: List<QHash<QString, ISwConfCollector*>, liste des pointeurs sur les Prefix/ConfCollectors
              */
 			virtual QHash<QString, ISwConfCollector*> getConfCollectors(QString confName);
 
@@ -108,24 +110,34 @@ namespace StreamWork
 
 
 			/**
-             * @brief	: Permet d'enregistrer un ConfPropertiesObserver
-             * @Param	: ISwConfPropertiesObserver* observer des properties
-             */
-			virtual bool registerConfPropertiesObserver(  ISwConfPropertiesObserver * observer  );
-
-			/**
-             * @brief	: Permet désenregistrer un ConfPropertiesObserver
-             * @Param	: ISwConfPropertiesObserver* observer des properties
-             */
-			virtual void unregisterConfPropertiesObserver(  ISwConfPropertiesObserver * observer );
-
-
-
-			/**
              * @brief	: Permet de vider les Maps du service de conf
              */
 			virtual void clearConfService();
 
+
+
+			//---------------------------------------------------------------------
+			// Interface ISwConfigurationManager
+			//---------------------------------------------------------------------
+			/**
+			* @brief	: Permet d'enregistrer un ConfPropertiesObserver
+			* @Param	: ISwPropertiesObserver* observer des properties
+			*/
+			virtual bool registerConfPropertiesObserver(ISwPropertiesObserver * observer);
+
+			/**
+			* @brief	: Permet désenregistrer un ConfPropertiesObserver
+			* @Param	: ISwPropertiesObserver* observer des properties
+			*/
+			virtual void unregisterConfPropertiesObserver(ISwPropertiesObserver * observer);
+
+
+
+			//---------------------------------------------------------------------
+			// Interface ISwPropertiesObserver
+			//---------------------------------------------------------------------
+			/** @brief : Fonction appelée par les confcollectors lors du delete d'une property */
+			virtual void onPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName = "");
 
 
 			//---------------------------------------------------------------------
@@ -179,6 +191,13 @@ namespace StreamWork
              */
 			virtual bool saveConfigurationFile( QString confName);
 
+             /**
+             * @brief	: dans le cas autoSave, permet de retenir une propriete qui sera ensuite sauvegardee dans le xml à la fermeture
+             * @brief   : a utiliser dans le cas par exemple de la sauvegarde d'une property dont le composant sera delete avant le confCollector a la fermeture du stream
+             * @Param	: QString : nom de la configuration concernée, ISwProperty propriete concernée, QString prefix concerné
+             */
+            virtual void saveOnePropertyOnConf(QString confName, ISwProperty *p, QString propCustomName, QString prefix);
+
 
 			/**
              * @brief	: permet de créer un XML file pour la configuration
@@ -229,7 +248,13 @@ namespace StreamWork
 			* @Param : QString : nom de la configuration concernée
 			* @return : QString : nom du profil de la conf courante chargée
 			*/
-			virtual QString getCurrentConf( QString confName);
+			virtual QString getCurrentProfile(QString confName);
+
+			/**
+			* @brief	: permet de récupérer la liste des configurations enregistrées
+			* @return	: QList<QString> : liste des configurations
+			*/
+			QList<QString> getAllConfigurations();
 
 			/**
              * @brief	: permet de récupérer l'interface d'administration de la conf
@@ -240,9 +265,9 @@ namespace StreamWork
 			
 			/**
              * @brief	: permet de récupérer l'interface de gestion des properties de la conf
-             * @return	: ISwConfPropertiesObserver : pointeur sur l'interface de gestion des properties de la conf
+             * @return	: ISwPropertiesObserver : pointeur sur l'interface de gestion des properties de la conf
              */
-			virtual ISwConfPropertiesObserver* getConfPropertiesObserver();
+			virtual ISwPropertiesObserver* getConfPropertiesObserver();
 
 			/**
              * @brief	: permet de récupérer un pointeur sur une property
@@ -257,33 +282,40 @@ namespace StreamWork
 			/**
              * @brief	: permet de récupérer les pointeurs de toutes les properties d'une conf
              * @Param	: QString : nom de la configuration concernée
+             * @Param	: QString : nom du groupe paramètres (page) concerné (prefix)
              * @return	: QList <ISwProperty*> : liste des pointeurs sur les properties
              */
-			virtual QHash<ISwProperty*, QString> getAllProperties (QString confName);
+			virtual QHash<ISwProperty*, QString> getAllProperties(QString confName, QString prefixName);
 			
 			/**
              * @brief	: permet de récupérer l'ordre de toutes les properties d'une conf pour les classer dans un treeview
              * @Param	: QString : nom de la configuration concernée
+             * @Param	: QString : nom du groupe paramètres (page) concerné (prefix)
              * @return	: QHash<QString, int> : liste des noms décorés des properties et leur ordre dans le treeview
              */
-			virtual QHash<QString, int> getAllPropertiesOrder (QString confName);
+			virtual QHash<QString, int> getAllPropertiesOrder(QString confName, QString prefixName);
 
 			/**
-             * @brief	: permet de récupérer l'arborescence d'une property d'après son pointeur
+			* @brief	: permet d'updater la valeur d'une property depuis le fichier qui a été loadé
+			* @Param	: QString : nom de la configuration concernée
+			* @Param	: QString : prefix du composant ConfCollector
              * @Param	: ISwProperty* : pointeur sur la propery concernée
-             * @return	: QString : Nom de la property concernée
+			* @return	: bool : Update réussi ou pas
              */
-			//virtual QString getConstructedNameForProperty( ISwProperty* property);
+			virtual bool updateProperty(QString confName, QString prefix, ISwProperty* propToUpdate);
 
 
-			//---------------------------------------------------------------------
-			// Interface ISwConfPropertiesObserver
-			//---------------------------------------------------------------------
-			/** @brief : Fonction appelée par les confcollectors lors du delete d'une property */
-			virtual void onPropertyDeleted( ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName );
+			/**
+			* @brief	: permet d'updater la part XML de la configuration par défault (CFM_DEFAULT_FILENAME)
+			* @Param	: QString : nom de la configuration concernée
+			*/
+			virtual bool updateDefaultProfile(QString confName, QHash<QString, QString> inNewDefaultValues = QHash<QString, QString>());
+
 
 		
 		private:
+
+			bool _hasCreatedFactoryFile;
 
 			/** @brief : QHash<confName, ISwConfSaver*> */
 			QHash<QString, ISwConfSaver*> _confSavers;
@@ -310,17 +342,30 @@ namespace StreamWork
 			QList<ISwConfigListener*>	_configurationServiceListeners;
 
 			/** @brief : Liste des observers du service pour notif lors d'une suppression de property */
-			QList<ISwConfPropertiesObserver*>	_configurationPropertiesListeners;
+			QList<ISwPropertiesObserver*>	_configurationPropertiesListeners;
+
+            
+            /** @brief permet de stocker les proprietes avec saveOnePropertyOnConf */
+            QDomDocument _alreadyDestroyedPropertiesToSaveDoc;
+            QDomElement _alreadyDestroyedPropertiesToSaveRootElt;
+
 			
 
 			/**
 			* @brief : permets de parser le fichier des confs
 			* @Param : QString : nom de la configuration concernée
 			* @Param : QString : fichier à parser contenant les données de conf
-			* @Param : bool : true s'il n'y avait pas de fichier de config 
+			* @Param : bool : true s'il n'y avait pas de fichier de config
 			*			et qu'il a du être créé pour la premiere fois (need un parse à nouveau)
 			*/
 			QString parseConfigurationFile(QString confName, QString inConfigFileToParse);
+
+			/**
+			* @brief : Crée un profile de conf par défaut (a partir des factory settings)
+			* @Param : QString : nom de la configuration concernée
+			* @Param : QDomElemment : root_node
+			*/
+			void createDefaultFromFactory(QString confName, QDomElement &root_node);
 
 			/**
 			* @brief : permets de parser le fichier des confs
@@ -336,7 +381,7 @@ namespace StreamWork
 			* @Param : QDomDocument : CDomDoc concerné
 			* @Param : QDomElement : à remplir avec les valeurs des properties des collectors associés
 			*/
-			void createQDomProfile(QString confName, QDomDocument &doc, QDomElement &elt_config);
+			void createQDomProfile(QString confName, QDomDocument &doc, QDomElement &elt_config, QHash<QString, QString> inNewDefaultValues = QHash<QString, QString>());
 
 			/**
 			* @brief : notifie les listeners du service de configuration
@@ -344,8 +389,16 @@ namespace StreamWork
 			*/
 			void notifyServiceListeners(QString confName, bool profilesNotif);
 
-			public slots:
-				void onQuit();
+			
+			/**
+			* @brief : met à jour dans _confProfilesDatas les données des profils de conf
+			* @Param : QHash<QString, QHash<QString, QString>>::iterator : itérateur sur la configuration concernée
+			* @Param : QString : nom du profil concerné
+			* @Param : QDomElement : nouvelles valeurs des datas du profil
+			*/
+			bool updateConfProfilesDatas(QHash<QString, QHash<QString, QString>>::iterator it_profiles, QString profile, QDomElement newProfileConfDatas);
+
+			bool updateDefaultProfileFromCurrent(QDomNodeList &DefaultElements, QDomNodeList &PropertiesElements, QDomElement &newProfileConfDatas);
 		};
     }
 }

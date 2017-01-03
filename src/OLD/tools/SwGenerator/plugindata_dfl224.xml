@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<SwFactoryEntry Path="C:\Projects\Libraries\StreamWork\Dev\tmp\TestWizard" Author="Francis" IsOwnPluginInDistribution="no" Name="Zob2" >
-    <Components Description="thecomp" Name="FBob" >
-        <Properties Type="Double" DefaultValue="0" PropertyName="int" />
-        <Connectors ConnectorName="CCon" Type="Bla" ReceiveData="yes" />
-    </Components>
-    <Components Description="NoDescription" Name="NoNamedComponent" />
-</SwFactoryEntry>

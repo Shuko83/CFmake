@@ -12,7 +12,6 @@
 #include "ISwConfSaver.h"
 #include "ISwConfCollector.h"
 #include "ISwConfigListener.h"
-#include "ISwConfPropertiesObserver.h"
 
 
 namespace StreamWork 
@@ -24,7 +23,7 @@ namespace StreamWork
          *  @brief Service permettant d'administration du service de gestion de la configuration
 		 *  @example
          */
-        class ISwAdminConfiguration  
+		class ISwAdminConfiguration 
         {
         public:
             /**
@@ -36,7 +35,7 @@ namespace StreamWork
 
             /**
              * @brief	: Permet de récupérer tous les ConfCollectors registered
-             * @Return	: List<ISwConfCollector*>, liste des pointeurs sur les ConfCollectors
+             * @Return	: List<QHash<QString, ISwConfCollector*>, liste des pointeurs sur les Prefix/ConfCollectors
              */
             virtual QHash<QString, ISwConfCollector*> getConfCollectors (QString confName) = 0;
 
@@ -97,24 +96,11 @@ namespace StreamWork
             virtual void unregisterConfigServiceListener (ISwConfigListener *listener) = 0;
   
 			/**
-             * @brief	: Permet d'enregistrer un ConfPropertiesObserver
-             * @Param	: ISwConfPropertiesObserver* observer des properties
-             */
-            virtual bool registerConfPropertiesObserver ( ISwConfPropertiesObserver * observer  ) = 0;
-
-			/**
-             * @brief	: Permet désenregistrer un ConfPropertiesObserver
-             * @Param	: ISwConfPropertiesObserver* observer des properties
-             */
-            virtual void unregisterConfPropertiesObserver ( ISwConfPropertiesObserver * observer  ) = 0;
-
-  
-			/**
              * @brief	: Permet de vider les Maps du service de conf
              */
 			virtual void clearConfService() = 0;
-        };
-}
+		};
+	}
 }
 
 #endif

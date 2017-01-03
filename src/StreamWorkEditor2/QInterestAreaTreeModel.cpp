@@ -6,6 +6,7 @@
 
 #include "QInterestAreaTreeModel.h"
 #include "SwApplication.h"
+#include "SwMacros.h"
  
 using namespace StreamWork::SwCore;
 

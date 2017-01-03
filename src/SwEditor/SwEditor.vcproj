@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9,00"
+	Name="SwEditor"
+	ProjectGUID="{30725B89-759D-34BF-A6EA-C8654BFBD1A4}"
+	Keyword="Qt4VSv1.0">
+	<Platforms>
+		<Platform
+			Name="Win32" />
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="debug\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot;,&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot;,&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot;,&quot;..\..\..\..\Qt\4.7.3\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;..\SwGui&quot;,&quot;..\StreamWorkEditor2&quot;,&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot;,&quot;debug&quot;,..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008"
+				AdditionalOptions="-Zm200 -w34100 -w34189"
+				AssemblerListingLocation="debug\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="3"
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="debug\"
+				Optimization ="4"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWEDITOR_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SwCored.lib SwExecutiond.lib SwGuid.lib c:\Qt\4.7.3\lib\QtXmld4.lib c:\Qt\4.7.3\lib\QtGuid4.lib c:\Qt\4.7.3\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,../../"
+				GenerateDebugInformation="true"
+				IgnoreImportLibrary="true"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\SwEditor.swdld"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..&quot;"
+				Description="Copy SwEditor.swdld to ..\.." />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWEDITOR_LIB,QT_DLL,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,_DEBUG" />
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="."
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			ConfigurationType="2"
+			IntermediateDirectory="release\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot;,&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot;,&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot;,&quot;..\..\..\..\Qt\4.7.3\include&quot;,&quot;.&quot;,&quot;..\SwCore&quot;,&quot;..\SwExecution&quot;,&quot;..\SwGui&quot;,&quot;..\StreamWorkEditor2&quot;,&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot;,&quot;release&quot;,..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008"
+				AdditionalOptions="-Zm200 -w34100 -w34189"
+				AssemblerListingLocation="release\"
+				BufferSecurityCheck="false"
+				DebugInformationFormat="0"
+				ExceptionHandling="1"
+				GeneratePreprocessedFile="0"
+				ObjectFile="release\"
+				Optimization ="2"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWEDITOR_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT,NDEBUG"
+				ProgramDataBaseFileName=".\"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="SwCore.lib SwExecution.lib SwGui.lib c:\Qt\4.7.3\lib\QtXml4.lib c:\Qt\4.7.3\lib\QtGui4.lib c:\Qt\4.7.3\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,../../"
+				GenerateDebugInformation="false"
+				IgnoreImportLibrary="true"
+				LinkIncremental="1"
+				LinkTimeCodeGeneration="0"
+				OutputFile="..\..\SwEditor.swdl"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine="copy  &quot;$(TargetPath)&quot; &quot;..\..&quot;"
+				Description="Copy SwEditor.swdl to ..\.." />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="QT_NO_DEBUG,NDEBUG,_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,SWEDITOR_LIB,QT_DLL,QT_NO_DEBUG,QT_XML_LIB,QT_GUI_LIB,QT_CORE_LIB,QT_HAVE_MMX,QT_HAVE_3DNOW,QT_HAVE_SSE,QT_HAVE_MMXEXT,QT_HAVE_SSE2,QT_THREAD_SUPPORT" />
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath="..\StreamWorkEditor2\ComponentListModel.cpp" />
+			<File
+				RelativePath="..\StreamWorkEditor2\PluginsListModel.cpp" />
+			<File
+				RelativePath="_SwEditorApplicativeCore.cpp" />
+			<File
+				RelativePath="_SwEditorCompStreamTabBar.cpp" />
+			<File
+				RelativePath="_SwEditorCompToolbox.cpp" />
+			<File
+				RelativePath="_SwEditorGIInterfaceMenu.cpp" />
+			<File
+				RelativePath="_SwEditorGIMenu.cpp" />
+			<File
+				RelativePath="_SwEditorGIPinMenu.cpp" />
+			<File
+				RelativePath="_SwEditorGraphicItem.cpp" />
+			<File
+				RelativePath="_SwEditorGraphicScene.cpp" />
+			<File
+				RelativePath="_SwEditorInterfaceGraphicItem.cpp" />
+			<File
+				RelativePath="_SwEditorInterfacesGraphicItemManager.cpp" />
+			<File
+				RelativePath="_SwEditorInterfacesLayerManager.cpp" />
+			<File
+				RelativePath="_SwEditorNavigator_Class.cpp" />
+			<File
+				RelativePath="_SwEditorPinGraphicItem.cpp" />
+			<File
+				RelativePath="_SwEditorPinGraphicItemManager.cpp" />
+			<File
+				RelativePath="_SwEditorPinsLayerManager.cpp" />
+			<File
+				RelativePath="_SwEditorPluginFactory_Class.cpp" />
+			<File
+				RelativePath="_SwEditorQGraphicsView.cpp" />
+			<File
+				RelativePath="_SwEditorSelection_Class.cpp" />
+			<File
+				RelativePath="_SwEditorStreamNavigatorActions.cpp" />
+			<File
+				RelativePath="_SwEditorStreamOperationsActions.cpp" />
+			<File
+				RelativePath="_SwEditorStreamTreeModel.cpp" />
+			<File
+				RelativePath="_SwEditorStreamView.cpp" />
+			<File
+				RelativePath="_SwEditorStreamsManagerActions.cpp" />
+			<File
+				RelativePath="_SwRouting_ToolBox.cpp" />
+			<File
+				RelativePath="_SwStreamNavigationActions.cpp" />
+			<File
+				RelativePath="_SwStreamOperationsActions.cpp" />
+			<File
+				RelativePath="_SwStreamsActions.cpp" />
+			<File
+				RelativePath="_SwStreamsTabBar.cpp" />
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath="..\StreamWorkEditor2\ComponentListModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\StreamWorkEditor2\ComponentListModel.h;C:\Qt\4.7.3\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 ..\StreamWorkEditor2\ComponentListModel.h -o debug\moc_ComponentListModel.cpp"
+						Description="MOC ..\StreamWorkEditor2\ComponentListModel.h"
+						Outputs="debug\moc_ComponentListModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\StreamWorkEditor2\ComponentListModel.h;C:\Qt\4.7.3\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 ..\StreamWorkEditor2\ComponentListModel.h -o release\moc_ComponentListModel.cpp"
+						Description="MOC ..\StreamWorkEditor2\ComponentListModel.h"
+						Outputs="release\moc_ComponentListModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="ISwEditorGraphicItem.h" />
+			<File
+				RelativePath="ISwEditorGraphicScene.h" />
+			<File
+				RelativePath="ISwEditorInterfacesGraphicItemManager.h" />
+			<File
+				RelativePath="ISwEditorPinGraphicItemManager.h" />
+			<File
+				RelativePath="ISwEditorStreamNavigation.h" />
+			<File
+				RelativePath="ISwEditorStreamOperations.h" />
+			<File
+				RelativePath="ISwEditorStreamsManager.h" />
+			<File
+				RelativePath="..\StreamWorkEditor2\PluginsListModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\StreamWorkEditor2\PluginsListModel.h;C:\Qt\4.7.3\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 ..\StreamWorkEditor2\PluginsListModel.h -o debug\moc_PluginsListModel.cpp"
+						Description="MOC ..\StreamWorkEditor2\PluginsListModel.h"
+						Outputs="debug\moc_PluginsListModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="..\StreamWorkEditor2\PluginsListModel.h;C:\Qt\4.7.3\bin\moc.exe"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 ..\StreamWorkEditor2\PluginsListModel.h -o release\moc_PluginsListModel.cpp"
+						Description="MOC ..\StreamWorkEditor2\PluginsListModel.h"
+						Outputs="release\moc_PluginsListModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_ISwEditorGraphicItemListener.h" />
+			<File
+				RelativePath="_ISwEditorInterfaceGraphicItemListener.h" />
+			<File
+				RelativePath="_ISwEditorPinGraphicItemListener.h" />
+			<File
+				RelativePath="_SwEditorApplicativeCore.h" />
+			<File
+				RelativePath="_SwEditorCompStreamTabBar.h" />
+			<File
+				RelativePath="_SwEditorCompToolbox.h" />
+			<File
+				RelativePath="_SwEditorGIInterfaceMenu.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorGIInterfaceMenu.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorGIInterfaceMenu.h -o debug\moc__SwEditorGIInterfaceMenu.cpp"
+						Description="MOC _SwEditorGIInterfaceMenu.h"
+						Outputs="debug\moc__SwEditorGIInterfaceMenu.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorGIInterfaceMenu.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorGIInterfaceMenu.h -o release\moc__SwEditorGIInterfaceMenu.cpp"
+						Description="MOC _SwEditorGIInterfaceMenu.h"
+						Outputs="release\moc__SwEditorGIInterfaceMenu.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwEditorGIMenu.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorGIMenu.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorGIMenu.h -o debug\moc__SwEditorGIMenu.cpp"
+						Description="MOC _SwEditorGIMenu.h"
+						Outputs="debug\moc__SwEditorGIMenu.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorGIMenu.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorGIMenu.h -o release\moc__SwEditorGIMenu.cpp"
+						Description="MOC _SwEditorGIMenu.h"
+						Outputs="release\moc__SwEditorGIMenu.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwEditorGIPinMenu.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorGIPinMenu.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorGIPinMenu.h -o debug\moc__SwEditorGIPinMenu.cpp"
+						Description="MOC _SwEditorGIPinMenu.h"
+						Outputs="debug\moc__SwEditorGIPinMenu.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorGIPinMenu.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorGIPinMenu.h -o release\moc__SwEditorGIPinMenu.cpp"
+						Description="MOC _SwEditorGIPinMenu.h"
+						Outputs="release\moc__SwEditorGIPinMenu.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwEditorGraphicItem.h" />
+			<File
+				RelativePath="_SwEditorGraphicScene.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorGraphicScene.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorGraphicScene.h -o debug\moc__SwEditorGraphicScene.cpp"
+						Description="MOC _SwEditorGraphicScene.h"
+						Outputs="debug\moc__SwEditorGraphicScene.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorGraphicScene.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorGraphicScene.h -o release\moc__SwEditorGraphicScene.cpp"
+						Description="MOC _SwEditorGraphicScene.h"
+						Outputs="release\moc__SwEditorGraphicScene.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwEditorInterfaceGraphicItem.h" />
+			<File
+				RelativePath="_SwEditorInterfacesGraphicItemManager.h" />
+			<File
+				RelativePath="_SwEditorInterfacesLayerManager.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorInterfacesLayerManager.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorInterfacesLayerManager.h -o debug\moc__SwEditorInterfacesLayerManager.cpp"
+						Description="MOC _SwEditorInterfacesLayerManager.h"
+						Outputs="debug\moc__SwEditorInterfacesLayerManager.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorInterfacesLayerManager.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorInterfacesLayerManager.h -o release\moc__SwEditorInterfacesLayerManager.cpp"
+						Description="MOC _SwEditorInterfacesLayerManager.h"
+						Outputs="release\moc__SwEditorInterfacesLayerManager.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwEditorNavigator_Class.h" />
+			<File
+				RelativePath="_SwEditorPinGraphicItem.h" />
+			<File
+				RelativePath="_SwEditorPinGraphicItemManager.h" />
+			<File
+				RelativePath="_SwEditorPinsLayerManager.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorPinsLayerManager.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorPinsLayerManager.h -o debug\moc__SwEditorPinsLayerManager.cpp"
+						Description="MOC _SwEditorPinsLayerManager.h"
+						Outputs="debug\moc__SwEditorPinsLayerManager.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorPinsLayerManager.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorPinsLayerManager.h -o release\moc__SwEditorPinsLayerManager.cpp"
+						Description="MOC _SwEditorPinsLayerManager.h"
+						Outputs="release\moc__SwEditorPinsLayerManager.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwEditorPluginFactory_Class.h" />
+			<File
+				RelativePath="_SwEditorQGraphicsView.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorQGraphicsView.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorQGraphicsView.h -o debug\moc__SwEditorQGraphicsView.cpp"
+						Description="MOC _SwEditorQGraphicsView.h"
+						Outputs="debug\moc__SwEditorQGraphicsView.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorQGraphicsView.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorQGraphicsView.h -o release\moc__SwEditorQGraphicsView.cpp"
+						Description="MOC _SwEditorQGraphicsView.h"
+						Outputs="release\moc__SwEditorQGraphicsView.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwEditorSelection_Class.h" />
+			<File
+				RelativePath="_SwEditorStreamNavigatorActions.h" />
+			<File
+				RelativePath="_SwEditorStreamOperationsActions.h" />
+			<File
+				RelativePath="_SwEditorStreamTreeModel.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorStreamTreeModel.h -o debug\moc__SwEditorStreamTreeModel.cpp"
+						Description="MOC _SwEditorStreamTreeModel.h"
+						Outputs="debug\moc__SwEditorStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwEditorStreamTreeModel.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwEditorStreamTreeModel.h -o release\moc__SwEditorStreamTreeModel.cpp"
+						Description="MOC _SwEditorStreamTreeModel.h"
+						Outputs="release\moc__SwEditorStreamTreeModel.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwEditorStreamView.h" />
+			<File
+				RelativePath="_SwEditorStreamsManagerActions.h" />
+			<File
+				RelativePath="_SwRouting_ToolBox.h" />
+			<File
+				RelativePath="_SwStreamNavigationActions.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwStreamNavigationActions.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwStreamNavigationActions.h -o debug\moc__SwStreamNavigationActions.cpp"
+						Description="MOC _SwStreamNavigationActions.h"
+						Outputs="debug\moc__SwStreamNavigationActions.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwStreamNavigationActions.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwStreamNavigationActions.h -o release\moc__SwStreamNavigationActions.cpp"
+						Description="MOC _SwStreamNavigationActions.h"
+						Outputs="release\moc__SwStreamNavigationActions.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwStreamOperationsActions.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwStreamOperationsActions.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwStreamOperationsActions.h -o debug\moc__SwStreamOperationsActions.cpp"
+						Description="MOC _SwStreamOperationsActions.h"
+						Outputs="debug\moc__SwStreamOperationsActions.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwStreamOperationsActions.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwStreamOperationsActions.h -o release\moc__SwStreamOperationsActions.cpp"
+						Description="MOC _SwStreamOperationsActions.h"
+						Outputs="release\moc__SwStreamOperationsActions.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwStreamsActions.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwStreamsActions.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwStreamsActions.h -o debug\moc__SwStreamsActions.cpp"
+						Description="MOC _SwStreamsActions.h"
+						Outputs="debug\moc__SwStreamsActions.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwStreamsActions.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwStreamsActions.h -o release\moc__SwStreamsActions.cpp"
+						Description="MOC _SwStreamsActions.h"
+						Outputs="release\moc__SwStreamsActions.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_SwStreamsTabBar.h">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwStreamsTabBar.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;debug&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwStreamsTabBar.h -o debug\moc__SwStreamsTabBar.cpp"
+						Description="MOC _SwStreamsTabBar.h"
+						Outputs="debug\moc__SwStreamsTabBar.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\moc.exe;_SwStreamsTabBar.h"
+						CommandLine="C:\Qt\4.7.3\bin\moc.exe  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DSWEDITOR_LIB -DQT_DLL -DQT_NO_DEBUG -DQT_XML_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_HAVE_MMX -DQT_HAVE_3DNOW -DQT_HAVE_SSE -DQT_HAVE_MMXEXT -DQT_HAVE_SSE2 -DQT_THREAD_SUPPORT -I&quot;..\..\..\..\Qt\4.7.3\include\QtCore&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtGui&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\QtXml&quot; -I&quot;..\..\..\..\Qt\4.7.3\include&quot; -I&quot;.&quot; -I&quot;..\SwCore&quot; -I&quot;..\SwExecution&quot; -I&quot;..\SwGui&quot; -I&quot;..\StreamWorkEditor2&quot; -I&quot;..\..\..\..\Qt\4.7.3\include\ActiveQt&quot; -I&quot;release&quot; -I..\..\..\..\Qt\4.7.3\mkspecs\win32-msvc2008 -D_MSC_VER=1500 -DWIN32 _SwStreamsTabBar.h -o release\moc__SwStreamsTabBar.cpp"
+						Description="MOC _SwStreamsTabBar.h"
+						Outputs="release\moc__SwStreamsTabBar.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Generated Files"
+			Filter="cpp;c;cxx;moc;h;def;odl;idl;res;"
+			UniqueIdentifier="{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}">
+			<File
+				RelativePath="debug\moc_ComponentListModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc_ComponentListModel.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc_PluginsListModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc_PluginsListModel.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwEditorGIInterfaceMenu.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwEditorGIInterfaceMenu.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwEditorGIMenu.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwEditorGIMenu.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwEditorGIPinMenu.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwEditorGIPinMenu.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwEditorGraphicScene.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwEditorGraphicScene.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwEditorInterfacesLayerManager.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwEditorInterfacesLayerManager.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwEditorPinsLayerManager.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwEditorPinsLayerManager.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwEditorQGraphicsView.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwEditorQGraphicsView.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwEditorStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwEditorStreamTreeModel.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwStreamNavigationActions.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwStreamNavigationActions.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwStreamOperationsActions.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwStreamOperationsActions.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwStreamsActions.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwStreamsActions.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\moc__SwStreamsTabBar.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\moc__SwStreamsTabBar.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="debug\qrc_SwEditorRsc.cpp">
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+			<File
+				RelativePath="release\qrc_SwEditorRsc.cpp">
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true" />
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
+			Filter="qrc;*"
+			UniqueIdentifier="{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}"
+			ParseFiles="false">
+			<File
+				RelativePath="_resources\SwEditorRsc.qrc">
+				<FileConfiguration
+					Name="Debug|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\rcc.exe;_resources\SwEditorRsc.qrc;_resources\images\actions.png;_resources\images\b_start.png;_resources\images\b_stop.png;_resources\images\brain.png;_resources\images\closetab.png;_resources\images\comp_edit.png;_resources\images\comp_toolbox.png;_resources\images\editcopy.png;_resources\images\editcut.png;_resources\images\editdelete.png;_resources\images\editpaste.png;_resources\images\filenew.png;_resources\images\fileopen.png;_resources\images\filesave.png;_resources\images\graphicsview.png;_resources\images\mod_run.png;_resources\images\mod_run_disable.png;_resources\images\tabbar.png;_resources\images\up.png"
+						CommandLine="C:\Qt\4.7.3\bin\rcc.exe -name SwEditorRsc _resources\SwEditorRsc.qrc -o debug\qrc_SwEditorRsc.cpp"
+						Description="RCC _resources\SwEditorRsc.qrc"
+						Outputs="debug\qrc_SwEditorRsc.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32">
+					<Tool
+						Name="VCCustomBuildTool"
+						AdditionalDependencies="C:\Qt\4.7.3\bin\rcc.exe;_resources\SwEditorRsc.qrc;_resources\images\actions.png;_resources\images\b_start.png;_resources\images\b_stop.png;_resources\images\brain.png;_resources\images\closetab.png;_resources\images\comp_edit.png;_resources\images\comp_toolbox.png;_resources\images\editcopy.png;_resources\images\editcut.png;_resources\images\editdelete.png;_resources\images\editpaste.png;_resources\images\filenew.png;_resources\images\fileopen.png;_resources\images\filesave.png;_resources\images\graphicsview.png;_resources\images\mod_run.png;_resources\images\mod_run_disable.png;_resources\images\tabbar.png;_resources\images\up.png"
+						CommandLine="C:\Qt\4.7.3\bin\rcc.exe -name SwEditorRsc _resources\SwEditorRsc.qrc -o release\qrc_SwEditorRsc.cpp"
+						Description="RCC _resources\SwEditorRsc.qrc"
+						Outputs="release\qrc_SwEditorRsc.cpp"
+						Path="c:\Qt\4.7.3\bin" />
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="_resources\images\actions.png" />
+			<File
+				RelativePath="_resources\images\b_start.png" />
+			<File
+				RelativePath="_resources\images\b_stop.png" />
+			<File
+				RelativePath="_resources\images\brain.png" />
+			<File
+				RelativePath="_resources\images\closetab.png" />
+			<File
+				RelativePath="_resources\images\comp_edit.png" />
+			<File
+				RelativePath="_resources\images\comp_toolbox.png" />
+			<File
+				RelativePath="_resources\images\editcopy.png" />
+			<File
+				RelativePath="_resources\images\editcut.png" />
+			<File
+				RelativePath="_resources\images\editdelete.png" />
+			<File
+				RelativePath="_resources\images\editpaste.png" />
+			<File
+				RelativePath="_resources\images\filenew.png" />
+			<File
+				RelativePath="_resources\images\fileopen.png" />
+			<File
+				RelativePath="_resources\images\filesave.png" />
+			<File
+				RelativePath="_resources\images\graphicsview.png" />
+			<File
+				RelativePath="_resources\images\mod_run.png" />
+			<File
+				RelativePath="_resources\images\mod_run_disable.png" />
+			<File
+				RelativePath="_resources\images\tabbar.png" />
+			<File
+				RelativePath="_resources\images\up.png" />
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

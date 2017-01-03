@@ -24,8 +24,7 @@
 
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwExecution;
-using namespace StreamWork::SwConfiguration;  
+using namespace StreamWork::SwGui;
 
 /*!
 	\class _SwPerspectiveList 
@@ -35,7 +34,7 @@ class _SwPerspectiveList :
     public ISwInterfaces_ConsumerObserver
 
 {
-    Q_OBJECT
+    
 
 public:
     /*! \brief Constructeur */

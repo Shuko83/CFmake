@@ -54,13 +54,13 @@ namespace StreamWork
 			 * @param	 : QString command - Nom de la commande
 			 * @param	 : ISwShortcut * obj - Pointeur sur l'objet
 			 */
-			void registerCommand(QString command, ISwShortcut *obj);
+			void registerCommand(QString category, QString command, ISwShortcut *obj);
 
 			/**
 			 * @brief    : Permet de desenregistré une commande dans le service
 			 * @param	 : QString command - Nom de la commande
 			 */
-			void unregisterCommand(QString command, ISwShortcut *obj);
+			void unregisterCommand(QString category, QString command, ISwShortcut *obj);
 
 			/**
 			 * @brief    : Permet d'enregistrer un périphérique 
@@ -153,14 +153,14 @@ namespace StreamWork
 			 * @return   : QString - Retourne Name
 			 * @param	 : QString val - Une combinaison de Name + SC_SEP + commandName
 			 */
-			virtual QString getName(QString val);
+			virtual QString getCategory(QString val);
 
 			/**
 			 * @brief    : Retourne le texte après le SC_SEP
 			 * @return   : QString - Retourne commandName
 			 * @param	 : QString val - Une combinaison de Name + SC_SEP + commandName
 			 */
-			virtual QString getParameter(QString val);
+			virtual QString getShortcutName(QString val);
 
 			/**
 			 * @brief    : Genere un nom "prefix+SC_SEP+suffix)
@@ -188,6 +188,7 @@ namespace StreamWork
 
 			QList<ISwShortcutObserver*> _listObs;
 
+			QVector<QString> _shortcutsName;
 			QMap<QString,ISwShortcut*> _mapShortcuts; // QMap<Shorcut.getname+SC_SEP+commandName,ISwShortcut>
 			QList<ISwDevice*> _listDevices;
 

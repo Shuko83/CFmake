@@ -13,7 +13,6 @@
   */
 #include "SwException.h"
 #include "SwCoreConstantes.h"
-#include "SwMacros.h"
 #include "ISwExecutor.h"
 #include "ISwExecutor2.h"
 #include "ISwPluginsBank.h"

@@ -12,6 +12,8 @@
 #include <SwApplication.h>
 #include "_SwGuiQActionConsumedToWidget.h"
 #include <QDebug>
+#include <QApplication>
+#include <QDesktopWidget>
 
 
 

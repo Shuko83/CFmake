@@ -9,7 +9,7 @@
 #define CL_MESSAGE_DISABLE "No replay in progress"
 
 /** @brief Constructor */
-_ReplayWidget::_ReplayWidget():QWidget(0) {
+_ReplayWidget::_ReplayWidget():QWidget(nullptr) {
 	_rEnable=false;
     _startTime=0.0;
     _stopTime=0.0;
@@ -138,17 +138,17 @@ void _ReplayWidget::paintEvent ( QPaintEvent * event ) {
 
 }
 /** @brief enter event */
-void _ReplayWidget::enterEvent ( QEvent * event ) {
+void _ReplayWidget::enterEvent ( QEvent * /*event*/ ) {
     _pauseProposal=true;
     update();
 }
 /** @brief leave event */
-void _ReplayWidget::leaveEvent ( QEvent * event ) {
+void _ReplayWidget::leaveEvent ( QEvent * /*event*/ ) {
     _pauseProposal=false;
     update();
 }
 /** @brief press event */
-void _ReplayWidget::mousePressEvent ( QMouseEvent * event ) {
+void _ReplayWidget::mousePressEvent ( QMouseEvent * /*event*/ ) {
     _pause=!_pause;
     update();
 }

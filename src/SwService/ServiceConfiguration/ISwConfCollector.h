@@ -80,7 +80,7 @@ namespace StreamWork
 			 * @param QString : nom décodé de la property
 			 * @param ISwProperty* pointeur sur la property
 			 */
-			virtual void addExternalProperty(QString decoratedName, ISwProperty* property ) = 0;
+			virtual bool addExternalProperty(QString decoratedName, ISwProperty* property ) = 0;
 		};
 	}
 }

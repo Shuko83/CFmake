@@ -4,7 +4,7 @@
 #include "SwDockWidget_MainDockMenuAction.h"
 #include "SwDockWidget_MainDockConfiguration.h"
 
-#include "ExceptionManager.h"
+#include "SwDockWidget_MainTabBar.h" //DEBUG ONLY
 
 //Qt
 #include <QtCore/QTime>
@@ -19,14 +19,22 @@
 #include <QAction>
 #include <QDesktopWidget>
 #include <QPropertyAnimation>
+#include <QProxyStyle>
 
-#define BTN_SIZE 32
-#define BTN_CENTER_SIZE 72
-#define PADDING 4
+#define BTN_SIZE		32
+#define BTN_CENTER_SIZE 96
+#define PADDING			4
 
 #define SAVE_TIMER				1000 * 60 * 5 //Valeur par defaut : 5 minutes (en millisecondes)
 #define SAVE_TIMER_MIN_VALUE	1000 //Minimum 1 seconde
 
+#define WIDGET_OVERLAY_COLOR			QColor(237, 254, 65,  130)
+#define CENTRAL_WIDGET_OVERLAY_COLOR	QColor(03, 169, 244, 120)
+
+
+
+//-----------------------------------------------------------------------------
+//	Classe SwDockWidget_MainArea
 //-----------------------------------------------------------------------------
 SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar)
 	: SwDockWidget_ToolBarWindow(parent), _menuBar(menuBar), _widgetMenu(NULL),
@@ -55,9 +63,11 @@ SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar
 	_secondScreenMainDock->setCanBeResize(false);
 	_secondScreenMainDock->hideShadow();
 	_secondScreenMainDock->setCanBePin(false);
-	_secondScreenMainDock->setAlwaysOnTop(false);
 
+	//Correctif maindock indédockable (Test si conforme mais règle le soucis : Ne déparente pas la fenêtre)
+	//_secondScreenMainDock->setAlwaysOnTop(false);
 	_quitOnClose = false;
+	//Fichier de configuration par defaut mis lors du load
 
 	//Creation d'un widget vide provisoire
 	_emptyWidget = new QWidget(this);
@@ -66,7 +76,12 @@ SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar
 	//Initialisation
 	init();
 
-	installEventFilter(this);//DEBUG ONLY
+	installEventFilter(this);
+
+	//Modification du style de l'application pour activer l'option "SloppySubMenu" permettant d'ajouter un delais a l'ouverture des menus
+	/*QStyle * style = QApplication::style(); //Recuperation du style actif
+	QApplication::setStyle(new SwDockWidget_Style(style)); //Application*/
+	//Attention, le setStyle doit etre fait pour toute l'application!!!
 }
 
 //-----------------------------------------------------------------------------
@@ -145,7 +160,7 @@ void SwDockWidget_MainArea::setMenu()
 		_widgetMenu = _menuBar->addMenu(tr("Widgets"));
 
 		// Choix de la configuration
-		_mainDockConf = new SwDockWidget_MainDockConfiguration("Configuration", _menuBar);
+		_mainDockConf = new SwDockWidget_MainDockConfiguration("Desktop", _menuBar);
 		connect(_mainDockConf, SIGNAL(changeConf(SwDockWidget_MainDockConfiguration::ConfigurationIndex)), this, SLOT(changeDockConfiguration(SwDockWidget_MainDockConfiguration::ConfigurationIndex)));
 		_menuBar->addMenu(_mainDockConf);
 
@@ -171,13 +186,6 @@ void SwDockWidget_MainArea::setMenu()
 		_lockAction->setEnabled(true);
 		_menuBar->addAction(_lockAction);
 		connect(_lockAction, SIGNAL(toggled(bool)), this, SLOT(setLock(bool)));
-
-		if (qApp->applicationName() == "MonitoringL22" ||qApp->applicationName() == "MonitoringL22_Spy")
-		{
-			QAction *aboutAction = new QAction(this);
-			aboutAction->setText(("V1.6.0"));
-			_menuBar->addAction(aboutAction);
-		}        
 	}
 }
 
@@ -531,7 +539,7 @@ void SwDockWidget_MainArea::closeEvent(QCloseEvent * event )
 //-----------------------------------------------------------------------------
 bool SwDockWidget_MainArea::close()
 {
-	EXCEPTION_TRY();
+//	EXCEPTION_TRY();
 
 	//Masquage de la fenetre
 	hide();
@@ -560,7 +568,7 @@ bool SwDockWidget_MainArea::close()
 
 	return true;
 
-	EXCEPTION_CATCH();
+	//EXCEPTION_CATCH();
 }
 
 //-----------------------------------------------------------------------------
@@ -882,7 +890,7 @@ QWidget * SwDockWidget_MainArea::pinDockTo(QObject * obj, QWidget * mainWidget, 
 		SwDockWidget_TabWidget *tabWidget = qobject_cast<SwDockWidget_TabWidget*>(mainWidget);
 		SwDockWidget_Splitter *splitter = NULL;
 		QWidget *toAdd = NULL;		
-		//Verification du widget auquel accroche le SwDockWidget_DockWidget
+		//Verification du widget auquel est accroche le SwDockWidget_DockWidget
 		SwDockWidget_DockWidget *secondDock = qobject_cast<SwDockWidget_DockWidget*>(mainWidget);
 		
 		//Si le SwDockWidget_DockWidget est attache au widget principal, on recupere le layout principal
@@ -930,25 +938,25 @@ QWidget * SwDockWidget_MainArea::pinDockTo(QObject * obj, QWidget * mainWidget, 
 						case Qt::LeftDockWidgetArea :
 							//Creation d'un splitter
 							splitter = new SwDockWidget_Splitter(Qt::Horizontal, this);
-							splitter->fill(dock, widget, area);
+							splitter->fill(dock, widget, area, Qt::NoDockWidgetArea, this->width()/3);
 							break;
 
 						case Qt::RightDockWidgetArea :
 							//Creation d'un splitter
 							splitter = new SwDockWidget_Splitter(Qt::Horizontal, this);
-							splitter->fill(widget, dock, area);
+							splitter->fill(widget, dock, area, Qt::NoDockWidgetArea, this->width()/3);
 							break;
 
 						case Qt::TopDockWidgetArea:
 							//Creation d'un splitter
 							splitter = new SwDockWidget_Splitter(Qt::Vertical, this);
-							splitter->fill(dock, widget, area);
+							splitter->fill(dock, widget, area, Qt::NoDockWidgetArea, this->height()/3);
 							break;
 
 						case Qt::BottomDockWidgetArea:
 							//Creation d'un splitter
 							splitter = new SwDockWidget_Splitter(Qt::Vertical, this);
-							splitter->fill(widget, dock, area);
+							splitter->fill(widget, dock, area, Qt::NoDockWidgetArea, this->height()/3);
 							break;
 					}
 					
@@ -1045,8 +1053,6 @@ QWidget * SwDockWidget_MainArea::pinDockTo(QObject * obj, QWidget * mainWidget, 
 	return NULL;
 }
 
-
-
 //-----------------------------------------------------------------------------
 //Ancrage d'un dock
 QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidget)
@@ -1056,6 +1062,7 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 	{
 		QPoint pos = QCursor::pos();
 		SwDockWidget_MainDockWidget * mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(obj);
+		SwDockWidget_MainTabWidget * toMainTabBar = qobject_cast<SwDockWidget_MainTabWidget*>(mainWidget);
 		//---------------
 		//Positionnement dans un dock principal
 		if (_mainWidget && mainWidget == _mainWidget)
@@ -1080,7 +1087,7 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 			}
 
 			//Si dock a ancrer a gauche
-			if(QRect(_leftWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+			if(_leftCentralBtn->isVisible() && QRect(_leftCentralBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 			{
 				_leftMainDock->addWidget(dock, name, size);
 				if (_leftMainDock->count() == 1)
@@ -1088,7 +1095,7 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 			}
 
 			//Si dock a ancrer a droite
-			else if(QRect(_rightWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+			else if(_rightCentralBtn->isVisible() && QRect(_rightCentralBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 			{
 				_rightMainDock->addWidget(dock, name, size);
 				if (_rightMainDock->count() == 1)
@@ -1096,7 +1103,7 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 			}
 
 			//Si dock a ancrer en haut
-			else if(QRect(_topWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+			else if(_topCentralBtn->isVisible() && QRect(_topCentralBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 			{
 				_topMainDock->addWidget(dock, name, size);
 				if (_topMainDock->count() == 1)
@@ -1104,7 +1111,7 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 			}
 
 			//Si dock a ancrer en bas
-			else if(QRect(_bottomWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+			else if(_bottomCentralBtn->isVisible() && QRect(_bottomCentralBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 			{
 				_bottomMainDock->addWidget(dock, name, size);
 				if (_bottomMainDock->count() == 1)
@@ -1120,20 +1127,20 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 
 		//---------------
 		//Positionnement par rapport au widget (non propose si le dock deplace est un dock principal)
-		else if (!mainDock)
+		else if (!mainDock &&!toMainTabBar)
 		{
 			//Ajout dans un dock principal
 			if (qobject_cast<SwDockWidget_MainDockWidget*>(mainWidget))
 			{
 				mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(mainWidget);
-				if (mainDock && mainDock->isCurrentEmpty())
+
+				if(_centerDockBtn->isVisible() && QRect(_centerDockBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 				{
 					int index = mainDock->currentIndex();
 					//Si l'onglet en cours est vide
 					mainDock->insertWidget(index, qobject_cast<QWidget*>(obj));
 				}
 			}
-
 			else
 			{
 				//Si le dock cible est dans un onglet, on insere le nouveau dock dans cet onglet
@@ -1145,24 +1152,42 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 				}
 
 				//Si dock a ancrer a gauche
-				if(QRect(_leftWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+				if(_leftWidgetBtn->isVisible() && QRect(_leftWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 					toReturn = pinDockTo(obj, mainWidget, Qt::LeftDockWidgetArea);
 
 				//Si dock a ancrer a droite
-				else if(QRect(_rightWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+				else if(_rightWidgetBtn->isVisible() && QRect(_rightWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 					toReturn = pinDockTo(obj, mainWidget, Qt::RightDockWidgetArea);
 
 				//Si dock a ancrer en haut
-				else if(QRect(_topWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+				else if(_topWidgetBtn->isVisible() && QRect(_topWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 					toReturn = pinDockTo(obj, mainWidget, Qt::TopDockWidgetArea);
 
 				//Si dock a ancrer en bas
-				else if(QRect(_bottomWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+				else if(_bottomWidgetBtn->isVisible() && QRect(_bottomWidgetBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 					toReturn = pinDockTo(obj, mainWidget, Qt::BottomDockWidgetArea);
 
 				//Ajout dans un onglet
-				else if(QRect(_tabBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+				else if(_tabBtn->isVisible() && QRect(_tabBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
 					toReturn = pinDockTo(obj, mainWidget, Qt::NoDockWidgetArea);
+			}
+		}
+		//Si ajout dans un nouvel onglet d'un dock principal
+		else if (toMainTabBar)
+		{
+			//Recherche du main dock parent
+			QWidget * parent = toMainTabBar->parentWidget();
+			mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(parent);
+			int itr = 0; //Protection!
+			while(!mainDock && itr < 20)
+			{
+				parent = (parent->parentWidget());
+				mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(parent);
+				itr++;
+			}
+			if (mainDock)
+			{
+				mainDock->addWidget(qobject_cast<QWidget*>(obj));
 			}
 		}
 		if (toReturn)
@@ -1447,9 +1472,19 @@ void SwDockWidget_MainArea::updateMainDock()
 //Creation des boutons de positionnement
 void SwDockWidget_MainArea::createArrowsButton()
 {
+	//Positionnement sur les cotes du widget central
+	//Fleche en haut
+	addButton(&_topCentralBtn, BTN_SIZE, QIcon(":/DockWidget/topMain"));
+	//Fleche a droite
+	addButton(&_rightCentralBtn, BTN_SIZE, QIcon(":/DockWidget/rightMain"));
+	//Fleche a gauche
+	addButton(&_leftCentralBtn, BTN_SIZE, QIcon(":/DockWidget/leftMain"));
+	//Fleche en bas
+	addButton(&_bottomCentralBtn, BTN_SIZE, QIcon(":/DockWidget/bottomMain"));
+
 	//Positionnement sur les bords du dock actif
 	//Center
-	addButton(&_centerWidgetBtn, BTN_CENTER_SIZE, QIcon(":/DockWidget/center"));
+	//addButton(&_centerWidgetBtn, BTN_CENTER_SIZE, QIcon(":/DockWidget/center"));
 	//Fleche en haut
 	addButton(&_topWidgetBtn, BTN_SIZE, QIcon(":/DockWidget/top"));
 	//Fleche a droite
@@ -1461,6 +1496,9 @@ void SwDockWidget_MainArea::createArrowsButton()
 
 	//Positionnement en onglet
 	addButton(&_tabBtn, BTN_SIZE, QIcon(":/DockWidget/images/DockWidget/tab.png"));
+
+	//Positionnement dans un onglet vide de dock principal
+	addButton(&_centerDockBtn, BTN_SIZE, QIcon(":/DockWidget/emptyMainDock"));
 
 	//Positionnement sur le deuxieme ecran
 	addButton(&_secondScreenBtn, BTN_CENTER_SIZE, QIcon(":/DockWidget/images/DockWidget/secondScreen.png"));
@@ -1486,37 +1524,103 @@ void SwDockWidget_MainArea::showArrows(QWidget * widget)
 {
 	if (widget)
 	{
-		//Positionnement sur les bords du widget (affichage au centre du widget)
+		//Si positionnement dans un widget, affichage des fleches au centre du widget
+		if (widget != _mainWidget)
+		{
+			QPoint p = widget->mapToGlobal(QPoint(0,0));
+
+			//Positionnement des boutons en fonction de la taille du widget
+			int centerX = p.x() + ( widget->width()  / 2);
+			int centerY = p.y() + ( widget->height() / 2);
+			
+			//_centerWidgetBtn->move(QPoint(centerX - BTN_CENTER_SIZE / 2, centerY - BTN_CENTER_SIZE / 2));
+			_topWidgetBtn->move( QPoint(centerX - (BTN_SIZE / 2), centerY - BTN_SIZE - PADDING - BTN_SIZE / 2));
+			_rightWidgetBtn->move(QPoint(centerX + (BTN_SIZE / 2) + PADDING, centerY - BTN_SIZE / 2));
+			_bottomWidgetBtn->move(QPoint(centerX - (BTN_SIZE / 2), centerY + BTN_SIZE + PADDING - BTN_SIZE / 2));
+			_leftWidgetBtn->move(QPoint(centerX - BTN_SIZE - (BTN_SIZE / 2) - PADDING, centerY - BTN_SIZE / 2));
+
+			_tabBtn->move(QPoint(centerX - BTN_SIZE / 2, centerY - BTN_SIZE / 2));
+
+			//Affichage
+			//_centerWidgetBtn->show();
+			_topWidgetBtn->show();
+			_rightWidgetBtn->show();
+			_leftWidgetBtn->show();
+			_bottomWidgetBtn->show();
+			_tabBtn->show();
+
+			_topCentralBtn->hide();
+			_rightCentralBtn->hide();
+			_bottomCentralBtn->hide();
+			_leftCentralBtn->hide();
+		}
+
+		//Si positionnement sur le widget central, affichage des fleches sur les bords
+		else
+		{
+			QPoint p = widget->mapToGlobal(QPoint(0,0));
+
+			//Positionnement des boutons en fonction de la taille du widget
+			int centerX = p.x() + ( widget->width()  / 2);
+			int centerY = p.y() + ( widget->height() / 2);
+
+			_topCentralBtn->move( QPoint(centerX - (BTN_SIZE / 2), p.y() + PADDING));
+			_rightCentralBtn->move(QPoint(p.x() + widget->width() - BTN_SIZE - PADDING, centerY - BTN_SIZE / 2));
+			_bottomCentralBtn->move(QPoint(centerX - (BTN_SIZE / 2), p.y() + widget->height() - BTN_SIZE - PADDING));
+			_leftCentralBtn->move(QPoint(p.x() + PADDING, centerY - BTN_SIZE / 2));
+
+			//Affichage des fleches lorsque le dock principal correspondant n'est pas affiche
+			if (_topMainDock->empty())
+				_topCentralBtn->show();
+			if (_rightMainDock->empty())
+				_rightCentralBtn->show();
+			if (_bottomMainDock->empty())
+				_bottomCentralBtn->show();
+			if (_leftMainDock->empty())
+				_leftCentralBtn->show();
+
+			//_centerWidgetBtn->hide();
+			_topWidgetBtn->hide();
+			_rightWidgetBtn->hide();
+			_bottomWidgetBtn->hide();
+			_leftWidgetBtn->hide();
+			_tabBtn->hide();
+		}
+
+		_centerDockBtn->hide();
+		_secondScreenBtn->hide();
+	}
+}
+
+//-----------------------------------------------------------------------------
+void SwDockWidget_MainArea::showArrowsOnEmptyMainDock(QWidget * widget)
+{
+	if (widget)
+	{
 		QPoint p = widget->mapToGlobal(QPoint(0,0));
 
 		//Positionnement des boutons en fonction de la taille du widget
 		int centerX = p.x() + ( widget->width()  / 2);
 		int centerY = p.y() + ( widget->height() / 2);
-		
-		_centerWidgetBtn->move(QPoint(centerX - BTN_CENTER_SIZE / 2, centerY - BTN_CENTER_SIZE / 2));
-		_topWidgetBtn->move( QPoint(centerX - (BTN_SIZE / 2), centerY - BTN_SIZE - PADDING - BTN_SIZE / 2));
-		_rightWidgetBtn->move(QPoint(centerX + (BTN_SIZE / 2) + PADDING, centerY - BTN_SIZE / 2));
-		_bottomWidgetBtn->move(QPoint(centerX - (BTN_SIZE / 2), centerY + BTN_SIZE + PADDING - BTN_SIZE / 2));
-		_leftWidgetBtn->move(QPoint(centerX - BTN_SIZE - (BTN_SIZE / 2) - PADDING, centerY - BTN_SIZE / 2));
 
-		//Affichage
-		_centerWidgetBtn->show();
-		_topWidgetBtn->show();
-		_rightWidgetBtn->show();
-		_leftWidgetBtn->show();
-		_bottomWidgetBtn->show();
+		_centerDockBtn->move(QPoint(centerX - BTN_SIZE / 2, centerY - BTN_SIZE / 2));
+		_centerDockBtn->show();
 
-		//Selection du deuxieme ecran non disponible
+		//On masque les autres fleches
+		//_centerWidgetBtn->hide();
+		_topWidgetBtn->hide();
+		_rightWidgetBtn->hide();
+		_leftWidgetBtn->hide();
+		_bottomWidgetBtn->hide();
+
+		_topCentralBtn->hide();
+		_rightCentralBtn->hide();
+		_leftCentralBtn->hide();
+		_bottomCentralBtn->hide();
+
+		_tabBtn->hide();
+
 		_secondScreenBtn->hide();
-
-		//Pas de mise en onglet sur le widget principal
-		if (_mainWidget && widget != _mainWidget)
-		{
-			_tabBtn->move(QPoint(centerX - BTN_SIZE / 2, centerY - BTN_SIZE / 2));
-			_tabBtn->show();
-		}
-		else
-			_tabBtn->hide();
 	}
 }
 
@@ -1527,27 +1631,42 @@ void SwDockWidget_MainArea::showArrowsOnSecondScreen(QRect rect)
 	_secondScreenBtn->show();
 
 	//On masque les autres fleches
-	_centerWidgetBtn->hide();
+	//_centerWidgetBtn->hide();
 	_topWidgetBtn->hide();
 	_rightWidgetBtn->hide();
 	_leftWidgetBtn->hide();
 	_bottomWidgetBtn->hide();
+
+	_topCentralBtn->hide();
+	_rightCentralBtn->hide();
+	_leftCentralBtn->hide();
+	_bottomCentralBtn->hide();
+
 	_tabBtn->hide();
+
+	_centerDockBtn->hide();
 }
 
 //-----------------------------------------------------------------------------
 //Masquage des boutons de positionnement
 void SwDockWidget_MainArea::hideArrows(bool withOverlay)
 {
-	_centerWidgetBtn->hide();
+	//_centerWidgetBtn->hide();
 	_topWidgetBtn->hide();
 	_rightWidgetBtn->hide();
 	_leftWidgetBtn->hide();
 	_bottomWidgetBtn->hide();
 
+	_topCentralBtn->hide();
+	_rightCentralBtn->hide();
+	_leftCentralBtn->hide();
+	_bottomCentralBtn->hide();
+
 	_tabBtn->hide();
 
 	_secondScreenBtn->hide();
+
+	_centerDockBtn->hide();
 
 	if (withOverlay)
 		hideOverlay();
@@ -1563,9 +1682,10 @@ void SwDockWidget_MainArea::manageArrows(QObject * obj)
 		QWidget * widget = getDockableWidget();
 		if (widget)
 		{
-			SwDockWidget_MainDockWidget * mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(obj);
-			if ((mainDock && widget == _mainWidget) || //Si deplacement d'un onglet d'un dock principal sur un autre dock principal
-				(!mainDock && !qobject_cast<SwDockWidget_MainDockWidget*>(widget))) //Si deplacement d'un dock dans un autre dock
+			SwDockWidget_MainDockWidget * toMainDock = qobject_cast<SwDockWidget_MainDockWidget*>(widget);
+			SwDockWidget_MainTabWidget * toMainTabBar = qobject_cast<SwDockWidget_MainTabWidget*>(widget);
+			//Si deplacement dans un autre dock
+			if (!toMainDock && !toMainTabBar)
 			{
 				//Affichage des fleches de positionnement sur la zone survolee
 				showArrows(widget);
@@ -1575,23 +1695,36 @@ void SwDockWidget_MainArea::manageArrows(QObject * obj)
 				highlightArrows(QCursor::pos(), widget == _mainWidget);
 				return;
 			}
-			//Si deplacement d'un dock dans un onglet vide d'un dock widget
-			else if (!mainDock && qobject_cast<SwDockWidget_MainDockWidget*>(widget))
+			//Si deplacement dans un onglet vide d'un main dock
+			else if (toMainDock && toMainDock->isCurrentEmpty())
 			{
-				mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(widget);
-				if (mainDock && mainDock->isCurrentEmpty())
+				//Affichage d'un symbole de positionnement centrale
+				showArrowsOnEmptyMainDock(toMainDock);
+				//Parametrage de l'ombre de positionnement
+				setupEmptyMainDockOverlay(toMainDock);
+				//Mise en surbrillance du bouton survole
+				highlightArrows(QCursor::pos(), false);
+				return;
+			}
+			//Si deplacement dans un nouvel onglet d'un main dock 
+			else if (toMainTabBar)
+			{
+				//Recherche du main dock parent
+				QWidget * parent = toMainTabBar->parentWidget();
+				toMainDock = qobject_cast<SwDockWidget_MainDockWidget*>(parent);
+				int itr = 0; //Protection!
+				while(!toMainDock && itr < 20)
 				{
-					QRect rect = mainDock->getWidget(mainDock->currentIndex())->rect();
-					QSize osize(rect.size());
-					QPoint opos(mainDock->getWidget(mainDock->currentIndex())->mapToGlobal(QPoint(0,0)));
-
-					//Masquage des fleches
-					hideArrows(false);
-			
-					//Affichage de l'aire de positionnement
-					_overlay->setParent(0);
-					_overlay->resize(osize);
-					_overlay->move(opos);
+					parent = (parent->parentWidget());
+					toMainDock = qobject_cast<SwDockWidget_MainDockWidget*>(parent);
+					itr++;
+				}
+				if (toMainDock)
+				{
+					hideArrows();
+					//Parametrage de l'ombre de positionnement
+					setupEmptyMainDockOverlay(toMainDock);
+					//Affichage de l'ombre de positionnement
 					_overlay->show();
 					return;
 				}
@@ -1623,6 +1756,44 @@ void SwDockWidget_MainArea::manageArrows(QObject * obj)
 void SwDockWidget_MainArea::highlightArrows(QPoint pos, bool toMain)
 {
 	hideOverlay();
+
+	//----------------
+	//Bord du widget central
+	if(_topCentralBtn->isVisible() && QRect(_topCentralBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+	{
+		_topCentralBtn->setIcon(QIcon(":/DockWidget/topMainHover"));
+		showOverlay(Qt::TopDockWidgetArea, toMain);
+		return;
+	}
+	else
+		_topCentralBtn->setIcon(QIcon(":/DockWidget/topMain"));
+
+	if(_bottomCentralBtn->isVisible() && QRect(_bottomCentralBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+	{
+		_bottomCentralBtn->setIcon(QIcon(":/DockWidget/bottomMainHover"));
+		showOverlay(Qt::BottomDockWidgetArea, toMain);
+		return;
+	}
+	else
+		_bottomCentralBtn->setIcon(QIcon(":/DockWidget/bottomMain"));
+
+	if(_leftCentralBtn->isVisible() && QRect(_leftCentralBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+	{
+		_leftCentralBtn->setIcon(QIcon(":/DockWidget/leftMainHover"));
+		showOverlay(Qt::LeftDockWidgetArea, toMain);
+		return;
+	}
+	else
+		_leftCentralBtn->setIcon(QIcon(":/DockWidget/leftMain"));
+
+	if(_rightCentralBtn->isVisible() && QRect(_rightCentralBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+	{
+		_rightCentralBtn->setIcon(QIcon(":/DockWidget/rightMainHover"));
+		showOverlay(Qt::RightDockWidgetArea, toMain);
+		return;
+	}
+	else
+		_rightCentralBtn->setIcon(QIcon(":/DockWidget/rightMain"));
 
 	//----------------
 	//Bord du widget
@@ -1671,6 +1842,15 @@ void SwDockWidget_MainArea::highlightArrows(QPoint pos, bool toMain)
 	else
 		_tabBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/tab.png"));
 
+	//Onglet principal
+	if(_centerDockBtn->isVisible() && QRect(_centerDockBtn->pos(),QSize(BTN_SIZE,BTN_SIZE)).contains(pos))
+	{
+		_centerDockBtn->setIcon(QIcon(":/DockWidget/emptyMainDockHover"));
+		_overlay->show();
+	}
+	else
+		_centerDockBtn->setIcon(QIcon(":/DockWidget/emptyMainDock"));
+
 	//Deuxieme ecran
 	if(_secondScreenBtn->isVisible() && QRect(_secondScreenBtn->pos(),QSize(BTN_CENTER_SIZE,BTN_CENTER_SIZE)).contains(pos))
 		_secondScreenBtn->setIcon(QIcon(":/DockWidget/images/DockWidget/secondScreenHover.png"));
@@ -1693,6 +1873,28 @@ void SwDockWidget_MainArea::setupOverlay(QObject * obj, QWidget * widget)
 
 	//Enregistrement des deux elements : SwDockWidget_DockWidget a positionner, et widget sur lequel positionner
 	_overlay->setWidgets(widget, dock);
+}
+
+//-----------------------------------------------------------------------------
+//Parametrage de l'aire de prepositionnement dans un onglet vide d'un dock principal
+void SwDockWidget_MainArea::setupEmptyMainDockOverlay(QWidget * widget)
+{
+	SwDockWidget_MainDockWidget * mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(widget);
+	if (mainDock)
+	{
+		QWidget * emptyWidget = mainDock->getWidget(mainDock->currentIndex());
+		QRect rect = emptyWidget->rect();
+		QSize osize(rect.size());
+		QPoint opos(0,0);
+		SwDockWidget_MainTabWidget * tab = qobject_cast<SwDockWidget_MainTabWidget * >(mainDock->getTabWidget());
+		if (tab)
+			opos = QPoint(0, tab->getTabBar()->height());
+
+		_overlay->setColor(CENTRAL_WIDGET_OVERLAY_COLOR);
+		_overlay->setParent(widget);
+		_overlay->resize(osize);
+		_overlay->move(opos);
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -1788,6 +1990,7 @@ void SwDockWidget_MainArea::showOverlay(Qt::DockWidgetArea area, bool toMain)
 		}
 		
 		//Affichage
+		_overlay->setColor(CENTRAL_WIDGET_OVERLAY_COLOR);
 		_overlay->setParent(0);
 		_overlay->setParent(ui.topwidget);
 		_overlay->resize(osize);
@@ -1796,14 +1999,17 @@ void SwDockWidget_MainArea::showOverlay(Qt::DockWidgetArea area, bool toMain)
 	}
 	//Si affichage sur un dock, configuration en fonction des dimensions (fait dans Overlay)
 	else
+	{
+		_overlay->setColor(WIDGET_OVERLAY_COLOR);
 		_overlay->showOn(area, toMain);
+	}
 }
 
 //-----------------------------------------------------------------------------
 //Masquage de l'aire de prepositionnement
 void SwDockWidget_MainArea::hideOverlay()
 {
-	if (_overlay->isVisible())
+	//if (_overlay->isVisible())
 		_overlay->hide();
 }
 
@@ -1821,7 +2027,9 @@ QWidget * SwDockWidget_MainArea::getDockableWidget()
 	if (widget)
 	{
 		//Parcours des parents du widget pour retrouver le dock, ou l'area
-		while (widget && !qobject_cast<SwDockWidget_DockWidget*>(widget) && (widget != _mainWidget))
+		while (widget &&
+				(!qobject_cast<SwDockWidget_DockWidget*>(widget) && !qobject_cast<SwDockWidget_MainTabBar*>(widget))&&
+				(widget != _mainWidget))
 		{
 			widget = widget->parentWidget();
 		}
@@ -1829,6 +2037,24 @@ QWidget * SwDockWidget_MainArea::getDockableWidget()
 	//Si un parent a ete trouve parmi les docks et l'area
 	if (widget)
 	{
+		//Cas particulier : si le curseur survole un onglet principal, on l'active
+		SwDockWidget_MainTabBar * tabBar = qobject_cast<SwDockWidget_MainTabBar*>(widget);
+		if (tabBar)
+		{
+			int numTab = tabBar->activeTabUnder(QCursor::pos(), false);
+			//Si un onglet a ete trouve, on regarde s'il s'agit de l'onglet d'ajout
+			if (numTab >= 0)
+			{
+				SwDockWidget_MainTabWidget * tabWidget = qobject_cast<SwDockWidget_MainTabWidget*>(tabBar->parentWidget());
+				if (tabWidget && tabWidget->widget(numTab))
+				{
+					if (tabWidget->widget(numTab)->objectName() == "AddTabWidget")
+						return tabWidget;
+				}
+			}
+			return NULL;
+		}
+
 		//S'il s'agit d'un dock, il ne doit pas etre flottant (donc avoir l'area pour parent)
 		if (widget->parentWidget() != this)
 			return widget;
@@ -2137,6 +2363,8 @@ QDomElement SwDockWidget_MainArea::writeWidgetParameters(QDomDocument doc, QDomE
 
 			//Sauvegarde du cote d'attachement si attache
 			noeud.setAttribute("area", QString::number(dock->getArea()));
+			//Sauvegarde du nom du dock reduit
+			noeud.setAttribute("ToolbarItemName", dock->getToolbarItemName());
 			//Enregistrement de la taille du dock
 			size.setAttribute("width", dock->getRawSize().width());
 			size.setAttribute("height", dock->getRawSize().height());
@@ -2361,6 +2589,9 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 					//Aire d'attachement
 					Qt::DockWidgetArea area = (Qt::DockWidgetArea)e.attribute("area").toInt();
 					dock->setArea(area);
+
+					//Nom du dock reduit
+					dock->setToolbarItemName(e.attribute("ToolbarItemName"));
 					
 					//Affichage
 					bool visible = e.attribute("visible").toInt();
@@ -2703,10 +2934,11 @@ void SwDockWidget_MainArea::setLock(bool state)
 //-----------------------------------------------------------------------------
 SwDockWidget_MainDockWidget * SwDockWidget_MainArea::setupMainDockWidget(QString name, Qt::DockWidgetArea area, bool withAddButton)
 {
-	SwDockWidget_MainDockWidget * main = new SwDockWidget_MainDockWidget(this, name, withAddButton);
-	connect(main, SIGNAL(moveTabRequested(QPoint)), this, SLOT(moveMainTab(QPoint)));
-	connect(main, SIGNAL(freeTabRequested(int, QPoint)), this, SLOT(freeMainTab(int, QPoint)));
-	connect(main, SIGNAL(stopMovingTabRequested()), this, SLOT(stopMovingMainTab()));
+	SwDockWidget_MainDockWidget * main = new SwDockWidget_MainDockWidget(this, name, area, withAddButton);
+	//connect(main, SIGNAL(moveTabRequested(QPoint)), this, SLOT(moveMainTab(QPoint)));
+	//connect(main, SIGNAL(freeTabRequested(int, QPoint)), this, SLOT(freeMainTab(int, QPoint)));
+	//connect(main, SIGNAL(stopMovingTabRequested()), this, SLOT(stopMovingMainTab()));
+	connect(main, SIGNAL(moveTabRequested(int, Qt::DockWidgetArea)), this, SLOT(moveMainTab(int, Qt::DockWidgetArea)));
 	_listMainDock.push_back(main);
 	main->installEventFilter(this);
 	main->setArea(area);
@@ -2715,77 +2947,19 @@ SwDockWidget_MainDockWidget * SwDockWidget_MainArea::setupMainDockWidget(QString
 }
 
 //-----------------------------------------------------------------------------
-void SwDockWidget_MainArea::freeMainTab(int index, QPoint pos)
+void SwDockWidget_MainArea::moveMainTab(int index, Qt::DockWidgetArea area)
 {
-	SwDockWidget_MainDockWidget * main = qobject_cast<SwDockWidget_MainDockWidget*>(this->sender());
-	if (main && !locked())
+	SwDockWidget_MainDockWidget * mainDock = qobject_cast<SwDockWidget_MainDockWidget*>(this->sender());
+	if (mainDock)
 	{
-		//Creation d'un dock provisoire pour le deplacement
-		_tempDock = setupMainDockWidget("tempDock", Qt::NoDockWidgetArea, false);
-		QWidget * widget = main->getWidget(index);
-		if (widget)
+		QWidget * dock = NULL;
+		QWidget * toReturn = NULL;
+		QString name = "";
+		QSize * size = NULL;
+		if (mainDock)
 		{
 			//Recuperation du contenu de l'onglet
-			if (widget->layout())
-			{
-				QLayoutItem * litem = widget->layout()->itemAt(0);
-				if (litem)
-					widget = litem->widget();
-			}
-			//Recuperation de la position actuelle
-			QPoint wp = widget->pos();
-			QSize size = main->getRawSize();
-			//Affectation de l'onglet au dock provisoire
-			QString temp = widget->objectName();
-			_tempDock->addWidget(widget, main->tabText(index));
-			_tempDock->setMoving(true);
-			widget->show();
-			_tempDock->show();
-			//Initialisation du deplacement
-			_isMovingDock = true;
-			_movingDock = _tempDock->objectName();
-			_tempDock->setInitialMoving(mapToGlobal(wp));
-			//Mise a jour de la position du dock
-			_tempDock->move(pos);
-			_tempDock->setRawSize(size);
-		}
-	}
-}
-
-//-----------------------------------------------------------------------------
-void SwDockWidget_MainArea::moveMainTab(QPoint pos)
-{
-	if (_tempDock && !locked())
-		_tempDock->move(pos);
-}
-
-//-----------------------------------------------------------------------------
-void SwDockWidget_MainArea::stopMovingMainTab()
-{
-	SwDockWidget_MainDockWidget * main = qobject_cast<SwDockWidget_MainDockWidget*>(this->sender());
-	if (_tempDock && !locked())
-	{
-		_tempDock->setMoving(false);
-		_isMovingDock = false;
-		_movingDock = "";
-
-		//Masquage des fleches de positionnement
-		hideArrows();
-
-		//Ajout du dock si necessaire
-		QWidget * widget = managePinDock(_tempDock, getDockableWidget());
-		
-		//Si l'onglet a ete ancree dans un dock principal, on supprime le dock principal provisoire
-		if (widget)
-		{
-			_listMainDock.removeOne(_tempDock);
-			delete _tempDock;
-		}
-		//Sinon, on le remet a sa place precedente
-		else
-		{
-			//Recuperation du contenu de l'onglet principal
-			QWidget * dock = _tempDock->getWidget(0);
+			dock = mainDock->getWidget(index);
 			if (dock && dock->layout())
 			{
 				QLayoutItem * litem = dock->layout()->itemAt(0);
@@ -2793,20 +2967,64 @@ void SwDockWidget_MainArea::stopMovingMainTab()
 					dock = litem->widget();
 			}
 			//Recuperation du nom et de la taille de l'onglet
-			QString name = _tempDock->tabText(0);
-			QSize size = _tempDock->getRawSize();
-			//Retour de l'onglet dans son dock d'origine
-			if (dock)
-			{
-				main->addWidget(dock, name, &size);
-				dock->show();
-			}
-
-			//Suppression du dock principal provisoire
-			_listMainDock.removeOne(_tempDock);
-			delete _tempDock;
+			name = mainDock->tabText(index);
+			size = new QSize(mainDock->getRawSize());
 		}
-	}
 
-	updateMainDock();
+		//Si a ancrer a gauche
+		if(area == Qt::LeftDockWidgetArea)
+		{
+			_leftMainDock->addWidget(dock, name, size);
+			if (_leftMainDock->count() == 1)
+				toReturn = pinDockTo(_leftMainDock, _mainWidget, Qt::LeftDockWidgetArea, true);
+		}
+
+		//Si a ancrer a droite
+		else if(area == Qt::RightDockWidgetArea)
+		{
+			_rightMainDock->addWidget(dock, name, size);
+			if (_rightMainDock->count() == 1)
+				toReturn = pinDockTo(_rightMainDock, _mainWidget, Qt::RightDockWidgetArea, true);
+		}
+
+		//Si a ancrer en haut
+		else if(area == Qt::TopDockWidgetArea)
+		{
+			_topMainDock->addWidget(dock, name, size);
+			if (_topMainDock->count() == 1)
+				toReturn = pinDockTo(_topMainDock, _mainWidget, Qt::TopDockWidgetArea, true);
+		}
+
+		//Si a ancrer en bas
+		else if(area == Qt::BottomDockWidgetArea)
+		{
+			_bottomMainDock->addWidget(dock, name, size);
+			if (_bottomMainDock->count() == 1)
+				toReturn = pinDockTo(_bottomMainDock, _mainWidget, Qt::BottomDockWidgetArea, true);
+		}
+
+		//Si a ancrer dans le deuxieme ecran
+		else if (area == Qt::NoDockWidgetArea)
+		{
+			//Recuperation des informations du deuxieme ecran
+			QRect rect = QApplication::desktop()->availableGeometry(1-QApplication::desktop()->screenNumber(mapToGlobal(this->rect().center())));
+			//Ajout du widget dans le dock principal de deuxieme ecran
+			_secondScreenMainDock->addWidget(dock, name);
+			_secondScreenMainDock->resize(rect.size());
+			_secondScreenMainDock->move(rect.x(), rect.y());
+			_secondScreenMainDock->show();
+
+			toReturn = dock;
+		}
+
+		else
+			toReturn = NULL;
+
+		//Affichage si necessaire du dock
+		if (mainDock && toReturn)
+			dock->show();
+
+		//Suppression de l'onglet contenant precedemment les docks
+		mainDock->removeWidget(index);
+	}
 }

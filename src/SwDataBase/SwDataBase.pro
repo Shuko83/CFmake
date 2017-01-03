@@ -6,21 +6,11 @@ include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
 QT += core xml
 	
-HEADERS += SwDataBasicBuffer_Class.h \
-    SwDatasBaseConstantes.h \
-    _SwDatasBaseBasicRouter.h \
-    _SwDatasBasePluginFactory_Class.h \
-	_SwSimpleDataExecutable.h
-SOURCES += SwDataBasicBuffer_Class.cpp \
-    _SwDatasBaseBasicRouter.cpp \
-    _SwDatasBasePluginFactory_Class.cpp \
-	_SwSimpleDataExecutable.cpp
-	
-FORMS +=
-
+HEADERS += $$files(*.h)
+SOURCES += $$files(*.cpp)
 RESOURCES += _resources/SwDatasBaseRsc.qrc
 
-DEFINES += SWDATASBASE_LIB
+DEFINES += SWDATABASE_LIB
 
 DESTDIR = ../../$$LIB_PATH
 DLLDESTDIR=  ../..$$BIN_PATH

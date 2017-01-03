@@ -69,6 +69,8 @@ public:
     bool isProducer();
     /** @brief est Producteur */
     bool isProducerButIsntConsumed();
+	/** @brief Align sur la grille */
+	QPointF computeTopLeftGridPoint(const QPointF& pointP);
 
 protected:
     /** @brief sur changement de l'item */

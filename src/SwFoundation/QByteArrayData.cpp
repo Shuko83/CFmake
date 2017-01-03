@@ -38,7 +38,7 @@ namespace StreamWork
 		}
 
 		//---------------------------------------------------------------------------------
-		void QByteArrayData::setData( QByteArray &data )
+		void QByteArrayData::setData(const QByteArray &data )
 		{
 				_internalData = data;
 		}
