@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Release|Win32">
@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6C6CFF0E-7A9D-3469-9780-C114A8858847}</ProjectGuid>
+    <ProjectGuid>{080F0B32-F7C0-3084-877E-53AE12A0A665}</ProjectGuid>
     <RootNamespace>SwModel2</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="Configuration">
     <PlatformToolSet>v120</PlatformToolSet>
     <OutputDirectory>..\..\lib\vc\release_QT5\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -25,7 +25,7 @@
     <IntermediateDirectory>GeneratedFiles_QT5\obj\</IntermediateDirectory>
     <PrimaryOutput>SwModel2</PrimaryOutput>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="Configuration">
     <PlatformToolSet>v120</PlatformToolSet>
     <OutputDirectory>..\..\lib\vc\debug_QT5\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -36,29 +36,29 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\lib\vc\release_QT5\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\obj\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SwModel2</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.swdl</TargetExt>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</PostBuildEventUseInBuild>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\lib\vc\debug_QT5\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\objd\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SwModel2d</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.swdld</TargetExt>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
-    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</PostBuildEventUseInBuild>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">..\..\lib\vc\release_QT5\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\obj\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwModel2</TargetName>
+    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">.swdl</TargetExt>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">false</LinkIncremental>
+    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</PostBuildEventUseInBuild>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">..\..\lib\vc\debug_QT5\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\objd\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwModel2d</TargetName>
+    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">.swdld</TargetExt>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</IgnoreImportLibrary>
+    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</PostBuildEventUseInBuild>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">
     <ClCompile>
       <AdditionalIncludeDirectories>.;.;..\SwCore;..\SwExecution;.;..\..\..\ExceptionManager\src;.;..\SwCore;..\SwCore\Component;..\SwCore\Component\Base;..\SwCore\Component\Interfaces;..\SwCore\Component\Pin;..\SwCore\Component\Services;..\SwCore\Component\Services\ServiceImpl;..\SwCore\Extensions;..\SwCore\Main;..\SwCore\Main\Connexion;..\SwCore\Main\Plugin;..\SwCore\Main\Serialization;..\SwCore\Main\Services;..\SwCore\Main\Services\Management;..\SwCore\Properties;..\SwCore\SwRef;..\SwCore\Tools;..\SwCore\Tools\Exception;..\SwCore\Tools\Log;..\SwCore\Tools\Signal;..\SwCore\Types;..\SwCore\Types\UserType;C:/StreamworkDev/Libraries/StreamWork/src/SwModel2/../../../../Libraries/StreamWork/src/SwService/ServiceAlert/;..\SwService\ServiceConfiguration;C:/StreamworkDev/Libraries/StreamWork/src/SwModel2/../../../../Libraries/StreamWork/src/SwService/ServiceImpl/;..\SwService\ServiceShortcut;C:/StreamworkDev/Libraries/StreamWork/src/SwModel2/../../../../Libraries/StreamWork/src/SwService/ServiceUnitSI/;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtWidgets;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtXml;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:strictStrings -w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
@@ -101,11 +101,11 @@
       <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SWMODEL2_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" ..\..\bin\vc\release_QT5</Command>
+      <Command>copy &quot;$(TargetPath)&quot; ..\..\bin\vc\release_QT5</Command>
       <Message>Copy SwModel2.swdl to ..\..\bin\vc\release_QT5</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
     <ClCompile>
       <AdditionalIncludeDirectories>.;.;..\SwCore;..\SwExecution;.;..\..\..\ExceptionManager\src;.;..\SwCore;..\SwCore\Component;..\SwCore\Component\Base;..\SwCore\Component\Interfaces;..\SwCore\Component\Pin;..\SwCore\Component\Services;..\SwCore\Component\Services\ServiceImpl;..\SwCore\Extensions;..\SwCore\Main;..\SwCore\Main\Connexion;..\SwCore\Main\Plugin;..\SwCore\Main\Serialization;..\SwCore\Main\Services;..\SwCore\Main\Services\Management;..\SwCore\Properties;..\SwCore\SwRef;..\SwCore\Tools;..\SwCore\Tools\Exception;..\SwCore\Tools\Log;..\SwCore\Tools\Signal;..\SwCore\Types;..\SwCore\Types\UserType;C:/StreamworkDev/Libraries/StreamWork/src/SwModel2/../../../../Libraries/StreamWork/src/SwService/ServiceAlert/;..\SwService\ServiceConfiguration;C:/StreamworkDev/Libraries/StreamWork/src/SwModel2/../../../../Libraries/StreamWork/src/SwService/ServiceImpl/;..\SwService\ServiceShortcut;C:/StreamworkDev/Libraries/StreamWork/src/SwModel2/../../../../Libraries/StreamWork/src/SwService/ServiceUnitSI/;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtWidgets;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtXml;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
@@ -148,7 +148,7 @@
       <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SWMODEL2_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;QT_WIDGETS_LIB;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" ..\..\bin\vc\debug_QT5</Command>
+      <Command>copy &quot;$(TargetPath)&quot; ..\..\bin\vc\debug_QT5</Command>
       <Message>Copy SwModel2d.swdld to ..\..\bin\vc\debug_QT5</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -229,42 +229,26 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="_SwExportStreamTreeModel.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_SwExportStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwExportStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc__SwExportStreamTreeModel.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC _SwExportStreamTreeModel.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc__SwExportStreamTreeModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_SwExportStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwExportStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc__SwExportStreamTreeModel.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC _SwExportStreamTreeModel.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc__SwExportStreamTreeModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwExportStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwExportStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc__SwExportStreamTreeModel.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwExportStreamTreeModel.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwExportStreamTreeModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwExportStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwExportStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc__SwExportStreamTreeModel.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwExportStreamTreeModel.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwExportStreamTreeModel.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="_SwModelExportTreeView.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_SwModelExportTreeView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelExportTreeView.h -o GeneratedFiles_QT5\moc\moc__SwModelExportTreeView.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC _SwModelExportTreeView.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc__SwModelExportTreeView.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_SwModelExportTreeView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelExportTreeView.h -o GeneratedFiles_QT5\moc\moc__SwModelExportTreeView.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC _SwModelExportTreeView.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc__SwModelExportTreeView.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelExportTreeView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelExportTreeView.h -o GeneratedFiles_QT5\moc\moc__SwModelExportTreeView.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelExportTreeView.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelExportTreeView.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelExportTreeView.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelExportTreeView.h -o GeneratedFiles_QT5\moc\moc__SwModelExportTreeView.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelExportTreeView.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelExportTreeView.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -272,22 +256,14 @@ endlocal</Command>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="_SwModelExportedEntitiesModel.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_SwModelExportedEntitiesModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelExportedEntitiesModel.h -o GeneratedFiles_QT5\moc\moc__SwModelExportedEntitiesModel.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC _SwModelExportedEntitiesModel.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc__SwModelExportedEntitiesModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_SwModelExportedEntitiesModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelExportedEntitiesModel.h -o GeneratedFiles_QT5\moc\moc__SwModelExportedEntitiesModel.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC _SwModelExportedEntitiesModel.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc__SwModelExportedEntitiesModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelExportedEntitiesModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelExportedEntitiesModel.h -o GeneratedFiles_QT5\moc\moc__SwModelExportedEntitiesModel.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelExportedEntitiesModel.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelExportedEntitiesModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelExportedEntitiesModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelExportedEntitiesModel.h -o GeneratedFiles_QT5\moc\moc__SwModelExportedEntitiesModel.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelExportedEntitiesModel.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelExportedEntitiesModel.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -313,42 +289,26 @@ endlocal</Command>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="_SwModelHostExportSelector.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_SwModelHostExportSelector.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelHostExportSelector.h -o GeneratedFiles_QT5\moc\moc__SwModelHostExportSelector.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC _SwModelHostExportSelector.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc__SwModelHostExportSelector.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_SwModelHostExportSelector.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelHostExportSelector.h -o GeneratedFiles_QT5\moc\moc__SwModelHostExportSelector.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC _SwModelHostExportSelector.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc__SwModelHostExportSelector.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelHostExportSelector.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelHostExportSelector.h -o GeneratedFiles_QT5\moc\moc__SwModelHostExportSelector.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelHostExportSelector.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelHostExportSelector.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelHostExportSelector.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelHostExportSelector.h -o GeneratedFiles_QT5\moc\moc__SwModelHostExportSelector.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelHostExportSelector.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelHostExportSelector.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="_SwModelHostSelector.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_SwModelHostSelector.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelHostSelector.h -o GeneratedFiles_QT5\moc\moc__SwModelHostSelector.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC _SwModelHostSelector.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc__SwModelHostSelector.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_SwModelHostSelector.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelHostSelector.h -o GeneratedFiles_QT5\moc\moc__SwModelHostSelector.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC _SwModelHostSelector.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc__SwModelHostSelector.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelHostSelector.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelHostSelector.h -o GeneratedFiles_QT5\moc\moc__SwModelHostSelector.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelHostSelector.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelHostSelector.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelHostSelector.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelHostSelector.h -o GeneratedFiles_QT5\moc\moc__SwModelHostSelector.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelHostSelector.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelHostSelector.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -359,22 +319,14 @@ endlocal</Command>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="_SwModelStreamTreeModel.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_SwModelStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc__SwModelStreamTreeModel.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MOC _SwModelStreamTreeModel.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\moc\moc__SwModelStreamTreeModel.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_SwModelStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc__SwModelStreamTreeModel.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MOC _SwModelStreamTreeModel.h</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\moc\moc__SwModelStreamTreeModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_SwModelStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DENABLE_EXCEPTIONS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc__SwModelStreamTreeModel.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">MOC _SwModelStreamTreeModel.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelStreamTreeModel.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_SwModelStreamTreeModel.h;GeneratedFiles_QT5\moc\mocinclude.tmp;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\moc.exe  -DUNICODE -DWIN32 -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DSWMODEL2_LIB -D_WINDOWS -D_WIN32_PLATEFORM_ -DQT_LARGEFILE_SUPPORT -D_CRT_SECURE_NO_WARNINGS -DQ_WS_WIN -DCPLUSPLUS11 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -D_MSC_VER=1800 -D_WIN32 @./GeneratedFiles_QT5/moc/mocinclude.tmp _SwModelStreamTreeModel.h -o GeneratedFiles_QT5\moc\moc__SwModelStreamTreeModel.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">MOC _SwModelStreamTreeModel.h</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\moc\moc__SwModelStreamTreeModel.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -428,22 +380,14 @@ endlocal</Command>
   <ItemGroup>
     <CustomBuild Include="_resources\SwModel2Rsc.qrc">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_resources\SwModel2Rsc.qrc;_resources\images\executor.png;_resources\images\interface_out.png;_resources\images\connector.png;_resources\images\model_host.png;_resources\images\property.png;_resources\images\model.png;_resources\images\interface_in.png;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name SwModel2Rsc _resources\SwModel2Rsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwModel2Rsc.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">RCC _resources/SwModel2Rsc.qrc</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\rcc\qrc_SwModel2Rsc.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_resources\SwModel2Rsc.qrc;_resources\images\executor.png;_resources\images\interface_out.png;_resources\images\connector.png;_resources\images\model_host.png;_resources\images\property.png;_resources\images\model.png;_resources\images\interface_in.png;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name SwModel2Rsc _resources\SwModel2Rsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwModel2Rsc.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">RCC _resources/SwModel2Rsc.qrc</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\rcc\qrc_SwModel2Rsc.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_resources\SwModel2Rsc.qrc;_resources\images\executor.png;_resources\images\interface_out.png;_resources\images\connector.png;_resources\images\model_host.png;_resources\images\property.png;_resources\images\model.png;_resources\images\interface_in.png;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name SwModel2Rsc _resources\SwModel2Rsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwModel2Rsc.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">RCC _resources/SwModel2Rsc.qrc</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_SwModel2Rsc.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_resources\SwModel2Rsc.qrc;_resources\images\executor.png;_resources\images\interface_out.png;_resources\images\connector.png;_resources\images\model_host.png;_resources\images\property.png;_resources\images\model.png;_resources\images\interface_in.png;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name SwModel2Rsc _resources\SwModel2Rsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwModel2Rsc.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">RCC _resources/SwModel2Rsc.qrc</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_SwModel2Rsc.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Release|Win32">
@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B0F10001-6FD3-332C-A176-28D311042C38}</ProjectGuid>
+    <ProjectGuid>{187D1111-8B87-323E-9351-C20DD1FBB886}</ProjectGuid>
     <RootNamespace>SwDataBase</RootNamespace>
     <Keyword>Qt4VSv1.0</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="Configuration">
     <PlatformToolSet>v120</PlatformToolSet>
     <OutputDirectory>..\..\lib\vc\release_QT5\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -25,7 +25,7 @@
     <IntermediateDirectory>GeneratedFiles_QT5\obj\</IntermediateDirectory>
     <PrimaryOutput>SwDataBase</PrimaryOutput>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+  <PropertyGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="Configuration">
     <PlatformToolSet>v120</PlatformToolSet>
     <OutputDirectory>..\..\lib\vc\debug_QT5\</OutputDirectory>
     <ATLMinimizesCRunTimeLibraryUsage>false</ATLMinimizesCRunTimeLibraryUsage>
@@ -36,29 +36,29 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
+  <ImportGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists(&apos;$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props&apos;)" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\lib\vc\release_QT5\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\obj\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">SwDataBase</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.swdl</TargetExt>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</PostBuildEventUseInBuild>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\lib\vc\debug_QT5\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\objd\</IntDir>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">SwDataBased</TargetName>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.swdld</TargetExt>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
-    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</PostBuildEventUseInBuild>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">..\..\lib\vc\release_QT5\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\obj\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">SwDataBase</TargetName>
+    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">.swdl</TargetExt>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</IgnoreImportLibrary>
+    <LinkIncremental Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">false</LinkIncremental>
+    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">true</PostBuildEventUseInBuild>
+    <OutDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">..\..\lib\vc\debug_QT5\</OutDir>
+    <IntDir Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\objd\</IntDir>
+    <TargetName Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">SwDataBased</TargetName>
+    <TargetExt Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">.swdld</TargetExt>
+    <IgnoreImportLibrary Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</IgnoreImportLibrary>
+    <PostBuildEventUseInBuild Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">true</PostBuildEventUseInBuild>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">
     <ClCompile>
       <AdditionalIncludeDirectories>.;.;..\SwCore;..\SwExecution;.;..\..\..\ExceptionManager\src;.;..\SwCore;..\SwCore\Component;..\SwCore\Component\Base;..\SwCore\Component\Interfaces;..\SwCore\Component\Pin;..\SwCore\Component\Services;..\SwCore\Component\Services\ServiceImpl;..\SwCore\Extensions;..\SwCore\Main;..\SwCore\Main\Connexion;..\SwCore\Main\Plugin;..\SwCore\Main\Serialization;..\SwCore\Main\Services;..\SwCore\Main\Services\Management;..\SwCore\Properties;..\SwCore\SwRef;..\SwCore\Tools;..\SwCore\Tools\Exception;..\SwCore\Tools\Log;..\SwCore\Tools\Signal;..\SwCore\Types;..\SwCore\Types\UserType;C:/StreamworkDev/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/StreamWork/src/SwService/ServiceAlert/;..\SwService\ServiceConfiguration;C:/StreamworkDev/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/StreamWork/src/SwService/ServiceImpl/;..\SwService\ServiceShortcut;C:/StreamworkDev/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/StreamWork/src/SwService/ServiceUnitSI/;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtXml;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zc:strictStrings -w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
@@ -101,11 +101,11 @@
       <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SWDATABASE_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;ENABLE_EXCEPTIONS;QT_NO_DEBUG;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" ..\..\bin\vc\release_QT5</Command>
+      <Command>copy &quot;$(TargetPath)&quot; ..\..\bin\vc\release_QT5</Command>
       <Message>Copy SwDataBase.swdl to ..\..\bin\vc\release_QT5</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ItemDefinitionGroup Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">
     <ClCompile>
       <AdditionalIncludeDirectories>.;.;..\SwCore;..\SwExecution;.;..\..\..\ExceptionManager\src;.;..\SwCore;..\SwCore\Component;..\SwCore\Component\Base;..\SwCore\Component\Interfaces;..\SwCore\Component\Pin;..\SwCore\Component\Services;..\SwCore\Component\Services\ServiceImpl;..\SwCore\Extensions;..\SwCore\Main;..\SwCore\Main\Connexion;..\SwCore\Main\Plugin;..\SwCore\Main\Serialization;..\SwCore\Main\Services;..\SwCore\Main\Services\Management;..\SwCore\Properties;..\SwCore\SwRef;..\SwCore\Tools;..\SwCore\Tools\Exception;..\SwCore\Tools\Log;..\SwCore\Tools\Signal;..\SwCore\Types;..\SwCore\Types\UserType;C:/StreamworkDev/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/StreamWork/src/SwService/ServiceAlert/;..\SwService\ServiceConfiguration;C:/StreamworkDev/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/StreamWork/src/SwService/ServiceImpl/;..\SwService\ServiceShortcut;C:/StreamworkDev/Libraries/StreamWork/src/SwDataBase/../../../../Libraries/StreamWork/src/SwService/ServiceUnitSI/;C:\Qt\Qt5.5.0\5.5\msvc2013\include;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtGui;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtANGLE;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtXml;C:\Qt\Qt5.5.0\5.5\msvc2013\include\QtCore;GeneratedFiles_QT5\moc;C:\Qt\Qt5.5.0\5.5\msvc2013\mkspecs\win32-msvc2013;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-w34100 -w34189 -w44996 %(AdditionalOptions)</AdditionalOptions>
@@ -148,7 +148,7 @@
       <PreprocessorDefinitions>_WINDOWS;UNICODE;WIN32;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;SWDATABASE_LIB;_WINDOWS;_WIN32_PLATEFORM_;QT_LARGEFILE_SUPPORT;_CRT_SECURE_NO_WARNINGS;Q_WS_WIN;CPLUSPLUS11;QT_GUI_LIB;QT_XML_LIB;QT_CORE_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy "$(TargetPath)" ..\..\bin\vc\debug_QT5</Command>
+      <Command>copy &quot;$(TargetPath)&quot; ..\..\bin\vc\debug_QT5</Command>
       <Message>Copy SwDataBased.swdld to ..\..\bin\vc\debug_QT5</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -188,22 +188,14 @@
   <ItemGroup>
     <CustomBuild Include="_resources\SwDatasBaseRsc.qrc">
       <FileType>Document</FileType>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_resources\SwDatasBaseRsc.qrc;_resources\images\router.png;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name SwDatasBaseRsc _resources\SwDatasBaseRsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwDatasBaseRsc.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">RCC _resources/SwDatasBaseRsc.qrc</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">GeneratedFiles_QT5\rcc\qrc_SwDatasBaseRsc.cpp;%(Outputs)</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_resources\SwDatasBaseRsc.qrc;_resources\images\router.png;%(AdditionalInputs)</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-if errorlevel 1 goto VCEnd
-C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name SwDatasBaseRsc _resources\SwDatasBaseRsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwDatasBaseRsc.cpp
-if errorlevel 1 goto VCEnd
-endlocal</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">RCC _resources/SwDatasBaseRsc.qrc</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">GeneratedFiles_QT5\rcc\qrc_SwDatasBaseRsc.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">_resources\SwDatasBaseRsc.qrc;_resources\images\router.png;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name SwDatasBaseRsc _resources\SwDatasBaseRsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwDatasBaseRsc.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">RCC _resources/SwDatasBaseRsc.qrc</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_SwDatasBaseRsc.cpp;%(Outputs)</Outputs>
+      <AdditionalInputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">_resources\SwDatasBaseRsc.qrc;_resources\images\router.png;%(AdditionalInputs)</AdditionalInputs>
+      <Command Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">setlocal&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;C:\Qt\Qt5.5.0\5.5\msvc2013\bin\rcc.exe -name SwDatasBaseRsc _resources\SwDatasBaseRsc.qrc -o GeneratedFiles_QT5\rcc\qrc_SwDatasBaseRsc.cpp&#x000D;&#x000A;if errorlevel 1 goto VCEnd&#x000D;&#x000A;endlocal</Command>
+      <Message Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">RCC _resources/SwDatasBaseRsc.qrc</Message>
+      <Outputs Condition="&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|Win32&apos;">GeneratedFiles_QT5\rcc\qrc_SwDatasBaseRsc.cpp;%(Outputs)</Outputs>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
