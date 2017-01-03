@@ -43,6 +43,7 @@ MainWindow::MainWindow(bool loadStream /*= true*/) :QMainWindow(), _streamContro
 	setMinimumSize(400, 300);
 	setDockOptions(QMainWindow::AnimatedDocks | QMainWindow::AllowTabbedDocks | QMainWindow::AllowNestedDocks);
 	nbWindows++;
+	_isMasterWindow = false;
 
 	//Definition du wizard
 	//_wizard=new SwWizardFrontEnd(this);
