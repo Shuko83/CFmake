@@ -7,32 +7,32 @@ call MakeVcProjAll.bat
 
 cd %~dp0
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\QsWidgets\QsWidget.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\QsWidgets\QsWidget.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwCore\SwCore.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwCore\SwCore.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwExecution\SwExecution.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwExecution\SwExecution.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwFoundation\SwFoundation.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwFoundation\SwFoundation.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwConfiguration\SwConfiguration.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwConfiguration\SwConfiguration.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwModel2\SwModel2.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwModel2\SwModel2.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwDataBase\SwDataBase.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwDataBase\SwDataBase.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwService\ServiceConfiguration\SwServiceConfiguration.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwService\ServiceConfiguration\SwServiceConfiguration.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\ServiceServiceMainWindow\SwServiceMainWindow.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\ServiceServiceMainWindow\SwServiceMainWindow.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\ServiceShortcut\SwServiceShortcut.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\ServiceShortcut\SwServiceShortcut.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\ServiceTools\SwServiceTools.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\ServiceTools\SwServiceTools.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwGui\SwGui.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwGui\SwGui.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwEditor\SwEditor.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwEditor\SwEditor.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\SwRecord\SwRecord.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwRecord\SwRecord.vcxproj)
 
-for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A src\StreamworkEditor2\StreamworkEditor2.vcxproj)
+for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\StreamworkEditor2\StreamworkEditor2.vcxproj)
