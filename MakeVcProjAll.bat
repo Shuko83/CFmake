@@ -26,13 +26,11 @@ call generatevcproj.bat
 cd ../SwRecord
 call generatevcproj.bat
 cd ../SwService
-cd ServiceAlert
+cd ServiceConfiguration
 call generatevcproj.bat
-cd ../ServiceConfiguration
-call generatevcproj.bat
-cd ../ServiceImpl
+cd ../ServiceMainWindow
 call generatevcproj.bat
 cd ../ServiceShortcut
 call generatevcproj.bat
-cd ../ServiceUnitSI
+cd ../ServiceTools
 call generatevcproj.bat
