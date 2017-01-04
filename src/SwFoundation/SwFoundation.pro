@@ -1,7 +1,7 @@
 TEMPLATE = lib
 TARGET = SwFoundation
 DEFINES += SWFOUNDATION_LIB
-PROJECTS_PATH = $$PWD/../../../..
+PROJECTS_PATH = ../../../../
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
