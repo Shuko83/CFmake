@@ -4,12 +4,16 @@ set QTDIR=C:\Qt\Qt5.5.0\5.5\msvc2013
 set QMAKESPEC=win32-msvc2013
 
 set PATHSAVE=%PATH%
-set PATH=%QTDIR%\bin
+set PATH=%QTDIR%\bin;C:\Windows\System32
 
 
 call "%ProgramFiles(x86)%\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86
+
+echo "Qmake utilise : "
 qmake -v
 call MakeVcProjAll.bat
+
+
 
 cd %~dp0
 
