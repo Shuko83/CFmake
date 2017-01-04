@@ -23,8 +23,7 @@ INCLUDEPATH += ./ \
 	../SwService/ServiceImpl \
 	../SwService/ServiceTools \
 	$$PROJECTS_PATH\Modules\Streamwork\src\SwServiceUnitSI \
-	$$PROJECTS_PATH\Libraries\ServiceUnitSI\src \
-	../SwService/SwServiceUnitSI
+	$$PROJECTS_PATH\Libraries\ServiceUnitSI\src
 
 DESTDIR = ./../../$$LIB_PATH
 DLLDESTDIR=  ./../../$$BIN_PATH
