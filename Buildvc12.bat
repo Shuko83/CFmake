@@ -1,10 +1,15 @@
 @echo generation des vc proj
+
 set QTDIR=C:\Qt\Qt5.5.0\5.5\msvc2013
 set QMAKESPEC=win32-msvc2013
+
+set PATHSAVE=%PATH%
+set PATH=%QTDIR%\bin
+
+
 call "%ProgramFiles(x86)%\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" x86
 qmake -v
 call MakeVcProjAll.bat
-qmake -v
 
 cd %~dp0
 
@@ -37,3 +42,6 @@ for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine
 for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\SwRecord\SwRecord.vcxproj)
 
 for %%A in (Debug Release) DO (msbuild.exe  /l:FileLogger,Microsoft.Build.Engine;logfile=BuildLog_%%A.log /m /t:rebuild /p:Configuration=%%A %~dp0\src\StreamworkEditor2\StreamworkEditor2.vcxproj)
+
+
+set PATH=%PATHSAVE%
