@@ -84,7 +84,6 @@ INCLUDEPATH += $$PROJECTS_PATH/Libraries/StreamWork/src/SwExecution
 INCLUDEPATH += $$PROJECTS_PATH/Libraries/StreamWork/src/SwFoundation
 INCLUDEPATH += $$PROJECTS_PATH/Libraries/StreamWork/src/SwService/SwServiceShortcut
 INCLUDEPATH += $$PROJECTS_PATH/Libraries/StreamWork/src/SwService/SwServiceTools
-INCLUDEPATH += $$PROJECTS_PATH/Libraries/StreamWork/src/SwService/SwServiceUnitSI
 
 
 ###################
