@@ -1,7 +1,7 @@
 TEMPLATE = lib
 TARGET = SwFoundation
 DEFINES += SWFOUNDATION_LIB
-PROJECTS_PATH = ../../../../
+PROJECTS_PATH = ../../../..
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
@@ -15,15 +15,15 @@ FORMS +=
 
 DEFINES += SWFOUNDATION_LIB
 
-INCLUDEPATH += ./ \
-    ../SwCore/ \
-	../SwGui/ \
-	../SwExecution \
-	../SwService/ServiceShortcut \
-	../SwService/ServiceImpl \
-	../SwService/ServiceTools \
-	$$PROJECTS_PATH\Modules\Streamwork\src\SwServiceUnitSI \
-	$$PROJECTS_PATH\Libraries\ServiceUnitSI\src
+INCLUDEPATH += ./ 
+INCLUDEPATH += ../SwCore
+INCLUDEPATH += ../SwGui
+INCLUDEPATH += ../SwExecution 
+INCLUDEPATH += ../SwService/ServiceShortcut 
+INCLUDEPATH += ../SwService/ServiceImpl 
+INCLUDEPATH += ../SwService/ServiceTools 
+INCLUDEPATH += $$PROJECTS_PATH\Modules\Streamwork\src\SwServiceUnitSI 
+INCLUDEPATH += $$PROJECTS_PATH\Libraries\ServiceUnitSI\src
 
 DESTDIR = ./../../$$LIB_PATH
 DLLDESTDIR=  ./../../$$BIN_PATH
