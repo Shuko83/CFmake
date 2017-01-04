@@ -127,7 +127,7 @@
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>..\..\\lib\vc\debug_QT5\SwCored.lib;..\..\\lib\vc\debug_QT5\SwExecutiond.lib;..\..\\lib\vc\debug_QT5\SwGuid.lib;C:\StreamworkDev\Libraries\StreamWork\src\SwConfiguration\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Guid.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Xmld.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>..\..\\lib\vc\debug_QT5\SwCored.lib;..\..\\lib\vc\debug_QT5\SwExecutiond.lib;SwGuid.lib;C:\StreamworkDev\Libraries\StreamWork\src\SwConfiguration\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5\ExceptionManagerd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Widgetsd.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Guid.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Xmld.lib;C:\Qt\Qt5.5.0\5.5\msvc2013\lib\Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\..\\lib\vc\debug_QT5;C:\StreamworkDev\Libraries\StreamWork\src\SwConfiguration\..\..\..\..\Libraries\ExceptionManager\\lib\vc\debug_QT5;C:\Qt\Qt5.5.0\5.5\msvc2013\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
