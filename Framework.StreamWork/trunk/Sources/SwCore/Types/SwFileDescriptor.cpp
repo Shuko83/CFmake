@@ -96,6 +96,30 @@ QString SwFileDescriptor::ToString() const
 QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
 {
 	QString pathAsWritten = getFileName();
+
+	// On commence par remplacer les éventuelles variables d'environnment :
+	QString pathWithEnv = pathAsWritten;
+	
+	QRegularExpression environmentVariableRegExp("^([^%]*)%([^%]+)%(.*)$");
+	QRegularExpressionMatch match;
+	
+	while (match = environmentVariableRegExp.match(pathWithEnv), match.hasMatch())
+	{
+		QString pre = match.captured(1);
+		QString envVarName = match.captured(2);
+		QString post = match.captured(3);
+		
+		QString envVarValue;
+		if (qEnvironmentVariableIsSet(envVarName.toStdString().c_str()))
+		{
+			envVarValue = qgetenv(envVarName.toStdString().c_str());
+		}
+		
+		pathWithEnv = pre + envVarValue + post;
+	}
+	pathAsWritten = pathWithEnv;
+
+	// Rechrche du fichier suivant les :: et les ( )
 	int indexOfSeparator = pathAsWritten.indexOf("::");
 	QString tmpS = pathAsWritten;
 	tmpS.replace("::", "");

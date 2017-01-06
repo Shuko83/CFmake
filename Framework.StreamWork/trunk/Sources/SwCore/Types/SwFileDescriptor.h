@@ -57,6 +57,7 @@ namespace StreamWork
 			/* Pour un path de la forme C:\path\to\file \::relativeFolder
 			/* renvoie relativeFolder si relativeFolder existe a coté de l'exe
 			/* renvoie C:\path\to\file \relativeFolder sinon (le cas general quand on est ds le stream)
+			/* Le texte entre deux % est considéré comme une variable d'environnement et remplacé, par exemple "%TEMP%/log.txt" devient "C:\Users\{Username}\AppData\Local\Temp\log.txt"
 			*/
 			QString getDoubleDottedPath(bool * relativeExists = nullptr);
 
