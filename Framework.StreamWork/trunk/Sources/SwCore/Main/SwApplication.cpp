@@ -100,7 +100,7 @@ SwApplication::~SwApplication()
 //-----------------------------------------------------------------------
 SwApplication * SwApplication::GetInstance()
 {
-	if (_singleton == NULL)
+	if (!_singleton)
 	{
 		QString appName = QCoreApplication::applicationName();
 		if (appName.isEmpty())
@@ -108,10 +108,10 @@ SwApplication * SwApplication::GetInstance()
 			QStringList names = QCoreApplication::applicationFilePath().split(QRegExp("[\\\\/]"));
 			if (names.count() > 0)
 			{
-				QStringList namep = names[names.count() - 1].split(".");
+				QStringList namep = names.at(names.count() - 1).split(".");
 				if (namep.count() > 0)
 				{
-					QCoreApplication::setApplicationName(namep[0]);
+					QCoreApplication::setApplicationName(namep.at(0));
 					QCoreApplication::setOrganizationName("Diginext");
 					QCoreApplication::setOrganizationDomain("diginext.fr");
 				}

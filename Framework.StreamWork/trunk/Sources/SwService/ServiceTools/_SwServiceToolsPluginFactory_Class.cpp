@@ -31,16 +31,17 @@ _SwServiceToolsPluginFactory_Class::~_SwServiceToolsPluginFactory_Class()
 //----------------------------------------------------------------------------------------------
 void _SwServiceToolsPluginFactory_Class::Initialize() 
 {
+	auto app = SW_APP;	// La fonction GetInstance() est très chronophage
 	_serviceRefProfiler = new _SwServiceRefProfiler();
-	SW_APP->RegisterService(_serviceRefProfiler);
+	app->RegisterService(_serviceRefProfiler);
 	_serviceParameters = new _SwServiceParametersImpl();
-	SW_APP->RegisterService(_serviceParameters);
+	app->RegisterService(_serviceParameters);
 	_serviceExtensions = new _SwServiceExtensionsImpl();
-	SW_APP->RegisterService(_serviceExtensions);
+	app->RegisterService(_serviceExtensions);
 	_serviceCodeTimer = new _SwServiceCodeTimer();
-	SW_APP->RegisterService(_serviceCodeTimer);
+	app->RegisterService(_serviceCodeTimer);
 	_serviceFileEditorManager = new _SwFileEditorManager();
-	SW_APP->RegisterService(_serviceFileEditorManager);
+	app->RegisterService(_serviceFileEditorManager);
 
 }
 
