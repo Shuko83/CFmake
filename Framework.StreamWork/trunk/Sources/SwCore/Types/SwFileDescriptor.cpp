@@ -93,7 +93,7 @@ QString SwFileDescriptor::ToString() const
 
 
 //-----------------------------------------------------------------------
-QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
+QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists, bool useOptionalPath)
 {
 	QString pathAsWritten = getFileName();
 
@@ -135,7 +135,7 @@ QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
 	QString relativePathStringWithOptionalFolderDoubleDot;
 	QString relativePathStringWithOptionalFolder;
 	QString absolutePathWithOptionalFolder;
-	if (tmpS.contains("(") && tmpS.contains(")"))
+	if (useOptionalPath && tmpS.contains("(") && tmpS.contains(")"))
 	{
 		int indexOfOpenBracet = pathAsWritten.indexOf("(");
 		int indexOfCloseBracet = pathAsWritten.indexOf(")");
