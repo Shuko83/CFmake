@@ -77,10 +77,10 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow() : SwAssistedComponent()
 	_useAsWidget = false;
 	_finalized = false;
 
-	HOME_PATH = QDir::homePath() + QDir::separator();
+	HOME_PATH = QDir::rootPath() + QDir::separator();
 	APP_PATH = SwApplication::GetInstance()->GetApplicationDirPath() + QDir::separator();
 
-	_relativePath = "AppData\\Roaming\\diginext\\Starlinx\\Configuration\\dockParameters.xml";
+	_relativePath = QString("ProgramData") + QDir::separator() + "DIGINEXT" + QDir::separator() + "Starlinx" + QDir::separator() + "Configuration" + QDir::separator() + "dockParameters.xml";
 
 	_quitOnClose = false;
 }
