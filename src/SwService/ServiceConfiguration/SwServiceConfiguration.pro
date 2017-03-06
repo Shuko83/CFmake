@@ -51,8 +51,8 @@ INCLUDEPATH += ./ \
 win32:DEFINES +=_CRT_SECURE_NO_WARNINGS
 
 
-DESTDIR = ./../../../$$LIB_PATH/service
-DLLDESTDIR=  ./../../../$$BIN_PATH/service
+DESTDIR = ./../../../$$LIB_PATH/
+DLLDESTDIR=  ./../../../$$BIN_PATH/
 
 LIBS += -L"../../../$$LIB_PATH"
 

@@ -49,8 +49,8 @@ INCLUDEPATH += ../../SwCore/Types
 INCLUDEPATH += ../../SwCore/Types/UserType
 
 
-DESTDIR = ./../../../$$LIB_PATH/service
-DLLDESTDIR=  ./../../../$$BIN_PATH/service
+DESTDIR = ./../../../$$LIB_PATH/
+DLLDESTDIR=  ./../../../$$BIN_PATH/
 
 LIBS += -L"../../../$$LIB_PATH"
 
