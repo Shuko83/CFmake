@@ -26,6 +26,7 @@ using namespace StreamWork::SwGui;
 _SwGuiCompQWidgetToQDialog::_SwGuiCompQWidgetToQDialog() : SwAssistedComponent()
 {
 	_enableMaximize = false;
+	_saveDialogPosition = false;
 	_widget = nullptr;
 	_action = new QAction(this);
 	connect(_action, &QAction::toggled, [=](bool)
@@ -70,8 +71,9 @@ void _SwGuiCompQWidgetToQDialog::initializeComponent() throw(SwException)
 	provideInterface<ISwAction>(ISWACTION_INTERFACE_NAME, this);
 
 	getPropertiesService().CreatePropertyForQObject(this, "EnableMaximize");
+	getPropertiesService().CreatePropertyForQObject(this, "SaveDialogPosition");
 	createPropertiesForQObject(&_container, "Widget", true);
-	createPropertiesForQObject(_action, "Action", true);
+	createPropertiesForQObject(_action, "Action", true);	
 }
 
 

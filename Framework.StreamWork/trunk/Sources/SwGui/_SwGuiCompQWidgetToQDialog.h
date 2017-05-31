@@ -24,6 +24,8 @@ public :
 		_layout->setContentsMargins(0, 0, 0, 0);
 		setLayout(_layout);
 		setMinimumSize(100, 100);
+		_savePositionWhenHidden = false;
+		_dialogSavedPosition = QPoint(0, 0);
 	}
 
 	void setContentWidget(QWidget * wid)
@@ -52,8 +54,29 @@ public :
 		return *this;
 	};
 
+	virtual void setVisible(bool visible) override
+	{
+		if (_savePositionWhenHidden && !visible)
+		{			
+			_dialogSavedPosition = mapToGlobal( pos() + QPoint(-geometry().x(), -geometry().y()));
+		}
+
+		QDialog::setVisible(visible);
+
+		if (_savePositionWhenHidden && visible)
+			move(_dialogSavedPosition);
+	}
+
+	void setSavePositionWhenHidden(bool value)
+	{
+		_savePositionWhenHidden = value;
+	}
+
 private:
 	QVBoxLayout * _layout;
+		
+	bool _savePositionWhenHidden;
+	QPoint _dialogSavedPosition;
 };
 
 
@@ -67,6 +90,10 @@ class _SwGuiCompQWidgetToQDialog : public StreamWork::SwFoundation::SwAssistedCo
 	Q_PROPERTY(bool EnableMaximize READ getEnableMaximize WRITE setEnableMaximize);
 	bool getEnableMaximize() const { return _enableMaximize; }
 	void setEnableMaximize(bool val) { _enableMaximize = val; }
+
+	Q_PROPERTY(bool SaveDialogPosition READ getSaveDialogPosition WRITE setSaveDialogPosition);
+	bool getSaveDialogPosition() const { return _saveDialogPosition; }
+	void setSaveDialogPosition(bool val) { _saveDialogPosition = val; _container.setSavePositionWhenHidden(_saveDialogPosition); }
 
 public:
 
@@ -92,7 +119,9 @@ public:
 protected:
 	DialogContainer _container;
 	QWidget *_widget;
+
 	bool _enableMaximize;
+	bool _saveDialogPosition;
 
 	QAction *_action;
 	SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow> *_helper;
