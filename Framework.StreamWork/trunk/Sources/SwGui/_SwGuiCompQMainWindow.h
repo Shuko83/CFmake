@@ -14,6 +14,7 @@
   */
 #include <QMap>
 #include <Qt>
+#include <QDir>
 #include <Component.h>
 #include <SwInterfaces_Provider_Class.h>
 #include <SwInterfaces_Consumer_Class.h>
@@ -154,10 +155,16 @@ private:
 	void showChanged();
 protected:
 	void closeEvent(QCloseEvent* event);
+	bool eventFilter(QObject* object, QEvent* event);
+
+	bool _firstTime;
+
 
 	virtual void OnRegisterService(ISwService * service);
 
 	virtual void OnUnregisterService(ISwService * service);
+
+	const QString _geometryPath = QDir::rootPath() + QDir::separator() + "ProgramData" + QDir::separator() + "DIGINEXT" + QDir::separator() + "StarlinxV2" + QDir::separator() + "geometry.ini";
 
 };
 #endif 

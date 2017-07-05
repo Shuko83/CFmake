@@ -12,6 +12,7 @@
 #include <SwMacros.h>
 #include "_SwGuiCompQMainWindow.h"
 #include <QEvent>
+#include <QSettings>
 
 #include "ISwServiceShortcuts.h"
 #include <SwApplication.h>
@@ -35,6 +36,7 @@ using namespace StreamWork::SwGui;
 //-----------------------------------------------------------------------
 _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
 {
+	_firstTime = true;
 	_use_aswidget_property = 0;
 	_menus_nb = 0;
 	_actions_nb = 0;
@@ -224,7 +226,9 @@ void _SwGuiCompQMainWindow::initializeComponent() throw(SwException)
 		SW_APP->Logger().Log(LogLvl_Info, QString("InitializeResources of SwGuiMainWindow done\n"));
 
 	//Provide the service
-	_mainWindowService = new StreamWork::Service::_SwServiceMainWindow(this);
+	_mainWindowService = new StreamWork::Service::_SwServiceMainWindow(this);	
+
+	GetWidget().installEventFilter(&GetMainWindow());
 }
 
 //-----------------------------------------------------------------------
@@ -563,7 +567,7 @@ void _SwGuiCompQMainWindow::showChanged()
 	switch ( _show_mode.ToInt() )
 	{
 		case SW_SHOW_CENTERED:
-		{
+		{			
 			this->showNormal();
 			QDesktopWidget *desktop = QApplication::desktop();
 			QRect screensize = desktop->screenGeometry(desktop->primaryScreen());
@@ -588,7 +592,7 @@ void _SwGuiCompQMainWindow::showChanged()
 		case SW_SHOW_NORMAL:
 		default:
 			break;
-	}
+	}	
 }
 
 //-----------------------------------------------------------------------
@@ -632,6 +636,10 @@ void _SwGuiCompQMainWindow::processCommand(QString name)
 //-----------------------------------------------------------------------
 void _SwGuiCompQMainWindow::closeEvent(QCloseEvent* event)
 {
+	QSettings settings(_geometryPath, QSettings::IniFormat);
+	settings.setValue("geometry", saveGeometry());
+	settings.setValue("windowState", saveState());
+
 	notify((QEvent*) event);
 }
 
@@ -654,6 +662,23 @@ void _SwGuiCompQMainWindow::OnUnregisterService(ISwService * service)
 		if ( themeSelector )
 			themeSelector->setMainWidget(nullptr);
 	}
+}
+
+bool _SwGuiCompQMainWindow::eventFilter(QObject* object, QEvent* event)
+{
+	if (event->type() == QEvent::Show)
+	{
+		if (_firstTime)
+		{
+			QSettings settings(_geometryPath, QSettings::IniFormat);
+			restoreGeometry(settings.value("geometry").toByteArray());
+			restoreState(settings.value("windowState").toByteArray());
+
+			_firstTime = false;
+		}
+	}
+
+	return QObject::eventFilter(object, event);
 }
 
 
