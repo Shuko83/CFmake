@@ -71,7 +71,7 @@ void _SwStreamsTabBar::OnIndexChanged(int index) {
 // Interface ISwObserver
 //---------------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
-void _SwStreamsTabBar::Update() {
+void _SwStreamsTabBar::Update(StreamWork::SwCore::ISwObservable* sender) {
     BuildWidget();    
 }
 

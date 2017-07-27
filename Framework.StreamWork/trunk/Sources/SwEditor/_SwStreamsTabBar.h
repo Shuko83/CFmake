@@ -44,7 +44,7 @@ namespace StreamWork
             // Interface ISwObserver
             //---------------------------------------------------------------------
 	        /*! \brief methode appelée par l'observable*/
-	        virtual void Update();
+			virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
         public slots:
 	        /*! \brief sur changement de l'index*/
             void OnIndexChanged(int index);

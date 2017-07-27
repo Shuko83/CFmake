@@ -226,7 +226,7 @@ QModelIndex _SwEditorStreamTreeModel::parent ( const QModelIndex & index ) const
 // Interface observeur
 //------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
-void _SwEditorStreamTreeModel::Update() {
+void _SwEditorStreamTreeModel::Update(StreamWork::SwCore::ISwObservable* sender) {
     if (_current_host!=_manager->GetCurrentStreamRoot()) {
 		beginResetModel();
         _current_host=_manager->GetCurrentStreamRoot();

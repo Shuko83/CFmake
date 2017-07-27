@@ -590,7 +590,7 @@ void _SwEditorGraphicItem::OnComponentNameChange() {
 // Sur mise a jour
 //---------------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
-void _SwEditorGraphicItem::Update() {
+void _SwEditorGraphicItem::Update(StreamWork::SwCore::ISwObservable* sender) {
     _SwEditorSelection_Class * selection;
 
     if (_isNavigableIndex) {

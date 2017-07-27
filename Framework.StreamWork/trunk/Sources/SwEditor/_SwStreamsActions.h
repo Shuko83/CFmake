@@ -70,7 +70,7 @@ namespace StreamWork
             // Interface ISwObserver
             //---------------------------------------------------------------------
 	        /*! \brief methode appelée par l'observable*/
-	        virtual void Update();
+			virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
 		private slots:
 	        /*! \brief callback _new*/
 	        void OnNew();

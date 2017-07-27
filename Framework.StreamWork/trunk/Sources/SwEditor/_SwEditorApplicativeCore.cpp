@@ -577,7 +577,7 @@ void _SwEditorApplicativeCore::_InternalSelection::SignalChangeToObservers() {
 // ISwObserver
 //-------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
-void _SwEditorApplicativeCore::_InternalSelection::Update(){
+void _SwEditorApplicativeCore::_InternalSelection::Update(StreamWork::SwCore::ISwObservable* sender){
     SignalChangeToObservers();
 }
 //-------------------------------------------------------------
@@ -664,7 +664,7 @@ void _SwEditorApplicativeCore::_InternalNavigator::SignalChangeToObservers() {
 // ISwObserver
 //-------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
-void _SwEditorApplicativeCore::_InternalNavigator::Update() {
+void _SwEditorApplicativeCore::_InternalNavigator::Update(StreamWork::SwCore::ISwObservable* sender) {
     if (_navigator!=NULL) _h_selection->DefineSelection(dynamic_cast<ISwEditorStreamOperations *>(_navigator->GetCurrentComponent()->QueryService(CG_SW_SERVICE_SELECTION)));
     else  _h_selection->DefineSelection(NULL);
     SignalChangeToObservers();

@@ -143,7 +143,7 @@ QAction & _SwStreamsActions::_ActionContainer::GetAction() {
 // Interface ISwObserver
 //---------------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
-void _SwStreamsActions::Update() {
+void _SwStreamsActions::Update(StreamWork::SwCore::ISwObservable* sender) {
     if (_manager==NULL) {
         _new->setEnabled(false);
         _open->setEnabled(false);

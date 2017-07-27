@@ -116,7 +116,7 @@ namespace StreamWork
                 // ISwObserver
                 //-------------------------------------------------------------
                 /*! \brief methode appelée par l'observable*/
-	            virtual void Update();
+				virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
             };
             /* \brief classe permanente de navigation (decorateur)*/
             class _InternalNavigator: public ISwEditorStreamNavigation, public SwCore::ISwObserver {
@@ -162,7 +162,7 @@ namespace StreamWork
                 // ISwObserver
                 //-------------------------------------------------------------
                 /*! \brief methode appelée par l'observable*/
-	            virtual void Update();
+				virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
             };
         protected:
             /* \brief service de fourniture d'interface */

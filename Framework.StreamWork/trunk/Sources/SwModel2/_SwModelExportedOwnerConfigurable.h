@@ -76,7 +76,7 @@ class _SwModelExportedOwnerConfigurable :
         //----------------------------------------------------
         // Interface ISwServiceObservable pour ISwServiceOwnerConfigurable
         //----------------------------------------------------
-        virtual void Update();   
+		virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
 };
 
 #endif

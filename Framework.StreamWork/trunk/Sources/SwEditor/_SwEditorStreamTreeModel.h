@@ -103,7 +103,7 @@ namespace StreamWork
             // Interface observeur
             //------------------------------------------------------------
             /*! \brief methode appelée par l'observable*/
-	        virtual void Update();
+			virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
             //-------------------------------------------------------------
             // Interface ISwQAbstractItemViewSlots
             //------------------------------------------------------------

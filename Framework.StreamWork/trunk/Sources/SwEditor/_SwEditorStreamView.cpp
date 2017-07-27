@@ -101,7 +101,7 @@ void _SwEditorStreamView::AfterInterfaceAvailabilityChange(QString interface_nam
 // Interface ISwObserver
 //---------------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
-void _SwEditorStreamView::Update() {
+void _SwEditorStreamView::Update(StreamWork::SwCore::ISwObservable* sender) {
     if (_manager->GetCurrentStreamGraphicScene()!=NULL) {
         _view->setScene(_manager->GetCurrentStreamGraphicScene()->GetRelatedScene());
         _view->sceneUpdated();

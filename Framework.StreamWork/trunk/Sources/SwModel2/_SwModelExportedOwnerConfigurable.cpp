@@ -100,7 +100,7 @@ void _SwModelExportedOwnerConfigurable::Notify()
     }
 }  
 /*! \brief Permet notifier aux observers un changement */
-void _SwModelExportedOwnerConfigurable::Update()
+void _SwModelExportedOwnerConfigurable::Update(StreamWork::SwCore::ISwObservable* sender)
 {
 
     Notify();

@@ -193,7 +193,7 @@ namespace StreamWork
             // Sur mise a jour
             //---------------------------------------------------------------------
 	        /*! \brief methode appelée par l'observable*/
-	        void Update();
+			void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
 	        /*! \brief Active le capacite de selection des items dont le composant est selectionnable*/
 	        void SetSelectionModeOn();
 	        /*! \brief Desactive le capacite de selection des items dont le composant n'est selectionnable*/

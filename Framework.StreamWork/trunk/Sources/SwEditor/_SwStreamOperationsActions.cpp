@@ -149,7 +149,7 @@ QAction & _SwStreamOperationsActions::_ActionContainer::GetAction() {
 // Interface ISwObserver
 //---------------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
-void _SwStreamOperationsActions::Update() {
+void _SwStreamOperationsActions::Update(StreamWork::SwCore::ISwObservable* sender) {
     if (_selection==NULL) {
         _select_all->setEnabled(false);
         _select_none->setEnabled(false);

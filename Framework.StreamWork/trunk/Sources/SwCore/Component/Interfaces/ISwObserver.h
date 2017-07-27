@@ -13,6 +13,7 @@ namespace StreamWork
 {
     namespace SwCore
     {
+		class ISwObservable;
         /*!
         \interface ISwObserver
         \brief interface de tout observer (DP Observer)
@@ -22,7 +23,7 @@ namespace StreamWork
         class ISwObserver  {
         public:
 	        /*! \brief methode appelée par l'observable*/
-	        virtual void Update()=0;
+			virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr) = 0;
         };
     }
 }

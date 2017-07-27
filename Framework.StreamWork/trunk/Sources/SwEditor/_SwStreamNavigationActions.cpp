@@ -85,7 +85,7 @@ QWidget & _SwStreamNavigationActions::_WidgetContainer::GetWidget() {
 // Interface ISwObserver
 //---------------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
-void _SwStreamNavigationActions::Update() {
+void _SwStreamNavigationActions::Update(StreamWork::SwCore::ISwObservable* sender) {
     if (_navigator==NULL) {
 		_go_to_parent->setEnabled(false);
 		_current_path->setEnabled(false);

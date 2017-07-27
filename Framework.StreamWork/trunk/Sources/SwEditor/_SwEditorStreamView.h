@@ -78,7 +78,7 @@ namespace StreamWork
             // Interface ISwObserver
             //---------------------------------------------------------------------
 	        /*! \brief methode appelée par l'observable*/
-	        void Update();
+			void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
 
         };
     }
