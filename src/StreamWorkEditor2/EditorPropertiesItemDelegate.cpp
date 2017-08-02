@@ -1,8 +1,8 @@
 /**
 @file EditorPropertiesItemDelegate.cpp
-@brief
+@brief 
 @author Big
-*/
+ */
 
 #include "EditorPropertiesItemDelegate.h"
 #include <SwPropertiesModelImpl.h>
@@ -12,42 +12,33 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
-
-//-----------------------------------------------------------------------
-EditorPropertiesItemDelegate::EditorPropertiesItemDelegate(QObject *parent) :SwGuiDefaultItemDelegate(parent)
-{
+/** @brief Constructor */
+EditorPropertiesItemDelegate::EditorPropertiesItemDelegate(QObject *parent):SwGuiDefaultItemDelegate(parent) {
 	//TO DO creation
 }
-
-//-----------------------------------------------------------------------
-EditorPropertiesItemDelegate::~EditorPropertiesItemDelegate()
-{
-	//TO DO destruction
+/** @brief Destructor */
+EditorPropertiesItemDelegate::~EditorPropertiesItemDelegate() {
+  //TO DO destruction
 }
+/** @brief paint */
+void EditorPropertiesItemDelegate::paint ( QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index ) const {
+    SwGuiDefaultItemDelegate::paint(painter,option,index);
 
-//-----------------------------------------------------------------------
-void EditorPropertiesItemDelegate::paint(QPainter * painter, const QStyleOptionViewItem & option, const QModelIndex & index) const
-{
-	SwGuiDefaultItemDelegate::paint(painter, option, index);
-
-	if ( !index.isValid() || index.column() != 0 )
-		return;
-	QVariant value = index.model()->data(index, Qt::UserRole);
-	void * ptr = value.value<void*>();
-	if ( ptr == 0 )
-	{
-		return;
-	}
-	ISwProperty * p = (ISwProperty *) ptr;
-	ISwProperty2 * rp = dynamic_cast<ISwProperty2 *>(p);
-	if ( rp == 0 || !rp->HasChanged() || !rp->isResettable() )
-	{
-		return;
-	}
-	if ( (option.state & QStyle::State_MouseOver) == QStyle::State_MouseOver )
-	{
-		QIcon ico(":/StreamWorkEditor2/reset.png");
-		ico.paint(painter, QRect(option.rect.right() - 17, option.rect.top(), 17, 17));
-	}
+    if (!index.isValid() || index.column()!=0) 
+        return;
+    QVariant value = index.model()->data(index, Qt::UserRole);
+    void * ptr=value.value<void*>();
+    if(ptr==0) {
+        return;
+    }
+    ISwProperty * p=(ISwProperty *)ptr;
+    ISwProperty2 * rp=dynamic_cast<ISwProperty2 *>(p);
+    if (rp==0 || !rp->HasChanged() || !rp->isResettable()) {
+        return;
+    }
+    if ((option.state & QStyle::State_MouseOver)==QStyle::State_MouseOver) {
+        QIcon ico(":/StreamWorkEditor2/reset.png");
+        ico.paint(painter,QRect(option.rect.right()-17,option.rect.top(),17,17));
+    }
 
 }

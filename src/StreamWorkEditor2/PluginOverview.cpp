@@ -1,6 +1,8 @@
 #include "PluginOverview.h"
 #include "PluginsListModel.h"
 #include <QScrollBar>
+#include "EditDoc.h"
+
 #if QT_VERSION >= 0x050000
 #include <QtWidgets>
 #else
@@ -13,12 +15,14 @@
 #include <QtConcurrentRun>
 #endif
 
+//#include "..\SwDoc\MultiTagCompleter.h"
 
-//-----------------------------------------------------------------------
-PluginOverview::PluginOverview(bool isGraphViewHosted, QPalette graphPalette, QWidget *parent)
+
+PluginOverview::PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette graphPalette,QWidget *parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
+	_doc = new EditDoc();
 
 	ui.LE_search->setText(DefaultSearchText);
 
@@ -46,9 +50,12 @@ PluginOverview::PluginOverview(bool isGraphViewHosted, QPalette graphPalette, QW
         ui.lviewComponents->horizontalScrollBar()->setStyleSheet(ScrollBarHorizontalStyle);
     }
 
+	ui.lviewComponents->connect(ui.lviewComponents->selectionModel(),SIGNAL( currentChanged(const QModelIndex &, const QModelIndex &)),_doc,SLOT(onSelectedComponentChanged(const QModelIndex&)));
+	ui.lviewComponents->connect(ui.lviewComponents,SIGNAL(  clicked ( const QModelIndex &)),_doc,SLOT(onSelectedComponentChanged(const QModelIndex&)));
+
 	setPalette(graphPalette);
 	setAutoFillBackground(true);
-	//ui.LE_search->setPalette(graphPalette);
+	ui.LE_search->setPalette(graphPalette);
 
 	//Connect
 	connect(ui.PB_clear,SIGNAL(clicked()),this,SLOT(resetSearchText()));
@@ -56,9 +63,11 @@ PluginOverview::PluginOverview(bool isGraphViewHosted, QPalette graphPalette, QW
 	
 	ui.LE_search->installEventFilter(this);
 	_pal = graphPalette;
+
+
+	//QObject::connect(&_futureWatcher, SIGNAL(finished()), this, SLOT(setCompleter()));
 }
 
-//-------------------------------------------------------------------------
 PluginOverview::~PluginOverview()
 {
 
@@ -98,23 +107,21 @@ void PluginOverview::doSearch( const QString&text )
 		return;
 	}
 
-	//Find the text on the database
-	// A mettre dans un thread si latence trop importante
-	QStringList componentToDisplay;
+	QStringList keywords = text.split(",",QString::SkipEmptyParts);
+	QStringList::Iterator it = keywords.begin();
 
-	QMap<QString, StreamWork::SwCore::SwPluginFactory_Class *> * allPlugins = SW_APP->ComponentsBank().GetAllPlugins();
-
-	QMapIterator<QString, StreamWork::SwCore::SwPluginFactory_Class *> itPlugins(*allPlugins);
-	while (itPlugins.hasNext())
+	//On trimmed les mots clés et on ignore les mots clés inférieur a 3 lettres
+	for(it ; it != keywords.end() ; )
 	{
-		itPlugins.next();
-		QSet<QString> components = itPlugins.value()->GetComponentsList();
-		for (QString componentName : components)
-		{
-			if (componentName.contains(text, Qt::CaseInsensitive))
-				componentToDisplay << componentName;
-		}
+		*it = it->trimmed();
+		if(it->size() < 3)
+			it = keywords.erase(it);
+		else
+			it++;
 	}
+
+	//Find the text on the database
+	QStringList componentToDisplay =  _doc->getListOfComponentName(keywords);
 
 	_componentModel->manageList(componentToDisplay);
 
@@ -122,6 +129,11 @@ void PluginOverview::doSearch( const QString&text )
 	QList<int> sizeWid;
 	sizeWid << 100 << 0;
 	ui.splitter->setSizes(sizeWid);
+}
+
+QStringList doCompleterFill(EditDoc *_doc)
+{
+	return _doc->getSearchStringList();
 }
 
 //-------------------------------------------------------------------------
@@ -140,8 +152,25 @@ bool PluginOverview::eventFilter( QObject *obj, QEvent *event )
 		{
 			if(ui.LE_search->text() == DefaultSearchText)
 				ui.LE_search->setText("");
+
+			//Permet de faire la requete de recherche de tous les composants qu'une fois au click
+			_futureWatcher.setFuture(QtConcurrent::run(doCompleterFill,_doc));
 		}
 	}
 
 	return ret;
 }
+
+//-------------------------------------------------------------------------
+// void PluginOverview::setCompleter()
+// {
+//  	MultiTagCompleter *completer = new MultiTagCompleter(_futureWatcher.result(), this);
+//  	completer->setCaseSensitivity(Qt::CaseInsensitive);
+//  	completer->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
+//  
+//  	completer->popup()->setPalette(_pal);
+//  	//Make the search and display result to listView
+//  	ui.LE_search->setCompleter(completer);
+//  
+//  	QObject::connect(completer,SIGNAL(activated(const QString&)),this, SLOT(doSearch(const QString&)));
+// }

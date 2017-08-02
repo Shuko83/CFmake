@@ -7,6 +7,8 @@
 #include <QFutureWatcher>
 #include "ComponentListModel.h"
 
+class  EditDoc;
+
 static const char * ScrollBarVerticalStyle = " \
 											 QScrollBar:vertical { \
 											 border: 0px; \
@@ -76,7 +78,7 @@ class PluginOverview : public QWidget
 	Q_OBJECT
 
 public:
-	PluginOverview(bool isGraphViewHosted,QPalette graphPalette,QWidget *parent = 0);
+	PluginOverview(EditDoc* doc,bool isGraphViewHosted,QPalette graphPalette,QWidget *parent = 0);
 	~PluginOverview();
 
 	bool eventFilter(QObject *obj, QEvent *event);
@@ -91,10 +93,17 @@ public slots:
 	 * @param	 : const QString & text - text a rechercher
 	 */
 	void doSearch(const QString&text);
+	
+	/**
+	 * @brief    : Au cas ou on veut remettre un completer mais pour le moment on le fait pas
+	 */
+	//void setCompleter();
 
 private:
 	Ui::PluginOverview ui;
+	EditDoc* _doc;
 	QPalette _pal;
+	QFutureWatcher<QStringList> _futureWatcher;
 	ComponentListModel * _componentModel;
 
 };

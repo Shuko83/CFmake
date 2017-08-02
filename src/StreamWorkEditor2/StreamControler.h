@@ -187,7 +187,7 @@ private:
     /** @brief dernier composant ajoute */
     ComponentGraphicItem * _lastAddedComponent;
     /** @brief is existing stream */
-    bool _isExistingStream;
+    boolean _isExistingStream;
 
 };
 

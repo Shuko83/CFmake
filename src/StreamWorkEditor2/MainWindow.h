@@ -19,6 +19,7 @@
 #include "QInterestAreaTreeModel.h"
 #include "PropertiesWidget.h"
 #include "ISelectionObserver.h"
+#include "EditDoc.h"
 
 /**
 @class MainWindow
@@ -38,7 +39,6 @@ public:
     /** @brief getEditors */
 	static QMap<StreamWork::SwCore::SwComponent_Class *,MainWindow *> * getEditors();
 
-	void setIsMasterWindow(bool val);
 public slots:
     /** @brief sur new stream */
     void onNewStream();
@@ -104,9 +104,6 @@ private:
 
 	QMenu * _streamMenu;
 
-
-	/** @brief To be able to clean other windows on close*/
-	bool _isMasterWindow;
 
 };
 

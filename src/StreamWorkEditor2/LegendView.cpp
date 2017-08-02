@@ -7,8 +7,8 @@ LegendView::LegendView(QWidget *parent)
 	_formLayout = new QGridLayout (this);
 	_formLayout->setSpacing(5);
 	_formLayout->setMargin(2);
-
 	connect(ManageLinkColor::getInstance(),SIGNAL(colorHasChange()),this,SLOT(updateLegend()));
+
 	updateLegend();
 }
 
