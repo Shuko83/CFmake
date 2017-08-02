@@ -3,8 +3,8 @@
 #include "ui_SwDockWidget_DockWidget.h"
 
 //-----------------------------------------------------------------------------
-SwDockWidget_MainDockWidget::SwDockWidget_MainDockWidget(QWidget * parent, QString name, Qt::DockWidgetArea area, bool withAddButton)
- : SwDockWidget_DockWidget(parent), _area(area)
+SwDockWidget_MainDockWidget::SwDockWidget_MainDockWidget(QWidget * parent, QString name, bool withAddButton)
+ : SwDockWidget_DockWidget(parent)
 {
 	this->setObjectName(name);
 
@@ -13,9 +13,11 @@ SwDockWidget_MainDockWidget::SwDockWidget_MainDockWidget(QWidget * parent, QStri
 	hideFrame();
 
 	//Creation d'onglets
-	_tab = new SwDockWidget_MainTabWidget(this, withAddButton, area);
+	_tab = new SwDockWidget_MainTabWidget(this, withAddButton);
 	setWidget(_tab);
-	connect(_tab, SIGNAL(moveTabRequested(int, Qt::DockWidgetArea)), this, SIGNAL(moveTabRequested(int, Qt::DockWidgetArea)));
+	connect(_tab, SIGNAL(moveTabRequested(QPoint)), this, SIGNAL(moveTabRequested(QPoint)));
+	connect(_tab, SIGNAL(freeTabRequested(int, QPoint)), this, SIGNAL(freeTabRequested(int, QPoint)));
+	connect(_tab, SIGNAL(stopMovingTabRequested()), this, SIGNAL(stopMovingTabRequested()));
 	connect(_tab, SIGNAL(currentChanged(int)), this, SLOT(updateContents()));
 
 	//Suppression du spacer present par defaut dans un DockWidget
@@ -28,7 +30,7 @@ SwDockWidget_MainDockWidget::SwDockWidget_MainDockWidget(QWidget * parent, QStri
 //-----------------------------------------------------------------------------
 SwDockWidget_MainDockWidget::~SwDockWidget_MainDockWidget()
 {
-	
+
 }
 
 //-----------------------------------------------------------------------------
@@ -118,7 +120,7 @@ void SwDockWidget_MainDockWidget::removeWidget(int index)
 void SwDockWidget_MainDockWidget::updateContents()
 {
 	//Si un onglet est vide, on le supprime
-	/*int index = 0;
+	int index = 0;
 	while(index < _tab->count())
 	{
 		QWidget * widget = _tab->widget(index);
@@ -133,7 +135,7 @@ void SwDockWidget_MainDockWidget::updateContents()
 		}
 		//Passage a l'onglet suivant
 		index++;
-	}*/
+	}
 
 	//S'il n'y a plus aucun onglet, on masque le dock principal
 	if (_tab->count() == 0)

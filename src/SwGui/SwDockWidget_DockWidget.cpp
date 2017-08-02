@@ -132,6 +132,8 @@ void SwDockWidget_DockWidget::setWidget(QWidget * widget)
 	}
 	else
 	{
+		_widget->setParent(NULL);
+
 		//Creation d'un widget vide provisoire
 		_emptyWidget = new QWidget();
 		_widget = _emptyWidget;
@@ -152,7 +154,6 @@ void SwDockWidget_DockWidget::setTitle(QString title)
 	{
 		//Mise a jour du nom du SwDockWidget_DockWidget
 		_title = title;
-		_toolBarItemName = title;
 		this->setObjectName(title);
 		setTextToLabel(ui->L_Title, _title);
 		//Mise a jour du bouton d'affichage du widget
@@ -422,7 +423,7 @@ bool SwDockWidget_DockWidget::event( QEvent * event )
 					showShadow();
 					updateBtn();
 					//Transparent aux evenements souris pour ne pas masquer les zones dockables
-					setAttribute(Qt::WA_TransparentForMouseEvents, false);
+					setAttribute(Qt::WA_TransparentForMouseEvents);
 					//Si dock libere mais masque, mise a jour du bouton d'action
 					if (!this->isVisible() && _action)
 						_action->setChecked(false);
@@ -484,7 +485,6 @@ void SwDockWidget_DockWidget::setMoving(bool state)
 	}
 	else
 	{
-		setAttribute(Qt::WA_TransparentForMouseEvents, false);
 		_canMove = false;
 		setCursor (Qt::ArrowCursor);
 		setWindowOpacity(1);
@@ -1120,15 +1120,3 @@ void SwDockWidget_DockWidget::blink()
 	}
 }
 
-//-----------------------------------------------------------------------------
-void SwDockWidget_DockWidget::setToolbarItemName(QString name)
-{
-	if (_toolBarItemName != name && !name.isEmpty())
-		_toolBarItemName = name;
-}
-
-//-----------------------------------------------------------------------------
-QString SwDockWidget_DockWidget::getToolbarItemName()
-{
-	return _toolBarItemName;
-}

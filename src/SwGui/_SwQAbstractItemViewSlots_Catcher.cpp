@@ -24,21 +24,21 @@ void _SwQAbstractItemViewSlots_Catcher::DefineInterfaceSlots(ISwQAbstractItemVie
 	_handle_interface=handle_inteface;
 }
 /*! \brief Filtre d'evenement (envoie les etats sourie a l'interface ISwQAbstractItemViewSlots); */
-bool _SwQAbstractItemViewSlots_Catcher::eventFilter(QObject * /*obj*/, QEvent *event) {
+bool _SwQAbstractItemViewSlots_Catcher::eventFilter(QObject *obj, QEvent *event) {
     
     if (_handle_interface==NULL)
         return false;
     QEvent::Type t=event->type();
-    if ((t == QEvent::MouseButtonPress) ||
-        (t == QEvent::MouseButtonRelease)||
-        (t == QEvent::MouseMove)||
-        (t == QEvent::MouseButtonDblClick)) {
+    if ((event->type() == QEvent::MouseButtonPress) ||
+        (event->type() == QEvent::MouseButtonRelease)||
+        (event->type() == QEvent::MouseMove)||
+        (event->type() == QEvent::MouseButtonDblClick)) {
         QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
         if (_handle_interface!=NULL) {
             _handle_interface->onMouseEvent(mouseEvent);
         }
     }
-    if (t=QEvent::KeyPress) {
+    if (event->type()==QEvent::KeyPress) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->matches(QKeySequence::HelpContents)) {
             _handle_interface->onHelp();

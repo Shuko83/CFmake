@@ -26,10 +26,9 @@
 #include "ISwLayout.h"
 #include "ISwWidget.h"
 
-#include <QDebug>
+
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
-
 
 /*!
 	\class _SwGuiCompVBoxLayout 

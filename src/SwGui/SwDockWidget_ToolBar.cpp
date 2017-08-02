@@ -123,11 +123,15 @@ void SwDockWidget_ToolBar::setMoving(bool state)
 	if (state)
 	{
 		//Pendant le deplacement d'un bouton, on masque la barre de titre et le fond pour ne laisser visible que le bouton
+		//setStyleSheet("#Frame{background:#353535} #Content{background:transparent;}");
+		//setStyleSheet("#Content{background:transparent;}");
 		ui.Frame->hide();
 	}
 	else
 	{
 		//A la fin du deplacement, on restaure le fond et la barre de titre
+		//setStyleSheet("#Frame{background:#353535} #Content{border:1px solid #AAA;background:#707070;}");
+		//setStyleSheet("#Content{border:1px solid #AAA;background:#707070;}");
 		ui.Frame->show();
 	}
 }
@@ -182,6 +186,7 @@ void SwDockWidget_ToolBar::mouseMoveEvent( QMouseEvent * event )
 		{
 			setWindowOpacity(0.6);
 
+			//move(mapToGlobal(event->pos() - _clickPos));
 			QPoint point = getAdjustedPosition(mapToGlobal(event->pos() - _clickPos));
 			point = checkStuckPosition(point.x(), point.y());
 			move(point);
@@ -276,16 +281,11 @@ bool SwDockWidget_ToolBar::eventFilter( QObject *obj , QEvent * event )
 					}
 				}
 				break;
-
-			case QEvent::Resize:
-				updateSize();
-				break;
 		}
-		//return false;
+		return false;
 	}
 
-	//return QWidget::eventFilter(obj, event);
-	return false;
+	return QWidget::eventFilter(obj, event);
 }
 
 //-----------------------------------------------------------------------------
@@ -297,10 +297,7 @@ void SwDockWidget_ToolBar::addItem(QWidget * widget)
 		widget->installEventFilter(this);
 		SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(widget);
 		if (item)
-		{
 			item->setOrientation(_orientation);
-			connect(item, SIGNAL(renameFinished()), this, SLOT(fixSize()));
-		}
 		
 		updateSize();
 	}
@@ -345,10 +342,7 @@ void SwDockWidget_ToolBar::addItem(QWidget * widget, QPoint pos)
 		widget->installEventFilter(this);
 		SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(widget);
 		if (item)
-		{
 			item->setOrientation(_orientation);
-			connect(item, SIGNAL(renameFinished()), this, SLOT(fixSize()));
-		}
 		
 		updateSize();
 	}
@@ -363,10 +357,6 @@ void SwDockWidget_ToolBar::removeItem(QWidget * widget)
 
 		if (_layout->indexOf(widget) >= 0)
 			_layout->removeWidget(widget);
-
-		SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(widget);
-		if (item)
-			disconnect(item, SIGNAL(renameFinished()), this, SLOT(fixSize()));
 
 		updateSize();
 	}

@@ -13,11 +13,7 @@
 * INCLUDES GLOBAUX
 */
 #include <QList>  
-
-/*
-* INCLUDES LOCAUX
-*/
-#include "SwDockWidget_DockWidget.h"
+#include <ISwDockWidget.h>
 
 namespace StreamWork
 {
@@ -40,13 +36,13 @@ namespace StreamWork
 			 * @param	 : widget - Pointeur vers le DockWidget ajouté
 			 * @param	 : menuName - Nom de la liste pour affichage dans un menu
 			 */
-			virtual void addDockWidget(SwDockWidget_DockWidget * widget, QString menuName) = 0;
+			virtual void addDockWidget(ISwDockWidget * widget, QString menuName) = 0;
 
 			/**
 			 * @brief    : Suppression d'un DockWidget
 			 * @param	 : DockWidget * widget - Pointeur vers le DockWidget supprimé
 			 */
-			virtual void removeDockWidget(SwDockWidget_DockWidget *widget) = 0;
+			virtual void removeDockWidget(ISwDockWidget *widget) = 0;
 
 		};
 	}

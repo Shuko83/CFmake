@@ -18,7 +18,7 @@ public:
 	SwDockWidget_Splitter(QWidget *parent = 0);
 	~SwDockWidget_Splitter();
 
-	void fill(QWidget * widget1, QWidget * widget2, Qt::DockWidgetArea area, Qt::DockWidgetArea parentArea = Qt::NoDockWidgetArea, int maxSize = 0);
+	void fill(QWidget * widget1, QWidget * widget2, Qt::DockWidgetArea area, Qt::DockWidgetArea parentArea = Qt::NoDockWidgetArea);
 	void addWidget(QWidget * widget, int pos, Qt::DockWidgetArea area = Qt::NoDockWidgetArea);
 	void replaceWidget(QWidget * widget, int pos);
 

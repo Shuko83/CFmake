@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <io.h>
-#include <iostream>
 #include "_SwGuiConsole.h"
 
 using namespace StreamWork::SwCore;

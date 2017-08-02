@@ -46,7 +46,7 @@ SwDockWidget_Splitter::~SwDockWidget_Splitter()
 
 //-----------------------------------------------------------------------------
 //Ajout des deux widgets
-void SwDockWidget_Splitter::fill(QWidget * widget1, QWidget * widget2, Qt::DockWidgetArea area, Qt::DockWidgetArea parentArea, int maxSize)
+void SwDockWidget_Splitter::fill(QWidget * widget1, QWidget * widget2, Qt::DockWidgetArea area, Qt::DockWidgetArea parentArea)
 {
 	if (widget1 && widget2)
 	{
@@ -83,26 +83,18 @@ void SwDockWidget_Splitter::fill(QWidget * widget1, QWidget * widget2, Qt::DockW
 		switch(area)
 		{
 			case Qt::LeftDockWidgetArea:
-				if (maxSize && size1.width()>maxSize)
-					size1.setWidth(maxSize);
 				size2.setWidth(qMax(size2.width() - size1.width(),10));
 				break;
 
 			case Qt::RightDockWidgetArea:
-				if (maxSize && size2.width()>maxSize)
-					size2.setWidth(maxSize);
 				size1.setWidth(qMax(size1.width() - size2.width(),10));
 				break;
 
 			case Qt::TopDockWidgetArea:
-				if (maxSize && size1.height()>maxSize)
-					size1.setHeight(maxSize);
 				size2.setHeight(qMax(size2.height() - size1.height(),10));
 				break;
 
 			case Qt::BottomDockWidgetArea:
-				if (maxSize && size2.height()>maxSize)
-					size2.setHeight(maxSize);
 				size1.setHeight(qMax(size1.height() - size2.height(),10));
 				break;
 		}

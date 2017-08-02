@@ -11,7 +11,7 @@ class SwDockWidget_MainDockWidget : public SwDockWidget_DockWidget
 	Q_OBJECT
 
 public:
-	SwDockWidget_MainDockWidget(QWidget * parent = 0, QString name = "", Qt::DockWidgetArea area = Qt::NoDockWidgetArea, bool withAddButton = true);
+	SwDockWidget_MainDockWidget(QWidget * parent = 0, QString name = "", bool withAddButton = true);
 	~SwDockWidget_MainDockWidget();
 
 	void addWidget(QWidget * widget, QString name = "", QSize * size = 0);
@@ -39,14 +39,13 @@ public slots:
 	void updateContents();
 
 signals:
-	void moveTabRequested(int index, Qt::DockWidgetArea area);
-	//void freeTabRequested(int index, QPoint pos);
-	//void stopMovingTabRequested();
+	void moveTabRequested(QPoint pos);
+	void freeTabRequested(int index, QPoint pos);
+	void stopMovingTabRequested();
 
 private:
 	SwDockWidget_MainTabWidget * _tab;
 	QString _styleSheet;
-	Qt::DockWidgetArea _area;
 };
 
 #endif

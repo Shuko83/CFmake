@@ -5,7 +5,9 @@
 #include "SwGuiConstantes.h"
 #include "ui__QRcViewerUi.h"
 
-class SWGUI_EXPORT _QRcViewer : public QDialog, public Ui::_QRcViewerUi
+using namespace Ui;
+
+class SWGUI_EXPORT _QRcViewer : public QDialog, public _QRcViewerUi
 {
 	Q_OBJECT
 

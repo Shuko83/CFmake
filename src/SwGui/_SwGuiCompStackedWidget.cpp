@@ -20,7 +20,7 @@ using namespace StreamWork::SwGui;
 /*****************************************************************************/
 _SwGuiCompStackedWidget::_SwGuiCompStackedWidget(): SwComponent_Class()
 {
-    _provider_service=NULL;
+	_provider_service=NULL;
     _consumer_service=NULL;
     _properties_service=NULL;
     _stackedWidget=NULL;
@@ -56,7 +56,7 @@ _SwGuiCompStackedWidget::~_SwGuiCompStackedWidget()
 /*****************************************************************************/
 void _SwGuiCompStackedWidget::InitializeResources() throw(SwException) 
 {
-    //Creation des service
+	//Creation des service
     _consumer_service		= new SwInterfaces_Consumer_Class(this) ;
     _provider_service		= new SwInterfaces_Provider_Class(this) ;
     _properties_service		= new SwProperties_Class(this);
@@ -85,6 +85,7 @@ void _SwGuiCompStackedWidget::InitializeResources() throw(SwException)
 	{
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register nb_page property\n"));
     }
+
     _stackedWidgets_nb_property->SetDescription("Define how many ISwWidget interfaces this component accept");
     _stackedWidgets_nb_property->SetValue(QVariant(_stackedWidgets_nb));
     _stackedWidgets_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompStackedWidget::OnPropertyChange);
@@ -163,7 +164,7 @@ void _SwGuiCompStackedWidget::OnPropertyChange(ISwProperty * property)
 /*****************************************************************************/
 void _SwGuiCompStackedWidget::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) 
 {
-    QMap<QString,ISwWidget *>::iterator widget_it;
+	QMap<QString,ISwWidget *>::iterator widget_it;
 
     //Si c'est un menu
     widget_it=_widgets.find(interface_name);

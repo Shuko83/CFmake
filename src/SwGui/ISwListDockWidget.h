@@ -47,7 +47,7 @@ namespace StreamWork
 			/**
 			 * @brief	Renvoi le nom du widget
 			 */
-			virtual QString getDockWidgetName() = 0;
+			virtual QString getName() = 0;
 		};
 	}
 }

@@ -55,7 +55,7 @@ void SwDockWidget_ToolBarWindow::addInToolBar(QWidget * widget, QWidget * toolba
 	if (widget && tb)
 	{
 		//Creation d'un bouton pour le dock actif
-		SwDockWidget_ToolBarItem * tbi = new SwDockWidget_ToolBarItem(dock, dock->getToolbarItemName(), tb, tb->getTitleBarSize());
+		SwDockWidget_ToolBarItem * tbi = new SwDockWidget_ToolBarItem(dock, dock->getTitle(), tb, tb->getTitleBarSize());
 		//Mise a jour de l'etat du dock
 		dock->setInToolBar(true, tbi);
 		//Ajout du bouton dans la toolbar

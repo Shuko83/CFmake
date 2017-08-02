@@ -85,7 +85,7 @@ namespace StreamWork
 			/*! \brief destructeur */
 			_SwPropertiesModelImpl();
 			/*! \brief definit les propriétés */
-            void SetProperties(SwCore::ISwProperties * properties);
+            void SetProperties(SwCore::ISwProperties * properties,QString root_name);
 			/*! \brief callback sur changement de controle */
             void OnControlChange(SwCore::ISwProperty * property,SwCore::ISwController *new_controller,SwCore::ISwController *old_controller);
 			/*! \brief callback avant changement */

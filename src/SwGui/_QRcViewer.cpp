@@ -17,6 +17,7 @@ _QRcViewer::_QRcViewer(QDialog *parent): QDialog(parent)
 	while (itDir.hasNext()) 
 	{
 		QString currentName = itDir.next();
+
 		if(!QFileInfo(currentName).isDir() && QFileInfo(currentName).suffix() != "html")
 		{
 			QString filename = currentName.mid(currentName.lastIndexOf("/")+1);

@@ -67,7 +67,4 @@ SwDockWidget_DockWidget & _SwGuiCompQDockToDock::GetDockWidget()
 	//Attention ca risque de crasher si on connect la sortie avant l'entrée
 	if (_dock)
 		return (*_dock);
-
-	//Pour éviter le warning
-	return *(new SwDockWidget_DockWidget());
 }

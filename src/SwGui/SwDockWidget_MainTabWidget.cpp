@@ -4,12 +4,12 @@
 #include <QMessageBox>
 
 //-----------------------------------------------------------------------------
-SwDockWidget_MainTabWidget::SwDockWidget_MainTabWidget(QWidget * parent, bool withAddButton, Qt::DockWidgetArea area)
- : SwDockWidget_TabWidget(parent), _lock(false), _addWidget(NULL), _area(area)
+SwDockWidget_MainTabWidget::SwDockWidget_MainTabWidget(QWidget * parent, bool withAddButton)
+ : SwDockWidget_TabWidget(parent), _lock(false), _addWidget(NULL)
 {
-	SwDockWidget_MainTabBar * tabBar = new SwDockWidget_MainTabBar(this, area);
+	SwDockWidget_MainTabBar * tabBar = new SwDockWidget_MainTabBar(this);
 	setTabBar(tabBar);
-	//setMovable(true); //Si option active, il faut gerer le cas de l'onglet "+" qui doit rester en derniere position
+	//setMovable(true);
 	setTabsClosable(true);
 	
 	//Creation d'un onglet vide pour l'ajout d'un nouvel onglet
@@ -20,10 +20,11 @@ SwDockWidget_MainTabWidget::SwDockWidget_MainTabWidget(QWidget * parent, bool wi
 
 	connect(this, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 	connect(this, SIGNAL(currentChanged(int)), this, SLOT(updateCurrent(int)));
-
-	connect(tabBar, SIGNAL(moveTabRequested(int, Qt::DockWidgetArea)), this, SIGNAL(moveTabRequested(int, Qt::DockWidgetArea)));
+	
+	connect(tabBar, SIGNAL(moveTabRequested(QPoint)), this, SIGNAL(moveTabRequested(QPoint)));
+	connect(tabBar, SIGNAL(freeTabRequested(int, QPoint)), this, SIGNAL(freeTabRequested(int, QPoint)));
+	connect(tabBar, SIGNAL(stopMovingTabRequested()), this, SIGNAL(stopMovingTabRequested()));
 	connect(tabBar, SIGNAL(insertNewTab()), this, SLOT(insertNewTab()));
-	connect(tabBar, SIGNAL(closeTabRequested(int)), this, SLOT(closeTab(int)));
 
 }
 
@@ -86,8 +87,8 @@ void SwDockWidget_MainTabWidget::closeTab(int index)
 		}
 	}
 
-	//Suppression de l'onglet
-	//if (empty)
+	//Suppression de l'onglet (fait automatiquement lors de la suppression du widget)
+	if (empty)
 		this->removeTab(index);
 
 	//Mise a jour de l'onglet actif

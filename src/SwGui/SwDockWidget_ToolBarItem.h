@@ -2,8 +2,6 @@
 #define SWDOCKWIDGET_TOOLBARITEM_H
 
 #include <QToolButton>
-#include <QMenu>
-#include <QLineEdit>
 
 class SwDockWidget_ToolBarItem : public QToolButton
 {
@@ -29,41 +27,24 @@ public:
 signals:
 	void isMoving(QPoint pos);
 	void stopMoving();
-	void renameFinished();
-
-protected slots:
-	void removeAction();
-
-	void renameAction();
-	void renameTemporarily(QString name);
-	void renameItem();
-	void cancelNameEdit();
 
 protected:
 	//Evenements
 	virtual void mousePressEvent( QMouseEvent * event );
 	virtual void mouseReleaseEvent( QMouseEvent * event );
 	virtual void mouseMoveEvent( QMouseEvent * event );
-	virtual void keyPressEvent(QKeyEvent * event);
-	virtual bool eventFilter( QObject *obj , QEvent * event );
 
 private:
 	void showWidget();
 	QPoint setPosition();
-	void setMenu();
-	void connectNameEdit();
-	void disconnectNameEdit();
 
 private:
 	QWidget * _widget;
 	QWidget * _toolBar;
 	Qt::Orientation _orientation;
 	QSize _titleBarSize;
-	QMenu * _menu;
-	QString _name;
 
 	QWidget * _tempMovingItem;
-	QLineEdit * _nameEdit;
 
 	//Parametres de deplacement
 	bool _canMove;
