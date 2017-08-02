@@ -24,7 +24,7 @@
 #endif
 
 
-#ifdef SWRECORD_LIB
+#ifdef SwRecord_LIB
 #define SwRecord_EXPORT Q_DECL_EXPORT
 #define SwRecord_DECLARE_UUID(name) SW_EXTERN_C Q_DECL_EXPORT const StreamWork::SwCore::SwUUID name;
 #else

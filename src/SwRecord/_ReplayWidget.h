@@ -10,7 +10,6 @@
 #include <QtGui>
 #include <QtCore>
 #include "ISwReplayListener.h"
-#include <QWidget>
 
 using namespace StreamWork::SwRecord;
 /**

@@ -6,7 +6,6 @@
 
 #include "_SwServiceRecording.h"
 #include <SwApplication.h> 
-#include <SwMacros.h>
 #include <QDebug>
 
 /** @brief Constructor */
