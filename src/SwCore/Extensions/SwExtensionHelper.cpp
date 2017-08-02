@@ -7,7 +7,7 @@
 #include "SwExtensionHelper.h"
 #include "ISwInterfaces_Provider.h"
 #include "ISwInterfaces_Provider.h"
-#include "SwExtensionImpl.h"
+#include "_SwExtensionImpl.h"
 #include "ISwInterfaces_Consumer.h"
 #include "_SwExtensionPointImpl.h"
 
@@ -61,7 +61,7 @@ QList<ISwExtension *> SwExtensionHelper::getAllExtensions() {
         QString name=iprovider->GetFirstInterface();
         while (!name.isNull()) {
             QString type=iprovider->GetInterfaceType(name);
-            liste_extensions.push_back(new SwExtensionImpl(type,name,_component->GetFactoryComponentName(),_component));
+            liste_extensions.push_back(new _SwExtensionImpl(type,name,_component->GetFactoryComponentName(),_component));
             name=iprovider->GetNextInterface();
         }  
     }
@@ -72,7 +72,7 @@ ISwExtension * SwExtensionHelper::getExtension(QString type,QString name) {
     QList<ISwExtension *> liste_extensions;
     ISwInterfaces_Provider *iprovider=dynamic_cast<ISwInterfaces_Provider *>(_component->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
     if (iprovider!=0 && iprovider->InterfaceExist(name) && iprovider->GetInterfaceType(name)==type) {
-        return new SwExtensionImpl(type,name,_component->GetFactoryComponentName(),_component);
+        return new _SwExtensionImpl(type,name,_component->GetFactoryComponentName(),_component);
     }
     return 0;
 

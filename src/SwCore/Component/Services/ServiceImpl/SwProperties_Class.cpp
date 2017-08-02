@@ -10,7 +10,7 @@
 #include "_SwPropertyImpl_Class.h"
 #include "_SwPropertyImplForQOject_Class.h"
 #include "_SwPropertyImplSimpleTypeAdapter_Class.h"
-#include "SwPropertyPersistentToolbox.h"
+#include "_SwPropertyPersistent_Toolbox.h"
 #include "SwProperties_Class.h"
 #include "SwException.h"
 #include "SwApplication.h"
@@ -162,29 +162,6 @@ void SwProperties_Class::DestroyProperty(QString name) {
         _OnAfterChange(this);
     }    
 }
-
-/*! \brief Permet de detruire les propriétés commencant par name */
-void SwProperties_Class::DestroyPropertiesBeginWith(QString name){
-	QMap<QString, _SwPropertyImpl_Class *>::iterator it;
-
-	for (it = _map_properties.begin(); it != _map_properties.end();)
-	{
-		if (QString::compare(it.key().left(name.size()), name) == 0)
-		{
-			_OnBeforeChange(this);
-			it.value()->GetOnControlChangeSignal().idisconnect(*this, &SwProperties_Class::OnPropertyControlChange);
-			DestroySubProperties(it.value());
-			_OnDestroyProperty(this, (ISwProperty *)it.value());
-			_set_properties.removeAt(_set_properties.indexOf((ISwProperty *)it.value()));
-			delete it.value();
-			it = _map_properties.erase(it);
-			_OnAfterChange(this);
-		}
-		else
-			it++;
-	}
-}
-
 /*! \brief Permet d'acceder a une propriété*/
 ISwProperty * SwProperties_Class::GetProperty(QString name) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
@@ -301,9 +278,9 @@ SwComponent_Class * SwProperties_Class::GetHostComponent(){
 /*! \brief methode permettant de charger des donnees */
 void SwProperties_Class::Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager) {
     for(QDomElement elt_property = elt.firstChildElement(); !elt_property.isNull(); elt_property = elt_property.nextSiblingElement())
-    {
-        SwPropertyPersistentToolbox::LoadProperty(elt_property,this);
-    }
+	{
+		_SwPropertyPersistent_Toolbox::LoadProperty(elt_property,this);
+	}
 }
 /*! \brief methode permettant de sauver des donnees
 (dans l'ordre d'enregistrement des données - important si des properties sont crées lors du load) */
@@ -312,7 +289,7 @@ void SwProperties_Class::Save(QDomElement & elt,QDomDocument & doc) {
     QDomElement elt_property;
 
     for (it=_set_properties.begin();it!=_set_properties.end();it++) {
-        SwPropertyPersistentToolbox::SaveProperty(elt,doc,(*it)->GetRealName(),this);
+        _SwPropertyPersistent_Toolbox::SaveProperty(elt,doc,(*it)->GetRealName(),this);
     }
 
 }

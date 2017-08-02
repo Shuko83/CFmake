@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9,00"
 	Name="SwCored"
-	ProjectGUID="{AD73DD76-E002-37B2-A69F-AA30D28F783B}"
+	ProjectGUID="{01E6F984-C53E-3746-9238-59FF4FFEC5ED}"
 	Keyword="Qt4VSv1.0">
 	<Platforms>
 		<Platform
@@ -44,8 +44,8 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Psapi.lib imagehlp.lib C:/StreamworkDev/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\debug\GeographicLibd.lib C:/StreamworkDev/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\debug\ExceptionManagerd.lib c:\Qt\4.7.3\lib\QtXmld4.lib c:\Qt\4.7.3\lib\QtGuid4.lib c:\Qt\4.7.3\lib\QtCored4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,C:/StreamworkDev/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\debug,C:/StreamworkDev/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\debug"
+				AdditionalDependencies="Psapi.lib imagehlp.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\debug\GeographicLibd.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\debug\ExceptionManagerd.lib c:\Qt\4.7.3\lib\QtXmld4.lib c:\Qt\4.7.3\lib\QtGuid4.lib c:\Qt\4.7.3\lib\QtCored4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\debug,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\debug"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
 				LinkTimeCodeGeneration="0"
@@ -104,8 +104,8 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Psapi.lib imagehlp.lib C:/StreamworkDev/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\release\GeographicLib.lib C:/StreamworkDev/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\release\ExceptionManager.lib c:\Qt\4.7.3\lib\QtXml4.lib c:\Qt\4.7.3\lib\QtGui4.lib c:\Qt\4.7.3\lib\QtCore4.lib"
-				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,C:/StreamworkDev/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\release,C:/StreamworkDev/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\release"
+				AdditionalDependencies="Psapi.lib imagehlp.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\release\GeographicLib.lib C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\release\ExceptionManager.lib c:\Qt\4.7.3\lib\QtXml4.lib c:\Qt\4.7.3\lib\QtGui4.lib c:\Qt\4.7.3\lib\QtCore4.lib"
+				AdditionalLibraryDirectories="c:\Qt\4.7.3\lib,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/GeographicLib/\lib\vc\release,C:/Projects/Libraries/StreamWork/src/SwCore/../../../../Libraries/ExceptionManager/\lib\vc\release"
 				GenerateDebugInformation="false"
 				IgnoreImportLibrary="true"
 				LinkIncremental="1"
@@ -187,7 +187,7 @@
 				<File
 					RelativePath="Extensions\SwExtensionHelper.cpp" />
 				<File
-					RelativePath="Extensions\SwExtensionImpl.cpp" />
+					RelativePath="Extensions\_SwExtensionImpl.cpp" />
 				<File
 					RelativePath="Extensions\_SwExtensionPointImpl.cpp" />
 			</Filter>
@@ -280,8 +280,6 @@
 					RelativePath="Tools\SwBuffer_Toolbox.cpp" />
 				<File
 					RelativePath="Tools\SwPropertiesPersistentToolbox.cpp" />
-				<File
-					RelativePath="Tools\SwPropertyPersistentToolbox.cpp" />
 				<File
 					RelativePath="Tools\SwRefPtrTools.cpp" />
 				<File
@@ -503,7 +501,7 @@
 				<File
 					RelativePath="Extensions\SwExtensionHelper.h" />
 				<File
-					RelativePath="Extensions\SwExtensionImpl.h" />
+					RelativePath="Extensions\_SwExtensionImpl.h" />
 				<File
 					RelativePath="Extensions\_SwExtensionPointImpl.h" />
 			</Filter>
@@ -600,8 +598,6 @@
 							RelativePath="Main\Services\Management\ISwService.h" />
 						<File
 							RelativePath="Main\Services\Management\ISwServicesManager_Listener.h" />
-						<File
-							RelativePath="Main\Services\Management\SwServiceManager_Helper.h" />
 						<File
 							RelativePath="Main\Services\Management\SwServicesManager_Class.h" />
 					</Filter>
@@ -707,8 +703,6 @@
 					RelativePath="Tools\SwBuffer_Toolbox.h" />
 				<File
 					RelativePath="Tools\SwPropertiesPersistentToolbox.h" />
-				<File
-					RelativePath="Tools\SwPropertyPersistentToolbox.h" />
 				<File
 					RelativePath="Tools\SwRefPtrTools.h" />
 				<File

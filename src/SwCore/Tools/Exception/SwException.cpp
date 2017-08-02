@@ -13,7 +13,6 @@
 
 using namespace StreamWork::SwCore;
 
-
 /*!
 \brief Constructeur
 \param[in] component    nom du composant source de l'erreur

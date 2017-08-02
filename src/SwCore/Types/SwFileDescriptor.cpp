@@ -2,211 +2,75 @@
 @file SwFileDescriptor.cpp
 @brief Descripteur de fichier
 @author F.Bighelli
-*/
+ */
 
 #include "SwFileDescriptor.h"
-#include "SwMacros.h"
-#include <QApplication>
-#include <QDir>
-
+ 
 using namespace StreamWork::SwCore;
 
-
-//-----------------------------------------------------------------------
-SwFileDescriptor::SwFileDescriptor()
-{
-	_filename = "";
-	_filter = "*";
-	_fileType = FileRead;
+/** @brief Constructor */
+SwFileDescriptor::SwFileDescriptor() {
+	_filename="";
+    _filter="*";
+    _fileType=FileRead;
 }
-
-//-----------------------------------------------------------------------
-SwFileDescriptor::SwFileDescriptor(enum FileType fileType, const QString & filter, const QString &filename)
-{
-	_filename = filename;
-	_filter = filter;
-	_fileType = fileType;
+/** @brief Constructor */
+SwFileDescriptor::SwFileDescriptor(enum FileType fileType,const QString & filter,const QString &filename){
+	_filename=filename;
+    _filter=filter;
+    _fileType=fileType;
 }
-
-//-----------------------------------------------------------------------
-SwFileDescriptor::SwFileDescriptor(const SwFileDescriptor & source)
-{
-	_filename = source._filename;
-	_filter = source._filter;
-	_fileType = source._fileType;
+/*! \brief Constructeur de copie */
+SwFileDescriptor::SwFileDescriptor(const SwFileDescriptor & source){
+	_filename=source._filename;
+    _filter=source._filter;
+    _fileType=source._fileType;
 }
-
-//-----------------------------------------------------------------------
-SwFileDescriptor::~SwFileDescriptor()
-{
+/*! \brief Destructeur */
+SwFileDescriptor::~SwFileDescriptor(){
 	//A Completer
 }
-
-//-----------------------------------------------------------------------
-QString SwFileDescriptor::getFilter() const
-{
+/** @brief Acces au filtre */
+QString SwFileDescriptor::getFilter() const{
 	return _filter;
 }
-
-//-----------------------------------------------------------------------
-SwFileDescriptor::FileType SwFileDescriptor::getFileType() const
-{
+/** @brief Acces au type */
+SwFileDescriptor::FileType SwFileDescriptor::getFileType() const{
 	return _fileType;
 }
-
-//-----------------------------------------------------------------------
-QString SwFileDescriptor::getFileName() const
-{
+/** @brief Acces au nom */
+QString SwFileDescriptor::getFileName() const{
 	return _filename;
 }
-
-//-----------------------------------------------------------------------
-void SwFileDescriptor::setFileName(const QString filename)
-{
-	_filename = filename;
+void SwFileDescriptor::setFileName(const QString &filename){
+	_filename=filename;
 }
 
-
-//-----------------------------------------------------------------------
-SwFileDescriptor & SwFileDescriptor::operator=(const SwFileDescriptor& source)
-{
-	if ( this != &source )
-	{
-		_filename = source._filename;
-		_filter = source._filter;
-		_fileType = source._fileType;
-	}
-	return *this;
+/*! \brief Operateur d'affectation */
+SwFileDescriptor & SwFileDescriptor::operator=(const SwFileDescriptor& source){
+    if (this!=&source) {
+	    _filename=source._filename;
+        _filter=source._filter;
+        _fileType=source._fileType;
+    }
+    return *this;
 }
-
-//-----------------------------------------------------------------------
-bool SwFileDescriptor::operator==(const SwFileDescriptor& source) const
-{
-	return _filename == source._filename;
+/*! \brief Operateur de comparaison*/
+bool SwFileDescriptor::operator==(const SwFileDescriptor& source) const{
+	return _filename==source._filename;
 }
-
-//-----------------------------------------------------------------------
-QString SwFileDescriptor::ToString() const
-{
+/*! \brief de recuperation de la valeur par une string*/
+QString SwFileDescriptor::ToString() const{
 	return getFileName();
 }
 
-
-//-----------------------------------------------------------------------
-QString SwFileDescriptor::getDoubleDottedPath(bool * relativeExists)
-{
-	QString pathAsWritten = getFileName();
-	int indexOfSeparator = pathAsWritten.indexOf("::");
-	QString tmpS = pathAsWritten;
-	tmpS.replace("::", "");
-	
-	QString relativePathString;
-	QString relativePathStringDoubleDot;
-	QString absolutePath;
-	QString qrcPathString;
-
-
-	// Gestion d'un répertoire optionnel pour les cas ou l'arborescence n'est pas la même en 
-	// dev local que dans un répertoire d'execution de l'appli
-	QString relativePathStringWithOptionalFolderDoubleDot;
-	QString relativePathStringWithOptionalFolder;
-	QString absolutePathWithOptionalFolder;
-	if (tmpS.contains("(") && tmpS.contains(")"))
-	{
-		int indexOfOpenBracet = pathAsWritten.indexOf("(");
-		int indexOfCloseBracet = pathAsWritten.indexOf(")");
-		QString optfolderName = tmpS.mid(indexOfOpenBracet , indexOfCloseBracet - indexOfOpenBracet -2 );
-		QString tmpS2 = tmpS;
-		tmpS2.replace("(", "").replace(")", "");
-
-		relativePathStringWithOptionalFolderDoubleDot = QDir::cleanPath(qApp->applicationDirPath() + "/" + pathAsWritten.mid(indexOfSeparator + 2).replace("(", "").replace(")", ""));
-		relativePathStringWithOptionalFolder = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + tmpS2);							
-		absolutePathWithOptionalFolder = pathAsWritten.remove("::").remove("(").remove(")");
-		
-		tmpS.remove("(").remove(")").remove(optfolderName);
-		pathAsWritten.remove("(").remove(")").remove(optfolderName);
-	}
-	else
-	{
-		qrcPathString = ":/" + pathAsWritten;
-		if (indexOfSeparator != -1)
-			qrcPathString = ":" + pathAsWritten.mid(indexOfSeparator + 2);
-		qrcPathString = qrcPathString.replace("\\", "/");
-	}
-
-	relativePathString = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + tmpS);
-	relativePathStringDoubleDot = QDir::cleanPath(qApp->applicationDirPath() + "/" + pathAsWritten.mid(indexOfSeparator + 2));
-
-	absolutePath = pathAsWritten.remove("::");
-	
-	if (QFile::exists(absolutePathWithOptionalFolder))
-	{
-		if (relativeExists)
-			*relativeExists = false;
-		return  QDir::cleanPath(absolutePathWithOptionalFolder);
-	}
-	else if ( QFile::exists(relativePathString) )
-	{
-		QFileInfo info(relativePathString);
-		//search in relative to swAPP:
-		if ( relativeExists )
-			*relativeExists = true;
-		return info.absoluteFilePath();
-	}
-	else if ( QFile::exists(relativePathStringDoubleDot) )
-	{
-		//search in relative :
-		if ( relativeExists )
-			*relativeExists = true;
-		return  QDir::cleanPath(relativePathStringDoubleDot);
-	}
-	else if ( QFile::exists(qrcPathString) )
-	{
-		//search in QtRessource :
-		if ( relativeExists )
-			*relativeExists = true;
-		return qrcPathString;
-	}
-	else if (QFile::exists(relativePathStringWithOptionalFolderDoubleDot))
-	{ 
-		//search in relative with optionnal folder :
-		if (relativeExists)
-			*relativeExists = true;
-		return  QDir::cleanPath(relativePathStringWithOptionalFolderDoubleDot);
-	}
-	else if (QFile::exists(relativePathStringWithOptionalFolder))
-	{
-		//search in relative to swAPP with optionnal folder :
-		if (relativeExists)
-			*relativeExists = true;
-		return  QDir::cleanPath(relativePathStringWithOptionalFolder);
-	}
-	else if (QFile::exists(absolutePath))
-	{
-		if (relativeExists)
-			*relativeExists = false;
-		return  QDir::cleanPath(absolutePath);
-	}
-	
-	//On dit que c'est absolute quand meme
-	if ( relativeExists )
-		*relativeExists = false;
-	return QDir::cleanPath(relativePathString);
+QDataStream &operator<<(QDataStream &out, const StreamWork::SwCore::SwFileDescriptor &myObj) {
+    out<<myObj.getFileName();
+    return out;
 }
-
-
-//-----------------------------------------------------------------------
-QDataStream &operator<<(QDataStream &out, const StreamWork::SwCore::SwFileDescriptor &myObj)
-{
-	out << myObj.getFileName();
-	return out;
-}
-
-//-----------------------------------------------------------------------
-QDataStream &operator>>(QDataStream &in, StreamWork::SwCore::SwFileDescriptor &myObj)
-{
-	QString tmp;
-	in >> tmp;
-	myObj.setFileName(tmp);
-	return in;
+QDataStream &operator>>(QDataStream &in, StreamWork::SwCore::SwFileDescriptor &myObj) {
+    QString tmp;
+    in>>tmp;
+    myObj.setFileName(tmp);
+    return in;
 }

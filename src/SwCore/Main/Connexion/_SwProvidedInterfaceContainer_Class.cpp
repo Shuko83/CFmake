@@ -8,7 +8,6 @@
 
 #include "_SwProvidedInterfaceContainer_Class.h"
 #include "ISwInterfaces_Consumer.h"
-#include <QMessageBox>
 
 using namespace StreamWork::SwCore;
 using namespace std;
@@ -60,7 +59,7 @@ void _SwProvidedInterfaceContainer_Class::ChangeAvailability(bool is_available){
         return;
     for (consumersIt=_consumers.begin();consumersIt!=_consumers.end();consumersIt++) {
         if (is_available) {
-            (*consumersIt)._consumer->ProvideInterface((*consumersIt)._cinterface,_handle);
+			(*consumersIt)._consumer->ProvideInterface((*consumersIt)._cinterface,_handle);
         } else {
             (*consumersIt)._consumer->UnprovideInterface((*consumersIt)._cinterface);
         }
@@ -78,8 +77,7 @@ void _SwProvidedInterfaceContainer_Class::RegisterConsumedInterface(ISwInterface
     index=_consumers.indexOf(__KeyConsumption(consumer,cinterface));
     if (index!=-1) {
         QString msg=QString("Interface %1 to consume of component %2 already registered\n for interface %3 of component %4").arg(cinterface).arg(consumer->GetHostComponent()->GetName()).arg(_name).arg(_parent->GetHostComponent()->GetName());
-		QMessageBox::critical(NULL, "Critical error", msg);
-		return;
+        LAUNCH_SWEXCEPTION("SwCore",msg)        
     }
     //Insertion
     _consumers.push_back(__KeyConsumption(consumer,cinterface));
@@ -93,8 +91,7 @@ void _SwProvidedInterfaceContainer_Class::UnregisterConsumedInterface(ISwInterfa
     index=_consumers.indexOf(__KeyConsumption(consumer,cinterface));
     if (index==-1) {
         QString msg=QString("Failed to unregister consumed interface %1 of component %2 because it's undefined\n for interface %3 of component %4").arg(cinterface).arg(consumer->GetHostComponent()->GetName()).arg(_name).arg(_parent->GetHostComponent()->GetName());
-		QMessageBox::critical(NULL, "Critical error", msg);
-		return;
+        LAUNCH_SWEXCEPTION("SwCore",msg)        
     }
     if (_isAvailable) _consumers[index]._consumer->UnprovideInterface(cinterface);
     _consumers.removeAt(index);

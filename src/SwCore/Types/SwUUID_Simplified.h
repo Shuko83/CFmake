@@ -9,10 +9,10 @@
 #ifndef _SwUUID_Simplified_H
 #define _SwUUID_Simplified_H
 
+
 #include "SwCoreConstantes.h"
 
-#include <string>
-#include <QString>
+class QDataStream;
 
 namespace StreamWork 
 {
@@ -46,5 +46,6 @@ namespace StreamWork
         
     }
 }
+
 
 #endif

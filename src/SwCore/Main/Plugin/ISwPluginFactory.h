@@ -23,7 +23,6 @@
 #include "SwComponent_Class.h"
 #include "ISwService.h"
 #include "SwData_Class.h"
-#include "SwUUID.h"
 
 //Nom du service
 #define CG_SW_SERVICE_PLUGIN_FACTORY "PluginFactory"

@@ -5,7 +5,7 @@
  */
 
 #include "SwPropertiesPersistentToolbox.h"
-#include "SwPropertyPersistentToolbox.h" 
+#include "_SwPropertyPersistent_Toolbox.h" 
 #include "ISwProperty.h"
 
 using namespace StreamWork::SwCore;
@@ -14,7 +14,7 @@ using namespace StreamWork::SwCore;
 void SwPropertiesPersistentToolbox::Load(QDomElement & elt,ISwProperties * properties) {
     for(QDomElement elt_property = elt.firstChildElement(); !elt_property.isNull(); elt_property = elt_property.nextSiblingElement())
     {
-        SwPropertyPersistentToolbox::LoadProperty(elt_property,properties);
+        _SwPropertyPersistent_Toolbox::LoadProperty(elt_property,properties);
     }
 
 }
@@ -23,6 +23,6 @@ void SwPropertiesPersistentToolbox::Save(QDomElement & elt,QDomDocument & doc,IS
     QList<ISwProperty *>::iterator it;
     QDomElement elt_property;
     for (it=properties->GetProperties().begin();it!=properties->GetProperties().end();it++) {
-        SwPropertyPersistentToolbox::SavePropertyExtended(elt,doc,(*it)->GetRealName(),properties,true);
+        _SwPropertyPersistent_Toolbox::SavePropertyExtended(elt,doc,(*it)->GetRealName(),properties,true);
     }
 }
