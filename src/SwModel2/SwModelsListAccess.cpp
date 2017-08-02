@@ -12,47 +12,32 @@ using namespace StreamWork::SwModel;
 SwModelsListAccess * _instance=0;
 _SwModelsList * _internalInstance=0;
 
-
-//-----------------------------------------------------------------------
-SwModelsListAccess::SwModelsListAccess()
-{
+/** @brief Constructor */
+SwModelsListAccess::SwModelsListAccess() {
 	_internalInstance=new _SwModelsList(); 
 }
-
-//-----------------------------------------------------------------------
-SwModelsListAccess::~SwModelsListAccess()
-{
+/** @brief Destructor */
+SwModelsListAccess::~SwModelsListAccess() {
     delete _internalInstance; 
 }
-
-//-----------------------------------------------------------------------
-SwModelsListAccess * SwModelsListAccess::getInstance()
-{
+/** @brief instance access */
+SwModelsListAccess * SwModelsListAccess::getInstance() {
     if (_instance==0) {
         _instance=new SwModelsListAccess();
     }
     return _instance;
 }
 
-//-----------------------------------------------------------------------
-_SwModelsList * SwModelsListAccess::getInternal()
-{
+/** @brief internal access (backup compatibility) */
+_SwModelsList * SwModelsListAccess::getInternal() {
     return _internalInstance;
 }
 
-//-----------------------------------------------------------------------
-QString SwModelsListAccess::getModelsDirectory()
-{
+/** @brief internal access (backup compatibility) */
+QString SwModelsListAccess::getModelsDirectory() {
     return _internalInstance->getModelPaths();
 }
-
-//-----------------------------------------------------------------------
-void SwModelsListAccess::addModel(QString hostComponent, QString modelName)
-{
+/** @brief add model */
+void SwModelsListAccess::addModel(QString hostComponent,QString modelName) {
     _internalInstance->addModel(hostComponent,modelName);
-}
-//-----------------------------------------------------------------------
-bool SwModelsListAccess::checkModelName(QString modelName)
-{
-	return _internalInstance->checkModelName(modelName);
 }
