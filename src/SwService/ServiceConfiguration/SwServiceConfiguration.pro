@@ -19,8 +19,17 @@ PRECOMPILED_SOURCE = StdAfx.cpp
 
 QMAKE_CXXFLAGS += /MP
 				
-HEADERS += $$files(*.h)
-SOURCES += $$files(*.cpp) 
+HEADERS += *.h 
+
+
+SOURCES += *.cpp 
+
+    
+FORMS +=
+
+RESOURCES += 
+
+DEFINES += 
 
 INCLUDEPATH += ./ \
 		../../SwCore/Component/Base/\
@@ -28,7 +37,6 @@ INCLUDEPATH += ./ \
 		../../SwCore/Component/Pin/\
 		../../SwCore/Component/Services/\
 		../../SwCore/Main/ \
-		../../SwCore/Main/Connexion \
 		../../SwCore/Main/Plugin/ \
 		../../SwCore/Main/Services/Management/ \
 		../../SwCore/Properties/ \
@@ -39,33 +47,41 @@ INCLUDEPATH += ./ \
 		../../SwCore/Tools/Signal/ \
 		../../SwCore/Types/ \
 		../../SwCore/Types/UserType/ \
-		../../SwCore\Component\Services\ServiceImpl \
-		../../SwCore/  \
-		../../SwFoundation/ \
-		../../SwService\ServiceShortcut \
-		../../SwExecution \
-		../../SwGui \
-	
+		../../SwCore/ 
 
 
 win32:DEFINES +=_CRT_SECURE_NO_WARNINGS
 
+win32:{
+    LIBS += 
+}    
 
-DESTDIR = ./../../../$$LIB_PATH/
-DLLDESTDIR=  ./../../../$$BIN_PATH/
+DESTDIR = ./../../../$$LIB_PATH/service
+DLLDESTDIR=  ./../../../$$BIN_PATH/service
 
 LIBS += -L"../../../$$LIB_PATH"
 
+
+
 CONFIG(debug, debug|release) {	
-	LIBS += -lSwCored -lSwFoundationd
+	LIBS += \
+			-lSwCored
+			
 	TARGET_EXT = .swdld
 } 
 
 CONFIG(release, debug|release) {
-	LIBS += -lSwCore -lSwFoundation
+	LIBS += \
+			-lSwCore
+			
 	TARGET_EXT = .swdl
 }
 
+################################################################################
+# SPECIFIC INCLUDES
+################################################################################
+
+INCLUDEPATH += \
 	
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
