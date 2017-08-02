@@ -12,7 +12,6 @@
 #endif
 
 #include "SwData_Class.h"
-#include "SwMacros.h"
 
 #include <QByteArray>
 #include <QString>
@@ -38,7 +37,7 @@ namespace StreamWork
 			QByteArrayData ();
 			virtual ~QByteArrayData();		
 
-			void setData (const QByteArray &data);
+			void setData (QByteArray &data);
 			QByteArray & getData();
 
 			//---------------------------------------------------------------------

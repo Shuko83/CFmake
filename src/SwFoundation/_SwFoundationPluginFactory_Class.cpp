@@ -8,13 +8,14 @@
 
 #include <QRegExp>
 #include <QTime>
-#include <QLocale>
-#include <QDate>
 
 #include "SwApplication.h"
 #include "ISwServiceExtensions.h"
 
 #include "_SwFoundationPluginFactory_Class.h"
+#include "SwServiceUnitSIProvider.h"
+
+using namespace StreamWork::SwFoundation;
 
 /*! \brief Constructeur */
 _SwFoundationPluginFactory_Class::_SwFoundationPluginFactory_Class():SwPluginFactory_Class() {
@@ -26,6 +27,7 @@ _SwFoundationPluginFactory_Class::~_SwFoundationPluginFactory_Class() {
 }
 /*! \brief Initialisation */
 void _SwFoundationPluginFactory_Class::Initialize() {
+	RegisterComponent("SwServiceUnitSIProvider","Permet de provider les properties du service unit SI");
 
 }
 /*! \brief Liberation */
@@ -34,6 +36,10 @@ void _SwFoundationPluginFactory_Class::Liberate() {
 }
 /*! \brief instanciation d'un composant */
 SwComponent_Class * _SwFoundationPluginFactory_Class::CreateInstanceOf(QString name) {
+   
+	if (name=="SwServiceUnitSIProvider") {
+		return new SwServiceUnitSIProvider;
+	}
     return NULL;
 }
 /*! \brief acces a l'icone d'un composant
@@ -41,6 +47,9 @@ SwComponent_Class * _SwFoundationPluginFactory_Class::CreateInstanceOf(QString n
 \return l'incone ou icone vide si non trouvé*/
 QIcon _SwFoundationPluginFactory_Class::CreateIconOf(QString name) const {
     QIcon ico;
+	if (name=="SwServiceUnitSIProvider") {
+		return ico;
+	}
     return ico;
 }
 /*! \brief Acces a la version du plugin

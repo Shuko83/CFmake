@@ -13,14 +13,11 @@
 #include <ISwProperty.h>
 #include "ISwServiceOwnerConfigurable.h"
 #include "ISwServiceOwner.h"
-#include "QCoreApplication"
-
-#include <QElapsedTimer>
-#include <QFile>
 
 using namespace StreamWork;
 using namespace StreamWork::SwFoundation;
 using namespace StreamWork::SwCore;
+
 
 
 //-------------------------------------------------------------------------
@@ -387,9 +384,9 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 	_ownerConf_service			= NULL;
 	_executable_service			= NULL;
 	_pins_service				= NULL;
-	
+
+	_componentNameShortcut		= "ERROR";
 	_disable_service			= false;
-	_allreadyListenerOfService  = false;
 
 	_isExecutable				= false;
 	_isConsumer					= true;
@@ -400,8 +397,6 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 	_isOwner					= false;
 	_isInitialized				= false;
 
-	_doCheckTimer = qApp->arguments().contains("-checktime", Qt::CaseInsensitive);
-
 }
 
 //-------------------------------------------------------------------------
@@ -409,26 +404,24 @@ SwAssistedComponent::~SwAssistedComponent()
 {    
 	_disable_service=true;
 
-	//Clear Consummed Interface
-	for ( QString name : _mapIConsummed.keys() )
-		unconsummeInterface(name);
-
-	for ( auto name : _mapIConsummedWithCallBack.keys() )
-		unconsummeInterface(name);
-
 	//Clear provided interface
-	for (QString providedInterfaceName : _listIProvided)
+	QStringList tmpList1 = _listIProvided;
+	foreach(QString providedInterfaceName,tmpList1)
+	{
 		unprovideInterface(providedInterfaceName);
+	}
 
-	if (_allreadyListenerOfService )
-		SW_APP->RemoveServicesManagerObserver( this );
-
-	//clear registrer service
+	//Clear consummed interface
+	/*QStringList tmpList2 = _mapIConsummed.keys();
+	foreach(QString key, tmpList2)
+		unconsummeInterface(key);*/
 
 	//Clear pin
 	QList<SwPin*> tmpList3 = _listPin;
 	foreach(SwPin *pin ,tmpList3)
+	{
 		unregisterPin(pin);
+	}
 
 	//Desenregistrement des services
 	if(_isConsumer && _consumer_service)
@@ -482,14 +475,11 @@ SwAssistedComponent::~SwAssistedComponent()
 	}
 
 	//Unregister all Shortcuts
-	if (_shortcuts_service && !_mapShortcutNameWithCategory.isEmpty())
+	if(_shortcuts_service && !_listShortcut.isEmpty())
 	{
-		auto itBegin = _mapShortcutNameWithCategory.constBegin();
-		auto itEnd = _mapShortcutNameWithCategory.constEnd();
-
-		for (; itBegin != itEnd; itBegin++)
+		foreach(QString nameShortcut,_listShortcut)
 		{
-			_shortcuts_service->unregisterCommand(itBegin.value(), itBegin.key(), this);
+			_shortcuts_service->unregisterCommand(nameShortcut,this);
 		}
 	}
 	_shortcuts_service = NULL;
@@ -499,12 +489,6 @@ SwAssistedComponent::~SwAssistedComponent()
 //-------------------------------------------------------------------------
 void SwAssistedComponent::InitializeResources() throw(SwException) 
 {  
-	QElapsedTimer *timer = nullptr;
-	if ( _doCheckTimer )
-	{
-		timer = new QElapsedTimer();
-		timer->start();
-	}
 	_isInitialized = true;
 	//Creation des services
 	if(_isConsumer)
@@ -554,13 +538,13 @@ void SwAssistedComponent::InitializeResources() throw(SwException)
 
 	initializeComponent();
 
-	if ( _doCheckTimer && timer )
+	//Register all Shortcuts
+	if(_shortcuts_service && !_listShortcut.isEmpty())
 	{
-		QFile debugFile("log.csv");
-		debugFile.open(QIODevice::Append);
-		debugFile.write(QString(GetFactoryComponentName() + ";" + QString::number(timer->elapsed()) + "\n").toLatin1());
-		debugFile.close();
-		delete timer;
+		foreach(QString nameShortcut,_listShortcut)
+		{
+			_shortcuts_service->registerCommand(nameShortcut,this);
+		}
 	}
 }
 
@@ -579,49 +563,16 @@ void SwAssistedComponent::setActive(bool active)
 //-------------------------------------------------------------------------
 void SwAssistedComponent::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) 
 {    
-	QElapsedTimer *timer = nullptr;
-	if ( _doCheckTimer )
-	{
-		timer = new QElapsedTimer();
-		timer->start();
-	}
-
-	if ( !_disable_service )
-		eventBeforeInterfaceAvailability(interface_name, provider_host);
-
-	if ( _doCheckTimer && timer )
-	{
-		QFile debugFile("log.csv");
-		debugFile.open(QIODevice::Append);
-		debugFile.write(QString(GetFactoryComponentName() + ";;;" + QString::number(timer->elapsed()) + "\n").toLatin1());
-		debugFile.close();
-		delete timer;
-	}
+	if (!_disable_service)
+		eventBeforeInterfaceAvailability(interface_name,provider_host);
 }
 
 //-------------------------------------------------------------------------
 void SwAssistedComponent::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host)
 {    
-	QElapsedTimer *timer = nullptr;
-	if ( _doCheckTimer )
-	{
-		timer = new QElapsedTimer();
-		timer->start();
-	}
-
-
-	if ( !_disable_service )
-		eventAfterInterfaceAvailability(interface_name, provider_host);
-
-	if ( _doCheckTimer && timer )
-	{
-		QFile debugFile("log.csv");
-		debugFile.open(QIODevice::Append);
-		debugFile.write(QString(GetFactoryComponentName() + ";;;;" + QString::number(timer->elapsed()) + "\n").toLatin1());
-		debugFile.close();
-		delete timer;
-	}
-}
+	if (!_disable_service)
+		eventAfterInterfaceAvailability(interface_name,provider_host);
+}            
 
 //-------------------------------------------------------------------------
 void SwAssistedComponent::OnReceiveData(SwPin * src,SwData_Class * data)
@@ -647,10 +598,7 @@ void SwAssistedComponent::eventBeforeInterfaceAvailability(QString interface_nam
 			interfaceUnavailable(interface_name);
 		}
 	}
-	if (_mapIConsummedWithCallBack.contains(interface_name))
-	{
-		_mapIConsummedWithCallBack[interface_name](BEFORE_POINTER_ASSIGNEMENT);
-	}
+
 }
 
 //-------------------------------------------------------------------------
@@ -663,10 +611,6 @@ void SwAssistedComponent::eventAfterInterfaceAvailability(QString interface_name
 		{
 			interfaceAvailable(interface_name);
 		}
-	}
-	if (_mapIConsummedWithCallBack.contains(interface_name))
-	{
-		_mapIConsummedWithCallBack[interface_name](AFTER_POINTER_ASSIGNEMENT);
 	}
 }
 
@@ -730,31 +674,32 @@ ISwProperty* StreamWork::SwFoundation::SwAssistedComponent::getISwProperty( QStr
 	return NULL;
 }
 
-//-----------------------------------------------------------------------
-void SwAssistedComponent::OnRegisterService( ISwService * service )
-{
-	auto name = service->GetServiceName();
-	if ( _mapServiceWithCallBack.contains( name ) )
-		_mapServiceWithCallBack[name]( service );
-}
-
-//-----------------------------------------------------------------------
-void SwAssistedComponent::OnUnregisterService( ISwService * service )
-{
-	auto name = service->GetServiceName();
-	if ( _mapServiceWithCallBack.contains( name ) )
-		_mapServiceWithCallBack[name]( service );
-}
-
 //-------------------------------------------------------------------------
 void SwAssistedComponent::processCommand( QString name )
 {
-	QHash<QString, std::function<void()> >::iterator it = _mapShortcutWithCallBack.find(name);
 
-	if (it != _mapShortcutWithCallBack.end())
+}
+
+//-------------------------------------------------------------------------
+QString SwAssistedComponent::getName()
+{
+	return _componentNameShortcut;
+}
+
+//-------------------------------------------------------------------------
+void SwAssistedComponent::addShortcut( QString name )
+{
+	_listShortcut.append(name);
+}
+
+//-------------------------------------------------------------------------
+void SwAssistedComponent::removeShortcut( QString name )
+{
+	if(_shortcuts_service && !_listShortcut.contains(name))
 	{
-		std::function<void()> shortcutFunction = *it;
-		shortcutFunction();
+		_shortcuts_service->unregisterCommand(name,this);
+
+		_listShortcut.removeOne(name);
 	}
 }
 
@@ -787,6 +732,12 @@ void SwAssistedComponent::eventActivationChanged()
 	{
 		deactivation();
 	}
+}
+
+//-------------------------------------------------------------------------
+void SwAssistedComponent::setComponentNameForShortcut( QString name )
+{
+	_componentNameShortcut = name;
 }
 
 //-------------------------------------------------------------------------
@@ -829,12 +780,6 @@ void SwAssistedComponent::unconsummeInterface( QString pinterface_name )
 		delete handle_interface;
 		//*handle_interface = NULL;
 		_mapIConsummed.remove(pinterface_name);
-	}
-
-	if(_mapIConsummedWithCallBack.contains(pinterface_name))
-	{
-		getIConsumerService().UnregisterConsumedInterface(pinterface_name);
-		_mapIConsummedWithCallBack.remove(pinterface_name);
 	}
 }
 

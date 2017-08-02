@@ -29,8 +29,6 @@
 #include "ISwPersistent.h"
 #include "ISwServiceOwner.h"
 
-#include <functional>
-
 #ifdef SWFOUNDATION_LIB
 # define BUILD_SWFOUNDATION Q_DECL_EXPORT
 #else
@@ -48,25 +46,19 @@ class SwOwner_Class;
 namespace StreamWork {
 
     namespace SwFoundation {
-
-		enum INTERFACE_EVENT {
-			AFTER_INTERFACE_AVAILABLE,
-			BEFORE_INTERFACE_UNAVAILABLE
-		};
-
+    
         /**
         @class SwAssistedComponent
         @brief Implementation avance d'un composant par defaut pour les assistés
         @ingroup SwCoreGrp
        */
-		class BUILD_SWFOUNDATION SwAssistedComponent :
+        class BUILD_SWFOUNDATION SwAssistedComponent: 
 			public SwComponent_Class,
 			virtual public ISwInterfaces_ConsumerObserver,
 			virtual public ISwPin_Listener,
-			virtual private ISwShortcut,
+			virtual public ISwShortcut,
 			virtual public ISwPersistent,
-			virtual public ISwPersistentConfigurable,
-			virtual public ISwServicesManager_Listener
+			virtual public ISwPersistentConfigurable
 		{
             Q_OBJECT
 			Q_PROPERTY(bool SwAssistedComponent_isActive READ isActive WRITE setActive)
@@ -82,17 +74,17 @@ namespace StreamWork {
              */
             virtual ~SwAssistedComponent();
 
-
 			/**
 			 * Activation des services 
 			 */
-			void setExecutableServiceAvaibility(bool val);							//_isExecutable = false;
-			void setConsumerServiceAvaibility(bool val);							//_isConsumer = true;
-			void setProviderServiceAvaibility(bool val);							//_isProvider = true;
-			void setPropertyServiceAvaibility(bool val);							//_isProperty = true;
-			void setPinServiceAvaibility(bool val);									//_isPin = false;
-			void setOwnerConfigurableServiceAvaibility(bool val);					//_isOwnerConf = false;
-			void setOwnerServiceAvaibility(bool val);								//_isOwner = false;
+			void setExecutableServiceAvaibility(bool val);
+			void setConsumerServiceAvaibility(bool val);
+			void setProviderServiceAvaibility(bool val);
+			void setPropertyServiceAvaibility(bool val);
+			void setPinServiceAvaibility(bool val);
+			void setOwnerConfigurableServiceAvaibility(bool val);
+			void setOwnerServiceAvaibility(bool val);
+
 
 			/**
 			 * @brief    : Permet de récuperer un pointerur sur une ISwProperty
@@ -158,26 +150,32 @@ namespace StreamWork {
 
 
 			//------------------------------------------------------------------
-			// Utilisation des shortcuts (ISwShortcut)
-			//------------------------------------------------------------------		
+			// Interface ISwShortcut
+			//------------------------------------------------------------------
 
 			/**
-			* @brief    : Callback d'appel avec en parametre le nom associé a la commande
-			* @param	 : QString name - nom de la commande appelée
-			*/
-			template<typename T> inline void registerShortcut(QString shortcutCategory, QString shortcutName,  void (T::*shortcutCallback)())
-			{
-				registerInternalShortcut(shortcutCategory, shortcutName, [=](){(static_cast<T*>(this)->*shortcutCallback)(); });
-			}
+			 * @brief    : Setter du nom du composant pour les raccourcis
+			 * @param	 : QString name - Nom du composant
+			 */
+			void setComponentNameForShortcut(QString name);
+
+		    /**
+			 * @brief    : Callback d'appel avec en parametre le nom associé a la commande
+			 * @param	 : QString name - nom de la commande appelée
+			 */
+		    virtual void processCommand(QString name);
 
 			/**
-			* @brief    : Callback d'appel avec en parametre le nom associé a la commande
-			* @param	 : QString name - nom de la commande appelée
-			*/
-			template<typename T, typename MEMBER> inline void registerShortcut(QString shortcutCategory, QString shortcutName, T* ptr, MEMBER shortcutCallback)
-			{
-				registerInternalShortcut(shortcutCategory, shortcutName, [=](){(ptr->*shortcutCallback)(); });
-			}
+			 * @brief    : Permet d'ajouter un raccourci au composant
+			 * @param	 : QString name - Nom de la commande
+			 */
+			void addShortcut(QString name);
+
+			/**
+			 * @brief    : Supprimer une raccourci déjç enregistré
+			 * @param	 : QString name - Nom de la commande
+			 */
+			void removeShortcut(QString name);
 
 			//----------------------------------------------------
 			// Interface ISwExecutable_Service
@@ -251,155 +249,6 @@ namespace StreamWork {
 			//------------------------------------------------------------------
 
 			/**
-			@brief Methode simplifiant la consomation d'interface
-
-			@details
-			- set automatique du pointeur
-			- fini les appels à getInterface avec le nom de l'interface
-			- Pratique quand aucun traitmenent specifique a la dispo/indispo de l'interface
-
-			exemple :
-			.h :
-			ISwWidget * _i_widget;
-			constructor :
-			_i_widget = 0;
-			initializeComponent :
-			consumeInterface("ISwWidget", &_i_widget);
-
-			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
-			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
-			*/
-			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle)
-			{
-				registerInterfaceCallback(interfaceName, interfaceHandle, [=](CALLBACK_EVENTS eventType)->void {});
-			}
-
-			/**
-			@brief Methode simplifiant la consomation d'interface
-
-			@details
-					- A chaque interface sa methode de disponibilité
-					- set automatique du pointeur
-					- notifie avant de changer le pointeur et aprés avoir changé le pointeur
-					- fini les appels à getInterface avec le nom de l'interface
-
-				exemple : 
-				.h : 
-					ISwWidget * _i_widget;
-				constructor : 
-					_i_widget = 0;
-				initializeComponent :
-					consumeInterface("ISwWidget", &_i_widget, [this](INTERFACE_EVENT eventType)->void { this->onWidgetChange(eventType); });
-				onWidgetChange(INTERFACE_EVENT event) : // Specifique
-					if(event == BEFORE_INTERFACE_UNAVAILABLE)
-						//do something on old value of _i_widget ( unregister from listener or anything else...)
-					if(event == AFTER_INTERFACE_AVAILABLE)
-						//do something with new value of _i_widget
-
-			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
-			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
-			@param callback : >  => methode à appeler lors des évennements de disponibilité d'interface (à utilisé de préférence avec une lambda expression)
-			*/
-			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, std::function<void(INTERFACE_EVENT)> callback)
-			{
-				registerInterfaceCallback(interfaceName, interfaceHandle, [=](CALLBACK_EVENTS eventType)->void {
-					if (*interfaceHandle)
-					{
-						if (eventType == AFTER_POINTER_ASSIGNEMENT)
-						{
-							callback(AFTER_INTERFACE_AVAILABLE);
-						}
-						else if (eventType == BEFORE_POINTER_ASSIGNEMENT)
-						{
-							callback(BEFORE_INTERFACE_UNAVAILABLE);
-						}
-					}
-				});
-			}
-
-			/**
-			@brief Methode simplifiant la consomation d'interface
-				- A chaque interface sa methode de disponibilité
-				- set automatique du pointeur
-				- notifie avant de changer le pointeur et aprés avoir changé le pointeur
-				- fini les appels à getInterface avec le nom de l'interface
-
-			@details
-			
-			.h :
-				ISwWidget * _i_widget;
-			
-			constructor :
-				_i_widget = 0;
-			
-			initializeComponent :
-				consumeInterface("ISwWidget", &_i_widget, this, &MaClass::onWidgetChange);
-			
-			onWidgetChange(INTERFACE_EVENT event) : // Specifique
-			if(event == BEFORE_INTERFACE_UNAVAILABLE)
-				//do something on old value of _i_widget ( unregister from listener or anything else...)
-			if(event == AFTER_INTERFACE_AVAILABLE)
-				//do something with new value of _i_widget
-
-			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
-			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
-			@param thisPointer : U *  => pointeur sur la classe ayant la callback en membre
-			@param callback : void (U::*callback)(INTERFACE_EVENT) => pointeur sur la callback en tant que fonction membre
-			*/
-			template<typename T, typename U> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, U* thisPointer, void (U::*callback)(INTERFACE_EVENT))
-			{
-				registerInterfaceCallback(interfaceName, interfaceHandle, [=](CALLBACK_EVENTS eventType)->void {
-					if (*interfaceHandle)
-					{
-						if (eventType == AFTER_POINTER_ASSIGNEMENT)
-						{
-							(thisPointer->*callback)(AFTER_INTERFACE_AVAILABLE);
-						}
-						else if (eventType == BEFORE_POINTER_ASSIGNEMENT)
-						{
-							(thisPointer->*callback)(BEFORE_INTERFACE_UNAVAILABLE);
-						}
-					}
-				});
-			}
-
-			/**
-			@brief Methode simplifiant la consomation d'interface
-				- A chaque interface sa methode de disponibilité
-				- notifie aprés avoir changé le pointeur
-				- fini les appels à getInterface avec le nom de l'interface
-
-			@details
-			
-			.h :
-				ISwWidget * _i_widget;
-			
-			constructor :
-				_i_widget = 0;
-			
-			initializeComponent :
-				consumeInterface("ISwWidget", &_i_widget, this, &MaClass::onWidgetChange);
-			
-			onWidgetChange() : // Specifique
-				//do something with new value of _i_widget
-
-			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
-			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
-			@param thisPointer : U *  => pointeur sur la classe ayant la callback en membre
-			@param callback : void (U::*callback)() => pointeur sur la callback en tant que fonction membre
-			*/
-			template<typename T, typename U, typename MEMBER> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, U* thisPointer, MEMBER func)
-			{
-				//passage de this pointer en = au contexte de la lambda expression pour copier l'adresse du pointeur dans la lambda expression car en sortie de la methode courante, la reference sur le pointeur n'est plus valide.
-				registerInterfaceCallback(interfaceName, interfaceHandle, [=](CALLBACK_EVENTS eventType)->void {
-					if(eventType==AFTER_POINTER_ASSIGNEMENT) 
-					{
-						(thisPointer->*func)();
-					}
-				});
-			}
-			
-			/**
 			 * @brief    : fourni une interface (sortie)
 			 * @param	 : QString pinterface_name - Nom de l'interface
 			 * @param	 : T * handle_interface - Pointeur sur l'interface fournite
@@ -426,6 +275,7 @@ namespace StreamWork {
 				*handle_interface = NULL;
 				getIConsumerService().RegisterConsumedInterface<T>(pinterface_name,(T**)handle_interface);
 				_mapIConsummed.insert(pinterface_name,handle_interface);
+				
 			}
 
 			/**
@@ -516,27 +366,6 @@ namespace StreamWork {
 			 */
 			virtual void interfaceUnavailable(QString interfaceName);
 
-			
-			template<typename U, typename T = ISwService> void RegisterToService( QString name, U* thisPointer, void (U::*callback)(T*) )
-			{
-				if ( !_allreadyListenerOfService )
-				{
-					_allreadyListenerOfService = true;
-					SW_APP->AddServicesManagerObserver( this );
-				}
-
-
-				_mapServiceWithCallBack.insert( name, [=]( ISwService* service )->void {
-
-					auto castS = dynamic_cast<T*>(service);
-					if ( castS )
-						(thisPointer->*callback)(castS);
-				} );
-
-				StreamWork::SwCore::ISwService * service = SW_APP->QueryService( name );
-				if ( service )
-					_mapServiceWithCallBack[name]( service );
-			}
 
 	
 protected:
@@ -599,25 +428,6 @@ protected:
 			 * @return   : HistoryIndex à utiliser dans le finalizer
 			 */
 			quint64 getHistoryIndex();
-
-
-			//---------------------------------------------------------------------
-			// Interface ISwPersistentConfigurable
-			//---------------------------------------------------------------------         
-
-			/**
-			* @brief	: Quand un service est ajouté
-			*
-			* @param	: ISwService * service - pointeur sur le service
-			*/
-			void OnRegisterService(ISwService * service);
-			/**
-			* @brief	: Quand un service est supprimé
-			*
-			* @param	: ISwService * service - Pointeur sur le service
-			*/
-			void OnUnregisterService(ISwService * service);
-
 	
 private:
 
@@ -659,68 +469,32 @@ private:
              */
             void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
 
+			//------------------------------------------------------------------
+			// Interface ISwShortcut
+			//------------------------------------------------------------------
+
+			/**
+			 * @brief    : Retourne le nom associé au composant
+			 * @return   : QString - le nom d'affichage pour le shortcut groupbox
+			 */
+		    virtual QString getName(); 
+
 			/**
 	         * @brief    : Callback sur reception d'une data
 	         * @param	 : SwPin * src - Pointeur sur le pin
 	         * @param	 : SwData_Class * data - pointeur sur les data
 	         * @note	 : note a surcharger pour receptionner les data
 	         */
-			void OnReceiveData(SwPin * src,SwData_Class * data); 
+	        void OnReceiveData(SwPin * src,SwData_Class * data);  
 
-			/**
+            /**
              * @brief    : Active l'observabilité d'une propriété notifié par "eventPropertyChange"
              * @param	 : ISwProperty * property - Pointeur sur une propriété
              */
             //void enableListeningChangeForProperty(ISwProperty * property);			
 
+        private:
 
- 			//------------------------------------------------------------------
-			// Interface ISwShortcut
-			//------------------------------------------------------------------
-
-			/**
-			 * @brief    : Callback d'appel avec en parametre le nom associé a la commande
-			 * @param	 : QString name - nom de la commande appelée
-			 */
-		    void processCommand(QString name) final;
-			         
-			//------------------------------------------------------------------
-			// Template pour la gestion des interfaces
-			//------------------------------------------------------------------
-
-			enum CALLBACK_EVENTS
-			{
-				BEFORE_POINTER_ASSIGNEMENT,
-				AFTER_POINTER_ASSIGNEMENT
-			};
-
-			/**
-			@param interfaceName : QString  => nom de l'interface (utilisé pour le unconsume)
-			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
-			@param callback : >  => methode à appeler lors des évennements de disponibilité d'interface (à utilisé de préférence avec une lambda expression)
-			*/
-			template<typename T> inline void registerInterfaceCallback(QString interfaceName, T ** interfaceHandle, std::function<void(CALLBACK_EVENTS)> callback)
-			{
-				getIConsumerService().RegisterConsumedInterface<T>(interfaceName, interfaceHandle);
-				_mapIConsummedWithCallBack.insert(interfaceName, callback);
-			}
-
-
-			inline void registerInternalShortcut(QString shortcutCategory, QString shortcutName,  std::function<void()> shortcutCallback)
-			{
-				ISwServiceShortcuts* serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
-				if (serviceShortcuts){
-					serviceShortcuts->registerCommand(shortcutCategory, shortcutName, this);
-
-					_mapShortcutNameWithCategory.insert(shortcutName, shortcutCategory);
-					_mapShortcutWithCallBack.insert(shortcutName, shortcutCallback);
-				}
-				else
-					qCritical() << "Unable to register shortcut, because the service is not available -> Faire le TODO";
-
-				//TODO : S'abonner à la notif de dispo du service && si service pas dispo -> On enregistre en temporaire
-				// Quand service dispo on registerCommand sur les temporaire
-			}
 
 			/**
 			 * Gestion des services
@@ -753,21 +527,17 @@ private:
             /* desactivation des services */
             bool _disable_service;
 
+			/* Liste des shortcuts definis */
+			QList<QString> _listShortcut;
+
 			/* Liste des interfaces produites */
 			QList<QString> _listIProvided;
 
 			/* Map des interfaces consommées */
 			QMap<QString,void **> _mapIConsummed;
 
-			/* hash des interfaces consommées vers les methode de disponibilité*/
-			QHash<QString, std::function<void( CALLBACK_EVENTS )>> _mapIConsummedWithCallBack;
-
-			QHash<QString, std::function<void(ISwService*)>> _mapServiceWithCallBack;
-			bool _allreadyListenerOfService;
-
-			QHash<QString, std::function<void()>> _mapShortcutWithCallBack;
-			QHash<QString, QString> _mapShortcutNameWithCategory;
-			
+			/* Nom du composant pour les raccourcis*/
+			QString _componentNameShortcut;
 
 			/* Liste des pin enregistrée*/
 			QList<SwPin*> _listPin;
@@ -786,10 +556,7 @@ private:
 			bool _isOwner;
 			bool _isInitialized;
 			quint64				  _historyIndex;
-
-			//Enable log of time
-			bool _doCheckTimer;
-
+        
         };
     }
 }

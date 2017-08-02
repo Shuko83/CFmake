@@ -17,7 +17,10 @@
 /*
   * INCLUDES LOCAUX
   */
+#include "SwGuiConstantes.h"
 #include <SwPluginFactory_Class.h>
+#include "SwServiceUnitSIProvider.h"
+
 
 using namespace StreamWork::SwCore;
 /*!
