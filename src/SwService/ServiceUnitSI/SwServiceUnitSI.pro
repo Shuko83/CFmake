@@ -1,5 +1,5 @@
 TEMPLATE = lib
-TARGET = SwServiceShortcut
+TARGET = SwServiceUnitSI
 
 ################################################################################
 # PROJECT
@@ -9,7 +9,7 @@ PROJECTS_PATH = $$PWD/../../../../..
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
-QT += core widgets 
+QT += core xml
 
 CONFIG += StdAfx.h
 PRECOMPILED_HEADER = StdAfx.h
@@ -41,7 +41,6 @@ INCLUDEPATH += ./ \
 		../../SwCore/Main/Services/Management/ \
 		../../SwCore/SwRef/ \
 		../../SwCore/Tools/ \
-		../../SwCore/Tools/ \
 		../../SwCore/Tools/Exception/ \
 		../../SwCore/Tools/Log/ \
 		../../SwCore/Tools/Signal/ \
@@ -58,16 +57,21 @@ win32:{
 DESTDIR = ./../../../$$LIB_PATH/service
 DLLDESTDIR=  ./../../../$$BIN_PATH/service
 
-LIBS += -L"../../../$$LIB_PATH"
+LIBS += -L"../../../$$LIB_PATH" \
+		-L"$$PROJECTS_PATH/Libraries/GeographicLib/$$LIB_PATH"
 		
 
 CONFIG(debug, debug|release) {	
-	LIBS += -lSwCored
+	LIBS +=  -lGeographicLibd \
+			 -lSwCored
+			 
 	TARGET_EXT = .swdld
 } 
 
 CONFIG(release, debug|release) {
-	LIBS += -lSwCore
+	LIBS += -lGeographicLib \
+			-lSwCore
+			
 	TARGET_EXT = .swdl
 }
 
@@ -75,7 +79,7 @@ CONFIG(release, debug|release) {
 # SPECIFIC INCLUDES
 ################################################################################
 
-INCLUDEPATH += 
-	
+INCLUDEPATH += \
+		$$PROJECTS_PATH/Libraries/GeographicLib/src
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)

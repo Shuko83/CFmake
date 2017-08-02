@@ -1,4 +1,4 @@
-#include "_SwServiceShortcutPluginFactory_Class.h"
+#include "_SwServiceToolsPluginFactory_Class.h"
 
 #include "SwApplication.h"
 
@@ -6,52 +6,71 @@
 using namespace StreamWork::SwCore;
 
 //----------------------------------------------------------------------------------------------
-_SwServiceShortcutPluginFactory_Class::_SwServiceShortcutPluginFactory_Class():SwPluginFactory_Class() 
+_SwServiceToolsPluginFactory_Class::_SwServiceToolsPluginFactory_Class():SwPluginFactory_Class() 
 {
 
 }
 
 //----------------------------------------------------------------------------------------------
-_SwServiceShortcutPluginFactory_Class::~_SwServiceShortcutPluginFactory_Class() 
+_SwServiceToolsPluginFactory_Class::~_SwServiceToolsPluginFactory_Class() 
 {
-	//SW_APP->UnregisterService(_serviceShortcuts->GetServiceName());
-	delete _serviceShortcuts;
+	//TODO Service not present when unregister
+	//SW_APP->UnregisterService(_serviceRefProfiler->GetServiceName());
+	delete _serviceRefProfiler;
+	//SW_APP->UnregisterService(_serviceParameters->GetServiceName());
+	delete _serviceParameters;
+	//SW_APP->UnregisterService(_serviceExtensions->GetServiceName());
+	delete _serviceExtensions;
+	//SW_APP->UnregisterService(_serviceCodeTimer->GetServiceName());
+	delete _serviceCodeTimer; 
+	//SW_APP->UnregisterService(_serviceFileEditorManager->GetServiceName());
+	delete _serviceFileEditorManager;
+
 }
 
 //----------------------------------------------------------------------------------------------
-void _SwServiceShortcutPluginFactory_Class::Initialize() 
+void _SwServiceToolsPluginFactory_Class::Initialize() 
 {
-	_serviceShortcuts = new _SwServiceShortcuts();
-	SW_APP->RegisterService(_serviceShortcuts);
+	_serviceRefProfiler = new _SwServiceRefProfiler();
+	SW_APP->RegisterService(_serviceRefProfiler);
+	_serviceParameters = new _SwServiceParametersImpl();
+	SW_APP->RegisterService(_serviceParameters);
+	_serviceExtensions = new _SwServiceExtensionsImpl();
+	SW_APP->RegisterService(_serviceExtensions);
+	_serviceCodeTimer = new _SwServiceCodeTimer();
+	SW_APP->RegisterService(_serviceCodeTimer);
+	_serviceFileEditorManager = new _SwFileEditorManager();
+	SW_APP->RegisterService(_serviceFileEditorManager);
+
 }
 
 //----------------------------------------------------------------------------------------------
-void _SwServiceShortcutPluginFactory_Class::Liberate() 
+void _SwServiceToolsPluginFactory_Class::Liberate() 
 {
 
 }
 
 ///----------------------------------------------------------------------------------------------
-SwComponent_Class * _SwServiceShortcutPluginFactory_Class::CreateInstanceOf(QString name) 
+SwComponent_Class * _SwServiceToolsPluginFactory_Class::CreateInstanceOf(QString name) 
 {
     return NULL;
 }
 
 //----------------------------------------------------------------------------------------------
-SwData_Class * _SwServiceShortcutPluginFactory_Class::CreateInstanceOf(const SwUUID & type_id) 
+SwData_Class * _SwServiceToolsPluginFactory_Class::CreateInstanceOf(const SwUUID & type_id) 
 {
     return NULL;
 }
 
 //----------------------------------------------------------------------------------------------
-QIcon _SwServiceShortcutPluginFactory_Class::CreateIconOf(QString name) const 
+QIcon _SwServiceToolsPluginFactory_Class::CreateIconOf(QString name) const 
 {
     QIcon ico;
     return ico;
 }
 
 //----------------------------------------------------------------------------------------------
-QString _SwServiceShortcutPluginFactory_Class::GetPluginVersion()
+QString _SwServiceToolsPluginFactory_Class::GetPluginVersion()
 {
     QString build;
     build=QString("%1 %2").arg(__DATE__).arg(__TIME__);
@@ -66,7 +85,7 @@ QString _SwServiceShortcutPluginFactory_Class::GetPluginVersion()
 }
 
 //----------------------------------------------------------------------------------------------
-double _SwServiceShortcutPluginFactory_Class::GetPluginCompilationDate()
+double _SwServiceToolsPluginFactory_Class::GetPluginCompilationDate()
 {	
 	//recup de la date à partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));

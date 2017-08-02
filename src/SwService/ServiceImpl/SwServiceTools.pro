@@ -1,5 +1,5 @@
 TEMPLATE = lib
-TARGET = SwServiceShortcut
+TARGET = SwServiceTools
 
 ################################################################################
 # PROJECT
@@ -9,7 +9,7 @@ PROJECTS_PATH = $$PWD/../../../../..
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/preDefine.pri)
 
-QT += core widgets 
+QT += core
 
 CONFIG += StdAfx.h
 PRECOMPILED_HEADER = StdAfx.h
@@ -21,9 +21,7 @@ QMAKE_CXXFLAGS += /MP
 				
 HEADERS += *.h 
 
-
 SOURCES += *.cpp 
-
     
 FORMS +=
 
@@ -36,11 +34,11 @@ INCLUDEPATH += ./ \
 		../../SwCore/Component/Base/\
 		../../SwCore/Component/Interfaces/\
 		../../SwCore/Component/Pin/\
+		../../SwCore/Extensions/ \
 		../../SwCore/Main/ \
 		../../SwCore/Main/Plugin/ \
 		../../SwCore/Main/Services/Management/ \
 		../../SwCore/SwRef/ \
-		../../SwCore/Tools/ \
 		../../SwCore/Tools/ \
 		../../SwCore/Tools/Exception/ \
 		../../SwCore/Tools/Log/ \

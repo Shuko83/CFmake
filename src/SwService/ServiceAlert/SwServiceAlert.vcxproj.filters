@@ -27,32 +27,47 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SwServiceMainWindowPluginFactory_Class.cpp">
+    <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="_SwServiceMainWindow.cpp">
+    <ClCompile Include="_SwError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ISwServiceMainWindow.h">
+    <ClCompile Include="_SwServiceAlert.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="_SwServiceAlertPluginFactory_Class.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ISwServiceAlert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SwServiceMainWindowPluginFactory_Class.h">
+    <ClInclude Include="StdAfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="_SwServiceMainWindow.h">
+    <ClInclude Include="_SwError.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="_SwServiceAlert.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="_SwServiceMainWindowConstantes.h">
+    <ClInclude Include="_SwServiceAlertPluginFactory_Class.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -63,7 +78,7 @@
     <Filter Include="Generated Files\GeneratedFiles_QT5\moc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GeneratedFiles_QT5\moc\moc__SwServiceMainWindow.cpp">
+    <ClCompile Include="GeneratedFiles_QT5\moc\moc__SwServiceAlert.cpp">
       <Filter>Generated Files\GeneratedFiles_QT5\moc</Filter>
     </ClCompile>
   </ItemGroup>

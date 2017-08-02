@@ -5,7 +5,7 @@
  */
 
 #include "_SwServiceExtensionsImpl.h"
-#include "SwExtensionImpl.h"
+#include "_SwExtensionImpl.h"
 
 using namespace StreamWork::SwCore;
 
@@ -19,7 +19,7 @@ _SwServiceExtensionsImpl::~_SwServiceExtensionsImpl() {
 }
 /*! \brief Permet d'enregistrer une extension avec le type en nom (utliser la methode precedente*/
 void _SwServiceExtensionsImpl::registerExtensionWithType(QString extension_type_name,QString extension_name,QString component_name) {
-    _extensions[extension_type_name].push_back(new SwExtensionImpl(extension_type_name,extension_name,component_name));
+    _extensions[extension_type_name].push_back(new _SwExtensionImpl(extension_type_name,extension_name,component_name));
 }
 /*! \brief Permet d'avoir une liste d'extension pourt un type donne (utliser la methode precedente)*/
 QList<ISwExtension *> _SwServiceExtensionsImpl::getExtensionWithType(QString extension_type_name) {

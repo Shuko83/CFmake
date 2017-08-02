@@ -1,5 +1,5 @@
-#ifndef _SwServiceShortcutPluginFactory_Class_H
-#define _SwServiceShortcutPluginFactory_Class_H
+#ifndef _SwServiceUnitSIPluginFactory_Class_H
+#define _SwServiceUnitSIPluginFactory_Class_H
 
 /*
   * INCLUDES GLOBAUX
@@ -10,7 +10,7 @@
   * INCLUDES LOCAUX
   */
 #include <SwPluginFactory_Class.h>
-#include "_SwServiceShortcuts.h"
+#include "_SwServiceUnitSI.h"
 
 using namespace StreamWork::SwCore;
 
@@ -18,7 +18,7 @@ using namespace StreamWork::SwCore;
 	\class SwPluginFactory_Class 
 	\brief classe definissant un plugin usine
 */
-class _SwServiceShortcutPluginFactory_Class : public SwPluginFactory_Class
+class _SwServiceUnitSIPluginFactory_Class : public SwPluginFactory_Class
 { 
 	protected:
 		/*! \brief instanciation d'un composant */
@@ -29,9 +29,9 @@ class _SwServiceShortcutPluginFactory_Class : public SwPluginFactory_Class
 		SwData_Class * CreateInstanceOf(const SwUUID & type_id);
 	public:
 		/*! \brief Constructeur */
-		_SwServiceShortcutPluginFactory_Class();
+		_SwServiceUnitSIPluginFactory_Class();
 		/*! \brief Destructeur */
-		~_SwServiceShortcutPluginFactory_Class();
+		~_SwServiceUnitSIPluginFactory_Class();
 		/*! \brief Initialisation */
 		void Initialize();
 		/*! \brief Liberation */
@@ -42,18 +42,18 @@ class _SwServiceShortcutPluginFactory_Class : public SwPluginFactory_Class
 		virtual double GetPluginCompilationDate();
 
 	private:
-		_SwServiceShortcuts * _serviceShortcuts;
+		_SwServiceUnitSI * _serviceUnitSI;
 		
 };
 
 #ifndef QT_NO_DEBUG
 	extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterfaceD() {
-		return new _SwServiceShortcutPluginFactory_Class();    
+		return new _SwServiceUnitSIPluginFactory_Class();    
 	}
 
 #else 
 	extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface() {
-		return new _SwServiceShortcutPluginFactory_Class();    
+		return new _SwServiceUnitSIPluginFactory_Class();    
 	}
 #endif
 

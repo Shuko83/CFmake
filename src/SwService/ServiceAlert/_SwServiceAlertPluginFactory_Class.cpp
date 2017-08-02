@@ -1,73 +1,78 @@
-#include "SwServiceMainWindowPluginFactory_Class.h"
+#include "_SwServiceAlertPluginFactory_Class.h"
+
 #include "SwApplication.h"
 #include "SwMacros.h"
 
 using namespace StreamWork::SwCore;
 
 //----------------------------------------------------------------------------------------------
-SwServiceMainWindowPluginFactory_Class::SwServiceMainWindowPluginFactory_Class() :SwPluginFactory_Class()
+_SwServiceAlertPluginFactory_Class::_SwServiceAlertPluginFactory_Class():SwPluginFactory_Class() 
 {
 
 }
 
 //----------------------------------------------------------------------------------------------
-SwServiceMainWindowPluginFactory_Class::~SwServiceMainWindowPluginFactory_Class()
+_SwServiceAlertPluginFactory_Class::~_SwServiceAlertPluginFactory_Class() 
 {
+	//SW_APP->UnregisterService(_serviceAlert->GetServiceName());
+	delete _serviceAlert;
 }
 
 //----------------------------------------------------------------------------------------------
-void SwServiceMainWindowPluginFactory_Class::Initialize()
+void _SwServiceAlertPluginFactory_Class::Initialize() 
 {
+	_serviceAlert = new _SwServiceAlert();
+    SW_APP->RegisterService(_serviceAlert);
 }
 
 //----------------------------------------------------------------------------------------------
-void SwServiceMainWindowPluginFactory_Class::Liberate()
+void _SwServiceAlertPluginFactory_Class::Liberate() 
 {
 
 }
 
 ///----------------------------------------------------------------------------------------------
-SwComponent_Class * SwServiceMainWindowPluginFactory_Class::CreateInstanceOf(QString name)
+SwComponent_Class * _SwServiceAlertPluginFactory_Class::CreateInstanceOf(QString name) 
 {
-	return NULL;
+    return NULL;
 }
 
 //----------------------------------------------------------------------------------------------
-SwData_Class * SwServiceMainWindowPluginFactory_Class::CreateInstanceOf(const SwUUID & type_id)
+SwData_Class * _SwServiceAlertPluginFactory_Class::CreateInstanceOf(const SwUUID & type_id) 
 {
-	return NULL;
+    return NULL;
 }
 
 //----------------------------------------------------------------------------------------------
-QIcon SwServiceMainWindowPluginFactory_Class::CreateIconOf(QString name) const
+QIcon _SwServiceAlertPluginFactory_Class::CreateIconOf(QString name) const 
 {
-	QIcon ico;
-	return ico;
+    QIcon ico;
+    return ico;
 }
 
 //----------------------------------------------------------------------------------------------
-QString SwServiceMainWindowPluginFactory_Class::GetPluginVersion()
+QString _SwServiceAlertPluginFactory_Class::GetPluginVersion()
 {
-	QString build;
-	build = QString("%1 %2").arg(__DATE__).arg(__TIME__);
-	build = build.toUpper();
-	build.replace(QRegExp("[ |:]+"), ".");
+    QString build;
+    build=QString("%1 %2").arg(__DATE__).arg(__TIME__);
+    build=build.toUpper();
+    build.replace(QRegExp("[ |:]+"), ".");
 #ifndef QT_NO_DEBUG
-	build += " (Debug)";
+    build+=" (Debug)";
 #else 
-	build+=" (Release)";
+    build+=" (Release)";
 #endif
-	return build;
+    return build;
 }
 
 //----------------------------------------------------------------------------------------------
-double SwServiceMainWindowPluginFactory_Class::GetPluginCompilationDate()
-{
+double _SwServiceAlertPluginFactory_Class::GetPluginCompilationDate()
+{	
 	//recup de la date à partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
 	//recup de l'heure à partir de __TIME__
 	QString strTime = __TIME__;
-	QTime time = time.fromString(strTime, "hh:mm:ss");
+	QTime time = time.fromString(strTime,"hh:mm:ss");
 
 	QDateTime finalDateTime;
 	//set la date dans QDateTime

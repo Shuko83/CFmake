@@ -27,6 +27,13 @@ namespace StreamWork
         class ISwShortcut {
         public:
 
+           /**
+            * @brief    : Retourne le nom associé au composant
+            * @return   : QString
+            */
+           virtual QString getName()  = 0 ; 
+
+
 		   /**
 		    * @brief    : Callback d'appel avec en parametre le nom associé a la commande
 		    * @param	 : QString name - nom de la commande appelée

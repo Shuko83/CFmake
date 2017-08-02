@@ -1,5 +1,5 @@
 TEMPLATE = lib
-TARGET = SwServiceShortcut
+TARGET = SwServiceAlert
 
 ################################################################################
 # PROJECT
@@ -41,12 +41,12 @@ INCLUDEPATH += ./ \
 		../../SwCore/Main/Services/Management/ \
 		../../SwCore/SwRef/ \
 		../../SwCore/Tools/ \
-		../../SwCore/Tools/ \
 		../../SwCore/Tools/Exception/ \
 		../../SwCore/Tools/Log/ \
 		../../SwCore/Tools/Signal/ \
 		../../SwCore/Types/ \
-		../../SwCore/Types/UserType/ 
+		../../SwCore/Types/UserType/  \
+		$$PROJECTS_PATH/Libraries/ProtoLG3/src/
 
 
 win32:DEFINES +=_CRT_SECURE_NO_WARNINGS
@@ -58,16 +58,22 @@ win32:{
 DESTDIR = ./../../../$$LIB_PATH/service
 DLLDESTDIR=  ./../../../$$BIN_PATH/service
 
-LIBS += -L"../../../$$LIB_PATH"
+LIBS += -L"$$PROJECTS_PATH/Libraries/AlertManager/$$LIB_PATH" \
+		-L"../../../$$LIB_PATH"
 		
 
 CONFIG(debug, debug|release) {	
-	LIBS += -lSwCored
+	LIBS += -lAlertManagerd \
+			-lSwCored
+	
 	TARGET_EXT = .swdld
 } 
 
 CONFIG(release, debug|release) {
-	LIBS += -lSwCore
+	
+	LIBS += -lAlertManager \
+			-lSwCore
+	
 	TARGET_EXT = .swdl
 }
 
@@ -75,7 +81,9 @@ CONFIG(release, debug|release) {
 # SPECIFIC INCLUDES
 ################################################################################
 
-INCLUDEPATH += 
+INCLUDEPATH += \
+	$$PROJECTS_PATH/Libraries/AlertManager/src/Interface/\
+	$$PROJECTS_PATH/Libraries/AlertManager/src/
 	
 
 include($$PROJECTS_PATH/Utilities/QtCommonPri/base.pri)
