@@ -23,6 +23,7 @@
   * INCLUDES LOCAUX
   */
 #include <SwComponent_Class.h>
+#include "_SwModelHost_Class.h"
 #include "_SwConfigurationExportedEntity.h"
 
 

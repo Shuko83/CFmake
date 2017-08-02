@@ -30,9 +30,13 @@ using namespace StreamWork::SwCore;
     */
 class ISwConfigurationLaunchEditor;
 
-class _ISwConfigurationLaunchManager : public QObject
+class _ISwConfigurationLaunchManager : virtual public QObject
     {
+
+    
+    
     public:
+
                
         /*! \brief Destructeur */
         virtual ~_ISwConfigurationLaunchManager(){}

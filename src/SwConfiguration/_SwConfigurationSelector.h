@@ -22,11 +22,9 @@
 
 #include <SwComponent_Class.h>
 #include "_SwConfigurationExportedEntity.h"
-
+#include "_SwConfigurationEntitiesModel.h"
 
 using namespace StreamWork::SwCore;
-
-class _SwConfigurationEntitiesModel;
 
 /*!
 	\class _SwConfigurationExportSelector 

@@ -22,6 +22,7 @@ using namespace StreamWork::SwConfiguration;
 
 /*! \brief Constructeur */
 _SwLaunchManager::_SwLaunchManager():
+    QObject(),
     _configurationFile(SwFileDescriptor::FileRead, "XML Files (*.conf)"),
     _recordDirectory(SwFileDescriptor::DirectorySelect, "Directory"),
     _replayDirectory(SwFileDescriptor::DirectorySelect, "Directory")
