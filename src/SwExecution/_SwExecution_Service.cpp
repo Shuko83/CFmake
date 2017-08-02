@@ -126,9 +126,9 @@ void _SwExecution_Service::ResolveLinks() {
             SwComponent_Class *comp=SwAddress_ToolBox::FindTarget(_exe_paths[i],_host);
             if (comp!=NULL) {
                 ISwExecutable_Service * service=dynamic_cast<ISwExecutable_Service *>(comp->QueryService(CG_SW_SERVICE_EXECUTABLE));
-				if (service != NULL && _exeHost != comp)
+                if (service!=NULL) {
                     _exe_servs.push_back(service);
-
+                }
                 ISwSupportReplay * sreplay=dynamic_cast<ISwSupportReplay *>(comp);
                 if (sreplay==0 && service!=NULL) {
                     sreplay=dynamic_cast<ISwSupportReplay *>(service);
