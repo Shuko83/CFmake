@@ -1,0 +1,12 @@
+
+Prendre l'installeur SQL 
+
+http://dev.mysql.com/downloads/mirror.php?id=403775
+
+
+L'installer dans MySQL_Server_5.5
+
+
+
+
+qmake "INCLUDEPATH+=C:/MySQL_Server_5.5/include" "LIBS+=C:/MySQL_Server_5.5/lib/libmysql.lib" mysql.pro -tp vc
