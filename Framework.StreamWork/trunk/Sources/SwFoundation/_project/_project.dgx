@@ -10,5 +10,6 @@
     <QTDependencies>
         <Module name="core"/>
         <Module name="xml"/>
+		<Module name="gui"/>
     </QTDependencies>
 </Project>

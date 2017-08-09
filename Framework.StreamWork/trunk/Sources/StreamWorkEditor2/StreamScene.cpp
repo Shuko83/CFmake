@@ -41,7 +41,6 @@ StreamScene::StreamScene(QObject * parent) :QGraphicsScene(parent)
 	addItem(_lineY);
 }
 
-
 //-----------------------------------------------------------------------
 void StreamScene::drawBackground(QPainter *painter, const QRectF &rect)
 {

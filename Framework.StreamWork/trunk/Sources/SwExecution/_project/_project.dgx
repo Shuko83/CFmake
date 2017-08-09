@@ -4,9 +4,9 @@
         <Artifact name="QsException"/>
         <Artifact name="SwCore"/>
     </Dependencies>
-	
-	 <QTDependencies>
+	<QTDependencies>
         <Module name="core"/>
         <Module name="widgets"/>
+		<Module name="xml"/>
     </QTDependencies>
 </Project>

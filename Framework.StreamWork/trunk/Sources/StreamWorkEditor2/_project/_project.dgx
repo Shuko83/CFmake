@@ -23,5 +23,6 @@
         <Module name="opengl"/>
         <Module name="printsupport"/>
         <Module name="widgets"/>
+		<Module name="opengl"/>
     </QTDependencies>
 </Project>

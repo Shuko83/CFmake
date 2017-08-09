@@ -11,3 +11,5 @@ greaterThan(QT_MINOR_VERSION, 4): {
 QMAKE_LFLAGS += /LARGEADDRESSAWARE
 
 RC_ICONS = ..\StreamWorkEditor2.ico
+
+LIBS += opengl32.lib

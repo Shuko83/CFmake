@@ -6,5 +6,7 @@
     </Dependencies>
     <QTDependencies>
         <Module name="core"/>
+		<Module name="gui"/>
     </QTDependencies>
 </Project>
+
