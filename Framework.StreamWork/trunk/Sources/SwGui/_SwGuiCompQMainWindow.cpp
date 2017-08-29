@@ -17,6 +17,8 @@
 #include "ISwServiceShortcuts.h"
 #include <SwApplication.h>
 
+#include "..\..\..\..\Libraries\Components\Sources\CssLoader\ICssThemesSelector.h"
+
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 

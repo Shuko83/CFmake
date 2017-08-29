@@ -214,7 +214,4 @@ namespace StreamWork
 	}
 }
 
-
-extern "C" Q_DECL_EXPORT StreamWork::SwCore::ISwService *  queryService(QString name) ;
-
 #endif

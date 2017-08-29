@@ -577,14 +577,6 @@ void SwApplication::waitOnRestart()
 #endif
 }
 
-
-
-//-----------------------------------------------------------------------
-StreamWork::SwCore::ISwService *  queryService(QString name)
-{
-	return StreamWork::SwCore::SwApplication::GetInstance()->QueryService(name);
-}
-
 //-----------------------------------------------------------------------
 void SwApplication::raiseQueryError(QString serviceName)
 {

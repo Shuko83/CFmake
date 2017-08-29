@@ -34,7 +34,6 @@
 #include "ISwEvent.h"
 #include "ISwEventObserver.h"
 #include "SwServiceManager_Helper.h"
-#include "..\..\..\..\Components\Sources\CssLoader\ICssThemesSelector.h"
 #include "_SwServiceMainWindow.h"
 
 using namespace StreamWork::SwCore;
