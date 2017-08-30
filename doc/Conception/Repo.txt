@@ -1,6 +1,0 @@
-Framework dans libraries
-
-tout ce qui est un plugin (donc qui a une factory que ce soit composant ou service) est dans module
-
-
-sauf SwService dans libraries streamwork --> a deplacer tout dans module pour etre logique

@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/SwExecution" >
-        <file alias="executor.png" >images/executor.png</file>
-        <file alias="executor_simple.png" >images/executor_simple.png</file>
-        <file alias="switchExecutor.png" >images/switchExecutor.png</file>
-    </qresource>
-</RCC>

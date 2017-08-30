@@ -1,8 +1,0 @@
-<RCC>
- <qresource prefix="/SwCore">
-     <file alias="unknown.png">images/unknown.png</file>
-     <file alias="plugin.png">images/plugin.png</file>
-     <file alias="path.png">images/path.png</file>
-     <file alias="SysTrayUpdate.png">images/SysTrayUpdate.png</file>
- </qresource>
-</RCC>
