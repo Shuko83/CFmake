@@ -17,8 +17,6 @@
 #include "ISwServiceShortcuts.h"
 #include <SwApplication.h>
 
-#include "..\..\..\..\Libraries\Components\Sources\CssLoader\ICssThemesSelector.h"
-
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
@@ -66,8 +64,7 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
 	_show_mode.AddKey(SW_SHOW_MINIMIZED, "Minimized");
 	_show_mode.FromInt(SW_SHOW_NORMAL);
 	_useAsWidget = false;
-	SW_APP->AddServicesManagerObserver(this);
-
+	
 	// Shortcuts
 	ISwServiceShortcuts* serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
 	if (serviceShortcuts)
@@ -78,8 +75,6 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
 _SwGuiCompQMainWindow::~_SwGuiCompQMainWindow()
 {
 	delete _mainWindowService;
-
-	SW_APP->RemoveServicesManagerObserver(this);
 
 	QMap<QString, ISwMenu *>::iterator menu_it;
 	QMap<QString, ISwAction *>::iterator action_it;
@@ -643,27 +638,6 @@ void _SwGuiCompQMainWindow::closeEvent(QCloseEvent* event)
 	settings.setValue("windowState", saveState());
 
 	notify((QEvent*) event);
-}
-
-//-----------------------------------------------------------------------
-void _SwGuiCompQMainWindow::OnRegisterService(ISwService * service)
-{
-	if ( service->GetServiceName() == "ServiceThemeSelector" )
-	{
-		auto themeSelector = dynamic_cast<ICssThemesSelector*>(service);
-		if ( themeSelector )
-			themeSelector->setMainWidget(this);
-	}
-}
-//-----------------------------------------------------------------------
-void _SwGuiCompQMainWindow::OnUnregisterService(ISwService * service)
-{
-	if ( service->GetServiceName() == "ServiceThemeSelector" )
-	{
-		auto themeSelector = dynamic_cast<ICssThemesSelector*>(service);
-		if ( themeSelector )
-			themeSelector->setMainWidget(nullptr);
-	}
 }
 
 bool _SwGuiCompQMainWindow::eventFilter(QObject* object, QEvent* event)

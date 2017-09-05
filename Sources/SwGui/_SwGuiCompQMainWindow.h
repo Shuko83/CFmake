@@ -48,7 +48,6 @@ class _SwGuiCompQMainWindow :	public Component,
 								public ISwQMainWindow,
 								public ISwWidget,
 								public ISwEvent,
-								public ISwServicesManager_Listener,
 								public ISwShortcut
 {
 protected:
@@ -157,12 +156,7 @@ protected:
 	bool eventFilter(QObject* object, QEvent* event);
 
 	bool _firstTime;
-
-
-	virtual void OnRegisterService(ISwService * service);
-
-	virtual void OnUnregisterService(ISwService * service);
-
+	
 	const QString _geometryPath = QDir::rootPath() + QDir::separator() + "ProgramData" + QDir::separator() + "DIGINEXT" + QDir::separator() + "StarlinxV2" + QDir::separator() + "geometry.ini";
 
 };
