@@ -1,12 +1,12 @@
 <Project name="SwServiceTools" path="SwService.SwServiceTools">
     <Target type="SHARED_LIB" ext="swdl"/>
-    <Dependencies>
-        <Artifact name="QsException"/>
-        <Artifact name="SwCore"/>
-    </Dependencies>
-    <QTDependencies>
+    <Libraries>
+        <Library name="QsException"/>
+        <Library name="SwCore"/>
+    </Libraries>
+    <Qt>
         <Module name="core"/>
 		<Module name="gui"/>
-    </QTDependencies>
+    </Qt>
 </Project>
 

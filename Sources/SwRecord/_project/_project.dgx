@@ -1,17 +1,17 @@
 <Project name="SwRecord" path="SwRecord">
     <Target type="SHARED_LIB" ext="swdl"/>
-    <Dependencies>
-        <Artifact name="QsException"/>
-        <Artifact name="SwCore"/>
-        <Artifact name="SwFoundation"/>
-        <Artifact name="SwConfiguration"/>
-        <Artifact name="SwGui"/>
-        <Artifact name="SwExecution"/>
-        <Artifact name="SwServiceShortcut"/>
-    </Dependencies>
-    <QTDependencies>
+    <Libraries>
+        <Library name="QsException"/>
+        <Library name="SwCore"/>
+        <Library name="SwFoundation"/>
+        <Library name="SwConfiguration"/>
+        <Library name="SwGui"/>
+        <Library name="SwExecution"/>
+        <Library name="SwServiceShortcut"/>
+    </Libraries>
+    <Qt>
         <Module name="core"/>
         <Module name="xml"/>
         <Module name="widgets"/>
-    </QTDependencies>
+    </Qt>
 </Project>

@@ -1,15 +1,15 @@
 <Project name="SwFoundation" path="SwFoundation">
     <Target type="SHARED_LIB" ext="swdl"/>
-    <Dependencies>
-        <Artifact name="QsException"/>
-        <Artifact name="SwCore"/>
-        <Artifact name="SwExecution"/>
-        <Artifact name="SwServiceShortcut" link="false"/>
-        <Artifact name="SwServiceTools" link="false"/>
-    </Dependencies>
-    <QTDependencies>
+    <Libraries>
+        <Library name="QsException"/>
+        <Library name="SwCore"/>
+        <Library name="SwExecution"/>
+        <Library name="SwServiceShortcut" link="false"/>
+        <Library name="SwServiceTools" link="false"/>
+    </Libraries>
+    <Qt>
         <Module name="core"/>
         <Module name="xml"/>
 		<Module name="gui"/>
-    </QTDependencies>
+    </Qt>
 </Project>

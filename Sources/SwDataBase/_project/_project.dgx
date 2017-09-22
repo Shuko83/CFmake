@@ -1,8 +1,8 @@
 <Project name="SwDataBase" path="SwDataBase">
     <Target type="SHARED_LIB" ext="swdl"/>
-    <Dependencies>
-        <Artifact name="QsException"/>
-        <Artifact name="SwCore"/>
-        <Artifact name="SwExecution"/>
-    </Dependencies>
+    <Libraries>
+        <Library name="QsException"/>
+        <Library name="SwCore"/>
+        <Library name="SwExecution"/>
+    </Libraries>
 </Project>

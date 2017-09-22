@@ -1,22 +1,22 @@
 <Project name="SwGui" path="SwGui">
     <Target type="SHARED_LIB" ext="swdl"/>
-    <Dependencies>
-        <Artifact name="QsException"/>
-        <Artifact name="SwCore"/>
-        <Artifact name="SwFoundation"/>
-        <Artifact name="SwServiceTools" link="false"/>
-        <Artifact name="SwServiceShortcut" link="false"/>
-        <Artifact name="SwServiceMainWindow"/>
-        <Artifact name="SwExecution"/>
-		<Artifact name="QsGui"/>
-		<Artifact name="QsCore"/>
-    </Dependencies>
-    <QTDependencies>
+    <Libraries>
+        <Library name="QsException"/>
+        <Library name="SwCore"/>
+        <Library name="SwFoundation"/>
+        <Library name="SwServiceTools" link="false"/>
+        <Library name="SwServiceShortcut" link="false"/>
+        <Library name="SwServiceMainWindow"/>
+        <Library name="SwExecution"/>
+		<Library name="QsGui"/>
+		<Library name="QsCore"/>
+    </Libraries>
+    <Qt>
         <Module name="core"/>
         <Module name="gui"/>
         <Module name="xml"/>
         <Module name="network"/>
         <Module name="designer"/>
         <Module name="widgets"/>
-    </QTDependencies>
+    </Qt>
 </Project>

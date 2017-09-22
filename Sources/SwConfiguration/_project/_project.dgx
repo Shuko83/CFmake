@@ -1,18 +1,18 @@
 <Project name="SwConfiguration" path="SwConfiguration">
     <Target type="SHARED_LIB" ext="swdl"/>
-    <Dependencies>
-        <Artifact name="QsException"/>
-        <Artifact name="SwCore"/>
-        <Artifact name="SwExecution"/>
-        <Artifact name="SwGui"/>
-        <Artifact link="false" name="SwServiceConfiguration"/>
-		<Artifact link="false" name="QsGui"/>
-		<Artifact link="false" name="QsCore"/>
-    </Dependencies>
-    <QTDependencies>
+    <Libraries>
+        <Library name="QsException"/>
+        <Library name="SwCore"/>
+        <Library name="SwExecution"/>
+        <Library name="SwGui"/>
+        <Library link="false" name="SwServiceConfiguration"/>
+		<Library link="false" name="QsGui"/>
+		<Library link="false" name="QsCore"/>
+    </Libraries>
+    <Qt>
         <Module name="core"/>
         <Module name="xml"/>
         <Module name="gui"/>
         <Module name="widgets"/>
-    </QTDependencies>
+    </Qt>
 </Project>

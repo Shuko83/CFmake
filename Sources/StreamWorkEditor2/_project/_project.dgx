@@ -1,22 +1,22 @@
 <Project name="StreamWorkEditor2" path="StreamWorkEditor2" >
     <Target type="APP"/>
-    <Dependencies>
-		<Artifact link="false" name="QsGui"/>
-		<Artifact link="false" name="QsCore"/>
-		<Artifact name="QsLog"/>
-        <Artifact name="QsException"/>
-        <Artifact name="SwCore"/>
-        <Artifact name="SwGui"/>
-        <Artifact name="SwModel2"/>
-        <Artifact name="SwExecution"/>
-        <Artifact name="SwEditor"/>
-        <Artifact name="SwServiceTools"			    link="false" />
-        <Artifact name="SwServiceShortcut"		  	link="false" />
-        <Artifact name="SwServiceConfiguration"		link="false" />
-        <Artifact name="SwServiceUnitSI"		    link="false" />
-		<Artifact name="SwServiceMainWindow"		link="false" />
-    </Dependencies>
-    <QTDependencies>
+    <Libraries>
+		<Library link="false" name="QsGui"/>
+		<Library link="false" name="QsCore"/>
+		<Library name="QsLog"/>
+        <Library name="QsException"/>
+        <Library name="SwCore"/>
+        <Library name="SwGui"/>
+        <Library name="SwModel2"/>
+        <Library name="SwExecution"/>
+        <Library name="SwEditor"/>
+        <Library name="SwServiceTools"			    link="false" />
+        <Library name="SwServiceShortcut"		  	link="false" />
+        <Library name="SwServiceConfiguration"		link="false" />
+        <Library name="SwServiceUnitSI"		    link="false" />
+		<Library name="SwServiceMainWindow"		link="false" />
+    </Libraries>
+    <Qt>
         <Module name="core"/>
         <Module name="gui"/>
         <Module name="xml"/>
@@ -24,5 +24,5 @@
         <Module name="printsupport"/>
         <Module name="widgets"/>
 		<Module name="opengl"/>
-    </QTDependencies>
+    </Qt>
 </Project>

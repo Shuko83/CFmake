@@ -1,14 +1,14 @@
 <Project name="SwCore" path="SwCore">
     <Target type="SHARED_LIB"/>
-    <Dependencies>
-		<Artifact name="QsLog"/>
-        <Artifact name="QsException"/>
-		<Artifact name="QsCore" link="false"/>
-		<Artifact name="QsGui" link="false"/>
-    </Dependencies>
-    <QTDependencies>
+    <Libraries>
+		<Library name="QsLog"/>
+        <Library name="QsException"/>
+		<Library name="QsCore" link="false"/>
+		<Library name="QsGui" link="false"/>
+    </Libraries>
+    <Qt>
         <Module name="core"/>
         <Module name="xml"/>
         <Module name="widgets"/>
-    </QTDependencies>
+    </Qt>
 </Project>

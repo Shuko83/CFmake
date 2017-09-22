@@ -1,12 +1,12 @@
 <Project name="SwExecution" path="SwExecution">
     <Target type="SHARED_LIB" ext="swdl"/>
-    <Dependencies>
-        <Artifact name="QsException"/>
-        <Artifact name="SwCore"/>
-    </Dependencies>
-	<QTDependencies>
+    <Libraries>
+        <Library name="QsException"/>
+        <Library name="SwCore"/>
+    </Libraries>
+	<Qt>
         <Module name="core"/>
         <Module name="widgets"/>
 		<Module name="xml"/>
-    </QTDependencies>
+    </Qt>
 </Project>
