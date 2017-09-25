@@ -1,4 +1,4 @@
-<Project name="SwServiceConfiguration" path="SwService.SwServiceConfiguration">
+<Project name="SwServiceConfiguration" path="SwService/SwServiceConfiguration">
     <Target type="SHARED_LIB" ext="swdl"/>
     <Libraries>
         <Library name="QsException"/>
