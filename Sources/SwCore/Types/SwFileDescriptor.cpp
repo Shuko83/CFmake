@@ -86,6 +86,12 @@ bool SwFileDescriptor::operator==(const SwFileDescriptor& source) const
 }
 
 //-----------------------------------------------------------------------
+bool SwFileDescriptor::operator!=(const SwFileDescriptor& source) const
+{
+	return !operator==(source);
+}
+
+//-----------------------------------------------------------------------
 QString SwFileDescriptor::ToString() const
 {
 	return getFileName();
@@ -119,14 +125,14 @@ QString SwFileDescriptor::getDoubleDottedPath(bool useOptionalPath)
 	QRegularExpression optionnalPathExp("\\(.*?\\)");
 	if (pathAsWritten.count("::") > 1)
 	{
-		qWarning() << QString("SwFileDescriptor bar formating : %1").arg(pathAsWritten);
+		qWarning() << QString("SwFileDescriptor: Multiple Dev/Deploy separators (::) : %1").arg(pathAsWritten);
 		return pathAsWritten;
 	}
 
 	if (!pathAsWritten.contains("::")) // cas simple
 	{
-		if (pathAsWritten.contains(optionnalPathExp)) // chemin optionnel uniquement après ::
-			qWarning() << QString("SwFileDescriptor bar formating : %1").arg(pathAsWritten);
+		//if (pathAsWritten.contains(optionnalPathExp)) // chemin optionnel uniquement après ::
+		//	qWarning() << QString("SwFileDescriptor bar formating : %1").arg(pathAsWritten);
 		return pathAsWritten;
 	}
 

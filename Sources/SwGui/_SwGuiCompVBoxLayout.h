@@ -41,7 +41,7 @@ class _SwGuiCompVBoxLayout : public SwComponent_Class, public ISwInterfaces_Cons
 
     Q_PROPERTY(bool Spacer_enable READ getEnableSpacer WRITE setEnableSpacer)
 
-protected:
+protected:	
     /* menu */
     QVBoxLayout * _layout;
     /* service de fourniture d'interface */
@@ -114,6 +114,10 @@ public:
 	virtual QLayout & GetLayout();
     /*! \brief Liberation du layout */
 	virtual void LiberateLayout();
+
+protected:
+	void adjustLayout();
+
 
 };
 #endif 

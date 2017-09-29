@@ -65,6 +65,7 @@ namespace StreamWork
 			SwFileDescriptor & operator=(const SwFileDescriptor& source);
 			/*! \brief Operateur de comparaison*/
 			bool operator==(const SwFileDescriptor& source) const;
+			bool operator!=(const SwFileDescriptor& source) const;
 			/*! \brief de recuperation de la valeur par une string*/
 			QString ToString() const;
 
