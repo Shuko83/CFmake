@@ -167,7 +167,7 @@ namespace StreamWork {
 			*/
 			template<typename T> inline void registerShortcut(QString shortcutCategory, QString shortcutName,  void (T::*shortcutCallback)())
 			{
-				registerInternalShortcut(shortcutCategory, shortcutName, [=](){(static_cast<T*>(this)->*shortcutCallback)(); });
+				registerInternalShortcut(shortcutCategory, shortcutName, [shortcutCallback,this](){(static_cast<T*>(this)->*shortcutCallback)(); });
 			}
 
 			/**
@@ -176,7 +176,7 @@ namespace StreamWork {
 			*/
 			template<typename T, typename MEMBER> inline void registerShortcut(QString shortcutCategory, QString shortcutName, T* ptr, MEMBER shortcutCallback)
 			{
-				registerInternalShortcut(shortcutCategory, shortcutName, [=](){(ptr->*shortcutCallback)(); });
+				registerInternalShortcut(shortcutCategory, shortcutName, [shortcutCallback,ptr](){(ptr->*shortcutCallback)(); });
 			}
 
 			//----------------------------------------------------
@@ -391,7 +391,7 @@ namespace StreamWork {
 			template<typename T, typename U, typename MEMBER> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, U* thisPointer, MEMBER func)
 			{
 				//passage de this pointer en = au contexte de la lambda expression pour copier l'adresse du pointeur dans la lambda expression car en sortie de la methode courante, la reference sur le pointeur n'est plus valide.
-				registerInterfaceCallback(interfaceName, interfaceHandle, [=](CALLBACK_EVENT eventType)->void {
+				registerInterfaceCallback(interfaceName, interfaceHandle, [func,thisPointer](CALLBACK_EVENT eventType)->void {
 					if(eventType==AFTER_POINTER_ASSIGNEMENT) 
 					{
 						(thisPointer->*func)();
@@ -526,7 +526,7 @@ namespace StreamWork {
 				}
 
 
-				_mapServiceWithCallBack.insert( name, [=]( ISwService* service )->void {
+				_mapServiceWithCallBack.insert(name, [callback, thisPointer](ISwService* service)->void {
 
 					auto castS = dynamic_cast<T*>(service);
 					if ( castS )
