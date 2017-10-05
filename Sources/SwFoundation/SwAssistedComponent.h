@@ -179,6 +179,11 @@ namespace StreamWork {
 				registerInternalShortcut(shortcutCategory, shortcutName, [shortcutCallback,ptr](){(ptr->*shortcutCallback)(); });
 			}
 
+			inline void unregisterShortcut(QString shortcutCategory, QString shortcutName)
+			{
+				unregisterInternalShortcut(shortcutCategory, shortcutName);
+			}
+
 			//----------------------------------------------------
 			// Interface ISwExecutable_Service
 			//----------------------------------------------------
@@ -719,6 +724,19 @@ private:
 
 				//TODO : S'abonner à la notif de dispo du service && si service pas dispo -> On enregistre en temporaire
 				// Quand service dispo on registerCommand sur les temporaire
+			}
+
+			inline void unregisterInternalShortcut(QString shortcutCategory, QString shortcutName)
+			{
+				ISwServiceShortcuts* serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
+				if (serviceShortcuts){
+					serviceShortcuts->unregisterCommand(shortcutCategory, shortcutName, this);
+
+					_mapShortcutNameWithCategory.remove(shortcutName);
+					_mapShortcutWithCallBack.remove(shortcutName);
+				}
+				else
+					qCritical() << "Unable to register shortcut, because the service is not available";
 			}
 
 			/**
