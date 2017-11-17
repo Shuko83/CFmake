@@ -1,6 +1,7 @@
 VERSION = 1.2.3 
 
-#Console in release
+#Console in debug and release
+CONFIG( debug, debug|release ): CONFIG *= console
 CONFIG( release, debug|release ): CONFIG *= console
 
 greaterThan(QT_MINOR_VERSION, 4): {
