@@ -13,7 +13,6 @@
         <Library name="SwServiceTools"			    link="false" />
         <Library name="SwServiceShortcut"		  	link="false" />
         <Library name="SwServiceConfiguration"		link="false" />
-        <Library name="SwServiceUnitSI"		    link="false" />
 		<Library name="SwServiceMainWindow"		link="false" />
     </Libraries>
     <Qt>
