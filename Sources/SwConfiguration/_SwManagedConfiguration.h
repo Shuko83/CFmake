@@ -88,7 +88,7 @@ public:
     bool isRecordAvailable();
 
     /*! \brief signale une modification de la configuration necessitant une sauvegarde*/
-    void Update();
+	void Update(StreamWork::SwCore::ISwObservable *);
 
     void setConfigurationController(ISwConfigurationController * controller);
 

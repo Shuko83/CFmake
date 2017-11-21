@@ -279,7 +279,7 @@ void _SwManagedConfiguration::setConfigurationController(ISwConfigurationControl
     _controller = controller;
 }
 
-void _SwManagedConfiguration::Update()
+void _SwManagedConfiguration::Update(StreamWork::SwCore::ISwObservable *)
 {
     if (_controller != 0)
         _controller->setConfigurationEdited(true);

@@ -98,7 +98,7 @@ void _SwConfigurationExportedOwnerConfigurable::Notify()
     }
 }  
 /*! \brief Permet notifier aux observers un changement */
-void _SwConfigurationExportedOwnerConfigurable::Update()
+void _SwConfigurationExportedOwnerConfigurable::Update(StreamWork::SwCore::ISwObservable *)
 {
 
     Notify();

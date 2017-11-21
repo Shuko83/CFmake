@@ -5,4 +5,9 @@
         <Library name="SwCore"/>
         <Library name="SwExecution"/>
     </Libraries>
+	<Qt>
+        <Module name="core"/>
+		<Module name="gui"/>
+		<Module name="xml"/>
+    </Qt>
 </Project>
