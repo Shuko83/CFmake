@@ -104,9 +104,13 @@ protected:
 	/* widget central */
 	ISwWidget * _handle_central_widget;
 	/* choix du type d'interface Widget ou MainWindow*/
-	bool  _useAsWidget;
+	bool _useAsWidget;
 	/* propriété nombre d'actions*/
 	ISwProperty * _use_aswidget_property;
+	/* Est ce que la fermeture est protegée par une fenetre de dialogue*/
+	bool _protectClosing;
+	/* propriété associée*/
+	ISwProperty * _protect_closing_property;
 
 	QList<ISwEventObserver*> _iSwEvent;
 

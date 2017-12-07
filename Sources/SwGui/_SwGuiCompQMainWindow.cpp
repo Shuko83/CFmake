@@ -13,6 +13,8 @@
 #include "_SwGuiCompQMainWindow.h"
 #include <QEvent>
 #include <QSettings>
+#include <QMessageBox>
+#include <QCloseEvent>
 
 #include "ISwServiceShortcuts.h"
 #include <SwApplication.h>
@@ -64,6 +66,7 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
 	_show_mode.AddKey(SW_SHOW_MINIMIZED, "Minimized");
 	_show_mode.FromInt(SW_SHOW_NORMAL);
 	_useAsWidget = false;
+	_protectClosing = false;
 	
 	// Shortcuts
 	ISwServiceShortcuts* serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>(SW_APP->QueryService(CG_SW_SERVICE_SHORTCUTS));
@@ -217,6 +220,15 @@ void _SwGuiCompQMainWindow::initializeComponent() throw(SwException)
 		_show_property->SetDescription("Show Mode");
 		enableListeningChangeForProperty(_show_property);
 	}
+
+	_protect_closing_property = getPropertiesService().CreateProperty<bool>("confirm closing dialog");
+	if (_protect_closing_property == NULL)
+	{
+		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register _protect_closing_property property\n"));
+	}
+	_protect_closing_property->SetDescription("Define kind of widget interface this component produces");
+	_protect_closing_property->SetValue(QVariant(_protectClosing));
+	enableListeningChangeForProperty(_protect_closing_property);
 
 	//Fin
 	if ( SW_APP->IsVerbose() )
@@ -380,6 +392,10 @@ void _SwGuiCompQMainWindow::eventPropertyChange(ISwProperty * property)
 		SwEnum showmode = _show_property->GetValue().value<SwEnum>();
 		_show_mode = showmode;
 		showChanged();
+	}
+	if (_protect_closing_property == property)
+	{
+		_protectClosing = property->GetValue().toBool();
 	}
 }
 
@@ -633,6 +649,14 @@ void _SwGuiCompQMainWindow::processCommand(QString name)
 //-----------------------------------------------------------------------
 void _SwGuiCompQMainWindow::closeEvent(QCloseEvent* event)
 {
+	if (_protectClosing)
+	{
+		int ret = QMessageBox::question(this, "Exit", "Do you really want to exit?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+		if (ret == QMessageBox::No)
+			event->ignore();
+	}
+
+
 	QSettings settings(_geometryPath, QSettings::IniFormat);
 	settings.setValue("geometry", saveGeometry());
 	settings.setValue("windowState", saveState());
