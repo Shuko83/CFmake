@@ -29,7 +29,7 @@
 #include "SwGuiEnumIntComboBox.h"
 #include "SwGuiStringLineEdit.h"
 #include "_QRcViewer.h"
-#include "..\SwCore\Main\SwMacros.h"
+#include "SwMacros.h"
 
 using namespace StreamWork::SwGui;
 using namespace StreamWork::SwCore;
