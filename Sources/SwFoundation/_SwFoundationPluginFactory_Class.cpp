@@ -12,7 +12,6 @@
 #include <QDate>
 
 #include "SwApplication.h"
-#include "ISwServiceExtensions.h"
 
 #include "_SwFoundationPluginFactory_Class.h"
 
