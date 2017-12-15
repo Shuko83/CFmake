@@ -32,10 +32,10 @@ private:
 	{
 		if (service->GetServiceName() == _serviceName)
 		{
-			if (_callback)
-				_callback(false);
+			_service = dynamic_cast<SERVICE_TYPE *>(service);
 
-			_service = nullptr;
+			if (_callback)
+				_callback(true);
 		}
 	}
 
@@ -44,12 +44,13 @@ private:
 	{
 		if (service->GetServiceName() == _serviceName)
 		{
-			_service = dynamic_cast<SERVICE_TYPE *>(service);
-
 			if (_callback)
-				_callback(true);
+				_callback(false);
+
+			_service = nullptr;
 		}
 	}
+
 };
 
 //---------------------------------------------------------------------------------
