@@ -31,19 +31,17 @@ _SwGuiCompQWidgetToQDialog::_SwGuiCompQWidgetToQDialog() : SwAssistedComponent()
 	_action = new QAction(this);
 	connect(_action, &QAction::toggled, [=](bool)
 	{
-		if ( _container.isVisible() )
+		//Close est important car il permet de filtrer l'event en cas
+		// de volonté de ne pas fermer la fenetre dans le widget
+		if (_container.isVisible())
 			_container.close();
 		else
 			_container.show();
 	});
 
 	connect(_action, &QAction::triggered, [=](bool)
-	{
-		//Close est important car il permet de filtrer l'event en cas 
-		// de volonté de ne pas fermer la fenetre dans le widget
-		if ( _container.isVisible() )
-			_container.close();
-		else
+	{		
+		if (!_container.isVisible())
 			_container.show();
 	});
 }
