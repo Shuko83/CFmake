@@ -131,7 +131,7 @@ public:
         return insert(new Func0<T>(&obj,f));    
     }
     template<class T> void idisconnect(T& obj,void (T::*f)()) {
-        Func0<T> * init_func;
+        Func0<T> * init_func = nullptr;
         sli r;
         r=sl;
         if (r!=0) init_func=dynamic_cast<Func0<T>*>(r);
@@ -227,7 +227,7 @@ public:
     }
     template<class T, class Arg1> 
         void idisconnect(T& obj,void (T::*f)(Arg1)) {
-            Func1<T,Arg1> * init_func;
+			Func1<T, Arg1> * init_func = nullptr;
             sli r;
             r=sl;
             if (r!=0) init_func=dynamic_cast<Func1<T,Arg1>*>(r);
@@ -299,7 +299,7 @@ public:
     }
     template<class T, class Arg1, class Arg2> 
         void idisconnect(T& obj,void (T::*f)(Arg1,Arg2)) {
-            Func2<T,Arg1,Arg2> * init_func;
+            Func2<T,Arg1,Arg2> * init_func = nullptr;
             sli r;
             r=sl;
             if (r!=0) init_func=dynamic_cast<Func2<T,Arg1,Arg2>*>(r);
@@ -371,7 +371,7 @@ public:
     }
     template<class T, class Arg1, class Arg2, class Arg3> 
         void idisconnect(T& obj,void (T::*f)(Arg1,Arg2,Arg3)) {
-            Func3<T,Arg1,Arg2,Arg3> * init_func;
+			Func3<T, Arg1, Arg2, Arg3> * init_func = nullptr;
             sli r;
             r=sl;
             if (r!=0) init_func=dynamic_cast<Func3<T,Arg1,Arg2,Arg3>*>(r);
@@ -443,7 +443,7 @@ public:
     }
     template<class T, class Arg1, class Arg2, class Arg3, class Arg4> 
         void idisconnect(T& obj,void (T::*f)(Arg1,Arg2,Arg3,Arg4)) {
-            Func4<T,Arg1,Arg2,Arg3,Arg4> * init_func;
+			Func4<T, Arg1, Arg2, Arg3, Arg4> * init_func = nullptr;
             sli r;
             r=sl;
             if (r!=0) init_func=dynamic_cast<Func4<T,Arg1,Arg2,Arg3,Arg4>*>(r);
@@ -515,7 +515,7 @@ public:
     }
     template<class T, class Arg1, class Arg2, class Arg3, class Arg4, class Arg5> 
         void idisconnect(T& obj,void (T::*f)(Arg1,Arg2,Arg3,Arg4,Arg5)) {
-            Func5<T,Arg1,Arg2,Arg3,Arg4,Arg5> * init_func;
+			Func5<T, Arg1, Arg2, Arg3, Arg4, Arg5> * init_func = nullptr;
             sli r;
             r=sl;
             if (r!=0) init_func=dynamic_cast<Func5<T,Arg1,Arg2,Arg3,Arg4,Arg5>*>(r);
@@ -587,7 +587,7 @@ public:
     }
     template<class T, class Arg1, class Arg2, class Arg3, class Arg4, class Arg5, class Arg6> 
         void idisconnect(T& obj,void (T::*f)(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6)) {
-            Func6<T,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6> * init_func;
+			Func6<T, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6> * init_func = nullptr;
             sli r;
             r=sl;
             if (r!=0) init_func=dynamic_cast<Func6<T,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6>*>(r);
@@ -659,7 +659,7 @@ public:
     }
     template<class T, class Arg1, class Arg2, class Arg3, class Arg4, class Arg5, class Arg6,class Arg7> 
         void idisconnect(T& obj,void (T::*f)(Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7)) {
-            Func7<T,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7> * init_func;
+			Func7<T, Arg1, Arg2, Arg3, Arg4, Arg5, Arg6, Arg7> * init_func = nullptr;
             sli r;
             r=sl;
             if (r!=0) init_func=dynamic_cast<Func7<T,Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7>*>(r);

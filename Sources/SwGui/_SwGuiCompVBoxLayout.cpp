@@ -278,13 +278,20 @@ void _SwGuiCompVBoxLayout::AfterInterfaceAvailabilityChange(QString interface_na
 	if ( interface_header == QString("W") && widget_it == _widgets.end() && _tmp_handle_widget != NULL )
 	{
 		_widgets.insert(interface_name, _tmp_handle_widget);
+		if ( _layout != NULL )
+		{
+			if ( _enableSpacer )
+			{
+				_layout->insertWidget(_layout->count() - 1, &_tmp_handle_widget->GetWidget());
+			}
+			else
+			{
+				_layout->insertWidget(interface_name.remove("Widget_").toInt(), &_tmp_handle_widget->GetWidget());
+				//_layout->addWidget();
+			}
+		}
 		_nb_childs++;
 		_ordered_childrens.insert(interface_name.remove("Widget_").toInt(),interface_name);
-		std::sort(_ordered_childrens.begin(), _ordered_childrens.end()); // Introduit un bug avec les Layout ajoutés. TODO : revoir cela.
-		if (_layout != NULL)
-		{
-			adjustLayout();
-		}
 		return;
 	}
 	//Si c'est un layout
@@ -292,12 +299,19 @@ void _SwGuiCompVBoxLayout::AfterInterfaceAvailabilityChange(QString interface_na
 	if ( interface_header == QString("L") && layout_it == _layouts.end() && _tmp_handle_layout != NULL )
 	{
 		_layouts.insert(interface_name, _tmp_handle_layout);
+		if ( _layout != NULL )
+		{
+			if ( _enableSpacer )
+			{
+				_layout->insertLayout(_layout->count() - 1, &_tmp_handle_layout->GetLayout());
+			}
+			else
+			{
+				_layout->addLayout(&_tmp_handle_layout->GetLayout());
+			}
+		}
 		_nb_childs++;
 		_ordered_childrens.push_back(interface_name);
-		if (_layout != NULL)
-		{
-			adjustLayout();
-		}
 		return;
 	}
 }
@@ -324,8 +338,7 @@ QLayout & _SwGuiCompVBoxLayout::GetLayout()
 			interface_header = _ordered_childrens[i];
 			interface_header.truncate(1);
 			widget_it = _widgets.find(_ordered_childrens[i]);
-			//qInfo() << "Ajout du widget" << _ordered_childrens[i] << interface_header << (widget_it != _widgets.end() ? *widget_it : nullptr);
-			if (interface_header == QString("W") && widget_it != _widgets.end())
+			if ( interface_header == QString("W") && widget_it != _widgets.end() )
 			{
 				_layout->addWidget(&widget_it.value()->GetWidget());
 			}
@@ -377,36 +390,3 @@ void _SwGuiCompVBoxLayout::LiberateLayout()
 	}
 }
 
-//-----------------------------------------------------------------------
-void  _SwGuiCompVBoxLayout::adjustLayout()
-{
-	if (!_layout)
-		return;
-	
-	while (!_layout->isEmpty())
-		_layout->takeAt(0);
-	
-	for (int index = 0; index < _ordered_childrens.size(); ++index)
-	{
-		QString interface_name = _ordered_childrens.value(index);
-		auto widget_it = _widgets.find("Widget_" + interface_name);
-		if (widget_it != _widgets.end())
-		{
-			_layout->insertWidget(index, &(*widget_it)->GetWidget());
-		}
-		else
-		{
-			qDebug() << "Pas de widget" << index << interface_name;
-		}
-		auto layout_it = _layouts.find(interface_name);
-		if (layout_it != _layouts.end())
-		{			
-			_layout->addLayout(&(*layout_it)->GetLayout());		 // Pas de index ?	
-		}
-	}
-	if (_enableSpacer)
-	{
-		_layout->addSpacerItem(_spacer);
-	}
-	
-}
