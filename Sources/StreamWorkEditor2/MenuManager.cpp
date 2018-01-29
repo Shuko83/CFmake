@@ -449,13 +449,16 @@ void MenuManager::buildMenuForConnector(QMenu * menu,ConnectorGraphicItem * conn
     }
     if (links->size()==0 && _selectedConnector->getConnectorType()==CONSUMER) {
         ISwServiceExtensions * serviceExtension=dynamic_cast<ISwServiceExtensions *>(SW_APP->QueryService(CG_SW_SERVICE_EXTENSION_MANAGER));
-        QList<ISwExtension *> availableExtensions=serviceExtension->getExtensionWithType(_selectedConnector->getModelType());
-        QMenu *submenu=menu->addMenu(QIcon(),"Create and connect to");
-        foreach(ISwExtension * ext,availableExtensions) {
-            QIcon icon=SW_APP->ComponentsBank().GetComponentIcon(ext->getComponentType());
-            QAction * action=submenu->addAction(icon,ext->getComponentType()+"."+ext->getName(),this,SLOT(onCreateAndConnect()));
-            action->setToolTip(SW_APP->ComponentsBank().GetComponentDescription(ext->getComponentType()));
-        }
+		if (serviceExtension)
+		{
+			QList<ISwExtension *> availableExtensions = serviceExtension->getExtensionWithType(_selectedConnector->getModelType());
+			QMenu *submenu = menu->addMenu(QIcon(), "Create and connect to");
+			foreach(ISwExtension * ext, availableExtensions) {
+				QIcon icon = SW_APP->ComponentsBank().GetComponentIcon(ext->getComponentType());
+				QAction * action = submenu->addAction(icon, ext->getComponentType() + "." + ext->getName(), this, SLOT(onCreateAndConnect()));
+				action->setToolTip(SW_APP->ComponentsBank().GetComponentDescription(ext->getComponentType()));
+			}
+		}
     }
 
 }
