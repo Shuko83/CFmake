@@ -29,13 +29,11 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
-namespace StreamWork
-{
-	namespace SwEditor
-	{
+namespace StreamWork {
+    namespace SwEditor {
         /*!
-	        \class _SwEditorStreamView 
-	        \brief Implementation d'une vue d'une scene de stream
+            \class _SwEditorStreamView
+            \brief Implementation d'une vue d'une scene de stream
         */
         class _SwEditorStreamView : public SwComponent_Class, public ISwWidget, public ISwInterfaces_ConsumerObserver, public SwCore::ISwObserver
         {
@@ -57,30 +55,30 @@ namespace StreamWork
             _SwEditorStreamView();
             /*! \brief Destructeur */
             virtual ~_SwEditorStreamView();
-
+            
             /*! \brief Initialisation des ressources
                 \note tous les services du composants doivent être déclarés dans cette methodes*/
-            virtual void InitializeResources() throw(SwException);  	
+            virtual void InitializeResources() throw( SwException );
             //---------------------------------------------------------------------
             // Interface ISwWidget
             //---------------------------------------------------------------------
             /*! \brief Renvoie le widget
-			\return le widget */
-	        virtual QWidget & GetWidget();
-             //---------------------------------------------------------------------
+            \return le widget */
+            virtual QWidget * GetWidget();
+            //---------------------------------------------------------------------
             // Interface ISwInterfaces_ConsumerObserver
             //---------------------------------------------------------------------
-	        /*! \brief Avant changement de la disponibilité de l'interface */
-	        virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-	        /*! \brief Apres changement de la disponibilité de l'interface */
-	        virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-             //---------------------------------------------------------------------
+            /*! \brief Avant changement de la disponibilité de l'interface */
+            virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
+            /*! \brief Apres changement de la disponibilité de l'interface */
+            virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
+            //---------------------------------------------------------------------
             // Interface ISwObserver
             //---------------------------------------------------------------------
-	        /*! \brief methode appelée par l'observable*/
-			void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
-
+            /*! \brief methode appelée par l'observable*/
+            void Update( StreamWork::SwCore::ISwObservable * sender = nullptr );
+            
         };
     }
 }
-#endif 
+#endif

@@ -14,23 +14,21 @@
 #include <QWidget>
 
 
-namespace StreamWork
-{
-	namespace SwGui
-	{
+namespace StreamWork {
+    namespace SwGui {
         /*!
-		@interface ISwWidget 
-		@brief interface definissant un QWidget
+        @interface ISwWidget
+        @brief interface definissant un QWidget
         @ingroup SwGuiGrp
         @swinterface
-		*/
-        class ISwWidget 
-		{   
-		public:
+        */
+        class ISwWidget
+        {
+        public:
             /*! \brief Renvoie le widget
             \return le widget */
-			virtual QWidget & GetWidget()=0;
-		};
-	}
+            virtual QWidget * GetWidget() = 0;
+        };
+    }
 }
-#endif 
+#endif

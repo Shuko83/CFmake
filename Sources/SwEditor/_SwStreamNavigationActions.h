@@ -21,37 +21,37 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
-namespace StreamWork
-{
-	namespace SwEditor
-	{
+namespace StreamWork {
+    namespace SwEditor {
         /*!
-	        \class _SwStreamsNavigationActions 
-	        \brief Implementations des QActions relatives a un manager de stream
+            \class _SwStreamsNavigationActions
+            \brief Implementations des QActions relatives a un manager de stream
         */
-		class _SwStreamNavigationActions : public QObject , public ISwObserver
-		{
-			Q_OBJECT
+        class _SwStreamNavigationActions : public QObject, public ISwObserver
+        {
+            Q_OBJECT
         private:
             /*! \brief container d'actions */
-            class _ActionContainer : public ISwAction {
+            class _ActionContainer : public ISwAction
+            {
             private:
                 QAction * _action;
             public:
-                _ActionContainer(QAction * action);
+                _ActionContainer( QAction * action );
                 /*! \brief Renvoie le Action
                 \return le Action */
-			    virtual QAction & GetAction();
+                virtual QAction & GetAction();
             };
             /*! \brief container de widget */
-            class _WidgetContainer : public ISwWidget {
+            class _WidgetContainer : public ISwWidget
+            {
             private:
                 QWidget * _widget;
             public:
-                _WidgetContainer(QWidget * widget);
+                _WidgetContainer( QWidget * widget );
                 /*! \brief Renvoie le Widget
                 \return leWidget */
-			    virtual QWidget & GetWidget();
+                virtual QWidget * GetWidget();
             };
             /*! \brief StreamsManager */
             ISwEditorStreamNavigation * _navigator;
@@ -63,23 +63,23 @@ namespace StreamWork
             /* \brief Widget */
             QLineEdit * _current_path;
             _WidgetContainer * _current_path_c;
-		public:
-		    _SwStreamNavigationActions(QObject *parent,SwInterfaces_Provider_Class * provider_service);
-		    ~_SwStreamNavigationActions();
+        public:
+            _SwStreamNavigationActions( QObject * parent, SwInterfaces_Provider_Class * provider_service );
+            ~_SwStreamNavigationActions();
             /*! \brief Attach un stream manager */
-            void AttachStreamNavigator(ISwEditorStreamNavigation * navigator);
+            void AttachStreamNavigator( ISwEditorStreamNavigation * navigator );
             /*! \briefdetach un stream manager */
             void DetachStreamNavigator();
             //---------------------------------------------------------------------
             // Interface ISwObserver
             //---------------------------------------------------------------------
-	        /*! \brief methode appelée par l'observable*/
-			virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
-		private slots:
-	        /*! \brief callback _Acces au parent*/
-	        void OnGoToParent();		    
-		};
-	}	
+            /*! \brief methode appelée par l'observable*/
+            virtual void Update( StreamWork::SwCore::ISwObservable * sender = nullptr );
+        private slots:
+            /*! \brief callback _Acces au parent*/
+            void OnGoToParent();
+        };
+    }
 }
 
 #endif // __SwEditorStreamsManagerActions_H

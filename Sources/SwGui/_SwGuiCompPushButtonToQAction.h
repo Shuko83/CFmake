@@ -30,14 +30,14 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 /*!
-	\class _SwGuiCompPushButtonToQAction 
-	\brief _SwGuiCompPushButtonToQAction generant un QWidget
+    \class _SwGuiCompPushButtonToQAction
+    \brief _SwGuiCompPushButtonToQAction generant un QWidget
 */
-class _SwGuiCompPushButtonToQAction : public SwComponent_Class, 
-                           public ISwInterfaces_ConsumerObserver,
-                           public ISwWidget
+class _SwGuiCompPushButtonToQAction : public SwComponent_Class,
+    public ISwInterfaces_ConsumerObserver,
+    public ISwWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 protected:
     /* menu */
     QPushButton * pushButton;
@@ -46,43 +46,43 @@ protected:
     /* service de consommation d'interface */
     SwInterfaces_Consumer_Class * _consumer_service;
     /* service de gestion des propriétés */
-    SwProperties_Class * _properties_service;   
-
-	/* interface action a consommée */
-	ISwAction * _handle_action;
-
-	/** @brief Interface Widget*/
-	//ISwWidget * _i_Widget;
+    SwProperties_Class * _properties_service;
+    
+    /* interface action a consommée */
+    ISwAction * _handle_action;
+    
+    /** @brief Interface Widget*/
+    //ISwWidget * _i_Widget;
 public:
     /*! \brief Constructeur */
     _SwGuiCompPushButtonToQAction();
     /*! \brief Destructeur */
     virtual ~_SwGuiCompPushButtonToQAction();
-
+    
     /*! \brief Initialisation des ressources
     \note tous les services du composants doivent être déclarés dans cette methodes*/
-    virtual void InitializeResources() throw(SwException);
-     /*! \brief Callback sur les changements de propriétés*/
+    virtual void InitializeResources() throw( SwException );
+    /*! \brief Callback sur les changements de propriétés*/
     //void OnPropertyChange(ISwProperty * property);
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-	//*! \brief Avant changement de la disponibilité de l'interface */
-	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-	/*! \brief Apres changement de la disponibilité de l'interface */
-	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
+    //*! \brief Avant changement de la disponibilité de l'interface */
+    virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
+    /*! \brief Apres changement de la disponibilité de l'interface */
+    virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     //---------------------------------------------------------------------
     // Interface ISwWidget
     //---------------------------------------------------------------------
     /*! \brief Renvoie le widget
     \return le widget */
-	virtual QWidget & GetWidget();
-
-	//--------------------------------------------------------------
-	//Slots
-	//--------------------------------------------------------------
-	public slots :
-		void commandApply(bool state);
-
+    virtual QWidget * GetWidget();
+    
+    //--------------------------------------------------------------
+    //Slots
+    //--------------------------------------------------------------
+public slots :
+    void commandApply( bool state );
+    
 };
-#endif 
+#endif

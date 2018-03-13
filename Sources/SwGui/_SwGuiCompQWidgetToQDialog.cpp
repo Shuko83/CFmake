@@ -25,98 +25,98 @@ using namespace StreamWork::SwGui;
 //-------------------------------------------------------------------------
 _SwGuiCompQWidgetToQDialog::_SwGuiCompQWidgetToQDialog() : SwAssistedComponent()
 {
-	_enableMaximize = false;
-	_saveDialogPosition = false;
-	_widget = nullptr;
-	_action = new QAction(this);
-	connect(_action, &QAction::toggled, [=](bool)
-	{
-		//Close est important car il permet de filtrer l'event en cas
-		// de volonté de ne pas fermer la fenetre dans le widget
-		if (_container.isVisible())
-			_container.close();
-		else
-			_container.show();
-	});
-
-	connect(_action, &QAction::triggered, [=](bool)
-	{		
-		if (!_container.isVisible())
-			_container.show();
-	});
+    _enableMaximize = false;
+    _saveDialogPosition = false;
+    _widget = nullptr;
+    _action = new QAction( this );
+    connect( _action, &QAction::toggled, [ = ]( bool )
+    {
+        //Close est important car il permet de filtrer l'event en cas
+        // de volonté de ne pas fermer la fenetre dans le widget
+        if( _container.isVisible() )
+            _container.close();
+        else
+            _container.show();
+    } );
+    
+    connect( _action, &QAction::triggered, [ = ]( bool )
+    {
+        if( !_container.isVisible() )
+            _container.show();
+    } );
 }
 
 //-------------------------------------------------------------------------
 _SwGuiCompQWidgetToQDialog::~_SwGuiCompQWidgetToQDialog()
 {
-	
-	unconsummeInterface(ISWWIDGET_INTERFACE_NAME);
-	unprovideInterface(ISWACTION_INTERFACE_NAME);
-	unprovideInterface(ISWWIDGETP_INTERFACE_NAME);
 
-	delete _helper;
+    unconsummeInterface( ISWWIDGET_INTERFACE_NAME );
+    unprovideInterface( ISWACTION_INTERFACE_NAME );
+    unprovideInterface( ISWWIDGETP_INTERFACE_NAME );
+    
+    delete _helper;
 }
 
 //-------------------------------------------------------------------------
-void _SwGuiCompQWidgetToQDialog::initializeComponent() throw(SwException)
+void _SwGuiCompQWidgetToQDialog::initializeComponent() throw( SwException )
 {
-	_helper = new SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow>();
-	_helper->setService(CG_SW_SERVICE_MAINWINDOW, this, &_SwGuiCompQWidgetToQDialog::onService);
-
-	consummeInterface<ISwWidget>(ISWWIDGET_INTERFACE_NAME);
-
-	provideInterface<ISwWidget>(ISWWIDGETP_INTERFACE_NAME, &_container);
-	provideInterface<ISwAction>(ISWACTION_INTERFACE_NAME, this);
-
-	getPropertiesService().CreatePropertyForQObject(this, "EnableMaximize");
-	getPropertiesService().CreatePropertyForQObject(this, "SaveDialogPosition");
-	createPropertiesForQObject(&_container, "Widget", true);
-	createPropertiesForQObject(_action, "Action", true);	
+    _helper = new SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow>();
+    _helper->setService( CG_SW_SERVICE_MAINWINDOW, this, &_SwGuiCompQWidgetToQDialog::onService );
+    
+    consummeInterface<ISwWidget>( ISWWIDGET_INTERFACE_NAME );
+    
+    provideInterface<ISwWidget>( ISWWIDGETP_INTERFACE_NAME, &_container );
+    provideInterface<ISwAction>( ISWACTION_INTERFACE_NAME, this );
+    
+    getPropertiesService().CreatePropertyForQObject( this, "EnableMaximize" );
+    getPropertiesService().CreatePropertyForQObject( this, "SaveDialogPosition" );
+    createPropertiesForQObject( &_container, "Widget", true );
+    createPropertiesForQObject( _action, "Action", true );
 }
 
 
 //---------------------------------------------------------------------------------
-void _SwGuiCompQWidgetToQDialog::interfaceAvailable(QString interfaceName)
+void _SwGuiCompQWidgetToQDialog::interfaceAvailable( QString interfaceName )
 {
-	if ( interfaceName == ISWWIDGET_INTERFACE_NAME )
-	{
-		auto ptrWidget = getInterface<ISwWidget>(interfaceName);
-		_widget = &(ptrWidget->GetWidget());
-		_container.setContentWidget(_widget);
-	}
+    if( interfaceName == ISWWIDGET_INTERFACE_NAME )
+    {
+        auto ptrWidget = getInterface<ISwWidget>( interfaceName );
+        _widget = ptrWidget->GetWidget();
+        _container.setContentWidget( _widget );
+    }
 }
 
 //---------------------------------------------------------------------------------
-void _SwGuiCompQWidgetToQDialog::interfaceUnavailable(QString interfaceName)
+void _SwGuiCompQWidgetToQDialog::interfaceUnavailable( QString interfaceName )
 {
-	if ( interfaceName == ISWWIDGET_INTERFACE_NAME )
-	{
-		if ( _widget )
-			_widget->setParent(nullptr);
-
-		_container.setContentWidget(nullptr);
-	}
+    if( interfaceName == ISWWIDGET_INTERFACE_NAME )
+    {
+        if( _widget )
+            _widget->setParent( nullptr );
+            
+        _container.setContentWidget( nullptr );
+    }
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiCompQWidgetToQDialog::onService(bool available)
+void _SwGuiCompQWidgetToQDialog::onService( bool available )
 {
-	if (available)
-	{
-		_container.setParent(_helper->getService()->getMainWindow());
-		if (_enableMaximize)
-			_container.setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint);
-		else
-			_container.setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
-
-	}
-	else
-		_container.setParent(nullptr);
+    if( available )
+    {
+        _container.setParent( _helper->getService()->getMainWindow() );
+        if( _enableMaximize )
+            _container.setWindowFlags( Qt::Dialog | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint );
+        else
+            _container.setWindowFlags( Qt::Dialog | Qt::WindowCloseButtonHint );
+            
+    }
+    else
+        _container.setParent( nullptr );
 }
 
 //-----------------------------------------------------------------------
 QAction & _SwGuiCompQWidgetToQDialog::GetAction()
 {
-	return *_action;
+    return *_action;
 }
 

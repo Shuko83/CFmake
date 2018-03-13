@@ -27,8 +27,9 @@ namespace StreamWork {
         @brief Perspectives Manager
         */
         class _SwPerspectivesManager: public SwComponent_Class,
-                                      public ISwInterfaces_ConsumerObserver,
-                                      public ISwWidget {
+            public ISwInterfaces_ConsumerObserver,
+            public ISwWidget
+        {
             Q_OBJECT
         protected:
             /* widget central */
@@ -53,63 +54,63 @@ namespace StreamWork {
             /* propriété nombre de perspectives */
             ISwProperty * _perspectives_nb_property;
             /* map des perspectives widgets*/
-            QMap<QString,ISwPerspective *> _perspectives;
+            QMap<QString, ISwPerspective *> _perspectives;
             /* handle temporaire d'interface perspectives*/
             ISwPerspective * _tmp_handle_perspective;
             /* handle PerspectiveCourante*/
             ISwPerspective * _currentPerspective;
-			/* @brief propriété style sheet des boutons */
-			ISwProperty * _buttons_stylesheet_property;
-			/* @brief stylesheet utilise pour les boutons */
-			QString	_buttons_stylesheet;
-			/* @brief propriété title de la perspective */
-			ISwProperty * _perspective_title_property;
-			/* @brief stylesheet utilise pour les boutons */
-			QString	_perspective_title;
-
+            /* @brief propriété style sheet des boutons */
+            ISwProperty * _buttons_stylesheet_property;
+            /* @brief stylesheet utilise pour les boutons */
+            QString _buttons_stylesheet;
+            /* @brief propriété title de la perspective */
+            ISwProperty * _perspective_title_property;
+            /* @brief stylesheet utilise pour les boutons */
+            QString _perspective_title;
+            
         public:
-	        /** @brief Constructor */
-	        _SwPerspectivesManager();
+            /** @brief Constructor */
+            _SwPerspectivesManager();
             /*! \brief Destructeur */
             virtual ~_SwPerspectivesManager();
-
+            
             /*! \brief Initialisation des ressources
             \note tous les services du composants doivent être déclarés dans cette methodes*/
-            virtual void InitializeResources() throw(SwException);
-             /*! \brief Callback sur les changements de propriétés*/
-            void OnPropertyChange(ISwProperty * property);
+            virtual void InitializeResources() throw( SwException );
+            /*! \brief Callback sur les changements de propriétés*/
+            void OnPropertyChange( ISwProperty * property );
             //---------------------------------------------------------------------
             // Interface ISwInterfaces_ConsumerObserver
             //---------------------------------------------------------------------
-	        /*! \brief Avant changement de la disponibilité de l'interface */
-	        virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-	        /*! \brief Apres changement de la disponibilité de l'interface */
-	        virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
+            /*! \brief Avant changement de la disponibilité de l'interface */
+            virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
+            /*! \brief Apres changement de la disponibilité de l'interface */
+            virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
             //---------------------------------------------------------------------
             // Interface ISwWidget
             //---------------------------------------------------------------------
             /*! \brief Renvoie le widget
             \return le widget */
-	        virtual QWidget & GetWidget();
-        
+            virtual QWidget * GetWidget();
+            
         private:
             /** @brief sur changement de l'activation d'une perspective*/
-            virtual void attachPerspective(ISwPerspective * perspective,int index);
+            virtual void attachPerspective( ISwPerspective * perspective, int index );
             /** @brief sur changement de l'activation d'une perspective*/
-            virtual void detachPerspective(ISwPerspective * perspective,int index);
+            virtual void detachPerspective( ISwPerspective * perspective, int index );
             /** @brief ajout bouton*/
-            virtual void addButtons(int number);
+            virtual void addButtons( int number );
             /** @brief suppression bouton*/
-            virtual void removeButtons(int number);
+            virtual void removeButtons( int number );
         public:
             /** @brief updateButtonsPosition*/
             virtual void updatePositionButton();
-        
+            
         public slots:
             /** @brief sur changement de checked*/
-            void onPerspectiveToggle(ISwPerspective * perspective,bool checked);
+            void onPerspectiveToggle( ISwPerspective * perspective, bool checked );
         };
-
+        
     }
     
 }

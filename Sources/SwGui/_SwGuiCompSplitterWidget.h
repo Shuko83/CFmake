@@ -2,7 +2,7 @@
  \file _SwGuiCompSplitterWidget.h
  \brief Implementation of the Class _SwGuiCompSplittableWidget generant un QSplitter
  \version 1.0
- \date 14-mai-2009 
+ \date 14-mai-2009
  \author PGA
 */
 
@@ -32,13 +32,13 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 /*!
-	\class _SwGuiCompSplitterWidget 
-	\brief _SwGuiCompSplitterWidget generant un QSplitter
+    \class _SwGuiCompSplitterWidget
+    \brief _SwGuiCompSplitterWidget generant un QSplitter
 */
-class _SwGuiCompSplitterWidget 
-        : public SwComponent_Class,
-          public ISwInterfaces_ConsumerObserver, 
-          public ISwWidget
+class _SwGuiCompSplitterWidget
+    : public SwComponent_Class,
+      public ISwInterfaces_ConsumerObserver,
+      public ISwWidget
 {
 protected:
     /* main */
@@ -55,39 +55,39 @@ protected:
     /* propriété nombre de widgets */
     ISwProperty * _widgets_nb_property;
     /* map des interfaces widgets*/
-    QMap<QString,ISwWidget *> _widgets;
-	/* map des proprietes des tailles des widgets */
+    QMap<QString, ISwWidget *> _widgets;
+    /* map des proprietes des tailles des widgets */
     typedef QMap<QString, ISwProperty *> WidgetSizes;
-	WidgetSizes	_widgetSizes;
+    WidgetSizes _widgetSizes;
     /* handle temporaire d'interface widget*/
     ISwWidget * _tmp_handle_widget;
-
-	/*! \brief reset de la taille des widgets  */
-	void resetWidgetSizes();
+    
+    /*! \brief reset de la taille des widgets  */
+    void resetWidgetSizes();
     
 public:
     /*! \brief Constructeur */
     _SwGuiCompSplitterWidget();
     /*! \brief Destructeur */
     virtual ~_SwGuiCompSplitterWidget();
-
+    
     /*! \brief Initialisation des ressources
     \note tous les services du composants doivent être déclarés dans cette methodes*/
-    virtual void InitializeResources() throw(SwException);
-     /*! \brief Callback sur les changements de propriétés*/
-    void OnPropertyChange(ISwProperty * property);
+    virtual void InitializeResources() throw( SwException );
+    /*! \brief Callback sur les changements de propriétés*/
+    void OnPropertyChange( ISwProperty * property );
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-	/*! \brief Avant changement de la disponibilité de l'interface */
-	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-	/*! \brief Apres changement de la disponibilité de l'interface */
-	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
+    /*! \brief Avant changement de la disponibilité de l'interface */
+    virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
+    /*! \brief Apres changement de la disponibilité de l'interface */
+    virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     //---------------------------------------------------------------------
     // Interface ISwWidget
     //---------------------------------------------------------------------
     /*! \brief Renvoie le widget
     \return le widget */
-	virtual QWidget & GetWidget();
+    virtual QWidget * GetWidget();
 };
-#endif 
+#endif

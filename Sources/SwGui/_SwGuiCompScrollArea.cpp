@@ -21,211 +21,212 @@ using namespace StreamWork::SwGui;
 
 
 //-----------------------------------------------------------------------
-_SwGuiCompScrollArea::_SwGuiCompScrollArea() : SwComponent_Class()
+_SwGuiCompScrollArea::_SwGuiCompScrollArea() : SwComponent_Class(),
+    _provider_service( nullptr ),
+    _consumer_service( nullptr ),
+    _properties_service( nullptr ),
+    _scrollArea( nullptr ),
+    _widgets_nb( 0 ),
+    _tmp_handle_widget( nullptr ),
+    _registered_widgets_nb( 0 ),
+    _handle_layout( nullptr ),
+    _is_layout_mode( false ),
+    _fixedHeight( false ),
+    _fixedWidth( false )
 {
-	_provider_service = NULL;
-	_consumer_service = NULL;
-	_properties_service = NULL;
-	_scrollArea = NULL;
-	_widgets_nb = 0;
-	_tmp_handle_widget = NULL;
-	_registered_widgets_nb = 0;
-	_handle_layout = NULL;
-	_is_layout_mode = false;
-	_fixedHeight = false;
-	_fixedWidth = false;
+
 }
 
 //-----------------------------------------------------------------------
 _SwGuiCompScrollArea::~_SwGuiCompScrollArea()
 {
-	for ( uint i = 0; i < _widgets_nb; i++ )
-	{
-		QString interface_name = QString(CL_WIDGET_INTERFACE_NAME).arg(i);
-		_consumer_service->UnregisterConsumedInterface(interface_name);
-	}
-
-	_consumer_service->UnregisterConsumedInterface("Layout");
-	_provider_service->UnregisterProvidedInterface("Widget");
-
-	//Desenregistrement des services
-	this->UnregisterService(_consumer_service->GetServiceName());
-	this->UnregisterService(_provider_service->GetServiceName());
-	this->UnregisterService(_properties_service->GetServiceName());
-	//Destruction des services
-	delete _consumer_service;
-	delete _provider_service;
-	delete _properties_service;
-	delete _scrollArea;
+    for( uint i = 0; i < _widgets_nb; i++ )
+    {
+        QString interface_name = QString( CL_WIDGET_INTERFACE_NAME ).arg( i );
+        _consumer_service->UnregisterConsumedInterface( interface_name );
+    }
+    
+    _consumer_service->UnregisterConsumedInterface( "Layout" );
+    _provider_service->UnregisterProvidedInterface( "Widget" );
+    
+    //Desenregistrement des services
+    this->UnregisterService( _consumer_service->GetServiceName() );
+    this->UnregisterService( _provider_service->GetServiceName() );
+    this->UnregisterService( _properties_service->GetServiceName() );
+    //Destruction des services
+    delete _consumer_service;
+    delete _provider_service;
+    delete _properties_service;
+    delete _scrollArea;
 }
 
 
 //-----------------------------------------------------------------------
-void _SwGuiCompScrollArea::InitializeResources() throw(SwException)
+void _SwGuiCompScrollArea::InitializeResources() throw( SwException )
 {
-	//Creation des service
-	_consumer_service = new SwInterfaces_Consumer_Class(this);
-	_provider_service = new SwInterfaces_Provider_Class(this);
-	_properties_service = new SwProperties_Class(this);
-	//Creation de l'interface principale
-	_scrollArea = new QScrollArea();
-	_scrollArea->setWidget(new QWidget());
-	_scrollArea->widget()->setLayout(new QVBoxLayout());
-	_scrollArea->widget()->installEventFilter(this);
-
-	//Enregistrement des services
-	this->RegisterService(_properties_service);
-	this->RegisterService(_consumer_service);
-	this->RegisterService(_provider_service);
-	//Exportation de l'interface ISwWidget
-	_provider_service->RegisterProvidedInterface<ISwWidget>("Widget", (ISwWidget *)this);
-
-	//Importation de l'interface ISwWidget (RAF puisque par defaut pas de widget) et ISwLayout (exclusif)
-	_consumer_service->RegisterConsumedInterface<ISwLayout>("Layout", &_handle_layout);
-
-	//S'enregistrer comme observer du consumer
-	_consumer_service->AttachInterfacesConsumerObserver(this);
-
-	_properties_service->CreatePropertiesForQObject(_scrollArea, "QScrollArea");
-	_properties_service->CreatePropertiesForQObject(this, "", false);
-
-	//Gestion des widgets
-	_widgets_nb_property = _properties_service->CreateProperty<uint>("nb_widgets");
-	if ( _widgets_nb_property == NULL )
-	{
-		if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register nb_widgets property\n"));
-	}
-	_widgets_nb_property->SetDescription("Define how many ISwWidget interfaces this component accept");
-	_widgets_nb_property->SetValue(QVariant(_widgets_nb));
-	_widgets_nb_property->GetOnChangeSignal().iconnect(*this, &_SwGuiCompScrollArea::OnPropertyChange);
-
-
-	if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Info, QString("InitializeResources of SwScrollAreaWidget done\n"));
-
+    //Creation des service
+    _consumer_service = new SwInterfaces_Consumer_Class( this );
+    _provider_service = new SwInterfaces_Provider_Class( this );
+    _properties_service = new SwProperties_Class( this );
+    //Creation de l'interface principale
+    _scrollArea = new QScrollArea();
+    _scrollArea->setWidget( new QWidget() );
+    _scrollArea->widget()->setLayout( new QVBoxLayout() );
+    _scrollArea->widget()->installEventFilter( this );
+    
+    //Enregistrement des services
+    this->RegisterService( _properties_service );
+    this->RegisterService( _consumer_service );
+    this->RegisterService( _provider_service );
+    //Exportation de l'interface ISwWidget
+    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", ( ISwWidget * )this );
+    
+    //Importation de l'interface ISwWidget (RAF puisque par defaut pas de widget) et ISwLayout (exclusif)
+    _consumer_service->RegisterConsumedInterface<ISwLayout>( "Layout", &_handle_layout );
+    
+    //S'enregistrer comme observer du consumer
+    _consumer_service->AttachInterfacesConsumerObserver( this );
+    
+    _properties_service->CreatePropertiesForQObject( _scrollArea, "QScrollArea" );
+    _properties_service->CreatePropertiesForQObject( this, "", false );
+    
+    //Gestion des widgets
+    _widgets_nb_property = _properties_service->CreateProperty<uint>( "nb_widgets" );
+    if( _widgets_nb_property == nullptr )
+    {
+        if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_widgets property\n" ) );
+    }
+    _widgets_nb_property->SetDescription( "Define how many ISwWidget interfaces this component accept" );
+    _widgets_nb_property->SetValue( QVariant( _widgets_nb ) );
+    _widgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompScrollArea::OnPropertyChange );
+    
+    
+    if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Info, QString( "InitializeResources of SwScrollAreaWidget done\n" ) );
+    
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiCompScrollArea::OnPropertyChange(ISwProperty * property)
+void _SwGuiCompScrollArea::OnPropertyChange( ISwProperty * property )
 {
-	uint val;
-	QString interface_name;
-
-	if ( _widgets_nb_property == property && _is_layout_mode == false )
-	{
-		val = property->GetValue().toUInt();
-		if ( val == _widgets_nb ) return;
-		if ( val < _widgets_nb )
-		{
-			for ( uint i = val; i < _widgets_nb; i++ )
-			{
-				interface_name = QString(CL_WIDGET_INTERFACE_NAME).arg(i);
-				_consumer_service->UnregisterConsumedInterface(interface_name);
-			}
-		}
-		else
-		{
-			for ( uint i = _widgets_nb; i < val; i++ )
-			{
-				interface_name = QString(CL_WIDGET_INTERFACE_NAME).arg(i);
-				_widgets.insert(interface_name, (ISwWidget *) NULL);
-				_consumer_service->RegisterConsumedInterface<ISwWidget>(interface_name, &_tmp_handle_widget);
-			}
-		}
-		_widgets_nb = val;
-	}
+    uint val;
+    QString interface_name;
+    
+    if( _widgets_nb_property == property && _is_layout_mode == false )
+    {
+        val = property->GetValue().toUInt();
+        if( val == _widgets_nb ) return;
+        if( val < _widgets_nb )
+        {
+            for( uint i = val; i < _widgets_nb; i++ )
+            {
+                interface_name = QString( CL_WIDGET_INTERFACE_NAME ).arg( i );
+                _consumer_service->UnregisterConsumedInterface( interface_name );
+            }
+        }
+        else
+        {
+            for( uint i = _widgets_nb; i < val; i++ )
+            {
+                interface_name = QString( CL_WIDGET_INTERFACE_NAME ).arg( i );
+                _widgets.insert( interface_name, ( ISwWidget * ) nullptr );
+                _consumer_service->RegisterConsumedInterface<ISwWidget>( interface_name, &_tmp_handle_widget );
+            }
+        }
+        _widgets_nb = val;
+    }
 }
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
 
 //-----------------------------------------------------------------------
-void _SwGuiCompScrollArea::BeforeInterfaceAvailabilityChange(QString interface_name, SwComponent_Class * provider_host)
+void _SwGuiCompScrollArea::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-	if ( interface_name != "Layout" )
-	{
-		QMap<QString, ISwWidget *>::iterator widget_it;
-		//Si c'est un menu
-		widget_it = _widgets.find(interface_name);
-		if ( widget_it != _widgets.end() )
-		{
-			if ( widget_it.value() != NULL )
-			{
-				//Et qu'il etait defini, on le detache de la widgetbar
-				widget_it.value()->GetWidget().setParent(NULL);
-				widget_it.value() = NULL;
-				_registered_widgets_nb--;
-				if ( _registered_widgets_nb == 0 ) _consumer_service->RegisterConsumedInterface<ISwLayout>("Layout", &_handle_layout);
-			}
-			return;
-		}
-	}
-	else if ( _handle_layout != NULL )
-	{
-		_handle_layout->LiberateLayout();
-		_handle_layout = NULL;
-
-		_scrollArea->widget()->setLayout(new QVBoxLayout());
-
-		_is_layout_mode = false;
-		OnPropertyChange(_widgets_nb_property);
-		_properties_service->ChangePropertyVisibility("nb_widgets", true);
-	}
+    if( interface_name != "Layout" )
+    {
+        QMap<QString, ISwWidget *>::iterator widget_it;
+        //Si c'est un menu
+        widget_it = _widgets.find( interface_name );
+        if( widget_it != _widgets.end() )
+        {
+            if( widget_it.value() && widget_it.value()->GetWidget() )
+            {
+                //Et qu'il etait defini, on le detache de la widgetbar
+                widget_it.value()->GetWidget()->setParent( nullptr );
+                widget_it.value() = nullptr;
+                _registered_widgets_nb--;
+                if( _registered_widgets_nb == 0 ) _consumer_service->RegisterConsumedInterface<ISwLayout>( "Layout", &_handle_layout );
+            }
+            return;
+        }
+    }
+    else if( _handle_layout )
+    {
+        _handle_layout->LiberateLayout();
+        _handle_layout = nullptr;
+        
+        _scrollArea->widget()->setLayout( new QVBoxLayout() );
+        
+        _is_layout_mode = false;
+        OnPropertyChange( _widgets_nb_property );
+        _properties_service->ChangePropertyVisibility( "nb_widgets", true );
+    }
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiCompScrollArea::AfterInterfaceAvailabilityChange(QString interface_name, SwComponent_Class * provider_host)
+void _SwGuiCompScrollArea::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
 
-	if ( interface_name != "Layout" )
-	{
-		QMap<QString, ISwWidget *>::iterator widget_it;
-
-		//Si c'est un widget
-		widget_it = _widgets.find(interface_name);
-		if ( widget_it != _widgets.end() )
-		{
-			if ( widget_it.value() == NULL && _tmp_handle_widget != NULL )
-			{
-				//Et qu'il etait non defini, on l'enregistre et l'attache a la widgetbar
-				widget_it.value() = _tmp_handle_widget;
-				_tmp_handle_widget->GetWidget().layout()->addWidget(_scrollArea->widget());
-				_registered_widgets_nb++;
-				if ( _registered_widgets_nb == 1 ) _consumer_service->UnregisterConsumedInterface("Layout");
-			}
-			return;
-		}
-		else if ( _handle_layout != NULL )
-		{
-
-			_widgets_nb_property->SetValue(QVariant((uint) 0));
-			_is_layout_mode = true;
-			_properties_service->ChangePropertyVisibility("nb_widgets", false);
-			if ( _scrollArea->widget()->layout() )
-				delete _scrollArea->widget()->layout();
-
-			_scrollArea->widget()->setLayout(&(_handle_layout->GetLayout()));
-		}
-	}
+    if( interface_name != "Layout" )
+    {
+        QMap<QString, ISwWidget *>::iterator widget_it;
+        
+        //Si c'est un widget
+        widget_it = _widgets.find( interface_name );
+        if( widget_it != _widgets.end() )
+        {
+            if( widget_it.value() == nullptr && _tmp_handle_widget && _tmp_handle_widget->GetWidget() )
+            {
+                //Et qu'il etait non defini, on l'enregistre et l'attache a la widgetbar
+                widget_it.value() = _tmp_handle_widget;
+                _tmp_handle_widget->GetWidget()->layout()->addWidget( _scrollArea->widget() );
+                _registered_widgets_nb++;
+                if( _registered_widgets_nb == 1 ) _consumer_service->UnregisterConsumedInterface( "Layout" );
+            }
+            return;
+        }
+        else if( _handle_layout )
+        {
+        
+            _widgets_nb_property->SetValue( QVariant( ( uint ) 0 ) );
+            _is_layout_mode = true;
+            _properties_service->ChangePropertyVisibility( "nb_widgets", false );
+            if( _scrollArea->widget()->layout() )
+                delete _scrollArea->widget()->layout();
+                
+            _scrollArea->widget()->setLayout( &( _handle_layout->GetLayout() ) );
+        }
+    }
 }
 //---------------------------------------------------------------------
 // Interface ISwMainWindow
 //---------------------------------------------------------------------
 
 //-----------------------------------------------------------------------
-QWidget & _SwGuiCompScrollArea::GetWidget()
+QWidget * _SwGuiCompScrollArea::GetWidget()
 {
-	return *_scrollArea;
+    return _scrollArea;
 }
 
 
 //-----------------------------------------------------------------------
-bool _SwGuiCompScrollArea::eventFilter(QObject *o, QEvent *e)
+bool _SwGuiCompScrollArea::eventFilter( QObject * o, QEvent * e )
 {
-	if ( o == _scrollArea->widget() && e->type() == QEvent::Resize && _fixedWidth )
-		_scrollArea->setMinimumWidth(_scrollArea->widget()->minimumSizeHint().width() + _scrollArea->verticalScrollBar()->width());
-
-	if ( o == _scrollArea->widget() && e->type() == QEvent::Resize && _fixedHeight )
-		_scrollArea->setMinimumHeight(_scrollArea->widget()->minimumSizeHint().height() + _scrollArea->horizontalScrollBar()->height());
-
-	return false;
+    if( o == _scrollArea->widget() && e->type() == QEvent::Resize && _fixedWidth )
+        _scrollArea->setMinimumWidth( _scrollArea->widget()->minimumSizeHint().width() + _scrollArea->verticalScrollBar()->width() );
+        
+    if( o == _scrollArea->widget() && e->type() == QEvent::Resize && _fixedHeight )
+        _scrollArea->setMinimumHeight( _scrollArea->widget()->minimumSizeHint().height() + _scrollArea->horizontalScrollBar()->height() );
+        
+    return false;
 }

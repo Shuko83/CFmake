@@ -31,8 +31,8 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 /*!
-	\class _SwGuiCompTabWidget 
-	\brief _SwGuiCompTabWidget generant un QWidget
+    \class _SwGuiCompTabWidget
+    \brief _SwGuiCompTabWidget generant un QWidget
 */
 class _SwGuiCompTabWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget2, public ISwWidget2_Observer
 {
@@ -51,7 +51,7 @@ protected:
     /* propriété nombre de widgets */
     ISwProperty * _widgets_nb_property;
     /* map des interfaces widgets*/
-    QMap<QString,ISwWidget *> _widgets;
+    QMap<QString, ISwWidget *> _widgets;
     /* handle temporaire d'interface widget*/
     ISwWidget * _tmp_handle_widget;
     /* liste des observers */
@@ -61,34 +61,34 @@ public:
     _SwGuiCompTabWidget();
     /*! \brief Destructeur */
     virtual ~_SwGuiCompTabWidget();
-
+    
     /*! \brief Initialisation des ressources
     \note tous les services du composants doivent être déclarés dans cette methodes*/
-    virtual void InitializeResources() throw(SwException);
-     /*! \brief Callback sur les changements de propriétés*/
-    void OnPropertyChange(ISwProperty * property);
+    virtual void InitializeResources() throw( SwException );
+    /*! \brief Callback sur les changements de propriétés*/
+    void OnPropertyChange( ISwProperty * property );
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-	/*! \brief Avant changement de la disponibilité de l'interface */
-	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-	/*! \brief Apres changement de la disponibilité de l'interface */
-	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
+    /*! \brief Avant changement de la disponibilité de l'interface */
+    virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
+    /*! \brief Apres changement de la disponibilité de l'interface */
+    virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     //---------------------------------------------------------------------
     // Interface ISwWidget2
     //---------------------------------------------------------------------
     /*! \brief Renvoie le widget
     \return le widget */
-	virtual QWidget & GetWidget();
+    virtual QWidget * GetWidget();
     /** @brief Enregistrement de l'observer */
-    virtual void RegisterISwWidgetObserver(ISwWidget2_Observer * o);
+    virtual void RegisterISwWidgetObserver( ISwWidget2_Observer * o );
     /** @brief Desregistrement de l'observer */
-    virtual void UnregisterISwWidgetObserver(ISwWidget2_Observer * o);
+    virtual void UnregisterISwWidgetObserver( ISwWidget2_Observer * o );
     //---------------------------------------------------------------------
     // InterfaceISwWidget2_Observer
     //---------------------------------------------------------------------
     /** @brief mettre en avant le widget si c'est possible */
-    virtual void OnBringToFrontRequest(ISwWidget * w);
-
+    virtual void OnBringToFrontRequest( ISwWidget * w );
+    
 };
-#endif 
+#endif

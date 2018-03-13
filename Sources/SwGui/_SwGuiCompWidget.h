@@ -30,13 +30,13 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 /*!
-	\class _SwGuiCompWidget 
-	\brief _SwGuiCompWidget generant un QWidget
+    \class _SwGuiCompWidget
+    \brief _SwGuiCompWidget generant un QWidget
 */
 class _SwGuiCompWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget
 {
-	Q_OBJECT
-	Q_PROPERTY(Qt::WindowFlags SwWindowFlag READ windowFlags WRITE setWindowFlags);
+    Q_OBJECT
+    Q_PROPERTY( Qt::WindowFlags SwWindowFlag READ windowFlags WRITE setWindowFlags );
 protected:
     /* menu */
     QWidget * _widget;
@@ -45,12 +45,12 @@ protected:
     ISwProperty * _show_property;
     /* flags */
     SwEnum _flags_mode;
-	ISwProperty * _flags_property;
-	ISwProperty * _backgroundTransparency_property;
-
-	/* Set the attributes background transparent */
-	bool _isBackgroundTransparent;
-
+    ISwProperty * _flags_property;
+    ISwProperty * _backgroundTransparency_property;
+    
+    /* Set the attributes background transparent */
+    bool _isBackgroundTransparent;
+    
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
@@ -63,7 +63,7 @@ protected:
     /* propriété nombre de widgets */
     ISwProperty * _widgets_nb_property;
     /* map des interfaces widgets*/
-    QMap<QString,ISwWidget *> _widgets;
+    QMap<QString, ISwWidget *> _widgets;
     /* handle temporaire d'interface widget*/
     ISwWidget * _tmp_handle_widget;
     /* integer indiquant le nombre de widgets en gestion directe */
@@ -73,37 +73,37 @@ protected:
     ISwLayout * _handle_layout;
     /* Flag indiquant une gestion par un layout */
     bool _is_layout_mode;
-
+    
 public:
     /*! \brief Constructeur */
     _SwGuiCompWidget();
     /*! \brief Destructeur */
     virtual ~_SwGuiCompWidget();
-
+    
     /*! \brief Initialisation des ressources
     \note tous les services du composants doivent être déclarés dans cette methodes*/
-    virtual void InitializeResources() throw(SwException);
-     /*! \brief Callback sur les changements de propriétés*/
-    void OnPropertyChange(ISwProperty * property);
+    virtual void InitializeResources() throw( SwException );
+    /*! \brief Callback sur les changements de propriétés*/
+    void OnPropertyChange( ISwProperty * property );
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-	/*! \brief Avant changement de la disponibilité de l'interface */
-	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-	/*! \brief Apres changement de la disponibilité de l'interface */
-	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
+    /*! \brief Avant changement de la disponibilité de l'interface */
+    virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
+    /*! \brief Apres changement de la disponibilité de l'interface */
+    virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     //---------------------------------------------------------------------
     // Interface ISwWidget
     //---------------------------------------------------------------------
     /*! \brief Renvoie le widget
     \return le widget */
-	virtual QWidget & GetWidget();
-
-
-	Qt::WindowFlags windowFlags();
-	void setWindowFlags(Qt::WindowFlags );
+    virtual QWidget * GetWidget();
+    
+    
+    Qt::WindowFlags windowFlags();
+    void setWindowFlags( Qt::WindowFlags );
 private:
     void showChanged();
-
+    
 };
-#endif 
+#endif
