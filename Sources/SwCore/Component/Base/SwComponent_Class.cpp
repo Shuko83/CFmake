@@ -12,6 +12,8 @@
 #include "SwComponent_Class.h"
 #include "_SwCleanLinksVisitor.h"
 
+#include "QExceptionManager.h"
+
 using namespace StreamWork::SwCore;
 
 /*
@@ -299,20 +301,15 @@ void SwComponent_Class::SetName(const QString & new_name) throw(SwException)
 	}
 
 	QString oldName = GetName();
-	try
+	EXCEPTION_TRY();
+	SwNamed_Class::SetName(new_name);
+	//Si on a un parent
+	if ( _parent != NULL )
 	{
-		SwNamed_Class::SetName(new_name);
-		//Si on a un parent
-		if ( _parent != NULL )
-		{
-			_parent->_child_components.insert(GetName(), SwComponent_ClassPtr(this));
-			it = _parent->_child_components.find(oldName);
-			_parent->_child_components.erase(it);
-		}
+		_parent->_child_components.insert(GetName(), SwComponent_ClassPtr(this));
+		it = _parent->_child_components.find(oldName);
+		_parent->_child_components.erase(it);
 	}
-	catch ( SwException & )
-	{
-
-	}
+	EXCEPTION_CATCH();
 	OnChangeComponentName(this);
 }

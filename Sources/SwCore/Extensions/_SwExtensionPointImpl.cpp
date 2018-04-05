@@ -9,6 +9,8 @@
 #include "ISwInterfaces_Provider.h" 
 #include "SwExtensionImpl.h"
 
+#include "QExceptionManager.h"
+
 using namespace StreamWork::SwCore;
 
 /** @brief Constructor */
@@ -63,12 +65,9 @@ void _SwExtensionPointImpl::extends(ISwExtension * ext){
     ISwInterfaces_Provider *iprovider=dynamic_cast<ISwInterfaces_Provider *>(ext->getComponent()->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
     ISwInterfaces_Consumer *iconsumer=dynamic_cast<ISwInterfaces_Consumer *>(_component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
     if (iprovider!=0 && iconsumer!=0) {
-        try {
-            iconsumer->AttachProvider(iprovider,_name,ext->getName());
-        } catch(SwException & /*se*/) {
-            //L'application a levé une exception
-            //QMessageBox::warning(0,QString("Warning... "),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
-        }
+        EXCEPTION_TRY();
+        iconsumer->AttachProvider(iprovider,_name,ext->getName());
+        EXCEPTION_CATCH();
     }
 }
 
