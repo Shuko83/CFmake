@@ -32,7 +32,7 @@ public:
     
     /*! \brief Renvoie le widget
     \return le widget */
-	virtual QWidget & GetWidget();
+	virtual QWidget * GetWidget();
 
     void setConfigurationController (ISwConfigurationController * controller);
     void setEdition(bool enabled);

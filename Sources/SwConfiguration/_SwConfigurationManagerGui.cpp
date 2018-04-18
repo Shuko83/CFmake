@@ -106,9 +106,9 @@ void _SwConfigurationManagerGui::setEdition(bool enabled)
 
 /*! \brief Renvoie le widget
 \return le widget */
-QWidget & _SwConfigurationManagerGui::GetWidget()
+QWidget * _SwConfigurationManagerGui::GetWidget()
 {
-    return *this;
+    return this;
 }
 
 
