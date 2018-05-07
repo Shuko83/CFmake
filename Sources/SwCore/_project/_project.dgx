@@ -10,5 +10,6 @@
         <Module name="core"/>
         <Module name="xml"/>
         <Module name="widgets"/>
+		<Module name="gui"/>
     </Qt>
 </Project>

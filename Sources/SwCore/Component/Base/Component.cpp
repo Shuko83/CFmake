@@ -19,9 +19,9 @@ using namespace StreamWork::SwCore;
 //-----------------------------------------------------------------------
 Component::Component() :SwComponent_Class()
 {
-	_provider_service = NULL;
-	_consumer_service = NULL;
-	_properties_service = NULL;
+	_provider_service = nullptr;
+	_consumer_service = nullptr;
+	_properties_service = nullptr;
 	_disable_service = false;
 	_doCheckTimer = qApp->arguments().contains("-checktime", Qt::CaseInsensitive);
 }

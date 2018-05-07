@@ -19,14 +19,14 @@ SwPin::SwPin(ISwPins_Manager * manager,QString name,QString data_type) {
 	_manager=manager;
 	_pin_name=name;
 	_data_type=data_type;
-	_remote_pin=NULL;
+	_remote_pin=nullptr;
     _connection_historic_date=0L;
 
 }
 /*! \brief Destructeur */
 SwPin::~SwPin(){
 	_listeners.clear();
-	Q_ASSERT(_remote_pin==NULL);
+	Q_ASSERT(_remote_pin==nullptr);
 }
 /*! \brief Liste des listener */
 void SwPin::ProcessReceivedData(SwData_Class * data){
@@ -52,7 +52,7 @@ void SwPin::PushData(SwData_Class * data){
 }
 /*! \brief Permet au pin d'envoyer une donnée */
 void SwPin::SendData(SwData_Class * data) {
-	if (_remote_pin!=NULL) {
+	if (_remote_pin!=nullptr) {
 		_remote_pin->PushData(data);
 	}
 
@@ -64,7 +64,7 @@ void SwPin::AssignRemote(SwPin * remote_pin,quint64 historic_date){
 }
 /*! \brief Permet de supprimer l'assignation du pin distant */
 void SwPin::Desassign(){
-	_remote_pin=NULL;
+	_remote_pin=nullptr;
     _connection_historic_date=0L;
 
 }

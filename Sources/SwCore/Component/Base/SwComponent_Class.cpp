@@ -24,7 +24,7 @@ using namespace StreamWork::SwCore;
 //-----------------------------------------------------------------------
 SwComponent_Class::SwComponent_Class() :QObject(), SwNamed_Class(), SwRef(), SwServicesManager_Class()
 {
-	_parent = NULL;
+	_parent = nullptr;
 	_child_components.clear();
 	_current_child = _child_components.begin();
 	_factory_component_name = QString();
@@ -39,8 +39,8 @@ SwComponent_Class::~SwComponent_Class()
 	AcceptVisitor(&cleanVisitor);
 
 	QMap<QString, SwComponent_ClassPtr>::iterator it;
-	for ( it = _child_components.begin(); it != _child_components.end(); it++ )
-		it.value()->SetParent(NULL); //ATTENTION !!!!
+	for (it = _child_components.begin(); it != _child_components.end(); it++)
+		it.value()->SetParent(nullptr); //ATTENTION !!!!
 
 	_child_components.clear();
 	LiberateAllServices();

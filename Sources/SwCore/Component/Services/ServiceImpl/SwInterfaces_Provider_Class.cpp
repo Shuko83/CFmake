@@ -21,7 +21,7 @@ SwInterfaces_Provider_Class::SwInterfaces_Provider_Class(SwComponent_Class * hos
 	_host_component = host;
 	_interfaces.clear();
 	_current_interface = _interfaces.end();
-	_current_interface_container = NULL;
+	_current_interface_container = nullptr;
 }
 
 //-----------------------------------------------------------------------
@@ -68,7 +68,7 @@ void SwInterfaces_Provider_Class::UnregisterProvidedInterface(QString pinterface
 	//Si on deplace le pointeur courant si c'est celui a supprimer
 	if ( _current_interface == it ) _current_interface++;
 	//Si le container courant est celui a supprimer on le remets a zero
-	if ( _current_interface_container == it.value() ) _current_interface_container = NULL;
+	if ( _current_interface_container == it.value() ) _current_interface_container = nullptr;
 	//suppression
 	delete it.value();
 	_interfaces.erase(it);
@@ -89,10 +89,10 @@ void SwInterfaces_Provider_Class::SetInterfaceAvailable(QString pinterface_name,
 	if ( it == _interfaces.end() )
 	{
 		QString msg = QString("In component %2\nFailed to availabilise of interface %1 because it's undefined").arg(pinterface_name).arg(_host_component->GetName());
-		QMessageBox::critical(NULL, "Critical error", msg);
+		QMessageBox::critical(nullptr, "Critical error", msg);
 		return;
 	}
-	if ( new_handle != NULL )
+	if ( new_handle != nullptr )
 		it.value()->SetInterface(new_handle);
 	it.value()->ChangeAvailability(true);
 }
@@ -106,7 +106,7 @@ void SwInterfaces_Provider_Class::SetInterfaceUnavailable(QString pinterface_nam
 	if ( it == _interfaces.end() )
 	{
 		QString msg = QString("In component %2\nFailed to unavailabilise of interface %1 because it's undefined").arg(pinterface_name).arg(_host_component->GetName());
-		QMessageBox::critical(NULL, "Critical error", msg);
+		QMessageBox::critical(nullptr, "Critical error", msg);
 		return;
 	}
 	it.value()->ChangeAvailability(false);
@@ -121,7 +121,7 @@ void SwInterfaces_Provider_Class::SubstituteInterfaceWithType(QString pinterface
 	if ( it == _interfaces.end() )
 	{
 		QString msg = QString("In component %2\nFailed to change interface %1 because it's undefined").arg(pinterface_name).arg(_host_component->GetName());
-		QMessageBox::critical(NULL, "Critical error", msg);
+		QMessageBox::critical(nullptr, "Critical error", msg);
 	}
 	it.value()->SetInterface(handle_interface);
 
@@ -139,7 +139,7 @@ void SwInterfaces_Provider_Class::AddConsumer(ISwInterfaces_Consumer * consumer,
 	if ( it == _interfaces.end() )
 	{
 		QString msg = QString("In component %2\nFailed to add comsumer to interface %1 because it's undefined").arg(pinterface_name).arg(_host_component->GetName());
-		QMessageBox::critical(NULL, "Critical error", msg);
+		QMessageBox::critical(nullptr, "Critical error", msg);
 	}
 	it.value()->RegisterConsumedInterface(consumer, cinterface_name);
 	//Signal connection d'interface
@@ -158,7 +158,7 @@ void SwInterfaces_Provider_Class::RemoveConsumer(ISwInterfaces_Consumer * consum
 	if ( it == _interfaces.end() )
 	{
 		QString msg = QString("In component %2\nFailed to remove comsumer to interface %1 because it's undefined").arg(pinterface_name).arg(_host_component->GetName());
-		QMessageBox::critical(NULL, "Critical error", msg);	
+		QMessageBox::critical(nullptr, "Critical error", msg);	
 		return;
 	}
 	it.value()->UnregisterConsumedInterface(consumer, cinterface_name);
@@ -178,7 +178,7 @@ QString SwInterfaces_Provider_Class::GetInterfaceType(QString pinterface_name)
 	if ( it == _interfaces.end() )
 	{
 		QString msg = QString("In component %2\nFailed to get type of interface %1 because it's undefined").arg(pinterface_name).arg(_host_component->GetName());
-		QMessageBox::critical(NULL, "Critical error", msg);
+		QMessageBox::critical(nullptr, "Critical error", msg);
 		return "";
 	}
 	return it.value()->GetType();
@@ -239,8 +239,8 @@ ISwInterfaces_Consumer * SwInterfaces_Provider_Class::GetFirstConsumer(QString p
 	it = _interfaces.find(pinterface_name);
 	if ( it == _interfaces.end() )
 	{
-		_current_interface_container = NULL;
-		return NULL;
+		_current_interface_container = nullptr;
+		return nullptr;
 	}
 	_current_interface_container = it.value();
 	return _current_interface_container->GetFirstConsumer(pt_cinterfacename);
@@ -250,9 +250,9 @@ ISwInterfaces_Consumer * SwInterfaces_Provider_Class::GetFirstConsumer(QString p
 ISwInterfaces_Consumer * SwInterfaces_Provider_Class::GetNextConsumer(QString * pt_cinterfacename)
 {
 
-	if ( _current_interface_container != NULL )
+	if ( _current_interface_container != nullptr )
 		return _current_interface_container->GetNextConsumer(pt_cinterfacename);
-	return NULL;
+	return nullptr;
 }
 
 //---------------------------------------------------------------------

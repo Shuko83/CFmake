@@ -35,6 +35,7 @@ SwInterfaces_Consumer_Class::SwInterfaces_Consumer_Class(SwComponent_Class * hos
 //-----------------------------------------------------------------------
 SwInterfaces_Consumer_Class::~SwInterfaces_Consumer_Class()
 {
+	Liberate();
 	_finalize_interfaces.clear();
 }
 
@@ -227,7 +228,7 @@ void SwInterfaces_Consumer_Class::UnprovideInterface(QString cinterface_name)
 	{
 		(*ito)->BeforeInterfaceAvailabilityChange(cinterface_name, it.value()->GetProvider()->GetHostComponent());
 	}
-	it.value()->SetHandle(NULL);
+	it.value()->SetHandle(nullptr);
 	//Signal apres changement
 	for ( ito = _observers.begin(); ito != _observers.end(); ito++ )
 	{
