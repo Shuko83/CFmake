@@ -651,7 +651,7 @@ void _SwGuiCompQMainWindow::closeEvent( QCloseEvent * event )
 {
     if( _protectClosing )
     {
-        int ret = QMessageBox::question( this, "Exit", "Do you really want to exit?", QMessageBox::Yes | QMessageBox::No, QMessageBox::No );
+        int ret = QMessageBox::question( this, "Exit", "Do you really want to exit?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
         if( ret == QMessageBox::No )
             event->ignore();
     }
