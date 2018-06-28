@@ -34,8 +34,8 @@ void _SwModelExportedInterfaceC::SpecificBuild()
 {
 	_internal_provider = dynamic_cast<SwInterfaces_Provider_Class *>(_model_host->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
 	//Creation du producteur interne
-	_internal_provider->RegisterProvidedInterfaceWithType(_exported_name, _itype, _handle);
-	_internal_provider->SetInterfaceUnavailable(_exported_name);
+	_internal_provider->RegisterProvidedInterfaceWithType(_exported_name + "_", _itype, _handle);
+	_internal_provider->SetInterfaceUnavailable(_exported_name + "_");
 
 }
 
@@ -44,7 +44,7 @@ void _SwModelExportedInterfaceC::SpecificDestroy()
 {
 	//recuperation des consumer existants
 	QString name;
-	ISwInterfaces_Consumer * consumer = _internal_provider->GetFirstConsumer(_exported_name, &name);
+	ISwInterfaces_Consumer * consumer = _internal_provider->GetFirstConsumer(_exported_name + "_", &name);
 	while ( consumer != NULL )
 	{
 		_lastPaths.push_back(SwAddress_ToolBox::BuildRelativePath(_model_host, consumer->GetHostComponent()));
@@ -52,7 +52,7 @@ void _SwModelExportedInterfaceC::SpecificDestroy()
 		consumer = _internal_provider->GetNextConsumer(&name);
 	}
 	//Destruction du producteur interne
-	_internal_provider->UnregisterProvidedInterface(_exported_name);
+	_internal_provider->UnregisterProvidedInterface(_exported_name + "_");
 	//Fin
 	_internal_provider = NULL;
 }
@@ -109,7 +109,7 @@ void _SwModelExportedInterfaceC::connectInterfaceTo(QStringList & paths, QString
 			return;
 		}
 		SwInterfaces_Consumer_Class * consumer = dynamic_cast<SwInterfaces_Consumer_Class *>(consumer_host->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
-		consumer->AttachProvider(_internal_provider, names[i], _exported_name);
+		consumer->AttachProvider(_internal_provider, names[i], _exported_name + "_");
 	}
 }
 //-------------------------------------------------------------------------
@@ -168,7 +168,7 @@ void _SwModelExportedInterfaceC::BeforeInterfaceAvailabilityChange(QString inter
 	if ( interface_name == _exported_name &&  _handle != NULL )
 	{
 		//Rendre l'interface non disponible
-		_internal_provider->SetInterfaceUnavailable(_exported_name);
+		_internal_provider->SetInterfaceUnavailable(_exported_name + "_");
 	}
 }
 
@@ -178,6 +178,6 @@ void _SwModelExportedInterfaceC::AfterInterfaceAvailabilityChange(QString interf
 	if ( interface_name == _exported_name &&  _handle != NULL )
 	{
 		//Rendre l'interface non disponible
-		_internal_provider->SetInterfaceAvailable(_exported_name, _handle);
+		_internal_provider->SetInterfaceAvailable(_exported_name + "_", _handle);
 	}
 }

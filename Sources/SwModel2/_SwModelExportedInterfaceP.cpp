@@ -115,11 +115,11 @@ void _SwModelExportedInterfaceP::OnAddInterface(ISwInterfaces_Service * source, 
 	{
 		//Sur creation de l'interface a propager on crée les deux interfaces locales
 		//Creation du producteur externe
-		_external_provider->RegisterProvidedInterfaceWithType(_exported_name, _itype, _handle);
-		_external_provider->SetInterfaceUnavailable(_exported_name);
+		_external_provider->RegisterProvidedInterfaceWithType(_exported_name + "_", _itype, _handle);
+		_external_provider->SetInterfaceUnavailable(_exported_name + "_");
 		if ( _handle != 0 )
 		{
-			_external_provider->SetInterfaceAvailable(_exported_name, _handle);
+			_external_provider->SetInterfaceAvailable(_exported_name + "_", _handle);
 		}
 		//Connexion a l'hote
 		//_internal_consumer->AttachProvider(_host_provider,_exported_name,_name);
@@ -137,9 +137,9 @@ void _SwModelExportedInterfaceP::OnRemoveInterface(ISwInterfaces_Service * sourc
 		//Destruction du producteur externe
 		if ( _handle != 0 )
 		{
-			_external_provider->SetInterfaceUnavailable(_exported_name);
+			_external_provider->SetInterfaceUnavailable(_exported_name + "_");
 		}
-		_external_provider->UnregisterProvidedInterface(_exported_name);
+		_external_provider->UnregisterProvidedInterface(_exported_name + "_");
 		//Flag d'info
 		_interface_created = false;
 	}
@@ -168,7 +168,7 @@ void _SwModelExportedInterfaceP::BeforeInterfaceAvailabilityChange(QString inter
 		_lastInterface = QString();
 		//Rendre l'interface non disponible
 		if ( _external_provider != 0 )
-			_external_provider->SetInterfaceUnavailable(_exported_name);
+			_external_provider->SetInterfaceUnavailable(_exported_name + "_");
 	}
 }
 
@@ -194,6 +194,6 @@ void _SwModelExportedInterfaceP::AfterInterfaceAvailabilityChange(QString interf
 		}
 		//Rendre l'interface non disponible
 		if ( _external_provider != 0 )
-			_external_provider->SetInterfaceAvailable(_exported_name, _handle);
+			_external_provider->SetInterfaceAvailable(_exported_name + "_", _handle);
 	}
 }
