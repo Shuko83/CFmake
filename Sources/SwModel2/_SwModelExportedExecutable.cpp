@@ -23,6 +23,9 @@ _SwModelExportedExecutable::~_SwModelExportedExecutable() {
 }
 /*! \brief Specific bind */
 void _SwModelExportedExecutable::SpecificBind(){
+	if (_internal_executable)
+		return;
+
     _internal_executable=dynamic_cast<ISwExecutable_Service *>(_host->QueryService(CG_SW_SERVICE_EXECUTABLE));
     if (_internal_executable==NULL)
         return;

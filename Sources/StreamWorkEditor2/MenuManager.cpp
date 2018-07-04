@@ -277,17 +277,7 @@ void MenuManager::onRemove()
     for(int i=0;i<clist.count();i++) 
 	{
         component=clist[i]->GetParent();
-		
-		//Bridage de deconnection d'interface sur un composant exécuté
-		StreamWork::SwExecution::ISwExecutable_Service * execServS = dynamic_cast<StreamWork::SwExecution::ISwExecutable_Service*>(clist[i]->QueryService(CG_SW_SERVICE_EXECUTABLE));
-		if( execServS && execServS->isRunning() ) 
-		{
-			QMessageBox::critical(0,"Forbidden Action","Unable to remove running component");		
-		}
-		else
-		{
-			component->RemoveChild(clist[i]);
-		}
+		component->RemoveChild(clist[i]);
     }
     _streamControler->streamControlerChanged();
 }

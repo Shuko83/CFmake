@@ -23,6 +23,7 @@
 #include <SwException.h>
 #include "ISwExecution_Service.h"
 #include "ISwExecutable_Service.h"
+#include "ISwServicesManager_Listener.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -34,7 +35,7 @@ typedef enum {Normal_mode,Replay_mode,Both_mode} _SwExecutionMode;
 \class _SwExecution_Services
 \brief  service pour l'execution
 */
-class _SwExecution_Service: public QThread, public ISwExecution_Service {
+class _SwExecution_Service : public QThread, public ISwExecution_Service, public ISwServicesManager_Listener {
     Q_OBJECT
 
     
@@ -75,7 +76,7 @@ public:
 	/*! \brief Resolution des liens */
     void ResolveLinks();
 	/*! \brief Acces a la liste des services executables */
-    QList<ISwExecutable_Service *> * GetExecutablesList();
+    const QList<ISwExecutable_Service *> * GetExecutablesList() const;
 	/*! \brief Initialisation de tous les composants */
     void InitializeAll();
 	/*! \brief Demarrage de tous les composants */
@@ -116,7 +117,10 @@ public:
 	/*! \brief run du thread */
     void run();
 
-
+	/*! \brief sur ajout d'un service */
+	virtual void OnRegisterService(ISwService * service);
+	/*! \brief sur suppression d'une  interface */
+	virtual void OnUnregisterService(ISwService * service);
 
 public:
 	/* List des path des composants executables */
@@ -125,6 +129,8 @@ public:
     QList<_SwExecutionMode> _exe_modes;
     /* List des interfaces d'execution */
     QList<ISwExecutable_Service *> _exe_servs;
+	/* List des composant execute */
+	QList<SwComponent_Class *> _exe_comps;
 
     /* Hote */
     SwComponent_Class * _host;

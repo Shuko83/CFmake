@@ -48,12 +48,16 @@ void _SwExecution_Service::Edit() {
     if (esetup->exec()==QDialog::Accepted) {
         _exe_paths=*esetup->GetEditedList();
         _exe_modes=*esetup->GetEditedListMode();
+		ResolveLinks();
     }
 }
 /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
 lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
 void _SwExecution_Service::Liberate(){
-
+	for (int i = 0; i < _exe_comps.count(); i++)
+	{
+		_exe_comps[i]->RemoveServicesManagerObserver(this);
+	}
 }  
 //---------------------------------------------------------------------
 // Interface ISwPersistence
@@ -81,6 +85,7 @@ void _SwExecution_Service::Load(QDomElement & elt,ISwFinalizerManager & finalize
             }
         }
     }
+	ResolveLinks();
 }
 /*! \brief methode permettant de sauver des donnees
 \param[in] elt neoud parent
@@ -116,6 +121,16 @@ SwComponent_Class * _SwExecution_Service::GetHostComponent() {
 //---------------------------------------------------------------------
 /*! \brief Resolution des liens */
 void _SwExecution_Service::ResolveLinks() {
+	QList<ISwExecutable_Service *> old_exe_servs = _exe_servs;
+	QList<SwComponent_Class *> old_exe_comps = _exe_comps;
+
+	for (int i = 0; i < _exe_comps.count(); i++)
+	{
+		_exe_comps[i]->RemoveServicesManagerObserver(this);
+	}
+	_exe_servs.clear();
+	_exe_comps.clear();
+
     _SwExecutor *_exeHost=dynamic_cast<_SwExecutor *>(_host);
     _SwExecutionMode mode=Normal_mode;
     if (_exeHost->getReplayMode()) {
@@ -124,10 +139,14 @@ void _SwExecution_Service::ResolveLinks() {
     for (int i=0;i<_exe_paths.count();i++) {
         if(_exe_modes[i]==mode || _exe_modes[i]==Both_mode) {
             SwComponent_Class *comp=SwAddress_ToolBox::FindTarget(_exe_paths[i],_host);
-            if (comp!=NULL) {
+			if (comp != NULL) {
                 ISwExecutable_Service * service=dynamic_cast<ISwExecutable_Service *>(comp->QueryService(CG_SW_SERVICE_EXECUTABLE));
 				if (service != NULL && _exeHost != comp)
+				{
                     _exe_servs.push_back(service);
+					_exe_comps.push_back(comp);
+					comp->AddServicesManagerObserver(this);
+				}
 
                 ISwSupportReplay * sreplay=dynamic_cast<ISwSupportReplay *>(comp);
                 if (sreplay==0 && service!=NULL) {
@@ -139,14 +158,27 @@ void _SwExecution_Service::ResolveLinks() {
             }
         }
     }
+
+	// Arret des composant supprimés de la liste
+	double t = _clockProvider != 0 ? _clockProvider->queryStopTime() : SwTime_ToolBox::GetTime();
+	for (int i = 0; i < old_exe_servs.count(); i++) {
+		if (!_exe_servs.contains(old_exe_servs[i]))
+		{
+			ISwExecutable_Service *service = old_exe_servs[i];
+			if (service->isRunning())
+			{
+				service->Stop(t);
+				service->setRunning(false);
+			}
+		}
+	}
 }
 /*! \brief Acces a la liste des services executables */
-QList<ISwExecutable_Service *> * _SwExecution_Service::GetExecutablesList() {
+const QList<ISwExecutable_Service *> * _SwExecution_Service::GetExecutablesList() const {
     return & _exe_servs;
 }
 /*! \brief Initialisation de tous les composants */
 void _SwExecution_Service::InitializeAll(){
-    ResolveLinks();
     double t=_clockProvider!=0?_clockProvider->queryInitTime():SwTime_ToolBox::GetTime();
     ISwExecutable_Service * service = 0;
     for (int i=0;i<_exe_servs.count();i++) 
@@ -265,8 +297,6 @@ void _SwExecution_Service::StopAll(){
             service->setRunning(false);
         }
     }
-    _exe_servs.clear();
-    _clockProvider=0;
 }
 //---------------------------------------------------------------------
 // Algorithmes d'execution 
@@ -417,3 +447,22 @@ void _SwExecution_Service::run() {
     Execution();
 }
 
+//---------------------------------------------------------------------------------
+void _SwExecution_Service::OnRegisterService(ISwService * service)
+{
+
+}
+
+//---------------------------------------------------------------------------------
+void _SwExecution_Service::OnUnregisterService(ISwService * service)
+{
+	ISwExecutable_Service * exe_serv = dynamic_cast<ISwExecutable_Service *>(service);
+
+	int i = _exe_servs.indexOf(exe_serv);
+	if (i != -1)
+	{
+		_exe_comps[i]->RemoveServicesManagerObserver(this);
+		_exe_servs.removeAt(i);
+		_exe_comps.removeAt(i);
+	}
+}

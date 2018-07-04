@@ -105,9 +105,12 @@ void SwServicesManager_Class::UnregisterService( QString service_name ) throw(Sw
 	}
 	//qDebug("------- > UnregisterService: %s",it.value()->GetServiceName().toLatin1().data());
 	it.value()->Liberate();
-	for ( int i = 0; i < _servicesObservers.count(); i++ )
+
+	// Copie pour permettre aux observers de se desenregistrer
+	QList<ISwServicesManager_Listener *> servicesObserversCopy = _servicesObservers;
+	for (int i = 0; i < servicesObserversCopy.count(); i++)
 	{
-		_servicesObservers[i]->OnUnregisterService( it.value() );
+		servicesObserversCopy[i]->OnUnregisterService(it.value());
 	}
 	_services.erase( it );
 	itd = _ordered_services.begin();

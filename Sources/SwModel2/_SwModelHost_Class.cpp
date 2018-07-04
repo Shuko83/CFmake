@@ -46,9 +46,7 @@ _SwModelHost_Class::_SwModelHost_Class() : SwComponent_Class()
 //-----------------------------------------------------------------------
 _SwModelHost_Class::~_SwModelHost_Class()
 {
-
-	if ( _model == this )
-		DestroyBinding();
+	DestroyBinding();
 
 	//Desenregistrement des services
 	this->UnregisterService(_pins_service->GetServiceName());
@@ -63,16 +61,10 @@ _SwModelHost_Class::~_SwModelHost_Class()
 	delete _properties_service;
 
 	//Nettoyage des entites
-	/*    for(int i=0;i<_exported_entities.count();i++) {
-			_SwModelExportedExecutable * executable=dynamic_cast<_SwModelExportedExecutable *>(_exported_entities[i]);
-			if (executable!=0) {
-			executable->Unbind();
-			}
-			delete _exported_entities[i];
-			}
-			_exported_entities.clear(); */
+// 	for(int i=0;i<_exported_entities.count();i++) {
+// 		delete _exported_entities[i];
+// 	}
 }
-
 
 //-----------------------------------------------------------------------
 void _SwModelHost_Class::InitializeResources() throw(SwException)

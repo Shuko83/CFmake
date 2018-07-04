@@ -129,8 +129,6 @@ protected:
 	ISwProperty * _executable_entry_property;
 	/* service contenant gerant la liste des composants executables */
 	_SwExecution_Service _exe_service;
-	/* liste des executables pour le mode esclave */
-	QList<ISwExecutable_Service *> * _exe_list;
 	/* replay mode */
 	bool _replayMode;
 	/* propriété DefaultActivated */
