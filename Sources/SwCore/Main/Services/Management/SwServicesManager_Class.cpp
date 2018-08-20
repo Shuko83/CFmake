@@ -75,9 +75,6 @@ void SwServicesManager_Class::RegisterService( ISwService * service ) throw(SwEx
 	it = _services.find( service->GetServiceName() );
 	if ( it != _services.end() )
 	{
-		//Verru pour desactiver la popup relou pour le service de check licence avec streamworkEditor
-		if ( (service->GetServiceName() == "CheckLicense" || service->GetServiceName() == "ProductKeyService") && QCoreApplication::applicationName() == "StreamWorkEditor2" )
-			return;
 		QString msg = QString( "A service with %1 already registered" ).arg( service->GetServiceName() );
 		QMessageBox::critical(NULL,"SwCore", msg );
 		return;
