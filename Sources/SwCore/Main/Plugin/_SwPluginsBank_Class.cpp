@@ -17,6 +17,7 @@
 #include <QDateTime>
 #include <QApplication>
 #include <QDebug>
+#include <QRegularExpression>
 
 #include "_SwPluginsBank_Class.h"
 #include "SwApplication.h"
@@ -191,22 +192,33 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 	QSet<QString> set_of_components;
 	QSet<SwUUID> set_of_data;
 	TL_plugins set_of_plugins;
-	QString realPath;
 
-	realPath=path;
-	//Si le repertoire existe
-	if ( QDir::isRelativePath(path) )
+	QString expendedPath = path;
+	
+	QRegularExpression envVarsRegex("%(.*?)%");
+	QRegularExpressionMatchIterator envVarsMatchIt = envVarsRegex.globalMatch(path);
+	while (envVarsMatchIt.hasNext())
 	{
-		realPath = qApp->applicationDirPath() + "/" + path;
-		if ( !QFileInfo(realPath).exists() )
+		QProcessEnvironment sysEnv = QProcessEnvironment::systemEnvironment();
+		QRegularExpressionMatch match = envVarsMatchIt.next();
+		QString envVarName = match.captured(1);
+		QString envVarValue = sysEnv.value(envVarName);
+		if (!envVarValue.isEmpty())
 		{
-			if ( !QDir(SW_APP->GetApplicationDirPath()).isRelative() )
-				realPath = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + path);
-			else
-			{
-				realPath = QDir::cleanPath(QDir::current().absolutePath() + "/" + SW_APP->GetApplicationDirPath() + "/" + path);
-				realPath = QDir::current().relativeFilePath(realPath);
-			}
+			expendedPath.replace(QStringLiteral("%%1%").arg(envVarName), envVarValue);
+		}
+	}
+	
+	QString realPath = expendedPath;
+	//Si le repertoire existe
+	if (QDir::isRelativePath(expendedPath))
+	{
+		if (!QDir(SW_APP->GetApplicationDirPath()).isRelative())
+			realPath = QDir::cleanPath(SW_APP->GetApplicationDirPath() + "/" + expendedPath);
+		else
+		{
+			realPath = QDir::cleanPath(QDir::current().absolutePath() + "/" + SW_APP->GetApplicationDirPath() + "/" + expendedPath);
+			realPath = QDir::current().relativeFilePath(realPath);
 		}
 	}
 
