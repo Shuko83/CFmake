@@ -38,9 +38,13 @@ SwComponent_Class::~SwComponent_Class()
 	_SwCleanLinksVisitor cleanVisitor;
 	AcceptVisitor(&cleanVisitor);
 
+	_current_child = _child_components.end();
 	QMap<QString, SwComponent_ClassPtr>::iterator it;
 	for (it = _child_components.begin(); it != _child_components.end(); it++)
+	{
+		OnRemoveChild(this, it.value());
 		it.value()->SetParent(nullptr); //ATTENTION !!!!
+	}
 
 	_child_components.clear();
 	LiberateAllServices();

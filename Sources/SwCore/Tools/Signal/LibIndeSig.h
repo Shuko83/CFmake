@@ -122,7 +122,7 @@ public:
 
   //execution
   void operator()() {
-     for (sli i=sl; i; i=i->next) { i->call(); }
+	  for (sli i=sl; i;) { sli next=i->next; i->call(); i=next; }
    }
    
   //Connexion
@@ -208,7 +208,7 @@ public:
 
   //execution
   void operator()(arg1 x) {
-     for (sli i=sl; i; i=i->next) { i->call(x); }
+     for (sli i=sl; i;) { sli next=i->next; i->call(x); i=next; }
    }   
 
   iSignal1(const iSignal1<arg1>& x) {
@@ -290,7 +290,7 @@ public:
 
   //execution
   void operator()(arg1 x, arg2 y) {
-     for (sli i=sl; i; i=i->next) { i->call(x,y); }
+	  for (sli i = sl; i;) { sli next = i->next; i->call(x,y); i = next; }
    }
     //connexion et deconnexion de signal
     template<class T, class Arg1, class Arg2>
@@ -362,7 +362,7 @@ public:
 
   //execution
   void operator()(arg1 x, arg2 y, arg3 z) {
-     for (sli i=sl; i; i=i->next) { i->call(x,y,z); }
+     for (sli i=sl; i;) { sli next=i->next; i->call(x,y,z); i=next; }
    }
     //connexion et deconnexion de signal
     template<class T, class Arg1, class Arg2, class Arg3>
@@ -434,7 +434,7 @@ public:
 
   //execution
   void operator()(arg1 x, arg2 y, arg3 z, arg4 t) {
-     for (sli i=sl; i; i=i->next) { i->call(x,y,z,t); }
+     for (sli i=sl; i;) { sli next=i->next; i->call(x,y,z,t); i=next; }
    }
     //connexion et deconnexion de signal
     template<class T, class Arg1, class Arg2, class Arg3, class Arg4>
@@ -506,7 +506,7 @@ public:
 
   //execution
   void operator()(arg1 x, arg2 y, arg3 z, arg4 t, arg5 u) {
-     for (sli i=sl; i; i=i->next) { i->call(x,y,z,t,u); }
+     for (sli i=sl; i;) { sli next=i->next; i->call(x,y,z,t,u); i=next; }
    }
     //connexion et deconnexion de signal
     template<class T, class Arg1, class Arg2, class Arg3, class Arg4, class Arg5>
@@ -578,7 +578,7 @@ public:
 
   //execution
   void operator()(arg1 x, arg2 y, arg3 z, arg4 t, arg5 u, arg6 v) {
-     for (sli i=sl; i; i=i->next) { i->call(x,y,z,t,u,v); }
+	 for (sli i=sl; i;) { sli next=i->next; i->call(x,y,z,t,u,v); i=next; }
    }
     //connexion et deconnexion de signal
     template<class T, class Arg1, class Arg2, class Arg3, class Arg4, class Arg5, class Arg6>
@@ -650,7 +650,7 @@ public:
 
   //execution
   void operator()(arg1 x, arg2 y, arg3 z, arg4 t, arg5 u, arg6 v, arg7 w) {
-     for (sli i=sl; i; i=i->next) { i->call(x,y,z,t,u,v,w); }
+     for (sli i=sl; i;) { sli next=i->next; i->call(x,y,z,t,u,v,w); i=next; }
    }
     //connexion et deconnexion de signal
     template<class T, class Arg1, class Arg2, class Arg3, class Arg4, class Arg5, class Arg6,class Arg7>

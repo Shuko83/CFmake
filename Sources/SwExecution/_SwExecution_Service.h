@@ -13,6 +13,7 @@
  */
 #include <QString>
 #include <QList>
+#include <QSet>
 /*
   * INCLUDES LOCAUX
  */
@@ -76,7 +77,7 @@ public:
 	/*! \brief Resolution des liens */
     void ResolveLinks();
 	/*! \brief Acces a la liste des services executables */
-    const QList<ISwExecutable_Service *> * GetExecutablesList() const;
+    const QSet<ISwExecutable_Service *>& GetExecutablesList() const;
 	/*! \brief Initialisation de tous les composants */
     void InitializeAll();
 	/*! \brief Demarrage de tous les composants */
@@ -122,15 +123,17 @@ public:
 	/*! \brief sur suppression d'une  interface */
 	virtual void OnUnregisterService(ISwService * service);
 
+	void onExecutedComponentRemoved(StreamWork::SwCore::SwComponent_Class * parent, StreamWork::SwCore::SwComponent_Class *child);
+
 public:
 	/* List des path des composants executables */
     QList<QString> _exe_paths;
 	/* List des mode d'execution des composants executables */
     QList<_SwExecutionMode> _exe_modes;
     /* List des interfaces d'execution */
-    QList<ISwExecutable_Service *> _exe_servs;
-	/* List des composant execute */
-	QList<SwComponent_Class *> _exe_comps;
+    QSet<ISwExecutable_Service *> _exe_servs;
+	/* Composants observé, Parent=>Composant executé */
+	QMultiHash<SwComponent_Class *, SwComponent_Class *> _observedComponents;
 
     /* Hote */
     SwComponent_Class * _host;

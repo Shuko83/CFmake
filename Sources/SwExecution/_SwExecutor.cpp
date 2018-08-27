@@ -283,14 +283,12 @@ void _SwExecutor::Initialize(double start_time, ISwExecution_Service * executor)
 	if ( _executable_entry.ToInt() < CL_EXE_FSLAVE && !_replayMode )
 		return;
 
-	const QList<ISwExecutable_Service *> * exe_list = _exe_service.GetExecutablesList();
 	_executor = executor;
 
 	// parcours de tous les executables (independants de l'activation)
-	for (int i = 0; i < exe_list->count(); i++)
+	for (ISwExecutable_Service* executable : _exe_service.GetExecutablesList())
 	{
 		// on vérifie si l'activation de l'executable a changé
-		ISwExecutable_Service * executable = (*exe_list)[i];
 		if ( executable->isActive() )
 		{
 			// on initialise le composant
@@ -308,15 +306,10 @@ void _SwExecutor::Initialize(double start_time, ISwExecution_Service * executor)
 //-----------------------------------------------------------------------
 void _SwExecutor::Start(double current_time) throw (SwException)
 {
-	const QList<ISwExecutable_Service *> * exe_list = _exe_service.GetExecutablesList();
-	if (exe_list == 0)
-		return;
-
 	// parcours de tous les executables (independants de l'activation)
-	for (int i = 0; i < exe_list->count(); i++)
+	for (ISwExecutable_Service* executable : _exe_service.GetExecutablesList())
 	{
 		// on vérifie l'activation de l'executable
-		ISwExecutable_Service * executable = (*exe_list)[i];
 		if ( executable->isActive() )
 		{
 			if ( !executable->isRunning() )
@@ -353,16 +346,11 @@ void _SwExecutor::Start(double current_time) throw (SwException)
 //-----------------------------------------------------------------------
 void _SwExecutor::Execute(double current_time, bool is_first_call) throw (SwException)
 {
-	const QList<ISwExecutable_Service *> * exe_list = _exe_service.GetExecutablesList();
-	if (exe_list == 0)
-		return;
-
 	bool internalFirstCall = is_first_call;
 	// parcours de tous les executables (independants de l'activation)
-	for (int i = 0; i < exe_list->count(); i++)
+	for (ISwExecutable_Service* executable : _exe_service.GetExecutablesList())
 	{
 		// on vérifie l'activation de l'executable
-		ISwExecutable_Service * executable = (*exe_list)[i];
 		if ( executable->isActive() )
 		{
 			if ( !executable->isRunning() )
@@ -440,20 +428,15 @@ void _SwExecutor::Execute(double current_time, bool is_first_call) throw (SwExce
 //-----------------------------------------------------------------------
 void _SwExecutor::Stop(double current_time)
 {
-	const QList<ISwExecutable_Service *> * exe_list = _exe_service.GetExecutablesList();
-	if (exe_list == NULL)
-		return;
-
-	for (int i = 0; i < exe_list->count(); i++)
+	for (ISwExecutable_Service* executable : _exe_service.GetExecutablesList())
 	{
-		ISwExecutable_Service * executable = (*exe_list)[i];
 		if ( executable->isRunning() )
 		{
 			if ( _executable_entry.ToInt() == CL_EXE_FSLAVE || _replayMode )
-				(*exe_list)[i]->Stop(current_time);
+				executable->Stop(current_time);
 			else
-				(*exe_list)[i]->Stop(SwTime_ToolBox::GetTime());
-			(*exe_list)[i]->setRunning(false);
+				executable->Stop(SwTime_ToolBox::GetTime());
+			executable->setRunning(false);
 		}
 	}
 	//_active_exe_list->clear();

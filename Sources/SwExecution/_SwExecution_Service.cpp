@@ -54,10 +54,15 @@ void _SwExecution_Service::Edit() {
 /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
 lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
 void _SwExecution_Service::Liberate(){
-	for (int i = 0; i < _exe_comps.count(); i++)
+	for (SwComponent_Class * parent : _observedComponents.keys())
 	{
-		_exe_comps[i]->RemoveServicesManagerObserver(this);
+		parent->OnRemoveChild.idisconnect(*this, &_SwExecution_Service::onExecutedComponentRemoved);
+		for (SwComponent_Class* comp : _observedComponents.values(parent))
+		{
+			comp->RemoveServicesManagerObserver(this);
+		}
 	}
+	_observedComponents.clear();
 }  
 //---------------------------------------------------------------------
 // Interface ISwPersistence
@@ -121,15 +126,18 @@ SwComponent_Class * _SwExecution_Service::GetHostComponent() {
 //---------------------------------------------------------------------
 /*! \brief Resolution des liens */
 void _SwExecution_Service::ResolveLinks() {
-	QList<ISwExecutable_Service *> old_exe_servs = _exe_servs;
-	QList<SwComponent_Class *> old_exe_comps = _exe_comps;
-
-	for (int i = 0; i < _exe_comps.count(); i++)
+	for (SwComponent_Class * parent : _observedComponents.keys())
 	{
-		_exe_comps[i]->RemoveServicesManagerObserver(this);
+		parent->OnRemoveChild.idisconnect(*this, &_SwExecution_Service::onExecutedComponentRemoved);
+		for (SwComponent_Class* comp : _observedComponents.values(parent))
+		{
+			comp->RemoveServicesManagerObserver(this);
+		}
 	}
+	_observedComponents.clear();
+
+	QSet<ISwExecutable_Service *> old_exe_servs = _exe_servs;
 	_exe_servs.clear();
-	_exe_comps.clear();
 
     _SwExecutor *_exeHost=dynamic_cast<_SwExecutor *>(_host);
     _SwExecutionMode mode=Normal_mode;
@@ -139,13 +147,19 @@ void _SwExecution_Service::ResolveLinks() {
     for (int i=0;i<_exe_paths.count();i++) {
         if(_exe_modes[i]==mode || _exe_modes[i]==Both_mode) {
             SwComponent_Class *comp=SwAddress_ToolBox::FindTarget(_exe_paths[i],_host);
-			if (comp != NULL) {
-                ISwExecutable_Service * service=dynamic_cast<ISwExecutable_Service *>(comp->QueryService(CG_SW_SERVICE_EXECUTABLE));
-				if (service != NULL && _exeHost != comp)
+			if (comp != NULL && _exeHost != comp) {
+				if (!_observedComponents.contains(comp->GetParent()))
 				{
-                    _exe_servs.push_back(service);
-					_exe_comps.push_back(comp);
-					comp->AddServicesManagerObserver(this);
+					comp->GetParent()->OnRemoveChild.iconnect(*this, &_SwExecution_Service::onExecutedComponentRemoved);
+				}
+				comp->AddServicesManagerObserver(this);
+
+				_observedComponents.insert(comp->GetParent(), comp);
+
+                ISwExecutable_Service * service=dynamic_cast<ISwExecutable_Service *>(comp->QueryService(CG_SW_SERVICE_EXECUTABLE));
+				if (service != NULL)
+				{
+                    _exe_servs.insert(service);
 				}
 
                 ISwSupportReplay * sreplay=dynamic_cast<ISwSupportReplay *>(comp);
@@ -161,29 +175,25 @@ void _SwExecution_Service::ResolveLinks() {
 
 	// Arret des composant supprimés de la liste
 	double t = _clockProvider != 0 ? _clockProvider->queryStopTime() : SwTime_ToolBox::GetTime();
-	for (int i = 0; i < old_exe_servs.count(); i++) {
-		if (!_exe_servs.contains(old_exe_servs[i]))
+	old_exe_servs.subtract(_exe_servs);
+
+	for (ISwExecutable_Service* service : old_exe_servs) {
+		if (service->isRunning())
 		{
-			ISwExecutable_Service *service = old_exe_servs[i];
-			if (service->isRunning())
-			{
-				service->Stop(t);
-				service->setRunning(false);
-			}
+			service->Stop(t);
+			service->setRunning(false);
 		}
 	}
 }
 /*! \brief Acces a la liste des services executables */
-const QList<ISwExecutable_Service *> * _SwExecution_Service::GetExecutablesList() const {
-    return & _exe_servs;
+const QSet<ISwExecutable_Service *>& _SwExecution_Service::GetExecutablesList() const {
+    return _exe_servs;
 }
 /*! \brief Initialisation de tous les composants */
 void _SwExecution_Service::InitializeAll(){
     double t=_clockProvider!=0?_clockProvider->queryInitTime():SwTime_ToolBox::GetTime();
-    ISwExecutable_Service * service = 0;
-    for (int i=0;i<_exe_servs.count();i++) 
-    {  
-        service = _exe_servs[i];
+	for (ISwExecutable_Service* service : _exe_servs)
+	{
         if (service->isActive())
         {
             service->Initialize(t,this);   
@@ -194,10 +204,8 @@ void _SwExecution_Service::InitializeAll(){
 /*! \brief Demarrage de tous les composants */
 void _SwExecution_Service::StartAll(){
     double t=_clockProvider!=0?_clockProvider->queryStartTime():SwTime_ToolBox::GetTime();
-    ISwExecutable_Service * service = 0;
-    for (int i=0;i<_exe_servs.count();i++) 
-    {    
-        service = _exe_servs[i];
+	for (ISwExecutable_Service* service : _exe_servs)
+	{
         if (service->isActive())
         {
             if (!service->isRunning())
@@ -242,11 +250,8 @@ void _SwExecution_Service::ExecuteAll(){
         return;
     }
     double t=_clockProvider!=0?_clockProvider->queryExecuteTime(&stopNeeded):SwTime_ToolBox::GetTime();
-    ISwExecutable_Service * service = 0;
-    for (int i=0;i<_exe_servs.count();i++) 
-    {  
-         
-        service = _exe_servs[i];
+	for (ISwExecutable_Service* service : _exe_servs)
+	{
         if (service->isActive())
         {
             if (!service->isRunning())
@@ -287,10 +292,8 @@ void _SwExecution_Service::ExecuteAll(){
 /*! \brief Arret de tous les composants */
 void _SwExecution_Service::StopAll(){
     double t=_clockProvider!=0?_clockProvider->queryStopTime():SwTime_ToolBox::GetTime();
-    ISwExecutable_Service * service = 0;
-    for (int i=0;i<_exe_servs.count();i++) 
-    {  
-        service = _exe_servs[i];
+	for (ISwExecutable_Service* service : _exe_servs)
+	{
         if (service->isRunning())
         {
             service->Stop(t);
@@ -450,19 +453,32 @@ void _SwExecution_Service::run() {
 //---------------------------------------------------------------------------------
 void _SwExecution_Service::OnRegisterService(ISwService * service)
 {
-
+	ISwExecutable_Service * exe_serv = dynamic_cast<ISwExecutable_Service *>(service);
+	if (exe_serv && exe_serv->GetServiceName() == CG_SW_SERVICE_EXECUTABLE)
+		_exe_servs.insert(exe_serv);
 }
 
 //---------------------------------------------------------------------------------
 void _SwExecution_Service::OnUnregisterService(ISwService * service)
 {
 	ISwExecutable_Service * exe_serv = dynamic_cast<ISwExecutable_Service *>(service);
+	if (exe_serv)
+		_exe_servs.remove(exe_serv);
+}
 
-	int i = _exe_servs.indexOf(exe_serv);
-	if (i != -1)
+//---------------------------------------------------------------------------------
+void _SwExecution_Service::onExecutedComponentRemoved(StreamWork::SwCore::SwComponent_Class * parent, StreamWork::SwCore::SwComponent_Class *child)
+{
+	ISwExecutable_Service * service = dynamic_cast<ISwExecutable_Service *>(child->QueryService(CG_SW_SERVICE_EXECUTABLE));
+	if (service)
+		_exe_servs.remove(service);
+
+	child->RemoveServicesManagerObserver(this);
+
+	_observedComponents.remove(parent, child);
+	if (_observedComponents.values(parent).isEmpty())
 	{
-		_exe_comps[i]->RemoveServicesManagerObserver(this);
-		_exe_servs.removeAt(i);
-		_exe_comps.removeAt(i);
+		parent->OnRemoveChild.idisconnect(*this, &_SwExecution_Service::onExecutedComponentRemoved);
+		_observedComponents.remove(parent);
 	}
 }
