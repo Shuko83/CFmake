@@ -218,7 +218,6 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 		else
 		{
 			realPath = QDir::cleanPath(QDir::current().absolutePath() + "/" + SW_APP->GetApplicationDirPath() + "/" + expendedPath);
-			realPath = QDir::current().relativeFilePath(realPath);
 		}
 	}
 
@@ -257,7 +256,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 	if (!dir.exists()) 
 	{
 		//Il n'existe pas on ne fait rien
-		qCritical() << __FUNCTION__ << " Directory in devpath, doesn't exist <" + realPath+">";
+		qCritical() << __FUNCTION__ << " Directory in devpath, doesn't exist <" + path + ">";
 		return;
 	}
 	//Operation de mise a jour
