@@ -36,7 +36,7 @@ typedef enum {Normal_mode,Replay_mode,Both_mode} _SwExecutionMode;
 \class _SwExecution_Services
 \brief  service pour l'execution
 */
-class _SwExecution_Service : public QThread, public ISwExecution_Service, public ISwServicesManager_Listener {
+class _SwExecution_Service : public QThread, public ISwExecution_Service, public ISwServicesManager_Listener, public ISwFinalizer {
     Q_OBJECT
 
     
@@ -66,6 +66,11 @@ public:
     \param[in] doc document parent
     */
 	void Save(QDomElement & elt,QDomDocument &doc);
+	//-----------------------------------------------------------
+	// Interface ISwFinalizer
+	//-----------------------------------------------------------
+	/*@brief appelée à la fin du chargement */
+	bool Finalize(quint64 historic_index) override;
 	//---------------------------------------------------------------------
 	// Interface ISwHost
 	//---------------------------------------------------------------------
@@ -75,7 +80,7 @@ public:
     // Gestion de l'execution des composants selectionnés
     //---------------------------------------------------------------------
 	/*! \brief Resolution des liens */
-    void ResolveLinks();
+    bool ResolveLinks();
 	/*! \brief Acces a la liste des services executables */
     const QSet<ISwExecutable_Service *>& GetExecutablesList() const;
 	/*! \brief Initialisation de tous les composants */

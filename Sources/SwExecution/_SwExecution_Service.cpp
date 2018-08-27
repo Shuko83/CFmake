@@ -72,6 +72,7 @@ void _SwExecution_Service::Liberate(){
 \param[in] finalizer_manager manager de finalisation
 */
 void _SwExecution_Service::Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager){
+	qint64 historyIndex = elt.attribute("historyIndex").toULongLong();
     for(QDomElement elt_path = elt.firstChildElement(CL_XML_NODE); !elt_path.isNull(); elt_path = elt_path.nextSiblingElement(CL_XML_NODE))
     {
         if (elt_path.hasAttribute(CL_XML_ATT_PATH)) {
@@ -90,7 +91,7 @@ void _SwExecution_Service::Load(QDomElement & elt,ISwFinalizerManager & finalize
             }
         }
     }
-	ResolveLinks();
+	finalizer_manager.RegisterFinalization(historyIndex, this);
 }
 /*! \brief methode permettant de sauver des donnees
 \param[in] elt neoud parent
@@ -115,6 +116,14 @@ void _SwExecution_Service::Save(QDomElement & elt,QDomDocument &doc) {
     }
 }
 //---------------------------------------------------------------------
+// Interface ISwFinalizer
+//---------------------------------------------------------------------
+/*@brief appelée à la fin du chargement */
+bool _SwExecution_Service::Finalize(quint64)
+{
+	return ResolveLinks();
+}
+//---------------------------------------------------------------------
 // Interface ISwHost
 //---------------------------------------------------------------------
 /*! \brief acces a son composant hote */
@@ -125,7 +134,9 @@ SwComponent_Class * _SwExecution_Service::GetHostComponent() {
 // Gestion de l'execution des composants selectionnés
 //---------------------------------------------------------------------
 /*! \brief Resolution des liens */
-void _SwExecution_Service::ResolveLinks() {
+bool _SwExecution_Service::ResolveLinks() {
+	bool result = true;
+
 	for (SwComponent_Class * parent : _observedComponents.keys())
 	{
 		parent->OnRemoveChild.idisconnect(*this, &_SwExecution_Service::onExecutedComponentRemoved);
@@ -147,7 +158,10 @@ void _SwExecution_Service::ResolveLinks() {
     for (int i=0;i<_exe_paths.count();i++) {
         if(_exe_modes[i]==mode || _exe_modes[i]==Both_mode) {
             SwComponent_Class *comp=SwAddress_ToolBox::FindTarget(_exe_paths[i],_host);
-			if (comp != NULL && _exeHost != comp) {
+			if (!comp) {
+				result = false;
+			}
+			else if (_exeHost!=comp) {
 				if (!_observedComponents.contains(comp->GetParent()))
 				{
 					comp->GetParent()->OnRemoveChild.iconnect(*this, &_SwExecution_Service::onExecutedComponentRemoved);
@@ -184,6 +198,8 @@ void _SwExecution_Service::ResolveLinks() {
 			service->setRunning(false);
 		}
 	}
+
+	return result;
 }
 /*! \brief Acces a la liste des services executables */
 const QSet<ISwExecutable_Service *>& _SwExecution_Service::GetExecutablesList() const {
