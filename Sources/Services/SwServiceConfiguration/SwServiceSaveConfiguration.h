@@ -189,7 +189,7 @@ namespace StreamWork
              * @Param	: QString : nom de la configuration concernée
              * @Param	: QDomDocument : document de conf à sauvegarder
              */
-			virtual bool saveConfigurationFile( QString confName);
+			virtual bool saveConfigurationFile(QString confName, QDomDocument* doc = nullptr);
 
              /**
              * @brief	: dans le cas autoSave, permet de retenir une propriete qui sera ensuite sauvegardee dans le xml à la fermeture

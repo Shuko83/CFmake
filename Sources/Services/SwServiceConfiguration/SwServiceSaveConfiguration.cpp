@@ -772,7 +772,7 @@ bool SwServiceSaveConfiguration::restoreCancelConfiguration(QString confName, QS
 
 
 //-------------------------------------------------------------------------
-bool SwServiceSaveConfiguration::saveConfigurationFile(QString confName)
+bool SwServiceSaveConfiguration::saveConfigurationFile(QString confName, QDomDocument* doc)
 {
 	bool ret = false;
 	// QDomDoc temporaire pour la création des profils de conf à renseigner dans _confProfilesDatas
@@ -780,6 +780,9 @@ bool SwServiceSaveConfiguration::saveConfigurationFile(QString confName)
 
 	ret = createConfigurationFile(confName, confFileToSave);
 	ret = ret && writeConfigurationFile(confName, confFileToSave);
+
+	if (doc != nullptr)
+		*doc = confFileToSave;
 
 	return ret;
 }
