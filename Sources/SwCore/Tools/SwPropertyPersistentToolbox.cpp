@@ -473,7 +473,8 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 				valueSetted = true;
 				return;
 			}
-		} else 
+		}
+		else 
 		{
 			//Sinon on va chercher une CDATASection
 			node=property_node.firstChild(); 
@@ -491,7 +492,14 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 				}
 			}
 		}
-			inProperty->SetValue(QVariant(QString("")));   
+
+		tmp = QVariant(QString(""));
+		if (tmp.convert(var.type()))
+		{
+			inProperty->SetValue(tmp, true);
+			valueSetted = true;
+			return;
+		}
 		return;
 	}
 
