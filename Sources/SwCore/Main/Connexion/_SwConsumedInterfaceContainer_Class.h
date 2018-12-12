@@ -79,7 +79,7 @@ namespace StreamWork
 	        /*! \brief Desenregistre une interface consommatrice */
             void UnregisterProviderInterface();
 	        /*! \brief Definition de l'interface potentielle et du fournisseur */
-            void DefinePotentialProviderInterfaceDescription(QString ppotential_interface,QString ppotential_provider_path);
+            void DefinePotentialProviderInterfaceDescription(QString ppotential_interface,QString ppotential_provider_path, quint64 index);
 	        /*! \brief Acces au nom de l'interface potentielle */
             QString GetPotentialProviderInterfaceName();
 	        /*! \brief Acces au path du fournisseur potentielle */

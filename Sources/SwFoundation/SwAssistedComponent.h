@@ -151,10 +151,9 @@ namespace StreamWork {
 
 			/**
 			* @brief    : methode permettant de sauver des donnees
-			* @param	 : QDomElement & elt - Noeud parent
-			* @param	 : QDomDocument & doc - Document parent
+			* @param	 : QXmlStreamWriter & writer - output stream
 			*/
-			virtual void Save(QDomElement & elt,QDomDocument &doc);
+			virtual void Save(QXmlStreamWriter& writer);
 
 
 			//------------------------------------------------------------------
@@ -229,7 +228,7 @@ namespace StreamWork {
 			 * @param	 : QDomElement & - Noeud parent
 			 * @param	 : QDomDocument & - Document parent
 			 */
-			virtual void SaveConfiguration(QDomElement &elm,QDomDocument &doc);
+			virtual void SaveConfiguration(QXmlStreamWriter &);
 
 			//---------------------------------------------------------------------
 			// Interface ISwService

@@ -220,39 +220,40 @@ quint64 _SwEditorPinGraphicItemManager::Load(QDomElement & elt) {
     }
     return index_to_return;
 }
+
 /*! \brief methode permettant de sauver des donnees */
 #define SHORT_DOUBLE(d) QString("%1").arg(d,0,'g',6)
-void _SwEditorPinGraphicItemManager::Save(QDomElement & elt,QDomDocument & doc) {
-    QDomElement item_node;
-    QDomElement subitem_node;
-    QDomElement point_node;
-    QMap<QString,_SwEditorPinGraphicItem *>::iterator it;
-    _SwRouting_ToolBox * rt;
+void _SwEditorPinGraphicItemManager::Save(QXmlStreamWriter& writer)
+{
+	writer.writeStartElement(CL_SW_XML_DRAW_COMP_EDITOR_GPITEMS_NODE);
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEMS_NODE_HISTORY, QString::number(_history_index));
+	for (auto it = _pin_gitems.begin(); it != _pin_gitems.end(); it++)
+	{
+		writer.writeStartElement(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NODE);
 
-    item_node=doc.createElement(CL_SW_XML_DRAW_COMP_EDITOR_GPITEMS_NODE);
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEMS_NODE_HISTORY,_history_index);
-    //Ajout des description de chaque interface item
-    for (it=_pin_gitems.begin();it!=_pin_gitems.end();it++) {
-        subitem_node=doc.createElement(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NODE);
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NAME_NODE,it.key());
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NODE_PORT_LIN_POS,SHORT_DOUBLE(it.value()->GetPortLinearPosition()));
-        rt=it.value()->GetRouting();
-        if (rt->GetPath().count()>2) {
-            subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NBPOINTS_NODE,rt->GetPath().count());
-            for (int i=0;i<rt->GetPath().count();i++) {
-                point_node=doc.createElement(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_PATH_POINT_NODE);
-                point_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_PATH_POINT_NODE_X,SHORT_DOUBLE(rt->GetPath()[i].x()));
-                point_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_PATH_POINT_NODE_Y,SHORT_DOUBLE(rt->GetPath()[i].y()));
-                subitem_node.appendChild(point_node);
-            }
-        } else {
-            subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NBPOINTS_NODE,-1);
-        }
-        item_node.appendChild(subitem_node);
-    }
-    //Ajout du neoud interface manager
-    elt.appendChild(item_node);
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NAME_NODE, it.key());
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NODE_PORT_LIN_POS, SHORT_DOUBLE(it.value()->GetPortLinearPosition()));
+		_SwRouting_ToolBox * rt = it.value()->GetRouting();
+		if (rt->GetPath().count() > 2)
+		{
+			writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NBPOINTS_NODE, QString::number(rt->GetPath().count()));
+			for (int i = 0; i < rt->GetPath().count(); i++)
+			{
+				writer.writeStartElement(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_PATH_POINT_NODE);
+				writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_PATH_POINT_NODE_X, SHORT_DOUBLE(rt->GetPath()[i].x()));
+				writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_PATH_POINT_NODE_Y, SHORT_DOUBLE(rt->GetPath()[i].y()));
+				writer.writeEndElement();
+			}
+		}
+		else
+		{
+			writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NBPOINTS_NODE, QString::number(-1));
+		}
+		writer.writeEndElement();
+	}
+	writer.writeEndElement();
 }
+
 /*! \brief Finalisation */
 void _SwEditorPinGraphicItemManager::Finalize() {
     QMap<QString,_TmpGPData *>::iterator it;

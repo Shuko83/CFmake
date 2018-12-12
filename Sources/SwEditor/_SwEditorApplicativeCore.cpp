@@ -137,24 +137,20 @@ void _SwEditorApplicativeCore::InternalOpenStream(QString file_name) {
 /*! \brief Sauvegarde interne d'un stream*/
 void _SwEditorApplicativeCore::InternalSaveStream(QString file_name) {
     SwSaver_Class saver;
-    QDomDocument doc;
-    QByteArray stream_desc;
-    QFile file;
+	
+	QFile file(file_name);
+	if (file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false)
+	{
+		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(file_name));
+		return;
+	}
 
-    //Construction du stream
-    saver.Save(_streams[_current_stream_index],doc);
-    //Recuperation du stream
-    stream_desc=doc.toByteArray(4); //Indentation de quatre espace
-    //Ouverture d'un fichier en ecriture
-    file.setFileName(file_name);
-    if (file.open(QIODevice::WriteOnly  | QIODevice::Truncate)==false) {
-        QMessageBox::critical(NULL,"StreamWorkEditor critical",QString("Fail to save stream in file %1").arg(file_name));
-        return;
-    }
-    //Ecriture du fichier
-    file.write(stream_desc);
-    //Fermeture du fichier
-    file.close();
+	QXmlStreamWriter writer(&file);
+	writer.writeStartDocument();
+	saver.Save(_streams[_current_stream_index], writer);
+	writer.writeEndDocument();
+	//Fermeture du fichier
+	file.close();
 }
 /*! \brief Definition du navigateur courant*/
 void _SwEditorApplicativeCore::DefineComponentAsCurrentNavigator(SwComponent_Class * root_component) {

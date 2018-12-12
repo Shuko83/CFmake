@@ -305,17 +305,18 @@ void SwProperties_Class::Load(QDomElement & elt,ISwFinalizerManager & finalizer_
         SwPropertyPersistentToolbox::LoadProperty(elt_property,this);
     }
 }
+
 /*! \brief methode permettant de sauver des donnees
 (dans l'ordre d'enregistrement des données - important si des properties sont crées lors du load) */
-void SwProperties_Class::Save(QDomElement & elt,QDomDocument & doc) {
-    QList<ISwProperty *>::iterator it;
-    QDomElement elt_property;
-
-    for (it=_set_properties.begin();it!=_set_properties.end();it++) {
-        SwPropertyPersistentToolbox::SaveProperty(elt,doc,(*it)->GetRealName(),this);
-    }
-
+//---------------------------------------------------------------------
+void SwProperties_Class::Save(QXmlStreamWriter& writer)
+{
+	for(ISwProperty * property : _set_properties)
+	{
+		SwPropertyPersistentToolbox::SaveProperty(writer, property->GetRealName(), this);
+	}
 }
+
 /*! \brief Permet de crée les sous propriétés pour un type complexe */
 void SwProperties_Class::CreateSubProperties(_SwPropertyImpl_Class * parent_property) {
     //Check s'il existe un fabrique d'adapteurs pour ce type

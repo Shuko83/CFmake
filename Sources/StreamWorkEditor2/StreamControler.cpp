@@ -55,6 +55,32 @@ using namespace StreamWork::SwModel;
 #define CL_CGCNTITEM_ATT_NAME "name"
 #define CL_CGCNTITEM_ATT_POS "pos"
 
+namespace
+{
+
+	std::tuple<bool, bool, QString, double, double> makeComparableTuple(QGraphicsItem * item)
+	{
+		ComponentGraphicItem * cgitem = dynamic_cast<ComponentGraphicItem *>(item);
+		InterestArea * ia = dynamic_cast<InterestArea *>(item);
+		QString name;
+		if (ia)
+			name = ia->getText();
+		else if (cgitem)
+			name = cgitem->getComponent()->GetName();
+		
+		// On place les IA en premier puis les ComponentGraphicItem ;
+		// Chaque catégorie est trié avec son nom ;
+		// S'il y a des doublons (ce qui a peu de chance d'arriver, les noms des Composants devant êtr euniques),
+		// on se sert de la position et de la taille pour les distinguer.
+		return std::make_tuple(!bool(ia), !bool(cgitem), name, item->x(), item->y());
+	}
+
+	bool graphicItemComparator(QGraphicsItem * leftItem, QGraphicsItem * rightItem)
+	{
+		return makeComparableTuple(leftItem) < makeComparableTuple(rightItem);
+	}
+
+}
 
 //-----------------------------------------------------------------------
 StreamControler::StreamControler(PropertiesWidget * propertiesWidget) :QObject()
@@ -274,33 +300,29 @@ void StreamControler::loadExistingStream(QString streamFileName, StreamWork::SwC
 //-----------------------------------------------------------------------
 void StreamControler::saveStream()
 {
-	SwSaver_Class saver;
-	QDomDocument doc;
-	QByteArray stream_desc;
-	QFile file;
-
-	//serialisation du stream
-	saver.Save(_rootComponent, doc);
-	//Ajout donnees visuelles
-	saveVisualData(doc);
-	//Recuperation du stream
-	stream_desc = doc.toByteArray(4); //Indentation de quatre espace
+	QFile file(_streamFileName);	
 	//Ouverture d'un fichier en ecriture
-	file.setFileName(_streamFileName);
 	if ( file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false )
 	{
 		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(_streamFileName));
 		return;
 	}
 
-	//Enregistrement des fichiers en UTF-8
-	QTextStream ts(&file);
-	ts.setCodec("UTF-8");
-	ts << stream_desc;
+	QXmlStreamWriter streamWriter(&file);
+	streamWriter.setCodec("UTF-8");
+	streamWriter.setAutoFormatting(true);
 
+	//serialisation du stream
+	SwSaver_Class saver;
+	streamWriter.writeStartDocument();
+
+	saver.Save(_rootComponent, streamWriter);
+	//Ajout donnees visuelles
+	saveVisualData(streamWriter);
+
+	streamWriter.writeEndDocument();
 	//Fermeture du fichier
 	file.close();
-
 }
 
 
@@ -989,29 +1011,24 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 	QList<SwComponent_Class *> components_and_model_host = components;
 	components_and_model_host.push_back(modelHost);
 	QString models_path = serviceModel->getModelsDirectory();
-	SwSaver_Class saver;
-	QDomDocument doc;
-	QByteArray stream_desc;
-	QFile file;
 	QString _streamFileName = models_path + "/" + modelName + ".xml";
-
-	//serialisation du stream
-	saver.SaveModel(components_and_model_host, doc);
-	//Ajout donnees visuelles
-	saveVisualDataFromSelection(doc, components_and_model_host);
-	//Recuperation du stream
-	stream_desc = doc.toByteArray(4); //Indentation de quatre espace
+	QFile file;
 	//Ouverture d'un fichier en ecriture
 	file.setFileName(_streamFileName);
-	if ( file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false )
+	if (file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false)
 	{
 		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(_streamFileName));
 		return;
 	}
-	//Ecriture du fichier
-	file.write(stream_desc);
-	//Fermeture du fichier
-	file.close();
+	QXmlStreamWriter writer(&file);
+	writer.setAutoFormattingIndent(4);
+	writer.setAutoFormatting(true);
+	//serialisation du stream
+	SwSaver_Class saver;
+	saver.SaveModel(components_and_model_host, writer);
+	//Ajout donnees visuelles
+	saveVisualDataFromSelection(writer, components_and_model_host);
+	writer.writeEndDocument();
 
 	//Modification de la liste de model
 	serviceModel->addModel(modelHostName, modelName);
@@ -1057,120 +1074,119 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 
 
 //-----------------------------------------------------------------------
-void StreamControler::saveVisualData(QDomDocument & doc)
+void StreamControler::saveVisualData(QXmlStreamWriter & writer)
 {
-	QDomElement sceneNode = doc.createElement(CL_SCENE_NODE);
+	writer.writeStartElement(CL_SCENE_NODE);
 	QRectF srect = _streamScene->sceneRect();
-	sceneNode.setAttribute(CL_SCENE_ATT_X, srect.topLeft().x());
-	sceneNode.setAttribute(CL_SCENE_ATT_Y, srect.topLeft().y());
-	sceneNode.setAttribute(CL_SCENE_ATT_WIDTH, srect.width());
-	sceneNode.setAttribute(CL_SCENE_ATT_HEIGHT, srect.height());
-	doc.documentElement().appendChild(sceneNode);
-
+	writer.writeAttribute(CL_SCENE_ATT_X, QString::number(srect.topLeft().x(), 'g', 12));
+	writer.writeAttribute(CL_SCENE_ATT_Y, QString::number(srect.topLeft().y(), 'g', 12));
+	writer.writeAttribute(CL_SCENE_ATT_WIDTH, QString::number(srect.width(), 'g', 12));
+	writer.writeAttribute(CL_SCENE_ATT_HEIGHT, QString::number(srect.height(), 'g', 12));
+	
 	QList<QGraphicsItem *> items = _streamScene->items();
-	int count = items.count();
-	for ( int i = 0; i < count; i++ )
+	std::sort(items.begin(), items.end(), graphicItemComparator);
+
+	for (QGraphicsItem * item : items)
 	{
-		QGraphicsItem * item = items[i];
-		if ( item->parentItem() == 0 )
+		if (item->parentItem() == 0)
 		{
 			ComponentGraphicItem * cgitem = dynamic_cast<ComponentGraphicItem *>(item);
-			if ( cgitem != 0 )
+			if (cgitem != 0)
 			{
-				saveVisualItem(cgitem, doc, sceneNode);
+				saveVisualItem(cgitem, writer);
 			}
 			InterestArea * ia = dynamic_cast<InterestArea *>(item);
-			if ( ia != 0 )
+			if (ia != 0)
 			{
-				QDomElement itemNode = doc.createElement(CL_IA_NODE);
-				itemNode.setAttribute(CL_IA_ATT_X, ia->pos().x());
-				itemNode.setAttribute(CL_IA_ATT_Y, ia->pos().y());
+				writer.writeStartElement(CL_IA_NODE);
+				writer.writeAttribute(CL_IA_ATT_X, QString::number(ia->pos().x(), 'g', 12));
+				writer.writeAttribute(CL_IA_ATT_Y, QString::number(ia->pos().y(), 'g', 12));
 				QRectF r = ia->boundingRect();
-				itemNode.setAttribute(CL_IA_ATT_W, r.width());
-				itemNode.setAttribute(CL_IA_ATT_H, r.height());
-				itemNode.setAttribute(CL_IA_ATT_COLOR, ia->getColor().name());
-				itemNode.setAttribute(CL_IA_ATT_ALPHA, ia->getColor().alpha());
-				itemNode.setAttribute(CL_IA_ATT_TEXT, ia->getText());
-				sceneNode.appendChild(itemNode);
-
-				QList<QGraphicsItem *> items2 = item->childItems();
-				int count2 = items2.count();
-				for ( int i2 = 0; i2 < count2; i2++ )
+				writer.writeAttribute(CL_IA_ATT_W, QString::number(r.width(), 'g', 12));
+				writer.writeAttribute(CL_IA_ATT_H, QString::number(r.height(), 'g', 12));
+				writer.writeAttribute(CL_IA_ATT_COLOR, ia->getColor().name());
+				writer.writeAttribute(CL_IA_ATT_ALPHA, QString::number(ia->getColor().alpha()));
+				writer.writeAttribute(CL_IA_ATT_TEXT, ia->getText());
+				
+				QList<QGraphicsItem *> subItems = item->childItems();
+				std::sort(subItems.begin(), subItems.end(), graphicItemComparator);
+				for (QGraphicsItem* subItem : subItems)
 				{
-					ComponentGraphicItem * cgitem = dynamic_cast<ComponentGraphicItem *>(items2[i2]);
-					if ( cgitem != 0 )
+					ComponentGraphicItem * cgitem = dynamic_cast<ComponentGraphicItem *>(subItem);
+					if (cgitem != 0)
 					{
-						saveVisualItem(cgitem, doc, itemNode);
+						saveVisualItem(cgitem, writer);
 					}
 				}
-
+				writer.writeEndElement();
 			}
 		}
 	}
+	writer.writeEndElement();
 }
 
 //-----------------------------------------------------------------------
-void StreamControler::saveVisualDataFromSelection(QDomDocument & doc, QList<StreamWork::SwCore::SwComponent_Class *> & components)
+void StreamControler::saveVisualDataFromSelection(QXmlStreamWriter & writer, QList<StreamWork::SwCore::SwComponent_Class *> & components)
 {
-	QDomElement sceneNode = doc.createElement(CL_SCENE_NODE);
+	writer.writeStartElement(CL_SCENE_NODE);
 	QRectF srect = _streamScene->sceneRect();
-	sceneNode.setAttribute(CL_SCENE_ATT_X, srect.topLeft().x());
-	sceneNode.setAttribute(CL_SCENE_ATT_Y, srect.topLeft().y());
-	sceneNode.setAttribute(CL_SCENE_ATT_WIDTH, srect.width());
-	sceneNode.setAttribute(CL_SCENE_ATT_HEIGHT, srect.height());
-	doc.documentElement().appendChild(sceneNode);
+	writer.writeAttribute(CL_SCENE_ATT_X, QString::number(srect.topLeft().x(), 'g', 12));
+	writer.writeAttribute(CL_SCENE_ATT_Y, QString::number(srect.topLeft().y(), 'g', 12));
+	writer.writeAttribute(CL_SCENE_ATT_WIDTH, QString::number(srect.width(), 'g', 12));
+	writer.writeAttribute(CL_SCENE_ATT_HEIGHT, QString::number(srect.height(), 'g', 12));
 
 	QList<QGraphicsItem *> items = _streamScene->items();
 	int count = items.count();
-	for ( int i = 0; i < count; i++ )
+	for (int i = 0; i < count; i++)
 	{
 		QGraphicsItem * item = items[i];
 		ComponentGraphicItem * cgitem = dynamic_cast<ComponentGraphicItem *>(item);
-		if ( cgitem != 0 && components.indexOf(cgitem->getComponent()) != -1 )
+		if (cgitem != 0 && components.indexOf(cgitem->getComponent()) != -1)
 		{
 			// Redondance mais pour sécurité
 			QPointF pt = item->scenePos();
 			item->setParentItem(NULL);
 			item->setPos(pt);
 
-			saveVisualItem(cgitem, doc, sceneNode);
+			saveVisualItem(cgitem, writer);
 		}
 	}
-
+	writer.writeEndElement();
 }
 
-
 //-----------------------------------------------------------------------
-void StreamControler::saveVisualItem(ComponentGraphicItem * item, QDomDocument & doc, QDomElement &parentNode)
+void StreamControler::saveVisualItem(ComponentGraphicItem * item, QXmlStreamWriter & writer)
 {
-	QDomElement itemNode = doc.createElement(CL_CGITEM_NODE);
-	itemNode.setAttribute(CL_CGITEM_ATT_NAME, item->getComponent()->GetName());
-	itemNode.setAttribute(CL_CGITEM_ATT_X, item->pos().x());
-	itemNode.setAttribute(CL_CGITEM_ATT_Y, item->pos().y());
-	itemNode.setAttribute(CL_CGITEM_ATT_COLOR, item->getColor().name());
-	itemNode.setAttribute(CL_CGITEM_ATT_TEXT_COLOR, item->getTextColor().name());
-	parentNode.appendChild(itemNode);
+	writer.writeStartElement(CL_CGITEM_NODE);
+	writer.writeAttribute(CL_CGITEM_ATT_NAME, item->getComponent()->GetName());
+	writer.writeAttribute(CL_CGITEM_ATT_X, QString::number(item->pos().x(), 'g', 12));
+	writer.writeAttribute(CL_CGITEM_ATT_Y, QString::number(item->pos().y(), 'g', 12));
+	writer.writeAttribute(CL_CGITEM_ATT_COLOR, item->getColor().name());
+	writer.writeAttribute(CL_CGITEM_ATT_TEXT_COLOR,item->getTextColor().name());
+	
 	//Connector
 	QList<ConnectorGraphicItem *> * clist = item->getConnectors();
-	for ( int i = 0; i < clist->count(); i++ )
+	for (int i = 0; i < clist->count(); i++)
 	{
-		QDomElement cntNode = doc.createElement(CL_CGCNTITEM_NODE);
-		cntNode.setAttribute(CL_CGCNTITEM_ATT_NAME, (*clist)[i]->getName());
-		cntNode.setAttribute(CL_CGCNTITEM_ATT_POS, (*clist)[i]->getParentPosition() == LEFT ? "left" : "right");
-		itemNode.appendChild(cntNode);
+		writer.writeStartElement(CL_CGCNTITEM_NODE);
+		writer.writeAttribute(CL_CGCNTITEM_ATT_NAME, (*clist)[i]->getName());
+		writer.writeAttribute(CL_CGCNTITEM_ATT_POS, (*clist)[i]->getParentPosition() == LEFT ? "left" : "right");
+		writer.writeEndElement();
 	}
 
 	//Enfant
 	QList<QGraphicsItem *> items = item->childItems();
 	int count = items.count();
-	for ( int i = 0; i < count; i++ )
+	for (int i = 0; i < count; i++)
 	{
 		ComponentGraphicItem * cgitem = dynamic_cast<ComponentGraphicItem *>(items[i]);
-		if ( cgitem != 0 )
+		if (cgitem != 0)
 		{
-			saveVisualItem(cgitem, doc, itemNode);
+			saveVisualItem(cgitem, writer);
 		}
 	}
+
+	writer.writeEndElement();
 }
 
 //-----------------------------------------------------------------------

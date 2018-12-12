@@ -245,21 +245,9 @@ bool _SwManagedConfigurationsList::SaveConfiguration(QString filename)
     if (_selectedConfiguration != 0)
     {
         QDomDocument doc;
-        QByteArray desc;
         QFile file;
-
-        QDomElement config = doc.createElement("Configuration");
-        doc.appendChild(config);
-        config.setAttribute("Name",_selectedConfiguration->getName());
-        QDomElement configProperties = doc.createElement("Properties");
-        config.appendChild(configProperties);
-
-        //ICI remplir le doc 
-        if (_selectedConfiguration != 0)
-            _selectedConfiguration->Save(configProperties,doc); 
-
-        //Construction du repertoire associer
-        QFileInfo fInfo(filename);
+    	
+    	QFileInfo fInfo(filename);
         QDir d=fInfo.dir();
         QString subdir=fInfo.completeBaseName()+"_files";
         if ( !d.exists(subdir) && !d.mkdir(subdir)) 
@@ -268,20 +256,33 @@ bool _SwManagedConfigurationsList::SaveConfiguration(QString filename)
         }
         d.cd(subdir);
 
-        //Traitement du fichier de configuration
-        processSaveConfigurationNode(&(doc.documentElement()),&d);
-
-        //Recuperation du stream
-        desc=doc.toByteArray(4); //Indentation de quatre espace
-        //Ouverture d'un fichier en ecriture
-        file.setFileName(filename);
+    	file.setFileName(filename);
         if (file.open(QIODevice::WriteOnly  | QIODevice::Truncate)==false) {
             //QMessageBox::critical(NULL,"StreamWorkEditor critical",QString("Fail to save stream in file %1").arg(_streamFileName));
             return false;
         }
 
-        //Ecriture du fichier
-        file.write(desc);
+		// The program then modifies the collected XML document forcing to write to memory (QByteArray) 
+    	// and then reading and modifying the DomDocument to then write to file 
+		QByteArray data;
+		QXmlStreamWriter writer(&data);
+
+		writer.writeStartDocument();
+		writer.writeStartElement("Configuration");
+		writer.writeAttribute("Name", _selectedConfiguration->getName());
+		writer.writeStartElement("Properties");
+    	_selectedConfiguration->Save(writer); 
+
+		writer.writeEndElement();
+		writer.writeEndElement();
+		writer.writeEndDocument();
+
+        //Traitement du fichier de configuration
+		doc.setContent(data);
+        processSaveConfigurationNode(&(doc.documentElement()),&d);
+
+	    //Ecriture du fichier
+        file.write(doc.toByteArray(4));
         //Fermeture du fichier
         file.close();
         return true;

@@ -13,6 +13,7 @@
   */
 #include <QDomDocument>
 #include <QDomElement>
+#include <QXmlStreamWriter>
 /*
  * INCLUDES LOCAUX
  */
@@ -39,10 +40,9 @@ namespace StreamWork
             */
 	        virtual void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager)=0;
 	        /*! \brief methode permettant de sauver des donnees
-            \param[in] elt neoud parent
-            \param[in] doc document parent
+            \param[in] writer stream XML.
             */
-	        virtual void Save(QDomElement & elt,QDomDocument &doc)=0;
+	        virtual void Save(QXmlStreamWriter& writer) = 0;
         };
     }
 }

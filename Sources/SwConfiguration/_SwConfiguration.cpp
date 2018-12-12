@@ -40,6 +40,7 @@ _SwConfiguration::_SwConfiguration(): SwComponent_Class(){
     _consumer_service = 0;
     _provider_service = 0;
 	_activated = false;
+	h_index = 0;
    // _recordAvailable = true;
 }
 /*! \brief Destructeur */
@@ -214,35 +215,34 @@ void _SwConfiguration::Load(QDomElement & elt,ISwFinalizerManager & finalizer_ma
 \param[in] elt neoud parent
 \param[in] doc document parent
 */
-void _SwConfiguration::Save(QDomElement & elt,QDomDocument &doc) {
-    QDomElement elt_ent;
-    
+void _SwConfiguration::Save(QXmlStreamWriter &writer) {
+
+	writer.writeAttribute(CL_CONFIG_XML_NODE_ATT_IDX, QString::number(h_index));
+
     for(int i=0;i<_exported_entities.count();i++) {
         //Creation du noeud
         switch (_exported_entities[i]->_type) {
             case _SwConfigurationExportedEntity::Ent_Property:
-                elt_ent=doc.createElement(CL_CONFIG_XML_NODE_PROPERTY);
+                writer.writeStartElement(CL_CONFIG_XML_NODE_PROPERTY);
                 break;
             case _SwConfigurationExportedEntity::Ent_Perspective:
-                elt_ent=doc.createElement(CL_CONFIG_XML_NODE_PERSPECTIVE);
+                writer.writeStartElement(CL_CONFIG_XML_NODE_PERSPECTIVE);
                 break;
             case _SwConfigurationExportedEntity::Ent_Execution:
-                elt_ent=doc.createElement(CL_CONFIG_XML_NODE_EXE);
+                writer.writeStartElement(CL_CONFIG_XML_NODE_EXE);
                 break;
             case _SwConfigurationExportedEntity::Ent_OwnerConfigurable:
-                elt_ent=doc.createElement(CL_CONFIG_XML_NODE_CONFPERS);
+                writer.writeStartElement(CL_CONFIG_XML_NODE_CONFPERS);
                 break;                
             default:
                 return;
-                break;
         }
         //Affectation des attributs
-        elt_ent.setAttribute(CL_CONFIG_XML_NODE_ATT_NAME,_exported_entities[i]->_name);
-        elt_ent.setAttribute(CL_CONFIG_XML_NODE_ATT_EXP_NAME,_exported_entities[i]->_exported_name);
-        elt_ent.setAttribute(CL_CONFIG_XML_NODE_ATT_PATH,_exported_entities[i]->_host_path);
+        writer.writeAttribute(CL_CONFIG_XML_NODE_ATT_NAME,_exported_entities[i]->_name);
+        writer.writeAttribute(CL_CONFIG_XML_NODE_ATT_EXP_NAME,_exported_entities[i]->_exported_name);
+        writer.writeAttribute(CL_CONFIG_XML_NODE_ATT_PATH,_exported_entities[i]->_host_path);
         //Attachement du neoud au parent
-        elt.appendChild(elt_ent);
-        elt.setAttribute(CL_CONFIG_XML_NODE_ATT_IDX,h_index);
+        writer.writeEndElement();
     }
 }
 //---------------------------------------------------------------------

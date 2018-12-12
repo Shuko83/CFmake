@@ -90,7 +90,7 @@ public:
     \param[in] elt neoud parent
     \param[in] doc document parent
     */
-	void Save(QDomElement & elt,QDomDocument &doc);
+	void Save(QXmlStreamWriter& writer);
 	//---------------------------------------------------------------------
 	// Interface ISwHost
 	//---------------------------------------------------------------------

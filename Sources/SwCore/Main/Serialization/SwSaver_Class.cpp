@@ -25,173 +25,127 @@ SwSaver_Class::SwSaver_Class() {
 SwSaver_Class::~SwSaver_Class(){
 
 }
-/*! Sauvegarde */
-void SwSaver_Class::Save(SwComponent_Class * root_component,QDomDocument & doc) {
-    QDomElement streamwork_elt;
-    QDomElement path_node;
-    QDomComment comment;
-    QMap<QString,bool> paths;
-    QMap<QString,bool>::const_iterator pathsIt;
 
-    //Ecriture du header
-    streamwork_elt=doc.createElement(CG_SW_XML_DOCUMENT_NODE);
-    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION,CG_STREAMWORK_VERSION);
-    //streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_DATE,__DATE__);
-    //streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_TIME,__TIME__);
-    doc.appendChild(streamwork_elt);
-    //Ajout des path
-    paths=SW_APP->ComponentsBank().GetPathList();
-    for (pathsIt=paths.begin();pathsIt!=paths.end();pathsIt++) {
-        if (pathsIt.value()) {
-            path_node=doc.createElement(CG_SW_XML_PATH_NODE);
-            path_node.setAttribute(CG_SW_XML_PATH_NODE_ATT_VALUE,pathsIt.key());
-            streamwork_elt.appendChild(path_node);
-        }
-    }
-    //Construction du flux
-    BuildXMLStream(root_component,doc,streamwork_elt);
+void SwSaver_Class::Save(SwComponent_Class * root_component, QXmlStreamWriter & writer)
+{
+	//Ecriture du header	
+	writer.writeStartElement(CG_SW_XML_DOCUMENT_NODE);
+	writer.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION, CG_STREAMWORK_VERSION);
+		
+	//Ajout des path
+	QMap<QString, bool> paths = SW_APP->ComponentsBank().GetPathList();
+	for (auto pathsIt = paths.begin(); pathsIt != paths.end(); ++pathsIt)
+	{
+		if (pathsIt.value())
+		{
+			writer.writeStartElement(CG_SW_XML_COMPONENT_NODE);
+			writer.writeAttribute(CG_SW_XML_COMPONENT_NODE_ATT_NAME, pathsIt.key());
+			writer.writeEndElement();
+		}
+	}
+	//Construction du flux
+	BuildXMLStream(root_component, writer);
+
+	// L'appelant doit fermer le stream (car on laisse la possibilité d'ajotuer des informations de positionnement des Composants)
 }
 /*! Sauvegarde groupe */
-void SwSaver_Class::SaveGroup(QList<SwComponent_Class *> & components,QDomDocument & doc) {
-    QDomElement streamwork_elt;
-    QDomElement path_node;
-    QDomComment comment;
-    QMap<QString,bool> paths;
-    QMap<QString,bool>::const_iterator pathsIt;
+void SwSaver_Class::SaveGroup(QList<SwComponent_Class *> & components, QXmlStreamWriter & writer)
+{
+	//Ecriture du header
+	writer.writeStartElement(CG_SW_XML_GROUP_DOCUMENT_NODE);
+	writer.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION, CG_STREAMWORK_VERSION);
+	writer.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_DATE, __DATE__);
+	writer.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_TIME, __TIME__);
+	
+	//Ecritures des composants
+	for (int i = 0; i < components.count(); i++)
+	{
+		BuildXMLStream(components[i], writer);
+	}
 
-    //Ecriture du header
-    streamwork_elt=doc.createElement(CG_SW_XML_GROUP_DOCUMENT_NODE);
-    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION,CG_STREAMWORK_VERSION);
-    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_DATE,__DATE__);
-    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_TIME,__TIME__);
-    doc.appendChild(streamwork_elt);
-    
-    //Ecritures des composants
-    for(int i=0;i<components.count();i++) {
-        BuildXMLStream(components[i],doc,streamwork_elt);    
-    }
+	writer.writeEndElement();
 }
 
 /*! Sauvegarde model */
-void SwSaver_Class::SaveModel(QList<SwComponent_Class *> & components,QDomDocument & doc) {
-    QDomElement streamwork_elt;
-    QDomElement path_node;
-    QDomComment comment;
-    QMap<QString,bool> paths;
-    QMap<QString,bool>::const_iterator pathsIt;
+void SwSaver_Class::SaveModel(QList<SwComponent_Class *>& components, QXmlStreamWriter& writer)
+{	
+	//Ecriture du header
+	writer.writeStartElement(CG_SW_XML_DOCUMENT_NODE);
+	writer.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION, CG_STREAMWORK_VERSION);
+	writer.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_DATE, __DATE__);
+	writer.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_TIME, __TIME__);
 
-    //Ecriture du header
-    streamwork_elt=doc.createElement(CG_SW_XML_DOCUMENT_NODE);
-    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION,CG_STREAMWORK_VERSION);
-    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_DATE,__DATE__);
-    streamwork_elt.setAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_TIME,__TIME__);
-    doc.appendChild(streamwork_elt);
-    //Ajout des path
-    paths=SW_APP->ComponentsBank().GetPathList();
-    for (pathsIt=paths.begin();pathsIt!=paths.end();pathsIt++) {
-        if (pathsIt.value()) {
-            path_node=doc.createElement(CG_SW_XML_PATH_NODE);
-            path_node.setAttribute(CG_SW_XML_PATH_NODE_ATT_VALUE,pathsIt.key());
-            streamwork_elt.appendChild(path_node);
-        }
-    }
-    //Ecritures du root
-    QDomElement component_node;
-    //Creation du neoud composant
-    component_node=doc.createElement(CG_SW_XML_COMPONENT_NODE);
-    //Ajout attribut nom
-    component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_NAME,"NoNamed");
-    //Ajout root
-    streamwork_elt.appendChild(component_node);
-    //Ecritures des composants
-    for(int i=0;i<components.count();i++) {
-        BuildXMLStream(components[i],doc,component_node);    
-    }
+	//Ajout des path
+	QMap<QString, bool> paths = SW_APP->ComponentsBank().GetPathList();
+	for (auto pathsIt = paths.cbegin(); pathsIt != paths.cend(); pathsIt++)
+	{
+		if (pathsIt.value())
+		{
+			writer.writeStartElement(CG_SW_XML_PATH_NODE);
+			writer.writeAttribute(CG_SW_XML_PATH_NODE_ATT_VALUE, pathsIt.key());
+			writer.writeEndElement();
+		}
+	}
+	//Ecritures du root
+	//Creation du noeud composant
+	writer.writeStartElement(CG_SW_XML_COMPONENT_NODE);
+	//Ajout attribut nom
+	writer.writeAttribute(CG_SW_XML_COMPONENT_NODE_ATT_NAME, "NoNamed");
+	//Ecritures des composants
+	for (int i = 0; i < components.count(); i++)
+	{
+		BuildXMLStream(components[i], writer);
+	}
+	//Ajout root
+	writer.writeEndElement();
+
+	writer.writeEndElement();
 }
 
-
 /*! Construction de la definition du stream au format xml */
-void SwSaver_Class::BuildXMLStream(SwComponent_Class * component,QDomDocument & doc,QDomElement & parent_node) {
-    QDomElement component_node;
-    QDomElement service_node;
-    QDomComment comment;
-    SwComponent_Class * child;
-    QList<QString> services_list;
-    QList<QString>::const_iterator service_it;
-    ISwService * service;
-    ISwPersistent * persistent_interface;
+void SwSaver_Class::BuildXMLStream(SwComponent_Class * component, QXmlStreamWriter& writer)
+{
+	writer.writeStartElement(CG_SW_XML_COMPONENT_NODE);
+	writer.writeAttribute(CG_SW_XML_COMPONENT_NODE_ATT_NAME, component->GetName());
+	if (!component->GetDescription().isEmpty())
+	{
+		writer.writeAttribute(CG_SW_XML_COMPONENT_NODE_ATT_DESC, component->GetDescription());
+	}
+	if (!component->isActive())
+	{
+		writer.writeAttribute(CG_SW_XML_COMPONENT_NODE_ATT_ACTIVE, "false");
+	}
+	//Ajout attribut nom d'usine
+	if (!component->GetFactoryComponentName().isEmpty())
+		writer.writeAttribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME, component->GetFactoryComponentName());
 
-    //Creation du neoud composant
-    component_node=doc.createElement(CG_SW_XML_COMPONENT_NODE);
-    //Ajout attribut nom
-    component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_NAME,component->GetName());
-    //Si description, ajout nom
-    if (!component->GetDescription().isEmpty()) {
-        component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_DESC,component->GetDescription());
-    }
-    //Si desactive , ajout
-    if (!component->isActive()) {
-        component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_ACTIVE,"false");
-    }
-    //Ajout attribut nom d'usine
-    if (!component->GetFactoryComponentName().isEmpty()) 
-        component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME,component->GetFactoryComponentName());
-    //Ajout attribut nom du plugin usine
-    service=component->QueryService(CG_SW_SERVICE_PLUGIN_OVERVIEW);
+	//  Auparavant, on enregistrait ici le nom de DLL.
 
-	//Réactiver pour sauvegarde nom de DLL
+	QList<QString> services_list = component->GetServicesList();
+	std::sort(services_list.begin(), services_list.end());
+	for (auto service_it = services_list.begin(); service_it != services_list.end(); service_it++)
+	{
+		ISwService * service = component->QueryService(*service_it);
+		ISwPersistent* persistent_interface = dynamic_cast<ISwPersistent *>(service);
+		//S'il a une interface persistante
+		if (persistent_interface != NULL)
+		{
+			writer.writeStartElement(CG_SW_XML_SERVICE_NODE);
+			writer.writeAttribute(CG_SW_XML_SERVICE_ATT_NAME, *service_it);
+			persistent_interface->Save(writer);
+			writer.writeEndElement();
+		}
+	}
 
-// 	if (service != NULL && dynamic_cast<ISwPluginOverview *>(service) != NULL)
-// 	{
-// 		// On supprime les éventuels marqueurs "d" de débug lorsqu'on sauvegarde le stream
-// 		QString factoryName = dynamic_cast<ISwPluginOverview *>(service)->GetPluginName();
-// 		if ((factoryName.endsWith("d") && QString::compare(factoryName.at(factoryName.size() - 2), QString("d")) != 0)
-// 			|| factoryName.endsWith("dd"))
-// 		{
-// 			factoryName = factoryName.mid(0, factoryName.size() - 1);
-// 
-// 			int indexPoint = factoryName.lastIndexOf(".");
-// 			if ((QString::compare(factoryName.at(indexPoint - 1), QString("d")) == 0 && QString::compare(factoryName.at(indexPoint - 2), QString("d")) != 0)
-// 				|| QString::compare(factoryName.mid(indexPoint - 2, 2), QString("dd")) == 0)
-// 			{
-// 				factoryName = factoryName.remove(indexPoint - 1, 1);
-// 			}
-// 		}
-// 		component_node.setAttribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY, factoryName);
-// 	}
+	//Enfants comentaire
+	SwComponent_Class * child = component->GetFirstChild();
+	//Ecriture des enfants
+	while (child != NULL)
+	{
+		BuildXMLStream(child, writer);
+		child = component->GetNextChild();
+	}
 
-
-    //Insertion du neoud
-    parent_node.appendChild(component_node);
-
-    //Services
-    services_list=component->GetServicesList();
-    //s'il y a des services
-    if (services_list.size()) {
-        //Pour chaque service
-        for(service_it=services_list.begin();service_it!=services_list.end();service_it++) {
-            service=component->QueryService(*service_it);  
-            persistent_interface=dynamic_cast<ISwPersistent *>(service);
-            //S'il a une interface persistante
-            if (persistent_interface!=NULL) {
-                //Enregistrer ses informations
-                service_node=doc.createElement(CG_SW_XML_SERVICE_NODE);
-                service_node.setAttribute(CG_SW_XML_SERVICE_ATT_NAME,*service_it);
-                component_node.appendChild(service_node);
-                //Enregistrement des données du service
-                persistent_interface->Save(service_node,doc);
-            }
-        }
-    }
-    //Enfants comentaire
-    child=component->GetFirstChild();
-    //S'il y a au moins un enfant
-    if (child!=NULL) {
-        //Ecriture des enfants
-        while (child!=NULL) {
-            BuildXMLStream(child,doc,component_node);
-            child=component->GetNextChild();
-        }
-    }
+	writer.writeEndElement();
 }
 

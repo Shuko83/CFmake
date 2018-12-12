@@ -207,6 +207,10 @@ namespace StreamWork
             /*! \brief Acces au compteur d'historique */
             quint64 GetHistoricCpt();
 
+			// The goal is to push hitoric counter over the highest index to generate 
+        	// indices only for new objects and reuse old index for the others.
+			void SetHistoricCpt(quint64 value);
+
 		protected :
 			virtual void raiseQueryError(QString serviceName);
 

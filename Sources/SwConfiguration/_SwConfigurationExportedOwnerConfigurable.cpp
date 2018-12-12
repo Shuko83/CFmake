@@ -61,10 +61,10 @@ void _SwConfigurationExportedOwnerConfigurable::LoadConfiguration(QDomElement & 
         _internal_ownerConfigurable->LoadConfiguration(element);
 }   
 /*! \brief methode permettant de sauver des donnees de configuration*/
-void _SwConfigurationExportedOwnerConfigurable::SaveConfiguration(QDomElement & element, QDomDocument & doc)
+void _SwConfigurationExportedOwnerConfigurable::SaveConfiguration(QXmlStreamWriter & writer)
 {
     if (_internal_ownerConfigurable != 0)
-        _internal_ownerConfigurable->SaveConfiguration(element,doc);
+        _internal_ownerConfigurable->SaveConfiguration(writer);
     
 }     
 //----------------------------------------------------

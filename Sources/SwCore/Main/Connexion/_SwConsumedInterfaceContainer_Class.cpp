@@ -97,7 +97,10 @@ void _SwConsumedInterfaceContainer_Class::RegisterProviderInterface(ISwInterface
 	_provider_parent = provider;
 	_provider_name = pinterface;
 	//Enregistrement du temps de l'action de regsitration
-	_historical_index = SW_APP->GetHistoricCpt();
+	if (_historical_index == 0)
+		_historical_index = SW_APP->GetHistoricCpt();
+	else
+		SW_APP->SetHistoricCpt(_historical_index);
 	provider->AddConsumer(_parent, _name, pinterface);
 }
 
@@ -110,10 +113,11 @@ void _SwConsumedInterfaceContainer_Class::UnregisterProviderInterface()
 }
 
 //-----------------------------------------------------------------------
-void _SwConsumedInterfaceContainer_Class::DefinePotentialProviderInterfaceDescription(QString ppotential_interface, QString ppotential_provider_path)
+void _SwConsumedInterfaceContainer_Class::DefinePotentialProviderInterfaceDescription(QString ppotential_interface, QString ppotential_provider_path, quint64 index)
 {
 	_potential_provider_name = ppotential_interface;
 	_potential_provider_path = ppotential_provider_path;
+	_historical_index = index;
 }
 
 //-----------------------------------------------------------------------

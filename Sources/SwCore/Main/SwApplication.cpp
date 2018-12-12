@@ -493,11 +493,12 @@ void SwApplication::StopLaunch()
 //-----------------------------------------------------------------------
 quint64 SwApplication::GetHistoricCpt()
 {
-	quint64 cpt;
+	return _historic_counter++;
+}
 
-	cpt = _historic_counter;
-	_historic_counter++;
-	return cpt;
+void SwApplication::SetHistoricCpt(quint64 value)
+{
+	_historic_counter = std::max(value + 1, _historic_counter);
 }
 
 //-----------------------------------------------------------------------

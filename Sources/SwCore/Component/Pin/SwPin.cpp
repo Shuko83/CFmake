@@ -77,6 +77,10 @@ SwPin * SwPin::GetConnected(){
 quint64 SwPin::GetHistoricConnectionDate() {
     return _connection_historic_date;
 }
+
+void SwPin::SetHistoricConnectionDate(quint64 value) {
+	_connection_historic_date = value;
+}
 /*! \brief Permet de connaitre le manager du pin */
 ISwPins_Manager * SwPin::GetManager(){
 	return _manager;

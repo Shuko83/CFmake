@@ -82,8 +82,8 @@ void _SwConfigurationExportedExecution::Load(QDomElement & elt,ISwFinalizerManag
 \param[in] elt neoud parent
 \param[in] doc document parent
 */
-void _SwConfigurationExportedExecution::Save(QDomElement & elt,QDomDocument &doc){
-    _internal_execution->Save(elt,doc);
+void _SwConfigurationExportedExecution::Save(QXmlStreamWriter &writer){
+    _internal_execution->Save(writer);
 }     	
 //---------------------------------------------------------------------
 // Interface ISwHost

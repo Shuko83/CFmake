@@ -52,6 +52,8 @@ namespace StreamWork
             QMap<QString,SwPin *> _pins;
             /*! \brief banque des connection a finalize (pour le load) */
             QMap<quint64,_SwPinDesc *> _finalize_connections;
+
+        	quint64 _historic_index;
 		public:
 	        /*! \brief Construsteur */
 	        SwPins_Manager_Class(SwComponent_Class * host);
@@ -89,8 +91,9 @@ namespace StreamWork
             //---------------------------------------------------------------------
  	        /*! \brief methode permettant de charger des donnees */
 	        void Load(QDomElement &elt,ISwFinalizerManager & finalizer_manager);
+
 	        /*! \brief methode permettant de sauver des donnees */
-	        void Save(QDomElement &elt,QDomDocument &doc);
+			void Save(QXmlStreamWriter& writer);
              //---------------------------------------------------------------------
             // Interface ISwFinalizer
             //---------------------------------------------------------------------

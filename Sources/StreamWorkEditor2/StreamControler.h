@@ -141,11 +141,14 @@ private:
     //--------------------------------------------------------------------------
     /** @brief sauvegarde des données visuelles */
     void saveVisualData(QDomDocument & doc);
-    /** @brief sauvegarde des données visuelles from selection*/
-    void saveVisualDataFromSelection(QDomDocument & doc,QList<StreamWork::SwCore::SwComponent_Class *> & components);
+	void saveVisualData(QXmlStreamWriter & writer);
+	/** @brief sauvegarde des données visuelles from selection*/
+	void saveVisualDataFromSelection(QDomDocument & doc, QList<StreamWork::SwCore::SwComponent_Class *> & components);
+	void saveVisualDataFromSelection(QXmlStreamWriter & writer, QList<StreamWork::SwCore::SwComponent_Class *> & components);
     /** @brief sauvegarde d'un item */
     void saveVisualItem(ComponentGraphicItem * item,QDomDocument & doc,QDomElement &parentNode);
-    /** @brief chargement des données visuelles */
+	void saveVisualItem(ComponentGraphicItem * item, QXmlStreamWriter & writer);
+	/** @brief chargement des données visuelles */
     void loadVisualData(QDomDocument & doc);
     /** @brief chargement d'un item */
     void loadVisualItem(QDomDocument & doc,QDomElement &node,StreamWork::SwCore::SwComponent_Class * parentComponent,QGraphicsItem * parentItem);

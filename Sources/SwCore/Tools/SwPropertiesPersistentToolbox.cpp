@@ -18,11 +18,11 @@ void SwPropertiesPersistentToolbox::Load(QDomElement & elt,ISwProperties * prope
     }
 
 }
+
 /*! \brief methode permettant de sauver des donnees de propriétés */
-void SwPropertiesPersistentToolbox::Save(QDomElement & elt,QDomDocument & doc,ISwProperties * properties) {
+void SwPropertiesPersistentToolbox::Save(QXmlStreamWriter &writer,ISwProperties * properties) {
     QList<ISwProperty *>::iterator it;
-    QDomElement elt_property;
-    for (it=properties->GetProperties().begin();it!=properties->GetProperties().end();it++) {
-        SwPropertyPersistentToolbox::SavePropertyExtended(elt,doc,(*it)->GetRealName(),properties,true);
+    for (auto it = properties->GetProperties().constBegin(); it != properties->GetProperties().constEnd(); ++it) {
+        SwPropertyPersistentToolbox::SavePropertyExtended(writer, (*it)->GetRealName(), properties, true);
     }
 }

@@ -11,7 +11,7 @@
 /*
   * INCLUDES GLOBAUX
   */
-#include <QDomDocument>
+#include <QXmlStreamWriter>
 #include <QDomElement>
 /*
  * INCLUDES LOCAUX
@@ -33,7 +33,7 @@ namespace StreamWork
 	        /*! \brief methode permettant de charger des donnees de configuration*/
 	        virtual void LoadConfiguration(QDomElement &)=0;
 	        /*! \brief methode permettant de sauver des donnees de configuration*/
-	        virtual void SaveConfiguration(QDomElement &,QDomDocument &)=0;
+			virtual void SaveConfiguration(QXmlStreamWriter &)=0;
         };
     }
 }

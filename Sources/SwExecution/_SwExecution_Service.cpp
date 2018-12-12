@@ -93,28 +93,33 @@ void _SwExecution_Service::Load(QDomElement & elt,ISwFinalizerManager & finalize
     }
 	finalizer_manager.RegisterFinalization(historyIndex, this);
 }
+
 /*! \brief methode permettant de sauver des donnees
 \param[in] elt neoud parent
 \param[in] doc document parent
 */
-void _SwExecution_Service::Save(QDomElement & elt,QDomDocument &doc) {
-    for (int i=0;i<_exe_paths.count();i++) {
-        QDomElement p_elt=doc.createElement(CL_XML_NODE);
-        p_elt.setAttribute(CL_XML_ATT_PATH,QString(_exe_paths[i]));
-        switch (_exe_modes[i]) {
-            case Normal_mode:
-                p_elt.setAttribute(CL_XML_ATT_MODE,"Normal");
-                break;
-            case Replay_mode:
-                p_elt.setAttribute(CL_XML_ATT_MODE,"Replay");
-                break;
-            default:
-                break;
-        }
+void _SwExecution_Service::Save(QXmlStreamWriter& writer)
+{
+	for (int i = 0; i < _exe_paths.count(); ++i)
+	{
+		writer.writeStartElement(CL_XML_NODE);
+		writer.writeAttribute(CL_XML_ATT_PATH, _exe_paths[i]);
+		switch (_exe_modes[i])
+		{
+			case Normal_mode:
+				writer.writeAttribute(CL_XML_ATT_MODE, "Normal");
+				break;
+			case Replay_mode:
+				writer.writeAttribute(CL_XML_ATT_MODE, "Replay");
+				break;
+			default:
+				break;
+		}
 
-        elt.appendChild(p_elt);
-    }
+		writer.writeEndElement();
+	}
 }
+
 //---------------------------------------------------------------------
 // Interface ISwFinalizer
 //---------------------------------------------------------------------
@@ -131,7 +136,7 @@ SwComponent_Class * _SwExecution_Service::GetHostComponent() {
     return _host;
 }
 //---------------------------------------------------------------------
-// Gestion de l'execution des composants selectionnés
+// Gestion de l'execution des composants selectionnés n'utilise pas index
 //---------------------------------------------------------------------
 /*! \brief Resolution des liens */
 bool _SwExecution_Service::ResolveLinks() {

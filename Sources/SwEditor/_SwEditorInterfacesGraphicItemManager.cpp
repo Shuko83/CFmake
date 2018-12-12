@@ -265,38 +265,38 @@ quint64 _SwEditorInterfacesGraphicItemManager::Load(QDomElement & elt) {
     }
     return index_to_return;
 }
+
 /*! \brief methode permettant de sauver des donnees */
 #define SHORT_DOUBLE(d) QString("%1").arg(d,0,'g',6)
-void _SwEditorInterfacesGraphicItemManager::Save(QDomElement & elt,QDomDocument & doc) {
-    QDomElement item_node;
-    QDomElement subitem_node;
-    QMap<QString,_SwEditorInterfaceGraphicItem *>::iterator it;
+void StreamWork::SwEditor::_SwEditorInterfacesGraphicItemManager::Save(QXmlStreamWriter& writer)
+{
+	writer.writeStartElement(CL_SW_XML_DRAW_COMP_EDITOR_GIITEMS_NODE);
 
-    item_node=doc.createElement(CL_SW_XML_DRAW_COMP_EDITOR_GIITEMS_NODE);
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEMS_NODE_HISTORY,_history_index);
-    //Ajout des description de chaque interface item
-    for (it=_provided_gitems.begin();it!=_provided_gitems.end();it++) {
-        subitem_node=doc.createElement(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_PRO_NODE);
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NAME_NODE,it.key());
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_PORT_LIN_POS,SHORT_DOUBLE(it.value()->GetPortLinearPosition()));
-        QPointF f=it.value()->GetEndPosition();
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_X,SHORT_DOUBLE(f.x()));
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_Y,SHORT_DOUBLE(f.y()));
-        item_node.appendChild(subitem_node);
-    }
-    for (it=_consumed_gitems.begin();it!=_consumed_gitems.end();it++) {
-        subitem_node=doc.createElement(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_CON_NODE);
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NAME_NODE,it.key());
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_PORT_LIN_POS,SHORT_DOUBLE(it.value()->GetPortLinearPosition()));
-        QPointF f=it.value()->GetEndPosition();
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_X,SHORT_DOUBLE(f.x()));
-        subitem_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_Y,SHORT_DOUBLE(f.y()));
-        item_node.appendChild(subitem_node);
-    }
-
-    //Ajout du neoud interface manager
-    elt.appendChild(item_node);
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEMS_NODE_HISTORY, QString::number(_history_index));
+	//Ajout des description de chaque interface item
+	for (auto it = _provided_gitems.begin(); it != _provided_gitems.end(); it++)
+	{
+		writer.writeStartElement(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_PRO_NODE);
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NAME_NODE, it.key());
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_PORT_LIN_POS, SHORT_DOUBLE(it.value()->GetPortLinearPosition()));
+		QPointF f = it.value()->GetEndPosition();
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_X, SHORT_DOUBLE(f.x()));
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_Y, SHORT_DOUBLE(f.y()));
+		writer.writeEndElement();
+	}
+	for (auto it = _consumed_gitems.begin(); it != _consumed_gitems.end(); it++)
+	{
+		writer.writeStartElement(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_CON_NODE);
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NAME_NODE, it.key());
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_PORT_LIN_POS, SHORT_DOUBLE(it.value()->GetPortLinearPosition()));
+		QPointF f = it.value()->GetEndPosition();
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_X, SHORT_DOUBLE(f.x()));
+		writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_Y, SHORT_DOUBLE(f.y()));
+		writer.writeEndElement();
+	}
+	writer.writeEndElement();
 }
+
 /*! \brief Finalisation */
 void _SwEditorInterfacesGraphicItemManager::Finalize() {
     QMap<QString,_TmpGIData *>::iterator it;

@@ -94,9 +94,10 @@ namespace StreamWork
             //---------------------------------------------------------------------
 	        /*! \brief methode permettant de charger des donnees */
 	        void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager);
+
 	        /*! \brief methode permettant de sauver des donnees */
-	        void Save(QDomElement & elt,QDomDocument & doc);
-             //---------------------------------------------------------------------
+			void Save(QXmlStreamWriter& writer);
+            //---------------------------------------------------------------------
             // Interface ISwFinalizer
             //---------------------------------------------------------------------
              /*! \brief finalize l'operation correspondant a l'index d'historique

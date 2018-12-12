@@ -35,16 +35,16 @@ SwController_Class::~SwController_Class(){
 	_related_property = nullptr;
 	_related_properties_service = nullptr;
 }
-/*! \brief callback de changement de la propriété par le parent*/
+/*! \brief callback de changement de la propriÃ©tÃ© par le parent*/
 void SwController_Class::_OnRelatedPropertyChange(ISwProperty *p) {
 	OnParentPropertyChange();
 }
-/*! \brief Acces a la valeur de la propriété du parent */
+/*! \brief Acces a la valeur de la propriÃ©tÃ© du parent */
 QVariant SwController_Class::GetParentPropertyValue(){
 	if (_related_property == nullptr) return QVariant();
 	return _related_property->GetValue();
 }
-/*! \brief Definition de la valeur de la propriété du parent */
+/*! \brief Definition de la valeur de la propriÃ©tÃ© du parent */
 void SwController_Class::SetParentPropertyValue(QVariant val){
 	if (_related_property == nullptr) return;
 	_SwPropertyImpl_Class * p = dynamic_cast<_SwPropertyImpl_Class *>(_related_property);
@@ -53,7 +53,7 @@ void SwController_Class::SetParentPropertyValue(QVariant val){
 //---------------------------------------------------------------------
 // Interface ISwController
 //---------------------------------------------------------------------
-/*! \brief Permet de crée une propriété */
+/*! \brief Permet de crÃ©e une propriÃ©tÃ© */
 void SwController_Class::InitializeControl(ISwProperties * properties, QString property_name){
 	_related_properties_service = properties;
 	_related_property = _related_properties_service->GetProperty(property_name);
@@ -64,7 +64,7 @@ void SwController_Class::InitializeControl(ISwProperties * properties, QString p
 	_historic_index = SW_APP->GetHistoricCpt();
 	OnParentPropertyAttach();
 }
-/*! \brief le controle est supprimer au niveau de la propriété */
+/*! \brief le controle est supprimer au niveau de la propriÃ©tÃ© */
 void SwController_Class::DetachControl() {
 	if (_related_property == nullptr)
 		return;
@@ -79,8 +79,8 @@ void SwController_Class::DetachControl() {
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void SwController_Class::Liberate(){
 }
 //---------------------------------------------------------------------
@@ -101,32 +101,34 @@ void SwController_Class::Load(QDomElement & elt, ISwFinalizerManager & finalizer
 		return;
 	if (p_elt.hasAttribute(CL_XML_ATT_IDX) &&
 		p_elt.hasAttribute(CL_XML_ATT_NAME) &&
-		p_elt.hasAttribute(CL_XML_ATT_NAME)) {
+		p_elt.hasAttribute(CL_XML_ATT_HOSTPATH)) {
 		_historic_index_on_load = p_elt.attribute(CL_XML_ATT_IDX).toULongLong(&result);
 		_property_name_on_load = p_elt.attribute(CL_XML_ATT_NAME);
 		_host_path_on_load = p_elt.attribute(CL_XML_ATT_HOSTPATH);
 		finalizer_manager.RegisterFinalization(_historic_index_on_load, this);
 	}
 }
-/*! \brief methode permettant de sauver des donnees */
-void SwController_Class::Save(QDomElement & elt, QDomDocument & doc){
-	QDomElement p_elt;
-	QString path;
 
-	p_elt = doc.createElement(CL_XML_NODE);
-	p_elt.setAttribute(CL_XML_ATT_NAME, QString(_related_property->GetRealName()));
-	try {
+/*! \brief methode permettant de sauver des donnees */
+void StreamWork::SwCore::SwController_Class::Save(QXmlStreamWriter& writer)
+{
+	writer.writeStartElement(CL_XML_NODE);
+	writer.writeAttribute(CL_XML_ATT_NAME, QString(_related_property->GetRealName()));
+	QString path;
+	try
+	{
 		//On tente un lien relatif
 		path = SwAddress_ToolBox::BuildRelativePath(_host, _related_properties_service->GetHostComponent());
 	}
-	catch (SwException &) {
+	catch (SwException &)
+	{
 		//Impossible (pas le meme parent)
 		//On recupere un lien universel
 		path = SwAddress_ToolBox::BuildUniversalPath(_related_properties_service->GetHostComponent());
 	}
-	p_elt.setAttribute(CL_XML_ATT_HOSTPATH, path);
-	p_elt.setAttribute(CL_XML_ATT_IDX, _historic_index);
-	elt.appendChild(p_elt);
+	writer.writeAttribute(CL_XML_ATT_HOSTPATH, path);
+	writer.writeAttribute(CL_XML_ATT_IDX, QString::number(_historic_index));
+	writer.writeEndElement();
 }
 //---------------------------------------------------------------------
 // Interface ISwFinalizer

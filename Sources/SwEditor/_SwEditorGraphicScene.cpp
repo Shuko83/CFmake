@@ -86,18 +86,16 @@ void _SwEditorGraphicScene::Load(QDomElement & elt,ISwFinalizerManager & finaliz
     }
 
 }
+
 /*! \brief methode permettant de sauver des donnees */
-void _SwEditorGraphicScene::Save(QDomElement & elt,QDomDocument & doc){
-    QDomElement item_node;
-
-    item_node=doc.createElement(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE);
-    //taille
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE_WIDTH,sceneRect().width());
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE_HEIGHT,sceneRect().height());
-    //position
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE_X,sceneRect().x());
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE_Y,sceneRect().y());
-    //Ajout du neoud interface
-    elt.appendChild(item_node);
-
+void StreamWork::SwEditor::_SwEditorGraphicScene::Save(QXmlStreamWriter& writer)
+{
+	writer.writeStartElement(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE);
+	//taille
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE_WIDTH, QString::number(sceneRect().width()));
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE_HEIGHT, QString::number(sceneRect().height()));
+	//position
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE_X, QString::number(sceneRect().x()));
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GSCENE_NODE_Y, QString::number(sceneRect().y()));
+	writer.writeEndElement();
 }

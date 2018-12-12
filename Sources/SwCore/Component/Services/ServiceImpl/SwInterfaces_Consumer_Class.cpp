@@ -424,7 +424,11 @@ void SwInterfaces_Consumer_Class::Load(QDomElement &elt, ISwFinalizerManager & f
 			//Si elle existe
 			if ( it != _interfaces.end() )
 			{
-				it.value()->DefinePotentialProviderInterfaceDescription(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME), interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH));
+				it.value()->DefinePotentialProviderInterfaceDescription(
+					interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME), 
+					interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH),
+					index
+					);
 
 				//Enregistrement en interne de l'interface
 				_finalize_interfaces.insert(index, it.value());
@@ -436,7 +440,11 @@ void SwInterfaces_Consumer_Class::Load(QDomElement &elt, ISwFinalizerManager & f
 			{
 				_SwConsumedInterfaceContainer_Class * fake = new _SwConsumedInterfaceContainer_Class(0);
 				fake->Define(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME), QString());
-				fake->DefinePotentialProviderInterfaceDescription(interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME), interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH));
+				fake->DefinePotentialProviderInterfaceDescription(
+					interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME), 
+					interface_node.attribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH), 
+					index
+					);
 				_finalize_interfaces.insert(index, fake);
 
 				//Enregistrement au niveau du finalizer manager
@@ -446,77 +454,55 @@ void SwInterfaces_Consumer_Class::Load(QDomElement &elt, ISwFinalizerManager & f
 	}
 }
 
+
 //-----------------------------------------------------------------------
-void SwInterfaces_Consumer_Class::Save(QDomElement &elt, QDomDocument &doc)
+void SwInterfaces_Consumer_Class::Save(QXmlStreamWriter& writer)
 {
-	QDomElement interface_node;
-	QString path;
+	QMap<QString, quint64> listIndex;
 
-	QMap<QString, _SwConsumedInterfaceContainer_Class *>::iterator it;
-	QMap<QString, quint64> _listIndex;
-	//pour toutes les interfaces connectés
-	for ( it = _interfaces.begin(); it != _interfaces.end(); it++ )
+	for (auto it = _interfaces.begin(); it != _interfaces.end(); ++it)
 	{
-		//Si l'interface est connecté
-		if ( it.value()->GetProvider() != NULL )
+		if (it.value()->GetProvider() != nullptr)
 		{
-			//Creation du neoud
-			interface_node = doc.createElement(CL_SW_XML_INTERFACE_NODE);
-
-			//Enregistrement du nom
-			interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME, it.key());
-
-			//Enregistrement du nom de l'interface distante
-			interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME, it.value()->GetProvidedInterfaceName());
-
-			//Enregistrement de l'index pour la reconstruction
-			//interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX,it.value()->GetHistoricalIndex());
-
-			//Enregistrement du path pour l'acces au parent
+			writer.writeStartElement(CL_SW_XML_INTERFACE_NODE);
+			writer.writeAttribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME, it.key());
+			writer.writeAttribute(CL_SW_XML_INTERFACE_NODE_ATT_PNAME, it.value()->GetProvidedInterfaceName());
+			QString path;
 			try
 			{
 				//On tente un lien relatif
 				path = SwAddress_ToolBox::BuildRelativePath(_host_component, it.value()->GetProvider()->GetHostComponent());
 			}
-			catch ( SwException & )
+			catch (SwException &)
 			{
 				//Impossible (pas le meme parent)
 				//On recupere un lien universel
 				path = SwAddress_ToolBox::BuildUniversalPath(it.value()->GetProvider()->GetHostComponent());
 			}
 
-			interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH, path);
-
-			_listIndex.insert(it.key(), it.value()->GetHistoricalIndex());
-			//Ajout du neoud interface
-			elt.appendChild(interface_node);
+			writer.writeAttribute(CL_SW_XML_INTERFACE_NODE_ATT_PPATH, path);
+			listIndex.insert(it.key(), it.value()->GetHistoricalIndex());
+			writer.writeEndElement();
 		}
 	}
-	//On append la list des IDX
-	if ( !_listIndex.isEmpty() )
+	
+	if (!listIndex.isEmpty())
 	{
-		QMap<QString, quint64>::const_iterator itbegin = _listIndex.constBegin();
-		QMap<QString, quint64>::const_iterator itend = _listIndex.constEnd();
-
-		QDomElement list_node;
-		list_node = doc.createElement(CL_SW_XML_LISTIDX_NODE);
-		for ( ; itbegin != itend; ++itbegin )
+		writer.writeStartElement(CL_SW_XML_LISTIDX_NODE);
+		for (auto it = listIndex.constBegin(); it != listIndex.constEnd(); ++it)
 		{
-
 			//Creation du neoud
-			interface_node = doc.createElement(CL_SW_XML_INTERFACE_NODE);
+			writer.writeStartElement(CL_SW_XML_INTERFACE_NODE);
 
 			//Enregistrement du nom
-			interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME, itbegin.key());
-			interface_node.setAttribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX, itbegin.value());
-			list_node.appendChild(interface_node);
+			writer.writeAttribute(CL_SW_XML_INTERFACE_NODE_ATT_NAME, it.key());
+			writer.writeAttribute(CL_SW_XML_INTERFACE_NODE_ATT_IDX, QString::number(it.value()));
+			writer.writeEndElement();
 		}
-		elt.appendChild(doc.createComment("Begin : Ignore on merge"));
-		elt.appendChild(list_node);
-		elt.appendChild(doc.createComment("End : Ignore on merge"));
+		writer.writeEndElement();
 	}
-
 }
+
 //---------------------------------------------------------------------
 // Interface ISwFinalizer
 //---------------------------------------------------------------------            
@@ -539,7 +525,11 @@ bool SwInterfaces_Consumer_Class::Finalize(quint64 historic_index)
 			it = _interfaces.find(container->GetName());
 			if ( it != _interfaces.end() )
 			{
-				it.value()->DefinePotentialProviderInterfaceDescription(container->GetPotentialProviderInterfaceName(), container->GetPotentialProviderPath());
+				it.value()->DefinePotentialProviderInterfaceDescription(
+					container->GetPotentialProviderInterfaceName(), 
+					container->GetPotentialProviderPath(), 
+					historic_index
+					);
 				container = it.value();
 			}
 			else

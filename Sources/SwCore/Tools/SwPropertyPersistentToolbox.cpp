@@ -94,13 +94,15 @@ void SwPropertyPersistentToolbox::LoadProperty(QDomElement & property_node, ISwP
 }
 
 //-------------------------------------------------------------------------
-void SwPropertyPersistentToolbox::SaveProperty(QDomElement & parent_property_node,QDomDocument &doc, QString name,ISwProperties * properties) 
+void SwPropertyPersistentToolbox::SaveProperty(QXmlStreamWriter& writer, QString name, ISwProperties * properties)
 {
-    SavePropertyExtended(parent_property_node, doc, name, properties, false);
+    SavePropertyExtended(writer, name, properties, false);
 }
 
+
 //-------------------------------------------------------------------------
-void SwPropertyPersistentToolbox::SaveProperty( QDomElement & parent_property_node, QDomDocument &doc, QString propCustomName, ISwProperty * inProperty, QString prefix, QVariant overWriteValue )
+void SwPropertyPersistentToolbox::SaveProperty( QDomElement & parent_property_node, QDomDocument &doc, 
+	QString propCustomName, ISwProperty * inProperty, QString prefix, QVariant overWriteValue )
 {
 	QVariant var;
 	QDomElement elt;
@@ -127,60 +129,58 @@ void SwPropertyPersistentToolbox::SaveProperty( QDomElement & parent_property_no
 }
 
 //-------------------------------------------------------------------------
-void SwPropertyPersistentToolbox::SavePropertyExtended(QDomElement & parent_property_node, QDomDocument &doc, QString name, ISwProperties * properties, bool forceSave) 
+void SwPropertyPersistentToolbox::SavePropertyExtended(QXmlStreamWriter& writer, QString name, ISwProperties * properties, bool forceSave) 
 {
 	_SwPropertyImpl_Class * property;
 	QVariant var;
-	QDomElement elt;
-
-	if (QDomImplementation::invalidDataPolicy()!=QDomImplementation::ReturnNullNode) 
-	{
-		QDomImplementation::setInvalidDataPolicy(QDomImplementation::ReturnNullNode);
-	}
-	//ISwProperty->GetHostingService()->GetHostComponent()->QueryService(CG_SW_SNAPSHOPPROPERTY_SERVICE)
-	ISwSnapShotPropertiesService * snapshotService=dynamic_cast<ISwSnapShotPropertiesService *>(properties->GetHostComponent()->QueryService(CG_SW_SNAPSHOPPROPERTY_SERVICE));
+	ISwSnapShotPropertiesService * snapshotService = dynamic_cast<ISwSnapShotPropertiesService *>(properties->GetHostComponent()->QueryService(CG_SW_SNAPSHOPPROPERTY_SERVICE));
 
 	property = dynamic_cast<_SwPropertyImpl_Class *>(properties->GetProperty(name));
 	//Si la propriété n'existe pas et qu'elle n'est pas editable (on ne peut ecrire dedans) ou qu'elle n'a pas changer (valeur usine)
 	//ou que c'est un type complexe
-	if (property==NULL || property->GetComplexeTypeAdapters()!=NULL || /*!property->IsEditable() || */ (!forceSave && !property->HasChanged()) ) 
+	if (property == NULL || property->GetComplexeTypeAdapters() != NULL || /*!property->IsEditable() || */ (!forceSave && !property->HasChanged()))
 	{
-		if (snapshotService!=0 && snapshotService->exist(name)) 
+		if (snapshotService != 0 && snapshotService->exist(name))
 		{
-			if (!snapshotService->getHasChanged(name)) 
+			if (!snapshotService->getHasChanged(name))
 			{
 				return;
-			} else 
-			{
-				var=snapshotService->getValue(name);
 			}
-		} else 
+			else
+			{
+				var = snapshotService->getValue(name);
+			}
+		}
+		else
 		{
 			return;
 		}
-	} else 
+	}
+	else
 	{
-		if (snapshotService!=0 && snapshotService->exist(name)) 
+		if (snapshotService != 0 && snapshotService->exist(name))
 		{
-			if (!snapshotService->getHasChanged(name)) 
+			if (!snapshotService->getHasChanged(name))
 			{
 				return;
-			} else 
-			{
-				var=snapshotService->getValue(name);
 			}
-		} else 
+			else
+			{
+				var = snapshotService->getValue(name);
+			}
+		}
+		else
 		{
 			var = property->GetValue();
 		}
 	}
-	elt = doc.createElement(CL_XML_NODE);
-	elt.setAttribute(CL_XML_ATT_NAME, QString(property->GetRealName()));
-
-
-	// création de la property et ajout dans le QDomElement elt
-	createProperty(parent_property_node, doc, property, elt, var);
+	writer.writeStartElement(CL_XML_NODE);
+	writer.writeAttribute(CL_XML_ATT_NAME, QString(property->GetRealName()));	
+	// création de la property et ajout dans le fichier
+	createProperty(writer, property, var);
+	writer.writeEndElement();
 }
+
 
 //-------------------------------------------------------------------------
 void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_node, QDomDocument &doc, ISwProperty * inProperty, QDomElement &elt, QVariant var) 
@@ -205,7 +205,7 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 	//Si la conversion de l'objet en string et inversement est possible, on le sauvegarde en string
 	if ((var.canConvert(QVariant::String) && tmp.canConvert(var.type()) && var.type () != QVariant::Color) 
 		|| (var.userType() == qMetaTypeId<ulong>()))
-	{
+	{		
 		text_node = doc.createTextNode(var.toString());
 		if (!text_node.isNull()) 
 		{
@@ -233,15 +233,15 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 			}
 		}
 		save_done=true;
-	} 
-
+	}
+	
 
 	//----------------------------------------------------------
 	// Gestion des autres types Qt
 	//----------------------------------------------------------
-	if (!save_done) 
+	if (!save_done)
 	{
-		switch (var.type()) 
+		switch (var.type())
 		{
 			case QVariant::Point:
 				p=var.toPoint();
@@ -274,7 +274,7 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 			case QVariant::ByteArray:
 				text_node=doc.createTextNode(SwBuffer_Toolbox::ConvertByteArrayIntoString(var.toByteArray()));
 				if (!text_node.isNull()) 
-				{
+			{
 					elt.appendChild(text_node);
 					save_done=true;
 				}
@@ -282,28 +282,28 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 			case QVariant::SizePolicy:
 				text_node=doc.createTextNode(SwBuffer_Toolbox::ConvertIntoString(var.value<QSizePolicy>()));
 				if (!text_node.isNull()) 
-				{
+			{
 					elt.appendChild(text_node);
 					save_done=true;
 				}
 				break;
 			case QVariant::Color:
-				{
-					QColor color = qvariant_cast<QColor>(var);
-					// Couleur sans composante alpha
+			{
+				QColor color = qvariant_cast<QColor>(var);
+				// Couleur sans composante alpha
 					if (color.alpha () == 255)
-					{
+				{
 						text_node=doc.createTextNode(color.name ().toUpper ());
-					}
-					else
-					{
-						QString text = color.name();
+				}
+				else
+				{
+					QString text = color.name();
 						QString alphaS = QString::number (color.alpha (), 16).toUpper ();
 						if (alphaS.length () == 1)
-						{
+					{
 							alphaS = QString ("0") + alphaS;
-						}
-						text += alphaS;
+					}
+					text += alphaS;
 						text_node=doc.createTextNode(text);
 					}
 					if (!text_node.isNull()) 
@@ -317,20 +317,20 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 			case QVariant::KeySequence:
 				text_node = doc.createTextNode(qvariant_cast<QKeySequence>(var).toString());
 				if (!text_node.isNull())
-				{
+			{
 					elt.appendChild(text_node);
-					save_done = true;
+				save_done = true;
 				}
 				break;
 			default:
 				break;
 		}
 	}
-	
+
 	//----------------------------------------------------------
 	// Gestion des types user
 	//----------------------------------------------------------
-	if (!save_done) 
+	if (!save_done)
 	{
 		//Type QEnum
 		if (QMetaType::typeFlags(var.userType()) & QMetaType::IsEnumeration && QMetaType::metaObjectForType(var.userType())) {
@@ -353,7 +353,7 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
             elt.setAttribute(CL_XML_ATT_ENUM,QString("%1").arg(enum_value.ToInt()));
             elt.setAttribute(CL_XML_ATT_ENUM_STRING,QString("%1").arg(enum_value.ToString()));
             save_done=true;
-        }
+		}
 		//Type SwIntegerEnum
 		if (var.userType()==qMetaTypeId<SwIntegerEnum>()) {
 			SwIntegerEnum enum_value=var.value<SwIntegerEnum>();
@@ -407,26 +407,26 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 			elt.setAttribute(CL_XML_ATT_UUID_L,value.leastSigBits);
 			save_done=true;
 		}
-	}    
+	}
 	//Si la propriete n'a pas ete enregistrée
-	if (!save_done) 
+	if (!save_done)
 	{
 		//Si le save n'a pas reussi alors log
 		if (inProperty->GetHostingService())
 		{
 			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
-				name,
-				var.typeName(),
-				inProperty->GetHostingService()->GetHostComponent()->GetName().toLatin1().data());
+								 name,
+								 var.typeName(),
+								 inProperty->GetHostingService()->GetHostComponent()->GetName().toLatin1().data());
 
 			qDebug() << "Unable to save type " << name << " for property " << var.typeName() << " of component", inProperty->GetHostingService()->GetHostComponent()->GetName().toLatin1().data();
 		}
 		else
 		{
 			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
-				name,
-				var.typeName(),
-				inProperty->GetName());
+								 name,
+								 var.typeName(),
+								 inProperty->GetName());
 
 			qDebug() << "Unable to save type " << name << " for property " << var.typeName() << " of component " << inProperty->GetName();
 		}
@@ -718,8 +718,232 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 		qDebug() << "ERROR in SwPropertyPersistentToolbox::setProperty() : " << inProperty->GetName() << " cannot be setted because QVariant Type is unknown " << var.type();
 }
 
+//-----------------------------------------------------------------------
+void SwPropertyPersistentToolbox::createProperty(QXmlStreamWriter& writer, ISwProperty * inProperty, QVariant var)
+{
+	bool save_done = false;
+	QString name = "";
 
+	if (inProperty)
+		name = inProperty->GetName();
 
+	//----------------------------------------------------------
+	// Gestion des types convertible en QString (et inversement)
+	//----------------------------------------------------------
+	QVariant tmp = QVariant(QString(""));
+
+	//Si la conversion de l'objet en string et inversement est possible, on le sauvegarde en string
+	if ((var.canConvert(QVariant::String) && tmp.canConvert(var.type()) && var.type() != QVariant::Color)
+		|| (var.userType() == qMetaTypeId<ulong>()))
+	{		
+		writer.writeCharacters(var.toString());
+		save_done = true;		
+	}
+	
+	//----------------------------------------------------------
+	// Gestion des autres types Qt
+	//----------------------------------------------------------
+	if (!save_done)
+	{
+		switch (var.type())
+		{
+			case QVariant::Point:
+			{
+				QPoint p = var.toPoint();
+				writer.writeAttribute(CL_XML_ATT_POINT_X, QString::number(p.x()));
+				writer.writeAttribute(CL_XML_ATT_POINT_Y, QString::number(p.y()));
+				save_done = true;
+				break;
+			}
+			case QVariant::Size:
+			{
+				QSize s = var.toSize();
+				writer.writeAttribute(CL_XML_ATT_SIZE_WIDTH, QString::number(s.width()));
+				writer.writeAttribute(CL_XML_ATT_SIZE_HEIGHT, QString::number(s.height()));
+				save_done = true;
+				break;
+			}
+			case QVariant::Rect:
+			{
+				QRect rr = var.toRect();
+				writer.writeAttribute(CL_XML_ATT_POINT_X, QString::number(rr.x()));
+				writer.writeAttribute(CL_XML_ATT_POINT_Y, QString::number(rr.y()));
+				writer.writeAttribute(CL_XML_ATT_SIZE_WIDTH, QString::number(rr.width()));
+				writer.writeAttribute(CL_XML_ATT_SIZE_HEIGHT, QString::number(rr.height()));
+				save_done = true;
+				break;
+			}
+			case QVariant::RectF:
+			{
+				QRectF rrF = var.toRectF();
+				writer.writeAttribute(CL_XML_ATT_POINT_X, QString::number(rrF.x(), 'g', 12));
+				writer.writeAttribute(CL_XML_ATT_POINT_Y, QString::number(rrF.y(), 'g', 12));
+				writer.writeAttribute(CL_XML_ATT_SIZE_WIDTH, QString::number(rrF.width(), 'g', 12));
+				writer.writeAttribute(CL_XML_ATT_SIZE_HEIGHT, QString::number(rrF.height(), 'g', 12));
+				save_done = true;
+				break;
+			}
+			case QVariant::ByteArray:
+			{
+				QString str = SwBuffer_Toolbox::ConvertByteArrayIntoString(var.toByteArray());
+				writer.writeCharacters(str);
+				save_done = true;
+				break;
+			}
+			case QVariant::SizePolicy:
+			{
+				QString str = SwBuffer_Toolbox::ConvertByteArrayIntoString(var.toByteArray());
+				writer.writeCharacters(str);
+				save_done = true;
+				break;
+			}
+			case QVariant::Color:
+			{
+				QColor color = qvariant_cast<QColor>(var);
+				// Couleur sans composante alpha
+				if (color.alpha() == 255)
+				{
+					writer.writeCharacters(color.name().toUpper());
+				}
+				else
+				{
+					QString text = color.name();
+					QString alphaS = QString::number(color.alpha(), 16).toUpper();
+					if (alphaS.length() == 1)
+					{
+						alphaS = QString("0") + alphaS;
+					}
+					text += alphaS;
+
+					writer.writeCharacters(text);
+				}
+				save_done = true;
+				break;
+			}
+			case QVariant::KeySequence:
+		{
+				QString keySequence = qvariant_cast<QKeySequence>(var).toString();
+				writer.writeCharacters(keySequence);
+				save_done = true;
+				break;
+			}
+			default:
+				break;
+		}
+	}
+
+	//----------------------------------------------------------
+	// Gestion des types user
+	//----------------------------------------------------------
+	if (!save_done)
+	{
+		//Type QEnum
+		if (QMetaType::typeFlags(var.userType()) & QMetaType::IsEnumeration && QMetaType::metaObjectForType(var.userType()))
+		{
+			const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(var.userType());
+			QString metaEnumName = QMetaType::typeName(var.userType());
+			metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+			QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
+
+			writer.writeAttribute(CL_XML_ATT_ENUM, QString("%1").arg(*(int*)var.data()));
+			if (metaEnum.isFlag())
+				writer.writeAttribute(CL_XML_ATT_ENUM_STRING, QString("%1").arg(QString(metaEnum.valueToKeys(*(int*)var.data()))));
+			else
+				writer.writeAttribute(CL_XML_ATT_ENUM_STRING, QString("%1").arg(QString(metaEnum.valueToKey(*(int*)var.data()))));
+
+			save_done = true;
+		}
+		//Type SwEnum
+		if (var.userType() == qMetaTypeId<SwEnum>())
+		{
+			SwEnum enum_value = var.value<SwEnum>();
+			writer.writeAttribute(CL_XML_ATT_ENUM, QString("%1").arg(enum_value.ToInt()));
+			writer.writeAttribute(CL_XML_ATT_ENUM_STRING, QString("%1").arg(enum_value.ToString()));
+			save_done = true;
+		}
+		//Type SwIntegerEnum
+		if (var.userType() == qMetaTypeId<SwIntegerEnum>())
+		{
+			SwIntegerEnum enum_value = var.value<SwIntegerEnum>();
+			writer.writeAttribute(CL_XML_ATT_ENUM_INTEGER, QString::number(enum_value.toInt()));
+			save_done = true;
+		}
+		//Type SwInteger
+		if (var.userType() == qMetaTypeId<SwInteger>())
+	{
+			SwInteger integer = var.value<SwInteger>();
+			writer.writeAttribute(CL_XML_ATT_INTEGER, QString::number(integer.getValue()));
+			save_done = true;
+		}
+		//Type SwString
+		if (var.userType() == qMetaTypeId<SwString>())
+		{
+			SwString string = var.value<SwString>();
+			writer.writeAttribute(CL_XML_ATT_STRING, string.toString());
+			save_done = true;
+		}
+		//Type SwDouble
+		if (var.userType() == qMetaTypeId<SwDouble>())
+		{
+			SwDouble double_value = var.value<SwDouble>();
+			writer.writeAttribute(CL_XML_ATT_DOUBLE, QString::number(double_value.getValue()));
+			save_done = true;
+		}
+		//Type SwFileDescriptor
+		if (var.userType() == qMetaTypeId<SwFileDescriptor>())
+		{
+			SwFileDescriptor fd = var.value<SwFileDescriptor>();
+			writer.writeAttribute(CL_XML_ATT_FD, fd.getFileName());
+			save_done = true;
+		}
+		//Type SwIconDescriptor
+		if (var.userType() == qMetaTypeId<SwIconDescriptor>())
+		{
+			SwIconDescriptor idesc = var.value<SwIconDescriptor>();
+			writer.writeAttribute(CL_XML_ATT_ID, idesc.ToString());
+			save_done = true;
+		}
+		//Type SwIpV4Address
+		if (var.userType() == qMetaTypeId<SwIpV4Address>())
+		{
+			SwIpV4Address value = var.value<SwIpV4Address>();
+			writer.writeAttribute(CL_XML_ATT_IPV4, value.ToString());
+			save_done = true;
+		}
+		//Type SwUUID
+		if (var.userType() == qMetaTypeId<SwUUID>())
+		{
+			SwUUID value = var.value<SwUUID>();
+			writer.writeAttribute(CL_XML_ATT_UUID_H, QString::number(value.mostSigBits));
+			writer.writeAttribute(CL_XML_ATT_UUID_L, QString::number(value.leastSigBits));
+			save_done = true;
+		}
+	}
+	//Si la propriete n'a pas ete enregistrée
+	if (!save_done)
+	{
+		//Si le save n'a pas reussi alors log
+		if (inProperty->GetHostingService())
+		{
+			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
+								 name,
+								 var.typeName(),
+								 inProperty->GetHostingService()->GetHostComponent()->GetName().toLatin1().data());
+
+			qDebug() << "Unable to save type " << name << " for property " << var.typeName() << " of component", inProperty->GetHostingService()->GetHostComponent()->GetName().toLatin1().data();
+		}
+		else
+		{
+			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
+								 name,
+								 var.typeName(),
+								 inProperty->GetName());
+
+			qDebug() << "Unable to save type " << name << " for property " << var.typeName() << " of component " << inProperty->GetName();
+		}
+
+	}
+}
 
 //-----------------------------------------------------------------------
 QVariant SwPropertyPersistentToolbox::createQVariantFromString(ISwProperty* prop, QString value)

@@ -106,9 +106,9 @@ namespace StreamWork
             // Interface ISwpersistent
             //---------------------------------------------------------------------
  	        /*! \brief methode permettant de charger des donnees */
-	        void Load(QDomElement &elt,ISwFinalizerManager & finalizer_manager);
+			void Load(QDomElement &elt, ISwFinalizerManager & finalizer_manager);
 	        /*! \brief methode permettant de sauver des donnees */
-	        void Save(QDomElement &elt,QDomDocument &doc);
+			void Save(QXmlStreamWriter& writer);
              //---------------------------------------------------------------------
             // Interface ISwFinalizer
             //---------------------------------------------------------------------

@@ -208,7 +208,7 @@ bool _SwManagedConfiguration::Load(QDomElement & elt, QString * errorMessage)
 }
 
 /*! \brief methode permettant de charger un fichier de propriétés*/
-bool _SwManagedConfiguration::Save(QDomElement & elt,QDomDocument & doc, QString * errorMessage)
+bool _SwManagedConfiguration::Save(QXmlStreamWriter &writer, QString * errorMessage)
 {
     if (_configuration == 0)
     {
@@ -224,23 +224,22 @@ bool _SwManagedConfiguration::Save(QDomElement & elt,QDomDocument & doc, QString
     }
 
     // try catch
-    SwPropertiesPersistentToolbox::Save(elt,doc,_configuration->getProperties());
+    SwPropertiesPersistentToolbox::Save(writer,_configuration->getProperties());
     QList<StreamWork::SwCore::ISwServiceOwnerConfigurable *> 
         ownerConfigurableList = _configuration->getServiceOwnerConfigurable();
 
-    QDomElement elt_ent;
 
     QList<StreamWork::SwCore::ISwServiceOwnerConfigurable *>::iterator it;
     it = ownerConfigurableList.begin();
     int index = 0;
     while(it != ownerConfigurableList.end())
     {
-        elt_ent=doc.createElement("OwnerConfigurable");
-        elt_ent.setAttribute("index",index);
-        (*it)->SaveConfiguration(elt_ent,doc);
-        elt.appendChild(elt_ent);
-        it ++;
-        index++;
+        writer.writeStartElement("OwnerConfigurable");
+        writer.writeAttribute("index", QString::number(index));
+        (*it)->SaveConfiguration(writer);
+        writer.writeEndElement();
+        ++it;
+        ++index;
     }
     return true;
     

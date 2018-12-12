@@ -58,15 +58,15 @@ void _SwModelExportedOwnerConfigurable::Liberate() {
 /*! \brief methode permettant de charger des donnees de configuration*/
 void _SwModelExportedOwnerConfigurable::LoadConfiguration(QDomElement & element)
 {
-    if (_internal_ownerConfigurable != 0)
+    if (_internal_ownerConfigurable != nullptr)
         _internal_ownerConfigurable->LoadConfiguration(element);
 }
 
 /*! \brief methode permettant de sauver des donnees de configuration*/
-void _SwModelExportedOwnerConfigurable::SaveConfiguration(QDomElement & element ,QDomDocument & doc)
+void _SwModelExportedOwnerConfigurable::SaveConfiguration(QXmlStreamWriter &writer)
 {
-    if (_internal_ownerConfigurable != 0)
-        _internal_ownerConfigurable->SaveConfiguration(element,doc);    
+    if (_internal_ownerConfigurable != nullptr)
+        _internal_ownerConfigurable->SaveConfiguration(writer);    
 }
         
 //----------------------------------------------------

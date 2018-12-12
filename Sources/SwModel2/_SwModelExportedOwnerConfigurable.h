@@ -61,7 +61,7 @@ class _SwModelExportedOwnerConfigurable :
         /*! \brief methode permettant de charger des donnees de configuration*/
         virtual void LoadConfiguration(QDomElement &);
         /*! \brief methode permettant de sauver des donnees de configuration*/
-        virtual void SaveConfiguration(QDomElement &,QDomDocument &);
+        virtual void SaveConfiguration(QXmlStreamWriter &);
         
 		
         //----------------------------------------------------

@@ -499,32 +499,33 @@ void _SwEditorGraphicItem::Load(QDomElement & elt,ISwFinalizerManager & finalize
         finalizer_manager.RegisterFinalization(_pin_managers_history_index,this);
     update();
 }
-/*! \brief methode permettant de sauver des donnees */
-void _SwEditorGraphicItem::Save(QDomElement & elt,QDomDocument & doc){
-    QDomElement item_node;
 
-    item_node=doc.createElement(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE);
-    //taille
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_WIDTH,_bbox.width());
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_HEIGHT,_bbox.height());
-    //position
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_X,_bbox.topLeft().x());
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_Y,_bbox.topLeft().y());
-    //centre
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_PX,x());
-    item_node.setAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_PY,y());
-    //Ajout du neoud interface
-    elt.appendChild(item_node);
-    //Sauvegarde du gestionnaire des items d'interfaces
-    _interface_managers->Save(elt,doc);
-    //Sauvegarde du gestionnaire des items de pins
-    _pin_managers->Save(elt,doc);
+/*! \brief methode permettant de sauver des donnees */
+void _SwEditorGraphicItem::Save(QXmlStreamWriter& writer)
+{
+	writer.writeStartElement(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE);
+	//taille
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_WIDTH, QString::number(_bbox.width()));
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_HEIGHT, QString::number(_bbox.height()));
+	//position
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_X, QString::number(_bbox.topLeft().x()));
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_Y, QString::number(_bbox.topLeft().y()));
+	//centre
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_PX, QString::number(x()));
+	writer.writeAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GITEM_NODE_PY, QString::number(y()));
+	//Ajout du neoud interface
+	writer.writeEndElement();
+	//Sauvegarde du gestionnaire des items d'interfaces
+	_interface_managers->Save(writer);
+	//Sauvegarde du gestionnaire des items de pins
+	_pin_managers->Save(writer);
 }
-    //---------------------------------------------------------------------
-// Interface ISwFinalizer
+
+//---------------------------------------------------------------------
+// Interface ISwFinalizer uses historic index pour differencier Interface et Pin et finaliser l'aspect graphique (draw);
 //---------------------------------------------------------------------            
-    /*! \brief finalize l'operation correspondant a l'index d'historique
-\return false si la finalisation n'a pas eu lieu et true si ok*/
+    /*! \brief Finalise le lien graphique pour Interface ou Pin
+	\return false si la finalisation n'a pas eu lieu et true si ok*/
 bool _SwEditorGraphicItem::Finalize(quint64 historic_index) {
     if (_interface_managers_history_index==historic_index) {
         _interface_managers->Finalize();

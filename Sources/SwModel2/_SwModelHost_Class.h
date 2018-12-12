@@ -66,8 +66,6 @@ protected:
     /* Modele lié */
     SwComponent_Class * _model;
 
-    quint64 h_index;
-
     /* Last Providers */
     QMap<QString,TargetInterface *> _lastProviders;
     /* Last Providers */
@@ -121,7 +119,7 @@ public:
     \param[in] elt neoud parent
     \param[in] doc document parent
     */
-	void Save(QDomElement & elt,QDomDocument &doc);
+	void Save(QXmlStreamWriter& writer);
     //---------------------------------------------------------------------
     // Interface ISwModelHostModifier
     //---------------------------------------------------------------------

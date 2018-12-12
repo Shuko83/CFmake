@@ -50,8 +50,8 @@ public:
     //---------------------------------------------------------------------
     // Interface ISwService
     //---------------------------------------------------------------------
-    /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-    lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+    /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+    lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
     void Liberate();  
     //---------------------------------------------------------------------
     // Interface ISwPersistence
@@ -65,11 +65,11 @@ public:
     \param[in] elt neoud parent
     \param[in] doc document parent
     */
-	void Save(QDomElement & elt,QDomDocument &doc);
+	void Save(QXmlStreamWriter& writer);
 	//-----------------------------------------------------------
 	// Interface ISwFinalizer
 	//-----------------------------------------------------------
-	/*@brief appelée à la fin du chargement */
+	/*@brief appelÃ©e Ã  la fin du chargement */
 	bool Finalize(quint64 historic_index) override;
 	//---------------------------------------------------------------------
 	// Interface ISwHost
@@ -77,7 +77,7 @@ public:
 	/*! \brief acces a son composant hote */
 	SwComponent_Class * GetHostComponent();            
     //---------------------------------------------------------------------
-    // Gestion de l'execution des composants selectionnés
+    // Gestion de l'execution des composants selectionnÃ©s
     //---------------------------------------------------------------------
 	/*! \brief Resolution des liens */
     bool ResolveLinks();
@@ -137,16 +137,16 @@ public:
     QList<_SwExecutionMode> _exe_modes;
     /* List des interfaces d'execution */
     QSet<ISwExecutable_Service *> _exe_servs;
-	/* Composants observé, Parent=>Composant executé */
+	/* Composants observÃ©, Parent=>Composant executÃ© */
 	QMultiHash<SwComponent_Class *, SwComponent_Class *> _observedComponents;
 
     /* Hote */
     SwComponent_Class * _host;
     /* Est ce la premiere execution */
     bool _is_first_execute;
-    /* Indique que la boucle d'execution doit être arretée */
+    /* Indique que la boucle d'execution doit Ãªtre arretÃ©e */
     bool _must_be_stopped;
-    /* Indique que la boucle d'execution est arretée */
+    /* Indique que la boucle d'execution est arretÃ©e */
     bool _is_stopped;
     /* Indique que le stop est necessaire */
     bool _persistentStopNeeded;

@@ -76,7 +76,7 @@ public:
 	/*! \brief methode permettant de charger des donnees */
 	void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager);
 	/*! \brief methode permettant de sauver des donnees */
-	void Save(QDomElement & elt,QDomDocument & doc);
+	void Save(QXmlStreamWriter& writer);
 
 	//---------------------------------------------------------------------
 	// Interface ISwActivable
@@ -142,13 +142,13 @@ SwAssistedComponent * SwExecutable_Class::GetHostComponent()
 }
 
 //-------------------------------------------------------------------------
-void SwExecutable_Class::Load( QDomElement & elt,ISwFinalizerManager & finalizer_manager )
+void SwExecutable_Class::Load( QDomElement& elt, ISwFinalizerManager & finalizer_manager )
 {
 
 }
 
 //-------------------------------------------------------------------------
-void SwExecutable_Class::Save( QDomElement & elt,QDomDocument & doc )
+void SwExecutable_Class::Save( QXmlStreamWriter& writer )
 {
 
 }
@@ -201,10 +201,9 @@ public:
 
 	/**
 	 * @brief    : methode permettant de sauver des donnees de configuration
-	 * @param	 : QDomElement & - Noeud parent
-	 * @param	 : QDomDocument & - Document parent
+	 * @param	 : QXmlStreamWriter & - Stream de sortie XML
 	 */
-	virtual void SaveConfiguration(QDomElement &,QDomDocument &);
+	virtual void SaveConfiguration(QXmlStreamWriter &);
 
 	//---------------------------------------------------------------------
 	// Interface ISwService
@@ -234,9 +233,9 @@ void SwOwnerConfigurable_Class::LoadConfiguration( QDomElement & elm)
 }
 
 //-------------------------------------------------------------------------
-void SwOwnerConfigurable_Class::SaveConfiguration( QDomElement &elm ,QDomDocument & doc)
+void SwOwnerConfigurable_Class::SaveConfiguration( QXmlStreamWriter &writer)
 {
-	_host_component->SaveConfiguration(elm,doc);
+	_host_component->SaveConfiguration(writer);
 }
 
 
@@ -295,8 +294,7 @@ public:
 	  * @param	 : QDomElement & elt - Noeud parent
 	  * @param	 : QDomDocument & doc - Document parent
 	  */
-	 virtual void Save(QDomElement & elt,QDomDocument &doc);
-
+	 void Save(QXmlStreamWriter& writer);
 
 	//---------------------------------------------------------------------
 	// Interface ISwService
@@ -307,10 +305,8 @@ public:
 };
 
 //-------------------------------------------------------------------------
-SwOwner_Class::SwOwner_Class( SwAssistedComponent * host )
+SwOwner_Class::SwOwner_Class( SwAssistedComponent * host ) : _host_component(host), _historyIndex(0)
 {
-	_host_component = host;
-	_historyIndex = SW_APP->GetHistoricCpt();
 }
 
 //-------------------------------------------------------------------------
@@ -331,23 +327,22 @@ void SwOwner_Class::Load( QDomElement & elt,ISwFinalizerManager & finalizer_mana
 	//On recupere l'index
 	bool result = false;
 	_historyIndex=elt.attribute("historyIndex").toULongLong(&result);
-	if (result==false)
+	if (!result)
 	{
 		qDebug() << "Fail to load historyIndex on SwOwnerClass :" << _host_component->GetName();
 	}
+	SW_APP->SetHistoricCpt(_historyIndex);
 
-	finalizer_manager.RegisterFinalization(_historyIndex,this);
+	finalizer_manager.RegisterFinalization(_historyIndex, this);
 
-	_host_component->Load(elt,finalizer_manager);
+	_host_component->Load(elt, finalizer_manager);
 }
 
 //-------------------------------------------------------------------------
-void SwOwner_Class::Save( QDomElement & elt,QDomDocument &doc )
+void SwOwner_Class::Save(QXmlStreamWriter& writer)
 {
-	//Enregistrement de l'index pour la reconstruction
-	elt.setAttribute("historyIndex",_historyIndex);
-
-	_host_component->Save(elt,doc);
+	writer.writeAttribute("historyIndex", QString::number(_historyIndex));
+	_host_component->Save(writer);
 }
 
 
@@ -360,12 +355,13 @@ void SwOwner_Class::Liberate()
 //---------------------------------------------------------------------------------
 bool SwOwner_Class::Finalize( quint64 historic_index )
 {
-	_historyIndex = SW_APP->GetHistoricCpt();
+	if (_historyIndex == 0)
+		_historyIndex = SW_APP->GetHistoricCpt();
 
 	ISwFinalizer * iFinalizer = dynamic_cast<ISwFinalizer*> (_host_component);
 	
 	if(iFinalizer)
-		iFinalizer->Finalize(historic_index);   
+		iFinalizer->Finalize(historic_index);
 
 	return true;
 }
@@ -989,7 +985,7 @@ void SwAssistedComponent::LoadConfiguration( QDomElement &elm )
 }
 
 //-------------------------------------------------------------------------
-void SwAssistedComponent::SaveConfiguration( QDomElement &elm,QDomDocument &doc )
+void SwAssistedComponent::SaveConfiguration( QXmlStreamWriter &writer )
 {
 
 }
@@ -1002,7 +998,7 @@ void SwAssistedComponent::Load( QDomElement & elt,ISwFinalizerManager & finalize
 }
 
 //-------------------------------------------------------------------------
-void SwAssistedComponent::Save( QDomElement & elt,QDomDocument &doc )
+void SwAssistedComponent::Save(QXmlStreamWriter& writer)
 {
 
 }

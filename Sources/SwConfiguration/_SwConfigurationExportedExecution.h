@@ -76,7 +76,7 @@ class _SwConfigurationExportedExecution :
         \param[in] elt neoud parent
         \param[in] doc document parent
         */
-        virtual void Save(QDomElement & elt,QDomDocument &doc);	
+        virtual void Save(QXmlStreamWriter &);	
         //---------------------------------------------------------------------
         // Interface ISwHost
         //---------------------------------------------------------------------

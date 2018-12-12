@@ -70,6 +70,8 @@ namespace StreamWork
 	        SwPin * GetConnected();
 	        /*! \brief Permet d'acceder a la date de connection */
             quint64 GetHistoricConnectionDate();
+
+			void SetHistoricConnectionDate(quint64 value);
 	        /*! \brief Permet de connaitre le manager du pin */
 	        ISwPins_Manager * GetManager();
 	        /*! \brief Enregistre un listener*/

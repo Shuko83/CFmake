@@ -132,7 +132,6 @@ void _SwModelHost_Class::CreateBinding(SwComponent_Class * model)
 	{
 		_exported_entities[i]->Bind(_model);
 	}
-	h_index = SW_APP->GetHistoricCpt();
 }
 
 //-----------------------------------------------------------------------
@@ -331,50 +330,53 @@ void _SwModelHost_Class::Load(QDomElement & elt, ISwFinalizerManager & finalizer
 }
 
 //-----------------------------------------------------------------------
-void _SwModelHost_Class::Save(QDomElement & elt, QDomDocument &doc)
-{
-	QDomElement elt_ent;
+void _SwModelHost_Class::Save(QXmlStreamWriter& writer)
+{	
+	QList<_SwModelExportedEntity *> tmp_exported_entities = _exported_entities;
+	std::sort(tmp_exported_entities.begin(), tmp_exported_entities.end(), [](_SwModelExportedEntity* lhs, _SwModelExportedEntity* rhs)
+	{
+		return std::make_tuple(lhs->_type, lhs->_name, lhs->_exported_name, lhs->_host_path) <
+			std::make_tuple(rhs->_type, rhs->_name, rhs->_exported_name, rhs->_host_path);
+	});	
 
-	for ( int i = 0; i < _exported_entities.count(); i++ )
+	for (_SwModelExportedEntity * exportedProperty : tmp_exported_entities)
 	{
 		//Creation du neoud
-		switch ( _exported_entities[i]->_type )
+		switch (exportedProperty->_type)
 		{
 			case Ent_Property:
-				elt_ent = doc.createElement(CL_XML_NODE_PROPERTY);
+				writer.writeStartElement(CL_XML_NODE_PROPERTY);
 				break;
 			case Ent_OwnerConfigurable:
-				elt_ent = doc.createElement(CL_XML_NODE_OWNERCONFIG);
+				writer.writeStartElement(CL_XML_NODE_OWNERCONFIG);
 				break;
 			case Ent_InterfaceC:
-				elt_ent = doc.createElement(CL_XML_NODE_INTERFACE_C);
+				writer.writeStartElement(CL_XML_NODE_INTERFACE_C);
 				break;
 			case Ent_InterfaceP:
-				elt_ent = doc.createElement(CL_XML_NODE_INTERFACE_P);
+				writer.writeStartElement(CL_XML_NODE_INTERFACE_P);
 				break;
 			case Ent_Pin:
-				elt_ent = doc.createElement(CL_XML_NODE_PIN);
+				writer.writeStartElement(CL_XML_NODE_PIN);
 				break;
 			case Ent_Executable:
-				elt_ent = doc.createElement(CL_XML_NODE_EXE);
+				writer.writeStartElement(CL_XML_NODE_EXE);
 				break;
 			case Ent_Activable:
-				elt_ent = doc.createElement(CL_XML_NODE_ACTIVABLE);
+				writer.writeStartElement(CL_XML_NODE_ACTIVABLE);
 				break;
 			default:
 				return;
-				break;
 		}
 		//Affectation des attributs
-		elt_ent.setAttribute(CL_XML_NODE_ATT_NAME, _exported_entities[i]->_name);
-		elt_ent.setAttribute(CL_XML_NODE_ATT_EXP_NAME, _exported_entities[i]->_exported_name);
-		elt_ent.setAttribute(CL_XML_NODE_ATT_PATH, _exported_entities[i]->_host_path);
-		elt_ent.setAttribute(CL_XML_NODE_ATT_ITYPE, _exported_entities[i]->_itype);
-		//Attachement du neoud au parent
-		elt.appendChild(elt_ent);
-		elt.setAttribute(CL_XML_NODE_ATT_IDX, h_index);
+		writer.writeAttribute(CL_XML_NODE_ATT_NAME, exportedProperty->_name);
+		writer.writeAttribute(CL_XML_NODE_ATT_EXP_NAME, exportedProperty->_exported_name);
+		writer.writeAttribute(CL_XML_NODE_ATT_PATH, exportedProperty->_host_path);
+		writer.writeAttribute(CL_XML_NODE_ATT_ITYPE, exportedProperty->_itype);
+		writer.writeEndElement();
 	}
 }
+
 //---------------------------------------------------------------------
 // Interface ISwModelHostModifier
 //---------------------------------------------------------------------

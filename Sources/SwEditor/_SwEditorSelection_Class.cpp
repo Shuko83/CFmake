@@ -14,6 +14,7 @@
 #include <SwSaver_Class.h>
 #include <SwLoader_Class.h>
 #include <QMimeData>
+#include <QBuffer>
 #include "ISwEditorGraphicItem.h"
 
 
@@ -162,18 +163,18 @@ void _SwEditorSelection_Class::RemoveSelection(){
 }
 /*! \brief Copie la selection courante*/
 void _SwEditorSelection_Class::CopySelection(){
-    SwSaver_Class saver;
-    QDomDocument doc;
-    QClipboard *clipboard = QApplication::clipboard();
+   //Recuperation & Construction du stream
+	QBuffer buffer;
+	buffer.open(QIODevice::WriteOnly | QIODevice::Text);
+	QXmlStreamWriter writer(&buffer);
+	writer.setAutoFormattingIndent(4);
+	writer.setAutoFormatting(true);
 
-    QString stream_desc;
-
-    //Construction du stream
-    saver.SaveGroup(_selecteds,doc);
-    //Recuperation du stream
-    stream_desc=doc.toString(4); //Indentation de quatre espace
-    //Enregistrement dans le clipboard
-    clipboard->setText(stream_desc);
+	SwSaver_Class saver;
+	saver.SaveGroup(_selecteds, writer);
+	//Enregistrement dans le clipboard
+	QClipboard *clipboard = QApplication::clipboard();
+	clipboard->setText(buffer.data());
 }
 /*! \brief Coller la selection courante*/
 void _SwEditorSelection_Class::PasteSelection(){

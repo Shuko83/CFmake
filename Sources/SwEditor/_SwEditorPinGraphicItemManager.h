@@ -98,7 +98,7 @@ namespace StreamWork
             \return la valeur de finalisation attendu*/
 	        quint64 Load(QDomElement & elt);
 	        /*! \brief methode permettant de sauver des donnees */
-	        void Save(QDomElement & elt,QDomDocument & doc);
+			void Save(QXmlStreamWriter& writer);
 	        /*! \brief Finalisation */
 	        void Finalize();
         };

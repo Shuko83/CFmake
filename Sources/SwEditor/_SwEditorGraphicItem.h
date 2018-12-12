@@ -171,8 +171,8 @@ namespace StreamWork
             //---------------------------------------------------------------------
 	        /*! \brief methode permettant de charger des donnees */
 	        void Load(QDomElement & elt,SwCore::ISwFinalizerManager & finalizer_manager);
-	        /*! \brief methode permettant de sauver des donnees */
-	        void Save(QDomElement & elt,QDomDocument & doc);
+			/*! \brief methode permettant de sauver des donnees */
+	        void Save(QXmlStreamWriter& writer);
              //---------------------------------------------------------------------
             // Interface ISwFinalizer
             //---------------------------------------------------------------------            

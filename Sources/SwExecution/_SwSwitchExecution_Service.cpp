@@ -117,39 +117,45 @@ void _SwSwitchExecution_Service::Load(QDomElement & elt,ISwFinalizerManager & fi
         }
     }
 }
+
 /*! \brief methode permettant de sauver des donnees
 \param[in] elt neoud parent
 \param[in] doc document parent
 */
-void _SwSwitchExecution_Service::Save(QDomElement & elt,QDomDocument &doc) {
-    ExeListMap::iterator it = _switchExecutionList->_exeListMap.begin();
-    ModeListMap::iterator itm = _switchExecutionList->_modeListMap.begin();
-    while(it != _switchExecutionList->_exeListMap.end() && itm != _switchExecutionList->_modeListMap.end()) {
-        QDomElement p_elt=doc.createElement("List");
-        p_elt.setAttribute("Name", it->first);
-        QList<QString> pathList;
-        pathList = it->second;
-        QList<_SwExecutionMode> mode=itm->second;
-        for(int i=0; i<pathList.count(); i++) {
-            QDomElement p_child_elt=doc.createElement("Module");            
-            p_child_elt.setAttribute("Path",pathList[i]);
-            switch (mode[i]) {
-                case Normal_mode:
-                    p_child_elt.setAttribute("Mode","Normal");
-                    break;
-                case Replay_mode:
-                    p_child_elt.setAttribute("Mode","Replay");
-                    break;
-                default:
-                    break;
-            }
-            p_elt.appendChild(p_child_elt);
-        }
-        elt.appendChild(p_elt);
-        it++;
-        itm++;
-    }
+void _SwSwitchExecution_Service::Save(QXmlStreamWriter& writer)
+{
+	ExeListMap::iterator it = _switchExecutionList->_exeListMap.begin();
+	ModeListMap::iterator itm = _switchExecutionList->_modeListMap.begin();
+	while (it != _switchExecutionList->_exeListMap.end() && itm != _switchExecutionList->_modeListMap.end())
+	{
+		writer.writeStartElement("List");
+		writer.writeAttribute("Name", it->first);
+		QList<QString> pathList;
+		pathList = it->second;
+		QList<_SwExecutionMode> mode = itm->second;
+		for (int i = 0; i < pathList.count(); ++i)
+		{
+			writer.writeStartElement("Module");
+			writer.writeAttribute("Path", pathList[i]);
+			switch (mode[i])
+			{
+				case Normal_mode:
+					writer.writeAttribute("Mode", "Normal");
+					break;
+				case Replay_mode:
+					writer.writeAttribute("Mode", "Replay");
+					break;
+				default:
+					break;
+			}
+			writer.writeEndElement();
+		}
+		writer.writeEndElement();
+		++it;
+		++itm;
+	}
 }
+
 //---------------------------------------------------------------------
 // Interface ISwHost
 //---------------------------------------------------------------------

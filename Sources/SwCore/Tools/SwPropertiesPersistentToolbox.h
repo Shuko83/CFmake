@@ -26,7 +26,7 @@ namespace StreamWork {
 	        /*! \brief methode permettant de charger des donnees de propriétés*/
 	        static void Load(QDomElement & elt,ISwProperties * properties);
 	        /*! \brief methode permettant de sauver des donnees de propriétés */
-	        static void Save(QDomElement & elt,QDomDocument & doc,ISwProperties * properties);
+	        static void Save(QXmlStreamWriter & writer,ISwProperties * properties);
 
         };
 

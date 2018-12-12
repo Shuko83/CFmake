@@ -51,24 +51,22 @@ namespace StreamWork
             \param[in] "prefix" prefix de la conf pour la sauvegarde
             */
 			static void SaveProperty(QDomElement & parent_property_node, QDomDocument &doc, QString propCustomName, ISwProperty * property, QString prefix, QVariant overWriteValue = QVariant());
-
-	        /*! \brief methode permettant de sauver une propriété  via une ISwProperties
-            \param[in] "parent_property_nod" noeud parent
-            \param[in] "doc" document parent
+			
+			/*! \brief methode permettant de sauver une propriété  via une ISwProperties
+            \param[in] "writer" StreamWriter handle
             \param[in] "name" nom de la propriétés
             \param[in] liste des propriétés
             */
-	        static void SaveProperty(QDomElement & parent_property_node, QDomDocument &doc, QString name, ISwProperties * properties);
+	        static void SaveProperty(QXmlStreamWriter &writer, QString name, ISwProperties * properties);
 
 	        /*! \brief methode permettant de sauver une propriété meme si elle a changer
-            \param[in] "parent_property_node" noeud parent
-            \param[in] "doc" document parent
+            \param[in] "writer" StreamWriter handle
             \param[in] "name" nom de la propriétés
             \param[in] liste des propriétés
             \param[in] force la sauvegarde meme si la propriété n'a pas changé
             */
-	        static void SavePropertyExtended(QDomElement & parent_property_node,QDomDocument &doc, QString name, ISwProperties * properties, bool forceSave);
-
+	        static void SavePropertyExtended(QXmlStreamWriter &writer, QString name, ISwProperties * properties, bool forceSave);
+				        
 			static QVariant createQVariantFromString(ISwProperty* prop, QString value);
 
 		private:
@@ -78,7 +76,7 @@ namespace StreamWork
 			 *	@param : inProperty, propiété
 			 */
 			static void setProperty(QDomElement & property_node, ISwProperty * inProperty) ;
-			
+
 			/* @brief : méthode interne pour récupérer la valeur d'une property au bon format selon son type
 			 *			appellée lors du SaveProperty
 			 * @param : property_node, noeud parent auque ajouté la valeur de la property
@@ -89,6 +87,7 @@ namespace StreamWork
 			 */
 			static void createProperty(QDomElement & parent_property_node, QDomDocument &doc, ISwProperty * inProperty, QDomElement &elt, QVariant var);
 
+			static void createProperty(QXmlStreamWriter &writer, ISwProperty * inProperty, QVariant var);
        };
     }
 }

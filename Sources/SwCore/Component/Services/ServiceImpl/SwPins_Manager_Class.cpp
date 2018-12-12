@@ -28,6 +28,7 @@ using namespace StreamWork::SwCore;
 SwPins_Manager_Class::SwPins_Manager_Class(SwComponent_Class * host) {
 	_host_component = host;
 	_observers.clear();
+	_historic_index = 0;
 }
 /*! \brief Destrusteur */
 SwPins_Manager_Class::~SwPins_Manager_Class(){
@@ -109,8 +110,17 @@ void SwPins_Manager_Class::ConnectRemotePinToLocalPin(QString local_pin, QString
 		LAUNCH_SWEXCEPTION("SwCore", msg)
 	}
 	//Effectuer la connection
-	l_pin->AssignRemote(r_pin, SW_APP->GetHistoricCpt());
-	r_pin->AssignRemote(l_pin, SW_APP->GetHistoricCpt());
+	if (_historic_index)
+	{
+		l_pin->AssignRemote(r_pin, _historic_index);
+		r_pin->AssignRemote(l_pin, _historic_index + 1);
+		SW_APP->SetHistoricCpt(_historic_index + 1);
+	}
+	else
+	{
+		l_pin->AssignRemote(r_pin, SW_APP->GetHistoricCpt());
+		r_pin->AssignRemote(l_pin, SW_APP->GetHistoricCpt());
+	}
 	//Signaler la connection au observers locaux
 	for (ito = _observers.begin(); ito != _observers.end(); ito++) {
 		(*ito)->OnConnectPin(l_pin, r_pin);
@@ -162,67 +172,67 @@ void SwPins_Manager_Class::RegisterListener(ISwPins_ManagerListener *observer){
 
 	it = _observers.find(observer);
 	if (it != _observers.end()) {
-		QString msg = QString("In component %1\nFailed to attach an already attached pin manager observer").arg(_host_component->GetName());
-		LAUNCH_SWEXCEPTION("SwCore", msg)
-	}
-	_observers.insert(observer);
+        QString msg=QString("In component %1\nFailed to attach an already attached pin manager observer").arg(_host_component->GetName());
+        LAUNCH_SWEXCEPTION("SwCore",msg)
+    }
+    _observers.insert(observer);
 }
 /*! \brief Desenregistre  un listener*/
 void SwPins_Manager_Class::UnregisterListener(ISwPins_ManagerListener *observer){
-	QSet<ISwPins_ManagerListener *>::iterator it;
+    QSet<ISwPins_ManagerListener *>::iterator it;
 
-	it = _observers.find(observer);
-	if (it == _observers.end()) {
-		return;
-	}
-	_observers.erase(it);
+    it=_observers.find(observer);
+    if (it==_observers.end()) {
+        return;
+    }
+    _observers.erase(it);
 }
 /*! \brief Acces a la liste des plugins*/
 QList<SwPin *> SwPins_Manager_Class::GetPinList(){
-	return _pins.values();
+    return _pins.values();
 }
 /*! \brief Acces a la liste des pins par nom*/
 SwPin * SwPins_Manager_Class::GetPinByName(QString name){
-	QMap<QString, SwPin *>::iterator it;
+    QMap<QString,SwPin *>::iterator it;
 
-	it = _pins.find(name);
-	if (it == _pins.end())
-		return NULL;
-	return it.value();
+    it=_pins.find(name);
+    if (it==_pins.end())
+        return NULL;
+    return it.value();
 }
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrï¿½
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rï¿½alisï¿½e*/
 void SwPins_Manager_Class::Liberate(){
-	QMap<QString, SwPin *>::iterator it;
-	//Deconnection de tous les pins connectes
-	for (it = _pins.begin(); it != _pins.end(); it++) {
-		if (it.value()->GetConnected() != NULL) {
-			DisconnectPin(it.value()->GetName());
-		}
-	}
-	//Destruction des pins restants
-	it = _pins.begin();
-	while (it != _pins.end()) {
-		SwPin * pin = it.value();
-		UnregisterPin(pin);
-		it = _pins.begin();
-	}
+    QMap<QString,SwPin *>::iterator it;
+    //Deconnection de tous les pins connectes
+    for (it=_pins.begin();it!=_pins.end();it++) {
+        if (it.value()->GetConnected()!=NULL) {
+            DisconnectPin(it.value()->GetName());
+        }
+    }
+    //Destruction des pins restants
+    it=_pins.begin();
+    while (it!=_pins.end()) {
+        SwPin * pin=it.value();
+        UnregisterPin(pin);
+        it=_pins.begin();
+    }
 }
 //---------------------------------------------------------------------
 // Interface ISwHost
 //---------------------------------------------------------------------
 /*! \brief acces a son composant hote */
 SwComponent_Class * SwPins_Manager_Class::GetHostComponent(){
-	return _host_component;
+    return _host_component;
 }
 //---------------------------------------------------------------------
 // Interface ISwpersistent
 //---------------------------------------------------------------------
 /*! \brief methode permettant de charger des donnees */
-void SwPins_Manager_Class::Load(QDomElement &elt, ISwFinalizerManager & finalizer_manager){
+void SwPins_Manager_Class::Load(QDomElement &elt,ISwFinalizerManager & finalizer_manager){
 	QMap<quint64, _SwPinDesc *>::iterator itidx;
 	quint64 index;
 	bool result;
@@ -261,37 +271,36 @@ void SwPins_Manager_Class::Load(QDomElement &elt, ISwFinalizerManager & finalize
 }
 
 /*! \brief methode permettant de sauver des donnees */
-void SwPins_Manager_Class::Save(QDomElement &elt, QDomDocument &doc){
-	QDomElement connection_node;
-	QString path;
-
-	QMap<QString, SwPin *>::iterator it;
-
-	//pour toutes les interfaces connectés
-	for (it = _pins.begin(); it != _pins.end(); it++) {
-		//Si l'interface est connecté
-		if (it.value()->GetConnected() != NULL) {
+void SwPins_Manager_Class::Save(QXmlStreamWriter& writer)
+{
+	for (auto it = _pins.constBegin(); it != _pins.constEnd(); ++it)
+	{
+		if (it.value()->GetConnected() != NULL)
+		{
 			//Creation du neoud
-			connection_node = doc.createElement(CL_SW_XML_CONNECTION_NODE);
+            writer.writeStartElement(CL_SW_XML_CONNECTION_NODE);
 			//Enregistrement de la source
-			connection_node.setAttribute(CL_SW_XML_CONNECTION_NODE_ATT_SOURCE, it.key());
+           	writer.writeAttribute(CL_SW_XML_CONNECTION_NODE_ATT_SOURCE, it.key());
 			//Enregistrement de la cible
-			connection_node.setAttribute(CL_SW_XML_CONNECTION_NODE_ATT_TARGET, it.value()->GetConnected()->GetName());
+            writer.writeAttribute(CL_SW_XML_CONNECTION_NODE_ATT_TARGET, it.value()->GetConnected()->GetName());
 			//Enregistrement de l'index pour la reconstruction
-			connection_node.setAttribute(CL_SW_XML_CONNECTION_NODE_ATT_IDX, it.value()->GetHistoricConnectionDate());
+            writer.writeAttribute(CL_SW_XML_CONNECTION_NODE_ATT_IDX, QString::number(it.value()->GetHistoricConnectionDate()));
 			//Enregistrement du path pour l'acces au parent
-			try {
+            QString path;
+			try
+			{
 				//On tente un lien relatif
 				path = SwAddress_ToolBox::BuildRelativePath(_host_component, it.value()->GetConnected()->GetManager()->GetHostComponent());
 			}
-			catch (SwException &) {
+			catch (SwException &)
+			{
 				//Impossible (pas le meme parent)
 				//On recupere un lien universel
 				path = SwAddress_ToolBox::BuildUniversalPath(it.value()->GetConnected()->GetManager()->GetHostComponent());
 			}
-			connection_node.setAttribute(CL_SW_XML_CONNECTION_NODE_ATT_TPATH, path);
-			//Ajout du neoud interface
-			elt.appendChild(connection_node);
+			writer.writeAttribute(CL_SW_XML_CONNECTION_NODE_ATT_TPATH, path);
+
+			writer.writeEndElement();
 		}
 	}
 }
@@ -311,14 +320,14 @@ bool SwPins_Manager_Class::Finalize(quint64 historic_index){
 
 	itidx = _finalize_connections.find(historic_index);
 	if (itidx != _finalize_connections.end()) {
-		//On a trouve le pin source concerné
+		//On a trouve le pin source concernï¿½
 		itp = _pins.find(itidx.value()->_src);
 		if (itp == _pins.end()) {
 			//Pin inconnu - on arrete
 			return true;
 		}
 		l_pin = itp.value();
-		//S'il est deja connecté, on ne fait rien
+		//S'il est deja connectï¿½, on ne fait rien
 		if (l_pin->GetConnected() != NULL) {
 			return true;
 		}
@@ -330,6 +339,7 @@ bool SwPins_Manager_Class::Finalize(quint64 historic_index){
 			(r_pin = r_manager->GetPinByName(itidx.value()->_tgt)) != NULL) {
 			try {
 				//On effectue la connection
+				_historic_index = historic_index;
 				ConnectRemotePinToLocalPin(l_pin->GetName(), r_pin->GetName(), r_manager);
 			}
 			catch (SwException & se) {

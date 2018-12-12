@@ -77,7 +77,7 @@ public:
     bool Load(QDomElement & elt, QString * errorMessage = 0);
 
     /*! \brief methode permettant de charger un fichier de propriétés*/
-    bool Save(QDomElement & elt,QDomDocument & doc, QString * errorMessage = 0 );
+    bool Save(QXmlStreamWriter &writer, QString * errorMessage = 0 );
 
     bool isEnabled();
 

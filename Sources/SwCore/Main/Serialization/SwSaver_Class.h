@@ -26,6 +26,7 @@
   */
 #include <QDomDocument>
 #include <QList>
+#include <QXmlStreamWriter>
 /*
   * INCLUDES LOCAUX
   */
@@ -42,20 +43,20 @@ namespace StreamWork
 		*/
 		class BUILD_SWCORE SwSaver_Class 
 		{
-        private:
-            /*! Construction de la definition du stream au format xml */
-            void BuildXMLStream(SwComponent_Class * component,QDomDocument & doc,QDomElement & parent_node);
-        public:
-            /*! Constructeur */
-            SwSaver_Class();
-            /*! Destructeur */
-            ~SwSaver_Class();
-            /*! Sauvegarde */
-            void Save(SwComponent_Class * root_component,QDomDocument & doc);
-            /*! Sauvegarde groupe */
-            void SaveGroup(QList<SwComponent_Class *> & components,QDomDocument & doc);
-            /*! Sauvegarde model */
-            void SaveModel(QList<SwComponent_Class *> & components,QDomDocument & doc);
+		public:
+			/*! Constructeur */
+			SwSaver_Class();
+			/*! Destructeur */
+			~SwSaver_Class();
+			/*! Sauvegarde */
+			void Save(SwComponent_Class * root_component, QXmlStreamWriter& writer);
+			/*! Sauvegarde groupe */
+			void SaveGroup(QList<SwComponent_Class *>& components, QXmlStreamWriter& writer);
+			/*! Sauvegarde model */
+			void SaveModel(QList<SwComponent_Class *>& components, QXmlStreamWriter& writer);
+		private:
+			/*! Construction de la definition du stream au format xml */
+			void BuildXMLStream(SwComponent_Class * component, QXmlStreamWriter& writer);
 		};
 	}
 }
