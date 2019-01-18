@@ -23,12 +23,14 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 //-------------------------------------------------------------------------
-_SwGuiCompQWidgetToQDialog::_SwGuiCompQWidgetToQDialog() : SwAssistedComponent()
+_SwGuiCompQWidgetToQDialog::_SwGuiCompQWidgetToQDialog()
+    : SwAssistedComponent()
+    , _widget(nullptr)
+    , _enableMaximize(false)
+    , _saveDialogPosition(false)
+    , _helper(CG_SW_SERVICE_MAINWINDOW)
+    , _action(new QAction(this))
 {
-    _enableMaximize = false;
-    _saveDialogPosition = false;
-    _widget = nullptr;
-    _action = new QAction( this );
     connect( _action, &QAction::toggled, [ = ]( bool )
     {
         //Close est important car il permet de filtrer l'event en cas
@@ -49,19 +51,17 @@ _SwGuiCompQWidgetToQDialog::_SwGuiCompQWidgetToQDialog() : SwAssistedComponent()
 //-------------------------------------------------------------------------
 _SwGuiCompQWidgetToQDialog::~_SwGuiCompQWidgetToQDialog()
 {
-
     unconsummeInterface( ISWWIDGET_INTERFACE_NAME );
     unprovideInterface( ISWACTION_INTERFACE_NAME );
     unprovideInterface( ISWWIDGETP_INTERFACE_NAME );
-    
-    delete _helper;
+
+    delete _action;
 }
 
 //-------------------------------------------------------------------------
 void _SwGuiCompQWidgetToQDialog::initializeComponent() throw( SwException )
 {
-    _helper = new SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow>();
-    _helper->setService( CG_SW_SERVICE_MAINWINDOW, this, &_SwGuiCompQWidgetToQDialog::onService );
+    _helper.setCallback(this, &_SwGuiCompQWidgetToQDialog::onService);
     
     consummeInterface<ISwWidget>( ISWWIDGET_INTERFACE_NAME );
     
@@ -103,7 +103,7 @@ void _SwGuiCompQWidgetToQDialog::onService( bool available )
 {
     if( available )
     {
-        _container.setParent( _helper->getService()->getMainWindow() );
+        _container.setParent( _helper.getService()->getMainWindow() );
         if( _enableMaximize )
             _container.setWindowFlags( Qt::Dialog | Qt::WindowCloseButtonHint | Qt::WindowMaximizeButtonHint );
         else

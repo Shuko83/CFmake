@@ -12,18 +12,18 @@ template <typename SERVICE_TYPE>
 class SwServiceManager_Helper : public StreamWork::SwCore::ISwServicesManager_Listener
 {
 public:
-	SwServiceManager_Helper();
+    SwServiceManager_Helper(QString serviceName);
 	~SwServiceManager_Helper();
 
 	SERVICE_TYPE * getService() const;
 
 	template <typename YOUR_CLASS>
-	void setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(bool available));
+	void setCallback(YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(bool available));
 	
-	void setService(QString serviceName);
+    void setCallback(std::function<void(bool)> callback);
 
 private:
-	QString _serviceName;
+	const QString _serviceName;
 	SERVICE_TYPE * _service;
 	std::function<void(bool)> _callback;
 
@@ -55,7 +55,9 @@ private:
 
 //---------------------------------------------------------------------------------
 template <typename SERVICE_TYPE>
-SwServiceManager_Helper<SERVICE_TYPE>::SwServiceManager_Helper() : _service(nullptr)
+SwServiceManager_Helper<SERVICE_TYPE>::SwServiceManager_Helper(QString serviceName)
+    : _serviceName(serviceName)
+    , _service(dynamic_cast<SERVICE_TYPE *> (SW_APP->QueryService(serviceName)))
 {
 	SW_APP->AddServicesManagerObserver(this);
 }
@@ -80,14 +82,12 @@ SERVICE_TYPE * SwServiceManager_Helper<SERVICE_TYPE>::getService() const
 //-----------------------------------------------------------------------
 template <typename SERVICE_TYPE>
 template <typename YOUR_CLASS>
-void SwServiceManager_Helper<SERVICE_TYPE>::setService(QString serviceName, YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(bool))
+void SwServiceManager_Helper<SERVICE_TYPE>::setCallback(YOUR_CLASS* thisPointer, void (YOUR_CLASS::*callback)(bool))
 {
 	if (_service && _callback)
 		_callback(false);
 
-	_serviceName = serviceName;
 	_callback = ([callback,thisPointer](bool available)->void { (thisPointer->*callback)(available); });
-	_service = dynamic_cast<SERVICE_TYPE *> (SW_APP->QueryService(serviceName));
 
 	if (_service)
 		_callback(true);
@@ -95,8 +95,13 @@ void SwServiceManager_Helper<SERVICE_TYPE>::setService(QString serviceName, YOUR
 
 //-----------------------------------------------------------------------
 template <typename SERVICE_TYPE>
-void SwServiceManager_Helper<SERVICE_TYPE>::setService(QString serviceName)
+void SwServiceManager_Helper<SERVICE_TYPE>::setCallback(std::function<void(bool)> callback)
 {
-	_serviceName = serviceName;
-	_service = dynamic_cast<SERVICE_TYPE *> (SW_APP->QueryService(serviceName));
+    if (_service && _callback)
+        _callback(false);
+
+    _callback = callback;
+
+    if (_service)
+        _callback(true);
 }

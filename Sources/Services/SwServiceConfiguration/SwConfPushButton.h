@@ -38,7 +38,7 @@ private:
     QPushButton _pb;
     
     //Service de conf
-    SwServiceManager_Helper<ISwServiceConfiguration> * _swServiceConfigurationHelper;
+    SwServiceManager_Helper<ISwServiceConfiguration> _swServiceConfigurationHelper;
     
     QString _confName;
 };

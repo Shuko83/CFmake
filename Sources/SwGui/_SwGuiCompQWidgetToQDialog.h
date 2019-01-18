@@ -124,6 +124,6 @@ protected:
     bool _saveDialogPosition;
     
     QAction * _action;
-    SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow> * _helper;
+    SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow> _helper;
 };
 
