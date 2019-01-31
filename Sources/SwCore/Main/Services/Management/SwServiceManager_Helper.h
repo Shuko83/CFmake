@@ -89,7 +89,7 @@ void SwServiceManager_Helper<SERVICE_TYPE>::setCallback(YOUR_CLASS* thisPointer,
 
 	_callback = ([callback,thisPointer](bool available)->void { (thisPointer->*callback)(available); });
 
-	if (_service)
+	if (_service && _callback)
 		_callback(true);
 }
 
@@ -102,6 +102,6 @@ void SwServiceManager_Helper<SERVICE_TYPE>::setCallback(std::function<void(bool)
 
     _callback = callback;
 
-    if (_service)
+	if (_service && _callback)
         _callback(true);
 }
