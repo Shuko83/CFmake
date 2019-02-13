@@ -51,6 +51,8 @@ _SwGuiCompQWidgetToQDialog::_SwGuiCompQWidgetToQDialog()
 //-------------------------------------------------------------------------
 _SwGuiCompQWidgetToQDialog::~_SwGuiCompQWidgetToQDialog()
 {
+    _helper.setCallback(nullptr);
+
     unconsummeInterface( ISWWIDGET_INTERFACE_NAME );
     unprovideInterface( ISWACTION_INTERFACE_NAME );
     unprovideInterface( ISWWIDGETP_INTERFACE_NAME );
