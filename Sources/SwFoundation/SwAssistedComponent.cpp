@@ -385,7 +385,6 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 	_pins_service				= NULL;
 	
 	_disable_service			= false;
-	_allreadyListenerOfService  = false;
 
 	_isExecutable				= false;
 	_isConsumer					= true;
@@ -397,7 +396,6 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 	_isInitialized				= false;
 
 	_doCheckTimer = qApp->arguments().contains("-checktime", Qt::CaseInsensitive);
-
 }
 
 //-------------------------------------------------------------------------
@@ -415,9 +413,6 @@ SwAssistedComponent::~SwAssistedComponent()
 	//Clear provided interface
 	for (QString providedInterfaceName : _listIProvided)
 		unprovideInterface(providedInterfaceName);
-
-	if (_allreadyListenerOfService )
-		SW_APP->RemoveServicesManagerObserver( this );
 
 	//clear registrer service
 
