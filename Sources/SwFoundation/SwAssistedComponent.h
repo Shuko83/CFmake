@@ -519,29 +519,6 @@ namespace StreamWork {
 			 * @param	 : QString interfaceName - Nom de l'interface
 			 */
 			virtual void interfaceUnavailable(QString interfaceName);
-
-			
-			template<typename U, typename T = ISwService> void RegisterToService( QString name, U* thisPointer, void (U::*callback)(T*) )
-			{
-				if ( !_allreadyListenerOfService )
-				{
-					_allreadyListenerOfService = true;
-					SW_APP->AddServicesManagerObserver( this );
-				}
-
-
-				_mapServiceWithCallBack.insert(name, [callback, thisPointer](ISwService* service)->void {
-
-					auto castS = dynamic_cast<T*>(service);
-					if ( castS )
-						(thisPointer->*callback)(castS);
-				} );
-
-				StreamWork::SwCore::ISwService * service = SW_APP->QueryService( name );
-				if ( service )
-					_mapServiceWithCallBack[name]( service );
-			}
-
 	
 protected:
 			/**
@@ -779,7 +756,6 @@ private:
 			QHash<QString, std::function<void( CALLBACK_EVENT )>> _mapIConsummedWithCallBack;
 
 			QHash<QString, std::function<void(ISwService*)>> _mapServiceWithCallBack;
-			bool _allreadyListenerOfService;
 
 			QHash<QString, std::function<void()>> _mapShortcutWithCallBack;
 			QHash<QString, QString> _mapShortcutNameWithCategory;
