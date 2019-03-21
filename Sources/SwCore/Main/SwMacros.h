@@ -66,7 +66,7 @@
 /*!
  * UUID STREAMWORK
  */
-#define SW_DEFINE_UUID(name,mostSigBits,leastSigBits) SW_EXTERN_C Q_DECL_EXPORT const StreamWork::SwCore::SwUUID name = SwUUID(Q_INT64_C(mostSigBits),Q_INT64_C(leastSigBits));
+#define SW_DEFINE_UUID(name,mostSigBits,leastSigBits) SW_EXTERN_C Q_DECL_EXPORT const StreamWork::SwCore::SwUUID name = StreamWork::SwCore::SwUUID(Q_INT64_C(mostSigBits),Q_INT64_C(leastSigBits));
 #define SW_DECLARE_UUID(name) SW_EXTERN_C Q_DECL_IMPORT const StreamWork::SwCore::SwUUID name;
 #define SW_DECLARE_UUID_LOCAL(name) SW_EXTERN_C Q_DECL_EXPORT const StreamWork::SwCore::SwUUID name;
 
