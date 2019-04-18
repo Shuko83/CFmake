@@ -58,7 +58,7 @@ void _SwGuiCompListDockWidget::interfaceAvailable( QString interfaceName )
             dockwidget_it.value()->setWidget( widget->GetWidget() );
             
             //Notification
-            foreach( ISwListDockWidgetListener * listener, _listListener )
+			for ( ISwListDockWidgetListener * listener: _listListener )
                 listener->addDockWidget( dockwidget_it.value(), _name );
         }
     }
@@ -76,7 +76,7 @@ void _SwGuiCompListDockWidget::interfaceUnavailable( QString interfaceName )
         if( dock )
         {
             //Notification
-            foreach( ISwListDockWidgetListener * listener, _listListener )
+			for ( ISwListDockWidgetListener * listener: _listListener )
                 listener->removeDockWidget( dock );
         }
         dockwidget_it.value()->setWidget( nullptr );

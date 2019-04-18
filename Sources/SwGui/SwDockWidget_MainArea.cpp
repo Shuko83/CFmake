@@ -384,7 +384,7 @@ void SwDockWidget_MainArea::changeDockConfiguration(SwDockWidget_MainDockConfigu
 
 	//Liberation des docks principaux
 	QList<int> listSize;
-	foreach(SwDockWidget_MainDockWidget * w, list)
+	for(SwDockWidget_MainDockWidget * w : list)
 	{
 		SwDockWidget_Splitter * splitter = qobject_cast<SwDockWidget_Splitter*>(w->parentWidget());
 		if (w && !w->empty())
@@ -417,7 +417,7 @@ void SwDockWidget_MainArea::changeDockConfiguration(SwDockWidget_MainDockConfigu
 	}
 
 	//Application de la nouvelle configuration
-	foreach(SwDockWidget_MainDockWidget * w, list)
+	for(SwDockWidget_MainDockWidget * w : list)
 	{
 		if (w && !w->empty())
 			pinDockTo(w, _mainWidget, w->getArea(), true);
@@ -554,7 +554,7 @@ bool SwDockWidget_MainArea::close()
 	closeToolbars();
 
 	//Fermeture des docks flottants
-	foreach(QObject * obj, _list)
+	for(QObject * obj : _list)
 	{
 		SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
 		if (dock && dock->parent() == this && !dock->isInToolBar())
@@ -620,7 +620,7 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 		QKeyEvent * e = (QKeyEvent*)event;
 		if (e && e->key() == Qt::Key_F12 && e->modifiers() & Qt::ControlModifier && e->modifiers() & Qt::ShiftModifier)
 		{
-			foreach(QObject * obj, _list)
+			for(QObject * obj : _list)
 			{
 				SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
 				if (dock)
@@ -2125,7 +2125,7 @@ void SwDockWidget_MainArea::setConfigurationFileName(QString name, bool apply)
 				_saveTimer->stop();
 
 			//Reinitialisation des docks
-			foreach(QObject * obj, _list)
+			for(QObject * obj : _list)
 			{
 				SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
 				if (dock)
@@ -2196,7 +2196,7 @@ void SwDockWidget_MainArea::saveAllPositions()
 	}
 
 	//Docks flottants
-	foreach(QObject * obj, _list)
+	for(QObject * obj : _list)
 	{
 		SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
 		if (dock && dock->parent() == this && !dock->isInToolBar())
@@ -2505,7 +2505,7 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 
 			//Recherche du dock en cours de chargement
 			name = e.attribute("objectName");
-			foreach(QObject * obj, _listMainDock)
+			for(QObject * obj : _listMainDock)
 			{
 				SwDockWidget_MainDockWidget * m = qobject_cast<SwDockWidget_MainDockWidget*>(obj);
 				if (obj && !obj->objectName().compare(name))
@@ -2562,7 +2562,7 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 			if (!widgetList.isEmpty() && mainDock)
 			{
 				int num = 0;
-				foreach(QWidget * widget, widgetList)
+				for (QWidget * widget : widgetList)
 					mainDock->addWidget(widget, widgetName.at(num++), &size);
 
 				mainDock->setCurrentWidget(index);
@@ -2581,7 +2581,7 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 		else if (!name.compare("SwDockWidget_DockWidget"))
 		{
 			//Si le dock existe
-			foreach(QObject * obj, _list)
+			for(QObject * obj : _list)
 			{
 				SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
 				if (dock && !dock->objectName().compare(e.attribute("objectName")))
@@ -2764,7 +2764,7 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 			//Si au moins 2 widgets ont ete trouves, on cree un SwDockWidget_TabWidget
 			if (widgetList.count() > 1)
 			{
-				foreach(QWidget * widget, widgetList)
+				for (QWidget * widget : widgetList)
 					tab->addTab(widget);
 
 				tab->setCurrentIndex(index);
@@ -2869,14 +2869,14 @@ void SwDockWidget_MainArea::lock()
 	if (!locked())
 	{
 		//Propagation aux docks
-		foreach(QObject * obj, _list)
+		for(QObject * obj : _list)
 		{
 			SwDockWidget_DockWidget *dockWidget = qobject_cast<SwDockWidget_DockWidget*>(obj);
 			if (dockWidget)
 				dockWidget->lock();		
 		}
 		//Propagation aux docks principaux
-		foreach(QObject * obj, _listMainDock)
+		for (QObject * obj : _listMainDock)
 		{
 			SwDockWidget_DockWidget *dockWidget = qobject_cast<SwDockWidget_DockWidget*>(obj);
 			if (dockWidget)
@@ -2898,14 +2898,14 @@ void SwDockWidget_MainArea::releaseLock()
 	if (locked())
 	{
 		//Propagation aux docks
-		foreach(QObject * obj, _list)
+		for(QObject * obj : _list)
 		{
 			SwDockWidget_DockWidget *dockWidget = qobject_cast<SwDockWidget_DockWidget*>(obj);
 			if (dockWidget)
 				dockWidget->releaseLock();		
 		}
 		//Propagation aux docks principaux
-		foreach(QObject * obj, _listMainDock)
+		for (QObject * obj : _listMainDock)
 		{
 			SwDockWidget_DockWidget *dockWidget = qobject_cast<SwDockWidget_DockWidget*>(obj);
 			if (dockWidget)

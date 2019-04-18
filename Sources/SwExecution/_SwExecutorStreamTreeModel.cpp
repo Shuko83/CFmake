@@ -65,7 +65,7 @@ QMimeData * _SwExecutorStreamTreeModel::mimeData ( const QModelIndexList &indexe
 	SwComponent_Class * cparent;
 	QString text;
 
-	foreach ( QModelIndex index, indexes )
+	for ( QModelIndex index : indexes )
 	{
 		if ( index.isValid () )
 		{
@@ -213,7 +213,7 @@ void _SwExecutorStreamTreeModel::OnExeAdded ( const QStringList & comps )
 	SwComponent_Class * comp;
 
 	emit layoutAboutToBeChanged ();
-	foreach ( item, comps )
+	for ( auto item : comps )
 	{
 		comp = SwAddress_ToolBox::FindTarget ( item, _root_component );
 		if ( (comp != NULL) && (_registered_components.find ( comp ) == _registered_components.end ()) )
@@ -232,7 +232,7 @@ void _SwExecutorStreamTreeModel::OnExeRemoved ( const QStringList & comps )
 	QSet<SwComponent_Class *>::iterator it;
 
 	emit layoutAboutToBeChanged ();
-	foreach ( item, comps )
+	for ( auto item : comps )
 	{
 		comp = SwAddress_ToolBox::FindTarget ( item, _root_component );
 		if ( comp != NULL )

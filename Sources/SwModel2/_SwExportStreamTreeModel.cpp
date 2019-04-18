@@ -60,7 +60,7 @@ QMimeData * _SwExportStreamTreeModel::mimeData(const QModelIndexList &indexes) c
     QString text;
     _Item * item;
 
-    foreach (QModelIndex index, indexes) {
+	for (QModelIndex index : indexes) {
         if (index.isValid()) {
             item=(_Item *)index.internalPointer();
             text=text+SwAddress_ToolBox::BuildAbsolutePath(item->_host);
@@ -215,7 +215,7 @@ _SwExportStreamTreeModel::_Item::_Item(_Item * parent,SwComponent_Class * host,_
 _SwExportStreamTreeModel::_Item::~_Item() {
     _Item * child;
 
-    foreach(child,_childs) {
+	for (auto child : _childs) {
         delete child;
     }
     _childs.clear();

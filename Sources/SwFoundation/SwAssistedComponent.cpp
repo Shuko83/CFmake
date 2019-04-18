@@ -418,7 +418,7 @@ SwAssistedComponent::~SwAssistedComponent()
 
 	//Clear pin
 	QList<SwPin*> tmpList3 = _listPin;
-	foreach(SwPin *pin ,tmpList3)
+	for (SwPin *pin : tmpList3)
 		unregisterPin(pin);
 
 	//Desenregistrement des services

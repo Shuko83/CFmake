@@ -47,7 +47,7 @@ void ManageLinkColor::loadStaticColor()
 	{
 		QSettings settings(ColorIni, QSettings::IniFormat);
 		QStringList allKeys = settings.allKeys();
-		foreach(QString val, allKeys)
+		for (QString val : allKeys)
 			if (settings.value(val).toString().startsWith("#"))
 				_mapColor.insert(val, settings.value(val).toString());
 	}

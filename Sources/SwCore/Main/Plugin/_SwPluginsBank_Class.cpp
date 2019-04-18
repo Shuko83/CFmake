@@ -398,7 +398,7 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
 	if(f->exists()) {
 		pathListUser=getPathsFromFile(f);
 		QString upath;
-		foreach(upath,pathListUser) {
+		for (auto upath : pathListUser) {
 			QString tmpupath=upath;
 			tmpupath.replace("\\Stable\\","\\********\\",Qt::CaseInsensitive); 
 			tmpupath.replace("\\Dev\\","\\********\\",Qt::CaseInsensitive); 
@@ -422,7 +422,7 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
 
 	}
 	QString path;
-	foreach(path,pathList) {
+	for (auto path : pathList) {
 		AddPath(path);
 	}
 
@@ -782,7 +782,7 @@ bool _SwPluginsBank_Class::updateHaveDone() {
 void _SwPluginsBank_Class::displayUpdate() {
 	_trayIcon->setVisible(true);
 	QString message="Updated files:\n";
-	foreach(QString f, _updatedFiles) {
+	for (QString f : _updatedFiles) {
 		message+=f+"\n";
 	}
 	_trayIcon->showMessage("Update information",message);

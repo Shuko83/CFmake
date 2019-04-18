@@ -64,7 +64,7 @@ void _SwServiceShortcuts::registerCommand( QString category, QString command, IS
 		_mapShortcuts.insert(cName,obj);
 
 		//Notify observer
-		foreach(ISwShortcutObserver *obs, _listObs)
+		for (ISwShortcutObserver *obs : _listObs)
 		{
 			obs->add(category, command, obj);
 		}
@@ -85,7 +85,7 @@ void _SwServiceShortcuts::unregisterCommand(QString category, QString command, I
 			qDebug() << "[Shortcut Services] - Unregister Command ("  <<obj->getCategory()<<","<<command<<")" ;
 #endif
 			//Notify observer
-			foreach(ISwShortcutObserver *obs, _listObs)
+			for (ISwShortcutObserver *obs : _listObs)
 			{
 				obs->remove(category, command, obj);
 			}
@@ -205,7 +205,7 @@ void _SwServiceShortcuts::bindKeyboard( QString sequence, QString shortcut, QWid
 
 
 	bool isAllReadyAShortcut = false;
-	foreach(QShortcut* tshortcut, _listKeyShortcut )
+	for (QShortcut* tshortcut : _listKeyShortcut )
 	{
 		if(tshortcut->key().toString() == sequence)
 			isAllReadyAShortcut = true;
@@ -299,7 +299,7 @@ void _SwServiceShortcuts::unBindAll()
 	_mapDevicesAssoc.clear();
 	_mapKeyboardAssoc.clear();
  
- 	foreach(QShortcut * ls , _listKeyShortcut)
+	for (QShortcut * ls : _listKeyShortcut)
  	{
 		if(ls)
 		{
@@ -329,7 +329,7 @@ void _SwServiceShortcuts::unBindDevices( QMap<QString,QList<QString>> devices )
 void _SwServiceShortcuts::unBindShortcuts( QMap<QString,QList<QString>> shortcuts )
 {
 	// On disconnecte et supprime que les shortcuts de la liste passée en paramètre
-	foreach(QShortcut* tshortcut, _listKeyShortcut )
+	for (QShortcut* tshortcut : _listKeyShortcut )
 	{
 		QString StringSeq = tshortcut->key().toString();
 

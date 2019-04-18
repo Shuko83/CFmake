@@ -16,7 +16,7 @@ SwSnapShotPropertiesService::SwSnapShotPropertiesService() {
 /** @brief Destructor */
 SwSnapShotPropertiesService::~SwSnapShotPropertiesService() {
     QList<PropDesc *> values=descProperties.values();
-    foreach(PropDesc * pdesc,values) {
+	for (PropDesc * pdesc : values) {
         delete pdesc;
     }
     descProperties.clear();
@@ -41,12 +41,12 @@ void SwSnapShotPropertiesService::removeFromSnapShot(QString property_name) {
 /** @brief doSnapShot */
 void SwSnapShotPropertiesService::doSnapShot(ISwProperties * properties){
     QList<PropDesc *> values=descProperties.values();
-    foreach(PropDesc * pdesc,values) {
+	for (PropDesc * pdesc : values) {
         delete pdesc;
     }
     descProperties.clear();
     QList<ISwProperty *> plist=properties->GetProperties();
-    foreach(ISwProperty * p,plist) {
+	for (ISwProperty * p : plist) {
         if (p->IsEditable()) {
             PropDesc * pdesc=new PropDesc();
             pdesc->hasChanged=p->HasChanged();

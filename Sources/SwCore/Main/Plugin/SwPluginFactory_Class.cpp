@@ -278,7 +278,7 @@ QMimeData * SwPluginFactory_Class::mimeData(const QModelIndexList &indexes) cons
      QMimeData *mimeData = new QMimeData();
      QString text;
 
-     foreach (QModelIndex index, indexes) {
+     for (QModelIndex index : indexes) {
          if (index.isValid()) {
              text=text+data(index, Qt::DisplayRole).toString();
              text+= ";";

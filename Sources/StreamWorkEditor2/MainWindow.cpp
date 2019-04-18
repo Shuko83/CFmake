@@ -81,7 +81,7 @@ MainWindow::MainWindow(bool loadStream /*= true*/) :QMainWindow(), _streamContro
 	if (_history.count() != 0)
 	{
 		int index = 1;
-		foreach(QString absF, _history)
+		for (QString absF : _history)
 		{
 			QFileInfo *test = new QFileInfo(absF);
 			if (test->exists())

@@ -30,7 +30,7 @@ bool SwDockWidget_TabWidget::event( QEvent * event )
 			for (int i = 0; i < count(); i++)
 				list.push_back(widget(i));
 			//Fermeture de tous les widgets
-			foreach(QWidget * w, list)
+			for (QWidget * w : list)
 				w->close();
 			break;
 	}

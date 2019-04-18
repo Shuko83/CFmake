@@ -69,7 +69,7 @@ QMimeData * ComponentListModel::mimeData(const QModelIndexList &indexes) const{
          return mimeData;
      }
 
-     foreach (QModelIndex index, indexes) {
+	 for (QModelIndex index: indexes) {
          if (index.isValid()) {
              text=text+data(index, Qt::DisplayRole).toString();
              text+= ";";
@@ -95,7 +95,7 @@ void ComponentListModel::onSelectedPluginChanged(const QModelIndex & index)
 			int i =0;
 			QList<QString> sortedList =  _plugin->GetComponentsList().toList();
 			qSort(sortedList);
-			foreach(QString componentName,sortedList)
+			for (QString componentName : sortedList)
 			{
 				InfoCompo tmp;
 				tmp.componentName = componentName;
@@ -132,7 +132,7 @@ void ComponentListModel::manageList(QStringList listComponent)
 	{
 		beginResetModel();
 		int indice=0;
- 		foreach(QString componentName,listComponent)
+		for (QString componentName : listComponent)
  		{
  			QMapIterator<QString, QStringList> i(_componentPlugin);
  			while (i.hasNext()) 

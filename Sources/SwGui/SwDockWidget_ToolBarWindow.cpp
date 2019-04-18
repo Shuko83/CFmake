@@ -274,7 +274,7 @@ QWidget * SwDockWidget_ToolBarWindow::getToolBarUnderCursor(QWidget * activeTool
 {
 	QPoint pos = QCursor::pos();
 
-	foreach (QObject * obj, _listToolBar)
+	for (QObject * obj : _listToolBar)
 	{
 		SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
 		if (tb && tb != activeToolBar)
@@ -297,7 +297,7 @@ QList<QObject*> SwDockWidget_ToolBarWindow::getListToolBar()
 void SwDockWidget_ToolBarWindow::saveToolBar(QDomDocument doc, QDomElement dom)
 {
 	//Parcours des toolbar
-	foreach(QObject * obj, _listToolBar)
+	for (QObject * obj : _listToolBar)
 	{
 		SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
 		if (tb)
@@ -445,7 +445,7 @@ void SwDockWidget_ToolBarWindow::closeToolBar()
 	{
 		//Recuperation des docks contenus dans la toolbar
 		QList<QWidget*> list = tb->getListWidget();
-		foreach (QWidget * widget, list)
+		for (QWidget * widget : list)
 		{
 			widget->close();
 		}
@@ -472,7 +472,7 @@ void SwDockWidget_ToolBarWindow::lock()
 	if (!_lock)
 	{
 		_lock = true;
-		foreach(QObject * obj, _listToolBar)
+		for (QObject * obj : _listToolBar)
 		{
 			SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
 			if (tb)
@@ -489,7 +489,7 @@ void SwDockWidget_ToolBarWindow::releaseLock()
 	if (_lock)
 	{
 		_lock = false;
-		foreach(QObject * obj, _listToolBar)
+		for (QObject * obj : _listToolBar)
 		{
 			SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
 			if (tb)
@@ -522,7 +522,7 @@ void SwDockWidget_ToolBarWindow::setLock(bool state)
 //-----------------------------------------------------------------------------
 void SwDockWidget_ToolBarWindow::closeToolbars()
 {
-	foreach(QObject * obj, _listToolBar)
+	for (QObject * obj : _listToolBar)
 	{
 		SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
 		if (tb)
@@ -535,7 +535,7 @@ void SwDockWidget_ToolBarWindow::closeToolbars()
 //-----------------------------------------------------------------------------
 void SwDockWidget_ToolBarWindow::updateMainWidget()
 {
-	foreach(QObject * obj, _listToolBar)
+	for (QObject * obj : _listToolBar)
 	{
 		SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
 		if (tb)
@@ -549,7 +549,7 @@ void SwDockWidget_ToolBarWindow::updateMainWidget()
 //-----------------------------------------------------------------------------
 void SwDockWidget_ToolBarWindow::updateToolBarMainRect()
 {
-	foreach(QObject * obj, _listToolBar)
+	for (QObject * obj: _listToolBar)
 	{
 		SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(obj);
 		if (tb)

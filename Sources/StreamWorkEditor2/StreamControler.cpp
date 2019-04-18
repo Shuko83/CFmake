@@ -683,7 +683,7 @@ void StreamControler::OnDisconnectInterface(ISwInterfaces_Service * source, QStr
 
 
 		//-----------------------------------------------------------------------
-		foreach(LinkGraphicItem * item, list)
+		for (LinkGraphicItem * item : list)
 		{
 			StreamWork::SwCore::SwComponent_Class * tmpC = ((ComponentGraphicItem *) item->getSource()->parentItem())->getComponent();
 			StreamWork::SwCore::SwComponent_Class * tmpS = ((ComponentGraphicItem *) item->getTarget()->parentItem())->getComponent();
@@ -879,7 +879,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 	QMap<StreamWork::SwCore::SwComponent_Class *, ComponentGraphicItem *>::iterator it;
 	QPointF targetpos;
 
-	foreach(SwComponent_Class * comp, components)
+	for (SwComponent_Class * comp : components)
 	{
 		it = _mapCompToItem.find(comp);
 		targetpos += it.value()->pos();
@@ -910,7 +910,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 
 	QMap<SwComponent_Class*, QStringList> allreadyConsumed;
 	QList<ModelCreatorHelper::ConsumerKey*> toremove;
-	foreach(SwComponent_Class * comp, components)
+	for (SwComponent_Class * comp : components)
 	{
 		//pour chaque interface produite linké a un composant exterieur a la selection
 		//On la rajoute au model host
@@ -1051,7 +1051,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 	_rootComponent->AddChild(model);
 
 	//Remove non fully integraded consumer
-	foreach(ModelCreatorHelper::ConsumerKey* key, toremove)
+	for (ModelCreatorHelper::ConsumerKey* key : toremove)
 	{
 		modelCreatorHelper.removeConsumerLink(key);
 	}

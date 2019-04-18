@@ -258,7 +258,7 @@ QVariant InterestArea::itemChange(GraphicsItemChange change,const QVariant & val
 		if ( !childItems().isEmpty() )
 		{
 			//-----------------------------------------------------------------------
-			foreach(QGraphicsItem *item, childItems())
+			for (QGraphicsItem *item : childItems())
 			{
 				ComponentGraphicItem * component = dynamic_cast<ComponentGraphicItem*>(item);
 				if ( component )

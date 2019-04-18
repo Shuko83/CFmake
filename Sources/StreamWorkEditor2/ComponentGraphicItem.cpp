@@ -149,7 +149,7 @@ void ComponentGraphicItem::updateAttributs()
 	qreal half_width;
 	qreal half_height;
 
-	foreach(ConnectorGraphicItem * connec, _connectors)
+	for (ConnectorGraphicItem * connec : _connectors)
 	{
 		if ( connec->getConnectorType() == PROVIDER )
 		{
@@ -497,7 +497,7 @@ void ComponentGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 		QRectF irect = mapToScene(_bbox | childrenBoundingRect()).boundingRect();
 		bool found = false;
 
-		foreach(QGraphicsItem *item, scene()->items())
+		for (QGraphicsItem *item : scene()->items())
 		{
 			InterestArea *ia = dynamic_cast<InterestArea*>(item);
 			if ( ia )

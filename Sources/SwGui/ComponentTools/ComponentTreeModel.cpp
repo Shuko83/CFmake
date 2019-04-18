@@ -55,7 +55,7 @@ QMimeData * ComponentTreeModel::mimeData(const QModelIndexList &indexes) const
 	QString text;
 	_Item * item;
 
-	foreach(QModelIndex index, indexes)
+	for (QModelIndex index : indexes)
 	{
 		if ( index.isValid() )
 		{
@@ -178,7 +178,7 @@ ComponentTreeModel::_Item::~_Item()
 {
 	_Item * child;
 
-	foreach(child, _childs)
+	for (auto child : _childs)
 		delete child;
 
 	_childs.clear();

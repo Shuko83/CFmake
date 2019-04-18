@@ -338,7 +338,7 @@ void StreamView::showSearchBox()
 //-----------------------------------------------------------------------
 void StreamView::doSearch()
 {
-	foreach(QGraphicsItem * item, scene()->items())
+	for (QGraphicsItem * item : scene()->items())
 	{
 		ComponentGraphicItem * gItem = dynamic_cast<ComponentGraphicItem*>(item);
 		if ( gItem &&  gItem->getComponent() )
@@ -359,7 +359,7 @@ void StreamView::doSearch()
 	{
 		QRectF allItemsBounding;
 
-		foreach(QGraphicsItem * item, scene()->selectedItems())
+		for (QGraphicsItem * item : scene()->selectedItems())
 		{
 			QRectF tmp = item->boundingRect();
 			tmp.moveTo(item->pos().x() - item->boundingRect().size().width() / 2, item->pos().y());

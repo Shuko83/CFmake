@@ -105,7 +105,7 @@ void SwDockWidget_ToolBar::updateOrientation()
 	//Restauration des widgets
 	if (list.isEmpty() == false)
 	{
-		foreach(QWidget * widg, list)
+		for (QWidget * widg : list)
 		{
 			_layout->addWidget(widg);
 			SwDockWidget_ToolBarItem * item = qobject_cast<SwDockWidget_ToolBarItem*>(widg);

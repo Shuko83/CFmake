@@ -282,7 +282,7 @@ void SwProperties_Class::Liberate(){
     _map_properties.clear();
     _set_properties.clear();
 
-	foreach(SwProperties_ClassHelper * helper, _helpers)
+	for (SwProperties_ClassHelper * helper : _helpers)
 	{
 		helper->unValidate();	
 	}

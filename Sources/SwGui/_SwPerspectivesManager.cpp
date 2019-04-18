@@ -280,7 +280,7 @@ void _SwPerspectivesManager::removeButtons( int number )
 void _SwPerspectivesManager::updatePositionButton()
 {
     //    int i=0;
-    //foreach(_SwPerspectiveButton * button,_buttons) {
+    //for(_SwPerspectiveButton * button : _buttons) {
     //    if (button->isVisible()){
     //        button->move(CL_MARGIN,CL_MARGIN+(CG_PERSPECTIVE_BUTTON_SIZE+CL_MARGIN)*i);
     //        i++;

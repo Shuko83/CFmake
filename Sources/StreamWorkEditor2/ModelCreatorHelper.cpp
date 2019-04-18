@@ -52,7 +52,7 @@ void ModelCreatorHelper::connectInternalToModelHost(SwComponent_Class * model_ho
     }
 
     //Pour les connectors: deconnexion
-    foreach(ConnectorItem * item,connectorLinks) {
+	for (ConnectorItem * item : connectorLinks) {
         item->source->GetManager()->DisconnectPin(item->source->GetName());
     }
 
@@ -95,7 +95,7 @@ void ModelCreatorHelper::connectInternalToModelHost(SwComponent_Class * model_ho
     //Pour les connectors: connexion au model host
     ISwPins_Manager *pins_manager_handle=dynamic_cast<ISwPins_Manager *>(model_host->QueryService(CG_SW_SERVICE_PINS_MANAGER));
     if (pins_manager_handle!=0) {
-        foreach(ConnectorItem * item,connectorLinks) {
+		for (ConnectorItem * item : connectorLinks) {
             item->source->GetManager()->ConnectRemotePinToLocalPin(item->source->GetName(),item->m_connecteur,pins_manager_handle);
         }
 
@@ -128,7 +128,7 @@ void ModelCreatorHelper::connectModelToExternal(SwComponent_Class * model) {
     //Pour les connectors: connexion au model host
     ISwPins_Manager *pins_manager_handle=dynamic_cast<ISwPins_Manager *>(model->QueryService(CG_SW_SERVICE_PINS_MANAGER));
     if (pins_manager_handle!=0) {
-        foreach(ConnectorItem * item,connectorLinks) {
+		for (ConnectorItem * item : connectorLinks) {
             item->rtarget->GetManager()->ConnectRemotePinToLocalPin(item->rtarget->GetName(),item->m_connecteur,pins_manager_handle);
         }
     }

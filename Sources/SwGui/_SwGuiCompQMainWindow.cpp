@@ -627,10 +627,10 @@ void _SwGuiCompQMainWindow::removeObserver( ISwEventObserver * obs )
 //-----------------------------------------------------------------------
 void _SwGuiCompQMainWindow::notify( QEvent * event )
 {
-    ISwEventObserver * itObs = nullptr;
-    
-    foreach( itObs, _iSwEvent )
-        itObs->onEvent( event );
+	ISwEventObserver * itObs = nullptr;
+
+	for (auto itObs : _iSwEvent)
+		itObs->onEvent(event);
 }
 
 //---------------------------------------------------------------------------------

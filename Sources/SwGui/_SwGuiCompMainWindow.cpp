@@ -149,7 +149,7 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
         {
             //Pour chaque dock de la liste
             QList<SwDockWidget_DockWidget *> list = listdockwidget_it.value()->GetListDockWidget();
-            foreach( SwDockWidget_DockWidget * widget, list )
+			for ( SwDockWidget_DockWidget * widget : list )
             {
                 //S'il etait definie, on le detache de la main window
                 if( widget )
@@ -594,7 +594,7 @@ void _SwGuiCompMainWindow::removeObserver( ISwEventObserver * obs )
 void _SwGuiCompMainWindow::notify( QEvent * event )
 {
     ISwEventObserver * itObs = nullptr;
-    foreach( itObs, _iSwEvent )
+	for ( auto itObs : _iSwEvent )
     {
         itObs->onEvent( event );
     }
@@ -673,7 +673,7 @@ void _SwGuiCompMainWindow::interfaceAvailable( QString interfaceName )
             //Enregistrement du listener
             widget->addDockWidgetListener( this );
             //Ajout des docks presents
-            foreach( SwDockWidget_DockWidget * dock, widget->GetListDockWidget() )
+			for ( SwDockWidget_DockWidget * dock : widget->GetListDockWidget() )
             {
                 if( dock && _mainWindow )
                     _mainWindow->addDockWidget( dock, widget->getDockWidgetName() );
@@ -766,7 +766,7 @@ void _SwGuiCompMainWindow::interfaceUnavailable( QString interfaceName )
             //Suppression du listener
             widget->removeDockWidgetListener( this );
             //Suppression des docks presents
-            foreach( SwDockWidget_DockWidget * dock, widget->GetListDockWidget() )
+			for ( SwDockWidget_DockWidget * dock: widget->GetListDockWidget() )
             {
                 if( dock && _mainWindow )
                     _mainWindow->removeDockWidget( dock );

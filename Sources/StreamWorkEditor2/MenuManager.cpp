@@ -123,7 +123,7 @@ void MenuManager::rebuildMenu() {
 				{
 					//parcours les propriétés et cherche si "visible est contenu dans le text"
 					QList<ISwProperty*>prop = serv->GetProperties();
-					foreach(ISwProperty *swprop , prop)
+					for (ISwProperty *swprop : prop)
 					{
 						if(swprop && swprop->GetName().contains("visible"))
 							_propertyList.push_back(swprop);
@@ -210,7 +210,7 @@ void MenuManager::buildMenuForContext(QMenu * menu) {
 
 		//Gestion de show et du hide
 		bool allVisible = true;
-		foreach(ISwProperty* prop, _propertyList)
+		for (ISwProperty* prop : _propertyList)
 		{
 			if(prop->GetValue().toBool() == false)
 				allVisible = false;
@@ -443,7 +443,7 @@ void MenuManager::buildMenuForConnector(QMenu * menu,ConnectorGraphicItem * conn
 		{
 			QList<ISwExtension *> availableExtensions = serviceExtension->getExtensionWithType(_selectedConnector->getModelType());
 			QMenu *submenu = menu->addMenu(QIcon(), "Create and connect to");
-			foreach(ISwExtension * ext, availableExtensions) {
+			for (ISwExtension * ext : availableExtensions) {
 				QIcon icon = SW_APP->ComponentsBank().GetComponentIcon(ext->getComponentType());
 				QAction * action = submenu->addAction(icon, ext->getComponentType() + "." + ext->getName(), this, SLOT(onCreateAndConnect()));
 				action->setToolTip(SW_APP->ComponentsBank().GetComponentDescription(ext->getComponentType()));
@@ -471,7 +471,7 @@ void MenuManager::onCreateAndConnect() {
     if (action!=0) {
         ISwServiceExtensions * serviceExtension=dynamic_cast<ISwServiceExtensions *>(SW_APP->QueryService(CG_SW_SERVICE_EXTENSION_MANAGER));
         QList<ISwExtension *> availableExtensions=serviceExtension->getExtensionWithType(_selectedConnector->getModelType());
-        foreach(ISwExtension * ext,availableExtensions) {
+		for (ISwExtension * ext : availableExtensions) {
             if ((ext->getComponentType()+"."+ext->getName())==action->text()) {
                 QPointF spos=_selectedConnector->mapToScene(0.0,0.0);
                 spos.setX(spos.x()+200);
@@ -494,7 +494,7 @@ void MenuManager::onConnect() {
     QObject * object=sender();
     QAction * action=dynamic_cast<QAction *>(object);
     if (action!=0) {
-        foreach(ConnectorGraphicItem *citem,_connectableItems) {
+		for (ConnectorGraphicItem *citem : _connectableItems) {
             if (buildActionNameForConnector(citem)==action->text()) {
                 _streamControler->onLinkConnectors(_selectedConnector,citem);
                 menuNeedBeRebuild=true;

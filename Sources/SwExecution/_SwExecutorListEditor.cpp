@@ -142,7 +142,7 @@ void _SwExecutorListEditor::dropEvent ( QDropEvent *event )
 		if ( allNewItems.count () == 2 )
 		{
 			newItemsModeString = allNewItems[1].split ( ";", QString::SkipEmptyParts );
-			foreach ( QString itemModeString, newItemsModeString )
+			for ( QString itemModeString : newItemsModeString )
 			{
 				if ( itemModeString == "N" )
 				{
@@ -163,7 +163,7 @@ void _SwExecutorListEditor::dropEvent ( QDropEvent *event )
 		//Si c'est un deplacement
 		if ( event->source () == this )
 		{
-			foreach ( item, newItems )
+			for (auto item : newItems )
 			{
 				int item_to_remove = _path_list->indexOf ( item );
 				if ( item_to_remove < index )
@@ -371,7 +371,7 @@ void _SwExecutorListEditor::keyPressEvent ( QKeyEvent * event )
 			}
 		}
 		emit OnExeRemoved ( ltext );
-		foreach ( item, ltext )
+		for (auto item : ltext )
 		{
 			item_to_remove = _path_list->indexOf ( item );
 			_path_list->removeAt ( item_to_remove );
