@@ -397,7 +397,7 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
 	f=new QFile(pathsdescriptor+"."+userName);
 	if(f->exists()) {
 		pathListUser=getPathsFromFile(f);
-		QString upath;
+
 		for (auto upath : pathListUser) {
 			QString tmpupath=upath;
 			tmpupath.replace("\\Stable\\","\\********\\",Qt::CaseInsensitive); 
@@ -421,7 +421,7 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
 		}
 
 	}
-	QString path;
+
 	for (auto path : pathList) {
 		AddPath(path);
 	}

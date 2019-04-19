@@ -176,8 +176,6 @@ ComponentTreeModel::_Item::_Item(_Item * parent, SwComponent_Class * host, QStri
 //---------------------------------------------------------------------------------
 ComponentTreeModel::_Item::~_Item()
 {
-	_Item * child;
-
 	for (auto child : _childs)
 		delete child;
 
