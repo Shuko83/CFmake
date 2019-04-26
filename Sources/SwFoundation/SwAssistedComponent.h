@@ -63,7 +63,7 @@ namespace StreamWork {
 			public SwComponent_Class,
 			virtual public ISwInterfaces_ConsumerObserver,
 			virtual public ISwPin_Listener,
-			virtual private ISwShortcut,
+			virtual protected ISwShortcut,
 			virtual public ISwPersistent,
 			virtual public ISwPersistentConfigurable,
 			virtual public ISwServicesManager_Listener
