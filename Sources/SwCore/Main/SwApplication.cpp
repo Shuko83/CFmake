@@ -105,7 +105,7 @@ SwApplication * SwApplication::GetInstance()
 		QString appName = QCoreApplication::applicationName();
 		if (appName.isEmpty())
 		{
-			QStringList names = QCoreApplication::applicationFilePath().split(QRegExp("[\\\\/]"));
+			QStringList names = QCoreApplication::applicationFilePath().split(QRegularExpression("[\\\\/]"));
 			if (names.count() > 0)
 			{
 				QStringList namep = names.at(names.count() - 1).split(".");

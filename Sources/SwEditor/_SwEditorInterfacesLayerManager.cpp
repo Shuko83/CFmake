@@ -8,7 +8,7 @@
 
 #include <QtGlobal>
 #include <QAction>
-#include <QRegExp>
+#include <QRegularExpression>
 
 #include "_SwEditorInterfacesLayerManager.h"
 #include "_SwEditorInterfaceGraphicItem.h"
@@ -114,7 +114,7 @@ void _SwEditorInterfacesLayerManager::OnAddInterface(ISwInterfaces_Service * sou
 
 //Nom simple depend de l'os
 #ifdef Q_WS_WIN
-        QRegExp r("class ([A-Za-z_0-9]*::)*([A-Za-z_0-9]*) *\\*");
+        QRegularExpression r("class ([A-Za-z_0-9]*::)*([A-Za-z_0-9]*) *\\*");
         if (r.exactMatch(type_interface)) {
             QStringList l=r.capturedTexts();
             simple_type_interface=l[l.count()-1];

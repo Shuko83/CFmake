@@ -6,7 +6,7 @@
  \author EPO
 */
 
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QTime>
 #include <QLocale>
 #include <QDate>
@@ -49,7 +49,7 @@ QString _SwFoundationPluginFactory_Class::GetPluginVersion(){
 
     build=QString("%1 %2").arg(__DATE__).arg(__TIME__);
     build=build.toUpper();
-    build.replace(QRegExp("[ |:]+"), ".");
+    build.replace(QRegularExpression("[ |:]+"), ".");
 #ifndef QT_NO_DEBUG
     build+=" (Debug)";
 #else

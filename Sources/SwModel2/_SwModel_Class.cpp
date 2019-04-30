@@ -11,7 +11,7 @@
 #include "_SwModel_Class.h"
 #include <SwMacros.h>
 #include <QUuid>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <SwAddress_ToolBox.h>
 #include "_SwModelHost_Class.h"
 #include "_SwModelHostSelector.h"
@@ -38,7 +38,7 @@ _SwModel_Class::_SwModel_Class(QString model_name,SwComponent_Class * root_eleme
     //generation du nom
     uuid=QUuid::createUuid();
     s=uuid.toString();
-    s.replace(QRegExp("[{}-]"), "_");
+    s.replace(QRegularExpression("[{}-]"), "_");
     s=s.toUpper();
     s=model_name+s;
     
@@ -106,7 +106,7 @@ void _SwModel_Class::SetName(const QString & new_name) throw(SwException) {
     SwComponent_Class::SetName(new_name);
     if (!_isDefault) {
         QString goodName=SwAddress_ToolBox::BuildUniversalPath(this);
-        goodName.replace(QRegExp("[\\.$]"), "_");
+        goodName.replace(QRegularExpression("[\\.$]"), "_");
         _root_element->SetName(goodName+"__ModelInstance");    
         _root_element->AcceptVisitor(this);
     }
@@ -115,7 +115,7 @@ void _SwModel_Class::SetName(const QString & new_name) throw(SwException) {
 void _SwModel_Class::RootParentNameHasChanged() {
     if (!_isDefault) {
         QString goodName=SwAddress_ToolBox::BuildUniversalPath(this);
-        goodName.replace(QRegExp("[\\.$]"), "_");
+        goodName.replace(QRegularExpression("[\\.$]"), "_");
         _root_element->SetName(goodName+"__ModelInstance");    
         _root_element->AcceptVisitor(this);
     }    

@@ -8,7 +8,7 @@
 
 #include <QLibrary>
 #include <QProcess>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QDir>
 #include <QFile>
 #include <QColor>

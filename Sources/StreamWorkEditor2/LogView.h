@@ -49,7 +49,7 @@ private:
     QTimer _timer;
     QMutex _mutex;
     QStringList _msgs;
-    QRegExp _regexp;
+    QRegularExpression _regexp;
     QString _regentry;
     QStringList _content;
 	bool _logEnable;

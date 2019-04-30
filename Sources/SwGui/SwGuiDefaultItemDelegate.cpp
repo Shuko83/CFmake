@@ -39,12 +39,12 @@ SwGuiDefaultItemDelegate::SwGuiDefaultItemDelegate(QObject *parent) : QDynamicSt
 {
 	currentWidgetIcon = NULL;
 	boolExp.setPattern("true|false");
-	boolExp.setCaseSensitivity(Qt::CaseInsensitive);
+	boolExp.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
 	currentWidgetFileDescriptor = 0;
 	byteArrayExp.setPattern("[\\x00-\\xff]*");
 	charExp.setPattern(".");
 	ipV4Exp.setPattern("(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})");
-	//ipV4Exp.setPatternSyntax(QRegExp::Wildcard);
+	//ipV4Exp.setPatternSyntax(QRegularExpression::Wildcard);
 	doubleExp.setPattern("");
 	pointExp.setPattern("\\((-?[0-9]*),(-?[0-9]*)\\)");
 	rectExp.setPattern("\\((-?[0-9]*),(-?[0-9]*),(-?[0-9]*),(-?[0-9]*)\\)");
@@ -253,11 +253,11 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent, const QStyleOpt
 	QLineEdit *lineEdit = new QLineEdit(parent);
 	lineEdit->setFrame(false);
 
-	QRegExp regExp;
+	QRegularExpression regExp;
 
 	if ( qMetaTypeId<SwIpV4Address>() == originalValue.userType() )
 	{
-		//QValidator *validator = new QRegExpValidator(regExp, lineEdit);
+		//QValidator *validator = new QRegularExpressionValidator(regExp, lineEdit);
 		//lineEdit->setValidator(validator);
 		return lineEdit;
 	}
@@ -313,9 +313,9 @@ QWidget *SwGuiDefaultItemDelegate::createEditor(QWidget *parent, const QStyleOpt
 			;
 	}
 
-	if ( !regExp.isEmpty() )
+	if ( !regExp.pattern().isEmpty() )
 	{
-		QValidator *validator = new QRegExpValidator(regExp, lineEdit);
+		QValidator *validator = new QRegularExpressionValidator(regExp, lineEdit);
 		lineEdit->setValidator(validator);
 	}
 
@@ -596,23 +596,31 @@ void SwGuiDefaultItemDelegate::setModelData(QWidget *editor, QAbstractItemModel 
 		}
 		break;
 		case QVariant::Point:
-			pointExp.exactMatch(text);
-			value = QPoint(pointExp.cap(1).toInt(), pointExp.cap(2).toInt());
+		{
+			QRegularExpressionMatch match = pointExp.match(text);
+			value = QPoint(match.captured(1).toInt(), match.captured(2).toInt());
 			break;
+		}
 		case QVariant::Rect:
-			rectExp.exactMatch(text);
-			value = QRect(rectExp.cap(1).toInt(), rectExp.cap(2).toInt(),
-						  rectExp.cap(3).toInt(), rectExp.cap(4).toInt());
+		{
+			QRegularExpressionMatch match = rectExp.match(text);
+			value = QRect(match.captured(1).toInt(), match.captured(2).toInt(),
+				match.captured(3).toInt(), match.captured(4).toInt());
 			break;
+		}
 		case QVariant::RectF:
-			rectFExp.exactMatch(text);
-			value = QRectF(rectFExp.cap(1).toDouble(), rectFExp.cap(2).toDouble(),
-						   rectFExp.cap(3).toDouble(), rectFExp.cap(4).toDouble());
+		{
+			QRegularExpressionMatch match = rectFExp.match(text);
+			value = QRectF(match.captured(1).toDouble(), match.captured(2).toDouble(),
+				match.captured(3).toDouble(), match.captured(4).toDouble());
 			break;
+		}
 		case QVariant::Size:
-			sizeExp.exactMatch(text);
-			value = QSize(sizeExp.cap(1).toInt(), sizeExp.cap(2).toInt());
+		{
+			QRegularExpressionMatch match = sizeExp.match(text);
+			value = QSize(match.captured(1).toInt(), match.captured(2).toInt());
 			break;
+		}
 		case QVariant::StringList:
 			value = text.split(",");
 			break;

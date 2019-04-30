@@ -13,7 +13,7 @@ Company: DIGINEXT
 /*
   * INCLUDES LOCAUX
   */
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QDebug>
 #include "SwNamed_Class.h"
 
@@ -71,8 +71,8 @@ void SwNamed_Class::SetDescription(const QString & new_description)
 //-----------------------------------------------------------------------
 bool SwNamed_Class::CheckNameValidity(const QString & name)
 {
-	QRegExp rx("^[A-Za-z_][A-Za-z_0-9]*$");
-	if ( !rx.exactMatch(name) )
+	QRegularExpression rx("^[A-Za-z_][A-Za-z_0-9]*$");
+	if ( !name.contains(rx) )
 	{
 		return false;
 	}

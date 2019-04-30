@@ -7,7 +7,7 @@
 
 #include <QtGlobal>
 #include <QStringList>
-#include <QRegExp>
+#include <QRegularExpression>
 #include "SwMacros.h"
 #include "SwComponent_Class.h"
 #include "_SwCleanLinksVisitor.h"
@@ -237,18 +237,18 @@ QString SwComponent_Class::GetSuggestedNameForChild(QString initial_name)
 	long index, new_index;
 	bool result;
 	QStringList list;
-	QRegExp rx("(.*[^0-9])([0-9]+)$");
+	QRegularExpression rx("(.*[^0-9])([0-9]+)$");
 
 	//Check si le nom contient des caractères interdis et on remplace par "_"
-	QString newName = initial_name.replace(QRegExp(":+"), "_");
+	QString newName = initial_name.replace(QRegularExpression(":+"), "_");
 
 	it = _child_components.find(newName);
 	if ( it == _child_components.end() )
 		return newName;
 
 	//Si c'est un nom numerote -extraction de la racine
-	rx.indexIn(newName);
-	list = rx.capturedTexts();
+	QRegularExpressionMatch match = rx.match(newName);
+	list = match.capturedTexts();
 	if ( list.count() == 3 )
 	{
 		//Matching, on recupere la racine

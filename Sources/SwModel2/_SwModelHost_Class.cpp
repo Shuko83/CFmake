@@ -10,7 +10,7 @@
 #include <SwMacros.h>
 #include <SwMacros.h>
 #include <QUuid>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <SwAddress_ToolBox.h>
 #include <QMessageBox>
 #include "_SwModelHost_Class.h"

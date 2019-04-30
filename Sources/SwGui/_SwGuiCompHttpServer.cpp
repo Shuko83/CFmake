@@ -9,7 +9,7 @@
 #include <QTcpSocket>
 #include <QStringList>
 #include <QString>
-#include <QRegExp>
+#include <QRegularExpression>
 //#include <QHttpRequestHeader>
 //#include <QHttpResponseHeader>
 #include <QFile>

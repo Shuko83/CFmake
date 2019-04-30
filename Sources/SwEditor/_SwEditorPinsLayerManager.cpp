@@ -8,7 +8,7 @@
 
 #include <QtGlobal>
 #include <QAction>
-#include <QRegExp>
+#include <QRegularExpression>
 
 #include "_SwEditorPinsLayerManager.h"
 #include "_SwEditorPinGraphicItem.h"

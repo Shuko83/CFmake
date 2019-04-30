@@ -1,5 +1,6 @@
 #include "_SwGuiCssHighlighter.h"
 
+#include <QRegularExpression>
 
 _SwGuiCssHighlighter::_SwGuiCssHighlighter(QTextDocument *document)
 : QSyntaxHighlighter(document),pattern (""),isMatchCase(false),isMatchWord(false), isRegx(false)
@@ -158,11 +159,13 @@ void _SwGuiCssHighlighter::highlight(const QString &text, int start, int length,
 			if(isMatchWord && !isRegx)
 				pat = "\\b"+pattern+"\\b";
 
-			QRegExp expression(pat);
-			int index = text.indexOf(expression);
-			while (index >= 0) 
+			QRegularExpression expression(pat);
+			QRegularExpressionMatch match = expression.match(text);
+			
+			while (match.hasMatch())
 			{
-				int length = expression.matchedLength();
+				int index = match.capturedStart();
+				int length = match.capturedLength();
 				setFormat(index, length, myClassFormat);
 				index = text.indexOf(expression, index + length);
 			}

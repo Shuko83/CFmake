@@ -27,8 +27,6 @@ LogView::LogView():QDialog()
     connect(ui.regExpEntry,SIGNAL(editTextChanged ( const QString &  )),this,SLOT(onRegexpTextChangeOnFly( const QString &)));
 	connect(ui.cb_enable,SIGNAL(stateChanged ( int )),this,SLOT(onCheckBoxChange( int)));
     ui.regExpEntry->setInsertPolicy(QComboBox::InsertAtTop);
-    _regexp.setPatternSyntax(QRegExp::RegExp);
-    _regexp.setMinimal(true);
 
 	QSettings settings;
 	_logEnable = settings.value("logEnable",true).toBool();
@@ -85,7 +83,7 @@ void LogView::updateLog() {
         for(int i=0;i<_msgs.count();i++) {
             _content.push_back(_msgs[i]);
             if (!_regentry.isEmpty()) {
-                if (_regexp.indexIn(_content[i])>=0) {
+                if (_content[i].contains(_regexp)) {
                     ui.logView->append(_msgs[i]);
                 }
             } else {
@@ -113,7 +111,7 @@ void LogView::onRegexpTextChange( const QString & text) {
     return;
   }
   for(int i=0;i<_content.count();i++) {
-        if (_regexp.indexIn(_content[i])>=0) {
+        if (_content[i].contains(_regexp)) {
             ui.logView->append(_content[i]);
         } 
   }

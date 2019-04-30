@@ -7,7 +7,7 @@
  \note first generation by plugin generator
 */
 
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QTime>
 
 #include "_SwEditorPluginFactory_Class.h"
@@ -108,7 +108,7 @@ QString _SwEditorPluginFactory_Class::GetPluginVersion(){
 
     build=QString("%1 %2").arg(__DATE__).arg(__TIME__);
     build=build.toUpper();
-    build.replace(QRegExp("[ |:]+"), ".");
+    build.replace(QRegularExpression("[ |:]+"), ".");
 #ifndef QT_NO_DEBUG
     build+=" (Debug)";
 #else 

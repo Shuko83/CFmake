@@ -15,7 +15,7 @@
   * INCLUDES GLOBAUX
   */
 #include <QDynamicStyledItemDelegate.h>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QFont>
 #include <QFileDialog>
 #include "SwFileDescriptor.h"
@@ -50,21 +50,21 @@ namespace StreamWork
             void setModelData(QWidget *editor, QAbstractItemModel *model,
                             const QModelIndex &index) const;
         private:
-            mutable QRegExp boolExp;
-            mutable QRegExp byteArrayExp;
-            mutable QRegExp charExp;
-            mutable QRegExp ipV4Exp;
-            mutable QRegExp dateExp;
-            mutable QRegExp dateTimeExp;
-            mutable QRegExp doubleExp;
-            mutable QRegExp pointExp;
-			mutable QRegExp rectExp;
-			mutable QRegExp rectFExp;
-			mutable QRegExp signedIntegerExp;
-            mutable QRegExp sizeExp;
-            mutable QRegExp timeExp;
-            mutable QRegExp uuidExp;
-            mutable QRegExp unsignedIntegerExp;
+            mutable QRegularExpression boolExp;
+            mutable QRegularExpression byteArrayExp;
+            mutable QRegularExpression charExp;
+            mutable QRegularExpression ipV4Exp;
+            mutable QRegularExpression dateExp;
+            mutable QRegularExpression dateTimeExp;
+            mutable QRegularExpression doubleExp;
+            mutable QRegularExpression pointExp;
+			mutable QRegularExpression rectExp;
+			mutable QRegularExpression rectFExp;
+			mutable QRegularExpression signedIntegerExp;
+            mutable QRegularExpression sizeExp;
+            mutable QRegularExpression timeExp;
+            mutable QRegularExpression uuidExp;
+            mutable QRegularExpression unsignedIntegerExp;
             mutable QFont currentFont;
             mutable QColor currentColor;
             mutable SwCore::SwIconDescriptor currentIconDesc;

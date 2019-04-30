@@ -3,6 +3,8 @@
 #include "SwMacros.h"
 #include "SwConfPushButton.h"
 
+#include <QRegularExpression>
+
 using namespace StreamWork::SwCore;
 
 //----------------------------------------------------------------------------------------------
@@ -59,7 +61,7 @@ QString _SwServiceConfigurationPluginFactory_Class::GetPluginVersion()
 	QString build;
 	build = QString("%1 %2").arg(__DATE__).arg(__TIME__);
 	build = build.toUpper();
-	build.replace(QRegExp("[ |:]+"), ".");
+	build.replace(QRegularExpression("[ |:]+"), ".");
 #ifndef QT_NO_DEBUG
 	build += " (Debug)";
 #else 

@@ -143,7 +143,7 @@ void _SwGuiCssDialog::documentWasModified(bool _isModified)
 	if(_isModified)
 	{
 		_isModified=true;
-		if(!windowTitle().contains(QRegExp("\\*")))
+		if(!windowTitle().contains(QRegularExpression("\\*")))
 			this->setWindowTitle(windowTitle()+" *");
 	}
 	else
@@ -251,7 +251,7 @@ void _SwGuiCssDialog::searchNext()
 		QString pat = ui.LE_Search->text();
 		if(ui.checkB_WO->isChecked() && !ui.checkB_Regx->isChecked())
 			pat = "\\b"+ui.LE_Search->text()+"\\b";
-		pos= _allCSS.indexOf(QRegExp(pat));
+		pos= _allCSS.indexOf(QRegularExpression(pat));
 	}
 	else
 	{
