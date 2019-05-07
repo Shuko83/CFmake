@@ -2216,7 +2216,7 @@ void SwDockWidget_MainArea::saveAllPositions()
 	QFile file(_configurationFileName);
 	if (file.open(QIODevice::WriteOnly))
 	{
-		file.write(doc.toString().toStdString().c_str());
+		file.write(doc.toByteArray());
 		file.close();
 	}
 }

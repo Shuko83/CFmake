@@ -114,9 +114,9 @@ QString SwFileDescriptor::getDoubleDottedPath(bool useOptionalPath)
 		QString post = match.captured(3);
 		
 		QString envVarValue;
-		if (qEnvironmentVariableIsSet(envVarName.toStdString().c_str()))
+		if (qEnvironmentVariableIsSet(envVarName.toUtf8().constData()))
 		{
-			envVarValue = qgetenv(envVarName.toStdString().c_str());
+			envVarValue = qgetenv(envVarName.toUtf8().constData());
 		}
 		
 		pathAsWritten = pre + envVarValue + post;

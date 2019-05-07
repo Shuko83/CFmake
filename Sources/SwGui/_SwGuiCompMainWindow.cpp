@@ -873,10 +873,10 @@ void _SwGuiCompMainWindow::checkDirectory( QString inDirectoryBasePath )
             directoryPath += directoriesToCheck[i];
             
             // Si ce n'est pas le cas, on le créé
-            if( _access( directoryPath.toStdString().c_str(), 0 ) == -1 )
+            if( _access( directoryPath.toUtf8().constData(), 0 ) == -1 )
             {
                 qDebug() << "The repertory named " << directoryPath << " doesn't exist, creation!!";
-                _mkdir( directoryPath.toStdString().c_str() );
+                _mkdir( directoryPath.toUtf8().constData());
             }
             directoryPath += "\\";
         }

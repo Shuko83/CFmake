@@ -45,7 +45,7 @@ SwRefPtrTools::~SwRefPtrTools(void)
 
 void SwRefPtrTools::debug( std::string msg )
 {
-	std::cout << msg.c_str() << std::endl;
+	std::cout << msg << std::endl;
 }
 
 SwRefPtrTools * SwRefPtrTools::_instance = 0;
@@ -89,7 +89,7 @@ void SwRefPtrTools::printResults()
 				if(msg.isNull()  || msg.isEmpty())
 					std::cout << "pointer, error while retriving rtti data, qstring null" << std::endl ;	
 				else
-					std::cout << msg.toStdString().c_str() << std::endl ;
+					std::cout << msg.toUtf8().constData() << std::endl ;
 			}catch(...){
 				std::cout << "pointer, error while retriving rtti data" << std::endl ;	
 			}

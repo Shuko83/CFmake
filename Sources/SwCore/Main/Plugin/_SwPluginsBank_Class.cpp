@@ -234,7 +234,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 	
 	qstrMessage.prepend(pathDir.canonicalPath()+";");
 
-	/*bool result=*/setenv(VARNAME_PATH, qstrMessage.toStdString().c_str(), true);
+	/*bool result=*/setenv(VARNAME_PATH, qstrMessage.toUtf8().constData(), true);
    
 	/* Flood pour rien
 	if (!result) 
