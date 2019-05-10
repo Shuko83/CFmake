@@ -41,8 +41,8 @@ namespace StreamWork
             QString GetServiceName(){return QString(CG_SW_SERVICE_PARAMETER_MANAGER); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
             \return le nom du service reel (le nom de l'interface)
-            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(this).name()*/
-            QString GetServiceRealName() {return QString(typeid(this).name());}    
+            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+            QString GetServiceRealName() {return QString(typeid(*this).name());}    
         };
     }
 }
