@@ -42,12 +42,13 @@ QValidator::State SwString::validate( QString & input, int & pos ) const
 }
 
 //---------------------------------------------------------------------------------
-void SwString::fromString( QString & string)
+void SwString::fromString(const QString & string)
 {
+	QString copy = string;
 	int pos = 0;
-	if(validate(string, pos) == QValidator::Acceptable)
+	if(validate(copy, pos) == QValidator::Acceptable)
 	{
-		_string = string;
+		_string = copy;
 	}
 }
 
@@ -64,7 +65,7 @@ QValidator * SwString::getValidator()
 }
 
 //---------------------------------------------------------------------------------
-QString SwString::toString() const
+const QString& SwString::toString() const
 {
 	return _string;
 }

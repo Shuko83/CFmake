@@ -161,8 +161,8 @@ void _SwSwitchExecutor::OnPropertyChange(ISwProperty * property) {
             ExeListMap::iterator it = _switchExecutionList._exeListMap.find(_switchExecutionList._list_name.ToString());
             ModeListMap::iterator itm = _switchExecutionList._modeListMap.find(_switchExecutionList._list_name.ToString());
             if(it != _switchExecutionList._exeListMap.end() && itm!=_switchExecutionList._modeListMap.end()) {
-                _exe_service._exe_paths = it->second;
-                _exe_service._exe_modes = itm->second;
+                _exe_service._exe_paths = it.value();
+                _exe_service._exe_modes = itm.value();
                 _exe_service.ResolveLinks();
             }
         }

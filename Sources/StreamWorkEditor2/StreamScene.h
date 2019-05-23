@@ -36,7 +36,7 @@ public:
 	virtual void drawBackground(QPainter *painter, const QRectF &rect);
 
 	/** @brief Mise a jour de la zone visible */
-	void setVisibleArea(QRectF & visibleArea);
+	void setVisibleArea(const QRectF & visibleArea);
 
 	/** @brief ajout d'un widget */
 	IAnchorable * addApplicativeWidget(QWidget *w);

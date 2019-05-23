@@ -110,9 +110,9 @@ void _SwSwitchExecution_Service::Load(QDomElement & elt,ISwFinalizerManager & fi
         if(it != _switchExecutionList->_exeListMap.end() && itm != _switchExecutionList->_modeListMap.end()) {
             _exe_paths.clear();
             _exe_modes.clear();
-            for(int i=0; i<it->second.count(); i++) {
-                _exe_paths.push_back(it->second[i]);
-                _exe_modes.push_back(itm->second[i]);
+            for(int i=0; i<it.value().size(); i++) {
+                _exe_paths.push_back(it.value()[i]);
+                _exe_modes.push_back(itm.value()[i]);
             }
         }
     }
@@ -129,10 +129,10 @@ void _SwSwitchExecution_Service::Save(QXmlStreamWriter& writer)
 	while (it != _switchExecutionList->_exeListMap.end() && itm != _switchExecutionList->_modeListMap.end())
 	{
 		writer.writeStartElement("List");
-		writer.writeAttribute("Name", it->first);
+		writer.writeAttribute("Name", it.key());
 		QList<QString> pathList;
-		pathList = it->second;
-		QList<_SwExecutionMode> mode = itm->second;
+		pathList = it.value();
+		QList<_SwExecutionMode> mode = itm.value();
 		for (int i = 0; i < pathList.count(); ++i)
 		{
 			writer.writeStartElement("Module");

@@ -44,7 +44,7 @@ public:
     /** @brief definition du point temporaire */
     void setTarget(ConnectorGraphicItem * target);
     /** @brief definition du point temporaire */
-    void setTemporaryTarget(QPointF & tmpTarget);
+    void setTemporaryTarget(const QPointF & tmpTarget);
     /** @brief set highlignt */
     void setExternalHighlight(bool highlight);
 private:

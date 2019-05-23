@@ -81,7 +81,7 @@ protected:
 	void manageHistory(QFileInfo fi);
 
 signals:
-	void selection (QString&,QString&);
+	void selection (const QString&, const QString&);
 private:
     /** @brief Graphics view */
     StreamView * _streamView;

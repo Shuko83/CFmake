@@ -101,7 +101,7 @@ int SwDouble::getPrecision()
 }
 
 //---------------------------------------------------------------------------------
-void SwDouble::setPrecision( double prec)
+void SwDouble::setPrecision( int prec)
 {
 	_precision = prec;
 	_doubleValidator->setDecimals(prec);

@@ -65,7 +65,7 @@ void LinkGraphicItem::setTarget(ConnectorGraphicItem * target)
 }
 
 //-----------------------------------------------------------------------
-void LinkGraphicItem::setTemporaryTarget(QPointF & tmpTarget)
+void LinkGraphicItem::setTemporaryTarget(const QPointF & tmpTarget)
 {
 	_tmpTarget = mapFromScene(tmpTarget);
 	if (_target != 0)

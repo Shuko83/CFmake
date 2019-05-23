@@ -13,7 +13,7 @@ _SwSwitchExecutionList::~_SwSwitchExecutionList() {
 }
 void _SwSwitchExecutionList::AddListName(int index,QString listName) {
     //ajout dans la liste
-    _exeListName.insert(ExeListName::value_type(index, listName));
+    _exeListName.insert(index, listName);
 
     //ajout dans la propriété du composant
     _list_name.RemoveKey(index); // remove si cle deja prise
@@ -25,8 +25,8 @@ void _SwSwitchExecutionList::AddListName(int index,QString listName) {
     _list_name_property->SetValue(_list_name_qvariant);
 }
 void _SwSwitchExecutionList::AddExeList(QString listName, QList<QString> exeList,QList<_SwExecutionMode> modeList) {
-    _exeListMap.insert(ExeListMap::value_type(listName, exeList));
-    _modeListMap.insert(ModeListMap::value_type(listName, modeList));
+    _exeListMap.insert(listName, exeList);
+    _modeListMap.insert(listName, modeList);
 }
 void _SwSwitchExecutionList::DeleteList(int index) {
 
@@ -36,18 +36,18 @@ void _SwSwitchExecutionList::DeleteList(int index) {
     if(it != _exeListName.end()) {
 
         //suppression de la liste d'executables associés
-        DeleteExeList(it->second);
+        DeleteExeList(it.value());
         //suppression dans la propriété
-        _list_name.RemoveKey(it->first);
+        _list_name.RemoveKey(it.key());
         //suppression du nom
-        _exeListName.erase(it->first);
+        _exeListName.remove(it.key());
 
         //suppression dans la propriété et
         //reorganisation de la liste de nom afin de garder une cohérence entre 
         //les index de _exeListName et l'enum _list_name
         it = _exeListName.begin();
         while(it!= _exeListName.end()) {
-            _list_name.RemoveKey(it->first);
+            _list_name.RemoveKey(it.key());
             it++;
         }
 
@@ -57,8 +57,8 @@ void _SwSwitchExecutionList::DeleteList(int index) {
         it = _exeListName.begin();
         int tmpIndex = 0;    
         while(it != _exeListName.end()) {
-            tmpList.insert(ExeListName::value_type(tmpIndex, it->second));
-            _list_name.AddKey(tmpIndex, it->second);
+            tmpList.insert(tmpIndex, it.value());
+            _list_name.AddKey(tmpIndex, it.value());
             tmpIndex++;
             it++;
         }
@@ -69,7 +69,7 @@ void _SwSwitchExecutionList::DeleteList(int index) {
         //copie de la liste temporaire dans la liste definitive
         it = tmpList.begin();
         while(it != tmpList.end()) {
-            _exeListName.insert(ExeListName::value_type(it->first, it->second));    
+            _exeListName.insert(it.key(), it.value());    
             it++;
         }
 

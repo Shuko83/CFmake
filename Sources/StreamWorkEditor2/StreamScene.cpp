@@ -69,7 +69,7 @@ void StreamScene::drawBackground(QPainter *painter, const QRectF &rect)
 }
 
 //-----------------------------------------------------------------------
-void StreamScene::setVisibleArea(QRectF & visibleArea)
+void StreamScene::setVisibleArea(const QRectF & visibleArea)
 {
 	_visibleArea = visibleArea;
 

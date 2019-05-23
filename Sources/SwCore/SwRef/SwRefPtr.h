@@ -12,6 +12,7 @@
 #include "LibIndeSig.h"
 #include "SwRefPtrTools.h"
 
+#include <QHash>
 
 namespace StreamWork
 {
@@ -255,9 +256,9 @@ namespace StreamWork
 
 
         template <class T> 
-        inline unsigned int qHash(const SwRefPtr<T> & key) 
+        inline unsigned int qHash(const SwRefPtr<T> & key, uint seed = 0) 
         {            
-            return (unsigned int)key.get();
+            return qHash(key.get(), seed);
         }
         
         template<class T> 

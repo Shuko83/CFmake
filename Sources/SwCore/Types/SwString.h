@@ -57,11 +57,11 @@ namespace StreamWork
 
 			/** @brief Affecte la valeur interne de la chaine de caractere
 			*	@param QString & => utilisé pour affecter à la chaine interne si valide */			
-			void fromString(QString &);
+			void fromString(const QString &);
 
 			/** @brief renvoi la valeur interne de la chaine de caractere
 			*	@return QString => valeur interne de la chaine de caractere */			
-			QString toString() const;
+			const QString& toString() const;
 
 		};
 	}

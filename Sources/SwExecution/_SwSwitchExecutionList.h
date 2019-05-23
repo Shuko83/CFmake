@@ -17,9 +17,9 @@
 
 using namespace StreamWork::SwCore;
 
-typedef std::map<int, QString> ExeListName;
-typedef std::map<QString, QList<QString>> ExeListMap;
-typedef std::map<QString, QList<_SwExecutionMode>> ModeListMap;
+typedef QMap<int, QString> ExeListName;
+typedef QMap<QString, QList<QString>> ExeListMap;
+typedef QMap<QString, QList<_SwExecutionMode>> ModeListMap;
 
 class _SwSwitchExecutionList
 {

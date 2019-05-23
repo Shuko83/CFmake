@@ -113,13 +113,13 @@ void _SwGuiCompGridLayout::eventAfterInterfaceAvailability(QString interface_nam
 }
 
 //-----------------------------------------------------------------------
-unsigned int _SwGuiCompGridLayout::getNbWidgets()
+int _SwGuiCompGridLayout::getNbWidgets()
 {
 	return _widgets_count;
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiCompGridLayout::setNbWidgets(unsigned int nbWidgets)
+void _SwGuiCompGridLayout::setNbWidgets(int nbWidgets)
 {
 	if ( nbWidgets > _widgets_count )
 	{
@@ -150,13 +150,13 @@ void _SwGuiCompGridLayout::setNbWidgets(unsigned int nbWidgets)
 }
 
 //-----------------------------------------------------------------------
-unsigned int _SwGuiCompGridLayout::getNbLayouts()
+int _SwGuiCompGridLayout::getNbLayouts()
 {
 	return _layouts_count;
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiCompGridLayout::setNbLayouts(unsigned int nbLayouts)
+void _SwGuiCompGridLayout::setNbLayouts(int nbLayouts)
 {
 	if ( nbLayouts > _layouts_count )
 	{
@@ -193,7 +193,7 @@ int _SwGuiCompGridLayout::getHorizontalSpacing()
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiCompGridLayout::setHorizontalSpacing(unsigned int horizontalSpacing)
+void _SwGuiCompGridLayout::setHorizontalSpacing(int horizontalSpacing)
 {
 	_horizontalSpacing = horizontalSpacing;
 	if ( _layout != 0 )
@@ -209,7 +209,7 @@ int _SwGuiCompGridLayout::getVerticalSpacing()
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiCompGridLayout::setVerticalSpacing(unsigned int verticalSpacing)
+void _SwGuiCompGridLayout::setVerticalSpacing(int verticalSpacing)
 {
 	_verticalSpacing = verticalSpacing;
 	if ( _layout != 0 )

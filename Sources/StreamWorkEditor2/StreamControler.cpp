@@ -370,7 +370,7 @@ QMenu * StreamControler::getContextualMenu(const QPointF & p)
 }
 
 //-----------------------------------------------------------------------
-void StreamControler::addComponent(QString & name, const QPointF & p)
+void StreamControler::addComponent(const QString & name, const QPointF & p)
 {
 	_creationPosition = p;
 	SwComponent_ClassPtr component = SW_FACTORIES.CreateComponent(name);

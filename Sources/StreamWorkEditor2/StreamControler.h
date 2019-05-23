@@ -60,7 +60,7 @@ public:
     /** @brief demande de menu contextuel a une position donnée */
     QMenu * getContextualMenu(const QPointF & p);
     /** @brief ajout d'un composant a une position donné */
-    void addComponent(QString & name,const QPointF & p);
+    void addComponent(const QString & name,const QPointF & p);
     //------------------------------------------------------------------------------
     // Evenements Composant
     //------------------------------------------------------------------------------

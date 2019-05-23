@@ -44,7 +44,7 @@ using namespace StreamWork::SwExecution;
 	\brief Ihm de configuration de l'execution
 */
 
-typedef std::map<int, QString> ExeListName;
+typedef QMap<int, QString> ExeListName;
 
 class _SwSwitchExecutionSetup : public QDialog
 {

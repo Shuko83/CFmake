@@ -20,8 +20,8 @@ using namespace StreamWork::SwGui;
 */
 class _SwGuiCompGridLayout : public Component , public virtual ISwLayout  {
     Q_OBJECT
-    Q_PROPERTY(unsigned int Widgets_count READ getNbWidgets WRITE setNbWidgets)
-    Q_PROPERTY(unsigned int Layouts_count READ getNbLayouts WRITE setNbLayouts)
+    Q_PROPERTY(int Widgets_count READ getNbWidgets WRITE setNbWidgets)
+    Q_PROPERTY(int Layouts_count READ getNbLayouts WRITE setNbLayouts)
     Q_PROPERTY(int horizontalSpacing READ getHorizontalSpacing WRITE setHorizontalSpacing)
     Q_PROPERTY(int verticalSpacing READ getVerticalSpacing WRITE setVerticalSpacing)
     Q_PROPERTY(QString columnStretch READ getColumnStretch WRITE setColumnStretch)
@@ -53,14 +53,14 @@ public:
     //-------------------------------------------------------------------------
     //Getter setter property
     //-------------------------------------------------------------------------
-    unsigned int getNbWidgets();
-    void setNbWidgets(unsigned int nbWidgets);
-    unsigned int getNbLayouts();
-    void setNbLayouts(unsigned int nbLayouts);
+    int getNbWidgets();
+    void setNbWidgets(int nbWidgets);
+    int getNbLayouts();
+    void setNbLayouts(int nbLayouts);
     int getHorizontalSpacing();
-    void setHorizontalSpacing(unsigned int horizontalSpacing);
+    void setHorizontalSpacing(int horizontalSpacing);
     int getVerticalSpacing();
-    void setVerticalSpacing(unsigned int verticalSpacing);
+    void setVerticalSpacing(int verticalSpacing);
     QString getColumnStretch();
     void setColumnStretch(QString columnStretch);
     QString getRowStretch();
@@ -87,9 +87,9 @@ private:
     //The Grid layout
     QGridLayout * _layout;
     //Nb Widget
-    unsigned int _widgets_count;
+    int _widgets_count;
     //Nb Layout
-    unsigned int _layouts_count;
+    int _layouts_count;
     //horizontalSpacing
     int _horizontalSpacing;
     //verticalSpacing

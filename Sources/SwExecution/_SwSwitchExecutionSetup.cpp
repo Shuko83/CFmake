@@ -25,10 +25,10 @@ _SwSwitchExecutionSetup::_SwSwitchExecutionSetup(QWidget *parent,SwComponent_Cla
         ExeListMap::iterator it = _switchExecutionList->_exeListMap.find(_switchExecutionList->_list_name.ToString());
         ModeListMap::iterator itm = _switchExecutionList->_modeListMap.find(_switchExecutionList->_list_name.ToString());
         if(it != _switchExecutionList->_exeListMap.end() && itm != _switchExecutionList->_modeListMap.end()) {
-            for(int i=0; i<it->second.count(); i++) {
-                if(SwAddress_ToolBox::FindTarget(it->second[i],_root_component) != NULL) {
-                    _exe_paths.push_back(it->second[i]);
-                    _exe_modes.push_back(itm->second[i]);
+            for(int i=0; i<it.value().size(); i++) {
+                if(SwAddress_ToolBox::FindTarget(it.value()[i],_root_component) != NULL) {
+                    _exe_paths.push_back(it.value()[i]);
+                    _exe_modes.push_back(itm.value()[i]);
                 }
             }
         }
@@ -85,7 +85,7 @@ _SwSwitchExecutionSetup::_SwSwitchExecutionSetup(QWidget *parent,SwComponent_Cla
         ExeListName::iterator i = _switchExecutionList->_exeListName.begin();
         while(i != _switchExecutionList->_exeListName.end())
         {
-            combo_exeList->addItem(i->second, i->first);
+            combo_exeList->addItem(i.value(), i.key());
             i++;
         }
     }
@@ -189,10 +189,10 @@ void _SwSwitchExecutionSetup::Clicked_deleteSelectedList(void) {
         ModeListMap::iterator itm = _switchExecutionList->_modeListMap.find(tmp);
         if(it!=_switchExecutionList->_exeListMap.end() && itm != _switchExecutionList->_modeListMap.end()) {
             //copie de la liste dans la liste locale
-            for(int i=0; i<it->second.count(); i++) {
-                if(SwAddress_ToolBox::FindTarget(it->second[i],_root_component) != NULL) {
-                    _exe_paths.push_back(it->second[i]);
-                    _exe_modes.push_back(itm->second[i]);
+            for(int i=0; i<it.value().size(); i++) {
+                if(SwAddress_ToolBox::FindTarget(it.value()[i],_root_component) != NULL) {
+                    _exe_paths.push_back(it.value()[i]);
+                    _exe_modes.push_back(itm.value()[i]);
                 }
             }
         }
@@ -202,7 +202,7 @@ void _SwSwitchExecutionSetup::Clicked_deleteSelectedList(void) {
         combo_exeList->clear();
         while(it2 != _switchExecutionList->_exeListName.end())
         {
-            combo_exeList->addItem(it2->second, it2->first);
+            combo_exeList->addItem(it2.value(), it2.key());
             it2++;
         }
         
@@ -233,10 +233,10 @@ void _SwSwitchExecutionSetup::CurrentIndexChanged(int index) {
         ModeListMap::iterator itm = _switchExecutionList->_modeListMap.find(_switchExecutionList->_list_name.ToString());
         if(it!=_switchExecutionList->_exeListMap.end() && itm != _switchExecutionList->_modeListMap.end()) {
             //copie de la liste dans la liste locale
-            for(int i=0; i<it->second.count(); i++) {
-                if(SwAddress_ToolBox::FindTarget(it->second[i],_root_component) != NULL) {
-                    _exe_paths.push_back(it->second[i]);
-                    _exe_modes.push_back(itm->second[i]);
+            for(int i=0; i<it.value().count(); i++) {
+                if(SwAddress_ToolBox::FindTarget(it.value()[i],_root_component) != NULL) {
+                    _exe_paths.push_back(it.value()[i]);
+                    _exe_modes.push_back(itm.value()[i]);
                 }
             }
         }

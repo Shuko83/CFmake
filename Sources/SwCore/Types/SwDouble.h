@@ -83,7 +83,7 @@ namespace StreamWork
 			/** @brief mutateur sur la valeur minimum */
 			void setMinimum(double);
 			/** @brief mutateur de la précision */
-			void setPrecision(double);
+			void setPrecision(int);
 
 		private :
 			double _val; /** @brief valeur de l'entier, init = 0.0 */
