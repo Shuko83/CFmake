@@ -167,6 +167,16 @@ QString SwFileDescriptor::getDoubleDottedPath(bool useOptionalPath)
 		if (QFileInfo::exists(streamPath))
 			return streamPath;
 
+		// Si le fichier n'existe pas, on teste l'existence du répertoire contenant ce dernier, car si on prend l'exemple des fichiers .sqlite
+		// ils sont recréés automatiquement s'ils n'existent pas, or s'ils n'existent pas, on renvoyait le chemin "pathAsWritten" qui, à cause
+		// de la balise :: n'est pas un chemin valide et empêche donc la potentielle (re)création du fichier demandé.
+		if (QFileInfo(resourcePath).dir().exists())
+			return resourcePath;
+		if (QFileInfo(executablePath).dir().exists())
+			return executablePath;
+		if (QFileInfo(streamPath).dir().exists())
+			return streamPath;
+
 		qWarning() << QString("SwFileDescriptor file does not exist : %1").arg(pathAsWritten);
 		return pathAsWritten;
 	}
