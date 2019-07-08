@@ -12,10 +12,6 @@
 #include "PluginOverview.h"
 #include "LegendView.h"
 
-
-static WidgetFactory * _instance=0;
-
-
 /** @brief Constructor */
 WidgetFactory::WidgetFactory() {
 	_graphPalette.setColor(QPalette::Window,QColor(50,50,50,255));
@@ -34,10 +30,8 @@ WidgetFactory::~WidgetFactory() {
 }
 /** @brief acces singleton */
 WidgetFactory * WidgetFactory::getInstance() {
-    if (_instance==0) {
-        _instance=new WidgetFactory();
-    }
-    return _instance;
+    static WidgetFactory instance;
+    return &instance;
 }
 
 /** @brief Construction widget representant les composants disponibles*/

@@ -173,18 +173,18 @@ void LinkGraphicItem::updateLink()
 		QPointF starget = mapFromItem(_target, QPointF(0.0, 0.0));
 		qreal decalage = sqrt((starget.x() - ssource.x())*(starget.x() - ssource.x()) + (starget.y() - ssource.y())*(starget.y() - ssource.y()));
 		decalage = decalage / 1.618;
-		QPointF c1((ssource.x() + starget.x()) / 2.0, ssource.y());
-		QPointF c2((ssource.x() + starget.x()) / 2.0, starget.y());
 
 		if (GlobalConf::instance()->isSplineLink())
 		{
-			QPointF c1=buildControlPoint(ssource,_source->getParentPosition(),decalage);
-			QPointF c2=buildControlPoint(starget,_target->getParentPosition(),decalage);
+			QPointF c1 = buildControlPoint(ssource,_source->getParentPosition(),decalage);
+			QPointF c2 = buildControlPoint(starget,_target->getParentPosition(),decalage);
 			path.cubicTo(c1,c2,starget);
 		}
 		else
 		{
-			
+			QPointF c1((ssource.x() + starget.x()) / 2.0, ssource.y());
+			QPointF c2((ssource.x() + starget.x()) / 2.0, starget.y());
+
 			if (_source->getParentPosition() == _target->getParentPosition())
 			{
 				if (_source->getParentPosition() == RIGHT)

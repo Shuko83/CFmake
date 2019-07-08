@@ -23,9 +23,6 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
 
-static MenuManager * _instance=0;
-
-
 /** @brief Constructor */
 MenuManager::MenuManager():QObject() {
 	_menu=new QMenu(0);
@@ -52,10 +49,8 @@ MenuManager::~MenuManager() {
 }
 /** @brief acces singleton */
 MenuManager * MenuManager::getInstance() {
-    if (_instance==0) {
-        _instance=new MenuManager();
-    }
-    return _instance;
+    static MenuManager instance;
+    return &instance;
 }
 /** @brief Definition du controleur */
 void MenuManager::setControler(StreamControler * controler) {

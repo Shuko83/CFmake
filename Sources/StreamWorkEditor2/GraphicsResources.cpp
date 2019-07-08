@@ -11,9 +11,6 @@
 
 using namespace StreamWork::SwCore;
 
-
-static GraphicsResources * _instance=0;
-
 //-----------------------------------------------------------------------
 GraphicsResources::GraphicsResources()
 {
@@ -35,10 +32,8 @@ GraphicsResources::~GraphicsResources()
 //-----------------------------------------------------------------------
 GraphicsResources * GraphicsResources::getInstance() 
 {
-    if (_instance==0) {
-        _instance=new GraphicsResources();
-    }
-    return _instance;
+    static GraphicsResources instance;
+    return &instance;
 }
 
 //-----------------------------------------------------------------------

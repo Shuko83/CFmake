@@ -30,6 +30,7 @@ public:
 
 	/** @brief Constructor */
 	StreamView(QWidget * parent=0);
+    ~StreamView();
     /** @brief Definition du controleur */
     void setControler(StreamControler * controler);
     /** @brief mise a jour externe de la scene */
@@ -95,7 +96,7 @@ private:
 	qreal _previousScaleFactor;
 	qreal _scaleFactor;
 
-	QGraphicsRectItem * test;
+	QGraphicsRectItem * _graphicsRectItem;
 };
 
 #endif

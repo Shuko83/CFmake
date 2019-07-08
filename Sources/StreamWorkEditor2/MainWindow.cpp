@@ -83,11 +83,11 @@ MainWindow::MainWindow(bool loadStream /*= true*/) :QMainWindow(), _streamContro
 		int index = 1;
 		for (QString absF : _history)
 		{
-			QFileInfo *test = new QFileInfo(absF);
-			if (test->exists())
+			QFileInfo file(absF);
+			if (file.exists())
 			{
-				_listOfActions.at(_history.indexOf(absF))->setText(QString::number(index) + ") " + test->fileName());
-				_listOfActions.at(_history.indexOf(absF))->setData(test->absoluteFilePath());
+				_listOfActions.at(_history.indexOf(absF))->setText(QString::number(index) + ") " + file.fileName());
+				_listOfActions.at(_history.indexOf(absF))->setData(file.absoluteFilePath());
 				_listOfActions.at(_history.indexOf(absF))->setVisible(true);
 				index++;
 			}
@@ -228,7 +228,9 @@ MainWindow::~MainWindow()
 	_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
 	_streamTreeModel->setStreamControler(0);
 	_iaTreeModel->setStreamControler(0);
+    delete _iaTreeModel;
 	delete _streamControler;
+    delete _streamView;
 }
 
 
@@ -289,7 +291,6 @@ void MainWindow::onLoadStream()
 
 		manageHistory(fi);
 
-		QSettings settings;
 		settings.setValue("history", _history);
 		_streamControler = new StreamControler(_propertyWidget);
 		_streamControler->setView(_streamView);
@@ -577,21 +578,16 @@ void MainWindow::manageHistory(QFileInfo fi)
 	if (_history.count() >= MAX_HISTORY_FILE && !_history.contains(fi.absoluteFilePath()))
 		_history.removeLast();
 
-	if (!_history.contains(fi.absoluteFilePath()))
-	{
-		_history.prepend(fi.absoluteFilePath());
-	}
-	else
-	{
-		_history.swap(0, _history.indexOf(fi.absoluteFilePath()));
+	_history.removeOne(fi.absoluteFilePath());
 
-	}
+	_history.prepend(fi.absoluteFilePath());
+
 	//on actualise la liste
 	for (int i = 0; i < _history.count(); i++)
 	{
-		QFileInfo fi(_history.at(i));
-		_listOfActions.at(i)->setData(fi.absoluteFilePath());
-		_listOfActions.at(i)->setText(QString::number(i + 1) + ") " + fi.fileName());
+		QFileInfo file(_history.at(i));
+		_listOfActions.at(i)->setData(file.absoluteFilePath());
+		_listOfActions.at(i)->setText(QString::number(i + 1) + ") " + file.fileName());
 		_listOfActions.at(i)->setVisible(true);
 	}
 }

@@ -1112,10 +1112,10 @@ void StreamControler::saveVisualData(QXmlStreamWriter & writer)
 				std::sort(subItems.begin(), subItems.end(), graphicItemComparator);
 				for (QGraphicsItem* subItem : subItems)
 				{
-					ComponentGraphicItem * cgitem = dynamic_cast<ComponentGraphicItem *>(subItem);
-					if (cgitem != 0)
+					ComponentGraphicItem * cgSubItem = dynamic_cast<ComponentGraphicItem *>(subItem);
+					if (cgSubItem)
 					{
-						saveVisualItem(cgitem, writer);
+						saveVisualItem(cgSubItem, writer);
 					}
 				}
 				writer.writeEndElement();
@@ -1473,14 +1473,14 @@ void StreamControler::buildConnectors(StreamWork::SwCore::SwComponent_Class * co
 	if ( pinManager != 0 )
 	{
 		QList<SwPin *> plist = pinManager->GetPinList();
-		QList<SwPin *>::iterator it = plist.begin();
-		while ( it != plist.end() )
+		QList<SwPin *>::iterator itPin = plist.begin();
+		while (itPin != plist.end() )
 		{
-			SwPin * pin = (*it);
+			SwPin * pin = (*itPin);
 			ConnectorGraphicItem * gcitem = new ConnectorGraphicItem(gitem, pin->GetName(), pin->GetType(), PIN);
 			connectors->push_back(gcitem);
 			gcitem->setParentItem(gitem);
-			it++;
+            itPin++;
 		}
 	}
 
@@ -1519,12 +1519,10 @@ void StreamControler::buildLinks()
 					{
 						//Interface produite trouvé -> recuperation du connecteur associé
 						SwComponent_Class * pcomponent = pt_provider->GetHostComponent();
-						QMap<StreamWork::SwCore::SwComponent_Class *, ComponentGraphicItem *>::iterator it;
-						it = _mapCompToItem.find(pcomponent);
-						if ( it != _mapCompToItem.end() )
+						QMap<StreamWork::SwCore::SwComponent_Class *, ComponentGraphicItem *>::iterator itCgItem = _mapCompToItem.find(pcomponent);
+						if (itCgItem != _mapCompToItem.end() )
 						{
-							ComponentGraphicItem * gitem = (*it);
-							ConnectorGraphicItem * pitem = gitem->getConnector(interface_provider);
+							ConnectorGraphicItem * pitem = (*itCgItem)->getConnector(interface_provider);
 							if ( pitem != 0 )
 							{
 								//Construction du lien
@@ -1547,11 +1545,10 @@ void StreamControler::buildLinks()
 					if ( rpin != 0 )
 					{
 						SwComponent_Class * rcomponent = rpin->GetManager()->GetHostComponent();
-						QMap<StreamWork::SwCore::SwComponent_Class *, ComponentGraphicItem *>::iterator it;
-						it = _mapCompToItem.find(rcomponent);
-						if ( it != _mapCompToItem.end() )
+						QMap<StreamWork::SwCore::SwComponent_Class *, ComponentGraphicItem *>::iterator itCgItem = _mapCompToItem.find(rcomponent);
+						if (itCgItem != _mapCompToItem.end() )
 						{
-							ConnectorGraphicItem * pitem = (*it)->getConnector(rpin->GetName());
+							ConnectorGraphicItem * pitem = (*itCgItem)->getConnector(rpin->GetName());
 							if ( pitem != 0 )
 							{
 								//Construction du lien

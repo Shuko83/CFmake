@@ -125,7 +125,8 @@ int main(int argc, char *argv[])
 
 	//Finalisation de l'initialisation
 	SW_APP->FinalizeInitialisation();
-	SW_APP->RegisterService(new EditionService());
+    EditionService *editionService = new EditionService();
+	SW_APP->RegisterService(editionService);
 	//Lancement
 	MainWindow *window = new MainWindow;
 	window->setIsMasterWindow(true);
@@ -152,5 +153,9 @@ int main(int argc, char *argv[])
 	// 		result  = -1;
 	// 	}
 	//Fin
+	SW_APP->UnregisterService(editionService->GetServiceName());
+    delete window;
+    delete editionService;
+
 	return result;
 }

@@ -7,7 +7,6 @@
 #include "LogView.h"
 #include <QSettings>
  
-static LogView * lView=0;
 /** @brief Constructor */
 LogView::LogView():QDialog() 
 {
@@ -39,10 +38,8 @@ LogView::~LogView() {
 }
 //Here public method
 LogView * LogView::getInstance() {
-    if (lView==0) {
-        lView=new LogView();
-    }
-    return lView;
+    static LogView instance;
+    return &instance;
 }
 //Implementation ISwLogRecorder 
 void LogView::RecordLog(TSw_Log_Level level,QString msg) {

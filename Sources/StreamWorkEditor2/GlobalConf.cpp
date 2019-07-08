@@ -3,26 +3,21 @@
 #include <QApplication>
 #include <QDir>
 
-static GlobalConf * _instance = 0;
-
 #define GLOBAL_CONF_INI qApp->applicationDirPath() + QDir::separator() + "GlobalConf.ini"
 
 //---------------------------------------------------------------------------------
-GlobalConf::GlobalConf() :QObject()
+GlobalConf::GlobalConf()
+    : QObject()
+    , _isSplineLink(true)
 {
-	_isSplineLink = true;
+	load();
 }
-
 
 //---------------------------------------------------------------------------------
 GlobalConf * GlobalConf::instance()
 {
-	if (_instance == 0)
-	{
-		_instance = new GlobalConf();
-		_instance->load();
-	}
-	return _instance;
+    static GlobalConf instance;
+	return &instance;
 }
 
 //-----------------------------------------------------------------------
@@ -30,7 +25,6 @@ void GlobalConf::load()
 {
 	QSettings settings(GLOBAL_CONF_INI, QSettings::IniFormat);
 	_isSplineLink = settings.value("_isSplineLink", true).toBool();
-
 }
 
 //-----------------------------------------------------------------------

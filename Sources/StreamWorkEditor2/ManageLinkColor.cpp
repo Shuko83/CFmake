@@ -1,11 +1,10 @@
 #include "ManageLinkColor.h"
 
-ManageLinkColor * ManageLinkColor::_instance = NULL;
-
 #define ColorIni qApp->applicationDirPath() + QDir::separator() + "LinkColor.ini"
 
 ManageLinkColor::ManageLinkColor(void)
 {
+	loadStaticColor();
 }
 
 ManageLinkColor::~ManageLinkColor(void)
@@ -15,12 +14,8 @@ ManageLinkColor::~ManageLinkColor(void)
 //-------------------------------------------------------------------------
 ManageLinkColor * ManageLinkColor::getInstance()
 {
-	if(_instance == NULL)
-	{
-		_instance = new ManageLinkColor();
-		_instance->loadStaticColor();
-	}
-	return _instance;
+    static ManageLinkColor instance;
+	return &instance;
 }
 
 //-------------------------------------------------------------------------

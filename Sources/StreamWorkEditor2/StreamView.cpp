@@ -27,8 +27,8 @@ StreamView::StreamView(QWidget * parent) :QGraphicsView(parent)
 	//        this,SLOT(displayContextualMenu(const QPoint &)));
 	//setContextMenuPolicy(Qt::CustomContextMenu);
 
-	test = new QGraphicsRectItem();
-	test->setOpacity(0.5);
+	_graphicsRectItem = new QGraphicsRectItem();
+	_graphicsRectItem->setOpacity(0.5);
 	//Search management
 	QFont font1;
 	font1.setFamily(QString::fromUtf8("Segoe UI"));
@@ -54,6 +54,13 @@ StreamView::StreamView(QWidget * parent) :QGraphicsView(parent)
 
 
 	_controler = 0;
+}
+
+//-----------------------------------------------------------------------
+StreamView::~StreamView()
+{
+    delete _graphicsRectItem;
+    delete _searchEdit;
 }
 
 //-----------------------------------------------------------------------
@@ -370,10 +377,10 @@ void StreamView::doSearch()
 		newRect.setBottomRight(QPointF(newRect.bottomRight().x() + 50, newRect.bottomRight().y() + 50));
 		allItemsBounding = allItemsBounding.united(newRect);
 
-		if ( scene() && !scene()->items().contains(test) )
-			scene()->addItem(test);
+		if ( scene() && !scene()->items().contains(_graphicsRectItem) )
+			scene()->addItem(_graphicsRectItem);
 
-		test->setRect(allItemsBounding);
+		_graphicsRectItem->setRect(allItemsBounding);
 		centerOn(allItemsBounding.center());
 		fitInView(allItemsBounding, Qt::KeepAspectRatio);
 		_scaleFactor = transform().m11();
