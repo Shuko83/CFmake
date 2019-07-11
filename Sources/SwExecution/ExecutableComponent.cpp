@@ -19,6 +19,7 @@ ExecutableComponent::ExecutableComponent():SwComponent_Class() {
     _provider_service=NULL;
     _consumer_service=NULL;
     _properties_service=NULL;
+    _pins_service = NULL;
     _disable_service=false;
 }
 /** @brief Destructor */
@@ -34,6 +35,7 @@ ExecutableComponent::~ExecutableComponent() {
     delete _consumer_service;
     delete _provider_service;
     delete _properties_service;
+    delete _pins_service;
 }
 /*! \brief Initialisation des ressources
 \note tous les services du composants doivent  tre d clar s dans cette methodes*/

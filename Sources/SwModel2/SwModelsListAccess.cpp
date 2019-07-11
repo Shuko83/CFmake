@@ -5,11 +5,10 @@
  */
 
 #include "SwModelsListAccess.h"
-#include "_SwModelsList.h" 
+#include "_SwModelsList.h"
 
 using namespace StreamWork::SwModel;
 
-SwModelsListAccess * _instance=0;
 _SwModelsList * _internalInstance=0;
 
 
@@ -28,10 +27,8 @@ SwModelsListAccess::~SwModelsListAccess()
 //-----------------------------------------------------------------------
 SwModelsListAccess * SwModelsListAccess::getInstance()
 {
-    if (_instance==0) {
-        _instance=new SwModelsListAccess();
-    }
-    return _instance;
+    static SwModelsListAccess instance;
+    return &instance;
 }
 
 //-----------------------------------------------------------------------

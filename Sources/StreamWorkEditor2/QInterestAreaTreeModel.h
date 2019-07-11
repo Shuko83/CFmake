@@ -42,6 +42,7 @@ public:
 
 	/** @brief Constructor */
 	QInterestAreaTreeModel(QObject * parent);
+    ~QInterestAreaTreeModel();
     /** @brief definition du controler */
     void setStreamControler(StreamControler * controler);
     //-------------------------------------------------------------
@@ -64,7 +65,7 @@ public:
     //-------------------------------------------------------------
     // Interface IStreamControlerObserver
     //------------------------------------------------------------
-    virtual void controlerHasChanged();
+    void controlerHasChanged() override;
 public slots:
     //--------------------------------------------------------------------------
     // events gui

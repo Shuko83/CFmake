@@ -19,6 +19,12 @@ bool caseInsensitiveLessThan(const QInterestAreaTreeModel::Item * s1, const QInt
 QInterestAreaTreeModel::QInterestAreaTreeModel(QObject * parent):QAbstractItemModel(parent) {
 	_controler=0;
 }
+
+QInterestAreaTreeModel::~QInterestAreaTreeModel()
+{
+    qDeleteAll(_items);
+}
+
 /** @brief definition du controler */
 void QInterestAreaTreeModel::setStreamControler(StreamControler * controler) {
     if(_controler!=0) {
@@ -123,10 +129,10 @@ void QInterestAreaTreeModel::onSelectItem(const QModelIndex & index) {
 //------------------------------------------------------------
 void QInterestAreaTreeModel::controlerHasChanged(){
 	beginResetModel();
+
+    qDeleteAll(_items);
     _items.clear();
-    for(int i=0;i<_items.count();i++) {
-        delete _items.at(i);
-    }
+
     if( _controler!=0) {
         QList<InterestArea *> ias=_controler->getScene()->getAllInterestAreas();
         for(int i=0;i<ias.count();i++) {
@@ -163,10 +169,7 @@ QInterestAreaTreeModel::Item::Item(ComponentGraphicItem * cg,Item * parent){
     _cg=cg;
 }
 QInterestAreaTreeModel::Item::~Item(){
-    for(int i=0;i<_childs.count();i++) {
-        delete _childs.at(i);
-    }
-    
+    qDeleteAll(_childs);
 }
 bool QInterestAreaTreeModel::Item::isIA(){
     return _ia!=0;
