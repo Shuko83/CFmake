@@ -99,7 +99,6 @@ void SwServicesManager_Class::UnregisterService(QString service_name) throw(SwEx
         QString msg = QString("Try to unregister unknown service %1").arg(service_name);
         LAUNCH_SWEXCEPTION("SwCore", msg);
     }
-    it.value()->Liberate();
 
     // Créer la pair itérateur/bool pour cette itération de la méthode
     _itForUnregisterService.push_back(qMakePair(_servicesObservers.begin(), false));
@@ -118,6 +117,9 @@ void SwServicesManager_Class::UnregisterService(QString service_name) throw(SwEx
             iterator = _itForUnregisterService.last().first;
         }
     }
+
+	it.value()->Liberate();
+
     // Retirer la pair itérateur/bool à la fin de la boucle
     _itForUnregisterService.pop_back();
     _services.erase(it);

@@ -20,7 +20,9 @@ SwDefaultComplexeTypeAdapters::~SwDefaultComplexeTypeAdapters() {
 	for (int i=0;i<_liste.count();i++) {
 		_liste[i]->Liberate();
 	}
-	_liste.clear();
+	for (int i = 0; i < _liste.count(); i++) {
+		delete _liste[i];
+	}
 }
 //-----------------------------------------------------------------------
 // Interface ISwComplexeTypeAdapters
@@ -38,7 +40,7 @@ QList<ISwSimpleTypeAdapter *> * SwDefaultComplexeTypeAdapters::GetAdapters() {
 }
 /*! \brief Liberation de la fabrique*/
 void SwDefaultComplexeTypeAdapters::Liberate() {
-	delete this;
+
 }               
 //-----------------------------------------------------------------------
 // Creation de la liste

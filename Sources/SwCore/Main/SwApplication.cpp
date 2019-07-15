@@ -306,7 +306,7 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 	//Destruction du singleton
 	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("End of application execution\n"));
 	root_component = 0;
-	delete this;
+	
 	_is_launch = false;
 	//Retour
 	return result;

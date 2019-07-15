@@ -88,7 +88,7 @@ namespace StreamWork
 		            _parent_property->SetValue(hosting_value_variant);
 		        }
  	            /*! \brief Liberation de l'adaptateur*/
-                void Liberate() {delete this;}               
+                void Liberate() {}               
 		};
 	}
 }
