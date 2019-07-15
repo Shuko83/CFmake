@@ -727,7 +727,7 @@ bool SwServiceSaveConfiguration::restoreCancelConfiguration(QString confName, QS
 
 					// On load la valeur de la property uniquement si le prefix 
 					// est celui du groupe de paramètres que l'on veut restaurer
-					if (prefix == parametersConcerned)
+					if (prefix == parametersConcerned || prefix.startsWith(parametersConcerned))
 					{
 						// Avec ces valeurs, on set au fur et à mesure toutes les values des Properties :
 						// Le *ISwProperty est récupéré via confCollectors[confName][prefix]->getProperty(name)
