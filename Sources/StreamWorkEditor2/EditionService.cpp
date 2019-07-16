@@ -18,7 +18,7 @@ EditionService::~EditionService() {
 /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
 lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
 void EditionService::Liberate() {
-    delete this;
+
 }
 /*! \brief verifie la licence*/
 bool EditionService::editorSavingInProgress(){

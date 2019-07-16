@@ -159,7 +159,7 @@ void SwServicesManager_Class::RemoveServicesManagerObserver(ISwServicesManager_L
             pair.second = true;
         }
     }
-
+	
     int index = _servicesObservers.indexOf(observer);
 
     if (index >= 0)

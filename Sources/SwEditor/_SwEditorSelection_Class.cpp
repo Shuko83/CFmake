@@ -44,7 +44,7 @@ _SwEditorSelection_Class::~_SwEditorSelection_Class(){
 /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
 	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
 void _SwEditorSelection_Class::Liberate() {
-    delete this;
+
 }
 //-------------------------------------------------------------
 // Ajout composant

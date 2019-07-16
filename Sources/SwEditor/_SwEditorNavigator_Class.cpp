@@ -30,7 +30,7 @@ _SwEditorNavigator_Class::~_SwEditorNavigator_Class(){
 /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
 	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
 void _SwEditorNavigator_Class::Liberate() {
-    delete this;
+
 }
 //-------------------------------------------------------------
 // Navigation dans l'arbre du stream

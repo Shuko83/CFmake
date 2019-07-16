@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
 	// 	}
 	//Fin
 	SW_APP->UnregisterService(editionService->GetServiceName());
-    delete window;
+    // delete window;
     delete editionService;
 
 	return result;

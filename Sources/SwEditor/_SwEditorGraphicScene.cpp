@@ -35,7 +35,7 @@ _SwEditorGraphicScene::~_SwEditorGraphicScene() {
 /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
 lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
 void _SwEditorGraphicScene::Liberate() {
-    delete this;
+
 }
 //---------------------------------------------------------------------
 // Interface ISwEditorGraphicScene
