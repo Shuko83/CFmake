@@ -27,8 +27,7 @@ namespace StreamWork
         */
         class SwServiceSaveConfiguration :  public ISwAdminConfiguration, 
 											public ISwServiceConfiguration,
-											public ISwConfigurationManager,
-											public ISwPropertiesObserver
+											public ISwConfigurationManager
         {
         public:
 
@@ -137,7 +136,7 @@ namespace StreamWork
 			// Interface ISwPropertiesObserver
 			//---------------------------------------------------------------------
 			/** @brief : Fonction appelée par les confcollectors lors du delete d'une property */
-			virtual void onPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName = "");
+			virtual void notifyPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName = "");
 
 
 			//---------------------------------------------------------------------
@@ -265,9 +264,9 @@ namespace StreamWork
 			
 			/**
              * @brief	: permet de récupérer l'interface de gestion des properties de la conf
-             * @return	: ISwPropertiesObserver : pointeur sur l'interface de gestion des properties de la conf
+             * @return	: ISwConfigurationManager : pointeur sur l'interface de gestion des properties de la conf
              */
-			virtual ISwPropertiesObserver* getConfPropertiesObserver();
+			virtual ISwConfigurationManager* getManager();
 
 			/**
              * @brief	: permet de récupérer un pointeur sur une property

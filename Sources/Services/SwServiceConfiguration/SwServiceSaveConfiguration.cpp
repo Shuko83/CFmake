@@ -1069,7 +1069,7 @@ ISwAdminConfiguration* SwServiceSaveConfiguration::getAdmin()
 
 
 //-------------------------------------------------------------------------
-ISwPropertiesObserver* SwServiceSaveConfiguration::getConfPropertiesObserver()
+ISwConfigurationManager* SwServiceSaveConfiguration::getManager()
 {
 	return this;
 }
@@ -1505,7 +1505,7 @@ void SwServiceSaveConfiguration::unregisterConfPropertiesObserver(ISwPropertiesO
 //---------------------------------------------------------------------
 // Interface ISwPropertiesObserver
 //---------------------------------------------------------------------
-void StreamWork::SwCore::SwServiceSaveConfiguration::onPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName /*= ""*/)
+void StreamWork::SwCore::SwServiceSaveConfiguration::notifyPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName /*= ""*/)
 {
 	// Fonction appelée par les collectors lorsque une property est destroyed
 	// Notification de tous les observers (SwPropertiesModelImpl) que la property a été supprimée

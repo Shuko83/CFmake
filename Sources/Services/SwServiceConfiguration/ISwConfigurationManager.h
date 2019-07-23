@@ -25,6 +25,8 @@ class ISwConfigurationManager
 	* @Param	: ISwConfPropertiesObserver* observer des properties
 	*/
 	virtual void unregisterConfPropertiesObserver(ISwPropertiesObserver * observer) = 0;
+
+	virtual void notifyPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName) = 0;
 };
 
 #endif

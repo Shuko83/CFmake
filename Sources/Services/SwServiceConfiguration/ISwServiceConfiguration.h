@@ -9,7 +9,7 @@
 
 #include "ISwService.h"
 #include "ISwAdminConfiguration.h"
-#include "ISwPropertiesObserver.h"
+#include "ISwConfigurationManager.h"
 #include <QDomDocument>
 
 //Nom du service
@@ -144,9 +144,9 @@ namespace StreamWork
 
 			/**
              * @brief	: permet de récupérer l'interface de gestion des properties de la conf
-             * @return	: ISwPropertiesObserver : pointeur sur l'interface de gestion des properties de la conf
+             * @return	: ISwConfigurationManager : pointeur sur l'interface de gestion des properties de la conf
              */
-			virtual ISwPropertiesObserver* getConfPropertiesObserver() = 0;
+			virtual ISwConfigurationManager* getManager() = 0;
 
 			
 			/**
