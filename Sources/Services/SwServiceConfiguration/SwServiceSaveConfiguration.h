@@ -360,6 +360,13 @@ namespace StreamWork
 			QString parseConfigurationFile(QString confName, QString inConfigFileToParse);
 
 			/**
+			* @brief : permets de mettre à jour la factory conf à partir du stream
+			* @Param : QString : nom de la configuration concernée
+			* @Param : QString : contenu à mettre à jour avec le nouveau "factory setting"
+			*/
+			QString updateFactorySetting(QString confName, QString confFileContent);
+
+			/**
 			* @brief : Crée un profile de conf par défaut (a partir des factory settings)
 			* @Param : QString : nom de la configuration concernée
 			* @Param : QDomElemment : root_node

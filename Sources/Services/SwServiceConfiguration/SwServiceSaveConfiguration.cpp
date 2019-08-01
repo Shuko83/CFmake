@@ -73,8 +73,11 @@ bool SwServiceSaveConfiguration::loadConfigurationFile(QString confName, QString
 	// récupération de la conf courante et set dans "currentConf"
 	// récupération de tous les profils de conf et set dans "confProfilesDatas"
 
+	// Mise à jour de la factory conf
+	QString confUpToDate = updateFactorySetting(confName, confFileToBeLoaded);
+
 	QString configInitiale = "";
-	configInitiale = parseConfigurationFile(confName, confFileToBeLoaded);
+	configInitiale = parseConfigurationFile(confName, confUpToDate);
 
 	if (configInitiale == "invalid")
 	{
@@ -1699,6 +1702,51 @@ QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QSt
 			return "";
 	}
 	return "invalid";
+}
+
+//-------------------------------------------------------------------------
+QString StreamWork::SwCore::SwServiceSaveConfiguration::updateFactorySetting(QString confName, QString confFileContent)
+{
+
+	QDomDocument xmlConfigFileDocument;
+	xmlConfigFileDocument.setContent(confFileContent);
+
+	QDomNodeList ConfigElements = xmlConfigFileDocument.documentElement().elementsByTagName(CFM_XML_TAG_CONFIG);
+
+	for (int i = 0; i < ConfigElements.size(); ++i)
+	{
+		QString profilName = ConfigElements.at(i).toElement().attribute(CFM_XML_CONFIG_NAME);
+		if (CFM_DEFAULT_FILENAME == profilName)
+		{
+			// Suppression de la factory conf dans le xml
+			QDomNode node = ConfigElements.at(i);
+			node.parentNode().removeChild(node);
+
+			// Récupération de la factory conf
+			QDomElement elt_factory_config = xmlConfigFileDocument.createElement(CFM_XML_TAG_CONFIG);
+			elt_factory_config.setAttribute(CFM_XML_CONFIG_DEFAULT, "true");
+			elt_factory_config.setAttribute(CFM_XML_CONFIG_CURRENT, "false");
+			elt_factory_config.setAttribute(CFM_XML_CONFIG_NAME, CFM_DEFAULT_FILENAME);
+			createQDomProfile(confName, xmlConfigFileDocument, elt_factory_config);
+
+			// Réimplémentation de la factory conf dans le fichier xml de base
+			QDomDocument tempDoc;
+			tempDoc.clear();
+			QDomNode xmlFactoryDatas = tempDoc.importNode(elt_factory_config, true);
+			xmlConfigFileDocument.documentElement().appendChild(xmlFactoryDatas);
+
+			// Faire appel à confSavers[confName]->saveCallBack(QString) avec les datas de la nouvelle conf factory
+			QString confUpToDate = xmlConfigFileDocument.toString(4);
+			QHash<QString, ISwConfSaver*>::const_iterator it_savers = _confSavers.find(confName);
+			if (it_savers != _confSavers.end() && confUpToDate != 0)
+			{
+				it_savers.value()->saveCallBack(confUpToDate);
+			}
+
+			return confUpToDate;
+		}
+	}
+	return confFileContent;
 }
 
 
