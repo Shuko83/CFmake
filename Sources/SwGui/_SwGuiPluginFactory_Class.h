@@ -61,14 +61,5 @@ public:
 private:
 };
 
-#ifndef QT_NO_DEBUG
-extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterfaceD()
-{
-	return new _SwGuiPluginFactory_Class();
-}
-#else
-extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface() {
-	return new _SwGuiPluginFactory_Class();    
-}
-#endif
+extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();
 #endif 

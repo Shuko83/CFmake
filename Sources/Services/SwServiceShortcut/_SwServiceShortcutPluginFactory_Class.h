@@ -47,15 +47,6 @@ class _SwServiceShortcutPluginFactory_Class : public SwPluginFactory_Class
 		
 };
 
-#ifndef QT_NO_DEBUG
-	extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterfaceD() {
-		return new _SwServiceShortcutPluginFactory_Class();    
-	}
-
-#else 
-	extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface() {
-		return new _SwServiceShortcutPluginFactory_Class();    
-	}
-#endif
+extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();
 
 #endif 

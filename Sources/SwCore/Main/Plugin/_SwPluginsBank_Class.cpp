@@ -274,11 +274,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 			QString libPath = fileInfo.absoluteFilePath();
 			//On recherche le point d'entrée du plugin
 			QLibrary lib(libPath);
-#ifndef QT_NO_DEBUG
-			Tf_getPluginEntry plugin_entry=(Tf_getPluginEntry)lib.resolve("GetPluginInterfaceD");
-#else
 			Tf_getPluginEntry plugin_entry=(Tf_getPluginEntry)lib.resolve("GetPluginInterface");
-#endif			
 			if (plugin_entry!=NULL) {
 				//Si trouvé extraction du plugin
 				SwPluginFactory_Class * plugin=plugin_entry();

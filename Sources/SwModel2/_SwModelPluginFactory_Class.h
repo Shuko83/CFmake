@@ -58,14 +58,6 @@ public:
 
 };
 
-#ifndef QT_NO_DEBUG
-extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterfaceD() {
-    return new _SwModelPluginFactory_Class();    
-}
-#else
-extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface() {
-    return new _SwModelPluginFactory_Class();    
-}
-#endif
+extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();
 
 #endif 

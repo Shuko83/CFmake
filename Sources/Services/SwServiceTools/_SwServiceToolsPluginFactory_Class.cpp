@@ -102,3 +102,10 @@ double _SwServiceToolsPluginFactory_Class::GetPluginCompilationDate()
 
 	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
 }
+
+//----------------------------------------------------------------------------------------------
+SwPluginFactory_Class *  GetPluginInterface()
+{
+	static _SwServiceToolsPluginFactory_Class singleton;
+	return &singleton;
+}

@@ -54,15 +54,6 @@ class _SwServiceToolsPluginFactory_Class : public SwPluginFactory_Class
 		_SwFileEditorManager * _serviceFileEditorManager;
 };
 
-#ifndef QT_NO_DEBUG
-	extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterfaceD() {
-		return new _SwServiceToolsPluginFactory_Class();    
-	}
-
-#else 
-	extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface() {
-		return new _SwServiceToolsPluginFactory_Class();    
-	}
-#endif
+extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();
 
 #endif 
