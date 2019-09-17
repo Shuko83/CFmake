@@ -111,6 +111,12 @@ protected:
     bool _protectClosing;
     /* propriété associée*/
     ISwProperty * _protect_closing_property;
+	/* propriété sauvegarde de la géométrie dans un fichier ini */
+	bool _save_geometry_ini_file;	
+	ISwProperty * _save_geometry_ini_file_property;
+	/* propriété du path de la sauvegarde de la géométrie dans un fichier ini */
+	QString _path_geometry_ini_file;
+	ISwProperty * _path_geometry_ini_file_property;
     
     QList<ISwEventObserver *> _iSwEvent;
     
@@ -157,11 +163,9 @@ private:
     void showChanged();
 protected:
     void closeEvent( QCloseEvent * event );
-    bool eventFilter( QObject * object, QEvent * event );
+
+	void restoreStateGeometry();
     
-    bool _firstTime;
-    
-    const QString _geometryPath = QDir::rootPath() + QDir::separator() + "ProgramData" + QDir::separator() + "DIGINEXT" + QDir::separator() + "StarlinxV2" + QDir::separator() + "geometry.ini";
-    
+    bool _firstTimeRestore;    
 };
 #endif
