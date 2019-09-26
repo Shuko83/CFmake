@@ -29,6 +29,7 @@ SwComponent_Class::SwComponent_Class() :QObject(), SwNamed_Class(), SwRef(), SwS
 	_current_child = _child_components.begin();
 	_factory_component_name = QString();
 	_active = true;
+	_logTime = SW_APP->logTime();
 }
 
 //-----------------------------------------------------------------------

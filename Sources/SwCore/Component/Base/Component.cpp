@@ -23,7 +23,6 @@ Component::Component() :SwComponent_Class()
 	_consumer_service = nullptr;
 	_properties_service = nullptr;
 	_disable_service = false;
-	_doCheckTimer = qApp->arguments().contains("-checktime", Qt::CaseInsensitive);
 }
 
 //-----------------------------------------------------------------------
@@ -47,7 +46,7 @@ Component::~Component()
 void Component::InitializeResources() throw(SwException)
 {
 	QElapsedTimer *timer = nullptr;
-	if ( _doCheckTimer )
+	if (_logTime)
 	{
 		timer = new QElapsedTimer();
 		timer->start();
@@ -69,7 +68,7 @@ void Component::InitializeResources() throw(SwException)
 
 	initializeComponent();
 
-	if ( _doCheckTimer && timer )
+	if (_logTime)
 	{
 		QFile debugFile("log.csv");
 		debugFile.open(QIODevice::Append);
@@ -100,7 +99,7 @@ void Component::OnPropertyChange(ISwProperty * property)
 void Component::BeforeInterfaceAvailabilityChange(QString interface_name, SwComponent_Class * provider_host)
 {
 	QElapsedTimer *timer = nullptr;
-	if ( _doCheckTimer )
+	if (_logTime)
 	{
 		timer = new QElapsedTimer();
 		timer->start();
@@ -109,7 +108,7 @@ void Component::BeforeInterfaceAvailabilityChange(QString interface_name, SwComp
 	if ( !_disable_service )
 		eventBeforeInterfaceAvailability(interface_name, provider_host);
 
-	if ( _doCheckTimer && timer )
+	if (_logTime)
 	{
 		QFile debugFile("log.csv");
 		debugFile.open(QIODevice::Append);
@@ -123,7 +122,7 @@ void Component::BeforeInterfaceAvailabilityChange(QString interface_name, SwComp
 void Component::AfterInterfaceAvailabilityChange(QString interface_name, SwComponent_Class * provider_host)
 {
 	QElapsedTimer *timer = nullptr;
-	if ( _doCheckTimer )
+	if (_logTime)
 	{
 		timer = new QElapsedTimer();
 		timer->start();
@@ -132,7 +131,7 @@ void Component::AfterInterfaceAvailabilityChange(QString interface_name, SwCompo
 	if ( !_disable_service )
 		eventAfterInterfaceAvailability(interface_name, provider_host);
 
-	if ( _doCheckTimer && timer )
+	if (_logTime)
 	{
 		QFile debugFile("log.csv");
 		debugFile.open(QIODevice::Append);

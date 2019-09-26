@@ -54,7 +54,6 @@ _SwExecutor::_SwExecutor() : SwComponent_Class(), _exe_service(this)
 	_priority.FromInt((int) _exe_service.priority());
 	_defaultActivated = true;
 	_replayMode = false;
-	_doCheckTimer = qApp->arguments().contains("-checktime",Qt::CaseInsensitive);
 }
 
 //-----------------------------------------------------------------------
@@ -374,7 +373,7 @@ void _SwExecutor::Execute(double current_time, bool is_first_call) throw (SwExce
 			// on execute le composant
 			if ( _executable_entry.ToInt() == CL_EXE_FSLAVE || _replayMode )
 			{
-				if ( _doCheckTimer )
+				if (_logTime)
 				{
 					QElapsedTimer timer;
 					timer.start();
@@ -392,7 +391,7 @@ void _SwExecutor::Execute(double current_time, bool is_first_call) throw (SwExce
 			}
 			else
 			{
-				if ( _doCheckTimer )
+				if (_logTime)
 				{
 					QElapsedTimer timer;
 					timer.start();

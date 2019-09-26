@@ -28,7 +28,7 @@ class MainWindow : public QMainWindow , public ISelectionObserver{
     Q_OBJECT
 public:
 	/** @brief Constructor */
-	MainWindow(bool loadStream = true);
+	MainWindow(QString streamFile);
 	virtual ~MainWindow();
 
     /** @brief sur load stream existant */

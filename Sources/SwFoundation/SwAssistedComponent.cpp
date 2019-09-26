@@ -394,8 +394,6 @@ SwAssistedComponent::SwAssistedComponent():SwComponent_Class()
 	_isOwnerConf				= false;
 	_isOwner					= false;
 	_isInitialized				= false;
-
-	_doCheckTimer = qApp->arguments().contains("-checktime", Qt::CaseInsensitive);
 }
 
 //-------------------------------------------------------------------------
@@ -491,7 +489,7 @@ SwAssistedComponent::~SwAssistedComponent()
 void SwAssistedComponent::InitializeResources() throw(SwException) 
 {  
 	QElapsedTimer *timer = nullptr;
-	if ( _doCheckTimer )
+	if (_logTime)
 	{
 		timer = new QElapsedTimer();
 		timer->start();
@@ -545,7 +543,7 @@ void SwAssistedComponent::InitializeResources() throw(SwException)
 
 	initializeComponent();
 
-	if ( _doCheckTimer && timer )
+	if (_logTime)
 	{
 		QFile debugFile("log.csv");
 		debugFile.open(QIODevice::Append);
@@ -571,7 +569,7 @@ void SwAssistedComponent::setActive(bool active)
 void SwAssistedComponent::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) 
 {    
 	QElapsedTimer *timer = nullptr;
-	if ( _doCheckTimer )
+	if (_logTime)
 	{
 		timer = new QElapsedTimer();
 		timer->start();
@@ -580,7 +578,7 @@ void SwAssistedComponent::BeforeInterfaceAvailabilityChange(QString interface_na
 	if ( !_disable_service )
 		eventBeforeInterfaceAvailability(interface_name, provider_host);
 
-	if ( _doCheckTimer && timer )
+	if (_logTime)
 	{
 		QFile debugFile("log.csv");
 		debugFile.open(QIODevice::Append);
@@ -594,7 +592,7 @@ void SwAssistedComponent::BeforeInterfaceAvailabilityChange(QString interface_na
 void SwAssistedComponent::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host)
 {    
 	QElapsedTimer *timer = nullptr;
-	if ( _doCheckTimer )
+	if (_logTime)
 	{
 		timer = new QElapsedTimer();
 		timer->start();
@@ -604,7 +602,7 @@ void SwAssistedComponent::AfterInterfaceAvailabilityChange(QString interface_nam
 	if ( !_disable_service )
 		eventAfterInterfaceAvailability(interface_name, provider_host);
 
-	if ( _doCheckTimer && timer )
+	if (_logTime)
 	{
 		QFile debugFile("log.csv");
 		debugFile.open(QIODevice::Append);

@@ -105,8 +105,6 @@ namespace StreamWork {
             SwPins_Manager_Class * _pins_service;
             /* desactivation des services */
             bool _disable_service;
-			//Enable log of time
-			bool _doCheckTimer;
         };
     
     }

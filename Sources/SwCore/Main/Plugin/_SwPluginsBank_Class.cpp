@@ -173,9 +173,9 @@ _SwPluginsBank_Class::~_SwPluginsBank_Class(){
 		SW_APP->RemoveServicesManagerObserver(it.value());
 		it.value()->Liberate();
 	}
-	for(it=_plugin_by_name.begin();it!=_plugin_by_name.end();it++) {
-		delete it.value();
-	}
+	_comp_to_factory.clear();
+	qDeleteAll(_plugin_by_name);
+	_plugin_by_name.clear();
 	_controllers.clear();
 	object_factory_map.clear();
 }

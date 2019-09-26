@@ -137,7 +137,5 @@ protected:
 	bool    _defaultActivated;
 
 	ISwExecution_Service * _executor;
-
-	bool _doCheckTimer;
 };
 #endif 

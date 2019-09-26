@@ -25,6 +25,9 @@ namespace StreamWork
 {
 	namespace SwCore
 	{
+		class _SwPluginsBank_Class;
+		class _SwComplexeTypeAdaptersFactoriesBankImpl;
+
 		/*!
 		\class SwApplication
 		\brief Classe singleton d'une application StreamWork accessible via la macro SW_APP
@@ -114,6 +117,12 @@ namespace StreamWork
 		*/
         class BUILD_SWCORE SwApplication : public SwServicesManager_Class {
         private:
+			_SwPluginsBank_Class *_bank;
+			_SwComplexeTypeAdaptersFactoriesBankImpl *_ctadaptersbank;
+			bool _is_launch;
+			bool _isCheck;
+			bool _logTime;
+			bool _autoStart;
             /*! \brief Est une application avec ihm (QApplication et non QCoreApplication) */
             bool _isGuiApp;
             /*! \brief mode affichage */
@@ -146,10 +155,6 @@ namespace StreamWork
             SwApplication();
             /*! \brief Destructeur*/
             ~SwApplication();
-            /*! \brief attente suite a un redemarrage*/
-            void waitOnRestart();
-			/*! \brief lit les parametres passes */
-			void readParameters();
         public:
             /*! \brief Acces a l'instance unique*/
             static SwApplication * GetInstance();
@@ -177,7 +182,13 @@ namespace StreamWork
             /*! \brief Activation du mode d'affichage des actions du core*/
             void Verbose();
             /*! \brief connaitre l'etat d'activation du mode d'affichage des actions du core*/
-            bool IsVerbose();
+            bool IsVerbose() const;
+			/*! \brief Activation du log du temps*/
+			void enableLogTime();
+			/*! \brief connaitre l'etat du log de temps*/
+			bool logTime() const;
+			/*! \brief Activation de l'autoStart*/
+			void enableAutoStart();
 
             //------------------------------------------------------------------------
             //Gestion de stream multiples

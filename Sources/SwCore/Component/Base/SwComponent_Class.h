@@ -49,7 +49,7 @@ namespace StreamWork
             friend class SwPluginFactory_Class;
             /*! \brief parent */
             SwComponent_Class * _parent;
-            /*! \bien activation */
+            /*! \brief activation */
             bool _active;
             /*! \brief nom usine du composant (pour retrouver la façon de le fabriquer) */
             QString _factory_component_name;
@@ -62,6 +62,8 @@ namespace StreamWork
             /*! \brief definition du nom usine du composant */
             void SetFactoryComponentName(QString factory_component_name);
         protected:
+			/*! \brief Log du temps*/
+			bool _logTime;
             /*! \brief Destructeur */
             virtual ~SwComponent_Class();
 		public:

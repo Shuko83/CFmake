@@ -7,10 +7,8 @@
 */
 
 #include <QApplication>
-#include <QMetaType>
 #include <QDir>
-#include <QStringList>
-#include <iostream>
+#include <QTextCodec>
 #include "SwApplication.h"
 #include "_SwPluginsBank_Class.h"
 #include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
@@ -25,37 +23,18 @@
 #include "SwFileDescriptor.h"
 #include "SwIconDescriptor.h"
 #include "SwIpV4Address.h"
-#include "SwTime_ToolBox.h"
 #include "ISwCheckService.h"
-#ifdef Q_OS_WIN
-#include <windows.h>
-#include <stdio.h>
-#include <tchar.h>
-#include <psapi.h>
-#endif
 
 using namespace StreamWork::SwCore;
 using namespace std;
 
-//Instance du singleton
-SwApplication								* _singleton = NULL;
-_SwPluginsBank_Class						* _bank = NULL;
-_SwComplexeTypeAdaptersFactoriesBankImpl	* _ctadaptersbank = NULL;
-//_SwFileEditorManager						* _feManager				= NULL;
-//_SwServiceExtensionsImpl					* _serviceExtensions		= NULL;
-//_SwServiceParametersImpl					* _serviceParameters		= NULL;
-//_SwServiceCodeTimer							* _serviceCodeTimer			= NULL;
-//_SwServiceRefProfiler						* _serviceRefProfiler		= NULL;
-//SwServiceSaveConfiguration					* _serviceSaveConfiguration	= NULL;
-//_SwServiceShortcuts							* _serviceShortcuts			= NULL;
-//_SwServiceUnitSI							* _serviceUnitSI			= NULL;
-
-bool										_is_launch = false;
-bool										_isCheck = false;
-
-
 //-----------------------------------------------------------------------
-SwApplication::SwApplication() :SwServicesManager_Class()
+SwApplication::SwApplication()
+	: SwServicesManager_Class()
+	, _is_launch(false)
+	, _isCheck(false)
+	, _logTime(false)
+	, _autoStart(false)
 {
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 	_startPath = QDir::currentPath();
@@ -88,117 +67,22 @@ SwApplication::SwApplication() :SwServicesManager_Class()
 //-----------------------------------------------------------------------
 SwApplication::~SwApplication()
 {
-
-	_singleton = NULL;
 	delete _bank;
-	_bank = NULL;
 	delete _ctadaptersbank;
-	_ctadaptersbank = NULL;
 }
-
 
 //-----------------------------------------------------------------------
 SwApplication * SwApplication::GetInstance()
 {
-	if (!_singleton)
-	{
-		QString appName = QCoreApplication::applicationName();
-		if (appName.isEmpty())
-		{
-			QStringList names = QCoreApplication::applicationFilePath().split(QRegularExpression("[\\\\/]"));
-			if (names.count() > 0)
-			{
-				QStringList namep = names.at(names.count() - 1).split(".");
-				if (namep.count() > 0)
-				{
-					QCoreApplication::setApplicationName(namep.at(0));
-					QCoreApplication::setOrganizationName("Diginext");
-					QCoreApplication::setOrganizationDomain("diginext.fr");
-				}
-			}
-		}
-
-		_singleton = new SwApplication;
-		_singleton->waitOnRestart();
-		//prise en compte des parametres passes en ligne de commande
-		_singleton->readParameters();
-	}
-	return _singleton;
-}
-
-//-----------------------------------------------------------------------
-void SwApplication::readParameters()
-{
-	QStringList args = QCoreApplication::instance()->arguments();
-	int nbArgs = args.count();
-	bool isAppDirPathChanged = false;
-
-	for (int i = 1; i < nbArgs; i++)
-	{
-		//debug
-		if (args[i] == "-d")
-			this->Verbose();
-
-		if (args[i] == "-checktime")
-		{
-			QFile debugFile("log.csv");
-			debugFile.open(QIODevice::WriteOnly);
-			debugFile.write(QString("Component Name;InitializeResources;Execute;BeforeInterfaceAvailabilityChange;AfterInterfaceAvailabilityChange\n").toLatin1());
-			debugFile.close();
-		}
-
-		//Ajout d'un path
-		if (args[i] == "-ppath" && i + 1 < nbArgs)
-		{
-			QDir dir(args[i + 1]);
-			if (!dir.exists())
-			{
-				qCritical() << QString("Plugin path %1 doesn't exist").arg(args[i + 1]);
-			}
-			else
-			{
-				this->ComponentsBank().AddPath(dir.path());
-			}
-		}
-		//Ajout d'un descripteur de paths
-		else if (args[i] == "-pdesc" && i + 1 < nbArgs)
-		{
-			QFile file(args[i + 1]);
-			if (!file.exists())
-			{
-				qCritical() << QString("Plugin path %1 doesn't exist").arg(args[i + 1]);
-			}
-			else
-			{
-				this->ComponentsBank().AddPaths(args[i + 1]);
-			}
-		}
-		//Modification de l'application dir path
-		else if (args[i] == "-appDirPath" && i + 1 < nbArgs)
-		{
-			QDir dir(args[i + 1]);
-			if (!dir.exists())
-			{
-				qCritical() << QString("application dir path %1 doesn't exist").arg(args[i + 1]);
-			}
-			else
-			{
-				isAppDirPathChanged = true;
-				this->SetApplicationDirPath(dir.path());
-			}
-		}
-	}   //fin for     
-
-	if (!isAppDirPathChanged)
-	{
-		//s'il n'y a pas eu de changement de l'appli dir path: on affecte celui par defaut
-		this->SetApplicationDirPath(qApp->applicationDirPath());
-	}
+	static SwApplication singleton;
+	return &singleton;
 }
 
 //-----------------------------------------------------------------------
 const QString & SwApplication::GetApplicationDirPath()
 {
+	if(_applicationDirPath.isEmpty())
+		SetApplicationDirPath(qApp->applicationDirPath()); // Valeur par defaut
 	return _applicationDirPath;
 }
 
@@ -226,8 +110,6 @@ QString SwApplication::GetWorkingPath()
 	return _startPath;
 }
 
-
-
 //-----------------------------------------------------------------------
 int SwApplication::Launch(QString stream_desc) throw(SwException)
 {
@@ -253,17 +135,20 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 	}
 	//Construction du stream
 	SwLoader_Class loader;
-	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("Loading stream\n"));
+	if (IsVerbose())
+		Logger().Log(LogLvl_Info, QString("Loading stream\n"));
 	root_component = loader.Load(doc);
-	if (root_component == 0)
+	if (!root_component)
 	{
 		LAUNCH_SWEXCEPTION("SwCore", "Unable to build stream or stream is empty");
 	}
 	//Enregistrement du composant
-	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("Registering stream\n"));
+	if (IsVerbose())
+		Logger().Log(LogLvl_Info, QString("Registering stream\n"));
 	AddNewStream(root_component);
 	//Si c'est une application GUI lancer la boucle d'execution
-	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("Launching application execution\n"));
+	if (IsVerbose())
+		Logger().Log(LogLvl_Info, QString("Launching application execution\n"));
 	//Check service
 	ISwCheckService * cservice = dynamic_cast<ISwCheckService *>(QueryService(CG_SW_CHECK_SERVICE));
 	if (cservice != 0)
@@ -278,35 +163,38 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 	//Lancement
 	if (_isGuiApp)
 	{
-		if (_executor != NULL)
+		if (_executor)
 			result = _executor->StreamExecute();
 		result = qApp->exec();
 	}
 	else
 	{
 		//Sinon execution du stream
-		if (_executor != NULL)
+		if (_executor)
 		{
 			result = _executor->StreamExecute();
 		}
 		else
 		{
 			result = -1;
-			cout << "No Executor found!!!" << endl;
+			if (IsVerbose())
+				Logger().Log(LogLvl_Warning, QString("No Executor found! \n"));
 		}
 	}
-	if (_executor2 != 0)
+	if (_executor2)
 	{
 		_executor2->StreamStop();
 	}
 	//Fin
-	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("Destroying all streams\n"));
+	if (IsVerbose())
+		Logger().Log(LogLvl_Info, QString("Destroying all streams\n"));
 	//Destruction des streams
 	_streams.clear();
 	//Destruction du singleton
-	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("End of application execution\n"));
-	root_component = 0;
-	
+	if (IsVerbose())
+		Logger().Log(LogLvl_Info, QString("End of application execution\n"));
+	root_component = nullptr;
+
 	_is_launch = false;
 	//Retour
 	return result;
@@ -318,12 +206,15 @@ void SwApplication::FinalizeInitialisation()
 	if (_initialisationFinalized)
 		return;
 
+	if (_applicationDirPath.isEmpty())
+		SetApplicationDirPath(qApp->applicationDirPath()); // Valeur par defaut
+
 	QMap<QString, SwPluginFactory_Class *> * plugins = _bank->GetAllPlugins();
 	QMap<QString, SwPluginFactory_Class *>::iterator it = plugins->begin();
 	while (it != plugins->end())
 	{
 		it.value()->FinalizeInitialisation();
-		it++;
+		++it;
 	}
 	//Fin
 	_initialisationFinalized = true;
@@ -339,25 +230,25 @@ void SwApplication::RegisterExecutor(ISwExecutor * executor)
 //-----------------------------------------------------------------------
 ISwPluginsBank & SwApplication::ComponentsBank()
 {
-	return *((ISwPluginsBank *)_bank);
+	return *_bank;
 }
 
 //-----------------------------------------------------------------------
 ISwComplexeTypeAdaptersFactoriesBank & SwApplication::CTFactoriesBank()
 {
-	return *((ISwComplexeTypeAdaptersFactoriesBank *)_ctadaptersbank);
+	return *_ctadaptersbank;
 }
 
 //-----------------------------------------------------------------------
 ISwLogger & SwApplication::Logger()
 {
-	return *((ISwLogger *)&_logger);
+	return _logger;
 }
 
 //-----------------------------------------------------------------------
 ISwAlerter & SwApplication::Alerter()
 {
-	return *((ISwAlerter *)&_alerter);
+	return _alerter;
 }
 
 //-----------------------------------------------------------------------
@@ -367,9 +258,27 @@ void SwApplication::Verbose()
 }
 
 //-----------------------------------------------------------------------
-bool SwApplication::IsVerbose()
+bool SwApplication::IsVerbose() const
 {
 	return _isVerboseMode;
+}
+
+//-----------------------------------------------------------------------
+void SwApplication::enableLogTime()
+{
+	_logTime = true;
+}
+
+//-----------------------------------------------------------------------
+bool StreamWork::SwCore::SwApplication::logTime() const
+{
+	return _logTime;
+}
+
+//-----------------------------------------------------------------------
+void StreamWork::SwCore::SwApplication::enableAutoStart()
+{
+	_autoStart = true;
 }
 
 //-----------------------------------------------------------------------
@@ -396,9 +305,7 @@ void SwApplication::AddNewStream(SwComponent_Class * stream_root)
 //-----------------------------------------------------------------------
 SwComponent_Class * SwApplication::CreateNewStream(QString name_of_stream, QString component_type)
 {
-	SwComponent_ClassPtr component;
-
-	component = _bank->CreateComponent(component_type);
+	SwComponent_ClassPtr component = _bank->CreateComponent(component_type);
 	component->SetName(name_of_stream);
 	_streams.insert(component);
 	return component;
@@ -435,7 +342,7 @@ SwComponent_Class * SwApplication::GetFirstStream()
 	//Non, recuperation de l'enfant
 	stream = *_current_stream;
 	//Incrementation
-	_current_stream++;
+	++_current_stream;
 	//Renvoie de l'enfant
 	return stream;
 }
@@ -452,7 +359,7 @@ SwComponent_Class * SwApplication::GetNextStream()
 	//Non, recuperation de l'enfant
 	stream = *_current_stream;
 	//Incrementation
-	_current_stream++;
+	++_current_stream;
 	//Renvoie de l'enfant
 	return stream;
 }
@@ -463,19 +370,11 @@ SwComponent_Class * SwApplication::GetNextStream()
 //-----------------------------------------------------------------------
 bool SwApplication::LaunchAutoStart()
 {
-	QStringList liste_arg = QCoreApplication::instance()->arguments();
-	for (int i = 0; i < liste_arg.count(); i++)
+	if (_autoStart && _executor)
 	{
-		if (liste_arg[i] == "-autostart")
-		{
-			i = liste_arg.count();
-			if (_executor != NULL)
-			{
-				_executor->StreamExecute();
-				_executor = 0;
-				return (_executor2 != 0);
-			}
-		}
+		_executor->StreamExecute();
+		_executor = 0;
+		return (_executor2 != 0);
 	}
 	return false;
 }
@@ -496,6 +395,7 @@ quint64 SwApplication::GetHistoricCpt()
 	return _historic_counter++;
 }
 
+//-----------------------------------------------------------------------
 void SwApplication::SetHistoricCpt(quint64 value)
 {
 	_historic_counter = std::max(value + 1, _historic_counter);
@@ -541,48 +441,6 @@ void SwApplication::Initialize_Types()
 	//Et de ses methodes de serialisation
 	qRegisterMetaTypeStreamOperators<StreamWork::SwCore::SwIpV4Address>("StreamWork::SwCore::SwIpV4Address");
 
-}
-
-//-----------------------------------------------------------------------
-void SwApplication::waitOnRestart()
-{
-	//Check si c'est un redemarrage,
-	//Si oui recupere l'identifiant
-	unsigned int processId = 0;
-	QStringList liste_arg = qApp->arguments();
-	int nb_args = liste_arg.count();
-	for (int i = 1; i < nb_args && processId == 0; i++)
-	{
-		if (liste_arg[i] == "-restart" && i + 1 < nb_args)
-		{
-			processId = liste_arg[i + 1].toUInt();
-		}
-	}
-	if (processId == 0)
-		return;
-#ifdef Q_OS_WIN
-	//Recherche du process origine,
-	//Si trouve on attends et sinon, on contenu
-	DWORD aProcesses[1024], cbNeeded, cProcesses;
-	bool start = false;
-	SW_DEBUG("Waiting to restart");
-	while (!start)
-	{
-		SwTime_ToolBox::InternalSleep((unsigned long)50); //50 ms d'attente  
-		if (!EnumProcesses(aProcesses, sizeof(aProcesses), &cbNeeded))
-			return;
-		start = true;
-		// Calculate how many process identifiers were returned.
-		cProcesses = cbNeeded / sizeof(DWORD);
-		// Print the name and process identifier for each process.
-		for (unsigned int i = 0; i < cProcesses; i++)
-		{
-			if (aProcesses[i] == processId)
-				start = false;
-		}
-	}
-
-#endif
 }
 
 //-----------------------------------------------------------------------
