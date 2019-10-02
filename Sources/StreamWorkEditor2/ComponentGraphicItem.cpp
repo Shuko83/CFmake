@@ -556,7 +556,7 @@ void ComponentGraphicItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * even
 			{
 				rootComponent = rootComponent->GetParent();
 			}
-			window = new MainWindow(false);
+			window = new MainWindow();
 			window->onLoadExistingStream(subStream->getSubStream(), subStream->getSubStreamPath(), rootComponent);
 			window->showMaximized();
 		}
