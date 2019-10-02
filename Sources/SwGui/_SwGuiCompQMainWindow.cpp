@@ -12,6 +12,7 @@
 #include "_SwGuiCompQMainWindow.h"
 #include <QSettings>
 #include <QMessageBox>
+#include <QCloseEvent>
 #include <SwFileDescriptor.h>
 
 #include "ISwServiceShortcuts.h"
