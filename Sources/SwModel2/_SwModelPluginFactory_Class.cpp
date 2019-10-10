@@ -170,7 +170,6 @@ QString _SwModelPluginFactory_Class::GetPluginVersion()
 	return build;
 }
 
-
 //-----------------------------------------------------------------------
 double _SwModelPluginFactory_Class::GetPluginCompilationDate()
 {
@@ -191,8 +190,8 @@ double _SwModelPluginFactory_Class::GetPluginCompilationDate()
 
 }
 
+//-----------------------------------------------------------------------
 SwPluginFactory_Class *  GetPluginInterface()
 {
-	static _SwModelPluginFactory_Class singleton;
-	return &singleton;
+	return new _SwModelPluginFactory_Class;
 }

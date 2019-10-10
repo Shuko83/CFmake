@@ -306,6 +306,5 @@ double _SwGuiPluginFactory_Class::GetPluginCompilationDate()
 //-------------------------------------------------------------------------
 SwPluginFactory_Class *  GetPluginInterface()
 {
-	static _SwGuiPluginFactory_Class singleton;
-	return &singleton;
+	return new _SwGuiPluginFactory_Class;
 }

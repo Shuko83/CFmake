@@ -49,14 +49,6 @@ public:
 	virtual double GetPluginCompilationDate();
 };
 
-#ifndef QT_NO_DEBUG
-extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterfaceD() {
-    return new _SwConfigurationPluginFactory_Class();    
-}
-#else
-extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface() {
-    return new _SwConfigurationPluginFactory_Class();    
-}
-#endif
+extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();
 
 #endif 

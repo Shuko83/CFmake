@@ -136,6 +136,5 @@ double _SwEditorPluginFactory_Class::GetPluginCompilationDate(){
 
 SwPluginFactory_Class *  GetPluginInterface()
 {
-	static _SwEditorPluginFactory_Class singleton;
-	return &singleton;
+	return new _SwEditorPluginFactory_Class;
 }

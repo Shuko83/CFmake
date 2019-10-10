@@ -79,6 +79,5 @@ double _SwFoundationPluginFactory_Class::GetPluginCompilationDate(){
 
 SwPluginFactory_Class *  GetPluginInterface()
 {
-	static _SwFoundationPluginFactory_Class singleton;
-	return &singleton;
+	return new _SwFoundationPluginFactory_Class;
 }

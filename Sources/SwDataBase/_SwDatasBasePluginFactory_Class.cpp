@@ -97,3 +97,7 @@ double _SwDatasBasePluginFactory_Class::GetPluginCompilationDate(){
 
 }
 
+SwPluginFactory_Class *  GetPluginInterface()
+{
+	return new _SwDatasBasePluginFactory_Class;    
+}

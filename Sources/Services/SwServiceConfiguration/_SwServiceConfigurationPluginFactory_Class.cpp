@@ -91,6 +91,5 @@ double _SwServiceConfigurationPluginFactory_Class::GetPluginCompilationDate()
 //----------------------------------------------------------------------------------------------
 SwPluginFactory_Class *  GetPluginInterface()
 {
-	static _SwServiceConfigurationPluginFactory_Class singleton;
-	return &singleton;
+	return new _SwServiceConfigurationPluginFactory_Class;
 }

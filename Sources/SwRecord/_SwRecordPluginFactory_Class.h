@@ -64,17 +64,7 @@ public:
     virtual void OnUnregisterService(ISwService * service);            
 };
 
-#ifndef QT_NO_DEBUG
-    extern "C" SwRecord_EXPORT SwPluginFactory_Class *  GetPluginInterfaceD() {
-        return new _SwRecordPluginFactory_Class();
-    }
-#else 
-    extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface() {
-        return new _SwRecordPluginFactory_Class();    
-    }
-#endif
-
-
+extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();
 
 #endif
 //------------------------------------------------------
