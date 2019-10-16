@@ -115,9 +115,10 @@ MainWindow::MainWindow(QString streamFile)
 	else
 		acc->setChecked(false);
 
-	connect(acc, &QAction::toggled, this, [=]() { GlobalConf::instance()->setSplineLink(acc->isChecked());
-	for (ComponentGraphicItem* item : _streamControler->getScene()->getAllComponentGraphicItems())
-		item->updateAttributs();
+	connect(acc, &QAction::toggled, this, [acc, this]() {
+		GlobalConf::instance()->setSplineLink(acc->isChecked());
+		for (ComponentGraphicItem* item : this->_streamControler->getScene()->getAllComponentGraphicItems())
+			item->updateAttributs();
 	});
 
 	//Log
@@ -189,37 +190,34 @@ MainWindow::MainWindow(QString streamFile)
 	restoreGeometry(settings.value("geometry").toByteArray());
 	restoreState(settings.value("windowState").toByteArray());
 
+	_streamControler = new StreamControler(_propertyWidget);
+	_streamControler->setView(_streamView);
+
 	QFileInfo fi(streamFile);
 	if (!streamFile.isEmpty() && fi.exists())
 	{
-		_streamControler = new StreamControler(_propertyWidget);
-		_streamControler->setView(_streamView);
 		_streamControler->loadStream(streamFile);
-		_streamTreeModel->setStreamControler(_streamControler);
-		_iaTreeModel->setStreamControler(_streamControler);
-		_streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
 		setWindowTitle(fi.fileName() + " - " + fi.filePath());
-		_editors.insert(_streamControler->getRootItem(), this);
-		_streamSourceOpener = 0;
-		_streamControler->getRootItem()->OnDestroy.iconnect(*this, &MainWindow::internalClose);
 	}
 	else
 	{
 		setWindowTitle("StreamWorkEditor V2");
 	}
+
+	_streamTreeModel->setStreamControler(_streamControler);
+	_iaTreeModel->setStreamControler(_streamControler);
+	_streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
 }
 
 //---------------------------------------------------------------------------------
 MainWindow::~MainWindow()
 {
-	if (_streamControler)
-	{
-		_streamControler->getRootItem()->OnDestroy.idisconnect(*this, &MainWindow::internalClose);
-		_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
-		_streamTreeModel->setStreamControler(0);
-		_iaTreeModel->setStreamControler(0);
-	}
-    delete _iaTreeModel;
+	_streamControler->getRootItem()->OnDestroy.idisconnect(*this, &MainWindow::internalClose);
+	_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+	_streamTreeModel->setStreamControler(0);
+	_iaTreeModel->setStreamControler(0);
+    
+	delete _iaTreeModel;
 	delete _streamControler;
     delete _streamView;
 }
@@ -229,16 +227,13 @@ MainWindow::~MainWindow()
 void MainWindow::onNewStream()
 {
 	// Clear old stream
-	if (_streamControler)
-	{
-		_streamControler->getRootItem()->OnDestroy.idisconnect(*this, &MainWindow::internalClose);
-		_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
-		_streamTreeModel->setStreamControler(0);
-		_iaTreeModel->setStreamControler(0);
-		delete _streamControler;
-		
-		clearServices();
-	}
+	_streamControler->getRootItem()->OnDestroy.idisconnect(*this, &MainWindow::internalClose);
+	_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+	_streamTreeModel->setStreamControler(0);
+	_iaTreeModel->setStreamControler(0);
+	delete _streamControler;
+
+	clearServices();
 
 	// Init New Stream
 	_streamControler = new StreamControler(_propertyWidget);
@@ -314,16 +309,13 @@ void MainWindow::onLoadStreamf()
 
 	if (file.exists())
 	{
-		if (_streamControler)
-		{
-			_streamControler->getRootItem()->OnDestroy.idisconnect(*this, &MainWindow::internalClose);
-			_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
-			_streamTreeModel->setStreamControler(0);
-			_iaTreeModel->setStreamControler(0);
-			delete _streamControler;
+		_streamControler->getRootItem()->OnDestroy.idisconnect(*this, &MainWindow::internalClose);
+		_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+		_streamTreeModel->setStreamControler(0);
+		_iaTreeModel->setStreamControler(0);
+		delete _streamControler;
 
-			clearServices();
-		}
+		clearServices();
 		
 		manageHistory(file);
 		_streamControler = new StreamControler(_propertyWidget);
@@ -344,14 +336,11 @@ void MainWindow::onLoadExistingStream(SwComponent_Class * aStream, QString path,
 {
 	QFileInfo fi(path);
 
-	if (_streamControler)
-	{
-		_streamControler->getRootItem()->OnDestroy.idisconnect(*this, &MainWindow::internalClose);
-		_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
-		_streamTreeModel->setStreamControler(0);
-		_iaTreeModel->setStreamControler(0);
-		delete _streamControler;
-	}
+	_streamControler->getRootItem()->OnDestroy.idisconnect(*this, &MainWindow::internalClose);
+	_streamControler->removeSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
+	_streamTreeModel->setStreamControler(0);
+	_iaTreeModel->setStreamControler(0);
+	delete _streamControler;
 	
 	manageHistory(fi);
 
