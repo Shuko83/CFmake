@@ -418,19 +418,33 @@ QModelIndex _SwModelExportedEntitiesModel::index ( int row, int column, const QM
         return createIndex(row,column,(void *)NULL);
     switch(parent.row()) {
         case 0:
-            return createIndex(row,column,(void *)_properties[row]);
+			if(row < _properties.size())
+				return createIndex(row,column,(void *)_properties[row]);
+			break;
         case 1:
-            return createIndex(row,column,(void *)_interfacesC[row]);
+			if (row < _interfacesC.size())
+				return createIndex(row,column,(void *)_interfacesC[row]);
+			break;
         case 2:
-            return createIndex(row,column,(void *)_interfacesP[row]);
+			if (row < _interfacesP.size())
+				return createIndex(row,column,(void *)_interfacesP[row]);
+			break;
         case 3:
-            return createIndex(row,column,(void *)_pins[row]);
+			if (row < _pins.size())
+				return createIndex(row,column,(void *)_pins[row]);
+			break;
         case 4:
-            return createIndex(row,column,(void *)_executables[row]);
+			if (row < _executables.size())
+				return createIndex(row,column,(void *)_executables[row]);
+			break;
         case 5:
-            return createIndex(row,column,(void *)_ownerConfigurables[row]);        
+			if (row < _ownerConfigurables.size())
+				return createIndex(row,column,(void *)_ownerConfigurables[row]);        
+			break;
         case 6:
-            return createIndex(row,column,(void *)_activables[row]);                    
+			if (row < _activables.size())
+				return createIndex(row,column,(void *)_activables[row]);                    
+			break;
         default:
             break;
     }
