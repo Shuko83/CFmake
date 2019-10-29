@@ -30,9 +30,6 @@ MenuManager::MenuManager():QObject() {
 	_contextualMenu=new QMenu(0);
     _contextualMenu->setWindowOpacity(0.9);
     _contextualMenu->setStyleSheet("* { border: 1px solid gray; background: #ccc; font-size:10px}");
-    _contextualMenuSwap=new QMenu(0);
-    _contextualMenuSwap->setWindowOpacity(0.9);
-    _contextualMenuSwap->setStyleSheet("* { border: 1px solid gray; background: #ccc; font-size:10px}");
     _disableSelectionChanged=false;
     _streamControler=0;
     menuNeedBeRebuild=true;
@@ -45,7 +42,6 @@ MenuManager::MenuManager():QObject() {
 MenuManager::~MenuManager() {
     delete _menu;
     delete _contextualMenu;
-    delete _contextualMenuSwap;
 }
 /** @brief acces singleton */
 MenuManager * MenuManager::getInstance() {
@@ -59,7 +55,6 @@ void MenuManager::setControler(StreamControler * controler) {
     }
     if (_streamControler!=0) {
         _contextualMenu->clear();
-        _contextualMenuSwap->clear();
         _gwList.clear();
         _lkList.clear();
 		_adminList.clear();
@@ -153,16 +148,14 @@ void MenuManager::rebuildMenu() {
 
 /** @brief construction du menu en fonction du contexte */
 QMenu * MenuManager::buildContextMenu(const QPointF & pos) {
+    _menuPosition=pos;
+
     if (menuNeedBeRebuild) {
         rebuildMenu();
+		return _contextualMenu;
     }
-    _menuPosition=pos;
-    if (!_contextualMenu->isEmpty()) {
-        QMenu * tmp=_contextualMenuSwap;
-        _contextualMenuSwap=_contextualMenu;
-        _contextualMenu=tmp;
-        _contextualMenu->clear();
-    } 
+
+    _contextualMenu->clear();
     buildMenuForContext(_contextualMenu);
     return _contextualMenu;
 }

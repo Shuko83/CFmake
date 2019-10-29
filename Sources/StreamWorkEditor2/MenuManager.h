@@ -91,8 +91,6 @@ private:
     QMenu * _menu;
     /** @brief Menu contextuel*/
     QMenu * _contextualMenu;
-    /** @brief Menu contextuel swap*/
-    QMenu * _contextualMenuSwap;
     /** @brief Menu */
     StreamControler * _streamControler;
     /** @brief Liste des composants selectionnéés */
