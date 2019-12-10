@@ -20,6 +20,7 @@
 #include "ISwExecution_Service.h"
 #include "ISwAdminSetup.h"
 #include "ISwWidget.h"
+
 /**
 @class MenuManager
 @brief manager de menu
@@ -33,8 +34,6 @@ public:
     void setControler(StreamControler * controler);
     /** @brief acces au controleur */
     StreamControler * getControler();
-    /** @brief selection changed */
-    void selectionChanged();
     /** @brief construction du menu en fonction du contexte */
     QMenu * buildContextMenu(const QPointF & pos);
     /** @brief Acces au menu de la fenetre principale */
@@ -114,8 +113,7 @@ private:
     bool _disableSelectionChanged;
     /** @brief menu position*/
     QPointF _menuPosition;
-    /** @brief Le menu a besoin d'etre reconstruit*/
-    bool menuNeedBeRebuild;
+
     /** @brief Color copied*/
     QColor _copyTextColor;
     QColor _copyBgColor;

@@ -32,11 +32,8 @@ MenuManager::MenuManager():QObject() {
     _contextualMenu->setStyleSheet("* { border: 1px solid gray; background: #ccc; font-size:10px}");
     _disableSelectionChanged=false;
     _streamControler=0;
-    menuNeedBeRebuild=true;
     _copyTextColor=TEXT_COLOR;
     _copyBgColor=HEADER_COLOR;
-
-
 }
 /** @brief Destructor */
 MenuManager::~MenuManager() {
@@ -64,21 +61,16 @@ void MenuManager::setControler(StreamControler * controler) {
     }
     _streamControler=controler;
     _menu->clear();
-    if (_streamControler!=0) {
-        selectionChanged();
-    }
 }
 /** @brief acces au controleur */
 StreamControler * MenuManager::getControler() {
     return _streamControler;
 }
 
-/** @brief selection changed */
-void MenuManager::selectionChanged() {
-    menuNeedBeRebuild=true;
-}
 /** @brief rebuildMenu() */
 void MenuManager::rebuildMenu() {
+	_contextualMenu->clear();
+
     QList<QGraphicsItem *> list=_streamControler->getScene()->selectedItems();
     _gwList.clear();
     _lkList.clear();
@@ -143,21 +135,14 @@ void MenuManager::rebuildMenu() {
         }
     }
     buildMenuForContext(_contextualMenu);
-    menuNeedBeRebuild=false;
 }
 
 /** @brief construction du menu en fonction du contexte */
 QMenu * MenuManager::buildContextMenu(const QPointF & pos) {
     _menuPosition=pos;
 
-    if (menuNeedBeRebuild) {
-        rebuildMenu();
-		return _contextualMenu;
-    }
-
-    _contextualMenu->clear();
-    buildMenuForContext(_contextualMenu);
-    return _contextualMenu;
+    rebuildMenu();
+	return _contextualMenu;
 }
 /** @brief buildMenuForContext() */
 void MenuManager::buildMenuForContext(QMenu * menu) {
@@ -284,7 +269,6 @@ void MenuManager::onDisconnect() {
 		if( execServS && execServS->isRunning() ) 
 		{
 			QMessageBox::critical(0,"Forbidden Action","Unable to disconnect interface on running component");
-			menuNeedBeRebuild=true;
 			return;
 		}
 
@@ -302,7 +286,6 @@ void MenuManager::onDisconnect() {
             }
         }
     }
-    menuNeedBeRebuild=true;
 }
 /** @brief sur start execution*/
 void MenuManager::onStartExecution() {
@@ -468,7 +451,6 @@ void MenuManager::onCreateAndConnect() {
                 ComponentGraphicItem * gitem=_streamControler->getLastAddedComponent();
                 ConnectorGraphicItem *citem=gitem->getConnector(ext->getName());
                 _streamControler->onLinkConnectors(_selectedConnector,citem);
-                menuNeedBeRebuild=true;
                 return;
             }
         }
@@ -485,7 +467,6 @@ void MenuManager::onConnect() {
 		for (ConnectorGraphicItem *citem : _connectableItems) {
             if (buildActionNameForConnector(citem)==action->text()) {
                 _streamControler->onLinkConnectors(_selectedConnector,citem);
-                menuNeedBeRebuild=true;
                 return;
             }
         }

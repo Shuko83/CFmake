@@ -410,7 +410,6 @@ void StreamControler::showProperties()
 void StreamControler::selectionChanged()
 {
 	MenuManager::getInstance()->setControler(this);
-	MenuManager::getInstance()->selectionChanged();
 	QList<QGraphicsItem *> list = _streamScene->selectedItems();
 	QList<SwComponent_Class *> sel;
 	ComponentGraphicItem * first_gcomponent = 0;
