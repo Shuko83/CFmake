@@ -13,7 +13,7 @@
 
 /*! \brief Constructeur */
 SwSplash::SwSplash(const QPixmap & pixmap)
-    : QSplashScreen(pixmap,Qt::SplashScreen | Qt::WindowStaysOnTopHint)
+    : QSplashScreen(pixmap,Qt::SplashScreen)
 {
     //setAttribute(Qt::WA_TranslucentBackground);
     setMask(pixmap.mask());
