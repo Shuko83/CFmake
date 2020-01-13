@@ -127,10 +127,6 @@ Parameters readParamaters()
 
 int main(int argc, char *argv[])
 {
-	//Warning do not move this line . It must be the first thing to do
-	//To be able to save QDomDocument attribute with the same order
-	qputenv("QT_HASH_SEED", "12378");
-
 	//Log Color
 	QsLogger->start();
 
