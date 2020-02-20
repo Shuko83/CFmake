@@ -115,8 +115,9 @@ protected:
 	bool _save_geometry_ini_file;	
 	ISwProperty * _save_geometry_ini_file_property;
 	/* propriété du path de la sauvegarde de la géométrie dans un fichier ini */
-	QString _path_geometry_ini_file;
-	ISwProperty * _path_geometry_ini_file_property;
+	QString _configPath;
+	ISwProperty * _config_path_property;
+	QString _geometryPath;
     
     QList<ISwEventObserver *> _iSwEvent;
     
@@ -165,6 +166,7 @@ protected:
     void closeEvent( QCloseEvent * event );
 
 	void restoreStateGeometry();
+	void saveStateGeometry();
     
     bool _firstTimeRestore;    
 };

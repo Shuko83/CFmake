@@ -67,6 +67,7 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
     _useAsWidget = false;
     _protectClosing = false;
 	_save_geometry_ini_file = false;
+	_geometryPath = "";
     
     // Shortcuts
     ISwServiceShortcuts * serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>( SW_APP->QueryService( CG_SW_SERVICE_SHORTCUTS ) );
@@ -77,6 +78,8 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
 //-----------------------------------------------------------------------
 _SwGuiCompQMainWindow::~_SwGuiCompQMainWindow()
 {
+	saveStateGeometry();
+
     delete _mainWindowService;
     
     QMap<QString, ISwMenu *>::iterator menu_it;
@@ -240,14 +243,14 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
 	_save_geometry_ini_file_property->SetValue(QVariant(_save_geometry_ini_file));
 	enableListeningChangeForProperty(_save_geometry_ini_file_property);
 
-	_path_geometry_ini_file_property = getPropertiesService().CreateProperty<QString>("path geometry");
-	if (_path_geometry_ini_file_property == nullptr)
+	_config_path_property = getPropertiesService().CreateProperty<QString>("configPath");
+	if (_config_path_property == nullptr)
 	{
-		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register _path_geometry_ini_file property\n"));
+		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register _config_path_property property\n"));
 	}	
-	_path_geometry_ini_file_property->SetDescription("Define if the QMainWindow path geometry ini file");
-	_path_geometry_ini_file_property->SetValue(QVariant(_path_geometry_ini_file));
-	enableListeningChangeForProperty(_path_geometry_ini_file_property);
+	_config_path_property->SetDescription("Define if the QMainWindow path geometry ini file");
+	_config_path_property->SetValue(QVariant(_configPath));
+	enableListeningChangeForProperty(_config_path_property);
     
     //Fin
     if( SW_APP->IsVerbose() )
@@ -418,14 +421,15 @@ void _SwGuiCompQMainWindow::eventPropertyChange( ISwProperty * property )
 	if (_save_geometry_ini_file_property == property)
 	{
 		_save_geometry_ini_file = property->GetValue().toBool();
-		if (_save_geometry_ini_file && !_path_geometry_ini_file.isEmpty())
+		if (_save_geometry_ini_file && !_geometryPath.isEmpty())
 			restoreStateGeometry();
 	}
 
-	if (_path_geometry_ini_file_property == property)
+	if (_config_path_property == property)
 	{
-		_path_geometry_ini_file = property->GetValue().toString();
-		if (_save_geometry_ini_file && !_path_geometry_ini_file.isEmpty())
+		_configPath = property->GetValue().toString();
+		_geometryPath = _configPath + QDir::separator() + QStringLiteral("geometry.ini");
+		if (_save_geometry_ini_file && !_geometryPath.isEmpty())
 			restoreStateGeometry();
 	}
 }
@@ -683,18 +687,24 @@ void _SwGuiCompQMainWindow::closeEvent( QCloseEvent * event )
         int ret = QMessageBox::question( this, "Exit", "Do you really want to exit?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
         if( ret == QMessageBox::No )
             event->ignore();
-    }
-    
-	if (_save_geometry_ini_file && !_path_geometry_ini_file.isEmpty())
-	{
-		SwFileDescriptor fd;
-		fd.setFileName(_path_geometry_ini_file);
-		QSettings settings(fd.getDoubleDottedPath(), QSettings::IniFormat);
-		settings.setValue( "geometry", saveGeometry() );
-		settings.setValue( "windowState", saveState() );
-	}
+    }	
+
+	saveStateGeometry();
     
     notify( ( QEvent * ) event );
+}
+
+//-----------------------------------------------------------------------
+void _SwGuiCompQMainWindow::saveStateGeometry()
+{
+	if (_save_geometry_ini_file && !_geometryPath.isEmpty())
+	{
+		SwFileDescriptor fd;
+		fd.setFileName(_geometryPath);
+		QSettings settings(fd.getDoubleDottedPath(), QSettings::IniFormat);
+		settings.setValue("geometry", saveGeometry());
+		settings.setValue("windowState", saveState());
+	}
 }
 
 //-----------------------------------------------------------------------
@@ -703,7 +713,7 @@ void _SwGuiCompQMainWindow::restoreStateGeometry()
 	if (_firstTimeRestore)
 	{
 		SwFileDescriptor fd;
-		fd.setFileName(_path_geometry_ini_file);
+		fd.setFileName(_geometryPath);
 		QSettings settings(fd.getDoubleDottedPath(), QSettings::IniFormat);
 		restoreGeometry(settings.value("geometry").toByteArray());
 		restoreState(settings.value("windowState").toByteArray());
