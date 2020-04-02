@@ -709,11 +709,17 @@ int _SwGuiCompQMainWindow::getCloseMode()
 }
 
 //-----------------------------------------------------------------------
+Qt::WindowStates _SwGuiCompQMainWindow::getWindowState()
+{
+	return windowState();
+}
+
+//-----------------------------------------------------------------------
 void _SwGuiCompQMainWindow::closeEvent( QCloseEvent * event )
 {
-	if (_close_mode.ToInt() == SW_CLOSE_HIDE && !this->isHidden())
+	if (_close_mode.ToInt() == SW_CLOSE_HIDE && windowState() != Qt::WindowState::WindowMinimized)
 	{
-		hide();
+		setWindowState(Qt::WindowState::WindowMinimized);
 		event->ignore();
 		return;
 	}

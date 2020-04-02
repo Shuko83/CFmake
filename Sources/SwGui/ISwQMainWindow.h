@@ -31,6 +31,7 @@ namespace StreamWork
             \return la fenetre principale */
 			virtual QMainWindow & GetMainWindow()=0;
 			virtual int getCloseMode() = 0;
+			virtual Qt::WindowStates getWindowState() = 0;
 		};
 	}
 }

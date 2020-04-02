@@ -141,6 +141,8 @@ public:
     // Interface ISwQMainWindow
     //---------------------------------------------------------------------
     virtual QMainWindow & GetMainWindow();
+	virtual int getCloseMode();
+	virtual Qt::WindowStates getWindowState();
     //---------------------------------------------------------------------
     // Interface ISwWidget
     //---------------------------------------------------------------------
@@ -166,7 +168,6 @@ public:
 private:
     void showChanged();
 protected:
-	virtual int getCloseMode();
     void closeEvent( QCloseEvent * event );
 
 	void restoreStateGeometry();
