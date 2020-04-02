@@ -32,6 +32,8 @@ using namespace StreamWork::SwGui;
 #define SW_SHOW_FULLSCREEN 2
 #define SW_SHOW_MAXIMIZED 3
 #define SW_SHOW_MINIMIZED 4
+#define SW_CLOSE_CLOSED 0
+#define SW_CLOSE_HIDE 1
 #define TOGGLE_FULLSCREEN "Show Fullscreen"
 
 //-----------------------------------------------------------------------
@@ -64,6 +66,9 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
     _show_mode.AddKey( SW_SHOW_MAXIMIZED, "Maximized" );
     _show_mode.AddKey( SW_SHOW_MINIMIZED, "Minimized" );
     _show_mode.FromInt( SW_SHOW_NORMAL );
+	_close_mode.AddKey(SW_CLOSE_CLOSED, "Closed");
+	_close_mode.AddKey(SW_CLOSE_HIDE, "Hide");
+	_close_mode.FromInt(SW_CLOSE_CLOSED);
     _useAsWidget = false;
     _protectClosing = false;
 	_save_geometry_ini_file = false;
@@ -251,6 +256,16 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
 	_config_path_property->SetDescription("Define if the QMainWindow path geometry ini file");
 	_config_path_property->SetValue(QVariant(_configPath));
 	enableListeningChangeForProperty(_config_path_property);
+
+	_close_property = getPropertiesService().CreateProperty<SwEnum>("Close or Hide");
+	if (_close_property != nullptr)
+	{
+		QVariant variant;
+		variant.setValue(_close_mode);
+		_close_property->SetValue(variant);
+		_close_property->SetDescription("Close Mode");
+		enableListeningChangeForProperty(_close_property);
+	}
     
     //Fin
     if( SW_APP->IsVerbose() )
@@ -431,6 +446,12 @@ void _SwGuiCompQMainWindow::eventPropertyChange( ISwProperty * property )
 		_geometryPath = _configPath + QDir::separator() + QStringLiteral("geometry.ini");
 		if (_save_geometry_ini_file && !_geometryPath.isEmpty())
 			restoreStateGeometry();
+	}
+
+	if (_close_property == property)
+	{
+		SwEnum closemode = _close_property->GetValue().value<SwEnum>();
+		_close_mode = closemode;
 	}
 }
 
@@ -680,8 +701,23 @@ void _SwGuiCompQMainWindow::processCommand( QString name )
 }
 
 //-----------------------------------------------------------------------
+
+
+int _SwGuiCompQMainWindow::getCloseMode()
+{
+	return _close_mode.ToInt();
+}
+
+//-----------------------------------------------------------------------
 void _SwGuiCompQMainWindow::closeEvent( QCloseEvent * event )
 {
+	if (_close_mode.ToInt() == SW_CLOSE_HIDE && !this->isHidden())
+	{
+		hide();
+		event->ignore();
+		return;
+	}
+
     if( _protectClosing )
     {
         int ret = QMessageBox::question( this, "Exit", "Do you really want to exit?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );

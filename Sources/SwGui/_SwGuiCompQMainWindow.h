@@ -118,6 +118,9 @@ protected:
 	QString _configPath;
 	ISwProperty * _config_path_property;
 	QString _geometryPath;
+	/* Lors d'une fermeture: fermer ou caché */
+	SwEnum _close_mode;
+	ISwProperty * _close_property;
     
     QList<ISwEventObserver *> _iSwEvent;
     
@@ -163,11 +166,12 @@ public:
 private:
     void showChanged();
 protected:
+	virtual int getCloseMode();
     void closeEvent( QCloseEvent * event );
 
 	void restoreStateGeometry();
 	void saveStateGeometry();
-    
+
     bool _firstTimeRestore;    
 };
 #endif

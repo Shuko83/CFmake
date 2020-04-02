@@ -30,6 +30,7 @@ namespace StreamWork
             /*! \brief Renvoie la fenetre principale
             \return la fenetre principale */
 			virtual QMainWindow & GetMainWindow()=0;
+			virtual int getCloseMode() = 0;
 		};
 	}
 }
