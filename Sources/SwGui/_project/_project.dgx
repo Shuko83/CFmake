@@ -10,7 +10,6 @@
         <Library name="SwExecution"/>
 		<Library name="QsGui"/>
 		<Library name="QsCore"/>
-		<Library name="SuUnifyApp"/>
     </Libraries>
     <Qt>
         <Module name="core"/>
