@@ -36,6 +36,8 @@
 #include "SwServiceManager_Helper.h"
 #include "_SwServiceMainWindow.h"
 
+//#include "ISuUnifyAppAccessor.h"
+
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
@@ -125,6 +127,8 @@ protected:
     QList<ISwEventObserver *> _iSwEvent;
     
     StreamWork::Service::_SwServiceMainWindow * _mainWindowService;
+
+	//ISuUnifyAppAccessor*	_unifyAppAccessor;
 public:
 
     /*! \brief Constructeur */
