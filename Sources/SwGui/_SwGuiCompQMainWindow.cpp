@@ -32,6 +32,7 @@ using namespace StreamWork::SwGui;
 #define SW_SHOW_FULLSCREEN 2
 #define SW_SHOW_MAXIMIZED 3
 #define SW_SHOW_MINIMIZED 4
+#define SW_SHOW_TOPRIBBON 5
 #define SW_CLOSE_CLOSED 0
 #define SW_CLOSE_HIDE 1
 #define TOGGLE_FULLSCREEN "Show Fullscreen"
@@ -65,6 +66,7 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
     _show_mode.AddKey( SW_SHOW_FULLSCREEN, "FullScreen" );
     _show_mode.AddKey( SW_SHOW_MAXIMIZED, "Maximized" );
     _show_mode.AddKey( SW_SHOW_MINIMIZED, "Minimized" );
+	_show_mode.AddKey( SW_SHOW_TOPRIBBON, "TopRibbon");
     _show_mode.FromInt( SW_SHOW_NORMAL );
 	_close_mode.AddKey(SW_CLOSE_CLOSED, "Closed");
 	_close_mode.AddKey(SW_CLOSE_HIDE, "Hide");
@@ -635,6 +637,17 @@ void _SwGuiCompQMainWindow::showChanged()
 {
     switch( _show_mode.ToInt() )
     {
+		case SW_SHOW_TOPRIBBON:
+		{
+			this->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
+			this->showNormal();
+			QDesktopWidget * desktop = QApplication::desktop();
+			QRect screensize = desktop->screenGeometry(desktop->primaryScreen());
+			this->setMinimumWidth(screensize.width());
+			this->setMaximumWidth(screensize.width());
+			this->move(QPoint(0,0));
+		}
+		break;
         case SW_SHOW_CENTERED:
         {
             this->showNormal();
