@@ -12,7 +12,7 @@
 
 #include "SwServiceSaveConfiguration.h"
 #include "SwPropertyPersistentToolbox.h"
-
+#include "SwMacros.h"
 
 
 using namespace StreamWork::SwCore;
@@ -1321,7 +1321,7 @@ bool SwServiceSaveConfiguration::updateDefaultProfileFromCurrent(QDomNodeList &D
 bool SwServiceSaveConfiguration::updateDefaultProfile(QString confName, QHash<QString, QString> inNewDefaultValues)
 {
 
-	if (_hasCreatedFactoryFile || QCoreApplication::applicationName() == QString("StreamWorkEditor2"))
+	if (_hasCreatedFactoryFile || SW_APP->developerMode())
 	{
 		bool ret = false;
 
@@ -1384,7 +1384,7 @@ bool SwServiceSaveConfiguration::updateDefaultProfile(QString confName, QHash<QS
 
 			//Si on est pas avec streamwork c'est forcément qu'on crée le fichier XML
 			//donc on patch la default avec la factory -> Sinon on touche a rien pour pas modifier les valeur des default du developpeur
-			if(QCoreApplication::applicationName() != QString("StreamWorkEditor2") || _hasCreatedFactoryFile)
+			if(!SW_APP->developerMode() || _hasCreatedFactoryFile)
 			{
 				createDefaultFromFactory(confName, root_node);
 				if (!setPropertiesValuesFromProfile(confName, CFM_DEFAULT_FILENAME))

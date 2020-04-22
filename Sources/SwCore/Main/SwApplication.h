@@ -123,6 +123,7 @@ namespace StreamWork
 			bool _isCheck;
 			bool _logTime;
 			bool _autoStart;
+			bool _developerMode;
             /*! \brief Est une application avec ihm (QApplication et non QCoreApplication) */
             bool _isGuiApp;
             /*! \brief mode affichage */
@@ -189,6 +190,10 @@ namespace StreamWork
 			bool logTime() const;
 			/*! \brief Activation de l'autoStart*/
 			void enableAutoStart();
+			/*! \brief Activation du mode developpeur*/
+			void enableDeveloperMode();
+			/*! \brief connaitre l'etat du mode developpeur*/
+			bool developerMode() const;
 
             //------------------------------------------------------------------------
             //Gestion de stream multiples

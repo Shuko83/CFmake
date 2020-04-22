@@ -35,6 +35,7 @@ SwApplication::SwApplication()
 	, _isCheck(false)
 	, _logTime(false)
 	, _autoStart(false)
+	, _developerMode(false)
 {
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 	_startPath = QDir::currentPath();
@@ -273,6 +274,18 @@ void SwApplication::enableLogTime()
 bool StreamWork::SwCore::SwApplication::logTime() const
 {
 	return _logTime;
+}
+
+//-----------------------------------------------------------------------
+void SwApplication::enableDeveloperMode()
+{
+	_developerMode = true;
+}
+
+//-----------------------------------------------------------------------
+bool StreamWork::SwCore::SwApplication::developerMode() const
+{
+	return _developerMode;
 }
 
 //-----------------------------------------------------------------------

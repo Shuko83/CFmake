@@ -252,6 +252,8 @@ int main(int argc, char *argv[])
 #endif
 	}
 
+	SW_APP->enableDeveloperMode();
+
 	// Finalisation de l'initialisation
 	SW_APP->FinalizeInitialisation();
 	

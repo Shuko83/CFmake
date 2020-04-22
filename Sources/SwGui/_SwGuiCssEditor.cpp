@@ -93,7 +93,7 @@ void _SwGuiCssEditor::applyStyle()
 //---------------------------------------------------------------------
 void _SwGuiCssEditor::setStyle(QString val)
 {
-	if ( _cssWatcher.files().isEmpty() && QCoreApplication::applicationName() == QString("StreamWorkEditor2") )
+	if ( _cssWatcher.files().isEmpty() && SW_APP->developerMode() )
 	{
 		_cssWatcher.addPath(SW_APP->GetApplicationDirPath() + QDir::separator() + val);
 		QObject::connect(&_cssWatcher, SIGNAL(fileChanged(QString)), this, SLOT(setStyle(QString)));
