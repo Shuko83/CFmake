@@ -39,7 +39,7 @@ MainWindow::MainWindow(QString streamFile)
 	, _streamControler(nullptr)
 	, _streamSourceOpener(nullptr)
 {
-	setWindowTitle("StreamWorkEditor V2");
+	setWindowTitle("StreamWorkEditor");
 	setObjectName("StreamWorkEditor");
 	setTabPosition(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea, QTabWidget::North);
 	setMinimumSize(400, 300);
@@ -201,7 +201,7 @@ MainWindow::MainWindow(QString streamFile)
 	}
 	else
 	{
-		setWindowTitle("StreamWorkEditor V2");
+		setWindowTitle("StreamWorkEditor");
 	}
 
 	_streamTreeModel->setStreamControler(_streamControler);
@@ -241,7 +241,7 @@ void MainWindow::onNewStream()
 	_streamTreeModel->setStreamControler(_streamControler);
 	_iaTreeModel->setStreamControler(_streamControler);
 	_streamControler->addSelectionObserver(dynamic_cast<ISelectionObserver *>(this));
-	setWindowTitle("StreamWorkEditor V2");
+	setWindowTitle("StreamWorkEditor");
 	_editors.insert(_streamControler->getRootItem(), this);
 	_streamSourceOpener = 0;
 	_streamControler->getRootItem()->OnDestroy.iconnect(*this, &MainWindow::internalClose);
