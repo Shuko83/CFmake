@@ -1,4 +1,4 @@
-<Project name="SwServiceMainWindow" path="SwService/SwServiceMainWindow">
+<Project name="SwServiceMainWindow" path="Services/SwServiceMainWindow">
     <Target type="SHARED_LIB" ext="swdl"/>
     <Libraries>
         <Library name="SwCore"/>

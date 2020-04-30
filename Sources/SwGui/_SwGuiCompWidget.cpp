@@ -12,8 +12,6 @@
 #include "_SwGuiCompWidget.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
-
 
 #define CL_WIDGET_INTERFACE_NAME "Widget_%1"
 #define SW_SHOW_NORMAL 0
@@ -21,8 +19,6 @@ using namespace StreamWork::SwGui;
 #define SW_SHOW_FULLSCREEN 2
 #define SW_SHOW_MAXIMIZED 3
 #define SW_SHOW_MINIMIZED 4
-
-
 
 //-----------------------------------------------------------------------
 _SwGuiCompWidget::_SwGuiCompWidget() : SwComponent_Class()
@@ -34,8 +30,6 @@ _SwGuiCompWidget::_SwGuiCompWidget() : SwComponent_Class()
     _widgets_nb = 0;
     _tmp_handle_widget = NULL;
     _registered_widgets_nb = 0;
-    _handle_layout = NULL;
-    _is_layout_mode = false;
     _isBackgroundTransparent = false;
     _show_mode.AddKey( SW_SHOW_NORMAL, "None" );
     _show_mode.AddKey( SW_SHOW_CENTERED, "Centered" );
@@ -68,7 +62,6 @@ _SwGuiCompWidget::~_SwGuiCompWidget()
         _consumer_service->UnregisterConsumedInterface( interface_name );
     }
     
-    _consumer_service->UnregisterConsumedInterface( "Layout" );
     _provider_service->UnregisterProvidedInterface( "Widget" );
     
     //Desenregistrement des services
@@ -81,7 +74,6 @@ _SwGuiCompWidget::~_SwGuiCompWidget()
     delete _properties_service;
     delete _widget;
 }
-
 
 //-----------------------------------------------------------------------
 void _SwGuiCompWidget::InitializeResources() throw( SwException )
@@ -98,11 +90,8 @@ void _SwGuiCompWidget::InitializeResources() throw( SwException )
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", ( ISwWidget * )this );
-    
-    //Importation de l'interface ISwWidget (RAF puisque par defaut pas de widget) et ISwLayout (exclusif)
-    _consumer_service->RegisterConsumedInterface<ISwLayout>( "Layout", &_handle_layout );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _widget );
     
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -116,7 +105,7 @@ void _SwGuiCompWidget::InitializeResources() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_widgets property\n" ) );
     }
-    _widgets_nb_property->SetDescription( "Define how many ISwWidget interfaces this component accept" );
+    _widgets_nb_property->SetDescription( "Define how many QWidget interfaces this component accept" );
     _widgets_nb_property->SetValue( QVariant( _widgets_nb ) );
     _widgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompWidget::OnPropertyChange );
     
@@ -162,7 +151,7 @@ void _SwGuiCompWidget::OnPropertyChange( ISwProperty * property )
     uint val;
     QString interface_name;
     
-    if( _widgets_nb_property == property && _is_layout_mode == false )
+    if( _widgets_nb_property == property )
     {
         val = property->GetValue().toUInt();
         if( val == _widgets_nb ) return;
@@ -179,8 +168,8 @@ void _SwGuiCompWidget::OnPropertyChange( ISwProperty * property )
             for( uint i = _widgets_nb; i < val; i++ )
             {
                 interface_name = QString( CL_WIDGET_INTERFACE_NAME ).arg( i );
-                _widgets.insert( interface_name, ( ISwWidget * ) NULL );
-                _consumer_service->RegisterConsumedInterface<ISwWidget>( interface_name, &_tmp_handle_widget );
+                _widgets.insert( interface_name, nullptr );
+                _consumer_service->RegisterConsumedInterface<QWidget>( interface_name, &_tmp_handle_widget );
             }
         }
         _widgets_nb = val;
@@ -225,76 +214,38 @@ void _SwGuiCompWidget::OnPropertyChange( ISwProperty * property )
 //-----------------------------------------------------------------------
 void _SwGuiCompWidget::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    if( interface_name != "Layout" )
+    QMap<QString, QWidget *>::iterator widget_it;
+    //Si c'est un menu
+    widget_it = _widgets.find( interface_name );
+    if( widget_it != _widgets.end() )
     {
-        QMap<QString, ISwWidget *>::iterator widget_it;
-        //Si c'est un menu
-        widget_it = _widgets.find( interface_name );
-        if( widget_it != _widgets.end() )
+        if( widget_it.value() )
         {
-            if( widget_it.value() && widget_it.value()->GetWidget() )
-            {
-                //Et qu'il etait defini, on le detache de la widgetbar
-                widget_it.value()->GetWidget()->setParent( nullptr );
-                widget_it.value() = nullptr;
-                _registered_widgets_nb--;
-                if( _registered_widgets_nb == 0 )
-                    _consumer_service->RegisterConsumedInterface<ISwLayout>( "Layout", &_handle_layout );
-            }
-            return;
+            //Et qu'il etait defini, on le detache de la widgetbar
+            widget_it.value()->setParent( nullptr );
+            widget_it.value() = nullptr;
+            _registered_widgets_nb--;
         }
-    }
-    else if( _handle_layout )
-    {
-        _handle_layout->LiberateLayout();
-        _handle_layout = nullptr;
-        
-        _widget->setLayout( new QVBoxLayout() );
-        
-        _is_layout_mode = false;
-        OnPropertyChange( _widgets_nb_property );
-        _properties_service->ChangePropertyVisibility( "nb_widgets", true );
     }
 }
 
 //-----------------------------------------------------------------------
 void _SwGuiCompWidget::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    if( interface_name != "Layout" )
-    {
-        QMap<QString, ISwWidget *>::iterator widget_it;
+    QMap<QString, QWidget *>::iterator widget_it;
         
-        //Si c'est un widget
-        widget_it = _widgets.find( interface_name );
-        if( widget_it != _widgets.end() )
+    //Si c'est un widget
+    widget_it = _widgets.find( interface_name );
+    if( widget_it != _widgets.end() )
+    {
+        if( widget_it.value() == nullptr && _tmp_handle_widget )
         {
-            if( widget_it.value() == nullptr && _tmp_handle_widget && _tmp_handle_widget->GetWidget() )
-            {
-                //Et qu'il etait non defini, on l'enregistre et l'attache a la widgetbar
-                widget_it.value() = _tmp_handle_widget;
-                _tmp_handle_widget->GetWidget()->setParent( _widget );
-                _registered_widgets_nb++;
-                if( _registered_widgets_nb == 1 ) _consumer_service->UnregisterConsumedInterface( "Layout" );
-            }
-            return;
+            //Et qu'il etait non defini, on l'enregistre et l'attache a la widgetbar
+            widget_it.value() = _tmp_handle_widget;
+            _tmp_handle_widget->setParent( _widget );
+            _registered_widgets_nb++;
         }
     }
-    else if( _handle_layout != NULL )
-    {
-        _widgets_nb_property->SetValue( QVariant( ( uint ) 0 ) );
-        _is_layout_mode = true;
-        _properties_service->ChangePropertyVisibility( "nb_widgets", false );
-        _widget->setLayout( &( _handle_layout->GetLayout() ) );
-    }
-}
-//---------------------------------------------------------------------
-// Interface ISwMainWindow
-//---------------------------------------------------------------------
-
-//-----------------------------------------------------------------------
-QWidget * _SwGuiCompWidget::GetWidget()
-{
-    return _widget;
 }
 
 //-----------------------------------------------------------------------
@@ -342,4 +293,3 @@ void _SwGuiCompWidget::setWindowFlags( Qt::WindowFlags flag )
 {
     _widget->setWindowFlags( flag );
 }
-

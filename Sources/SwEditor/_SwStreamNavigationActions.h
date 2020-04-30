@@ -14,7 +14,6 @@
 #include <QLineEdit>
 #include <ISwObserver.h>
 #include <ISwAction.h>
-#include <ISwWidget.h>
 #include <SwInterfaces_Provider_Class.h>
 #include "ISwEditorStreamNavigation.h"
 
@@ -42,17 +41,6 @@ namespace StreamWork {
                 \return le Action */
                 virtual QAction & GetAction();
             };
-            /*! \brief container de widget */
-            class _WidgetContainer : public ISwWidget
-            {
-            private:
-                QWidget * _widget;
-            public:
-                _WidgetContainer( QWidget * widget );
-                /*! \brief Renvoie le Widget
-                \return leWidget */
-                virtual QWidget * GetWidget();
-            };
             /*! \brief StreamsManager */
             ISwEditorStreamNavigation * _navigator;
             /* \brief service de fourniture d'interface */
@@ -62,7 +50,6 @@ namespace StreamWork {
             _ActionContainer * _go_to_parent_c;
             /* \brief Widget */
             QLineEdit * _current_path;
-            _WidgetContainer * _current_path_c;
         public:
             _SwStreamNavigationActions( QObject * parent, SwInterfaces_Provider_Class * provider_service );
             ~_SwStreamNavigationActions();

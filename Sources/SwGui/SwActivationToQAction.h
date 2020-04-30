@@ -9,7 +9,7 @@ namespace StreamWork {
 
     namespace SwGui {
    
-		class SwActivationToQAction : public SwFoundation::SwAssistedComponent, public ISwAction, public ISwFinalizer
+		class SwActivationToQAction : public SwFoundation::SwAssistedComponent, public ISwAction, public SwCore::ISwFinalizer
 		{
 			Q_OBJECT
 			Q_PROPERTY(QString componentNameToControl READ getComponentName WRITE setComponentName)
@@ -23,7 +23,7 @@ namespace StreamWork {
 			// ------------------------------------------------------------------------
 			//				SwAssistedComponent
 			// ------------------------------------------------------------------------
-			virtual void initializeComponent() throw(SwException);
+			virtual void initializeComponent() throw(SwCore::SwException);
 
 			// ------------------------------------------------------------------------
 			//				ISwAction
@@ -40,7 +40,7 @@ namespace StreamWork {
 
 		private:
 			QString _componentToControl;
-			SwComponent_Class * _activableComponent;
+			SwCore::SwComponent_Class * _activableComponent;
 			QAction _action;
 			bool _isConstructed;
         };

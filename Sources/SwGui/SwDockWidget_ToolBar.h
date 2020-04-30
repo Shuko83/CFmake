@@ -5,11 +5,7 @@
 #include "SwDockWidget_ToolBarItem.h"
 #include "SwDockWidget_Overlay.h"
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#else
-#include <QtGui>
-#endif
 
 class SwDockWidget_ToolBar : public QWidget
 {

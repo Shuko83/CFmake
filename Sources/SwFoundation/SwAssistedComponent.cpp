@@ -21,6 +21,7 @@
 using namespace StreamWork;
 using namespace StreamWork::SwFoundation;
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwExecution;
 
 
 //-------------------------------------------------------------------------

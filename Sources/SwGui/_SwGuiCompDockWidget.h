@@ -20,10 +20,7 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwWidget.h"
-#include "ISwLayout.h"
 #include "ISwDockWidget.h"
-
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -46,7 +43,7 @@ protected:
     /* service de gestion des propriétés */
     SwProperties_Class * _properties_service;
     /* interface widget a consommée */
-    ISwWidget * _handle_widget;
+    QWidget * _handle_widget;
 
 public:
     /*! \brief Constructeur */
@@ -71,4 +68,5 @@ public:
     \return le dockwidget */
 	virtual SwDockWidget_DockWidget & GetDockWidget();
 };
+
 #endif 

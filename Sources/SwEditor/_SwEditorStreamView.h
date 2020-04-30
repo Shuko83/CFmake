@@ -22,12 +22,10 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include <ISwWidget.h>
 #include "ISwEditorStreamsManager.h"
 #include "_SwEditorQGraphicsView.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 namespace StreamWork {
     namespace SwEditor {
@@ -35,7 +33,7 @@ namespace StreamWork {
             \class _SwEditorStreamView
             \brief Implementation d'une vue d'une scene de stream
         */
-        class _SwEditorStreamView : public SwComponent_Class, public ISwWidget, public ISwInterfaces_ConsumerObserver, public SwCore::ISwObserver
+        class _SwEditorStreamView : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public SwCore::ISwObserver
         {
         protected:
             /* \brief actions object */
@@ -60,12 +58,6 @@ namespace StreamWork {
                 \note tous les services du composants doivent être déclarés dans cette methodes*/
             virtual void InitializeResources() throw( SwException );
             //---------------------------------------------------------------------
-            // Interface ISwWidget
-            //---------------------------------------------------------------------
-            /*! \brief Renvoie le widget
-            \return le widget */
-            virtual QWidget * GetWidget();
-            //---------------------------------------------------------------------
             // Interface ISwInterfaces_ConsumerObserver
             //---------------------------------------------------------------------
             /*! \brief Avant changement de la disponibilité de l'interface */
@@ -77,8 +69,8 @@ namespace StreamWork {
             //---------------------------------------------------------------------
             /*! \brief methode appelée par l'observable*/
             void Update( StreamWork::SwCore::ISwObservable * sender = nullptr );
-            
-        };
+		};
     }
 }
+
 #endif

@@ -9,7 +9,6 @@
 //#include <SwApplication.h>
 //#include <SwMacros.h>
 #include "_SwGuiCompListDockWidget.h"
-#include "ISwWidget.h"
 #include "ISwDockWidget.h"
 
 #define WIDGET_INTERFACE_NAME "Widget_%1"
@@ -52,10 +51,10 @@ void _SwGuiCompListDockWidget::interfaceAvailable( QString interfaceName )
     QMap<QString, SwDockWidget_DockWidget *>::iterator dockwidget_it = _dockwidgets.find( interfaceName );
     if( dockwidget_it != _dockwidgets.end() && dockwidget_it.value() )
     {
-        ISwWidget * widget = getInterface<ISwWidget>( interfaceName );
+		QWidget * widget = getInterface<QWidget>( interfaceName );
         if( widget )
         {
-            dockwidget_it.value()->setWidget( widget->GetWidget() );
+            dockwidget_it.value()->setWidget( widget );
             
             //Notification
 			for ( ISwListDockWidgetListener * listener: _listListener )
@@ -117,7 +116,7 @@ void _SwGuiCompListDockWidget::setWidgetNumber( uint nb )
                 SwDockWidget_DockWidget * dock = new SwDockWidget_DockWidget();
                 createPropertiesForQObject( dock, interface_name, true );
                 _dockwidgets.insert( interface_name, dock );
-                consummeInterface<ISwWidget>( interface_name );
+                consummeInterface<QWidget>( interface_name );
             }
         }
         

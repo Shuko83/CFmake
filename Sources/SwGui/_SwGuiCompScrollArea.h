@@ -22,18 +22,14 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwLayout.h"
-#include "ISwWidget.h"
-
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*!
     \class _SwGuiCompScrollArea
     \brief _SwGuiCompScrollArea generant un QScrollArea
 */
-class _SwGuiCompScrollArea : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget
+class _SwGuiCompScrollArea : public SwComponent_Class, public ISwInterfaces_ConsumerObserver
 {
     Q_OBJECT
     Q_PROPERTY( bool fixedWidth READ GetFixedWidth WRITE SetFixedWidth )
@@ -54,16 +50,11 @@ protected:
     /* propriété nombre de widgets */
     ISwProperty * _widgets_nb_property;
     /* map des interfaces widgets*/
-    QMap<QString, ISwWidget *> _widgets;
+    QMap<QString, QWidget *> _widgets;
     /* handle temporaire d'interface widget*/
-    ISwWidget * _tmp_handle_widget;
+    QWidget * _tmp_handle_widget;
     /* integer indiquant le nombre de widgets en gestion directe */
     uint _registered_widgets_nb;
-    // --- Layout ---
-    /* interface layout a consommée */
-    ISwLayout * _handle_layout;
-    /* Flag indiquant une gestion par un layout */
-    bool _is_layout_mode;
     
     bool _fixedWidth;
     bool _fixedHeight;
@@ -86,12 +77,6 @@ public:
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     /*! \brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
     
     bool GetFixedWidth() const { return _fixedWidth; }
     void SetFixedWidth( bool val ) { _fixedWidth = val; }
@@ -100,4 +85,5 @@ public:
     void SetFixedHeight( bool val ) { _fixedHeight = val; }
     bool eventFilter( QObject * o, QEvent * e );
 };
+
 #endif

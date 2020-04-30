@@ -4,7 +4,6 @@
 #include "SwAssistedComponent.h"
 #include "qdialog.h"
 #include "qboxlayout.h"
-#include "ISwWidget.h"
 #include "SwServiceManager_Helper.h"
 #include "ISwServiceMainWindow.h"
 #include "ISwAction.h"
@@ -12,10 +11,7 @@
 
 #define QWIDGET_TO_QDIALOG_COMPONENT "_SwGuiCompQWidgetToQDialog"
 
-
-
-
-class DialogContainer : public QDialog, public StreamWork::SwGui::ISwWidget
+class DialogContainer : public QDialog
 {
 public :
     DialogContainer()
@@ -48,11 +44,6 @@ public :
             return;
         QDialog::keyPressEvent( evt );
     }
-    
-    virtual QWidget * GetWidget()
-    {
-        return this;
-    };
     
     virtual void setVisible( bool visible ) override
     {
@@ -106,7 +97,7 @@ public:
     /**
     * @brief    : Initialisation du composant
     */
-    virtual void initializeComponent() throw( SwException );
+    virtual void initializeComponent() throw(StreamWork::SwCore::SwException );
     
     virtual void interfaceAvailable( QString interfaceName );
     
@@ -126,4 +117,3 @@ protected:
     QAction * _action;
     SwServiceManager_Helper<StreamWork::Service::ISwServiceMainWindow> _helper;
 };
-

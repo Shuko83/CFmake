@@ -10,14 +10,12 @@
 #include <SwMacros.h>
 #include "_SwGuiCompVBoxLayout.h"
 
-using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
+#include <QWidget>
 
+using namespace StreamWork::SwCore;
 
 #define CL_WIDGET_INTERFACE_NAME "Widget_%1"
 #define CL_LAYOUT_INTERFACE_NAME "Layout_%1"
-
-
 
 //-----------------------------------------------------------------------
 _SwGuiCompVBoxLayout::_SwGuiCompVBoxLayout() : SwComponent_Class()
@@ -28,8 +26,6 @@ _SwGuiCompVBoxLayout::_SwGuiCompVBoxLayout() : SwComponent_Class()
     _layout = NULL;
     _widgets_nb = 0;
     _widgets_nb_property = NULL;
-    _layouts_nb = 0;
-    _layouts_nb_property = NULL;
     _nb_childs = 0;
     _margin = 0;
     _spacing = 6;
@@ -52,29 +48,38 @@ _SwGuiCompVBoxLayout::~_SwGuiCompVBoxLayout()
     this->UnregisterService( _consumer_service->GetServiceName() );
     this->UnregisterService( _provider_service->GetServiceName() );
     this->UnregisterService( _properties_service->GetServiceName() );
+
+	QMap<QString, QWidget *>::iterator widget_it;
+
+	for (widget_it = _widgets.begin(); widget_it != _widgets.end(); widget_it++)
+	{
+		if (widget_it.value())
+			widget_it.value()->setParent(nullptr);
+	}
+	if (_enableSpacer)
+	{
+		_layout->removeItem(_spacer);
+	}
     
     //Destruction des services
     delete _consumer_service;
     delete _provider_service;
     delete _properties_service;
     
-    if( _layout != NULL && _layout->parent() == NULL )
-    {
-        delete _layout;
-        _layout = NULL;
-    }
-    
-    if( _spacer != NULL )
-    {
-        delete _spacer;
-        _spacer = NULL;
-    }
+    delete _spacer;
+    delete _layoutWidget;
 }
 
 
 //-----------------------------------------------------------------------
 void _SwGuiCompVBoxLayout::InitializeResources() throw( SwException )
 {
+	//Construction du layout
+	_layoutWidget = new QWidget();
+	_layout = new QVBoxLayout(_layoutWidget);
+	_layout->setMargin(_margin);
+	_layout->setSpacing(_spacing);
+
     //Creation des service
     _consumer_service = new SwInterfaces_Consumer_Class( this );
     _provider_service = new SwInterfaces_Provider_Class( this );
@@ -85,8 +90,8 @@ void _SwGuiCompVBoxLayout::InitializeResources() throw( SwException )
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwLayout>( "Layout", ( ISwLayout * )this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Layout", _layoutWidget );
     
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -108,26 +113,14 @@ void _SwGuiCompVBoxLayout::InitializeResources() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_widgets property\n" ) );
     }
-    _widgets_nb_property->SetDescription( "Define how many ISwWidget interfaces this component accept" );
+    _widgets_nb_property->SetDescription( "Define how many QWidget interfaces this component accept" );
     _widgets_nb_property->SetValue( QVariant( _widgets_nb ) );
     _widgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompVBoxLayout::OnPropertyChange );
-    
-    //Gestion des layouts
-    _layouts_nb_property = _properties_service->CreateProperty<uint>( "nb_layouts" );
-    if( _layouts_nb_property == NULL )
-    {
-        if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_widgets property\n" ) );
-    }
-    _layouts_nb_property->SetDescription( "Define how many ISwLayout interfaces this component accept" );
-    _layouts_nb_property->SetValue( QVariant( _layouts_nb ) );
-    _layouts_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompVBoxLayout::OnPropertyChange );
-    
     
     if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Info, QString( "InitializeResources of SwGuiVBoxLayout done\n" ) );
     
     //Spacer
     _properties_service->CreatePropertiesForQObject( this, QString(), true );
-    
 }
 
 //-----------------------------------------------------------------------
@@ -153,33 +146,10 @@ void _SwGuiCompVBoxLayout::OnPropertyChange( ISwProperty * property )
             for( uint i = _widgets_nb; i < val; i++ )
             {
                 interface_name = QString( CL_WIDGET_INTERFACE_NAME ).arg( i );
-                _consumer_service->RegisterConsumedInterface<ISwWidget>( interface_name, &_tmp_handle_widget );
+                _consumer_service->RegisterConsumedInterface<QWidget>( interface_name, &_tmp_handle_widget );
             }
         }
         _widgets_nb = val;
-    }
-    
-    if( _layouts_nb_property == property )
-    {
-        val = property->GetValue().toUInt();
-        if( val == _layouts_nb ) return;
-        if( val < _layouts_nb )
-        {
-            for( uint i = val; i < _layouts_nb; i++ )
-            {
-                interface_name = QString( CL_LAYOUT_INTERFACE_NAME ).arg( i );
-                _consumer_service->UnregisterConsumedInterface( interface_name );
-            }
-        }
-        else
-        {
-            for( uint i = _layouts_nb; i < val; i++ )
-            {
-                interface_name = QString( CL_LAYOUT_INTERFACE_NAME ).arg( i );
-                _consumer_service->RegisterConsumedInterface<ISwLayout>( interface_name, &_tmp_handle_layout );
-            }
-        }
-        _layouts_nb = val;
     }
     if( _margin_property == property )
     {
@@ -229,35 +199,19 @@ void _SwGuiCompVBoxLayout::setEnableSpacer( bool enable )
 //-----------------------------------------------------------------------
 void _SwGuiCompVBoxLayout::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    QMap<QString, ISwWidget *>::iterator widget_it;
-    QMap<QString, ISwLayout *>::iterator layout_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     
     //Si c'est un menu
     widget_it = _widgets.find( interface_name );
     if( widget_it != _widgets.end() )
     {
-        if( widget_it.value() && widget_it.value()->GetWidget() )
+        if( widget_it.value() )
         {
             //Et qu'il etait defini, on le detache de la widgetbar
             if( _layout )
-                widget_it.value()->GetWidget()->setParent( nullptr );
+                widget_it.value()->setParent( nullptr );
             widget_it.value() = nullptr;
             _widgets.erase( widget_it );
-            _nb_childs--;
-            int index = _ordered_childrens.indexOf( interface_name );
-            if( index != -1 ) _ordered_childrens.removeAt( index );
-        }
-    }
-    //Si c'est un layout
-    layout_it = _layouts.find( interface_name );
-    if( layout_it != _layouts.end() )
-    {
-        if( layout_it.value() )
-        {
-            //Et qu'il etait defini, on le detache de la widgetbar
-            if( _layout ) layout_it.value()->LiberateLayout();
-            layout_it.value() = nullptr;
-            _layouts.erase( layout_it );
             _nb_childs--;
             int index = _ordered_childrens.indexOf( interface_name );
             if( index != -1 ) _ordered_childrens.removeAt( index );
@@ -268,8 +222,7 @@ void _SwGuiCompVBoxLayout::BeforeInterfaceAvailabilityChange( QString interface_
 //-----------------------------------------------------------------------
 void _SwGuiCompVBoxLayout::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    QMap<QString, ISwWidget *>::iterator widget_it;
-    QMap<QString, ISwLayout *>::iterator layout_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     QString interface_header = interface_name;
     
     interface_header.truncate( 1 );
@@ -282,11 +235,11 @@ void _SwGuiCompVBoxLayout::AfterInterfaceAvailabilityChange( QString interface_n
         {
             if( _enableSpacer )
             {
-                _layout->insertWidget( _layout->count() - 1, _tmp_handle_widget->GetWidget() );
+                _layout->insertWidget( _layout->count() - 1, _tmp_handle_widget );
             }
             else
             {
-                _layout->insertWidget( interface_name.remove( "Widget_" ).toInt(), _tmp_handle_widget->GetWidget() );
+                _layout->insertWidget( interface_name.remove( "Widget_" ).toInt(), _tmp_handle_widget );
                 //_layout->addWidget();
             }
         }
@@ -294,100 +247,4 @@ void _SwGuiCompVBoxLayout::AfterInterfaceAvailabilityChange( QString interface_n
         _ordered_childrens.insert( interface_name.remove( "Widget_" ).toInt(), interface_name );
         return;
     }
-    //Si c'est un layout
-    layout_it = _layouts.find( interface_name );
-    if( interface_header == QStringLiteral( "L" ) && layout_it == _layouts.end() && _tmp_handle_layout != NULL )
-    {
-        _layouts.insert( interface_name, _tmp_handle_layout );
-        if( _layout )
-        {
-            if( _enableSpacer )
-            {
-                _layout->insertLayout( _layout->count() - 1, &_tmp_handle_layout->GetLayout() );
-            }
-            else
-            {
-                _layout->addLayout( &_tmp_handle_layout->GetLayout() );
-            }
-        }
-        _nb_childs++;
-        _ordered_childrens.push_back( interface_name );
-        return;
-    }
 }
-//---------------------------------------------------------------------
-// Interface ISwLayout
-//---------------------------------------------------------------------
-
-//-----------------------------------------------------------------------
-QLayout & _SwGuiCompVBoxLayout::GetLayout()
-{
-    QString interface_header;
-    QMap<QString, ISwWidget *>::iterator widget_it;
-    QMap<QString, ISwLayout *>::iterator layout_it;
-    
-    if( _layout == nullptr )
-    {
-        //Reconstruction du layout
-        _layout = new QVBoxLayout();
-        _layout->setMargin( _margin );
-        _layout->setSpacing( _spacing );
-        //Mise en place des enfants
-        for( int i = 0; i < _ordered_childrens.count(); i++ )
-        {
-            interface_header = _ordered_childrens[i];
-            interface_header.truncate( 1 );
-            widget_it = _widgets.find( _ordered_childrens[i] );
-            if( interface_header == QStringLiteral( "W" ) && widget_it != _widgets.end() )
-            {
-                _layout->addWidget( widget_it.value()->GetWidget() );
-            }
-            //Si c'est un layout
-            layout_it = _layouts.find( _ordered_childrens[i] );
-            if( interface_header == QStringLiteral( "L" ) && layout_it == _layouts.end() )
-            {
-                _layout->addLayout( &layout_it.value()->GetLayout() );
-            }
-        }
-        //Spacer
-        if( _enableSpacer )
-        {
-            _layout->addSpacerItem( _spacer );
-            _layout->setStretch( _layout->count() - 1, 1 );
-        }
-        else
-        {
-            _layout->removeItem( _spacer );
-        }
-    }
-    return *_layout;
-    
-}
-
-//-----------------------------------------------------------------------
-void _SwGuiCompVBoxLayout::LiberateLayout()
-{
-    QMap<QString, ISwWidget *>::iterator widget_it;
-    QMap<QString, ISwLayout *>::iterator layout_it;
-    
-    for( widget_it = _widgets.begin(); widget_it != _widgets.end(); widget_it++ )
-    {
-        if( widget_it.value()->GetWidget() )
-            widget_it.value()->GetWidget()->setParent( nullptr );
-    }
-    for( layout_it = _layouts.begin(); layout_it != _layouts.end(); layout_it++ )
-    {
-        layout_it.value()->LiberateLayout();
-    }
-    if( _enableSpacer && _layout )
-    {
-        _layout->removeItem( _spacer );
-    }
-    //_layout->setParent(NULL);
-    if( _layout && _layout->parent() )
-    {
-        delete _layout;
-        _layout = nullptr;
-    }
-}
-

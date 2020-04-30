@@ -27,9 +27,7 @@
 #include "ISwAction.h"
 #include "ISwToolBar.h"
 #include "ISwListDockWidget.h"
-#include "ISwWidget.h"
 #include "ISwListDockWidgetListener.h"
-
 
 /*
   * INCLUDES LOCAUX
@@ -47,9 +45,8 @@ using namespace StreamWork::SwFoundation;
     \class _SwGuiCompMainWindow
     \brief _SwGuiMainWindow generant une QMainWindow
 */
-class SWGUI_EXPORT _SwGuiCompMainWindow :   public SwAssistedComponent,
+class SWGUI_EXPORT _SwGuiCompMainWindow : public SwAssistedComponent,
     public ISwMainWindow,
-    public ISwWidget,
     public ISwEvent,
     public ISwFinalizer,
     public ISwListDockWidgetListener
@@ -167,13 +164,6 @@ public:
     /*! \brief Renvoie le nom du service
     \return le nom du service */
     virtual SwDockWidget_MainWindow & getMainWindow();
-    
-    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
     
     //---------------------------------------------------------------------
     // Interface ISwEvent

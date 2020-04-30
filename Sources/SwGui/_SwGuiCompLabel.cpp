@@ -11,7 +11,6 @@
 #include "_SwGuiCompLabel.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*! \brief Constructeur */
 _SwGuiCompLabel::_SwGuiCompLabel(): SwComponent_Class()
@@ -53,8 +52,8 @@ void _SwGuiCompLabel::InitializeResources() throw( SwException )
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _label);
     
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -77,19 +76,8 @@ void _SwGuiCompLabel::OnPropertyChange( ISwProperty * property )
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompLabel::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompLabel::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
 }
-//---------------------------------------------------------------------
-// Interface ISwMainWindow
-//---------------------------------------------------------------------
-/*! \brief Renvoie le menu
-\return le menu */
-QWidget * _SwGuiCompLabel::GetWidget()
-{
-    return _label;
-}
-

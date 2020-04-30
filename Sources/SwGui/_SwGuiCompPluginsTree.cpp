@@ -57,7 +57,7 @@ void _SwGuiCompPluginsTree::InitializeResources() throw(SwException) {
     _window_title_property->SetValue(QVariant(_window_title));
     _window_title_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompPluginsTree::OnPropertyChange);
 	
-    //Exportation de l'interface ISwWidget
+    //Exportation de l'interface QWidget
     _provider_service->RegisterProvidedInterface<ISwAction>("Action",(ISwAction *)this);
 
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiPluginsTree done\n"));

@@ -1,4 +1,4 @@
-<Project name="SwServiceShortcut" path="SwService/SwServiceShortcut">
+<Project name="SwServiceShortcut" path="Services/SwServiceShortcut">
     <Target type="SHARED_LIB" ext="swdl"/>
     <Libraries>
         <Library name="QsException"/>

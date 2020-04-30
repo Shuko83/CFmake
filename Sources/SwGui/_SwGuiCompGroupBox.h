@@ -13,6 +13,7 @@
   * INCLUDES GLOBAUX
   */
 #include <QGroupBox>
+#include <QVBoxLayout>
 /*
   * INCLUDES LOCAUX
   */
@@ -21,24 +22,20 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwLayout.h"
-#include "ISwWidget.h"
-
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*!
     \class _SwGuiCompGroupBox
     \brief _SwGuiCompGroupBox generant un QWidget
 */
 class _SwGuiCompGroupBox : public SwComponent_Class,
-    public ISwInterfaces_ConsumerObserver,
-    public ISwWidget
+    public ISwInterfaces_ConsumerObserver
 {
 protected:
     /* menu */
     QGroupBox * _groupBox;
+	QVBoxLayout * _layout;
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
@@ -46,7 +43,7 @@ protected:
     /* service de gestion des propriétés */
     SwProperties_Class * _properties_service;
     /* interface layout a consommer */
-    ISwLayout * _layout;
+    QWidget * _mainWidget;
     
 public:
     /*! \brief Constructeur */
@@ -66,12 +63,7 @@ public:
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     /*! \brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
     
 };
+
 #endif

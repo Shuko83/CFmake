@@ -228,8 +228,6 @@ QString _SwGuiPluginFactory_Class::GetPluginVersion()
 	return build;
 }
 
-
-
 //---------------------------------------------------------------------
 void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
 {
@@ -243,31 +241,31 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
 		eservice->registerExtension<ISwQDockWidget>("QDockWidget", "SwGuiQDockWidget");
 		eservice->registerExtension<ISwDockWidget>("DockWidget", "SwGuiDockWidget");
 		eservice->registerExtension<ISwListDockWidget>("ListDockWidget", "SwGuiListDockWidget");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiFrame");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiScrollArea");
-		eservice->registerExtension<ISwLayout>("GridLayout", "SwGuiGridLayout");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiGroupBox");
-		eservice->registerExtension<ISwLayout>("Layout", "SwGuiHorizontalLayout");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiFrame");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiScrollArea");
+		eservice->registerExtension<QWidget>("GridLayout", "SwGuiGridLayout");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiGroupBox");
+		eservice->registerExtension<QWidget>("Layout", "SwGuiHorizontalLayout");
 		eservice->registerExtension<ISwHttpServer>("ISwHttpServer", "SwGuiHttpServer");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiLabel");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiLabel");
 		eservice->registerExtension<ISwQMainWindow>("QMainWindow", "SwGuiQMainWindow");
 		eservice->registerExtension<ISwMainWindow>("MainWindow", "SwGuiMainWindow");
 		eservice->registerExtension<ISwMenu>("Menu", "SwGuiMenu");
 		eservice->registerExtension<ISwAction>("Action", "SwGuiPluginsTree");
 		eservice->registerExtension<ISwAction>("Action", "SwGuiQActionToWidget");
 		eservice->registerExtension<ISwAction>("Action", "SwGuiQActionConsumedToWidget");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiSplitterWidget");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiStackedWidget");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiSplitterWidget");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiStackedWidget");
 		eservice->registerExtension<ISwStackedWidget_Controler>("StackedWidget_Controler", "SwGuiStackedWidget");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiTabWidget");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiTabWidget");
 		eservice->registerExtension<ISwToolBar>("ToolBar", "SwGuiToolBar");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiTreeView");
-		eservice->registerExtension<ISwLayout>("Layout", "SwGuiVerticalLayout");
-		eservice->registerExtension<ISwWidget>("logConsole", "SwGuiVisualLogConsole");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiWidget");
-		eservice->registerExtension<ISwWidget>("Widget", "SwPerspectivesManager");
-		eservice->registerExtension<ISwWidget>("Widget", "SwGuiPushButtonToQAction");
-		eservice->registerExtension<ISwWidget>("Widget", "SwActionToToolButton");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiTreeView");
+		eservice->registerExtension<QWidget>("Layout", "SwGuiVerticalLayout");
+		eservice->registerExtension<QWidget>("logConsole", "SwGuiVisualLogConsole");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiWidget");
+		eservice->registerExtension<QWidget>("Widget", "SwPerspectivesManager");
+		eservice->registerExtension<QWidget>("Widget", "SwGuiPushButtonToQAction");
+		eservice->registerExtension<QWidget>("Widget", "SwActionToToolButton");
 	}
 }
 

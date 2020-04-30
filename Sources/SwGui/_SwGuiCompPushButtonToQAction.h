@@ -23,8 +23,6 @@
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
 #include "ISwAction.h"
-#include "ISwWidget.h"
-
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -34,8 +32,7 @@ using namespace StreamWork::SwGui;
     \brief _SwGuiCompPushButtonToQAction generant un QWidget
 */
 class _SwGuiCompPushButtonToQAction : public SwComponent_Class,
-    public ISwInterfaces_ConsumerObserver,
-    public ISwWidget
+    public ISwInterfaces_ConsumerObserver
 {
     Q_OBJECT
 protected:
@@ -52,7 +49,7 @@ protected:
     ISwAction * _handle_action;
     
     /** @brief Interface Widget*/
-    //ISwWidget * _i_Widget;
+    //QWidget * _i_Widget;
 public:
     /*! \brief Constructeur */
     _SwGuiCompPushButtonToQAction();
@@ -71,12 +68,6 @@ public:
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     /*! \brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
     
     //--------------------------------------------------------------
     //Slots
@@ -85,4 +76,5 @@ public slots :
     void commandApply( bool state );
     
 };
+
 #endif

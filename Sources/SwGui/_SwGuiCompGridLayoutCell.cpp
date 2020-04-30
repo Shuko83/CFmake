@@ -8,28 +8,16 @@
 #include "ISwProperty.h"
 
 #define WIDGET_NAME "Widget%1"
-#define LAYOUT_NAME "Layout%1"
-
 
 //-----------------------------------------------------------------------
-_SwGuiCompGridLayoutCell::_SwGuiCompGridLayoutCell( int index, ISwProperties * propertiesAccess, ISwInterfaces_Consumer * consumerAccess, bool isLayout ) : QObject()
+_SwGuiCompGridLayoutCell::_SwGuiCompGridLayoutCell( int index, ISwProperties * propertiesAccess, ISwInterfaces_Consumer * consumerAccess) : QObject()
 {
-    _isLayout = isLayout;
-    QString name;
-    if( !_isLayout )
-    {
-        name = QString( WIDGET_NAME ).arg( index );
-    }
-    else
-    {
-        name = QString( LAYOUT_NAME ).arg( index );
-    }
+    QString name = QString( WIDGET_NAME ).arg( index );
     setObjectName( name );
     _propertiesAccess = propertiesAccess;
     _consumerAccess = consumerAccess;
     _isBuild = false;
     _glayout = 0;
-    _hLayout = 0;
     _hWidget = 0;
     _alignment = 0;
     _row = 1;
@@ -37,15 +25,7 @@ _SwGuiCompGridLayoutCell::_SwGuiCompGridLayoutCell( int index, ISwProperties * p
     _rowSpan = 1;
     _columnSpan = 1;
     propertiesAccess->CreatePropertiesForQObject( this, name, true );
-    if( _isLayout )
-    {
-        consumerAccess->RegisterConsumedInterface<ISwLayout>( name, &_hLayout );
-    }
-    else
-    {
-        consumerAccess->RegisterConsumedInterface<ISwWidget>( name, &_hWidget );
-    }
-    
+    consumerAccess->RegisterConsumedInterface<QWidget>( name, &_hWidget );
 }
 
 //-----------------------------------------------------------------------
@@ -148,39 +128,19 @@ void _SwGuiCompGridLayoutCell::setAlignment( Qt::Alignment alignment )
 //-----------------------------------------------------------------------
 void _SwGuiCompGridLayoutCell::eventBeforeInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
 {
-    if( _isLayout )
-    {
-        if( interface_name == objectName() && _hLayout != 0 )
-        {
-            destroy();
-        }
-    }
-    else
-    {
-        if( interface_name == objectName() && _hWidget != 0 )
-        {
-            destroy();
-        }
-    }
+	if (interface_name == objectName() && _hWidget != 0)
+	{
+		destroy();
+	}
 }
 
 //-----------------------------------------------------------------------
 void _SwGuiCompGridLayoutCell::eventAfterInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
 {
-    if( _isLayout )
-    {
-        if( interface_name == objectName() && _hLayout != 0 )
-        {
-            build();
-        }
-    }
-    else
-    {
-        if( interface_name == objectName() && _hWidget != 0 )
-        {
-            build();
-        }
-    }
+	if (interface_name == objectName() && _hWidget != 0)
+	{
+		build();
+	}
 }
 //-----------------------------------------------------------------------
 void _SwGuiCompGridLayoutCell::rebuild()
@@ -195,19 +155,10 @@ void _SwGuiCompGridLayoutCell::build()
 {
     if( _glayout == 0 )
         return;
-    if( _isLayout && _hLayout == 0 )
-        return;
-    if( !_isLayout && _hWidget == 0 )
+    if( _hWidget == 0 )
         return;
     //qDebug("Build cell");
-    if( _isLayout )
-    {
-        _glayout->addLayout( &_hLayout->GetLayout(), _row, _column, _rowSpan, _columnSpan, _alignment );
-    }
-    else
-    {
-        _glayout->addWidget( _hWidget->GetWidget(), _row, _column, _rowSpan, _columnSpan, _alignment );
-    }
+     _glayout->addWidget( _hWidget, _row, _column, _rowSpan, _columnSpan, _alignment );
     _isBuild = true;
 }
 //-----------------------------------------------------------------------
@@ -216,15 +167,7 @@ void _SwGuiCompGridLayoutCell::destroy()
     if( !_isBuild )
         return;
     // qDebug("Destroy cell");
-    if( _isLayout )
-    {
-        _hLayout->LiberateLayout();
-    }
-    else
-    {
-        if( _hWidget && _hWidget->GetWidget() )
-            _hWidget->GetWidget()->setParent( nullptr );
-    }
+    if( _hWidget )
+		_hWidget->setParent( nullptr );
     _isBuild = false;
-    
 }

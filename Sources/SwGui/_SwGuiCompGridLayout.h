@@ -9,19 +9,18 @@
 
 #include <Component.h>
 
-#include "ISwLayout.h"
 #include "_SwGuiCompGridLayoutCell.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
+
 /**
 @class _SwGuiCompGridLayout
 @brief ComposantGridLayout
 */
-class _SwGuiCompGridLayout : public Component , public virtual ISwLayout  {
+class _SwGuiCompGridLayout : public Component
+{
     Q_OBJECT
     Q_PROPERTY(int Widgets_count READ getNbWidgets WRITE setNbWidgets)
-    Q_PROPERTY(int Layouts_count READ getNbLayouts WRITE setNbLayouts)
     Q_PROPERTY(int horizontalSpacing READ getHorizontalSpacing WRITE setHorizontalSpacing)
     Q_PROPERTY(int verticalSpacing READ getVerticalSpacing WRITE setVerticalSpacing)
     Q_PROPERTY(QString columnStretch READ getColumnStretch WRITE setColumnStretch)
@@ -36,12 +35,6 @@ public:
     _SwGuiCompGridLayout();
     /** @brief Destructor */
     virtual ~_SwGuiCompGridLayout();
-    /*! \brief Renvoie le Layout
-    \return le Layout */
-	virtual QLayout & GetLayout();
-    /*! \brief Liberation du layout (doit etre appele lors de la liberation du layout)
-    Attention, le layout est (et doit) etre detruit par cette methode*/
-	virtual void LiberateLayout();
     /*! \brief Initialisation du composant */
     virtual void initializeComponent() throw(SwException);
     /*! \brief evenement avant changement de la disponibilité de l'interface
@@ -55,8 +48,6 @@ public:
     //-------------------------------------------------------------------------
     int getNbWidgets();
     void setNbWidgets(int nbWidgets);
-    int getNbLayouts();
-    void setNbLayouts(int nbLayouts);
     int getHorizontalSpacing();
     void setHorizontalSpacing(int horizontalSpacing);
     int getVerticalSpacing();
@@ -85,11 +76,10 @@ protected:
 
 private:
     //The Grid layout
-    QGridLayout * _layout;
+	QWidget * _layoutWidget;
+	QGridLayout * _layout;
     //Nb Widget
     int _widgets_count;
-    //Nb Layout
-    int _layouts_count;
     //horizontalSpacing
     int _horizontalSpacing;
     //verticalSpacing
@@ -106,7 +96,6 @@ private:
 
     //Liste des cell widget et layout
     QList<_SwGuiCompGridLayoutCell *> _widgets;
-    QList<_SwGuiCompGridLayoutCell *> _layouts;
 };
 
 #endif

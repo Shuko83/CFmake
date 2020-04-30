@@ -17,7 +17,6 @@
 #include <ISwProperty.h>
 
 #include <ISwAction.h>
-#include <ISwWidget.h>
 #include "_SwContainerCloseableWidget.h"
 #include "ISwQMainWindow.h"
 
@@ -86,8 +85,6 @@ protected:
 		WRITE setStayOnTop);
     
 protected:
-
-
  	//--------------------------------------------------------------
 	//Properties
 	//--------------------------------------------------------------
@@ -96,7 +93,6 @@ protected:
 	//Handle interfaces
 	//--------------------------------------------------------------
     /** @brief Interface Widget*/
-	ISwWidget * _i_Widget;
 	ISwQMainWindow * _iSwQMainWindow;
 
  	//--------------------------------------------------------------
@@ -121,7 +117,6 @@ public:
 	\return le Action */
 	virtual QAction & GetAction() ;
 
-
 private:
 	QAction _action;
 	QWidget * _widget;
@@ -135,7 +130,5 @@ private:
 	void MoveCenter();//déplace la widget au centre de l'écran
 
 };
+
 #endif
-//------------------------------------------------------
-//DO NOT WRITE ANY CODE AFTER THIS POINT
-//------------------------------------------------------

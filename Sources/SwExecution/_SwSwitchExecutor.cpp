@@ -258,6 +258,11 @@ int _SwSwitchExecutor::StreamExecute() {
     _exe_service.StopExecution();
     return 0;
 }
+//-----------------------------------------------------------------------
+int _SwSwitchExecutor::StreamStop()
+{
+	return 0;
+}
 //----------------------------------------------------
 // Interface ISwExecutable
 //----------------------------------------------------

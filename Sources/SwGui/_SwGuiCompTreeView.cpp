@@ -16,9 +16,7 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
-
 #define CL_WIDGET_INTERFACE_NAME "Widget_%1"
-
 
 /*! \brief Constructeur */
 _SwGuiCompTreeView::_SwGuiCompTreeView(): SwComponent_Class()
@@ -84,8 +82,8 @@ void _SwGuiCompTreeView::InitializeResources() throw( SwException )
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", ( ISwWidget * )this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _treeview );
     
     //Importation de l'interface QAbstractItemModel
     _consumer_service->RegisterConsumedInterface<QAbstractItemModel>( "Model", &_handle );
@@ -135,13 +133,3 @@ void _SwGuiCompTreeView::AfterInterfaceAvailabilityChange( QString interface_nam
         _signals_catcher->DefineInterfaceSlots( _slots_handles );
     }
 }
-//---------------------------------------------------------------------
-// Interface ISwMainWindow
-//---------------------------------------------------------------------
-/*! \brief Renvoie le menu
-\return le menu */
-QWidget * _SwGuiCompTreeView::GetWidget()
-{
-    return _treeview;
-}
-

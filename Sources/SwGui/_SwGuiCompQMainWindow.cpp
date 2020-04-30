@@ -138,8 +138,8 @@ _SwGuiCompQMainWindow::~_SwGuiCompQMainWindow()
     }
     
     //Si c'est le widget central Et qu'il est defini, on le detache du parent
-    if( _handle_central_widget && _handle_central_widget->GetWidget() )
-        _handle_central_widget->GetWidget()->setParent( nullptr );
+    if( _handle_central_widget )
+        _handle_central_widget->setParent( nullptr );
         
     ISwServiceShortcuts * serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>( SW_APP->QueryService( CG_SW_SERVICE_SHORTCUTS ) );
     if( serviceShortcuts )
@@ -153,12 +153,12 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
     if( !_useAsWidget )
         getIProviderService().RegisterProvidedInterface<ISwQMainWindow>( "MainWindow", ( ISwQMainWindow * )this );
     else
-        getIProviderService().RegisterProvidedInterface<ISwWidget>( "MainWindowAsWidget", ( ISwWidget * )this );
+        getIProviderService().RegisterProvidedInterface<QWidget>( "MainWindowAsWidget", this );
         
-    //Importation de l'interface ISwWidget
-    getIConsumerService().RegisterConsumedInterface<ISwWidget>( CL_CENTRALWIDGET_INTERFACE_NAME, &_handle_central_widget );
+    //Importation de l'interface QWidget
+    getIConsumerService().RegisterConsumedInterface<QWidget>( CL_CENTRALWIDGET_INTERFACE_NAME, &_handle_central_widget );
     
-    //Exportation de l'interface ISwWidget
+    //Exportation de l'interface QWidget
     getIProviderService().RegisterProvidedInterface<ISwEvent>( "ISwEvent", ( ISwEvent * )this );
     
     //Enregistrement des propriétés
@@ -275,8 +275,8 @@ void _SwGuiCompQMainWindow::eventPropertyChange( ISwProperty * property )
         if( !_useAsWidget && boolval )
         {
             getIProviderService().UnregisterProvidedInterface( "MainWindow" );
-            //Exportation de l'interface ISwWidget
-            getIProviderService().RegisterProvidedInterface<ISwWidget>( "MainWindowAsWidget", ( ISwWidget * )this );
+            //Exportation de l'interface QWidget
+            getIProviderService().RegisterProvidedInterface<QWidget>( "MainWindowAsWidget", this );
         }
         else
         {
@@ -441,12 +441,6 @@ QMainWindow & _SwGuiCompQMainWindow::GetMainWindow()
 }
 
 //-----------------------------------------------------------------------
-QWidget * _SwGuiCompQMainWindow::GetWidget()
-{
-    return dynamic_cast<QWidget *>( this );
-}
-
-//-----------------------------------------------------------------------
 void _SwGuiCompQMainWindow::eventBeforeInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
 {
     QMap<QString, ISwMenu *>::iterator menu_it;
@@ -503,10 +497,10 @@ void _SwGuiCompQMainWindow::eventBeforeInterfaceAvailability( QString interface_
         return;
     }
     //Si c'est le widget central
-    if( interface_name == CL_CENTRALWIDGET_INTERFACE_NAME && _handle_central_widget && _handle_central_widget->GetWidget() )
+    if( interface_name == CL_CENTRALWIDGET_INTERFACE_NAME && _handle_central_widget )
     {
         //Et qu'il est defini, on le detache du parent
-        _handle_central_widget->GetWidget()->setParent( nullptr );
+        _handle_central_widget->setParent( nullptr );
         return;
     }
     
@@ -603,7 +597,7 @@ void _SwGuiCompQMainWindow::eventAfterInterfaceAvailability( QString interface_n
     //Si c'est le widget central
     if( interface_name == CL_CENTRALWIDGET_INTERFACE_NAME && _handle_central_widget != nullptr )
     {
-        this->setCentralWidget( _handle_central_widget->GetWidget() );
+        this->setCentralWidget( _handle_central_widget );
         return;
     }
     
@@ -721,4 +715,3 @@ void _SwGuiCompQMainWindow::restoreStateGeometry()
 		_firstTimeRestore = false;
 	}
 }
-

@@ -10,14 +10,12 @@
 #include <SwMacros.h>
 #include "_SwGuiCompHBoxLayout.h"
 
-using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
+#include <QWidget>
 
+using namespace StreamWork::SwCore;
 
 #define CL_WIDGET_INTERFACE_NAME "Widget_%1"
 #define CL_LAYOUT_INTERFACE_NAME "Layout_%1"
-
-
 
 //-----------------------------------------------------------------------
 _SwGuiCompHBoxLayout::_SwGuiCompHBoxLayout() : SwComponent_Class()
@@ -25,16 +23,19 @@ _SwGuiCompHBoxLayout::_SwGuiCompHBoxLayout() : SwComponent_Class()
     _provider_service = NULL;
     _consumer_service = NULL;
     _properties_service = NULL;
+	_mainWidget = NULL;
     _layout = NULL;
     _widgets_nb = 0;
     _widgets_nb_property = NULL;
-    _layouts_nb = 0;
-    _layouts_nb_property = NULL;
     _nb_childs = 0;
     _margin = 0;
     _spacing = 6;
     _enableSpacer = false;
     _spacer = new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Expanding );
+	_mainWidget = new QWidget();
+	_layout = new QHBoxLayout(_mainWidget);
+	_layout->setMargin(_margin);
+	_layout->setSpacing(_spacing);
 }
 
 //-----------------------------------------------------------------------
@@ -44,12 +45,6 @@ _SwGuiCompHBoxLayout::~_SwGuiCompHBoxLayout()
     for( uint i = 0; i < _widgets_nb; i++ )
     {
         QString interface_name = QString( CL_WIDGET_INTERFACE_NAME ).arg( i );
-        _consumer_service->UnregisterConsumedInterface( interface_name );
-    }
-    
-    for( uint i = 0; i < _layouts_nb; i++ )
-    {
-        QString interface_name = QString( CL_LAYOUT_INTERFACE_NAME ).arg( i );
         _consumer_service->UnregisterConsumedInterface( interface_name );
     }
     
@@ -63,12 +58,10 @@ _SwGuiCompHBoxLayout::~_SwGuiCompHBoxLayout()
     delete _consumer_service;
     delete _provider_service;
     delete _properties_service;
-    if( _layout != NULL && _layout->parent() == NULL )
-        delete _layout;
-    if( _spacer != NULL )
-        delete _spacer;
+	delete _layout;
+	delete _mainWidget;
+    delete _spacer;
 }
-
 
 //-----------------------------------------------------------------------
 void _SwGuiCompHBoxLayout::InitializeResources() throw( SwException )
@@ -83,8 +76,8 @@ void _SwGuiCompHBoxLayout::InitializeResources() throw( SwException )
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwLayout>( "Layout", ( ISwLayout * )this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Layout", _mainWidget);
     
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -106,20 +99,9 @@ void _SwGuiCompHBoxLayout::InitializeResources() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_widgets property\n" ) );
     }
-    _widgets_nb_property->SetDescription( "Define how many ISwWidget interfaces this component accept" );
+    _widgets_nb_property->SetDescription( "Define how many QWidget interfaces this component accept" );
     _widgets_nb_property->SetValue( QVariant( _widgets_nb ) );
     _widgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompHBoxLayout::OnPropertyChange );
-    
-    //Gestion des layouts
-    _layouts_nb_property = _properties_service->CreateProperty<uint>( "nb_layouts" );
-    if( _layouts_nb_property == NULL )
-    {
-        if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_widgets property\n" ) );
-    }
-    _layouts_nb_property->SetDescription( "Define how many ISwLayout interfaces this component accept" );
-    _layouts_nb_property->SetValue( QVariant( _layouts_nb ) );
-    _layouts_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompHBoxLayout::OnPropertyChange );
-    
     
     if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Info, QString( "InitializeResources of SwGuiHBoxLayout done\n" ) );
     //Spacer
@@ -150,43 +132,20 @@ void _SwGuiCompHBoxLayout::OnPropertyChange( ISwProperty * property )
             for( uint i = _widgets_nb; i < val; i++ )
             {
 				interface_name = QString(CL_WIDGET_INTERFACE_NAME).arg(i);
-                _consumer_service->RegisterConsumedInterface<ISwWidget>( interface_name, &_tmp_handle_widget );
+                _consumer_service->RegisterConsumedInterface<QWidget>( interface_name, &_tmp_handle_widget );
             }
         }
         _widgets_nb = val;
     }
-    
-    if( _layouts_nb_property == property )
-    {
-        val = property->GetValue().toUInt();
-        if( val == _layouts_nb ) return;
-        if( val < _layouts_nb )
-        {
-            for( uint i = val; i < _layouts_nb; i++ )
-            {
-				interface_name = QString(CL_LAYOUT_INTERFACE_NAME).arg(i);
-                _consumer_service->UnregisterConsumedInterface( interface_name );
-            }
-        }
-        else
-        {
-            for( uint i = _layouts_nb; i < val; i++ )
-            {
-				interface_name = QString(CL_LAYOUT_INTERFACE_NAME).arg(i);
-                _consumer_service->RegisterConsumedInterface<ISwLayout>( interface_name, &_tmp_handle_layout );
-            }
-        }
-        _layouts_nb = val;
-    }
     if( _margin_property == property )
     {
         _margin = property->GetValue().toInt();
-        if( _layout ) _layout->setMargin( _margin );
+        _layout->setMargin( _margin );
     }
     if( _spacing_property == property )
     {
         _spacing = property->GetValue().toInt();
-        if( _layout ) _layout->setSpacing( _spacing );
+        _layout->setSpacing( _spacing );
     }
     
 }
@@ -224,35 +183,18 @@ void _SwGuiCompHBoxLayout::setEnableSpacer( bool enable )
 //-----------------------------------------------------------------------
 void _SwGuiCompHBoxLayout::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-
-    QMap<QString, ISwWidget *>::iterator widget_it;
-    QMap<QString, ISwLayout *>::iterator layout_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     
     //Si c'est un menu
     widget_it = _widgets.find( interface_name );
     if( widget_it != _widgets.end() )
     {
-        if( widget_it.value() && widget_it.value()->GetWidget() )
+        if( widget_it.value() )
         {
             //Et qu'il etait defini, on le detache de la widgetbar
-            if( _layout ) widget_it.value()->GetWidget()->setParent( nullptr );
+            widget_it.value()->setParent( nullptr );
             widget_it.value() = nullptr;
             _widgets.erase( widget_it );
-            _nb_childs--;
-            int index = _ordered_childrens.indexOf( interface_name );
-            if( index != -1 ) _ordered_childrens.removeAt( index );
-        }
-    }
-    //Si c'est un layout
-    layout_it = _layouts.find( interface_name );
-    if( layout_it != _layouts.end() )
-    {
-        if( layout_it.value() )
-        {
-            //Et qu'il etait defini, on le detache de la widgetbar
-            if( _layout ) layout_it.value()->LiberateLayout();
-            layout_it.value() = nullptr;
-            _layouts.erase( layout_it );
             _nb_childs--;
             int index = _ordered_childrens.indexOf( interface_name );
             if( index != -1 ) _ordered_childrens.removeAt( index );
@@ -263,8 +205,7 @@ void _SwGuiCompHBoxLayout::BeforeInterfaceAvailabilityChange( QString interface_
 //-----------------------------------------------------------------------
 void _SwGuiCompHBoxLayout::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    QMap<QString, ISwWidget *>::iterator widget_it;
-    QMap<QString, ISwLayout *>::iterator layout_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     QString interface_header = interface_name;
     
     interface_header.truncate( 1 );
@@ -273,111 +214,16 @@ void _SwGuiCompHBoxLayout::AfterInterfaceAvailabilityChange( QString interface_n
     if( interface_header == QString( "W" ) && widget_it == _widgets.end() && _tmp_handle_widget )
     {
         _widgets.insert( interface_name, _tmp_handle_widget );
-        if( _layout )
-        {
-            if( _enableSpacer )
-            {
-                _layout->insertWidget( _layout->count() - 1, _tmp_handle_widget->GetWidget() );
-            }
-            else
-            {
-                _layout->addWidget( _tmp_handle_widget->GetWidget() );
-            }
-        }
-        _nb_childs++;
-        _ordered_childrens.push_back( interface_name );
-        return;
-    }
-    //Si c'est un layout
-    layout_it = _layouts.find( interface_name );
-    if( interface_header == QString( "L" ) && layout_it == _layouts.end() && _tmp_handle_layout )
-    {
-        _layouts.insert( interface_name, _tmp_handle_layout );
-        if( _layout )
-        {
-            if( _enableSpacer )
-            {
-                _layout->insertLayout( _layout->count() - 1, &_tmp_handle_layout->GetLayout() );
-            }
-            else
-            {
-                _layout->addLayout( &_tmp_handle_layout->GetLayout() );
-            }
-        }
-        _nb_childs++;
-        _ordered_childrens.push_back( interface_name );
-        return;
-    }
-}
-//---------------------------------------------------------------------
-// Interface ISwLayout
-//---------------------------------------------------------------------
-
-//-----------------------------------------------------------------------
-QLayout & _SwGuiCompHBoxLayout::GetLayout()
-{
-    QString interface_header;
-    QMap<QString, ISwWidget *>::iterator widget_it;
-    QMap<QString, ISwLayout *>::iterator layout_it;
-    
-    if( _layout == nullptr )
-    {
-        //Reconstruction du layout
-        _layout = new QHBoxLayout();
-        _layout->setMargin( _margin );
-        _layout->setSpacing( _spacing );
-        //Mise en place des enfants
-        for( int i = 0; i < _ordered_childrens.count(); i++ )
-        {
-            interface_header = _ordered_childrens[i];
-            interface_header.truncate( 1 );
-            widget_it = _widgets.find( _ordered_childrens[i] );
-            if( interface_header == QString( "W" ) && widget_it != _widgets.end() )
-            {
-                _layout->addWidget( widget_it.value()->GetWidget() );
-            }
-            //Si c'est un layout
-            layout_it = _layouts.find( _ordered_childrens[i] );
-            if( interface_header == QString( "L" ) && layout_it == _layouts.end() )
-            {
-                _layout->addLayout( &layout_it.value()->GetLayout() );
-            }
-        }
-        //Spacer
         if( _enableSpacer )
         {
-            _layout->addSpacerItem( _spacer );
-            _layout->setStretch( _layout->count() - 1, 1 );
+            _layout->insertWidget( _layout->count() - 1, _tmp_handle_widget );
         }
         else
         {
-            _layout->removeItem( _spacer );
+            _layout->addWidget( _tmp_handle_widget );
         }
+        _nb_childs++;
+        _ordered_childrens.push_back( interface_name );
+        return;
     }
-    return *_layout;
-    
 }
-
-//-----------------------------------------------------------------------
-void _SwGuiCompHBoxLayout::LiberateLayout()
-{
-    QMap<QString, ISwWidget *>::iterator widget_it;
-    QMap<QString, ISwLayout *>::iterator layout_it;
-    
-    for( widget_it = _widgets.begin(); widget_it != _widgets.end(); widget_it++ )
-    {
-        if( widget_it.value()->GetWidget() )
-            widget_it.value()->GetWidget()->setParent( nullptr );
-    }
-    for( layout_it = _layouts.begin(); layout_it != _layouts.end(); layout_it++ )
-    {
-        layout_it.value()->LiberateLayout();
-    }
-    if( _enableSpacer )
-    {
-        _layout->removeItem( _spacer );
-    }
-    delete _layout;
-    _layout = nullptr;
-}
-

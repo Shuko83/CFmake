@@ -85,6 +85,10 @@ namespace StreamWork
 
 			/*! \brief methode d'acces au signal de changement de controle*/
 			virtual void SetIsEditable(bool is_editable) = 0;
+			/*! \brief prpriete resettable*/
+			virtual bool isResettable() = 0;
+			/*! \brief reset de la propriété*/
+			virtual void reset() = 0;
         };
     }
 }

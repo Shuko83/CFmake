@@ -20,7 +20,7 @@ _SwGuiCompPushButtonToQAction::_SwGuiCompPushButtonToQAction(): SwComponent_Clas
     
     _handle_action = NULL;
     
-    //  _i_Widget=(ISwWidget *)this; /* Remplacer null par le bon handle pour les interfaces fournies */
+    //  _i_Widget=this; /* Remplacer null par le bon handle pour les interfaces fournies */
     
     
 }
@@ -52,7 +52,7 @@ void _SwGuiCompPushButtonToQAction::InitializeResources() throw( SwException )
     pushButton = new QPushButton();
     
     bool res = true;
-    if( !connect( pushButton, SIGNAL( clicked( bool ) ), ( QWidget * )this, SLOT( commandApply( bool ) ) ) )
+    if(!connect(pushButton, &QPushButton::clicked, this, &_SwGuiCompPushButtonToQAction::commandApply))
         res = false;
         
     //Enregistrement des services
@@ -62,9 +62,9 @@ void _SwGuiCompPushButtonToQAction::InitializeResources() throw( SwException )
     
     _consumer_service->RegisterConsumedInterface<ISwAction>( "Action", &_handle_action );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", this );
-    //_provider_service->RegisterProvidedInterface<ISwWidget>("Widget", _i_Widget);
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", pushButton);
+    //_provider_service->RegisterProvidedInterface<QWidget>("Widget", _i_Widget);
     
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -90,15 +90,6 @@ void _SwGuiCompPushButtonToQAction::BeforeInterfaceAvailabilityChange( QString i
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompPushButtonToQAction::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-}
-//---------------------------------------------------------------------
-// Interface ISwMainWindow
-//---------------------------------------------------------------------
-/*! \brief Renvoie le menu
-\return le menu */
-QWidget * _SwGuiCompPushButtonToQAction::GetWidget()
-{
-    return pushButton;
 }
 
 void _SwGuiCompPushButtonToQAction::commandApply( bool state )

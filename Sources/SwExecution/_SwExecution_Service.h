@@ -26,23 +26,19 @@
 #include "ISwExecutable_Service.h"
 #include "ISwServicesManager_Listener.h"
 
-using namespace StreamWork::SwCore;
-using namespace StreamWork::SwExecution;
-
-
 typedef enum {Timer_exe,Thread_exe,External_exe,Slave_exe} _SwExecutionType;
 typedef enum {Normal_mode,Replay_mode,Both_mode} _SwExecutionMode;
 /*!
 \class _SwExecution_Services
 \brief  service pour l'execution
 */
-class _SwExecution_Service : public QThread, public ISwExecution_Service, public ISwServicesManager_Listener, public ISwFinalizer {
+class _SwExecution_Service : public QThread, public StreamWork::SwExecution::ISwExecution_Service, public StreamWork::SwCore::ISwServicesManager_Listener, public StreamWork::SwCore::ISwFinalizer {
     Q_OBJECT
 
     
 public:
 	/* Constructeur */
-	_SwExecution_Service(SwComponent_Class * host);
+	_SwExecution_Service(StreamWork::SwCore::SwComponent_Class * host);
 	/* Destructeur */
 	~_SwExecution_Service();
     /* Edit execution list */
@@ -60,7 +56,7 @@ public:
     \param[in] elt neoud parent
     \param[in] finalizer_manager manager de finalisation
     */
-	void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager);
+	void Load(QDomElement & elt, StreamWork::SwCore::ISwFinalizerManager & finalizer_manager);
 	/*! \brief methode permettant de sauver des donnees
     \param[in] elt neoud parent
     \param[in] doc document parent
@@ -75,14 +71,14 @@ public:
 	// Interface ISwHost
 	//---------------------------------------------------------------------
 	/*! \brief acces a son composant hote */
-	SwComponent_Class * GetHostComponent();            
+	StreamWork::SwCore::SwComponent_Class * GetHostComponent();
     //---------------------------------------------------------------------
     // Gestion de l'execution des composants selectionnés
     //---------------------------------------------------------------------
 	/*! \brief Resolution des liens */
     bool ResolveLinks();
 	/*! \brief Acces a la liste des services executables */
-    const QSet<ISwExecutable_Service *>& GetExecutablesList() const;
+    const QSet<StreamWork::SwExecution::ISwExecutable_Service *>& GetExecutablesList() const;
 	/*! \brief Initialisation de tous les composants */
     void InitializeAll();
 	/*! \brief Demarrage de tous les composants */
@@ -116,7 +112,7 @@ public:
 	/*! \brief Arret de l'execution */
     void StopExecution();
     /*! \brief definition du fournisseur de temps */
-    void SetClockProvider(ISwClockProvider * provider);
+    void SetClockProvider(StreamWork::SwExecution::ISwClockProvider * provider);
     //---------------------------------------------------------------------
     // QThread
     //---------------------------------------------------------------------
@@ -136,12 +132,12 @@ public:
 	/* List des mode d'execution des composants executables */
     QList<_SwExecutionMode> _exe_modes;
     /* List des interfaces d'execution */
-    QSet<ISwExecutable_Service *> _exe_servs;
+    QSet<StreamWork::SwExecution::ISwExecutable_Service *> _exe_servs;
 	/* Composants observé, Parent=>Composant executé */
-	QMultiHash<SwComponent_Class *, SwComponent_Class *> _observedComponents;
+	QMultiHash<StreamWork::SwCore::SwComponent_Class *, StreamWork::SwCore::SwComponent_Class *> _observedComponents;
 
     /* Hote */
-    SwComponent_Class * _host;
+	StreamWork::SwCore::SwComponent_Class * _host;
     /* Est ce la premiere execution */
     bool _is_first_execute;
     /* Indique que la boucle d'execution doit être arretée */
@@ -159,7 +155,7 @@ public:
     /* Timer d'execution */
     QTimer * _exe_timer;
     /* fournisseur de temps */
-    ISwClockProvider * _clockProvider;
+	StreamWork::SwExecution::ISwClockProvider * _clockProvider;
 
 	bool _time_step_changed;
 

@@ -11,7 +11,6 @@
 #include "_SwEditorCompStreamTabBar.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 using namespace StreamWork::SwEditor;
 
 /*! \brief Constructeur */
@@ -53,8 +52,8 @@ void _SwEditorCompStreamTabBar::InitializeResources() throw( SwException )
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", ( ISwWidget * )this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _tabbar );
     _properties_service->CreatePropertiesForQObject( _tabbar, "QTabBar" );
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -62,15 +61,6 @@ void _SwEditorCompStreamTabBar::InitializeResources() throw( SwException )
     //Fin
     if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Info, QString( "InitializeResources of SwEditorCompToolBox done\n" ) );
     
-}
-//---------------------------------------------------------------------
-// Interface ISwWidget
-//---------------------------------------------------------------------
-/*! \brief Renvoie le menu
-\return le menu */
-QWidget * _SwEditorCompStreamTabBar::GetWidget()
-{
-    return _tabbar;
 }
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver

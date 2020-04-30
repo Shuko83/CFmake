@@ -1,6 +1,6 @@
 /**
  * @file SwGuiQActionToWidget2.h
- * @brief Composant qui consomme un ISwAction et une ISwWidget et qui, sur le triggered de l'action
+ * @brief Composant qui consomme un ISwAction et une QWidget et qui, sur le triggered de l'action
  *		  ouvre ou ferme le widget associé.
  *		  Le Widget n'est pas encapsulé
  * @version 1.0
@@ -11,16 +11,11 @@
 #ifndef _SwGuiQActionConsumedToWidget_H
 #define _SwGuiQActionConsumedToWidget_H
 
-
 #include <Component.h>
 #include <ISwAction.h>
-#include <ISwWidget.h>
-
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
-
-
 
 class _SwGuiQActionConsumedToWidget : public Component 
 {
@@ -33,13 +28,9 @@ public slots:
 
 protected:
 
-    /** @brief Interface Widget*/
-	ISwWidget * _i_Widget;
-
 	/** @brief Interface QAction*/
 	ISwAction * _i_Action;
 
- 	
 
 public:
     /** @brief Constructeur */
@@ -69,7 +60,5 @@ private:
 	void MoveCenter();//déplace la widget au centre de l'écran
 
 };
+
 #endif
-//------------------------------------------------------
-//DO NOT WRITE ANY CODE AFTER THIS POINT
-//------------------------------------------------------

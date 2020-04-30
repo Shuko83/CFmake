@@ -23,19 +23,15 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwLayout.h"
-#include "ISwWidget.h"
 
 #include <QDebug>
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
-
 
 /*!
 	\class _SwGuiCompVBoxLayout 
 	\brief _SwGuiCompVBoxLayout generant un QWidget
 */
-class _SwGuiCompVBoxLayout : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwLayout
+class _SwGuiCompVBoxLayout : public SwComponent_Class, public ISwInterfaces_ConsumerObserver
 {
     Q_OBJECT
 
@@ -43,7 +39,8 @@ class _SwGuiCompVBoxLayout : public SwComponent_Class, public ISwInterfaces_Cons
 
 protected:
     /* menu */
-    QVBoxLayout * _layout;
+	QWidget * _layoutWidget;
+	QVBoxLayout * _layout;
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
@@ -63,18 +60,9 @@ protected:
     /* propriété nombre de widgets */
     ISwProperty * _widgets_nb_property;
     /* map des interfaces widgets*/
-    QMap<QString,ISwWidget *> _widgets;
+    QMap<QString, QWidget *> _widgets;
     /* handle temporaire d'interface widget*/
-    ISwWidget * _tmp_handle_widget;
-    // --- Layout ---
-    /* nombre de widgets */
-    uint _layouts_nb;
-    /* propriété nombre de widgets */
-    ISwProperty * _layouts_nb_property;
-    /* handle temporaire d'interface widget*/
-    ISwLayout * _tmp_handle_layout;
-    /* map des interfaces widgets*/
-    QMap<QString,ISwLayout *> _layouts;
+	QWidget * _tmp_handle_widget;
 
     //Spacer
     bool _enableSpacer;
@@ -106,14 +94,6 @@ public:
 	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
 	/*! \brief Apres changement de la disponibilité de l'interface */
 	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-    //---------------------------------------------------------------------
-    // Interface ISwLayout
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le Layout
-            \return le Layout */
-	virtual QLayout & GetLayout();
-    /*! \brief Liberation du layout */
-	virtual void LiberateLayout();
-
 };
+
 #endif 

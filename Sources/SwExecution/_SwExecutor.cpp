@@ -24,6 +24,7 @@
 #define CL_EXE_TIMER_MAINENTRY 5
 
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwExecution;
 
 
 //-----------------------------------------------------------------------

@@ -3,6 +3,8 @@
 #include "SwTime_ToolBox.h"
 #include "SwAddress_ToolBox.h"
 
+using namespace StreamWork::SwCore;
+
 namespace StreamWork {
 	namespace SwGui {
 

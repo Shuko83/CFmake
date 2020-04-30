@@ -22,7 +22,7 @@
 #include <SwPins_Manager_Class.h>
 #include <ISwProperty.h>
 #include <ISwPin_Listener.h>
-#include <ISwExecutor2.h>
+#include <ISwExecutor.h>
 #include <ISwAdminSetup.h>
 #include "_SwExecution_Service.h"
 #include "ISwExecutable_Service.h"
@@ -30,17 +30,15 @@
 #include "SwExecutionConstantes.h"
 #include "ISwExecution_Service.h"
 
-using namespace StreamWork::SwCore;
-using namespace StreamWork::SwExecution;
 /*!
 	\class _SwExecutor
 	\brief Implementation of the Class _SwExecutor generant un router de données basique
 	*/
-class _SwExecutor : public SwComponent_Class,
-	public ISwExecutor2,
-	public ISwAdminSetup,
-	virtual public ISwExecutable_Service,
-	public ISwSupportReplay
+class _SwExecutor : public StreamWork::SwCore::SwComponent_Class,
+	public StreamWork::SwCore::ISwExecutor,
+	public StreamWork::SwCore::ISwAdminSetup,
+	virtual public StreamWork::SwExecution::ISwExecutable_Service,
+	public StreamWork::SwExecution::ISwSupportReplay
 {
 	Q_OBJECT
 
@@ -51,9 +49,9 @@ public:
 	virtual ~_SwExecutor();
 	/*! \brief Initialisation des ressources
 		  \note tous les services du composants doivent être déclarés dans cette methodes*/
-	virtual void InitializeResources() throw(SwException);
+	virtual void InitializeResources() throw(StreamWork::SwCore::SwException);
 	/*! \brief Callback sur les changements de propriétés*/
-	void OnPropertyChange(ISwProperty * property);
+	void OnPropertyChange(StreamWork::SwCore::ISwProperty * property);
 	//----------------------------------------------------
 	// Interface ISwExecutor
 	//----------------------------------------------------
@@ -70,11 +68,11 @@ public:
 	// Interface ISwExecutable
 	//----------------------------------------------------
 	/*! \brief Initialisation */
-	void Initialize(double start_time, ISwExecution_Service * executor) throw (SwException);
+	void Initialize(double start_time, StreamWork::SwExecution::ISwExecution_Service * executor) throw (StreamWork::SwCore::SwException);
 	/*! \brief Demarrage */
-	void Start(double current_time) throw (SwException);
+	void Start(double current_time) throw (StreamWork::SwCore::SwException);
 	/*! \brief Execution */
-	void Execute(double current_time, bool is_first_call) throw (SwException);
+	void Execute(double current_time, bool is_first_call) throw (StreamWork::SwCore::SwException);
 	/*! \brief Execution */
 	void Stop(double current_time);
 	//---------------------------------------------------------------------
@@ -87,7 +85,7 @@ public:
 	// Interface ISwHost
 	//---------------------------------------------------------------------
 	/*! \brief acces a son composant hote */
-	SwComponent_Class * GetHostComponent();
+	StreamWork::SwCore::SwComponent_Class * GetHostComponent();
 	//----------------------------------------------------
 	// Interface ISwAdminSetup
 	//----------------------------------------------------
@@ -110,32 +108,33 @@ public:
 
 protected:
 	/* service de gestion des propriétés */
-	SwProperties_Class * _properties_service;
+	StreamWork::SwCore::SwProperties_Class * _properties_service;
 	/* Pas temporel en millisecondes */
 	uint _time_step;
 	/* propriété Pas temporel */
-	ISwProperty * _time_step_property;
+	StreamWork::SwCore::ISwProperty * _time_step_property;
 	/* overload */
-	SwEnum _overload;
+	StreamWork::SwCore::SwEnum _overload;
 	/* propriété overload */
-	ISwProperty * _overload_property;
+	StreamWork::SwCore::ISwProperty * _overload_property;
 	/* Priority */
-	SwEnum _priority;
+	StreamWork::SwCore::SwEnum _priority;
 	/* propriété Priority */
-	ISwProperty * _priority_property;
+	StreamWork::SwCore::ISwProperty * _priority_property;
 	/* est l'entree de l'execution */
-	SwEnum _executable_entry;
+	StreamWork::SwCore::SwEnum _executable_entry;
 	/* propriété est l'entree de l'execution */
-	ISwProperty * _executable_entry_property;
+	StreamWork::SwCore::ISwProperty * _executable_entry_property;
 	/* service contenant gerant la liste des composants executables */
 	_SwExecution_Service _exe_service;
 	/* replay mode */
 	bool _replayMode;
 	/* propriété DefaultActivated */
-	ISwProperty * _defaultActivated_property;
+	StreamWork::SwCore::ISwProperty * _defaultActivated_property;
 	/* default _defaultActivated */
 	bool    _defaultActivated;
 
-	ISwExecution_Service * _executor;
+	StreamWork::SwExecution::ISwExecution_Service * _executor;
 };
+
 #endif 

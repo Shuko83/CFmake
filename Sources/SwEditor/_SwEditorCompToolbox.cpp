@@ -13,7 +13,6 @@
 #include "ComponentListModel.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 using namespace StreamWork::SwEditor;
 
 /*! \brief Constructeur */
@@ -49,22 +48,13 @@ void _SwEditorCompToolbox::InitializeResources() throw( SwException )
     this->RegisterService( _properties_service );
     this->RegisterService( _provider_service );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", ( ISwWidget * )this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _toolbox );
     
     _properties_service->CreatePropertiesForQObject( _toolbox, "QToolBox" );
     
     if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Info, QString( "InitializeResources of SwEditorCompToolBox done\n" ) );
     
-}
-//---------------------------------------------------------------------
-// Interface ISwMainWindow
-//---------------------------------------------------------------------
-/*! \brief Renvoie le menu
-\return le menu */
-QWidget * _SwEditorCompToolbox::GetWidget()
-{
-    return _toolbox;
 }
 //---------------------------------------------------------------------
 // Autres
@@ -108,4 +98,3 @@ void _SwEditorCompToolbox::BuildWidget()
             _toolbox->addItem(view,QIcon(":/SwEditor/comp_toolbox.png"),it.value()->GetPluginName());
         } */
 }
-

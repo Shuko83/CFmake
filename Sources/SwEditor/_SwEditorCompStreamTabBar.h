@@ -21,12 +21,10 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include <ISwWidget.h>
 #include "ISwEditorStreamsManager.h"
 #include "_SwStreamsTabBar.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 namespace StreamWork {
     namespace SwEditor {
@@ -34,7 +32,7 @@ namespace StreamWork {
             \class _SwEditorCompStreamTabBar
             \brief Implementation of the Class _SwEditorCompStreamTabBar une tabbar des streams editer
         */
-        class _SwEditorCompStreamTabBar : public SwComponent_Class, public ISwWidget, public ISwInterfaces_ConsumerObserver
+        class _SwEditorCompStreamTabBar : public SwComponent_Class, public ISwInterfaces_ConsumerObserver
         {
         protected:
             /* \brief TreeView */
@@ -57,20 +55,14 @@ namespace StreamWork {
                 \note tous les services du composants doivent être déclarés dans cette methodes*/
             virtual void InitializeResources() throw( SwException );
             //---------------------------------------------------------------------
-            // Interface ISwWidget
-            //---------------------------------------------------------------------
-            /*! \brief Renvoie le widget
-                \return le widget */
-            virtual QWidget * GetWidget();
-            //---------------------------------------------------------------------
             // Interface ISwInterfaces_ConsumerObserver
             //---------------------------------------------------------------------
             /*! \brief Avant changement de la disponibilité de l'interface */
             virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
             /*! \brief Apres changement de la disponibilité de l'interface */
             virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-            
         };
     }
 }
+
 #endif

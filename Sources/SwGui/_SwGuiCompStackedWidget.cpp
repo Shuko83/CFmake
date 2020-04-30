@@ -69,8 +69,8 @@ void _SwGuiCompStackedWidget::InitializeResources() throw( SwException )
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", ( ISwWidget * )this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _stackedWidget );
     _provider_service->RegisterProvidedInterface<ISwStackedWidget_Controler>( "StackedWidget_Controler", ( ISwStackedWidget_Controler * )this );
     
     
@@ -85,7 +85,7 @@ void _SwGuiCompStackedWidget::InitializeResources() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_page property\n" ) );
     }
-    _stackedWidgets_nb_property->SetDescription( "Define how many ISwWidget interfaces this component accept" );
+    _stackedWidgets_nb_property->SetDescription( "Define how many QWidget interfaces this component accept" );
     _stackedWidgets_nb_property->SetValue( QVariant( _stackedWidgets_nb ) );
     _stackedWidgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompStackedWidget::OnPropertyChange );
     
@@ -95,7 +95,7 @@ void _SwGuiCompStackedWidget::InitializeResources() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register default_page_index property\n" ) );
     }
-    _stackedWidgets_current_index_page->SetDescription( "Define how many ISwWidget interfaces this component accept" );
+    _stackedWidgets_current_index_page->SetDescription( "Define how many QWidget interfaces this component accept" );
     _stackedWidgets_current_index_page->SetValue( QVariant( _stackedWidgets_page_index ) );
     _stackedWidgets_current_index_page->GetOnChangeSignal().iconnect( *this, &_SwGuiCompStackedWidget::OnPropertyChange );
     
@@ -143,7 +143,7 @@ void _SwGuiCompStackedWidget::OnPropertyChange( ISwProperty * property )
                 {
                     interface_name = QString( CL_WIDGET_INTERFACE_NAME ).arg( i );
                     _widgets.insert( interface_name, nullptr );
-                    _consumer_service->RegisterConsumedInterface<ISwWidget>( interface_name, &_tmp_handle_widget );
+                    _consumer_service->RegisterConsumedInterface<QWidget>( interface_name, &_tmp_handle_widget );
                     if( _stackedWidget )
                         _stackedWidget->addWidget( new QWidget );
                 }
@@ -163,30 +163,24 @@ void _SwGuiCompStackedWidget::OnPropertyChange( ISwProperty * property )
 /*****************************************************************************/
 void _SwGuiCompStackedWidget::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    QMap<QString, ISwWidget *>::iterator widget_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     
     //Si c'est un menu
     widget_it = _widgets.find( interface_name );
     
     if( widget_it != _widgets.end() )
     {
-        if( widget_it.value() && widget_it.value()->GetWidget() )
+        if( widget_it.value() )
         {
             //Et qu'il etait defini, on le suprime de la stack
-            int indexWidget =  _stackedWidget->indexOf( widget_it.value()->GetWidget() );
-            _stackedWidget->removeWidget( widget_it.value()->GetWidget() );
-            widget_it.value()->GetWidget()->setParent( nullptr );
+            int indexWidget =  _stackedWidget->indexOf( widget_it.value() );
+            _stackedWidget->removeWidget( widget_it.value() );
+            widget_it.value()->setParent( nullptr );
             
             _stackedWidget->insertWidget( indexWidget, new QWidget );
             
             notifyObserver();
             
-            //Si c'est un widget observable, on se mets en observer
-            ISwWidget2 * wo = dynamic_cast<ISwWidget2 *>( widget_it.value() );
-            if( wo != 0 )
-            {
-                wo->UnregisterISwWidgetObserver( this );
-            }
             //Fin
             widget_it.value() = nullptr;
         }
@@ -200,7 +194,7 @@ void _SwGuiCompStackedWidget::BeforeInterfaceAvailabilityChange( QString interfa
 void _SwGuiCompStackedWidget::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
 
-    QMap<QString, ISwWidget *>::iterator widget_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     
     //Si c'est un widget
     widget_it = _widgets.find( interface_name );
@@ -219,64 +213,16 @@ void _SwGuiCompStackedWidget::AfterInterfaceAvailabilityChange( QString interfac
             delete temporyW;
             temporyW = nullptr;
             
-            _stackedWidget->insertWidget( indexWidget, _tmp_handle_widget->GetWidget() );
+            _stackedWidget->insertWidget( indexWidget, _tmp_handle_widget );
             setCurrentIndex( _stackedWidgets_page_index );
             notifyObserver();
-            
-            //Si c'est un widget observable, on se mets en observer
-            ISwWidget2 * wo = dynamic_cast<ISwWidget2 *>( _tmp_handle_widget );
-            if( wo != 0 )
-            {
-                wo->RegisterISwWidgetObserver( this );
-            }
         }
         return;
     }
 }
 
 //---------------------------------------------------------------------
-// Interface ISwWidget2
-//---------------------------------------------------------------------
-
-/*****************************************************************************/
-QWidget * _SwGuiCompStackedWidget::GetWidget()
-{
-    return _stackedWidget;
-}
-
-/*****************************************************************************/
-void _SwGuiCompStackedWidget::RegisterISwWidgetObserver( ISwWidget2_Observer * o )
-{
-    _wObservers.push_back( o );
-}
-
-/*****************************************************************************/
-void _SwGuiCompStackedWidget::UnregisterISwWidgetObserver( ISwWidget2_Observer * o )
-{
-    _wObservers.removeOne( o );
-}
-
-//---------------------------------------------------------------------
-// InterfaceISwWidget2_Observer
-//---------------------------------------------------------------------
-
-/*****************************************************************************/
-void _SwGuiCompStackedWidget::OnBringToFrontRequest( ISwWidget * w )
-{
-    int index = _stackedWidget->indexOf( w->GetWidget() );
-    if( index >= 0 && _stackedWidget && index <= _stackedWidget->count() )
-    {
-        _stackedWidget->setCurrentIndex( index );
-    }
-    
-    for( int i = 0; i < _wObservers.count(); i++ )
-    {
-        _wObservers[i]->OnBringToFrontRequest( this );
-    }
-}
-
-//---------------------------------------------------------------------
-// InterfaceISwWidget2_Observer
+// InterfaceQWidget2_Observer
 //---------------------------------------------------------------------
 
 /*****************************************************************************/

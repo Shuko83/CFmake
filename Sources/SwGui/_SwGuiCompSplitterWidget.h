@@ -24,12 +24,8 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwLayout.h"
-#include "ISwWidget.h"
-
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*!
     \class _SwGuiCompSplitterWidget
@@ -37,8 +33,7 @@ using namespace StreamWork::SwGui;
 */
 class _SwGuiCompSplitterWidget
     : public SwComponent_Class,
-      public ISwInterfaces_ConsumerObserver,
-      public ISwWidget
+      public ISwInterfaces_ConsumerObserver
 {
 protected:
     /* main */
@@ -55,12 +50,12 @@ protected:
     /* propriété nombre de widgets */
     ISwProperty * _widgets_nb_property;
     /* map des interfaces widgets*/
-    QMap<QString, ISwWidget *> _widgets;
+    QMap<QString, QWidget *> _widgets;
     /* map des proprietes des tailles des widgets */
     typedef QMap<QString, ISwProperty *> WidgetSizes;
     WidgetSizes _widgetSizes;
     /* handle temporaire d'interface widget*/
-    ISwWidget * _tmp_handle_widget;
+	QWidget * _tmp_handle_widget;
     
     /*! \brief reset de la taille des widgets  */
     void resetWidgetSizes();
@@ -83,11 +78,6 @@ public:
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     /*! \brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
 };
+
 #endif

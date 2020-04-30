@@ -2,6 +2,7 @@
 #include "ISwAction.h"
 
 using namespace StreamWork::SwGui;
+using namespace StreamWork::SwCore;
 
 //---------------------------------------------------
 SwActionToToolButton::SwActionToToolButton() : SwAssistedComponent()
@@ -11,21 +12,24 @@ SwActionToToolButton::SwActionToToolButton() : SwAssistedComponent()
     setProviderServiceAvaibility( true );
     
     //tool button
-    _toolButton.setVisible( false );
+	_toolButton = new QToolButton();
+    _toolButton->setVisible( false );
 }
 
 //---------------------------------------------------
 SwActionToToolButton::~SwActionToToolButton()
 {
     unconsummeInterface( "ISwAction" );
-    unprovideInterface( "ISwWidget" );
+    unprovideInterface( "Widget" );
+
+	delete _toolButton;
 }
 
 //---------------------------------------------------
 void SwActionToToolButton::initializeComponent() throw( SwException )
 {
     consummeInterface<ISwAction>( "ISwAction" );
-    provideInterface<ISwWidget>( "ISwWidget", ( ISwWidget * )this );
+    provideInterface<QWidget>( "Widget", _toolButton);
     
     createPropertiesForThisObject( QString(), true );
 }
@@ -35,8 +39,8 @@ void SwActionToToolButton::interfaceAvailable( QString interface_name )
 {
     if( interface_name == "ISwAction" )
     {
-        _toolButton.setDefaultAction( &getInterface<ISwAction>( "ISwAction" )->GetAction() );
-        connect( _toolButton.defaultAction(), &QAction::changed, this, &SwActionToToolButton::updateVisibilityAction );
+        _toolButton->setDefaultAction( &getInterface<ISwAction>( "ISwAction" )->GetAction() );
+        connect( _toolButton->defaultAction(), &QAction::changed, this, &SwActionToToolButton::updateVisibilityAction );
         
         updateVisibilityAction();
     }
@@ -47,8 +51,8 @@ void SwActionToToolButton::interfaceUnavailable( QString interface_name )
 {
     if( interface_name == "ISwAction" )
     {
-        disconnect( _toolButton.defaultAction(), &QAction::changed, this, &SwActionToToolButton::updateVisibilityAction );
-        _toolButton.setDefaultAction( NULL );
+        disconnect( _toolButton->defaultAction(), &QAction::changed, this, &SwActionToToolButton::updateVisibilityAction );
+        _toolButton->setDefaultAction( NULL );
         
         updateVisibilityAction();
     }
@@ -57,15 +61,9 @@ void SwActionToToolButton::interfaceUnavailable( QString interface_name )
 //---------------------------------------------------
 void SwActionToToolButton::updateVisibilityAction()
 {
-    QAction * tmp = _toolButton.defaultAction();
+    QAction * tmp = _toolButton->defaultAction();
     if( tmp )
-        _toolButton.setVisible( tmp->isVisible() );
+        _toolButton->setVisible( tmp->isVisible() );
     else
-        _toolButton.setVisible( false );
-}
-
-//----------------------------------------------------
-QWidget * StreamWork::SwGui::SwActionToToolButton::GetWidget()
-{
-    return &_toolButton;
+        _toolButton->setVisible( false );
 }

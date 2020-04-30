@@ -21,20 +21,15 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwLayout.h"
-#include "ISwWidget.h"
-
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*!
     \class _SwGuiCompLabel
     \brief _SwGuiCompLabel generant un QWidget
 */
 class _SwGuiCompLabel : public SwComponent_Class,
-    public ISwInterfaces_ConsumerObserver,
-    public ISwWidget
+    public ISwInterfaces_ConsumerObserver
 {
 protected:
     /* menu */
@@ -64,12 +59,7 @@ public:
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     /*! \brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
-    
+
 };
+
 #endif

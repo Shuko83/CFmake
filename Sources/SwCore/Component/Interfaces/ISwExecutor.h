@@ -35,6 +35,10 @@ namespace StreamWork
             /*! \brief Execute le stream
             \return le resultat de l'operation */
 			virtual int StreamExecute() =0;
+
+			/*! \brief Arrete l'execution du stream
+			\return le resultat de l'operation */
+			virtual int StreamStop() = 0;
 		};
 	}
 }

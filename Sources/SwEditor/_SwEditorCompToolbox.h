@@ -20,11 +20,8 @@
 #include <SwInterfaces_Provider_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwWidget.h"
-
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 namespace StreamWork {
     namespace SwEditor {
@@ -32,7 +29,7 @@ namespace StreamWork {
             \class _SwEditorCompToolbox
             \brief Implementation of the Class _SwEditorCompToolbox generant un boite a outils contenant la liste des composants
         */
-        class _SwEditorCompToolbox : public SwComponent_Class, public ISwWidget
+        class _SwEditorCompToolbox : public SwComponent_Class
         {
         protected:
             /* \brief TreeView */
@@ -52,15 +49,8 @@ namespace StreamWork {
             /*! \brief Initialisation des ressources
                 \note tous les services du composants doivent être déclarés dans cette methodes*/
             virtual void InitializeResources() throw( SwException );
-            
-            //---------------------------------------------------------------------
-            // Interface ISwWidget
-            //---------------------------------------------------------------------
-            /*! \brief Renvoie le widget
-                \return le widget */
-            virtual QWidget * GetWidget();
-            
         };
     }
 }
+
 #endif

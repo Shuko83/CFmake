@@ -11,7 +11,6 @@
 
 using namespace StreamWork::SwEditor;
 
-
 _SwStreamNavigationActions::_SwStreamNavigationActions( QObject * parent, SwInterfaces_Provider_Class * provider_service )
     : QObject( parent )
 {
@@ -29,8 +28,7 @@ _SwStreamNavigationActions::_SwStreamNavigationActions( QObject * parent, SwInte
     _current_path->setStatusTip( "Current path in current stream" );
     _current_path->setToolTip( "Current path in current stream" );
     _current_path->setReadOnly( true );
-    _current_path_c = new _WidgetContainer( _current_path );
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "CurrentPath", ( ISwWidget * )_current_path_c );
+    _provider_service->RegisterProvidedInterface<QWidget>( "CurrentPath", _current_path );
     
     _current_path->setEnabled( false );
     _go_to_parent->setEnabled( false );
@@ -40,7 +38,6 @@ _SwStreamNavigationActions::~_SwStreamNavigationActions()
 {
     _provider_service->UnregisterProvidedInterface( "CurrentPath" );
     _provider_service->UnregisterProvidedInterface( "ActionGoToParent" );
-    delete _current_path_c;
     delete _current_path;
     delete _go_to_parent_c;
     delete _go_to_parent;
@@ -75,18 +72,6 @@ _SwStreamNavigationActions::_ActionContainer::_ActionContainer( QAction * action
 QAction & _SwStreamNavigationActions::_ActionContainer::GetAction()
 {
     return *_action;
-}
-//---------------------------------------------------------------------
-// internal class _WidgetContainer
-//---------------------------------------------------------------------
-/*! \brief Construction*/
-_SwStreamNavigationActions::_WidgetContainer::_WidgetContainer( QWidget * widget )
-{
-    _widget = widget;
-}/*! \brief Construction*/
-QWidget * _SwStreamNavigationActions::_WidgetContainer::GetWidget()
-{
-    return _widget;
 }
 //---------------------------------------------------------------------
 // Interface ISwObserver

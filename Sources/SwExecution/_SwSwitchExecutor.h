@@ -65,6 +65,9 @@ public:
     /*! \brief Execute le stream
     \return le resultat de l'operation */
 	virtual int StreamExecute();
+	/*! \brief Arrete l'execution du stream
+	\return le resultat de l'operation */
+	virtual int StreamStop();
     //----------------------------------------------------
     // Interface ISwExecutable
     //----------------------------------------------------

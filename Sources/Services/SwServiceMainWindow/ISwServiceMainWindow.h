@@ -19,8 +19,6 @@
  */
 #include "ISwService.h"
 
-using namespace StreamWork::SwCore;
-
 //Nom du service
 #define CG_SW_SERVICE_MAINWINDOW "ISwServiceMainWindow"
 
@@ -33,7 +31,7 @@ namespace StreamWork
         \interface ISwServiceMainWindow
         \brief permettant d'accéder a la mainWindow de l'application
         */
-        class ISwServiceMainWindow: virtual public ISwService
+        class ISwServiceMainWindow: virtual public StreamWork::SwCore::ISwService
 		{
         public:
 

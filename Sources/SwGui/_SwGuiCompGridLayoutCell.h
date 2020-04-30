@@ -8,17 +8,18 @@
 #define __SWGUICOMPGRIDLAYOUTCELL_H
 
 #include <QtCore>
+#include <QGridLayout>
+#include <QWidget>
 #include <Component.h>
-#include "ISwLayout.h"
-#include "ISwWidget.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
+
 /**
 @class _SwGuiCompGridLayoutCell
 @brief ComposantGridLayoutCell
 */
-class _SwGuiCompGridLayoutCell : public QObject{
+class _SwGuiCompGridLayoutCell : public QObject
+{
     Q_OBJECT
     Q_PROPERTY(unsigned int row READ getRow WRITE setRow)
     Q_PROPERTY(unsigned int column READ getColumn WRITE setColumn)
@@ -27,7 +28,7 @@ class _SwGuiCompGridLayoutCell : public QObject{
     Q_PROPERTY(Qt::Alignment alignment READ getAlignment WRITE setAlignment);
 public:
     /** @brief Constructor */
-    _SwGuiCompGridLayoutCell(int index,ISwProperties * propertiesAccess,ISwInterfaces_Consumer *consumerAccess,bool isLayout);
+    _SwGuiCompGridLayoutCell(int index,ISwProperties * propertiesAccess,ISwInterfaces_Consumer *consumerAccess);
     /** @brief Destructor */
     virtual ~_SwGuiCompGridLayoutCell();
     //Definition du grid layout
@@ -65,7 +66,6 @@ protected:
     
 private:
     QGridLayout * _glayout;
-    bool _isLayout;
     unsigned int _row;
     unsigned int _column;
     unsigned int _rowSpan;
@@ -74,9 +74,7 @@ private:
     ISwProperties * _propertiesAccess;
     ISwInterfaces_Consumer * _consumerAccess;
     bool _isBuild;
-    ISwLayout * _hLayout;
-    ISwWidget * _hWidget;
-
+    QWidget * _hWidget;
 };
 
 #endif

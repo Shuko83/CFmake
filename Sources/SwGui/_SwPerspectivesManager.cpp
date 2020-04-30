@@ -12,7 +12,6 @@ using namespace StreamWork::SwGui;
 #define CL_PERSPECTIVE_INTERFACE_NAME "Perspective_%1"
 #define CL_MARGIN 10
 
-
 /** @brief Constructor */
 _SwPerspectivesManager::_SwPerspectivesManager()
 {
@@ -39,7 +38,6 @@ _SwPerspectivesManager::~_SwPerspectivesManager()
     delete _properties_service;
     if( _mainWidget != NULL )
         delete _mainWidget;
-        
 }
 
 /*! \brief Initialisation des ressources
@@ -75,8 +73,8 @@ void _SwPerspectivesManager::InitializeResources() throw( SwException )
     _tabWidget->setLayout( _vlayout );
     _vlayout->addSpacerItem( new QSpacerItem( CG_PERSPECTIVE_BUTTON_SIZE, 0, QSizePolicy::Minimum, QSizePolicy::Expanding ) );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", ( ISwWidget * )this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _mainWidget );
     
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -221,15 +219,6 @@ void _SwPerspectivesManager::AfterInterfaceAvailabilityChange( QString interface
         }
         return;
     }
-}
-//---------------------------------------------------------------------
-// Interface ISwWidget
-//---------------------------------------------------------------------
-/*! \brief Renvoie le widget
-\return le widget */
-QWidget * StreamWork::SwGui::_SwPerspectivesManager::GetWidget()
-{
-    return _mainWidget;
 }
 /** @brief sur changement de l'activation d'une perspective*/
 void _SwPerspectivesManager::attachPerspective( ISwPerspective * perspective, int index )

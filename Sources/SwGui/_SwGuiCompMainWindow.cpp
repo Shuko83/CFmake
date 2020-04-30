@@ -197,16 +197,16 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
     if( !_useAsWidget )
         provideInterface<ISwMainWindow>( "MainWindow", ( ISwMainWindow * )this );
     else
-        provideInterface<ISwWidget>( "MainWindowAsWidget", ( ISwWidget * )this );
+        provideInterface<QWidget>( "MainWindowAsWidget", _mainWindow );
         
     //Central widget
-    consummeInterface<ISwWidget>( CL_CENTRALWIDGET_INTERFACE_NAME );
+    consummeInterface<QWidget>( CL_CENTRALWIDGET_INTERFACE_NAME );
     
-    //Exportation de l'interface ISwWidget
+    //Exportation de l'interface QWidget
     provideInterface<ISwEvent>( "ISwEvent", ( ISwEvent * )this );
     
     //Status bar
-    consummeInterface<ISwWidget>( STATUSBAR_INTERFACE );
+    consummeInterface<QWidget>( STATUSBAR_INTERFACE );
     
     //Enregistrement des propriétés
     createPropertiesForThisObject( QString(), true );
@@ -249,7 +249,7 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
         if( SW_APP->IsVerbose() )
             SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_widgets property\n" ) );
     }
-    _dockwidgets_nb_property->SetDescription( "Define how many ISwWidget interfaces this component accept" );
+    _dockwidgets_nb_property->SetDescription( "Define how many QWidget interfaces this component accept" );
     _dockwidgets_nb_property->SetValue( QVariant( _dockwidgets_nb ) );
     _dockwidgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
     
@@ -328,8 +328,8 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
         if( !_useAsWidget && boolval )
         {
             unprovideInterface( "MainWindow" );
-            //Exportation de l'interface ISwWidget
-            provideInterface<ISwWidget>( "MainWindowAsWidget", ( ISwWidget * )this );
+            //Exportation de l'interface QWidget
+            provideInterface<QWidget>( "MainWindowAsWidget", (QWidget * )this );
             _useAsWidget = boolval;
         }
         else if( _useAsWidget && !boolval )
@@ -473,7 +473,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
                 SwDockWidget_DockWidget * dock = new SwDockWidget_DockWidget();
                 createPropertiesForQObject( dock, interface_name, true );
                 _dockwidgets.insert( interface_name, dock );
-                consummeInterface<ISwWidget>( interface_name );
+                consummeInterface<QWidget>( interface_name );
             }
         }
         _dockwidgets_nb = val;
@@ -524,14 +524,6 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
 SwDockWidget_MainWindow & _SwGuiCompMainWindow::getMainWindow()
 {
     return *_mainWindow;
-}
-
-//-----------------------------------------------------------------------------
-/*! \brief Renvoie le widget
-\return le widget */
-QWidget * _SwGuiCompMainWindow::GetWidget()
-{
-    return ( dynamic_cast<QWidget *>( _mainWindow ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -643,9 +635,9 @@ void _SwGuiCompMainWindow::interfaceAvailable( QString interfaceName )
     //Central widget
     if( interfaceName == CL_CENTRALWIDGET_INTERFACE_NAME )
     {
-        ISwWidget * widget = getInterface<ISwWidget>( interfaceName );
+        QWidget * widget = getInterface<QWidget>( interfaceName );
         if( widget && _mainWindow )
-            _mainWindow->setMainWidget( widget->GetWidget(), _quitOnClose );
+            _mainWindow->setMainWidget( widget, _quitOnClose );
         return;
     }
     
@@ -653,10 +645,10 @@ void _SwGuiCompMainWindow::interfaceAvailable( QString interfaceName )
     QMap<QString, SwDockWidget_DockWidget *>::iterator dockwidget_it = _dockwidgets.find( interfaceName );
     if( dockwidget_it != _dockwidgets.end() && dockwidget_it.value() )
     {
-        ISwWidget * widget = getInterface<ISwWidget>( interfaceName );
+        QWidget * widget = getInterface<QWidget>( interfaceName );
         if( widget )
         {
-            dockwidget_it.value()->setWidget( widget->GetWidget() );
+            dockwidget_it.value()->setWidget( widget );
             _mainWindow->addDockWidget( dockwidget_it.value() );
         }
         return;
@@ -726,9 +718,9 @@ void _SwGuiCompMainWindow::interfaceAvailable( QString interfaceName )
     //Status bar
     if( interfaceName == STATUSBAR_INTERFACE )
     {
-        ISwWidget * widget = getInterface<ISwWidget>( interfaceName );
+		QWidget * widget = getInterface<QWidget>( interfaceName );
         if( widget && _mainWindow && _mainWindow->statusBar() )
-            _mainWindow->statusBar()->addPermanentWidget( widget->GetWidget(), 1 );
+            _mainWindow->statusBar()->addPermanentWidget( widget, 1 );
         return;
     }
 }
@@ -739,7 +731,7 @@ void _SwGuiCompMainWindow::interfaceUnavailable( QString interfaceName )
     //Central widget
     if( interfaceName == CL_CENTRALWIDGET_INTERFACE_NAME )
     {
-        ISwWidget * widget = getInterface<ISwWidget>( interfaceName );
+        QWidget * widget = getInterface<QWidget>( interfaceName );
         if( widget && _mainWindow )
             _mainWindow->setMainWidget( 0, _quitOnClose );
         return;
@@ -808,11 +800,11 @@ void _SwGuiCompMainWindow::interfaceUnavailable( QString interfaceName )
     //Status bar
     if( interfaceName == STATUSBAR_INTERFACE )
     {
-        ISwWidget * widget = getInterface<ISwWidget>( interfaceName );
-        if( widget && _mainWindow && _mainWindow->statusBar() && widget->GetWidget() )
+		QWidget * widget = getInterface<QWidget>( interfaceName );
+        if( widget && _mainWindow && _mainWindow->statusBar() )
         {
-            _mainWindow->statusBar()->removeWidget( widget->GetWidget() );
-            widget->GetWidget()->setParent( nullptr );
+            _mainWindow->statusBar()->removeWidget( widget );
+            widget->setParent( nullptr );
         }
         return;
     }

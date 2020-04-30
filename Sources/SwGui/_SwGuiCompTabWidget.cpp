@@ -11,11 +11,8 @@
 #include "_SwGuiCompTabWidget.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
-
 
 #define CL_WIDGET_INTERFACE_NAME QStringLiteral("Widget_%1")
-
 
 /*! \brief Constructeur */
 _SwGuiCompTabWidget::_SwGuiCompTabWidget() : SwComponent_Class(),
@@ -57,8 +54,8 @@ void _SwGuiCompTabWidget::InitializeResources() throw( SwException )
     this->RegisterService( _properties_service );
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", ( ISwWidget * )this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _tabWidget );
     
     
     //S'enregistrer comme observer du consumer
@@ -72,7 +69,7 @@ void _SwGuiCompTabWidget::InitializeResources() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QStringLiteral( "Fail to register nb_widgets property\n" ) );
     }
-    _widgets_nb_property->SetDescription( QStringLiteral( "Define how many ISwWidget interfaces this component accept" ) );
+    _widgets_nb_property->SetDescription( QStringLiteral( "Define how many QWidget interfaces this component accept" ) );
     _widgets_nb_property->SetValue( QVariant( _widgets_nb ) );
     _widgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompTabWidget::OnPropertyChange );
     
@@ -103,8 +100,8 @@ void _SwGuiCompTabWidget::OnPropertyChange( ISwProperty * property )
             for( uint i = _widgets_nb; i < val; i++ )
             {
                 interface_name = QString( CL_WIDGET_INTERFACE_NAME ).arg( i );
-                _widgets.insert( interface_name, ( ISwWidget * )NULL );
-                _consumer_service->RegisterConsumedInterface<ISwWidget>( interface_name, &_tmp_handle_widget );
+                _widgets.insert( interface_name, nullptr );
+                _consumer_service->RegisterConsumedInterface<QWidget>( interface_name, &_tmp_handle_widget );
             }
         }
         _widgets_nb = val;
@@ -116,87 +113,39 @@ void _SwGuiCompTabWidget::OnPropertyChange( ISwProperty * property )
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompTabWidget::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    QMap<QString, ISwWidget *>::iterator widget_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     //Si c'est un menu
     widget_it = _widgets.find( interface_name );
     if( widget_it != _widgets.end() )
     {
-        if( widget_it.value() && widget_it.value()->GetWidget() )
+        if( widget_it.value() )
         {
             //Et qu'il etait defini, on le detache de la widgetbar
-            //            int index=_tabWidget->indexOf(&widget_it.value()->GetWidget());
+            //            int index=_tabWidget->indexOf(&widget_it.value());
             //if(index>=0) {
             //_tabWidget->removeTab(index);
             //} else {
-            widget_it.value()->GetWidget()->setParent( nullptr );
+            widget_it.value()->setParent( nullptr );
             //}
-            //Si c'est un widget observable, on se mets en observer
-            ISwWidget2 * wo = dynamic_cast<ISwWidget2 *>( widget_it.value() );
-            if( wo != 0 )
-            {
-                wo->UnregisterISwWidgetObserver( this );
-            }
             //Fin
             widget_it.value() = nullptr;
         }
-        return;
     }
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompTabWidget::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    QMap<QString, ISwWidget *>::iterator widget_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     
     //Si c'est un widget
     widget_it = _widgets.find( interface_name );
     if( widget_it != _widgets.end() )
     {
-        if( widget_it.value() == nullptr && _tmp_handle_widget && _tmp_handle_widget->GetWidget() )
+        if( widget_it.value() == nullptr && _tmp_handle_widget )
         {
             //Et qu'il etait non defini, on l'enregistre et l'attache a la widgetbar
             widget_it.value() = _tmp_handle_widget;
-            _tabWidget->addTab( _tmp_handle_widget->GetWidget(), _tmp_handle_widget->GetWidget()->windowTitle() );
-            //Si c'est un widget observable, on se mets en observer
-            ISwWidget2 * wo = dynamic_cast<ISwWidget2 *>( _tmp_handle_widget );
-            if( wo != 0 )
-            {
-                wo->RegisterISwWidgetObserver( this );
-            }
+            _tabWidget->addTab( _tmp_handle_widget, _tmp_handle_widget->windowTitle() );
         }
-        return;
     }
 }
-//---------------------------------------------------------------------
-// Interface ISwWidget2
-//---------------------------------------------------------------------
-/*! \brief Renvoie le menu
-\return le menu */
-QWidget * _SwGuiCompTabWidget::GetWidget()
-{
-    return _tabWidget;
-}
-/** @brief Enregistrement de l'observer */
-void _SwGuiCompTabWidget::RegisterISwWidgetObserver( ISwWidget2_Observer * o )
-{
-    _wObservers.push_back( o );
-}
-/** @brief Desregistrement de l'observer */
-void _SwGuiCompTabWidget::UnregisterISwWidgetObserver( ISwWidget2_Observer * o )
-{
-    _wObservers.removeOne( o );
-}
-//---------------------------------------------------------------------
-// InterfaceISwWidget2_Observer
-//---------------------------------------------------------------------
-/** @brief mettre en avant le widget si c'est possible */
-void _SwGuiCompTabWidget::OnBringToFrontRequest( ISwWidget * w )
-{
-    int index = _tabWidget->indexOf( w->GetWidget() );
-    if( index >= 0 )
-        _tabWidget->setCurrentIndex( index );
-    for( int i = 0; i < _wObservers.count(); i++ )
-    {
-        _wObservers[i]->OnBringToFrontRequest( this );
-    }
-}
-

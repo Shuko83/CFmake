@@ -25,8 +25,6 @@
 #include "ISwShortcut.h"
 #include "ISwDevice.h"
 
-using namespace StreamWork::SwCore;
-
 //Nom du service
 #define CG_SW_SERVICE_SHORTCUTS "ServiceShortcuts"
 #define SC_SEP "¤¤SEP¤¤"

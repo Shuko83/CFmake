@@ -12,7 +12,6 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwWidget.h"
 #include "ISwPerspective.h"
 #include "_SwPerspectiveButton.h"
 
@@ -27,8 +26,7 @@ namespace StreamWork {
         @brief Perspectives Manager
         */
         class _SwPerspectivesManager: public SwComponent_Class,
-            public ISwInterfaces_ConsumerObserver,
-            public ISwWidget
+            public ISwInterfaces_ConsumerObserver
         {
             Q_OBJECT
         protected:
@@ -86,12 +84,6 @@ namespace StreamWork {
             virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
             /*! \brief Apres changement de la disponibilité de l'interface */
             virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-            //---------------------------------------------------------------------
-            // Interface ISwWidget
-            //---------------------------------------------------------------------
-            /*! \brief Renvoie le widget
-            \return le widget */
-            virtual QWidget * GetWidget();
             
         private:
             /** @brief sur changement de l'activation d'une perspective*/
@@ -110,8 +102,7 @@ namespace StreamWork {
             /** @brief sur changement de checked*/
             void onPerspectiveToggle( ISwPerspective * perspective, bool checked );
         };
-        
     }
-    
 }
+
 #endif

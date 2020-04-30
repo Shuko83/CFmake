@@ -21,6 +21,7 @@
 
 using namespace StreamWork::SwFoundation;
 using namespace StreamWork::SwGui;
+using namespace StreamWork::SwCore;
 
 /*!
 	\class _SwGuiCompListDockWidget 

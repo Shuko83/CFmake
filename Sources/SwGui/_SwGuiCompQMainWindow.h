@@ -25,7 +25,6 @@
 #include "ISwAction.h"
 #include "ISwToolBar.h"
 #include "ISwQDockWidget.h"
-#include "ISwWidget.h"
 #include "ISwShortcut.h"
 /*
   * INCLUDES LOCAUX
@@ -46,7 +45,6 @@ using namespace StreamWork::SwGui;
 class _SwGuiCompQMainWindow :   public Component,
     public QMainWindow,
     public ISwQMainWindow,
-    public ISwWidget,
     public ISwEvent,
     public ISwShortcut
 {
@@ -102,7 +100,7 @@ protected:
     ISwQDockWidget * _tmp_handle_dockwidget;
     // --- Central Widget ---
     /* widget central */
-    ISwWidget * _handle_central_widget;
+    QWidget * _handle_central_widget;
     /* choix du type d'interface Widget ou MainWindow*/
     bool _useAsWidget;
     /* propriété nombre d'actions*/
@@ -139,10 +137,6 @@ public:
     //---------------------------------------------------------------------
     virtual QMainWindow & GetMainWindow();
     //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    virtual QWidget * GetWidget();
-    //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
     virtual void eventBeforeInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host );
@@ -170,4 +164,5 @@ protected:
     
     bool _firstTimeRestore;    
 };
+
 #endif

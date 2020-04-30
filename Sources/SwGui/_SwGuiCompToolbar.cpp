@@ -13,10 +13,8 @@
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
-
 #define CL_ACTION_INTERFACE_NAME "Action_%1"
 #define CL_WIDGET_INTERFACE_NAME "Widget_%1"
-
 
 /*! \brief Constructeur */
 _SwGuiCompToolBar::_SwGuiCompToolBar(): SwComponent_Class(){
@@ -104,7 +102,7 @@ void _SwGuiCompToolBar::OnPropertyChange(ISwProperty * property) {
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompToolBar::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     QMap<QString,ISwAction *>::iterator action_it;
-    QMap<QString,ISwWidget *>::iterator widget_it;
+    QMap<QString, QWidget *>::iterator widget_it;
 
     //Si c'est une action
     action_it=_actions.find(interface_name);
@@ -114,13 +112,12 @@ void _SwGuiCompToolBar::BeforeInterfaceAvailabilityChange(QString interface_name
             //_toolbar->removeAction(&action_it.value()->GetAction());
             //action_it.value()=NULL;
         }
-        return;
     }
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompToolBar::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     QMap<QString,ISwAction *>::iterator action_it;
-    QMap<QString,ISwWidget *>::iterator widget_it;
+    QMap<QString, QWidget *>::iterator widget_it;
 
     //Si c'est une action
     action_it=_actions.find(interface_name);
@@ -141,4 +138,3 @@ void _SwGuiCompToolBar::AfterInterfaceAvailabilityChange(QString interface_name,
 QToolBar & _SwGuiCompToolBar::GetToolBar() {
     return *_toolbar;
 }
-

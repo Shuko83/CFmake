@@ -41,7 +41,7 @@ void SwDefaultPerspective::InitializeResources() throw(SwException) {
     this->RegisterService(_consumer_service);
     this->RegisterService(_provider_service);
 
-    //Exportation de l'interface ISwWidget
+    //Exportation de l'interface QWidget
     _provider_service->RegisterProvidedInterface<ISwPerspective>("Perspective",(ISwPerspective *)this);
 
     //S'enregistrer comme observer du consumer

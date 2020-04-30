@@ -22,7 +22,7 @@ _SwGuiVisualLogConsole::_SwGuiVisualLogConsole(): SwComponent_Class()
     _properties_service = NULL;
     _provider_service = NULL;
     _consumer_service = NULL;
-    mainWidget = 0;
+	_mainWidget = 0;
     _handleHttpServer = 0;
     QFile image( ":/SwGui/console.jpg" );
     image.open( QIODevice::ReadOnly );
@@ -39,7 +39,7 @@ _SwGuiVisualLogConsole::_SwGuiVisualLogConsole(): SwComponent_Class()
     //--------------------------------------
     //Autres
     //--------------------------------------
-    mainWidget = _SwConsoleWidget::buildScrollableConsole( 0, &logWidget );
+	_mainWidget = _SwConsoleWidget::buildScrollableConsole( 0, &logWidget );
     
 }
 /** @brief Destructeur */
@@ -61,7 +61,7 @@ _SwGuiVisualLogConsole::~_SwGuiVisualLogConsole()
     delete _properties_service;
     
     //DETRUIRE LES AUTRES ATTRIBUTS DE LA CLASSE
-    delete mainWidget;
+    delete _mainWidget;
 }
 /**
  * @brief Initialisation des ressources
@@ -85,12 +85,12 @@ void _SwGuiVisualLogConsole::InitializeResources() throw( SwException )
     //--------------------------------------
     //Definition Interfaces fournis
     //--------------------------------------
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "logConsole", ( ISwWidget * )this );
+    _provider_service->RegisterProvidedInterface<QWidget>( "logConsole", _mainWidget);
     
     //--------------------------------------
     //Definition Interfaces consommés
     //--------------------------------------
-    //Importation de l'interface ISwWidget
+    //Importation de l'interface QWidget
     _consumer_service->RegisterConsumedInterface<ISwHttpServer>( "HttpServer", &_handleHttpServer );
     
     //S'enregistrer comme observer du consumer
@@ -119,7 +119,7 @@ QColor _SwGuiVisualLogConsole::backgroundColor()
 void _SwGuiVisualLogConsole::setBackgroundColor( QColor color )
 {
     _backgroundColor = color;
-    mainWidget->setStyleSheet( QString( "color: %1;background-color: %2;" ).arg( _foregroundColor.name() ).arg( _backgroundColor.name() ) );
+	_mainWidget->setStyleSheet( QString( "color: %1;background-color: %2;" ).arg( _foregroundColor.name() ).arg( _backgroundColor.name() ) );
 }
 QColor _SwGuiVisualLogConsole::foregroundColor()
 {
@@ -128,7 +128,7 @@ QColor _SwGuiVisualLogConsole::foregroundColor()
 void _SwGuiVisualLogConsole::setForegroundColor( QColor color )
 {
     _foregroundColor = color;
-    mainWidget->setStyleSheet( QString( "color: %1;background-color: %2;" ).arg( _foregroundColor.name() ).arg( _backgroundColor.name() ) );
+	_mainWidget->setStyleSheet( QString( "color: %1;background-color: %2;" ).arg( _foregroundColor.name() ).arg( _backgroundColor.name() ) );
 }
 
 //---------------------------------------------------------------------
@@ -150,15 +150,6 @@ void _SwGuiVisualLogConsole::AfterInterfaceAvailabilityChange( QString interface
     {
         _handleHttpServer->registerHttpPart( this );
     }
-}
-//---------------------------------------------------------------------
-// Interface ISwWidget
-//---------------------------------------------------------------------
-/*! \brief Renvoie le widget
-\return le widget */
-QWidget * _SwGuiVisualLogConsole::GetWidget()
-{
-    return mainWidget ;
 }
 //---------------------------------------------------------------------
 // Interface ISwLogRecorder
@@ -200,7 +191,7 @@ void _SwGuiVisualLogConsole::RecordLog( TSw_Log_Level level, QString text )
         _liste.clear();
     }
     _mutex.unlock();
-    if( mainWidget->parentWidget() == 0 )
+    if( _mainWidget->parentWidget() == 0 )
         return;
     message = "";
     switch( level )
@@ -276,4 +267,3 @@ void _SwGuiVisualLogConsole::setMaxLine( int val )
     if( logWidget )
         logWidget->setMaxMessages( val );
 }
-

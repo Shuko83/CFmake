@@ -11,7 +11,6 @@
 #include "_SwGuiCompGroupBox.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*! \brief Constructeur */
 _SwGuiCompGroupBox::_SwGuiCompGroupBox(): SwComponent_Class()
@@ -20,7 +19,8 @@ _SwGuiCompGroupBox::_SwGuiCompGroupBox(): SwComponent_Class()
     _consumer_service = NULL;
     _properties_service = NULL;
     _groupBox = NULL;
-    _layout = NULL;
+	_layout = NULL;
+	_mainWidget = NULL;
 }
 
 /*! \brief Destructeur */
@@ -48,18 +48,17 @@ void _SwGuiCompGroupBox::InitializeResources() throw( SwException )
     
     //Creation de l'interface principale
     _groupBox = new QGroupBox();
-    
+	_layout = new QVBoxLayout(_groupBox);
     //Enregistrement des services
     this->RegisterService( _properties_service );
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _groupBox);
     
     //Consomme un layout
-    _consumer_service->RegisterConsumedInterface<ISwLayout>( "Layout",
-            &_layout );
+    _consumer_service->RegisterConsumedInterface<QWidget>( "MainWidget", &_mainWidget );
             
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -84,9 +83,9 @@ void _SwGuiCompGroupBox::BeforeInterfaceAvailabilityChange( QString interface_na
         SwComponent_Class * provider_host )
 {
     //Si c'est un layout
-    if( _layout != NULL )
+    if(_mainWidget != NULL )
     {
-        _layout->LiberateLayout();
+		_layout->removeWidget(_mainWidget);
     }
     
 }
@@ -94,18 +93,8 @@ void _SwGuiCompGroupBox::BeforeInterfaceAvailabilityChange( QString interface_na
 void _SwGuiCompGroupBox::AfterInterfaceAvailabilityChange( QString interface_name,
         SwComponent_Class * provider_host )
 {
-    if( interface_name == "Layout" && _layout != 0 )
+    if( interface_name == "MainWidget" && _mainWidget != 0 )
     {
-        _groupBox->setLayout( &_layout->GetLayout() );
+		_layout->addWidget(_mainWidget);
     }
 }
-//---------------------------------------------------------------------
-// Interface ISwMainWindow
-//---------------------------------------------------------------------
-/*! \brief Renvoie le menu
-\return le menu */
-QWidget * _SwGuiCompGroupBox::GetWidget()
-{
-    return _groupBox;
-}
-

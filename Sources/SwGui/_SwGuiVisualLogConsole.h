@@ -21,7 +21,6 @@
 #include <SwInterfaces_Provider_Class.h>
 #include <SwInterfaces_Consumer_Class.h>
 #include <ISwLogRecorder.h>
-#include <ISwWidget.h>
 #include <QTextEdit>
 #include <ISwHttpServer.h>
 #include <ISwHttpPart.h>
@@ -29,7 +28,6 @@
 #include <QMutex>
 #include <QColor>
 #include "_SwConsoleWidget.h"
-
 
 //Check namespace needed (for exemple ISwAction need namespace StreamWork::SwGui)
 using namespace StreamWork::SwCore;
@@ -41,7 +39,6 @@ using namespace StreamWork::SwGui;
  */
 class _SwGuiVisualLogConsole : public SwComponent_Class,
     public ISwInterfaces_ConsumerObserver,
-    public ISwWidget,
     public ISwLogRecorder,
     public ISwHttpPart
 {
@@ -49,8 +46,8 @@ class _SwGuiVisualLogConsole : public SwComponent_Class,
     Q_PROPERTY( QColor backgroundColor READ backgroundColor WRITE setBackgroundColor )
     Q_PROPERTY( QColor foregroundColor READ foregroundColor WRITE setForegroundColor )
     Q_PROPERTY( int    maxLine         READ getMaxLine      WRITE setMaxLine )
-protected:
 
+protected:
     //--------------------------------------------------------------
     //Services
     //--------------------------------------------------------------
@@ -64,7 +61,7 @@ protected:
     //Widget
     //--------------------------------------------------------------
     //WidgetCentral
-    QWidget * mainWidget;
+    QWidget * _mainWidget;
     //LogWidget
     _SwConsoleWidget * logWidget;
     //--------------------------------------------------------------
@@ -81,7 +78,6 @@ protected:
     QColor _backgroundColor;
     QColor _foregroundColor;
     int _maxLine;
-    
     
 public:
     /** @brief Constructeur */
@@ -110,12 +106,6 @@ public:
     /** @brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
-    //---------------------------------------------------------------------
     // Interface ISwLogRecorder
     //---------------------------------------------------------------------
     /*! \brief Methode de log */
@@ -130,9 +120,6 @@ public:
         QMap<QString, QString> * parameters,
         QByteArray * body,
         QIODevice * device );
-        
 };
+
 #endif
-//------------------------------------------------------
-//DO NOT WRITE ANY CODE AFTER THIS POINT
-//------------------------------------------------------

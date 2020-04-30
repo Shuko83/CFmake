@@ -22,7 +22,6 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwWidget.h"
 #include "ISwQAbstractItemViewSlots.h"
 #include "_SwQAbstractItemViewSlots_Catcher.h"
 #include <QAbstractItemModel>
@@ -35,7 +34,7 @@ using namespace StreamWork::SwGui;
     \class _SwGuiCompTreeView
     \brief Implementation of the Class _SwGuiCompTreeView generant un QTreeView pour un modele fournit
 */
-class _SwGuiCompTreeView : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget
+class _SwGuiCompTreeView : public SwComponent_Class, public ISwInterfaces_ConsumerObserver
 {
 protected:
     /* TreeView */
@@ -70,12 +69,7 @@ public:
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     /*! \brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-          \return le widget */
-    virtual QWidget * GetWidget();
-    
+
 };
+
 #endif

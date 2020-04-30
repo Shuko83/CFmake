@@ -7,16 +7,11 @@
 #ifndef _STREAMWORK_SWGUI__SWBASICPERSPECTIVE_H
 #define _STREAMWORK_SWGUI__SWBASICPERSPECTIVE_H
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#else
-#include <QtGui>
-#endif
 
 #include "SwDefaultPerspective.h"
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwWidget.h"
 
 using namespace StreamWork::SwCore;
 
@@ -32,13 +27,13 @@ namespace StreamWork {
             Q_OBJECT
         private:
             /** @brief header */
-            ISwWidget * _wHeader;
+            QWidget * _wHeader;
             /** @brief part high */
-            ISwWidget * _wHighPart;
+			QWidget * _wHighPart;
             /** @brief part low */
-            ISwWidget * _wLowPart;
+			QWidget * _wLowPart;
             /** @brief footer */
-            ISwWidget * _wFooter;
+			QWidget * _wFooter;
             /** @brief splitter du milieu */
             QSplitter * _splitter;
             /** @brief box layout */
@@ -81,10 +76,8 @@ namespace StreamWork {
             virtual bool isPerspectiveEnabled();
 			/** @brief changement de proprietes */
 			void OnPropertyChange(ISwProperty * property);
-
         };
-
     }
-    
 }
+
 #endif

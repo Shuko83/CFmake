@@ -14,7 +14,6 @@
 #include "SwException.h"
 #include "SwCoreConstantes.h"
 #include "ISwExecutor.h"
-#include "ISwExecutor2.h"
 #include "ISwPluginsBank.h"
 #include "ISwComplexeTypeAdaptersFactoriesBank.h"
 #include "SwServicesManager_Class.h"
@@ -45,8 +44,6 @@ namespace StreamWork
         #include <exception>
         #include <SwApplication>
         #include <SwMacros>
-
-        using namespace StreamWork::SwCore;
 
         int main(int argc,char **argv) {
             QApplication app(argc,argv);
@@ -139,7 +136,7 @@ namespace StreamWork
             /*! \brief Handle sur l'executeur (Que pour les applications consoles)*/
             ISwExecutor * _executor;
             /*! \brief Handle sur l'executeur2 (Que pour les applications consoles)*/
-            ISwExecutor2 * _executor2;
+            ISwExecutor * _executor2;
             /*! \brief QSet des stream */
             QSet<SwComponent_ClassPtr> _streams;
             /*! \brief iterateur de parcours sur la QMap du stream */

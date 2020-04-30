@@ -1,6 +1,6 @@
 /**
  * @file SwGuiQActionToWidget2.h
- * @brief Composant qui consomme un ISwAction et une ISwWidget et qui, sur le triggered de l'action
+ * @brief Composant qui consomme un ISwAction et une QWidget et qui, sur le triggered de l'action
  *        ouvre ou ferme le widget associé.
  *        Le Widget n'est pas encapsulé
  * @version 1.0
@@ -8,25 +8,20 @@
  * @author  CGD
  */
 
-
 #include <SwApplication.h>
 #include "_SwGuiQActionConsumedToWidget.h"
 #include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
 
-
-
 //-------------------------------------------------------------------------
 _SwGuiQActionConsumedToWidget::_SwGuiQActionConsumedToWidget(): Component()
 {
-    _i_Widget = NULL;
     _widget = NULL;
     _i_Action = NULL;
     _action = NULL;
     
     _isVisible = false;
-    
     
     isMoved = false;
 }
@@ -42,7 +37,7 @@ _SwGuiQActionConsumedToWidget::~_SwGuiQActionConsumedToWidget()
 void _SwGuiQActionConsumedToWidget::initializeComponent() throw( SwException )
 {
     getIConsumerService().RegisterConsumedInterface<ISwAction>( "Action", &_i_Action );
-    getIConsumerService().RegisterConsumedInterface<ISwWidget>( "Widget", &_i_Widget );
+    getIConsumerService().RegisterConsumedInterface<QWidget>( "Widget", &_widget);
     
     getPropertiesService().CreatePropertiesForQObject( this, "", true );
 }
@@ -60,9 +55,8 @@ void _SwGuiQActionConsumedToWidget::eventBeforeInterfaceAvailability( QString in
 //-------------------------------------------------------------------------
 void _SwGuiQActionConsumedToWidget::eventAfterInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
 {
-    if( interface_name == "Widget"  &&  _i_Widget )
+    if( interface_name == "Widget"  &&  _widget)
     {
-        _widget = _i_Widget->GetWidget();
         
         // Récupération de la fenêtre parente du widget concerné
         topParent = qobject_cast<QWidget *>( parent() );
@@ -75,13 +69,6 @@ void _SwGuiQActionConsumedToWidget::eventAfterInterfaceAvailability( QString int
                 break;
         }
     }
-    else
-    {
-        if( _i_Widget == 0 )
-        {
-            _widget = 0;
-        }
-    }
     
     if( ( interface_name == "Action" ) && ( _i_Action != 0 ) )
     {
@@ -92,8 +79,6 @@ void _SwGuiQActionConsumedToWidget::eventAfterInterfaceAvailability( QString int
         }
     }
 }
-
-
 
 //-------------------------------------------------------------------------
 void _SwGuiQActionConsumedToWidget::ManageAction()
@@ -117,7 +102,6 @@ void _SwGuiQActionConsumedToWidget::ManageAction()
         }
     }
 }
-
 
 //-------------------------------------------------------------------------
 void _SwGuiQActionConsumedToWidget::MoveCenter()

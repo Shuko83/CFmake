@@ -20,6 +20,7 @@
 /**
  * Namespace
  */
+using namespace StreamWork::SwCore;
 
 //-------------------------------------------------------------------------
 _SwServiceShortcuts::_SwServiceShortcuts() : _isConfigurationMode(false)

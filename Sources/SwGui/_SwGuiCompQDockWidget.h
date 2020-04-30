@@ -20,10 +20,7 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwWidget.h"
-#include "ISwLayout.h"
 #include "ISwQDockWidget.h"
-
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -48,7 +45,7 @@ protected:
     /* service de gestion des propriétés */
     SwProperties_Class * _properties_service;
     /* interface widget a consommée */
-    ISwWidget * _handle_widget;
+    QWidget * _handle_widget;
 	/* Force floating because in Qt, the floating is true until the dock is parent */
 	bool _forceFloating;
 	bool _showTitleBar;
@@ -84,4 +81,5 @@ public:
 	bool getShowTitleBar();
 	void setShowTitleBar(bool val);
 };
+
 #endif 

@@ -6,7 +6,6 @@
  * @author ATN
  */
 
-
 #include <SwApplication.h>
 #include <SwMacros.h>
 #include "_SwGuiQActionToWidget.h"
@@ -15,14 +14,10 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-
-
-
 //-----------------------------------------------------------------------
 _SwGuiQActionToWidget::_SwGuiQActionToWidget() : Component(), _action( 0 )
 {
     //RESET Interfaces
-    _i_Widget = NULL; /* Remplacer null par le bon handle pour les interfaces fournies */
     _widget = NULL;
     _hostWidget = new _SwContainerCloseableWidget( 0 );
     connect( _hostWidget, SIGNAL( onClose() ), this, SLOT( ManageWidget() ) );
@@ -54,12 +49,10 @@ _SwGuiQActionToWidget::~_SwGuiQActionToWidget()
     delete _hostWidget;
 }
 
-
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::initializeComponent() throw( SwException )
 {
     QVariant tmp;
-    
     
     //--------------------------------------
     //Definition Interfaces fournis
@@ -68,7 +61,7 @@ void _SwGuiQActionToWidget::initializeComponent() throw( SwException )
     //--------------------------------------
     //Definition Interfaces consommés
     //--------------------------------------
-    getIConsumerService().RegisterConsumedInterface<ISwWidget>( "Widget", &_i_Widget );
+    getIConsumerService().RegisterConsumedInterface<QWidget>( "Widget", &_widget);
     
     //--------------------------------------
     //Definition Pins
@@ -84,8 +77,7 @@ void _SwGuiQActionToWidget::initializeComponent() throw( SwException )
     //--------------------------------------
     //Autres
     //--------------------------------------
-    
-    
+
 }
 
 //-----------------------------------------------------------------------
@@ -101,16 +93,12 @@ void _SwGuiQActionToWidget::eventBeforeInterfaceAvailability( QString interface_
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::eventAfterInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
 {
-    if( interface_name == "Widget" && _i_Widget )
+    if( interface_name == "Widget" && _widget)
     {
-        _widget = _i_Widget->GetWidget();
         _hostWidget->setContainedWidget( _widget );
     }
     else
     {
-        if( _i_Widget == nullptr )
-            _widget = nullptr;
-            
         _hostWidget->setContainedWidget( nullptr );
         _hostWidget->hide();
     }
@@ -122,13 +110,11 @@ QAction & _SwGuiQActionToWidget::GetAction()
     return _action;
 }
 
-
 //-----------------------------------------------------------------------
 QString _SwGuiQActionToWidget::getShowName()
 {
     return _showName;
 }
-
 
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::setShowName( QString name )
@@ -140,13 +126,11 @@ void _SwGuiQActionToWidget::setShowName( QString name )
     }
 }
 
-
 //-----------------------------------------------------------------------
 QString _SwGuiQActionToWidget::getHiddenName()
 {
     return _hiddenName;
 }
-
 
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::setHiddenName( QString name )
@@ -157,7 +141,6 @@ void _SwGuiQActionToWidget::setHiddenName( QString name )
         _action.setText( _hiddenName );
     }
 }
-
 
 //-----------------------------------------------------------------------
 _SwGuiQActionToWidget::WindowFlag _SwGuiQActionToWidget::getFlag()
@@ -172,7 +155,6 @@ _SwGuiQActionToWidget::WindowFlag _SwGuiQActionToWidget::getFlag()
         return WIDGET;
     }
 }
-
 
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::setFlag( _SwGuiQActionToWidget::WindowFlag flag )
@@ -212,8 +194,6 @@ void _SwGuiQActionToWidget::setStayOnTop( bool val )
     _hostWidget->setVisible( visible );
 }
 
-
-
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::ManageAction()
 {
@@ -242,15 +222,12 @@ void _SwGuiQActionToWidget::ManageAction()
     }
 }
 
-
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::ManageWidget()
 {
     _isVisible = false;
     _action.setChecked( _isVisible );
 }
-
-
 
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::MoveCenter()

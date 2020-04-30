@@ -22,18 +22,14 @@
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
 #include <SwEnum.h>
-#include "ISwLayout.h"
-#include "ISwWidget.h"
-
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*!
     \class _SwGuiCompWidget
     \brief _SwGuiCompWidget generant un QWidget
 */
-class _SwGuiCompWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget
+class _SwGuiCompWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver
 {
     Q_OBJECT
     Q_PROPERTY( Qt::WindowFlags SwWindowFlag READ windowFlags WRITE setWindowFlags );
@@ -63,16 +59,11 @@ protected:
     /* propriété nombre de widgets */
     ISwProperty * _widgets_nb_property;
     /* map des interfaces widgets*/
-    QMap<QString, ISwWidget *> _widgets;
+    QMap<QString, QWidget *> _widgets;
     /* handle temporaire d'interface widget*/
-    ISwWidget * _tmp_handle_widget;
+	QWidget * _tmp_handle_widget;
     /* integer indiquant le nombre de widgets en gestion directe */
     uint _registered_widgets_nb;
-    // --- Layout ---
-    /* interface layout a consommée */
-    ISwLayout * _handle_layout;
-    /* Flag indiquant une gestion par un layout */
-    bool _is_layout_mode;
     
 public:
     /*! \brief Constructeur */
@@ -92,13 +83,6 @@ public:
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     /*! \brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    //---------------------------------------------------------------------
-    // Interface ISwWidget
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
-    
     
     Qt::WindowFlags windowFlags();
     void setWindowFlags( Qt::WindowFlags );
@@ -106,4 +90,5 @@ private:
     void showChanged();
     
 };
+
 #endif

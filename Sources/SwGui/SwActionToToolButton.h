@@ -9,14 +9,11 @@
 #ifndef SWGUI_SWACTIONTOTOOLBUTTON_H
 #define SWGUI_SWACTIONTOTOOLBUTTON_H
 
-
 /*
 * INCLUDES LOCAUX
 */
 #include "SwAssistedComponent.h"
 #include <QToolButton>
-#include "ISwWidget.h"
-
 
 namespace StreamWork {
     namespace SwGui {
@@ -24,11 +21,10 @@ namespace StreamWork {
         *   @class SwActionToToolButton
         *   @brief
         */
-        class SwActionToToolButton : public StreamWork::SwFoundation::SwAssistedComponent, public ISwWidget
+        class SwActionToToolButton : public StreamWork::SwFoundation::SwAssistedComponent
         {
             Q_OBJECT
         public:
-        
             /*! \brief Constructeur */
             SwActionToToolButton();
             
@@ -39,8 +35,7 @@ namespace StreamWork {
             * @brief    : Initialisation du composant
             * @note  : A surcharger
             */
-            virtual void initializeComponent() throw( SwException );
-            
+            virtual void initializeComponent() throw(StreamWork::SwCore::SwException );
             
             //----------------------------------------------------
             // Interface de consomation d'interfaces
@@ -58,13 +53,6 @@ namespace StreamWork {
             */
             virtual void interfaceUnavailable( QString interface_name );
             
-            //---------------------------------------------------------------------
-            // Interface ISwWidget
-            //---------------------------------------------------------------------
-            /*! \brief Renvoie le widget
-            \return le widget */
-            virtual QWidget * GetWidget();
-            
         protected slots:
             /**
             * @brief    : Update visibility's ToolButton
@@ -72,12 +60,9 @@ namespace StreamWork {
             void updateVisibilityAction();
             
         private:
-            QToolButton  _toolButton;
-            
+            QToolButton*  _toolButton;
         };
     }
 }
-
-
 
 #endif

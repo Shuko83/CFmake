@@ -6,8 +6,6 @@
 #include "ISwServicesManager_Listener.h"
 #include "SwApplication.h"
 
-using namespace StreamWork::SwCore;
-
 template <typename SERVICE_TYPE>
 class SwServiceManager_Helper : public StreamWork::SwCore::ISwServicesManager_Listener
 {

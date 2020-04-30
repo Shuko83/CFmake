@@ -58,8 +58,8 @@ void _SwGuiCompDockWidget::InitializeResources() throw( SwException )
     //Exportation de l'interface ISwQDockWidget
     _provider_service->RegisterProvidedInterface<ISwDockWidget>( "DockWidget", ( ISwDockWidget * )this );
     
-    //Importation des interfaces ISwWidget et ISwLayout (exclusif)
-    _consumer_service->RegisterConsumedInterface<ISwWidget>( "Widget", &_handle_widget );
+    //Importation des interfaces QWidget et ISwLayout (exclusif)
+    _consumer_service->RegisterConsumedInterface<QWidget>( "Widget", &_handle_widget );
     
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -80,7 +80,7 @@ void _SwGuiCompDockWidget::BeforeInterfaceAvailabilityChange( QString interface_
     if(_dockwidget && _handle_widget )
     {
         _dockwidget->setWidget( nullptr );
-        //_handle_widget->GetWidget().setParent(NULL);
+        //_handle_widget.setParent(NULL);
     }
 }
 
@@ -89,7 +89,7 @@ void _SwGuiCompDockWidget::AfterInterfaceAvailabilityChange( QString interface_n
 {
     if(_dockwidget && _handle_widget )
     {
-        _dockwidget->setWidget( _handle_widget->GetWidget() );
+        _dockwidget->setWidget( _handle_widget );
     }
 }
 

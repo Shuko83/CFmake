@@ -22,11 +22,7 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwLayout.h"
-#include "ISwWidget2.h"
-#include "ISwWidget2_Observer.h"
 #include "ISwStackedWidget_Controler.h"
-
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -35,7 +31,7 @@ using namespace StreamWork::SwGui;
     \class _SwGuiCompStackedWidget
     \brief _SwGuiCompStackedWidget generant un QWidget
 */
-class _SwGuiCompStackedWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget2, public ISwWidget2_Observer, public ISwStackedWidget_Controler
+class _SwGuiCompStackedWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwStackedWidget_Controler
 {
 protected:
     /* menu */
@@ -59,13 +55,12 @@ protected:
     ISwProperty * _stackedWidgets_current_index_page;
     
     /* map des interfaces widgets*/
-    QMap<QString, ISwWidget *> _widgets;
+    QMap<QString, QWidget *> _widgets;
     
     /* handle temporaire d'interface widget*/
-    ISwWidget * _tmp_handle_widget;
+	QWidget * _tmp_handle_widget;
     
     /* liste des observers */
-    QList<ISwWidget2_Observer *> _wObservers;
     QList<ISwStackedWidget_Observer *> _wStackedWidgetsObservers;
     
 public:
@@ -87,23 +82,6 @@ public:
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     /*! \brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    
-    //---------------------------------------------------------------------
-    // Interface ISwWidget2
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
-    /** @brief Enregistrement de l'observer */
-    virtual void RegisterISwWidgetObserver( ISwWidget2_Observer * o );
-    /** @brief Desregistrement de l'observer */
-    virtual void UnregisterISwWidgetObserver( ISwWidget2_Observer * o );
-    
-    //---------------------------------------------------------------------
-    // InterfaceISwWidget2_Observer
-    //---------------------------------------------------------------------
-    /** @brief mettre en avant le widget si c'est possible */
-    virtual void OnBringToFrontRequest( ISwWidget * w );
     
     //---------------------------------------------------------------------
     // ISwStackedWidget_Controler
@@ -147,4 +125,5 @@ public:
     /*! \brief Permet de notifier les observers */
     void notifyObserver();
 };
+
 #endif

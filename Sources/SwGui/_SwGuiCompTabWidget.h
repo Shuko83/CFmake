@@ -22,19 +22,14 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwLayout.h"
-#include "ISwWidget2.h"
-#include "ISwWidget2_Observer.h"
-
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*!
     \class _SwGuiCompTabWidget
     \brief _SwGuiCompTabWidget generant un QWidget
 */
-class _SwGuiCompTabWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver, public ISwWidget2, public ISwWidget2_Observer
+class _SwGuiCompTabWidget : public SwComponent_Class, public ISwInterfaces_ConsumerObserver
 {
 protected:
     /* menu */
@@ -51,11 +46,9 @@ protected:
     /* propriété nombre de widgets */
     ISwProperty * _widgets_nb_property;
     /* map des interfaces widgets*/
-    QMap<QString, ISwWidget *> _widgets;
+    QMap<QString, QWidget *> _widgets;
     /* handle temporaire d'interface widget*/
-    ISwWidget * _tmp_handle_widget;
-    /* liste des observers */
-    QList<ISwWidget2_Observer *> _wObservers;
+	QWidget * _tmp_handle_widget;
 public:
     /*! \brief Constructeur */
     _SwGuiCompTabWidget();
@@ -74,21 +67,6 @@ public:
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     /*! \brief Apres changement de la disponibilité de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    //---------------------------------------------------------------------
-    // Interface ISwWidget2
-    //---------------------------------------------------------------------
-    /*! \brief Renvoie le widget
-    \return le widget */
-    virtual QWidget * GetWidget();
-    /** @brief Enregistrement de l'observer */
-    virtual void RegisterISwWidgetObserver( ISwWidget2_Observer * o );
-    /** @brief Desregistrement de l'observer */
-    virtual void UnregisterISwWidgetObserver( ISwWidget2_Observer * o );
-    //---------------------------------------------------------------------
-    // InterfaceISwWidget2_Observer
-    //---------------------------------------------------------------------
-    /** @brief mettre en avant le widget si c'est possible */
-    virtual void OnBringToFrontRequest( ISwWidget * w );
-    
 };
+
 #endif

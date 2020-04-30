@@ -3,13 +3,16 @@
 SwConfPushButton::SwConfPushButton()
     : _swServiceConfigurationHelper(CG_SW_SERVICE_SAVECONFIGURATION)
 	, _confName("")
+	, _pb(new QPushButton())
 {
-    connect( &_pb, &QPushButton::clicked, this, &SwConfPushButton::onClicked );
+    connect( _pb, &QPushButton::clicked, this, &SwConfPushButton::onClicked );
 }
 
 SwConfPushButton::~SwConfPushButton()
 {
-    unprovideInterface( "ISwWidget" );
+    unprovideInterface( "Widget" );
+
+	delete _pb;
 }
 
 void SwConfPushButton::onClicked()
@@ -23,11 +26,6 @@ void SwConfPushButton::onClicked()
 void SwConfPushButton::initializeComponent()
 {
     createPropertiesForThisObject();
-    createPropertiesForQObject( &_pb, "QPushButton" );
-    provideInterface<ISwWidget>( "ISwWidget", this );
-}
-
-QWidget * SwConfPushButton::GetWidget()
-{
-    return &_pb;
+    createPropertiesForQObject( _pb, "QPushButton" );
+    provideInterface<QWidget>( "Widget", _pb);
 }

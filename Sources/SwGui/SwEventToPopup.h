@@ -21,6 +21,7 @@
 #include "ISwQMainWindow.h"
 
 
+using namespace StreamWork::SwCore;
 using namespace StreamWork::SwFoundation;
 using namespace StreamWork::SwGui;
 

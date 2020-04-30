@@ -4,7 +4,6 @@
 #include "ISwServiceConfiguration.h"
 #include "SwServiceManager_Helper.h"
 #include "SwAssistedComponent.h"
-#include "ISwWidget.h"
 
 // Push Button
 
@@ -14,11 +13,10 @@
 
 //Du moment qu'on a ajouté un confCollector
 
-class SwConfPushButton : public StreamWork::SwFoundation::SwAssistedComponent, public  StreamWork::SwGui::ISwWidget
+class SwConfPushButton : public StreamWork::SwFoundation::SwAssistedComponent
 {
     Q_OBJECT
     Q_PROPERTY( QString confName READ getConfName WRITE setConfName )
-    
 public:
     SwConfPushButton();
     ~SwConfPushButton();
@@ -28,14 +26,11 @@ public:
     QString getConfName() const { return _confName; }
     void setConfName( QString val ) { _confName = val; }
     
-    QWidget * GetWidget();
-    
 public slots:
     void onClicked();
     
-    
 private:
-    QPushButton _pb;
+    QPushButton* _pb;
     
     //Service de conf
     SwServiceManager_Helper<ISwServiceConfiguration> _swServiceConfigurationHelper;

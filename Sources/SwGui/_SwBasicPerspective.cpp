@@ -41,10 +41,10 @@ void _SwBasicPerspective::InitializeResources() throw( SwException )
 {
     SwDefaultPerspective::InitializeResources();
     
-    _consumer_service->RegisterConsumedInterface<ISwWidget>( "header", &_wHeader );
-    _consumer_service->RegisterConsumedInterface<ISwWidget>( "highPart", &_wHighPart );
-    _consumer_service->RegisterConsumedInterface<ISwWidget>( "lowPart", &_wLowPart );
-    _consumer_service->RegisterConsumedInterface<ISwWidget>( "footer", &_wFooter );
+    _consumer_service->RegisterConsumedInterface<QWidget>( "header", &_wHeader );
+	_consumer_service->RegisterConsumedInterface<QWidget>("highPart", &_wHighPart);
+	_consumer_service->RegisterConsumedInterface<QWidget>("lowPart", &_wLowPart);
+    _consumer_service->RegisterConsumedInterface<QWidget>( "footer", &_wFooter );
     
     _splitter = new QSplitter( Qt::Vertical );
     _layout = new QVBoxLayout();
@@ -81,29 +81,29 @@ void _SwBasicPerspective::BeforeInterfaceAvailabilityChange( QString interface_n
 {
     if( _enabledPerspective )
     {
-        if( _wHeader && _wHeader->GetWidget() && interface_name == "header" )
+        if( _wHeader && interface_name == "header" )
         {
             if( _isCurrent )
-                _wHeader->GetWidget()->setParent( nullptr );
+                _wHeader->setParent( nullptr );
         }
-        else if( _wHighPart && _wHeader->GetWidget() && interface_name == "highPart" )
+        else if( _wHighPart && interface_name == "highPart" )
         {
             if( _wLowPart == 0 )
                 _enabledPerspective = false;
             if( _isCurrent )
-                _wHighPart->GetWidget()->setParent( nullptr );
+                _wHighPart->setParent( nullptr );
         }
-        else if( _wLowPart && _wLowPart->GetWidget() && interface_name == "lowPart" )
+        else if( _wLowPart && interface_name == "lowPart" )
         {
             if( _wHighPart == 0 )
                 _enabledPerspective = false;
             if( _isCurrent )
-                _wLowPart->GetWidget()->setParent( nullptr );
+                _wLowPart->setParent( nullptr );
         }
-        else if( _wFooter && _wFooter->GetWidget() && interface_name == "footer" )
+        else if( _wFooter && interface_name == "footer" )
         {
             if( _isCurrent )
-                _wFooter->GetWidget()->setParent( nullptr );
+                _wFooter->setParent( nullptr );
         }
         if( !_enabledPerspective )
         {
@@ -157,38 +157,38 @@ void _SwBasicPerspective::buildPerspectiveView( QWidget * widget )
     _layout->addWidget( _mtitle );
     if( _wHeader )
     {
-        _layout->addWidget( ( _wHeader->GetWidget() ) );
+        _layout->addWidget( ( _wHeader ) );
     }
     if( _wHighPart  && _wLowPart )
     {
-        _splitter->addWidget( ( _wHighPart->GetWidget() ) );
-        _splitter->addWidget( ( _wLowPart->GetWidget() ) );
+        _splitter->addWidget( ( _wHighPart ) );
+        _splitter->addWidget( ( _wLowPart ) );
         _layout->addWidget( _splitter );
     }
     else
     {
         if( _wHighPart )
         {
-            _layout->addWidget( ( _wHighPart->GetWidget() ) );
+            _layout->addWidget( ( _wHighPart ) );
         }
         if( _wLowPart )
         {
-            _layout->addWidget( ( _wLowPart->GetWidget() ) );
+            _layout->addWidget( ( _wLowPart ) );
         }
     }
     if( _wFooter )
     {
-        _layout->addWidget( ( _wFooter->GetWidget() ) );
+        _layout->addWidget( ( _wFooter ) );
     }
     widget->setLayout( _layout );
     _isCurrent = true;
-    if( _wHighPart && _wHighPart->GetWidget() )
+    if( _wHighPart )
     {
-        _wHighPart->GetWidget()->setVisible( true );
+        _wHighPart->setVisible( true );
     }
-    if( _wLowPart && _wHighPart->GetWidget() )
+    if( _wLowPart && _wHighPart )
     {
-        _wLowPart->GetWidget()->setVisible( true );
+        _wLowPart->setVisible( true );
     }
     
 }
@@ -197,16 +197,16 @@ void _SwBasicPerspective::destroyPerspectiveView( QWidget * widget )
 {
     _isCurrent = false;
     delete _mtitle;
-    if( _wHeader && _wHeader->GetWidget() )
-        _wHeader->GetWidget()->setParent( nullptr );
+    if( _wHeader )
+        _wHeader->setParent( nullptr );
     if( _splitter )
         _splitter->setParent( nullptr );
-    if( _wHighPart && _wHighPart->GetWidget() )
-        _wHighPart->GetWidget()->setParent( nullptr );
-    if( _wLowPart && _wLowPart->GetWidget() )
-        _wLowPart->GetWidget()->setParent( nullptr );
-    if( _wFooter && _wFooter->GetWidget() )
-        _wFooter->GetWidget()->setParent( nullptr );
+    if( _wHighPart )
+        _wHighPart->setParent( nullptr );
+    if( _wLowPart )
+        _wLowPart->setParent( nullptr );
+    if( _wFooter )
+        _wFooter->setParent( nullptr );
     delete _layout;
     _layout = new QVBoxLayout();
     _layout->setMargin( 1 );

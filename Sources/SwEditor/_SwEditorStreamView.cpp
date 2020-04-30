@@ -12,9 +12,7 @@
 #include <QRectF>
 #include <QWheelEvent>
 
-
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 using namespace StreamWork::SwEditor;
 
 /*! \brief Constructeur */
@@ -61,8 +59,8 @@ void _SwEditorStreamView::InitializeResources() throw( SwException )
     _default_scene->setBackgroundBrush( Qt::black );
     
     
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", ( ISwWidget * )this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _view );
     
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -72,17 +70,8 @@ void _SwEditorStreamView::InitializeResources() throw( SwException )
     _properties_service->CreatePropertiesForQObject( _view, "QGraphicsView" );
     
     //Fin
-    if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Info, QString( "InitializeResources of SwEditorStreamView done\n" ) );
-    
-}
-//---------------------------------------------------------------------
-// Interface ISwWidget
-//---------------------------------------------------------------------
-/*! \brief Renvoie le widget
-\return le widget */
-QWidget * _SwEditorStreamView::GetWidget()
-{
-    return _view;
+    if( SW_APP->IsVerbose() )
+		SW_APP->Logger().Log( LogLvl_Info, QString( "InitializeResources of SwEditorStreamView done\n" ) );
 }
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver

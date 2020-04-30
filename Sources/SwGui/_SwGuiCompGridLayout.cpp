@@ -9,11 +9,11 @@
 
 
 //-----------------------------------------------------------------------
-_SwGuiCompGridLayout::_SwGuiCompGridLayout() :Component()
+_SwGuiCompGridLayout::_SwGuiCompGridLayout() : Component()
 {
+	_layoutWidget = 0;
 	_layout = 0;
 	_widgets_count = 0;
-	_layouts_count = 0;
 	_horizontalSpacing = 6;
 	_verticalSpacing = 0;
 	_columnStretch = "0";
@@ -22,7 +22,6 @@ _SwGuiCompGridLayout::_SwGuiCompGridLayout() :Component()
 	_topMargin = 0;
 	_rightMargin = 0;
 	_bottomMargin = 0;
-
 }
 
 //-----------------------------------------------------------------------
@@ -30,58 +29,31 @@ _SwGuiCompGridLayout::~_SwGuiCompGridLayout()
 {
 	getIProviderService().UnregisterProvidedInterface("GridLayout");
 
-	if ( _layout != 0 && _layout->parent() == NULL )
-	{
-		delete _layout;
-		_layout = 0;
-	}
-}
-
-//-----------------------------------------------------------------------
-QLayout & _SwGuiCompGridLayout::GetLayout()
-{
-	if ( _layout == 0 )
-	{
-		_layout = new QGridLayout();
-		_layout->setHorizontalSpacing(_horizontalSpacing);
-		_layout->setVerticalSpacing(_verticalSpacing);
-		for ( int i = 0; i < _widgets.count(); i++ )
-		{
-			_widgets[i]->setGridLayout(_layout);
-		}
-		for ( int i = 0; i < _layouts.count(); i++ )
-		{
-			_layouts[i]->setGridLayout(_layout);
-		}
-		updateStretchToLayoutStretch();
-		updateLayoutStretchToStretch();
-		_layout->setContentsMargins(_leftMargin, _topMargin, _rightMargin, _bottomMargin);
-
-	}
-	return (*_layout);
-}
-
-//-----------------------------------------------------------------------
-void _SwGuiCompGridLayout::LiberateLayout()
-{
 	updateLayoutStretchToStretch();
-	for ( int i = 0; i < _widgets.count(); i++ )
+	for (int i = 0; i < _widgets.count(); i++)
 	{
 		_widgets[i]->setGridLayout(0);
 	}
-	for ( int i = 0; i < _layouts.count(); i++ )
-	{
-		_layouts[i]->setGridLayout(0);
-	}
 
-	delete _layout;
-	_layout = NULL;
+	delete _layoutWidget;
 }
 
 //-----------------------------------------------------------------------
 void _SwGuiCompGridLayout::initializeComponent() throw(SwException)
 {
-	getIProviderService().RegisterProvidedInterface<ISwLayout>("GridLayout", (ISwLayout *)this);
+	_layoutWidget = new QWidget();
+	_layout = new QGridLayout(_layoutWidget);
+	_layout->setHorizontalSpacing(_horizontalSpacing);
+	_layout->setVerticalSpacing(_verticalSpacing);
+	for (int i = 0; i < _widgets.count(); i++)
+	{
+		_widgets[i]->setGridLayout(_layout);
+	}
+	updateStretchToLayoutStretch();
+	updateLayoutStretchToStretch();
+	_layout->setContentsMargins(_leftMargin, _topMargin, _rightMargin, _bottomMargin);
+
+	getIProviderService().RegisterProvidedInterface<QWidget>("GridLayout", _layoutWidget);
 	getPropertiesService().CreatePropertiesForQObject(this, QString(), true);
 }
 
@@ -92,10 +64,6 @@ void _SwGuiCompGridLayout::eventBeforeInterfaceAvailability(QString interface_na
 	{
 		_widgets[i]->eventBeforeInterfaceAvailability(interface_name, provider_host);
 	}
-	for ( int i = 0; i < _layouts.count(); i++ )
-	{
-		_layouts[i]->eventBeforeInterfaceAvailability(interface_name, provider_host);
-	}
 }
 
 //-----------------------------------------------------------------------
@@ -104,10 +72,6 @@ void _SwGuiCompGridLayout::eventAfterInterfaceAvailability(QString interface_nam
 	for ( int i = 0; i < _widgets.count(); i++ )
 	{
 		_widgets[i]->eventAfterInterfaceAvailability(interface_name, provider_host);
-	}
-	for ( int i = 0; i < _layouts.count(); i++ )
-	{
-		_layouts[i]->eventAfterInterfaceAvailability(interface_name, provider_host);
 	}
 	updateStretchToLayoutStretch();
 }
@@ -125,7 +89,7 @@ void _SwGuiCompGridLayout::setNbWidgets(int nbWidgets)
 	{
 		while ( _widgets.count() != nbWidgets )
 		{
-			_SwGuiCompGridLayoutCell * cell = new _SwGuiCompGridLayoutCell(_widgets.count(), &getPropertiesService(), &getIConsumerService(), false);
+			_SwGuiCompGridLayoutCell * cell = new _SwGuiCompGridLayoutCell(_widgets.count(), &getPropertiesService(), &getIConsumerService());
 			if ( _layout != 0 )
 			{
 				cell->setGridLayout(_layout);
@@ -147,43 +111,6 @@ void _SwGuiCompGridLayout::setNbWidgets(int nbWidgets)
 		}
 	}
 	_widgets_count = nbWidgets;
-}
-
-//-----------------------------------------------------------------------
-int _SwGuiCompGridLayout::getNbLayouts()
-{
-	return _layouts_count;
-}
-
-//-----------------------------------------------------------------------
-void _SwGuiCompGridLayout::setNbLayouts(int nbLayouts)
-{
-	if ( nbLayouts > _layouts_count )
-	{
-		while ( _layouts.count() != nbLayouts )
-		{
-			_SwGuiCompGridLayoutCell * cell = new _SwGuiCompGridLayoutCell(_layouts.count(), &getPropertiesService(), &getIConsumerService(), true);
-			if ( _layout != 0 )
-			{
-				cell->setGridLayout(_layout);
-			}
-			_layouts.push_back(cell);
-		}
-	}
-	else if ( nbLayouts < _layouts_count )
-	{
-		while ( _layouts.count() != nbLayouts )
-		{
-			_SwGuiCompGridLayoutCell * cell = _layouts.back();
-			_layouts.pop_back();
-			if ( _layout != 0 )
-			{
-				cell->setGridLayout(0);
-			}
-			delete cell;
-		}
-	}
-	_layouts_count = nbLayouts;
 }
 
 //-----------------------------------------------------------------------

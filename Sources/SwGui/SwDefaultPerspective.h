@@ -12,7 +12,6 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwWidget.h"
 #include "ISwPerspective.h"
 #include "ISwPerspectiveObserver.h"
 #include "SwGuiConstantes.h"

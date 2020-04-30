@@ -11,16 +11,13 @@
   * Includes Locaux
   */
 #include "_SwGuiCompQWidgetToQDialog.h"
-#include <ISwWidget.h>
 #include <SwMacros.h>
 
-
-#define ISWWIDGET_INTERFACE_NAME "ISwWidget"
-#define ISWWIDGETP_INTERFACE_NAME "ISwWidgetP"
+#define WIDGET_INTERFACE_NAME "Widget"
+#define WIDGETP_INTERFACE_NAME "WidgetP"
 #define ISWACTION_INTERFACE_NAME "ISwAction"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 //-------------------------------------------------------------------------
 _SwGuiCompQWidgetToQDialog::_SwGuiCompQWidgetToQDialog()
@@ -53,9 +50,9 @@ _SwGuiCompQWidgetToQDialog::~_SwGuiCompQWidgetToQDialog()
 {
     _helper.setCallback(nullptr);
 
-    unconsummeInterface( ISWWIDGET_INTERFACE_NAME );
+    unconsummeInterface( WIDGET_INTERFACE_NAME );
     unprovideInterface( ISWACTION_INTERFACE_NAME );
-    unprovideInterface( ISWWIDGETP_INTERFACE_NAME );
+    unprovideInterface( WIDGETP_INTERFACE_NAME );
 
     delete _action;
 }
@@ -65,9 +62,9 @@ void _SwGuiCompQWidgetToQDialog::initializeComponent() throw( SwException )
 {
     _helper.setCallback(this, &_SwGuiCompQWidgetToQDialog::onService);
     
-    consummeInterface<ISwWidget>( ISWWIDGET_INTERFACE_NAME );
+    consummeInterface<QWidget>( WIDGET_INTERFACE_NAME );
     
-    provideInterface<ISwWidget>( ISWWIDGETP_INTERFACE_NAME, &_container );
+    provideInterface<QWidget>( WIDGETP_INTERFACE_NAME, &_container );
     provideInterface<ISwAction>( ISWACTION_INTERFACE_NAME, this );
     
     getPropertiesService().CreatePropertyForQObject( this, "EnableMaximize" );
@@ -80,10 +77,9 @@ void _SwGuiCompQWidgetToQDialog::initializeComponent() throw( SwException )
 //---------------------------------------------------------------------------------
 void _SwGuiCompQWidgetToQDialog::interfaceAvailable( QString interfaceName )
 {
-    if( interfaceName == ISWWIDGET_INTERFACE_NAME )
+    if( interfaceName == WIDGET_INTERFACE_NAME )
     {
-        auto ptrWidget = getInterface<ISwWidget>( interfaceName );
-        _widget = ptrWidget->GetWidget();
+		_widget = getInterface<QWidget>( interfaceName );
         _container.setContentWidget( _widget );
     }
 }
@@ -91,7 +87,7 @@ void _SwGuiCompQWidgetToQDialog::interfaceAvailable( QString interfaceName )
 //---------------------------------------------------------------------------------
 void _SwGuiCompQWidgetToQDialog::interfaceUnavailable( QString interfaceName )
 {
-    if( interfaceName == ISWWIDGET_INTERFACE_NAME )
+    if( interfaceName == WIDGET_INTERFACE_NAME )
     {
         if( _widget )
             _widget->setParent( nullptr );
@@ -121,4 +117,3 @@ QAction & _SwGuiCompQWidgetToQDialog::GetAction()
 {
     return *_action;
 }
-

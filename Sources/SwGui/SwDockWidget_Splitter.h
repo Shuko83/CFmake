@@ -1,11 +1,7 @@
 #ifndef SWDOCKWIDGET_SPLITTER_H
 #define SWDOCKWIDGET_SPLITTER_H
 
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#else
-#include <QtGui>
-#endif
 
 #include "SwDockWidget_DockWidget.h"
 

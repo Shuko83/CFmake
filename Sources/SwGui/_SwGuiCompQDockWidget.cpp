@@ -59,8 +59,8 @@ void _SwGuiCompQDockWidget::InitializeResources() throw( SwException )
     //Exportation de l'interface ISwQDockWidget
     _provider_service->RegisterProvidedInterface<ISwQDockWidget>( "DockWidget", ( ISwQDockWidget * )this );
     
-    //Importation des interfaces ISwWidget et ISwLayout (exclusif)
-    _consumer_service->RegisterConsumedInterface<ISwWidget>( "Widget", &_handle_widget );
+    //Importation des interfaces QWidget et ISwLayout (exclusif)
+    _consumer_service->RegisterConsumedInterface<QWidget>( "Widget", &_handle_widget );
     
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
@@ -77,9 +77,9 @@ void _SwGuiCompQDockWidget::InitializeResources() throw( SwException )
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompQDockWidget::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    if( _handle_widget && _handle_widget->GetWidget() )
+    if( _handle_widget )
     {
-        _handle_widget->GetWidget()->setParent( nullptr );
+        _handle_widget->setParent( nullptr );
     }
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
@@ -87,7 +87,7 @@ void _SwGuiCompQDockWidget::AfterInterfaceAvailabilityChange( QString interface_
 {
     if( _handle_widget )
     {
-        _dockwidget->setWidget( _handle_widget->GetWidget() );
+        _dockwidget->setWidget( _handle_widget );
     }
 }
 //---------------------------------------------------------------------
@@ -118,6 +118,4 @@ void _SwGuiCompQDockWidget::setShowTitleBar( bool val )
     }
     else
         GetDockWidget().setTitleBarWidget( _titleBar );
-        
 }
-

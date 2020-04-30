@@ -23,7 +23,6 @@
 #include <ISwProperty.h>
 #include <ISwComponentProvider.h>
 #include "_SwPropertiesModelImpl.h"
-//#include "ISwWidget.h"
 //#include "ISwQAbstractItemViewSlots.h"
 //#include "_SwQAbstractItemViewSlots_Catcher.h"
 

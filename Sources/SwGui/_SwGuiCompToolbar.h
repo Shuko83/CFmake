@@ -22,9 +22,6 @@
 #include <ISwProperty.h>
 #include "ISwToolBar.h"
 #include "ISwAction.h"
-#include "ISwWidget.h"
-
-
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -78,4 +75,5 @@ public:
 	virtual QToolBar & GetToolBar();
 
 };
+
 #endif 

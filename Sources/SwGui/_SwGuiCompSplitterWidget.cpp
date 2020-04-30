@@ -11,11 +11,8 @@
 #include "_SwGuiCompSplitterWidget.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
-
 
 #define CL_WIDGET_INTERFACE_NAME "Widget_%1"
-
 
 /*! \brief Constructeur */
 _SwGuiCompSplitterWidget::_SwGuiCompSplitterWidget(): SwComponent_Class()
@@ -59,8 +56,8 @@ void _SwGuiCompSplitterWidget::InitializeResources() throw( SwException )
     this->RegisterService( _properties_service );
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>( "Widget", this );
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>( "Widget", _splitterWidget );
     
     
     //S'enregistrer comme observer du consumer
@@ -77,7 +74,7 @@ void _SwGuiCompSplitterWidget::InitializeResources() throw( SwException )
     }
     else
     {
-        _widgets_nb_property->SetDescription( "Define how many ISwWidget interfaces this component accept" );
+        _widgets_nb_property->SetDescription( "Define how many QWidget interfaces this component accept" );
         _widgets_nb_property->SetValue( QVariant( _widgets_nb ) );
         _widgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompSplitterWidget::OnPropertyChange );
     }
@@ -131,7 +128,7 @@ void _SwGuiCompSplitterWidget::OnPropertyChange( ISwProperty * property )
             {
                 interface_name = QString( CL_WIDGET_INTERFACE_NAME ).arg( i );
                 _widgets.insert( interface_name, 0 );
-                _consumer_service->RegisterConsumedInterface<ISwWidget>( interface_name,
+                _consumer_service->RegisterConsumedInterface<QWidget>( interface_name,
                         &_tmp_handle_widget );
                         
                 //creation d'une propriete pour la taille du widget dans le splitter
@@ -176,25 +173,24 @@ void _SwGuiCompSplitterWidget::OnPropertyChange( ISwProperty * property )
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompSplitterWidget::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    QMap<QString, ISwWidget *>::iterator widget_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     //Si c'est un menu
     widget_it = _widgets.find( interface_name );
     if( widget_it != _widgets.end() )
     {
-        if( widget_it.value() && widget_it.value()->GetWidget() )
+        if( widget_it.value() )
         {
-            widget_it.value()->GetWidget()->setParent( nullptr );
+            widget_it.value()->setParent( nullptr );
             //Fin
             widget_it.value() = nullptr;
         }
-        return;
     }
 }
 
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompSplitterWidget::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
-    QMap<QString, ISwWidget *>::iterator widget_it;
+    QMap<QString, QWidget *>::iterator widget_it;
     
     //Si c'est un widget
     widget_it = _widgets.find( interface_name );
@@ -210,22 +206,10 @@ void _SwGuiCompSplitterWidget::AfterInterfaceAvailabilityChange( QString interfa
             if( convertOk && index >= 0 )
             {
                 //ajout du nouveau widget a l'index specifie
-                _splitterWidget->insertWidget( index, _tmp_handle_widget->GetWidget() );
+                _splitterWidget->insertWidget( index, _tmp_handle_widget );
                 //on reaffecte les tailles de chaque widget
                 resetWidgetSizes();
             }
         }
-        return;
     }
 }
-
-//---------------------------------------------------------------------
-// Interface ISwWidget
-//---------------------------------------------------------------------
-/*! \brief Renvoie le menu
-\return le menu */
-QWidget * _SwGuiCompSplitterWidget::GetWidget()
-{
-    return _splitterWidget;
-}
-

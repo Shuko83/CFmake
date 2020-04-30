@@ -16,7 +16,7 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "ISwProperty2.h"
+#include "ISwProperty.h"
 #include "ISwController.h"
 #include "ISwProperties.h"
 #include "ISwComplexeTypeAdapters.h"
@@ -35,7 +35,7 @@ namespace StreamWork
         \note
         */
 
-        class BUILD_SWCORE _SwPropertyImpl_Class : public virtual ISwProperty2 {
+        class BUILD_SWCORE _SwPropertyImpl_Class : public virtual ISwProperty {
         protected:
             /*! \brief service hote */
             ISwProperties * _hosting_service;

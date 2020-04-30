@@ -68,7 +68,7 @@ void _SwGuiVisualUpdater::InitializeResources() throw(SwException) {
     //--------------------------------------
     //Definition Interfaces consommés
     //--------------------------------------
-    //Importation de l'interface ISwWidget
+    //Importation de l'interface QWidget
     _consumer_service->RegisterConsumedInterface<ISwHttpServer>("HttpServer",&_handleHttpServer);
 
     //S'enregistrer comme observer du consumer

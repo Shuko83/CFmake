@@ -52,11 +52,7 @@ ISwProperty * SwProperties_Class::CreatePropertyWithType(int type_id,QString nam
         LAUNCH_SWEXCEPTION("SwCore",s);                
     }
 
-	#if QT_VERSION >= 0x050000
 	_my_objet=QMetaType::create(type_id);
-	#else
-	_my_objet=QMetaType::construct(type_id);
-	#endif
 
     if (_my_objet==NULL) {
         QString s=QString("Unable to create property %1 in %2 because type undefined").arg(name).arg(_host_component->GetName());

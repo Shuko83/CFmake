@@ -225,7 +225,7 @@ void SwApplication::FinalizeInitialisation()
 void SwApplication::RegisterExecutor(ISwExecutor * executor)
 {
 	_executor = executor;
-	_executor2 = dynamic_cast<ISwExecutor2 *>(_executor);
+	_executor2 = _executor;
 }
 
 //-----------------------------------------------------------------------
