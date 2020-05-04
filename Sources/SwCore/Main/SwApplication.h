@@ -162,6 +162,8 @@ namespace StreamWork
             const QString & GetApplicationDirPath();
 			/*! \brief Acces au path de l'application ou celui configure comme tel par l'utilisateur*/
             void SetApplicationDirPath(const QString & path);
+			/*! \brief Check if the xml signature is valid */
+			bool isValidSignature(QString stream_desc) const;
             /*! \brief Lancement de l'application avec un stream definit dans une chaine*/
             int Launch(QString stream_desc) throw(SwException);
             /*! \brief Finalisation de l'initialisation*/

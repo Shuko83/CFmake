@@ -14,6 +14,7 @@
         <Library name="SwServiceShortcut"		  	link="false" />
         <Library name="SwServiceConfiguration"		link="false" />
 		<Library name="SwServiceMainWindow"		link="false" />
+		<Library name="cryptopp" type="static"/>
     </Libraries>
     <Qt>
         <Module name="core"/>

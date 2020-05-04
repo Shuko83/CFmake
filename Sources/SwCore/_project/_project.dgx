@@ -5,6 +5,7 @@
         <Library name="QsException"/>
 		<Library name="QsCore" link="false"/>
 		<Library name="QsGui" link="false"/>
+		<Library name="cryptopp" type="static"/>
     </Libraries>
     <Qt>
         <Module name="core"/>

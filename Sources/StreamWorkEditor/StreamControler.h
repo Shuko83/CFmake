@@ -164,6 +164,12 @@ private:
     /** @brief destruction des liens */
     void destroyLinks();
 
+	//--------------------------------------------------------------------------
+	// Signature
+	//--------------------------------------------------------------------------
+	/** @brief Récupère la signature du stream */
+	std::string getStreamSignature(std::string stream) const;
+
 private:
 	/** @brief Scene */
     StreamScene * _streamScene;

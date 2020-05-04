@@ -24,9 +24,16 @@
 #include "SwIconDescriptor.h"
 #include "SwIpV4Address.h"
 #include "ISwCheckService.h"
+#include "cryptlib.h"
+#include "rsa.h"
+#include "hex.h"
 
 using namespace StreamWork::SwCore;
 using namespace std;
+
+static const std::string publicKey = "30819D300D06092A864886F70D010101050003818B0030818702818100A8B3838DAE1FC7F9F33C643BBF5A3B5B2D3E1A7C94319BD00353B8538CE6F38503B5AD74EBAF5D6BB80870ECD1D1C79BD1E735E70BD02B76BBB06184D3CA4024D87433C49006E1D9EA568F08468F990E8E9D66D3E875D9711B6A30C7EA311871DF77FD503335EDFDB1CF9B58BB8BE8855BA63162B4EDCC3EDD5CBCA5904B0F47020111";
+static const QString START_SIGNATURE = QStringLiteral("<Signature>");
+static const QString END_SIGNATURE = QStringLiteral("</Signature>");
 
 //-----------------------------------------------------------------------
 SwApplication::SwApplication()
@@ -112,6 +119,57 @@ QString SwApplication::GetWorkingPath()
 }
 
 //-----------------------------------------------------------------------
+bool StreamWork::SwCore::SwApplication::isValidSignature(QString stream_desc) const
+{
+	int signatureStart = stream_desc.indexOf(START_SIGNATURE);
+	int signatureEnd = stream_desc.indexOf(END_SIGNATURE);
+
+	if (signatureStart == -1 || signatureEnd == -1)
+		return false;
+
+	std::string signatureDecoded;
+	std::string signatureData = stream_desc.toStdString().substr(signatureStart + START_SIGNATURE.length(), signatureEnd - (signatureStart + START_SIGNATURE.length()));
+	CryptoPP::StringSource(signatureData.c_str(), true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(signatureDecoded)));
+
+	int startLine;
+	for (startLine = signatureStart; startLine != -1; --startLine)
+	{
+		if (stream_desc.at(startLine) == '\n')
+		{
+			startLine += 1;
+			break;
+		}
+	}
+
+	int endLine;
+	for (endLine = signatureEnd; endLine != stream_desc.length(); ++endLine)
+	{
+		if (stream_desc.at(endLine) == '\n')
+		{
+			endLine += 1;
+			break;
+		}
+	}
+
+	if (startLine == -1 || endLine == stream_desc.length())
+		return false;
+
+	std::string message = stream_desc.toStdString().erase(startLine, endLine - startLine);
+
+	// Génération du verifier a partir de la clef publique
+	string publicKeyBin;
+	CryptoPP::StringSource(publicKey, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(publicKeyBin)));
+	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PublicKey pubKey;
+	pubKey.BERDecode(CryptoPP::StringStore(publicKeyBin).Ref());
+	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Verifier verifier(pubKey);
+
+	if (signatureDecoded.length() != verifier.SignatureLength())
+		return false;
+
+	return verifier.VerifyMessage((const byte*)message.c_str(), message.length(), (const byte*)signatureDecoded.c_str(), signatureDecoded.size());
+}
+
+//-----------------------------------------------------------------------
 int SwApplication::Launch(QString stream_desc) throw(SwException)
 {
 	int result = 0;
@@ -123,6 +181,10 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 	if (_is_launch)
 	{
 		LAUNCH_SWEXCEPTION("SwCore", "Only one launch can be done simultaneously");
+	}
+	if (!isValidSignature(stream_desc))
+	{
+		LAUNCH_SWEXCEPTION("SwCore", "Signature not valid");
 	}
 	//Lancement effectuée
 	_is_launch = true;
