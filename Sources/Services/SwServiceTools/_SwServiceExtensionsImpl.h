@@ -27,7 +27,7 @@ namespace StreamWork {
             virtual QList<ISwExtension *> getExtensionWithType(QString extension_type_name);
         protected:
             /*! \brief Permet d'enregistrer une extension avec le type en nom */
-            virtual void registerExtensionWithType(QString extension_type_name,QString extension_name,QString component_name);
+            virtual void registerExtensionWithType(QString extension_type_name,QString extension_name,QString pluginName,QString component_name);
 
             
         private:

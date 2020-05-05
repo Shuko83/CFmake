@@ -125,10 +125,10 @@ QVariant _SwEditorStreamTreeModel::data ( const QModelIndex & index, int role ) 
         return QVariant(cparent->GetFactoryComponentName());
     }
     if (role == Qt::DisplayRole && index.column()==3) {
-        return QVariant(SW_APP->ComponentsBank().GetComponentDescription(cparent->GetFactoryComponentName()));
+        return QVariant(SW_APP->ComponentsBank().GetComponentDescription(cparent->GetFactoryName(),cparent->GetFactoryComponentName()));
     }
     if (role == Qt::DecorationRole && index.column()==0) {
-        return QVariant(SW_APP->ComponentsBank().GetComponentIcon(cparent->GetFactoryComponentName()));
+        return QVariant(SW_APP->ComponentsBank().GetComponentIcon(cparent->GetFactoryName(),cparent->GetFactoryComponentName()));
     }
     if (cparent==_current_selection ) {
         if (role == Qt::ForegroundRole) {

@@ -47,6 +47,7 @@
 #define CG_SW_XML_COMPONENT_NODE_ATT_DESC    "description"
 #define CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME    "factory_name"
 #define CG_SW_XML_COMPONENT_NODE_ATT_FACTORY    "factory"
+#define CG_SW_XML_COMPONENT_NODE_ATT_PLUGIN_NAME    "plugin_name"
 
 #define CG_SW_XML_SERVICE_NODE    "service"
 #define CG_SW_XML_SERVICE_ATT_NAME    "name"

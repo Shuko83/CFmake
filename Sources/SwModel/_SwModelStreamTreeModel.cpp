@@ -88,7 +88,7 @@ QVariant _SwModelStreamTreeModel::data ( const QModelIndex & index, int role ) c
         return QVariant(cparent->GetDescription());
     }
     if (role == Qt::DecorationRole && index.column()==0) {
-        return QVariant(SW_APP->ComponentsBank().GetComponentIcon(cparent->GetFactoryComponentName()));
+        return QVariant(SW_APP->ComponentsBank().GetComponentIcon(cparent->GetFactoryName(), cparent->GetFactoryComponentName()));
     }
     if (role == Qt::ForegroundRole) {
         if (dynamic_cast<_SwModelHost_Class *>(cparent)!=NULL) {

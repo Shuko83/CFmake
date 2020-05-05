@@ -32,7 +32,8 @@ namespace StreamWork
             // Ajout composant
             //-------------------------------------------------------------
             /*! \brief Ajoute un component enfant au composant courant*/
-			virtual void AddChild(QString component_type=QString())=0;
+			virtual void AddChild() = 0;
+			virtual void AddChild(QString plugin_name, QString component_type) = 0;
             //-------------------------------------------------------------
             // Operations de la selection 
             //-------------------------------------------------------------

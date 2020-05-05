@@ -46,12 +46,10 @@ namespace StreamWork
             QMap<QString,TL_plugins> _plugins_paths;    
             /*! \brief Liste plugin par nom de plugin */
             QMap<QString,SwPluginFactory_Class *> _plugin_by_name;    
-            /*! \brief QMap d'un composant vers son plugin */
-            QMap<QString,SwPluginFactory_Class *> _comp_to_factory;
             /*! \brief QMap d'une data vers son plugin */
             QMap<SwUUID,SwPluginFactory_Class *> _data_to_factory;
             /*! \brief QMultiMap des controlleurs clef type */
-            QMultiMap<int,QString> _controllers;
+            QMultiMap< int, QPair<QString,QString> > _controllers;
 			/*! \Enregistrement des fabriques d'objet */
 			QHash<SwUUID,ISwObjectFactory *> object_factory_map;
             /*! \brief arbre pour le modele */
@@ -93,16 +91,14 @@ namespace StreamWork
             QSet<ISwPluginFactory *> & GetPluginList(QString path)  throw(SwException);
             /*! \brief Acces a liste de tous les plugins */
             QMap<QString,SwPluginFactory_Class *> * GetAllPlugins();
-            /*! \brief Acces a la liste des noms de tous les composants */
-            const QSet<QString> GetComponentsList();
             /*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donné*/
-            QList<QString> GetControllersListForType(int type_identifier);
+			QList< QPair<QString, QString> > GetControllersListForType(int type_identifier);
             /*! \brief Acces a la description d'un composant */
-            QString GetComponentDescription(QString component_name) throw(SwException);
+            QString GetComponentDescription(QString plugin_name, QString component_name) throw(SwException);
             /*! \brief Acces a l'icone d'un composant */
-            QIcon GetComponentIcon(QString component_name) throw(SwException);
+            QIcon GetComponentIcon(QString plugin_name, QString component_name) throw(SwException);
             /*! \brief Creation d'un composant a partir de son nom*/
-            SwComponent_Class * CreateComponent(QString component_name) throw(SwException);
+            SwComponent_Class * CreateComponent(QString plugin_name, QString component_name) throw(SwException);
             /*! \brief Relire le contenu d'un plugin (pour les plugins dont le contenu a changer)*/
             virtual void RereadPluginContent(SwPluginFactory_Class * plugin) throw(SwException);
             /*! \brief Acces au modèle pour l'affichage*/

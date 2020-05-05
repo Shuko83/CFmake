@@ -116,8 +116,11 @@ void SwSaver_Class::BuildXMLStream(SwComponent_Class * component, QXmlStreamWrit
 		writer.writeAttribute(CG_SW_XML_COMPONENT_NODE_ATT_ACTIVE, "false");
 	}
 	//Ajout attribut nom d'usine
-	if (!component->GetFactoryComponentName().isEmpty())
+	if (!component->GetFactoryComponentName().isEmpty() && !component->GetFactoryName().isEmpty())
+	{
 		writer.writeAttribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME, component->GetFactoryComponentName());
+		writer.writeAttribute(CG_SW_XML_COMPONENT_NODE_ATT_PLUGIN_NAME, component->GetFactoryName());
+	}
 
 	//  Auparavant, on enregistrait ici le nom de DLL.
 

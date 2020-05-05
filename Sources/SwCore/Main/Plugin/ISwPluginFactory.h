@@ -44,7 +44,7 @@ namespace StreamWork
             /*! \brief Acces au path du plugin */
             virtual QString GetPath()=0;
             /*! \brief Acces au nom du plugin */
-            virtual QString GetPluginName()=0;
+            virtual QString GetPluginName() const = 0;
             /*! \brief Acces a la version du plugin */
             virtual QString GetPluginVersion()=0;
 			/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/

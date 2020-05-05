@@ -156,7 +156,7 @@ QVariant _SwExportStreamTreeModel::data ( const QModelIndex & index, int role ) 
             case IT_Activable:
                 return QVariant(QIcon(":/SwModel/executor.png"));              
             case IT_Host:
-                return QVariant(SW_APP->ComponentsBank().GetComponentIcon(item->_host->GetFactoryComponentName()));
+                return QVariant(SW_APP->ComponentsBank().GetComponentIcon(item->_host->GetFactoryName(), item->_host->GetFactoryComponentName()));
             default:
                 break;
         }

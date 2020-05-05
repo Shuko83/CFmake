@@ -39,7 +39,7 @@ GraphicsResources * GraphicsResources::getInstance()
 //-----------------------------------------------------------------------
 QPixmap GraphicsResources::getComponentIcon(StreamWork::SwCore::SwComponent_Class * component) 
 {
-    QIcon ico=SW_APP->ComponentsBank().GetComponentIcon(component->GetFactoryComponentName());
+    QIcon ico=SW_APP->ComponentsBank().GetComponentIcon(component->GetFactoryName(), component->GetFactoryComponentName());
     return ico.pixmap(16,16);
 }
 

@@ -52,6 +52,7 @@ namespace StreamWork
             /*! \brief activation */
             bool _active;
             /*! \brief nom usine du composant (pour retrouver la façon de le fabriquer) */
+			QString _factory_name;
             QString _factory_component_name;
             /*! \brief QMap des enfants */
             QMap<QString,SwComponent_ClassPtr> _child_components;
@@ -59,7 +60,8 @@ namespace StreamWork
             QMap<QString,SwComponent_ClassPtr>::iterator _current_child;
             /*! \brief definition du parent */
             void SetParent(SwComponent_Class * parent);
-            /*! \brief definition du nom usine du composant */
+			/*! \brief definition du nom usine du composant */
+			void SetFactoryName(QString factory_name);
             void SetFactoryComponentName(QString factory_component_name);
         protected:
 			/*! \brief Log du temps*/
@@ -72,7 +74,8 @@ namespace StreamWork
 
 
             /*! \brief acces nom usine du composant*/
-            QString GetFactoryComponentName();
+			QString GetFactoryName();
+			QString GetFactoryComponentName();
 
             /*! \brief Initialisation des ressources
             \note tous les services du composants doivent être déclarés dans cette methodes*/

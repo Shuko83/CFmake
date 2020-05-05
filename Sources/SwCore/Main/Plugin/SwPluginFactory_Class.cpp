@@ -21,7 +21,6 @@ using namespace StreamWork::SwCore;
 SwPluginFactory_Class::SwPluginFactory_Class()
     :QAbstractListModel(NULL),overview(this) {
     _path=QString();
-    _name=QString();
     _component_description.clear();
     _data_type.clear();
     _controllers.clear();
@@ -38,11 +37,6 @@ SwPluginFactory_Class::~SwPluginFactory_Class(){
 \param[in] path path du plugin*/
 void SwPluginFactory_Class::SetPath(QString path){
     _path=path;
-}
-/*! \brief Definition du nom du plugin 
-\param[in] plugin_name nom du plugin**/
-void SwPluginFactory_Class::SetPluginName(QString plugin_name){
-    _name=plugin_name;
 }
 /*! \brief Initialisation 
 \note a surcharger*/
@@ -131,11 +125,6 @@ QIcon SwPluginFactory_Class::CreateIconOf(QString name) const{
 QString SwPluginFactory_Class::GetPath(){
     return _path;
 }
-/*! \brief Acces au nom du plugin
-\return nom du plugin*/
-QString SwPluginFactory_Class::GetPluginName(){
-    return _name;
-}
 /*! \brief Acces a la version du plugin
 \return version*/
 QString SwPluginFactory_Class::GetPluginVersion(){
@@ -163,7 +152,7 @@ QString SwPluginFactory_Class::GetComponentDescription(QString component_name) t
 
     it=_component_description.find(component_name);
     if (it==_component_description.end()) {
-        QString msg=QString("In plugin %1, unable de find description for component %2 because he's undefined").arg(_name).arg(component_name);
+        QString msg=QString("In plugin %1, unable de find description for component %2 because he's undefined").arg(GetPluginName()).arg(component_name);
         LAUNCH_SWEXCEPTION("SwCore",msg)        
     }
     return it.value();
@@ -175,7 +164,7 @@ QIcon SwPluginFactory_Class::GetComponentIcon(QString component_name) const thro
 
     it=_component_description.find(component_name);
     if (it==_component_description.end()) {
-        QString msg=QString("In plugin %1, unable de find icon for component %2 because he's undefined").arg(_name).arg(component_name);
+        QString msg=QString("In plugin %1, unable de find icon for component %2 because he's undefined").arg(GetPluginName()).arg(component_name);
         LAUNCH_SWEXCEPTION("SwCore",msg)        
     }
     icon=CreateIconOf(component_name);
@@ -194,10 +183,13 @@ SwComponent_Class * SwPluginFactory_Class::CreateComponent(QString component_nam
 
     component=CreateInstanceOf(component_name);
     if (component==NULL) {
-        QString msg=QString("In plugin %1, fail to create component %2 because he's undefined").arg(_name).arg(component_name);
-        LAUNCH_SWEXCEPTION("SwCore",msg)        
+    /// TEMP FOR UPDATING STREAMS
+		return nullptr;
+//         QString msg=QString("In plugin %1, fail to create component %2 because he's undefined").arg(_name).arg(component_name);
+//         LAUNCH_SWEXCEPTION("SwCore",msg)        
     }
-    component->SetFactoryComponentName(component_name);
+	component->SetFactoryName(GetPluginName());
+	component->SetFactoryComponentName(component_name);
     component->InitializeResources();
     component->RegisterService(&overview); \
     return component;
@@ -236,7 +228,7 @@ SwData_Class * SwPluginFactory_Class::CreateData(const SwUUID & id) throw(SwExce
 
     data=CreateInstanceOf(id);
     if (data==NULL) {
-        QString msg=QString("In plugin %1, fail to create data of id type %2 because he's undefined").arg(_name).arg(id.toQString());
+        QString msg=QString("In plugin %1, fail to create data of id type %2 because he's undefined").arg(GetPluginName()).arg(id.toQString());
         LAUNCH_SWEXCEPTION("SwCore",msg)        
     }
     return data;
@@ -280,7 +272,7 @@ QMimeData * SwPluginFactory_Class::mimeData(const QModelIndexList &indexes) cons
 
      for (QModelIndex index : indexes) {
          if (index.isValid()) {
-             text=text+data(index, Qt::DisplayRole).toString();
+			 text = text + data(indexes.front(), Qt::UserRole).toString() + "::" + data(indexes.front(), Qt::DisplayRole).toString();
              text+= ";";
          }
      }

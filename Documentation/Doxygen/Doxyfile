@@ -627,11 +627,11 @@ RECURSIVE              = YES
 # subdirectory from a directory tree whose root is specified with the INPUT tag.
 
 EXCLUDE                = ../../src/StreamWorkEditor \
-                         ../../src/StreamWorkEditor2 \
+                         ../../src/StreamWorkEditor \
                          ../../src/SwConfiguration \
                          ../../src/SwEditor \
                          ../../src/WizardIDE \
-                         ../../src/SwModel2 \
+                         ../../src/SwModel \
                          ../../src/TestPlugin \
                          ../../src/SwDataBase
 

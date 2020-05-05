@@ -173,7 +173,6 @@ _SwPluginsBank_Class::~_SwPluginsBank_Class(){
 		SW_APP->RemoveServicesManagerObserver(it.value());
 		it.value()->Liberate();
 	}
-	_comp_to_factory.clear();
 	qDeleteAll(_plugin_by_name);
 	_plugin_by_name.clear();
 	_controllers.clear();
@@ -286,29 +285,22 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 			if (plugin_entry!=NULL) {
 				//Si trouvé extraction du plugin
 				SwPluginFactory_Class * plugin=plugin_entry();
-				//Initialisation du plugin
-				plugin->SetPath(QDir::cleanPath(realPath));
-				plugin->SetPluginName(list_files[j]);
-				plugin->Initialize();
-				SW_APP->AddServicesManagerObserver(plugin);
 				//Info
 				if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("\tAdding plugin %1\n").arg(list_files[j]));
+				if (_plugin_by_name.contains(plugin->GetPluginName()))
+				{
+					//Signaler le pb
+					qDebug() << QString("Plugin %1 already registered").arg(plugin->GetPluginName());
+					delete plugin;
+					continue;
+				}
 				//Enregistrement du plugin dans la banque
 				itpp.value().insert(plugin);
-				_plugin_by_name.insert(list_files[j],plugin);
-				//Enregistrement des composants dans la bank
-				set_of_components=plugin->GetComponentsList();
-				for (itc=set_of_components.begin();itc!=set_of_components.end();itc++) {
-					//Si un composant de même nom n'est pas enregistrer
-					if (_comp_to_factory.find(*itc)==_comp_to_factory.end()) {
-						//info
-						if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("\t\tRegistering component %1\n").arg(*itc));
-						//Enregistrement du composant
-						_comp_to_factory.insert(*itc,plugin);
-					} else {
-						//Signaler le pb
-					}
-				}
+				_plugin_by_name.insert(plugin->GetPluginName(), plugin);
+				//Initialisation du plugin
+				plugin->SetPath(QDir::cleanPath(realPath));
+				plugin->Initialize();
+				SW_APP->AddServicesManagerObserver(plugin);
 				//Enregistrement des data types
 				set_of_data=plugin->GetDataList();
 				for (itd=set_of_data.begin();itd!=set_of_data.end();itd++) {
@@ -323,7 +315,18 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 					}
 				}
 				//Enregistrement des composants controllers
-				_controllers+=plugin->GetControllersMap();
+				QMultiMap<int,QString> map_of_controllers = plugin->GetControllersMap();
+				for (auto itController = map_of_controllers.begin(); itController != map_of_controllers.end(); itController++) {
+					if (_controllers.find(itController.key()) == _controllers.end()) {
+						//info
+						if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("\t\tRegistering controller type id %1\n").arg(itd->toQString()));
+						//Enregistrement du controllers
+						_controllers.insert(itController.key(), qMakePair(plugin->GetPluginName(), itController.value()));
+					}
+					else {
+						//Signaler le pb
+					}
+				}
 			} else {
 				SW_APP->Logger().Log(LogLvl_Critical,QString("Unable to load Lib %1").arg(real_file).toLatin1(),lib.errorString());
 				qDebug(QString("QLoadLibrary failed for %1").arg(real_file).toLatin1().data()); 
@@ -455,19 +458,8 @@ QSet<ISwPluginFactory *> & _SwPluginsBank_Class::GetPluginList(QString path)  th
 QMap<QString,SwPluginFactory_Class *> * _SwPluginsBank_Class::GetAllPlugins() {
 	return & _plugin_by_name;
 }
-/*! \brief Acces a la liste des noms de tous les composants
-\renvoie la liste des composants*/
-const QSet<QString> _SwPluginsBank_Class::GetComponentsList(){
-	QMap<QString,SwPluginFactory_Class *>::const_iterator it;
-	QSet<QString> liste;
-
-	for (it=_comp_to_factory.begin();it!=_comp_to_factory.end();it++) {
-		liste.insert(it.key());
-	}
-	return liste;
-}
 /*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donné*/
-QList<QString> _SwPluginsBank_Class::GetControllersListForType(int type_identifier) {
+QList< QPair<QString,QString> > _SwPluginsBank_Class::GetControllersListForType(int type_identifier) {
 	return _controllers.values(type_identifier);
 }
 /*! \brief Acces a la description d'un composant
@@ -475,13 +467,13 @@ QList<QString> _SwPluginsBank_Class::GetControllersListForType(int type_identifi
 \return la description du composant
 \exception SwException Unable to find description of unknown component
 */
-QString _SwPluginsBank_Class::GetComponentDescription(QString component_name)  throw(SwException){
+QString _SwPluginsBank_Class::GetComponentDescription(QString plugin_name, QString component_name)  throw(SwException){
 	QMap<QString,SwPluginFactory_Class *>::const_iterator it;
 
 	if (component_name.isEmpty()) return QString();
-	it=_comp_to_factory.find(component_name);
-	if (it==_comp_to_factory.end()) {
-		QString msg=QString("Unable to find description of unknown component %1").arg(component_name);
+	it= _plugin_by_name.find(plugin_name);
+	if (it== _plugin_by_name.end()) {
+		QString msg=QString("Unable to find description of component %1 from unknown plugin %2").arg(component_name, plugin_name);
 		LAUNCH_SWEXCEPTION("SwCore",msg)
 	}
 	return it.value()->GetComponentDescription(component_name);
@@ -491,13 +483,13 @@ QString _SwPluginsBank_Class::GetComponentDescription(QString component_name)  t
 \return l'icone du composant
 \exception SwException Unable to find icon of unknown component
 */
-QIcon _SwPluginsBank_Class::GetComponentIcon(QString component_name) throw(SwException) {
+QIcon _SwPluginsBank_Class::GetComponentIcon(QString plugin_name, QString component_name) throw(SwException) {
 	QMap<QString,SwPluginFactory_Class *>::const_iterator it;
 
-	if (component_name.isEmpty()) return QIcon();
-	it=_comp_to_factory.find(component_name);
-	if (it==_comp_to_factory.end()) {
-		QString msg=QString("Unable to find icon of unknown component %1").arg(component_name);
+	if (component_name.isEmpty() || plugin_name.isEmpty()) return QIcon();
+	it= _plugin_by_name.find(plugin_name);
+	if (it== _plugin_by_name.end()) {
+		QString msg=QString("Unable to find icon of component %1 from unknown plugin %2").arg(component_name, plugin_name);
 		LAUNCH_SWEXCEPTION("SwCore",msg)
 	}
 	return it.value()->GetComponentIcon(component_name);
@@ -507,15 +499,29 @@ QIcon _SwPluginsBank_Class::GetComponentIcon(QString component_name) throw(SwExc
 \return l'instance du composant
 \exception SwException Unable to create instance of unknown component
 */
-SwComponent_Class * _SwPluginsBank_Class::CreateComponent(QString component_name)  throw(SwException){
+SwComponent_Class * _SwPluginsBank_Class::CreateComponent(QString plugin_name, QString component_name)  throw(SwException){
 	QMap<QString,SwPluginFactory_Class *>::const_iterator it;
 	QSet<ISwCreationPostProcessor *>::iterator itp;
 	SwComponent_Class * created_component;
 
-	if (!component_name.isEmpty()) {
-		it=_comp_to_factory.find(component_name);
-		if (it==_comp_to_factory.end()) {
-			QString msg=QString("Unable to create instance of unknown component %1").arg(component_name);
+/// TEMP FOR UPDATING STREAMS
+	if (!component_name.isEmpty() && plugin_name.isEmpty()) {
+		for (SwPluginFactory_Class* plugin : _plugin_by_name)
+		{
+			created_component = plugin->CreateComponent(component_name);
+			if (created_component)
+				break;
+		}
+		if (!created_component) {
+			QString msg = QString("Unable to create instance of component %1").arg(component_name);
+			LAUNCH_SWEXCEPTION("SwCore", msg)
+		}
+	}
+	else
+	if (!component_name.isEmpty() && !plugin_name.isEmpty()) {
+		it= _plugin_by_name.find(plugin_name);
+		if (it== _plugin_by_name.end()) {
+			QString msg=QString("Unable to create instance of component %1 from unknown plugin %2").arg(component_name, plugin_name);
 			LAUNCH_SWEXCEPTION("SwCore",msg)
 		}
 		created_component=it.value()->CreateComponent(component_name);
@@ -536,35 +542,7 @@ SwComponent_Class * _SwPluginsBank_Class::CreateComponent(QString component_name
 /*! \brief Relire le contenu d'un plugin (pour les plugins dont le contenu a changer)
 \param[in] plugin handle sur le plugin a relire*/
 void _SwPluginsBank_Class::RereadPluginContent(SwPluginFactory_Class * plugin) throw(SwException) {
-	QMap<QString,SwPluginFactory_Class *>::iterator it,itd;
-	QSet<QString> liste;
-	QSet<QString>::const_iterator liste_it;
-
-	liste=plugin->GetComponentsList();
-	it=_comp_to_factory.begin();
-	//Suppression des composants qui ne sont plus reference
-	while (it!=_comp_to_factory.end()) {
-		itd=it;
-		it++;
-		//Recherche si le composant appartient au plugin concerné
-		if (itd.value()==plugin) {
-			//existe-t-il toujours
-			if (liste.find(itd.key())==liste.end()) {
-				//non,suppression
-				_comp_to_factory.erase(itd);
-				_has_changed=true;
-			}
-		}
-	}
-	//Ajout des nouveaux composants
-	for(liste_it=liste.begin();liste_it!=liste.end();liste_it++) {
-		//S'il n'existe pas
-		if (_comp_to_factory.find(*liste_it)==_comp_to_factory.end()) {
-			//Ajout
-			_comp_to_factory.insert(*liste_it,plugin);
-			_has_changed=true;
-		}
-	}
+	_has_changed = true;
 	RebuildModel();
 }
 

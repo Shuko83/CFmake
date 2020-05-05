@@ -135,11 +135,18 @@ void StreamView::dropEvent(QDropEvent * event)
 	//qDebug() << event->mimeData()->formats();
 	if ( event->mimeData()->hasFormat("application/mod") )
 	{
-		_controler->addComponent(QString(event->mimeData()->data("application/mod")),
-								 mapToScene(event->pos()));
+		QString data = QString(event->mimeData()->data("application/mod").data());
+		QStringList dataSplit = data.split("::");
+		QString pluginName;
+		QString componentName;
+		if (dataSplit.size() == 2)
+		{
+			pluginName= dataSplit[0];
+			componentName = dataSplit[1];
+		}
+		_controler->addComponent(pluginName, componentName, mapToScene(event->pos()));
 	}
 }
-
 
 //-----------------------------------------------------------------------
 void StreamView::scrollContentsBy(int dx, int dy)

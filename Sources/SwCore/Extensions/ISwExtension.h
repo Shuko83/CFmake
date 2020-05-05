@@ -32,6 +32,9 @@ namespace StreamWork {
             /** @brief renvoie le nom */
             virtual QString getName()=0;
 
+			/** @brief renvoie le nom du plugin*/
+			virtual QString getPluginName()=0;
+
             /** @brief renvoie le nom du type de composant*/
             virtual QString getComponentType()=0;
 

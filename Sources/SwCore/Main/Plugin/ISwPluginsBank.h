@@ -75,16 +75,14 @@ namespace StreamWork
             virtual QSet<ISwPluginFactory *> & GetPluginList(QString path) throw(SwException)=0;
             /*! \brief Acces a liste de tous les plugins */
             virtual QMap<QString,SwPluginFactory_Class *> * GetAllPlugins()=0;
-            /*! \brief Acces a la liste des noms de tous les composants */
-            virtual const QSet<QString> GetComponentsList()=0;
             /*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donné*/
-            virtual QList<QString> GetControllersListForType(int type_identifier)=0;
+            virtual QList< QPair<QString, QString> > GetControllersListForType(int type_identifier)=0;
             /*! \brief Acces a la description d'un composant */
-            virtual QString GetComponentDescription(QString component_name) throw(SwException)=0;
+            virtual QString GetComponentDescription(QString plugin_name, QString component_name) throw(SwException)=0;
             /*! \brief Acces a l'icone d'un composant */
-            virtual QIcon GetComponentIcon(QString component_name) throw(SwException)=0;
+            virtual QIcon GetComponentIcon(QString plugin_name, QString component_name) throw(SwException)=0;
             /*! \brief Creation d'un composant a partir de son nom*/
-            virtual SwComponent_Class * CreateComponent(QString component_name) throw(SwException)=0;
+            virtual SwComponent_Class * CreateComponent(QString plugin_name, QString component_name) throw(SwException)=0;
             /*! \brief Relire le contenu d'un plugin (pour les plugins dont le contenu a changer)*/
             virtual void RereadPluginContent(SwPluginFactory_Class * plugin) throw(SwException)=0;
             /*! \brief Acces au modèle pour l'affichage*/

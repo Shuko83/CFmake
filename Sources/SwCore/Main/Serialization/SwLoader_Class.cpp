@@ -64,7 +64,7 @@ void SwLoader_Class::LoadGroup(SwComponent_Class * parent_component,QDomDocument
     SwComponent_ClassPtr tmp_parent_component;  
     SwComponent_ClassPtr component;  
     QDomElement path_elt;
-    tmp_parent_component=SW_APP->ComponentsBank().CreateComponent("");    
+    tmp_parent_component=SW_APP->ComponentsBank().CreateComponent("", "");
 
     //Check du header
     QDomElement root_elt=doc.documentElement();
@@ -99,7 +99,8 @@ void SwLoader_Class::LoadGroup(SwComponent_Class * parent_component,QDomDocument
 SwComponent_ClassPtr SwLoader_Class::BuildStream(QDomElement & node,SwComponent_Class * parent_component,bool create_always) throw(SwException){
     SwComponent_ClassPtr component;
     SwComponent_ClassPtr child_component;
-    QString factory_name;
+	QString plugin_name;
+	QString factory_name;
     QString name;
     QString description;
     QDomElement service_node;
@@ -134,17 +135,19 @@ SwComponent_ClassPtr SwLoader_Class::BuildStream(QDomElement & node,SwComponent_
         }
         //Non alors on le crée
         //Recuperation nom d'usine
-        factory_name=node.attribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME);
+		plugin_name = node.attribute(CG_SW_XML_COMPONENT_NODE_ATT_PLUGIN_NAME);
+		factory_name = node.attribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME);
         //check du nom d'usine
-        if (factory_name.isEmpty()) {
+        /// TEMP FOR UPDATING STREAMS
+        if (/*plugin_name.isEmpty() && */factory_name.isEmpty()) {
             //Creation du composant par defaut
-            component=SW_APP->ComponentsBank().CreateComponent("");
+            component=SW_APP->ComponentsBank().CreateComponent("", "");
         } else {
             //Creation du composant
-            component=SW_APP->ComponentsBank().CreateComponent(factory_name);
+            component=SW_APP->ComponentsBank().CreateComponent(plugin_name, factory_name);
         }
         if (component==NULL) {
-            SW_APP->Logger().Log(LogLvl_Critical,"At %d,%d , failed to create component of type %s",node.lineNumber(),node.columnNumber(),factory_name.toLatin1().data());
+            SW_APP->Logger().Log(LogLvl_Critical,"At %d,%d , failed to create component of type %s from plugin %s",node.lineNumber(),node.columnNumber(),factory_name.toLatin1().data(),plugin_name.toLatin1().data());
             return SwComponent_ClassPtr(0);       
         }
         if (use_suggested_name) {

@@ -79,8 +79,6 @@ namespace StreamWork
         private:
             /*! \brief path */
             QString _path;
-            /*! \brief name */
-            QString _name;
             /*! \brief QMap des composants et de leur descriptions */
             QMap<QString,QString> _component_description;
             /*! \brief QMap des data et de leur types */
@@ -111,8 +109,6 @@ namespace StreamWork
             virtual ~SwPluginFactory_Class();
             /*! \brief Definition path du plugin */
             void SetPath(QString path);
-            /*! \brief Definition du nom du plugin */
-            void SetPluginName(QString plugin_name);
             /*! \brief Initialisation */
             virtual void Initialize();
             /*! \brief finalisation de l'initialisation DECLARER LES SERVICES GLOBAUX ICI*/
@@ -124,8 +120,6 @@ namespace StreamWork
             //---------------------------------------------------------------------
             /*! \brief Acces au path du plugin */
             QString GetPath();
-            /*! \brief Acces au nom du plugin */
-            QString GetPluginName();
             /*! \brief Acces a la version du plugin */
             virtual QString GetPluginVersion();
 			/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/

@@ -9,18 +9,20 @@
 using namespace StreamWork::SwCore;
 
 /** @brief Constructor */
-SwExtensionImpl::SwExtensionImpl(QString type,QString name,QString componentTypeName){
+SwExtensionImpl::SwExtensionImpl(QString type,QString name,QString pluginName,QString componentTypeName){
     _type=type;
     _name=name;
-    _componentTypeName=componentTypeName;
+	_pluginName=pluginName;
+	_componentTypeName=componentTypeName;
     _component=0;
     _status=Abstract;
 }
 /** @brief Constructor */
-SwExtensionImpl::SwExtensionImpl(QString type,QString name,QString componentTypeName,SwComponent_Class * component){
+SwExtensionImpl::SwExtensionImpl(QString type,QString name,QString pluginName,QString componentTypeName,SwComponent_Class * component){
     _type=type;
     _name=name;
-    _componentTypeName=componentTypeName;
+	_pluginName=pluginName;
+	_componentTypeName=componentTypeName;
     _component=component;
     _status=Concrete;
 }
@@ -43,6 +45,11 @@ QString SwExtensionImpl::getName(){
     return _name;
 }
 
+/** @brief renvoie le nom du plugin*/
+QString SwExtensionImpl::getPluginName() {
+	return _pluginName;
+}
+
 /** @brief renvoie le nom du type de composant*/
 QString SwExtensionImpl::getComponentType(){
     return _componentTypeName;
@@ -58,7 +65,7 @@ ISwExtension * SwExtensionImpl::concretise(SwComponent_Class * sourceComponent){
     if (_status==Concrete) {
         return this;
     }
-    SwRefPtr<SwComponent_Class> ncomponent=SW_APP->ComponentsBank().CreateComponent(_componentTypeName);
+    SwRefPtr<SwComponent_Class> ncomponent=SW_APP->ComponentsBank().CreateComponent(_pluginName, _componentTypeName);
     if (ncomponent.get()!=0) {
         SwComponent_Class * parentComponent=sourceComponent->GetParent();
         if (parentComponent==0) {
@@ -66,7 +73,7 @@ ISwExtension * SwExtensionImpl::concretise(SwComponent_Class * sourceComponent){
         }
         ncomponent->SetName(parentComponent->GetSuggestedNameForChild(ncomponent->GetName()));
         parentComponent->AddChild(ncomponent);
-        return new SwExtensionImpl(_type,_name,_componentTypeName,ncomponent.get());
+        return new SwExtensionImpl(_type,_name,_pluginName,_componentTypeName,ncomponent.get());
     } else {
         return 0;
     }

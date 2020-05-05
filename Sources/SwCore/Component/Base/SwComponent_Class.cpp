@@ -52,6 +52,18 @@ SwComponent_Class::~SwComponent_Class()
 }
 
 //-----------------------------------------------------------------------
+void SwComponent_Class::SetFactoryName(QString factory_name)
+{
+	_factory_name = factory_name;
+}
+
+//-----------------------------------------------------------------------
+QString SwComponent_Class::GetFactoryName()
+{
+	return _factory_name;
+}
+
+//-----------------------------------------------------------------------
 void SwComponent_Class::SetFactoryComponentName(QString factory_component_name)
 {
 	_factory_component_name = factory_component_name;

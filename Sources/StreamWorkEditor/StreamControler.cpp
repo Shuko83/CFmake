@@ -427,10 +427,10 @@ QMenu * StreamControler::getContextualMenu(const QPointF & p)
 }
 
 //-----------------------------------------------------------------------
-void StreamControler::addComponent(const QString & name, const QPointF & p)
+void StreamControler::addComponent(const QString & pluginName, const QString & name, const QPointF & p)
 {
 	_creationPosition = p;
-	SwComponent_ClassPtr component = SW_FACTORIES.CreateComponent(name);
+	SwComponent_ClassPtr component = SW_FACTORIES.CreateComponent(pluginName, name);
 	QList<QGraphicsItem *> list = _streamScene->items(p);
 	QList<ComponentGraphicItem *> listc;
 	for ( int i = 0; i < list.count(); i++ )
@@ -946,7 +946,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 
 	QString modelHostName = "__host";
 	//Ajout model host
-	SwComponent_Class * modelHost = SW_APP->ComponentsBank().CreateComponent("SwModelHost");
+	SwComponent_Class * modelHost = SW_APP->ComponentsBank().CreateComponent("SwModel", "SwModelHost");
 	modelHost->SetName(modelHostName);
 
 	SwComponent_Class *cp = _rootComponent->GetChild(modelHostName);
@@ -1100,7 +1100,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 
 
 	// Insertion du model final
-	SwComponent_Class * model = SW_APP->ComponentsBank().CreateComponent(modelName);
+	SwComponent_Class * model = SW_APP->ComponentsBank().CreateComponent("SwModel", modelName);
 	model->SetName(modelName + "_instance");
 
 	_creationPosition = targetpos;

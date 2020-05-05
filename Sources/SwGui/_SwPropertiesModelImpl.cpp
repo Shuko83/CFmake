@@ -630,7 +630,7 @@ void _SwPropertiesModelImpl::onMenuRequested( const QPoint & globalpos,QModelInd
     } else {
         //Si elle n'est pas controlé, on propose la liste des controleurs valide pour son type
         QVariant val=_action_item->_property->GetValue();
-        QList<QString> liste=SW_FACTORIES.GetControllersListForType(val.userType());
+        QList< QPair<QString,QString>> liste=SW_FACTORIES.GetControllersListForType(val.userType());
         if (liste.count()==0) {
             _action_item=NULL;
             return;
@@ -639,7 +639,7 @@ void _SwPropertiesModelImpl::onMenuRequested( const QPoint & globalpos,QModelInd
         QMenu * ctrl_menu=menu->addMenu(QString("Add Controller"));
         ctrl_menu->connect(ctrl_menu,SIGNAL(triggered(QAction *)),this,SLOT(OnAttachController(QAction *)));
         for(int i=0;i<liste.count();i++) {
-            ctrl_menu->addAction(liste[i]);
+            ctrl_menu->addAction(liste[i].first + "::" + liste[i].second);
         }
         menu->exec(globalpos);
         delete menu;
@@ -657,7 +657,10 @@ void _SwPropertiesModelImpl::OnAttachController(QAction * a) {
     ISwController * i_controller;
     SwComponent_Class * host;
     //Creation du controller
-    controller=SW_FACTORIES.CreateComponent(a->text());
+	QStringList actionText = a->text().split("::");
+	QString pluginName = actionText.count() == 2? actionText[0]:QString();
+	QString controllerName = actionText.count() == 2 ? actionText[1] : QString();
+    controller=SW_FACTORIES.CreateComponent(pluginName, controllerName);
     if (controller==NULL)
         return;
     //Ok ajout en tant qu'enfant du host de la propriété
@@ -669,4 +672,3 @@ void _SwPropertiesModelImpl::OnAttachController(QAction * a) {
     i_controller->InitializeControl(_action_item->_property->GetHostingService(),_action_item->_property->GetRealName());
     //Fin
 }
-

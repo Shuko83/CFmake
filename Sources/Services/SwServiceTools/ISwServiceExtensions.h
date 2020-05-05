@@ -57,7 +57,7 @@ namespace StreamWork {
 
         protected:
             /*! \brief Permet d'enregistrer une extension avec le type en nom (utliser la methode precedente)*/
-            virtual void registerExtensionWithType(QString extension_type_name,QString extension_name,QString component_name)=0;
+            virtual void registerExtensionWithType(QString extension_type_name,QString extension_name,QString pluginName,QString component_name)=0;
 
         };
     

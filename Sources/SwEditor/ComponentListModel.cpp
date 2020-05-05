@@ -64,14 +64,14 @@ QMimeData * ComponentListModel::mimeData(const QModelIndexList &indexes) const{
      QString text;
 
      if (indexes.count()==1) {
-         text=data(indexes.front(), Qt::DisplayRole).toString();
+         text= data(indexes.front(), Qt::UserRole).toString() + "::" + data(indexes.front(), Qt::DisplayRole).toString();
          mimeData->setData("application/mod",text.toLatin1());
          return mimeData;
      }
 
 	 for (QModelIndex index: indexes) {
          if (index.isValid()) {
-             text=text+data(index, Qt::DisplayRole).toString();
+             text=text+ data(indexes.front(), Qt::UserRole).toString() + "::" + data(indexes.front(), Qt::DisplayRole).toString();
              text+= ";";
          }
      }

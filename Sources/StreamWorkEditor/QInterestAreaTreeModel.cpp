@@ -196,5 +196,5 @@ QGraphicsItem * QInterestAreaTreeModel::Item::getGraphicsItem() {
 QIcon QInterestAreaTreeModel::Item::getIcon() {
     if (_ia!=0)
         return _ico;
-    return SW_APP->ComponentsBank().GetComponentIcon(_cg->getComponent()->GetFactoryComponentName());
+    return SW_APP->ComponentsBank().GetComponentIcon(_cg->getComponent()->GetFactoryName(), _cg->getComponent()->GetFactoryComponentName());
 }

@@ -200,7 +200,8 @@ namespace StreamWork
             /*! \brief Ajout d'un stream preconstruit*/
             void AddNewStream(SwComponent_Class * stream_root);
             /*! \brief Creation d'un stream */
-            SwComponent_Class * CreateNewStream(QString name_of_stream,QString component_type=QString());
+			SwComponent_Class * CreateNewStream(QString name_of_stream);
+			SwComponent_Class * CreateNewStream(QString name_of_stream, QString plugin_name, QString component_type);
             /*! \brief Destruction d'un stream */
             void DestroyStream(SwComponent_Class * stream_root) throw(SwException);
 			/*! \brief Acces au premier stream */

@@ -47,7 +47,7 @@ using namespace StreamWork::SwEditor;
 _SwEditorGraphicItem::_SwEditorGraphicItem(SwComponent_Class * host_comp):QGraphicsItem() {
     //Definition du composant parent
     _host_comp=host_comp;
-    QIcon ico=SW_APP->ComponentsBank().GetComponentIcon(_host_comp->GetFactoryComponentName());
+    QIcon ico=SW_APP->ComponentsBank().GetComponentIcon(_host_comp->GetFactoryName(),_host_comp->GetFactoryComponentName());
     _icone=ico.pixmap(CL_SW_GITEM_DEFAULT_ICON_DIM,CL_SW_GITEM_DEFAULT_ICON_DIM);
     QIcon icor=QIcon(":/SwEditor/mod_run.png");
     _icone_run=icor.pixmap(11,14);
@@ -120,15 +120,24 @@ void _SwEditorGraphicItem::dropEvent ( QGraphicsSceneDragDropEvent * event ) {
     _SwEditorGraphicItem * iitem;
     QPointF drop_pos=event->pos();
     try {
-        QStringList comps_list;
+        QList< QPair<QString, QString> > comps_list;
         if (event->mimeData()->hasFormat("application/mod")) {
-            comps_list.push_back(QString(event->mimeData()->data("application/mod").data()));
+			QString data = QString(event->mimeData()->data("application/mod").data());
+			QStringList dataSplit = data.split("::");
+			if(dataSplit.size() == 2)
+				comps_list.push_back(qMakePair(dataSplit[0], dataSplit[1]));
         } else {
-            QString comps=QString(event->mimeData()->data("application/mod_list").data());
-            comps_list=comps.split(";",QString::SkipEmptyParts);
+            QString datas =QString(event->mimeData()->data("application/mod_list").data());
+			QStringList data_list= datas.split(";",QString::SkipEmptyParts);
+			for (QString data : data_list)
+			{
+				QStringList dataSplit = data.split("::");
+				if (dataSplit.size() == 2)
+					comps_list.push_back(qMakePair(dataSplit[0], dataSplit[1]));
+			}
         }
         for(int i=0;i<comps_list.count();i++) {
-            _operations->AddChild(comps_list[i]);
+            _operations->AddChild(comps_list[i].first, comps_list[i].second);
             comp=_operations->GetSelectedComponent(0);
             if (comp!=NULL) {
                 iitem=dynamic_cast<_SwEditorGraphicItem *>(comp->QueryService(CG_SW_SERVICE_EDITOR_GRAPHIC_ITEM));

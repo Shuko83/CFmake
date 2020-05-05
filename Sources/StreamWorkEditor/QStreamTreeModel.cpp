@@ -112,11 +112,11 @@ QVariant QStreamTreeModel::data(const QModelIndex & index, int role) const
 	}
 	if ( role == Qt::DisplayRole && index.column() == 3 )
 	{
-		return QVariant(SW_APP->ComponentsBank().GetComponentDescription(component->GetFactoryComponentName()));
+		return QVariant(SW_APP->ComponentsBank().GetComponentDescription(component->GetFactoryName(), component->GetFactoryComponentName()));
 	}
 	if ( role == Qt::DecorationRole && index.column() == 0 )
 	{
-		return QVariant(SW_APP->ComponentsBank().GetComponentIcon(component->GetFactoryComponentName()));
+		return QVariant(SW_APP->ComponentsBank().GetComponentIcon(component->GetFactoryName(), component->GetFactoryComponentName()));
 	}
 	if ( role == Qt::ForegroundRole && _selection.indexOf(component) >= 0 )
 	{

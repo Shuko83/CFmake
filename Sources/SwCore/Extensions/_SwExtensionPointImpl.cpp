@@ -49,7 +49,7 @@ ISwExtension * _SwExtensionPointImpl::getExtension() {
         while (!iname.isNull()) {
             if (!iname.isNull() && iname==_name && itype==_type) {
                 if (provider!=0) {
-                    return new SwExtensionImpl(_type,_name,provider->GetHostComponent()->GetFactoryComponentName(),provider->GetHostComponent());
+                    return new SwExtensionImpl(_type,_name,provider->GetHostComponent()->GetFactoryName(),provider->GetHostComponent()->GetFactoryComponentName(),provider->GetHostComponent());
                 } else {
                     return 0;
                 }

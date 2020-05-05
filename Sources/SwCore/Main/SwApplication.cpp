@@ -378,9 +378,18 @@ void SwApplication::AddNewStream(SwComponent_Class * stream_root)
 }
 
 //-----------------------------------------------------------------------
-SwComponent_Class * SwApplication::CreateNewStream(QString name_of_stream, QString component_type)
+SwComponent_Class * SwApplication::CreateNewStream(QString name_of_stream)
 {
-	SwComponent_ClassPtr component = _bank->CreateComponent(component_type);
+	SwComponent_ClassPtr component = _bank->CreateComponent(QString(), QString());
+	component->SetName(name_of_stream);
+	_streams.insert(component);
+	return component;
+}
+
+//-----------------------------------------------------------------------
+SwComponent_Class * SwApplication::CreateNewStream(QString name_of_stream, QString plugin_name, QString component_type)
+{
+	SwComponent_ClassPtr component = _bank->CreateComponent(plugin_name, component_type);
 	component->SetName(name_of_stream);
 	_streams.insert(component);
 	return component;

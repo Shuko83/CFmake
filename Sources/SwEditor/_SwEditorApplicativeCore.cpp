@@ -187,10 +187,9 @@ void _SwEditorApplicativeCore::QuitEditor() {
 /*! \brief Crée un nouveau stream vide*/
 void _SwEditorApplicativeCore::NewStream() {
     QString stream_name;
-    QString root_component_type;
+	QString root_component_type;
+	QString root_plugin_name;
     QStringList list_of_components;
-    QSet<QString> std_list_of_components;
-    QSet<QString>::iterator it;
     bool result;
     SwComponent_Class * root_component;
 
@@ -199,20 +198,31 @@ void _SwEditorApplicativeCore::NewStream() {
     if (result!=true)
         return;
     //Demande du type de demarrage
-    std_list_of_components=SW_APP->ComponentsBank().GetComponentsList();
-    for (it=std_list_of_components.begin();it!=std_list_of_components.end();it++) list_of_components.push_back(*it);
+    QList<SwPluginFactory_Class*> list_of_plugins=SW_APP->ComponentsBank().GetAllPlugins()->values();
+	for (auto it = list_of_plugins.begin(); it != list_of_plugins.end(); it++)
+	{
+		for(QString component : (*it)->GetComponentsList())
+			list_of_components.push_back((*it)->GetPluginName() + "::" + component);
+	}
     list_of_components.push_front(QString("<empty component>"));
     root_component_type=QInputDialog::getItem(NULL,"StreamWorkEditor::Type of the root component","Select the type of the root component",list_of_components,0,false,&result);
     if (result!=true)
         return;
     if (root_component_type==QString("<empty component>")) {
-        root_component_type=QString();
+		root_component_type = QString();
+		root_plugin_name = QString();
     }
+	else
+	{
+		QStringList nameSplit = root_component_type.split("::");
+		root_component_type = nameSplit[0];
+		root_plugin_name = nameSplit[1];
+	}
     //Creation du nouveau stream
     RegisterPostProcessing();
     _create_graphic_scene=true;
     try {
-        root_component=SW_APP->CreateNewStream(stream_name,root_component_type);
+        root_component=SW_APP->CreateNewStream(stream_name, root_plugin_name,root_component_type);
         root_component->SetDescription(stream_name+".xml");
     } catch (SwException & e) {
         UnregisterPostProcessing();
@@ -459,9 +469,12 @@ void _SwEditorApplicativeCore::_InternalSelection::DefineSelection(ISwEditorStre
 // Ajout composant
 //-------------------------------------------------------------
 /*! \brief Ajoute un component enfant au composant courant*/
-void _SwEditorApplicativeCore::_InternalSelection::AddChild(QString component_type){
+void _SwEditorApplicativeCore::_InternalSelection::AddChild() {
+	AddChild(QString(), QString());
+}
+void _SwEditorApplicativeCore::_InternalSelection::AddChild(QString plugin_name, QString component_type){
     _p_core->RegisterPostProcessing();
-    if (_selection!=NULL) _selection->AddChild(component_type);
+    if (_selection!=NULL) _selection->AddChild(plugin_name, component_type);
     _p_core->UnregisterPostProcessing();
 }
 //-------------------------------------------------------------

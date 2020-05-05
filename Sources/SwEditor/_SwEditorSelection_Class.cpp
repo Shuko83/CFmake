@@ -50,11 +50,15 @@ void _SwEditorSelection_Class::Liberate() {
 // Ajout composant
 //-------------------------------------------------------------
 /*! \brief Ajoute un component enfant au composant courant*/
-void _SwEditorSelection_Class::AddChild(QString component_type) {
+void _SwEditorSelection_Class::AddChild() {
+	AddChild(QString(), QString());
+}
+
+void _SwEditorSelection_Class::AddChild(QString plugin_name, QString component_type) {
     SwComponent_ClassPtr component;
     QString new_name;
     //Creation du composant
-    component=SW_APP->ComponentsBank().CreateComponent(component_type);
+    component=SW_APP->ComponentsBank().CreateComponent(plugin_name, component_type);
     //Renommage du composant si necessaire
     new_name=_host_component->GetSuggestedNameForChild(component->GetName());
     component->SetName(new_name);

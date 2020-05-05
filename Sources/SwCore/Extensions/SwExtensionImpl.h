@@ -20,9 +20,9 @@ namespace StreamWork {
         class BUILD_SWCORE SwExtensionImpl : public ISwExtension{
         public:
             /** @brief Constructor */
-            SwExtensionImpl(QString type,QString name,QString componentTypeName);
+            SwExtensionImpl(QString type,QString name,QString pluginName,QString componentTypeName);
             /** @brief Constructor */
-            SwExtensionImpl(QString type,QString name,QString componentTypeName,SwComponent_Class * component);
+            SwExtensionImpl(QString type,QString name,QString pluginName, QString componentTypeName,SwComponent_Class * component);
             /** @brief Destructor */
             virtual ~SwExtensionImpl();
 
@@ -34,6 +34,9 @@ namespace StreamWork {
 
             /** @brief renvoie le nom */
             virtual QString getName();
+
+			/** @brief renvoie le nom du plugin*/
+			virtual QString getPluginName();
 
             /** @brief renvoie le nom du type de composant*/
             virtual QString getComponentType();
@@ -47,7 +50,8 @@ namespace StreamWork {
             ExtensionStatus _status;
             QString _type;
             QString _name;
-            QString _componentTypeName;
+			QString _pluginName;
+			QString _componentTypeName;
             SwComponent_Class * _component;
         };
     
