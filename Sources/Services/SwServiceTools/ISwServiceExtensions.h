@@ -27,9 +27,9 @@ namespace StreamWork {
         public:
 
             /*! \brief Permet d'enregistrer une extension*/
-            template<typename T> inline void registerExtension(QString extension_name,QString component_name){
+            template<typename T> inline void registerExtension(QString extension_name, QString plugin_name, QString component_name){
                 T * handle;
-                registerExtensionWithType(QString(typeid(handle).name()),extension_name,component_name);
+                registerExtensionWithType(QString(typeid(handle).name()),extension_name,plugin_name,component_name);
             }
             
             /*! \brief Permet d'avoir une liste d'extension pourt un type donne*/
