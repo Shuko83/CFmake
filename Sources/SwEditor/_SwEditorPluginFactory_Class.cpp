@@ -18,6 +18,7 @@
 #include "_SwEditorStreamNavigatorActions.h"
 #include "_SwEditorStreamOperationsActions.h"
 #include "_SwEditorStreamView.h"
+#include "info_SwEditor.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwEditor;
@@ -132,6 +133,11 @@ double _SwEditorPluginFactory_Class::GetPluginCompilationDate(){
 
 	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
 
+}
+
+QString _SwEditorPluginFactory_Class::GetPluginName() const
+{
+	return SwEditor::name();
 }
 
 SwPluginFactory_Class *  GetPluginInterface()

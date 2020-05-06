@@ -42,6 +42,8 @@ public:
 	/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/
 	virtual double GetPluginCompilationDate();
 
+	QString GetPluginName() const override;
+
 private:
 	SwServiceSaveConfiguration * _serviceconfiguration;
 };

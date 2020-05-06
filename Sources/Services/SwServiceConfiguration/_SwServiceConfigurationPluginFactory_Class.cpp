@@ -2,6 +2,7 @@
 #include "SwApplication.h"
 #include "SwMacros.h"
 #include "SwConfPushButton.h"
+#include "info_SwServiceConfiguration.h"
 
 #include <QRegularExpression>
 
@@ -86,6 +87,12 @@ double _SwServiceConfigurationPluginFactory_Class::GetPluginCompilationDate()
 	finalDateTime.setTime(time);
 
 	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
+}
+
+//----------------------------------------------------------------------------------------------
+QString _SwServiceConfigurationPluginFactory_Class::GetPluginName() const
+{
+	return SwServiceConfiguration::name();
 }
 
 //----------------------------------------------------------------------------------------------

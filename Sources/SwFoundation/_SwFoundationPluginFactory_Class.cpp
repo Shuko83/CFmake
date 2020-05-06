@@ -15,6 +15,8 @@
 
 #include "_SwFoundationPluginFactory_Class.h"
 
+#include "info_SwFoundation.h"
+
 /*! \brief Constructeur */
 _SwFoundationPluginFactory_Class::_SwFoundationPluginFactory_Class():SwPluginFactory_Class() {
 
@@ -77,7 +79,14 @@ double _SwFoundationPluginFactory_Class::GetPluginCompilationDate(){
 
 }
 
+//-------------------------------------------------------------------------
 SwPluginFactory_Class *  GetPluginInterface()
 {
 	return new _SwFoundationPluginFactory_Class;
+}
+
+//-------------------------------------------------------------------------
+QString _SwFoundationPluginFactory_Class::GetPluginName() const
+{
+	return SwFoundation::name();
 }

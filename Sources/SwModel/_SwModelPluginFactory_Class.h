@@ -56,6 +56,7 @@ public:
     //Here public method
     virtual void modelAdded(QString name,QString description);
 
+	QString GetPluginName() const override;
 };
 
 extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();

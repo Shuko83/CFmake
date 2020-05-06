@@ -58,6 +58,8 @@ public:
 	/*! \brief sur suppression d'une  interface */
 	void OnUnregisterService(ISwService * service);
 
+	QString GetPluginName() const override;
+
 private:
 };
 

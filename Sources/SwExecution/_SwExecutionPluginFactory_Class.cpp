@@ -13,6 +13,7 @@
 #include "_SwExecutionPluginFactory_Class.h"
 #include "_SwExecutor.h"
 #include "_SwSwitchExecutor.h"
+#include "info_SwExecution.h"
 
 using namespace StreamWork::SwCore;
 
@@ -106,6 +107,12 @@ double _SwExecutionPluginFactory_Class::GetPluginCompilationDate()
 
 	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
 
+}
+
+//-----------------------------------------------------------------------
+QString _SwExecutionPluginFactory_Class::GetPluginName() const
+{
+	return SwExecution::name();
 }
 
 //-----------------------------------------------------------------------

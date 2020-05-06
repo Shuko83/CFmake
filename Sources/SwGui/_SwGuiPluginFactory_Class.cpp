@@ -55,6 +55,8 @@
 #include "SwActionToToolButton.h"
 #include "_SwGuiCompQWidgetToQDialog.h"
 
+#include "info_SwGui.h"
+
 using namespace StreamWork::SwCore;
 
 //---------------------------------------------------------------------
@@ -299,6 +301,12 @@ double _SwGuiPluginFactory_Class::GetPluginCompilationDate()
 
 	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
 
+}
+
+//-------------------------------------------------------------------------
+QString _SwGuiPluginFactory_Class::GetPluginName() const
+{
+	return SwGui::name();
 }
 
 //-------------------------------------------------------------------------

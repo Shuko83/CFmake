@@ -1,5 +1,5 @@
 #include "_SwServiceShortcutPluginFactory_Class.h"
-
+#include "info_SwServiceShortcut.h"
 #include "SwApplication.h"
 #include "SwMacros.h"
 
@@ -83,6 +83,12 @@ double _SwServiceShortcutPluginFactory_Class::GetPluginCompilationDate()
 	finalDateTime.setTime(time);
 
 	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
+}
+
+//----------------------------------------------------------------------------------------------
+QString _SwServiceShortcutPluginFactory_Class::GetPluginName() const
+{
+	return SwServiceShortcut::name();
 }
 
 //----------------------------------------------------------------------------------------------

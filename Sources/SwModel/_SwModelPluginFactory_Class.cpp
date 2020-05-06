@@ -21,6 +21,7 @@
 #include "SwSnapShotPropertiesService.h"
 #include "ISwEditionService.h"
 #include "SwModelsListAccess.h"
+#include "info_SwModel.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwModel;
@@ -188,6 +189,12 @@ double _SwModelPluginFactory_Class::GetPluginCompilationDate()
 
 	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
 
+}
+
+//----------------------------------------------------------------------------------------------
+QString _SwModelPluginFactory_Class::GetPluginName() const
+{
+	return SwModel::name();
 }
 
 //-----------------------------------------------------------------------

@@ -1,6 +1,7 @@
 #include "SwServiceMainWindowPluginFactory_Class.h"
 #include "SwApplication.h"
 #include "SwMacros.h"
+#include "info_SwServiceMainWindow.h"
 
 #include <QRegularExpression>
 
@@ -78,6 +79,12 @@ double SwServiceMainWindowPluginFactory_Class::GetPluginCompilationDate()
 	finalDateTime.setTime(time);
 
 	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
+}
+
+//----------------------------------------------------------------------------------------------
+QString SwServiceMainWindowPluginFactory_Class::GetPluginName() const
+{
+	return SwServiceMainWindow::name();
 }
 
 //----------------------------------------------------------------------------------------------
