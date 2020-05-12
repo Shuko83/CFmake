@@ -72,6 +72,10 @@ namespace StreamWork
             /*! \brief recuperatoin d'une liste de path d'un fichier descripteur */
             QList<QString> getPathsFromFile(QFile *f);
 
+			std::string getPluginLicence() const;
+
+			std::string pluginLicence;
+
 			QList<QString> _dllWithError;
 		public:
             /*! \brief Constructeur */

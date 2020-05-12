@@ -18,12 +18,22 @@
 #include <QApplication>
 #include <QDebug>
 #include <QRegularExpression>
+#include <windows.h>
+#include <psapi.h>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 #include "_SwPluginsBank_Class.h"
 #include "SwApplication.h"
 #include "SwMacros.h"
 #include "SwData_Class.h"
 #include "_SwTreeItem.h"
+#include "SwProtectedPluginFactory_Class.h"
+#include "cryptlib.h"
+#include "rsa.h"
+#include "hex.h"
+#include "osrng.h"
+#include "files.h"
 
 
 #include <stdlib.h> 
@@ -44,6 +54,7 @@ using namespace StreamWork::SwCore;
 /*! \brief list des popups déjà popé pour une DLL pour éviter le flood */
 static QList<QString> _msgBoxAllReadyPopup;
 
+static std::string private_key = "30820274020100300D06092A864886F70D01010105000482025E3082025A02010002818100A8B3838DAE1FC7F9F33C643BBF5A3B5B2D3E1A7C94319BD00353B8538CE6F38503B5AD74EBAF5D6BB80870ECD1D1C79BD1E735E70BD02B76BBB06184D3CA4024D87433C49006E1D9EA568F08468F990E8E9D66D3E875D9711B6A30C7EA311871DF77FD503335EDFDB1CF9B58BB8BE8855BA63162B4EDCC3EDD5CBCA5904B0F470201110281800881858EAC467157E58A9309775CC04DBD70D8762596F03135F302D709416D15C3F3A5C9A8ECE0238C818050C7E3DABC8FF62523503137F91438388C1348958500B2000F86410E31C934803312DAA1288A3869FFC47B5216904CD9DF2A1BBC0821B9C708EBEDB8EACDC67F1DCFACFBA5EB51F1F0443B2EB759696BFA4B932151024100C74A47926015FC6109568C552CCE79B80C7E35DEABAA3ACB960C429E2D5DA52E28CC447F725DDD60005943ECBC9F6814D626FFC605518C6FCF9080166D92AA4F024100D8B4EAFE493BF69D75196968CE7BA307CCC04FF9D93DC290ACBF0D0A4F02B74D19C7229FCEED3D176AEAD39CBD5B016B1FA5F32A1106769AA076B4559D27A5890241008CACE73A25B52A9ED96A44F0D4558318814A07E8792CDE355ADB7A51896F476BE0903059F660600787C68A4CC16176A54BDF4B225E1B7230CEC05A6A2F3A5A1902404C7C16B419D8EDA0FC271624FD950C5D1B16B2D0A706BD2400BBE67C1BE2D748637375A1D08FF771AD43D23751E3E2620B2B82FFC9C60BBE1A843FA5BEFEEF2102400F9F8E497279C4FEDF35939C6C53CAB9F713677A703A56CE3959D876AC260FE0F6D9F8E3FA0B90AF4313926280E6BE31FCD8924C0394D407ACADBA3779E6EA69";
 
 
 int setenv(const char *name, const char *value, int overwrite)
@@ -163,7 +174,7 @@ _SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel() {
 	   userName = QString::fromLocal8Bit(chNewEnv);
 #endif
 	}
-
+	pluginLicence = getPluginLicence();
 }
 /*! \brief Destructeur */
 _SwPluginsBank_Class::~_SwPluginsBank_Class(){
@@ -285,6 +296,16 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 			if (plugin_entry!=NULL) {
 				//Si trouvé extraction du plugin
 				SwPluginFactory_Class * plugin=plugin_entry();
+
+				// Check if plugin is protected
+				SwProtectedPluginFactory_Class* protectedPlugin = dynamic_cast<SwProtectedPluginFactory_Class*>(plugin);
+				if (protectedPlugin && !protectedPlugin->unlock(pluginLicence.c_str()))
+				{
+					qDebug() << QString("Plugin %1 is protected").arg(plugin->GetPluginName());
+					delete plugin;
+					continue;
+				}
+
 				//Info
 				if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("\tAdding plugin %1\n").arg(list_files[j]));
 				if (_plugin_by_name.contains(plugin->GetPluginName()))
@@ -386,6 +407,78 @@ QList<QString> _SwPluginsBank_Class::getPathsFromFile(QFile *f) {
 		pathelt=pathelt.nextSiblingElement("Path");
 	}
 	return pathList;
+}
+
+/* get the plugin licence */
+std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
+{
+	HANDLE	process = GetCurrentProcess();
+	DWORD	size;
+
+	// Process ID
+	int		processId = GetCurrentProcessId();
+
+	// Process Name
+	char processName[4096];
+	size = GetModuleBaseNameA(process, NULL, processName, 4095);
+	processName[size] = '\0';
+
+	// Process Times
+	FILETIME lpCreationTime;
+	FILETIME lpExitTime;
+	FILETIME lpKernelTime;
+	FILETIME lpUserTime;
+	if (!GetProcessTimes(process, &lpCreationTime, &lpExitTime, &lpKernelTime, &lpUserTime))
+		return false;
+
+	// User name
+	char userName[4096];
+	size = 4096;
+	GetUserNameA(userName, &size);
+	userName[size] = '\0';
+
+	// Computer name
+	char computerName[4096];
+	size = 4096;
+	GetComputerNameA(computerName, &size);
+	computerName[size] = 0;
+
+	QJsonObject jsonInfo;
+	jsonInfo.insert("ProcessID", processId);
+	jsonInfo.insert("ProcessName", processName);
+	jsonInfo.insert("ProcessLowDateTime", (int)lpCreationTime.dwLowDateTime);
+	jsonInfo.insert("ProcessHighDateTime", (int)lpCreationTime.dwHighDateTime);
+	jsonInfo.insert("UserName", userName);
+	//jsonInfo.insert("ComputerName", computerName);
+
+	// json info to string
+	QJsonDocument doc(jsonInfo);
+	QString data(doc.toJson(QJsonDocument::Compact));
+
+	try
+	{
+		// Génération du signer a partir de la clef privé
+		std::string privateKeyBin;
+		CryptoPP::StringSource(private_key, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(privateKeyBin)));
+		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PrivateKey privKey;
+		privKey.BERDecode(CryptoPP::StringStore(privateKeyBin).Ref());
+		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Signer priv(privKey);
+
+		// génération de la signature
+		CryptoPP::AutoSeededRandomPool rng;
+		byte *signature = new byte[priv.MaxSignatureLength()];
+		size_t size = priv.SignMessage(rng, (const byte*)data.toStdString().c_str(), data.length(), signature);
+
+		// Transformation de la signature de binaire a hexa
+		std::string signatureStringBinaire(reinterpret_cast<char const*>(signature), size);
+		std::string signatureStringhex;
+		CryptoPP::StringSource(signatureStringBinaire, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
+		return signatureStringhex;
+	}
+	catch (...)
+	{
+		return "";
+	}
 }
 
 /*! \brief Ajouter un descripteur de paths */

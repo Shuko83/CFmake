@@ -18,7 +18,7 @@
   * INCLUDES LOCAUX
   */
 //#include "SwGuiConstantes.h"
-#include <SwPluginFactory_Class.h>
+#include <SwProtectedPluginFactory_Class.h>
 #include "_SwModelsList.h"
 
 using namespace StreamWork::SwCore;
@@ -27,7 +27,7 @@ using namespace StreamWork::SwCore;
 	\class SwPluginFactory_Class 
 	\brief classe definissant un plugin usine
 */
-class _SwModelPluginFactory_Class : public SwPluginFactory_Class, public _ISwModelsListListener
+class _SwModelPluginFactory_Class : public SwProtectedPluginFactory_Class, public _ISwModelsListListener
 { 
 protected:
 

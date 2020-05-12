@@ -39,6 +39,7 @@ Main\Connexion\ISwPins_ManagerListener.h
 Main\Connexion\ISwInterfaces_Service.h
 Main\Connexion\ISwInterfaces_ServicesListener.h
 Main\Plugin\SwPluginFactory_Class.h
+Main\Plugin\SwProtectedPluginFactory_Class.h
 Main\Plugin\ISwPluginFactory.h
 Main\Plugin\ISwPluginOverview.h
 Main\Plugin\ISwPluginsBank.h
