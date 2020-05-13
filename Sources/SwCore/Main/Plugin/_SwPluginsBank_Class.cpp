@@ -449,7 +449,7 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 	jsonInfo.insert("ProcessLowDateTime", (int)lpCreationTime.dwLowDateTime);
 	jsonInfo.insert("ProcessHighDateTime", (int)lpCreationTime.dwHighDateTime);
 	jsonInfo.insert("UserName", userName);
-	//jsonInfo.insert("ComputerName", computerName);
+	jsonInfo.insert("ComputerName", computerName);
 
 	// json info to string
 	QJsonDocument doc(jsonInfo);
