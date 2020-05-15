@@ -109,6 +109,7 @@ namespace StreamWork
             /*! \brief Supprime un post processeur*/
             virtual void RemoveCreationPostProcessor(ISwCreationPostProcessor *)=0;
 
+			virtual void SetLicenceBuildDate(double buildDate) = 0;
 		};
 	}
 }

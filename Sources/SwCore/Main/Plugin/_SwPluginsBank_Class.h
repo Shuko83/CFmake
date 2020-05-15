@@ -74,9 +74,11 @@ namespace StreamWork
 
 			std::string getPluginLicence() const;
 
-			std::string pluginLicence;
+			std::string _pluginLicence;
 
 			QList<QString> _dllWithError;
+
+			double	_licenceBuildDate;
 		public:
             /*! \brief Constructeur */
             _SwPluginsBank_Class();
@@ -137,6 +139,8 @@ namespace StreamWork
 
 			void beginInsertRow(int index, _SwTreeItem * node);
 			void endInsertRow();
+
+			virtual void SetLicenceBuildDate(double buildDate);
 
             //----------------------------------------------------
             //-- Gestion des Creations Post Processor
