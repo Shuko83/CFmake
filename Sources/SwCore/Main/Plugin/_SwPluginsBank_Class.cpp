@@ -608,7 +608,7 @@ QIcon _SwPluginsBank_Class::GetComponentIcon(QString plugin_name, QString compon
 SwComponent_Class * _SwPluginsBank_Class::CreateComponent(QString plugin_name, QString component_name)  throw(SwException){
 	QMap<QString,SwPluginFactory_Class *>::const_iterator it;
 	QSet<ISwCreationPostProcessor *>::iterator itp;
-	SwComponent_Class * created_component;
+	SwComponent_Class * created_component = NULL;
 
 /// TEMP FOR UPDATING STREAMS
 	if (!component_name.isEmpty() && plugin_name.isEmpty()) {
