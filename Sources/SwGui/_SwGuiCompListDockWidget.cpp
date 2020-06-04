@@ -103,7 +103,7 @@ void _SwGuiCompListDockWidget::setWidgetNumber( uint nb )
                     delete iDock.value();
                     _dockwidgets.remove( interface_name );
                 }
-                unconsummeInterface( interface_name );
+                unconsumeInterface( interface_name );
             }
         }
         

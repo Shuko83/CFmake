@@ -22,7 +22,7 @@ _SwGuiCompQDockToDock::_SwGuiCompQDockToDock(): SwAssistedComponent(), _dock(NUL
 //-----------------------------------------------------------------------------
 _SwGuiCompQDockToDock::~_SwGuiCompQDockToDock()
 {
-	unconsummeInterface(QDOCKWIDGET_INTERFACE_NAME);
+	unconsumeInterface(QDOCKWIDGET_INTERFACE_NAME);
 	unprovideInterface(DOCKWIDGET_INTERFACE_NAME);
 }
 

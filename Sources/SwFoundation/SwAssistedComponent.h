@@ -452,7 +452,7 @@ namespace StreamWork {
 			 * @brief    : Permet de supprimer une interface consommée
 			 * @param	 : QString pinterface_name - Nom de l'interface
 			 */
-			virtual void unconsummeInterface(QString pinterface_name);
+			virtual void unconsumeInterface(QString pinterface_name);
 
 			/**
 			 * @brief    : Supprime la production d'interface

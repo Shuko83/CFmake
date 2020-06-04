@@ -404,10 +404,10 @@ SwAssistedComponent::~SwAssistedComponent()
 
 	//Clear Consummed Interface
 	for ( QString name : _mapIConsummed.keys() )
-		unconsummeInterface(name);
+		unconsumeInterface(name);
 
 	for ( auto name : _mapIConsummedWithCallBack.keys() )
-		unconsummeInterface(name);
+		unconsumeInterface(name);
 
 	//Clear provided interface
 	for (QString providedInterfaceName : _listIProvided)
@@ -806,7 +806,7 @@ void SwAssistedComponent::unprovideInterface( QString pinterface_name )
 }
 
 //-------------------------------------------------------------------------
-void SwAssistedComponent::unconsummeInterface( QString pinterface_name )
+void SwAssistedComponent::unconsumeInterface( QString pinterface_name )
 {
 	if(!_isConsumer)
 		return;

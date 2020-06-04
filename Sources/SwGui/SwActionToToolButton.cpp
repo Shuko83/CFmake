@@ -19,7 +19,7 @@ SwActionToToolButton::SwActionToToolButton() : SwAssistedComponent()
 //---------------------------------------------------
 SwActionToToolButton::~SwActionToToolButton()
 {
-    unconsummeInterface( "ISwAction" );
+    unconsumeInterface( "ISwAction" );
     unprovideInterface( "Widget" );
 
 	delete _toolButton;

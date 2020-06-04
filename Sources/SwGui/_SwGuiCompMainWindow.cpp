@@ -161,17 +161,17 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
     
     //DockWidget
     for( uint i = 0; i < _dockwidgets_nb; i++ )
-        unconsummeInterface( QString( CL_WIDGET_INTERFACE_NAME ).arg( i ) );
+        unconsumeInterface( QString( CL_WIDGET_INTERFACE_NAME ).arg( i ) );
         
     //ListDockWidget
     for( uint i = 0; i < _listdockwidgets_nb; i++ )
-        unconsummeInterface( QString( CL_LISTDOCKWIDGET_INTERFACE_NAME ).arg( i ) );
+        unconsumeInterface( QString( CL_LISTDOCKWIDGET_INTERFACE_NAME ).arg( i ) );
         
     //Central widget
-    unconsummeInterface( CL_CENTRALWIDGET_INTERFACE_NAME );
+    unconsumeInterface( CL_CENTRALWIDGET_INTERFACE_NAME );
     
     //Status bar
-    unconsummeInterface( STATUSBAR_INTERFACE );
+    unconsumeInterface( STATUSBAR_INTERFACE );
     
     //Event
     unprovideInterface( "ISwEvent" );
@@ -353,7 +353,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
             for( uint i = val; i < _menus_nb; i++ )
             {
                 interface_name = QString( CL_MENU_INTERFACE_NAME ).arg( i );
-                unconsummeInterface( interface_name );
+                unconsumeInterface( interface_name );
             }
         }
         //S'il faut en ajouter
@@ -381,7 +381,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
             for( uint i = val; i < _actions_nb; i++ )
             {
                 interface_name = QString( CL_ACTION_INTERFACE_NAME ).arg( i );
-                unconsummeInterface( interface_name );
+                unconsumeInterface( interface_name );
             }
         }
         //S'il faut en ajouter
@@ -409,7 +409,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
             for( uint i = val; i < _toolbars_nb; i++ )
             {
                 interface_name = QString( CL_TOOLBAR_INTERFACE_NAME ).arg( i );
-                unconsummeInterface( interface_name );
+                unconsumeInterface( interface_name );
                 //Positionnement
                 property_name = interface_name + ".where";
                 _toolbar_positions.erase( _toolbar_positions.find( interface_name ) );
@@ -460,7 +460,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
                     delete iDock.value();
                     _dockwidgets.remove( interface_name );
                 }
-                unconsummeInterface( interface_name );
+                unconsumeInterface( interface_name );
             }
         }
         //S'il faut en ajouter
@@ -491,7 +491,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
             for( uint i = val; i < _listdockwidgets_nb; i++ )
             {
                 interface_name = QString( CL_LISTDOCKWIDGET_INTERFACE_NAME ).arg( i );
-                unconsummeInterface( interface_name );
+                unconsumeInterface( interface_name );
             }
         }
         //S'il faut en ajouter

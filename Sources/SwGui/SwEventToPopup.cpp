@@ -22,8 +22,8 @@ SwEventToPopup::~SwEventToPopup()
 	//---------------------------------------------------
 	//				Gestion des Interfaces
 	//---------------------------------------------------
-	unconsummeInterface("ISwEvent");
-	unconsummeInterface("ISwQMainWindow");
+	unconsumeInterface("ISwEvent");
+	unconsumeInterface("ISwQMainWindow");
 }
 
 void SwEventToPopup::initializeComponent() throw(SwException)
