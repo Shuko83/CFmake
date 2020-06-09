@@ -34,7 +34,7 @@
 #include "hex.h"
 #include "osrng.h"
 #include "files.h"
-
+#include "ProductLicense.h"
 
 #include <stdlib.h> 
 
@@ -175,6 +175,8 @@ _SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel() {
 #endif
 	}
 	_pluginLicence = getPluginLicence();
+	_productLicense = new ProductLicense(licenseId::ProductId::Product_SX);
+	_productLicense->takeCore();
 }
 /*! \brief Destructeur */
 _SwPluginsBank_Class::~_SwPluginsBank_Class(){
@@ -297,14 +299,14 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 				//Si trouvé extraction du plugin
 				SwPluginFactory_Class * plugin=plugin_entry();
 
-				// Check if plugin compilation date is older than the license
-				if (_licenceBuildDate < plugin->GetPluginCompilationDate())
+				// Check if plugin compilation date is older than the licence
+ 				if (!_productLicense->checkBuildDate(plugin->GetPluginCompilationDate()))
 				{
 					qDebug() << QString("Plugin %1 is too recent").arg(plugin->GetPluginName());
 					delete plugin;
 					continue;
 				}
-				
+
 				// Check if plugin is protected
 				SwProtectedPluginFactory_Class* protectedPlugin = dynamic_cast<SwProtectedPluginFactory_Class*>(plugin);
 				if (protectedPlugin && !protectedPlugin->unlock(_pluginLicence.c_str()))
@@ -487,11 +489,6 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 	{
 		return "";
 	}
-}
-
-void StreamWork::SwCore::_SwPluginsBank_Class::SetLicenceBuildDate(double buildDate)
-{
-	_licenceBuildDate = buildDate;
 }
 
 /*! \brief Ajouter un descripteur de paths */

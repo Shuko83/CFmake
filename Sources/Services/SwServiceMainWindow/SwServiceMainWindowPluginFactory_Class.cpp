@@ -64,11 +64,12 @@ QString SwServiceMainWindowPluginFactory_Class::GetPluginVersion()
 }
 
 //----------------------------------------------------------------------------------------------
-double SwServiceMainWindowPluginFactory_Class::GetPluginCompilationDate()
+QDateTime SwServiceMainWindowPluginFactory_Class::GetPluginCompilationDate()
 {
-	//recup de la date à partir de __DATE__
+	//recup de la date ? partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
-	//recup de l'heure à partir de __TIME__
+
+	//recup de l'heure ? partir de __TIME__
 	QString strTime = __TIME__;
 	QTime time = time.fromString(strTime, "hh:mm:ss");
 
@@ -78,7 +79,7 @@ double SwServiceMainWindowPluginFactory_Class::GetPluginCompilationDate()
 	//set le time dans QDateTime
 	finalDateTime.setTime(time);
 
-	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
+	return finalDateTime;
 }
 
 //----------------------------------------------------------------------------------------------

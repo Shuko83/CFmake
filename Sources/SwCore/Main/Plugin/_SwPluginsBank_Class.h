@@ -25,6 +25,8 @@
 #include "SwPluginFactory_Class.h"
 #include "_SwTreeItem.h"
 
+class ProductLicense;
+
 namespace StreamWork
 {
 	namespace SwCore
@@ -78,7 +80,7 @@ namespace StreamWork
 
 			QList<QString> _dllWithError;
 
-			double	_licenceBuildDate;
+			ProductLicense * _productLicense;
 		public:
             /*! \brief Constructeur */
             _SwPluginsBank_Class();
@@ -139,8 +141,6 @@ namespace StreamWork
 
 			void beginInsertRow(int index, _SwTreeItem * node);
 			void endInsertRow();
-
-			virtual void SetLicenceBuildDate(double buildDate);
 
             //----------------------------------------------------
             //-- Gestion des Creations Post Processor

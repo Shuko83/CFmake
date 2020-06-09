@@ -284,7 +284,7 @@ void _SwGuiPluginFactory_Class::FinalizeInitialisation()
 }
 
 //-------------------------------------------------------------------------
-double _SwGuiPluginFactory_Class::GetPluginCompilationDate()
+QDateTime _SwGuiPluginFactory_Class::GetPluginCompilationDate()
 {
 	//recup de la date à partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
@@ -299,8 +299,7 @@ double _SwGuiPluginFactory_Class::GetPluginCompilationDate()
 	//set le time dans QDateTime
 	finalDateTime.setTime(time);
 
-	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
-
+	return finalDateTime;
 }
 
 //-------------------------------------------------------------------------

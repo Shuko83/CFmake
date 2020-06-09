@@ -209,7 +209,6 @@ int main(int argc, char *argv[])
 	{
 		SW_APP->enableAutoStart();
 	}
-	SW_APP->ComponentsBank().SetLicenceBuildDate(productLicense.getLicenceBuildDate());
 	// Modification de l'application dir path
 	// Doit être fait avant pluginPath et pluginPathFile
 	if (!params.appDirPath.isEmpty())
