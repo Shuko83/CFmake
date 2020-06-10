@@ -121,6 +121,9 @@ protected:
 	/* Lors d'une fermeture: fermer ou caché */
 	SwEnum _close_mode;
 	ISwProperty * _close_property;
+	/* Propriete des flags de la fenetre */
+	SwEnum _windowFlagsEnum;
+	ISwProperty * _windowFlags;
     
     QList<ISwEventObserver *> _iSwEvent;
     

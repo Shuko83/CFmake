@@ -17,6 +17,7 @@
 
 #include "ISwServiceShortcuts.h"
 #include <SwApplication.h>
+#include <QMetaEnum>
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -75,6 +76,20 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
     _protectClosing = false;
 	_save_geometry_ini_file = false;
 	_geometryPath = "";
+
+	_windowFlagsEnum.ChangeFlagStatus(true);
+	const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(qMetaTypeId<Qt::WindowFlags>());
+	if (metaEnumMetaObject)
+	{
+		QString metaEnumName = QMetaType::typeName(qMetaTypeId<Qt::WindowFlags>());
+		metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+		QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
+
+		for (int key = 0; key < metaEnum.keyCount(); ++key) {
+			_windowFlagsEnum.AddKey(metaEnum.value(key), metaEnum.key(key));
+		}
+	}
+	_windowFlagsEnum.FromInt(windowFlags());
     
     // Shortcuts
     ISwServiceShortcuts * serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>( SW_APP->QueryService( CG_SW_SERVICE_SHORTCUTS ) );
@@ -268,6 +283,16 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
 		_close_property->SetDescription("Close Mode");
 		enableListeningChangeForProperty(_close_property);
 	}
+
+	_windowFlags = getPropertiesService().CreateProperty<SwEnum>("Window flags");
+ 	if (_windowFlags != nullptr)
+	{
+		QVariant variant;
+		variant.setValue(_windowFlagsEnum);
+ 		_windowFlags->SetValue(variant);
+		_windowFlags->SetDescription("This enum type is used to specify various window-system properties for the widget.");
+		enableListeningChangeForProperty(_windowFlags);
+ 	}
     
     //Fin
     if( SW_APP->IsVerbose() )
@@ -454,6 +479,20 @@ void _SwGuiCompQMainWindow::eventPropertyChange( ISwProperty * property )
 	{
 		SwEnum closemode = _close_property->GetValue().value<SwEnum>();
 		_close_mode = closemode;
+	}
+
+	if (_windowFlags == property)
+	{
+		SwEnum wFlags = _windowFlags->GetValue().value<SwEnum>();
+		_windowFlagsEnum = wFlags;
+		QPoint pos = this->pos();
+		GetMainWindow().setWindowFlags(static_cast<Qt::WindowFlags>(wFlags.ToInt()));
+		if (pos.x() < 0)
+			pos.setX(0);
+		if (pos.y() < 0)
+			pos.setY(0);
+		move(pos);
+		show();
 	}
 }
 
