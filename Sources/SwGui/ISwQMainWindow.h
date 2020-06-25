@@ -32,6 +32,9 @@ namespace StreamWork
 			virtual QMainWindow & GetMainWindow()=0;
 			virtual int getCloseMode() = 0;
 			virtual Qt::WindowStates getWindowState() = 0;
+
+			virtual void saveStateGeometry(const QString& pathTo) const = 0;
+			virtual void restoreStateGeometry(const QString& pathFrom) = 0;
 		};
 	}
 }

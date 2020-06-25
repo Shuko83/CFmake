@@ -789,6 +789,32 @@ void _SwGuiCompQMainWindow::closeEvent( QCloseEvent * event )
 }
 
 //-----------------------------------------------------------------------
+void _SwGuiCompQMainWindow::saveStateGeometry(const QString& pathTo) const
+{
+	if (!pathTo.isEmpty())
+	{
+		SwFileDescriptor fd;
+		fd.setFileName(pathTo);
+		QSettings settings(fd.getDoubleDottedPath(), QSettings::IniFormat);
+		settings.setValue("geometry", saveGeometry());
+		settings.setValue("windowState", saveState());
+	}
+}
+
+//-----------------------------------------------------------------------
+void _SwGuiCompQMainWindow::restoreStateGeometry(const QString& pathFrom)
+{
+	if (!pathFrom.isEmpty())
+	{
+		SwFileDescriptor fd;
+		fd.setFileName(pathFrom);
+		QSettings settings(fd.getDoubleDottedPath(), QSettings::IniFormat);
+		restoreGeometry(settings.value("geometry").toByteArray());
+		restoreState(settings.value("windowState").toByteArray());
+	}
+}
+
+//-----------------------------------------------------------------------
 void _SwGuiCompQMainWindow::saveStateGeometry()
 {
 	if (_save_geometry_ini_file && !_geometryPath.isEmpty())
@@ -815,4 +841,5 @@ void _SwGuiCompQMainWindow::restoreStateGeometry()
 		_firstTimeRestore = false;
 	}
 }
+
 

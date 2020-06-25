@@ -147,6 +147,9 @@ public:
     virtual QMainWindow & GetMainWindow();
 	virtual int getCloseMode();
 	virtual Qt::WindowStates getWindowState();
+	virtual void saveStateGeometry(const QString& pathTo) const;
+	virtual void restoreStateGeometry(const QString& pathFrom);
+
     //---------------------------------------------------------------------
     // Interface ISwWidget
     //---------------------------------------------------------------------
