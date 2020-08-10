@@ -376,6 +376,15 @@ QVariant SwPropertiesModelImpl::data(const QModelIndex & index, int role) const
 		{
 			if ( item->_property != NULL )
 			{
+				if (item->_label == "flagTest")
+				{
+					qDebug() << "SwPropertiesModelImpl::data " << item->_label;
+				}
+				if (item->_label == "styleSheet")
+				{
+					qDebug() << "SwPropertiesModelImpl::data " << item->_label;
+					//return QVariant("styleSheetddd\nstyleSheetddd\nstyleSheetddd\nstyleSheetddd\r\nstyleSheetddd\r\nstyleSheetddd\r\n");
+				}
 				QVariant variant = item->_property->GetValue();
 				if ( isSupportedType(variant) )
 					return QVariant(displayText(variant));
@@ -574,7 +583,7 @@ QString SwPropertiesModelImpl::displayText(const QVariant &value)
 		case QVariant::String:
 		case QVariant::UInt:
 		case QVariant::ULongLong:
-			return value.toString();
+			return value.toString().simplified();
 		case QVariant::Double:
 			return QLocale().toString(value.toDouble(), 'f', 4);
 		case QVariant::Color:
@@ -630,21 +639,6 @@ QString SwPropertiesModelImpl::displayText(const QVariant &value)
 		case QVariant::KeySequence:
 			return value.toString();
 		case QVariant::UserType:
-			if (QMetaType::typeFlags(value.userType()) & QMetaType::IsEnumeration)
-			{
-				const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(value.userType());
-				if (metaEnumMetaObject)
-				{
-					QString metaEnumName = QMetaType::typeName(value.userType());
-					metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
-					QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
-
-					if (metaEnum.isFlag())
-						return metaEnum.valueToKeys(*(int*)value.data());
-					else
-						return metaEnum.valueToKey(*(int*)value.data());
-				}
-			}
 			if ( qMetaTypeId<SwEnum>() == value.userType() )
 			{
 				SwEnum venum = value.value<SwEnum>();
@@ -686,6 +680,20 @@ QString SwPropertiesModelImpl::displayText(const QVariant &value)
 			{
 				return value.value<SwUUID>().toQString();
 			}
+			{
+				const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(value.userType());
+				if (metaEnumMetaObject)
+				{
+					QString metaEnumName = QMetaType::typeName(value.userType());
+					metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+					QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
+
+					if (metaEnum.isFlag())
+						return metaEnum.valueToKeys(*(int*)value.data());
+					else
+						return metaEnum.valueToKey(*(int*)value.data());
+				}
+			}
 	}
 	return QString("<%1>").arg(value.typeName());
 }
@@ -717,10 +725,6 @@ bool SwPropertiesModelImpl::isSupportedType(QVariant & val)
 		case QVariant::KeySequence:
 			return true;
 		case QVariant::UserType:
-			if (QMetaType::typeFlags(val.userType()).testFlag(QMetaType::IsEnumeration) && QMetaType::metaObjectForType(val.userType()))
-			{
-				return true;
-			}
 			if ( qMetaTypeId<SwEnum>() == val.userType() )
 			{
 				return true;
@@ -756,6 +760,17 @@ bool SwPropertiesModelImpl::isSupportedType(QVariant & val)
 			if ( qMetaTypeId<SwUUID>() == val.userType() )
 			{
 				return true;
+			}
+			{
+				const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(val.userType());
+				if (metaEnumMetaObject)
+				{
+					QString metaEnumName = QMetaType::typeName(val.userType());
+					metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+					QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
+
+					return metaEnum.isValid();
+				}
 			}
 		default:
 			break;

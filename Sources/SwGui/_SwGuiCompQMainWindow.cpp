@@ -17,6 +17,7 @@
 
 #include "ISwServiceShortcuts.h"
 #include <SwApplication.h>
+#include <QMetaEnum>
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -32,6 +33,9 @@ using namespace StreamWork::SwGui;
 #define SW_SHOW_FULLSCREEN 2
 #define SW_SHOW_MAXIMIZED 3
 #define SW_SHOW_MINIMIZED 4
+#define SW_SHOW_TOPRIBBON 5
+#define SW_CLOSE_CLOSED 0
+#define SW_CLOSE_HIDE 1
 #define TOGGLE_FULLSCREEN "Show Fullscreen"
 
 //-----------------------------------------------------------------------
@@ -63,11 +67,29 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
     _show_mode.AddKey( SW_SHOW_FULLSCREEN, "FullScreen" );
     _show_mode.AddKey( SW_SHOW_MAXIMIZED, "Maximized" );
     _show_mode.AddKey( SW_SHOW_MINIMIZED, "Minimized" );
+	_show_mode.AddKey( SW_SHOW_TOPRIBBON, "TopRibbon");
     _show_mode.FromInt( SW_SHOW_NORMAL );
+	_close_mode.AddKey(SW_CLOSE_CLOSED, "Closed");
+	_close_mode.AddKey(SW_CLOSE_HIDE, "Hide");
+	_close_mode.FromInt(SW_CLOSE_CLOSED);
     _useAsWidget = false;
     _protectClosing = false;
 	_save_geometry_ini_file = false;
 	_geometryPath = "";
+
+	_windowFlagsEnum.ChangeFlagStatus(true);
+	const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(qMetaTypeId<Qt::WindowFlags>());
+	if (metaEnumMetaObject)
+	{
+		QString metaEnumName = QMetaType::typeName(qMetaTypeId<Qt::WindowFlags>());
+		metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+		QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
+
+		for (int key = 0; key < metaEnum.keyCount(); ++key) {
+			_windowFlagsEnum.AddKey(metaEnum.value(key), metaEnum.key(key));
+		}
+	}
+	_windowFlagsEnum.FromInt(windowFlags());
     
     // Shortcuts
     ISwServiceShortcuts * serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>( SW_APP->QueryService( CG_SW_SERVICE_SHORTCUTS ) );
@@ -251,6 +273,26 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
 	_config_path_property->SetDescription("Define if the QMainWindow path geometry ini file");
 	_config_path_property->SetValue(QVariant(_configPath));
 	enableListeningChangeForProperty(_config_path_property);
+
+	_close_property = getPropertiesService().CreateProperty<SwEnum>("Close or Hide");
+	if (_close_property != nullptr)
+	{
+		QVariant variant;
+		variant.setValue(_close_mode);
+		_close_property->SetValue(variant);
+		_close_property->SetDescription("Close Mode");
+		enableListeningChangeForProperty(_close_property);
+	}
+
+	_windowFlags = getPropertiesService().CreateProperty<SwEnum>("Window flags");
+ 	if (_windowFlags != nullptr)
+	{
+		QVariant variant;
+		variant.setValue(_windowFlagsEnum);
+ 		_windowFlags->SetValue(variant);
+		_windowFlags->SetDescription("This enum type is used to specify various window-system properties for the widget.");
+		enableListeningChangeForProperty(_windowFlags);
+ 	}
     
     //Fin
     if( SW_APP->IsVerbose() )
@@ -432,6 +474,26 @@ void _SwGuiCompQMainWindow::eventPropertyChange( ISwProperty * property )
 		if (_save_geometry_ini_file && !_geometryPath.isEmpty())
 			restoreStateGeometry();
 	}
+
+	if (_close_property == property)
+	{
+		SwEnum closemode = _close_property->GetValue().value<SwEnum>();
+		_close_mode = closemode;
+	}
+
+	if (_windowFlags == property)
+	{
+		SwEnum wFlags = _windowFlags->GetValue().value<SwEnum>();
+		_windowFlagsEnum = wFlags;
+		QPoint pos = this->pos();
+		GetMainWindow().setWindowFlags(static_cast<Qt::WindowFlags>(wFlags.ToInt()));
+		if (pos.x() < 0)
+			pos.setX(0);
+		if (pos.y() < 0)
+			pos.setY(0);
+		move(pos);
+		show();
+	}
 }
 
 //-----------------------------------------------------------------------
@@ -608,6 +670,17 @@ void _SwGuiCompQMainWindow::showChanged()
 {
     switch( _show_mode.ToInt() )
     {
+		case SW_SHOW_TOPRIBBON:
+		{
+			this->setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
+			this->showNormal();
+			QDesktopWidget * desktop = QApplication::desktop();
+			QRect screensize = desktop->screenGeometry(desktop->primaryScreen());
+			this->setMinimumWidth(screensize.width());
+			this->setMaximumWidth(screensize.width());
+			this->move(QPoint(0,0));
+		}
+		break;
         case SW_SHOW_CENTERED:
         {
             this->showNormal();
@@ -674,8 +747,29 @@ void _SwGuiCompQMainWindow::processCommand( QString name )
 }
 
 //-----------------------------------------------------------------------
+
+
+int _SwGuiCompQMainWindow::getCloseMode()
+{
+	return _close_mode.ToInt();
+}
+
+//-----------------------------------------------------------------------
+Qt::WindowStates _SwGuiCompQMainWindow::getWindowState()
+{
+	return windowState();
+}
+
+//-----------------------------------------------------------------------
 void _SwGuiCompQMainWindow::closeEvent( QCloseEvent * event )
 {
+	if (_close_mode.ToInt() == SW_CLOSE_HIDE && windowState() != Qt::WindowState::WindowMinimized)
+	{
+		setWindowState(Qt::WindowState::WindowMinimized);
+		event->ignore();
+		return;
+	}
+
     if( _protectClosing )
     {
         int ret = QMessageBox::question( this, "Exit", "Do you really want to exit?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
@@ -686,6 +780,32 @@ void _SwGuiCompQMainWindow::closeEvent( QCloseEvent * event )
 	saveStateGeometry();
     
     notify( ( QEvent * ) event );
+}
+
+//-----------------------------------------------------------------------
+void _SwGuiCompQMainWindow::saveStateGeometry(const QString& pathTo) const
+{
+	if (!pathTo.isEmpty())
+	{
+		SwFileDescriptor fd;
+		fd.setFileName(pathTo);
+		QSettings settings(fd.getDoubleDottedPath(), QSettings::IniFormat);
+		settings.setValue("geometry", saveGeometry());
+		settings.setValue("windowState", saveState());
+	}
+}
+
+//-----------------------------------------------------------------------
+void _SwGuiCompQMainWindow::restoreStateGeometry(const QString& pathFrom)
+{
+	if (!pathFrom.isEmpty())
+	{
+		SwFileDescriptor fd;
+		fd.setFileName(pathFrom);
+		QSettings settings(fd.getDoubleDottedPath(), QSettings::IniFormat);
+		restoreGeometry(settings.value("geometry").toByteArray());
+		restoreState(settings.value("windowState").toByteArray());
+	}
 }
 
 //-----------------------------------------------------------------------
@@ -715,3 +835,4 @@ void _SwGuiCompQMainWindow::restoreStateGeometry()
 		_firstTimeRestore = false;
 	}
 }
+

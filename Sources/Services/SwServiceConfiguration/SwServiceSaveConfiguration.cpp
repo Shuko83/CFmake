@@ -1120,7 +1120,7 @@ ISwProperty* SwServiceSaveConfiguration::getProperty(QString confName, QString p
 			qDebug() << "Prefix " << prefix<<" not registered in confCollector for configuration " <<confName;
 	}
 	else
-		qDebug() << "Configuration " << confName << " not registered in confCollectors";
+		qDebug() << "Configuration " << confName << " not yet registered in confCollectors";
 
 	return returnedProp;
 }

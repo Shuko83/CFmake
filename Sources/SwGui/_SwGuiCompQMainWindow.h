@@ -116,10 +116,17 @@ protected:
 	QString _configPath;
 	ISwProperty * _config_path_property;
 	QString _geometryPath;
+	/* Lors d'une fermeture: fermer ou caché */
+	SwEnum _close_mode;
+	ISwProperty * _close_property;
+	/* Propriete des flags de la fenetre */
+	SwEnum _windowFlagsEnum;
+	ISwProperty * _windowFlags;
     
     QList<ISwEventObserver *> _iSwEvent;
     
     StreamWork::Service::_SwServiceMainWindow * _mainWindowService;
+
 public:
 
     /*! \brief Constructeur */
@@ -136,6 +143,11 @@ public:
     // Interface ISwQMainWindow
     //---------------------------------------------------------------------
     virtual QMainWindow & GetMainWindow();
+	virtual int getCloseMode();
+	virtual Qt::WindowStates getWindowState();
+	virtual void saveStateGeometry(const QString& pathTo) const;
+	virtual void restoreStateGeometry(const QString& pathFrom);
+
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
@@ -161,7 +173,7 @@ protected:
 
 	void restoreStateGeometry();
 	void saveStateGeometry();
-    
+
     bool _firstTimeRestore;    
 };
 
