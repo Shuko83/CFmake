@@ -23,8 +23,9 @@
 #include "SwIpV4Address.h"
 #include "SwUUID.h"
 
-using namespace StreamWork::SwCore;
+#include <QMetaEnum>
 
+using namespace StreamWork::SwCore;
 
 //-----------------------------------------------------------------------
 _SwPropertyImpl_Class::_SwPropertyImpl_Class(QString name, ISwProperties * hosting_service)
@@ -137,10 +138,6 @@ bool _SwPropertyImpl_Class::checkForUserType(const QVariant & val)
 		QString s = QString("Unable to change property %1 because types are different %2!=%3").arg(_name).arg(QString(_value.typeName())).arg(QString(val.typeName()));
 		LAUNCH_SWEXCEPTION("SwCore", s);
 	}
-	if (QMetaType::typeFlags(val.userType()) & QMetaType::IsEnumeration && QMetaType::metaObjectForType(val.userType()))
-	{
-		return *(int*)val.data() == *(int*)_value.data();
-	}
 	if ( val.userType() == qMetaTypeId<SwEnum>() )
 	{
 		return (val.value<SwEnum>() == _value.value<SwEnum>());
@@ -177,9 +174,22 @@ bool _SwPropertyImpl_Class::checkForUserType(const QVariant & val)
 	{
 		return (val.value<SwUUID>() == _value.value<SwUUID>());
 	}
+	{
+		const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(val.userType());
+		if (metaEnumMetaObject)
+		{
+			QString metaEnumName = QMetaType::typeName(val.userType());
+			metaEnumName = metaEnumName.mid(metaEnumName.lastIndexOf(":") + 1);
+			QMetaEnum metaEnum = metaEnumMetaObject->enumerator(metaEnumMetaObject->indexOfEnumerator(metaEnumName.toLatin1()));
+
+			if (metaEnum.isValid())
+			{
+				return *(int*)val.data() == *(int*)_value.data();
+			}
+		}
+	}
 	return false;
 }
-
 
 //-----------------------------------------------------------------------
 void _SwPropertyImpl_Class::SetValueByController(const QVariant & val)
