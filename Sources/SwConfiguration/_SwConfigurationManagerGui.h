@@ -2,7 +2,6 @@
 #define __SWCONFIGURATIONMANAGERGUI_H
 
 #include <QWidget>
-#include <ISwWidget.h>
 #include <ISwConfigurationEditor.h>
 #include <_ISwConfigurationLaunchEditor.h>
 #include <_SwManagedConfiguration.h>
@@ -13,13 +12,10 @@
 #include <QModelIndex>
 #include "ui__SwConfigurationManagerGui.h"
 
-using namespace StreamWork::SwGui;
-
 using namespace StreamWork::SwConfiguration;
 
 class _SwConfigurationManagerGui : 
     public QWidget,
-    public ISwWidget,
     public ISwConfigurationEditor,
     public ISwConfigurationLaunchEditor,
     public ISwConfigurationControllerListener
@@ -30,10 +26,6 @@ public:
     _SwConfigurationManagerGui(QWidget *parent = 0);
     ~_SwConfigurationManagerGui();
     
-    /*! \brief Renvoie le widget
-    \return le widget */
-	virtual QWidget * GetWidget();
-
     void setConfigurationController (ISwConfigurationController * controller);
     void setEdition(bool enabled);
     // configuration properties editor

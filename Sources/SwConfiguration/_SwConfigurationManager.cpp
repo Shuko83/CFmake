@@ -186,8 +186,8 @@ void _SwConfigurationManager::InitializeResources() throw(SwException) {
     _managedConfigurations->setConfigurationController(this);
     _launchManager->setEditor (_mainWidget);
 
-    //Exportation de l'interface ISwWidget
-    _provider_service->RegisterProvidedInterface<ISwWidget>("Widget",(ISwWidget *) _mainWidget);
+    //Exportation de l'interface QWidget
+    _provider_service->RegisterProvidedInterface<QWidget>("Widget",(QWidget *) _mainWidget);
 
     //Exportation des interfaces d actions
     _provider_service->RegisterProvidedInterface<ISwAction>("StartAction",(ISwAction *) _actionStart);
