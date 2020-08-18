@@ -60,7 +60,7 @@ public:
     /** @brief demande de menu contextuel a une position donnée */
     QMenu * getContextualMenu(const QPointF & p);
     /** @brief ajout d'un composant a une position donné */
-    void addComponent(const QString & name,const QPointF & p);
+    void addComponent(const QString & pluginName, const QString & name,const QPointF & p);
     //------------------------------------------------------------------------------
     // Evenements Composant
     //------------------------------------------------------------------------------
@@ -163,6 +163,12 @@ private:
     void buildLinks();
     /** @brief destruction des liens */
     void destroyLinks();
+
+	//--------------------------------------------------------------------------
+	// Signature
+	//--------------------------------------------------------------------------
+	/** @brief Récupère la signature du stream */
+	std::string getStreamSignature(std::string stream) const;
 
 private:
 	/** @brief Scene */

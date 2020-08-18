@@ -835,3 +835,4 @@ void _SwGuiCompQMainWindow::restoreStateGeometry()
 		_firstTimeRestore = false;
 	}
 }
+

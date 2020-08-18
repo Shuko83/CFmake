@@ -20,7 +20,7 @@ _SwGuiCompPushButtonToQAction::_SwGuiCompPushButtonToQAction(): SwComponent_Clas
     
     _handle_action = NULL;
     
-    //  _i_Widget=(QWidget *)this; /* Remplacer null par le bon handle pour les interfaces fournies */
+    //  _i_Widget=this; /* Remplacer null par le bon handle pour les interfaces fournies */
     
     
 }

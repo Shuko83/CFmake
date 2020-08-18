@@ -50,7 +50,7 @@ _SwGuiCompQWidgetToQDialog::~_SwGuiCompQWidgetToQDialog()
 {
     _helper.setCallback(nullptr);
 
-    unconsummeInterface( WIDGET_INTERFACE_NAME );
+    unconsumeInterface( WIDGET_INTERFACE_NAME );
     unprovideInterface( ISWACTION_INTERFACE_NAME );
     unprovideInterface( WIDGETP_INTERFACE_NAME );
 

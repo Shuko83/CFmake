@@ -16,6 +16,7 @@
 #include "EditionService.h"
 #include "QsLog.h"
 #include "SwTime_ToolBox.h"
+#include "ProductLicense.h"
 
 #ifdef Q_OS_WIN
 #include <psapi.h>
@@ -136,6 +137,17 @@ int main(int argc, char *argv[])
 	QCoreApplication::setOrganizationDomain("diginext.fr");
 	QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	QApplication app(argc, argv);
+
+	// Licence
+	ProductLicense productLicense(licenseId::ProductId::Product_SX);
+	bool licenseLost = false;
+
+	QObject::connect(&productLicense, &ProductLicense::error, [&licenseLost]() {licenseLost = true; qApp->exit(EXIT_FAILURE); });
+	if (!productLicense.takeCore())
+	{
+		QMessageBox::information(0, QStringLiteral("No license"), QStringLiteral("No licence for StreamWork could be found."), QMessageBox::Ok);
+		return EXIT_FAILURE;
+	}
 
 	// SplashScreedn
 	SwSplash splash(QPixmap(":/StreamWorkEditor/splash.png"));

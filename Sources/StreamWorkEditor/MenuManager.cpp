@@ -396,9 +396,9 @@ void MenuManager::buildMenuForConnector(QMenu * menu,ConnectorGraphicItem * conn
                 if (testConnectable) {
                     _connectableItems.push_back(citem);
                     ComponentGraphicItem *parentitem=dynamic_cast<ComponentGraphicItem *>(citem->parentItem());
-                    QIcon icon=SW_APP->ComponentsBank().GetComponentIcon(parentitem->getComponent()->GetFactoryComponentName());
+                    QIcon icon=SW_APP->ComponentsBank().GetComponentIcon(parentitem->getComponent()->GetFactoryName(), parentitem->getComponent()->GetFactoryComponentName());
                     QAction * action=submenu->addAction(icon,buildActionNameForConnector(citem),this,SLOT(onConnect()));
-                    action->setToolTip(SW_APP->ComponentsBank().GetComponentDescription(parentitem->getComponent()->GetFactoryComponentName()));
+                    action->setToolTip(SW_APP->ComponentsBank().GetComponentDescription(parentitem->getComponent()->GetFactoryName(), parentitem->getComponent()->GetFactoryComponentName()));
                 } 
             }
             it++;
@@ -411,9 +411,9 @@ void MenuManager::buildMenuForConnector(QMenu * menu,ConnectorGraphicItem * conn
 			QList<ISwExtension *> availableExtensions = serviceExtension->getExtensionWithType(_selectedConnector->getModelType());
 			QMenu *submenu = menu->addMenu(QIcon(), "Create and connect to");
 			for (ISwExtension * ext : availableExtensions) {
-				QIcon icon = SW_APP->ComponentsBank().GetComponentIcon(ext->getComponentType());
+				QIcon icon = SW_APP->ComponentsBank().GetComponentIcon(ext->getPluginName(), ext->getComponentType());
 				QAction * action = submenu->addAction(icon, ext->getComponentType() + "." + ext->getName(), this, SLOT(onCreateAndConnect()));
-				action->setToolTip(SW_APP->ComponentsBank().GetComponentDescription(ext->getComponentType()));
+				action->setToolTip(SW_APP->ComponentsBank().GetComponentDescription(ext->getPluginName(), ext->getComponentType()));
 			}
 		}
     }
@@ -443,7 +443,7 @@ void MenuManager::onCreateAndConnect() {
                 QPointF spos=_selectedConnector->mapToScene(0.0,0.0);
                 spos.setX(spos.x()+200);
 
-                _streamControler->addComponent(ext->getComponentType(),spos);
+                _streamControler->addComponent(ext->getPluginName(), ext->getComponentType(),spos);
                 ComponentGraphicItem * gitem=_streamControler->getLastAddedComponent();
                 ConnectorGraphicItem *citem=gitem->getConnector(ext->getName());
                 _streamControler->onLinkConnectors(_selectedConnector,citem);
