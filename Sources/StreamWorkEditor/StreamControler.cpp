@@ -26,11 +26,6 @@
 #include "ISwModelService.h"
 #include "SwSaver_Class.h"
 #include "ModelCreatorHelper.h"
-#include "cryptlib.h"
-#include "rsa.h"
-#include "hex.h"
-#include "osrng.h"
-#include "files.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwModel;
@@ -59,8 +54,6 @@ using namespace StreamWork::SwModel;
 #define CL_CGCNTITEM_NODE "Cnt"
 #define CL_CGCNTITEM_ATT_NAME "name"
 #define CL_CGCNTITEM_ATT_POS "pos"
-
-static std::string private_key = "30820274020100300D06092A864886F70D01010105000482025E3082025A02010002818100A8B3838DAE1FC7F9F33C643BBF5A3B5B2D3E1A7C94319BD00353B8538CE6F38503B5AD74EBAF5D6BB80870ECD1D1C79BD1E735E70BD02B76BBB06184D3CA4024D87433C49006E1D9EA568F08468F990E8E9D66D3E875D9711B6A30C7EA311871DF77FD503335EDFDB1CF9B58BB8BE8855BA63162B4EDCC3EDD5CBCA5904B0F470201110281800881858EAC467157E58A9309775CC04DBD70D8762596F03135F302D709416D15C3F3A5C9A8ECE0238C818050C7E3DABC8FF62523503137F91438388C1348958500B2000F86410E31C934803312DAA1288A3869FFC47B5216904CD9DF2A1BBC0821B9C708EBEDB8EACDC67F1DCFACFBA5EB51F1F0443B2EB759696BFA4B932151024100C74A47926015FC6109568C552CCE79B80C7E35DEABAA3ACB960C429E2D5DA52E28CC447F725DDD60005943ECBC9F6814D626FFC605518C6FCF9080166D92AA4F024100D8B4EAFE493BF69D75196968CE7BA307CCC04FF9D93DC290ACBF0D0A4F02B74D19C7229FCEED3D176AEAD39CBD5B016B1FA5F32A1106769AA076B4559D27A5890241008CACE73A25B52A9ED96A44F0D4558318814A07E8792CDE355ADB7A51896F476BE0903059F660600787C68A4CC16176A54BDF4B225E1B7230CEC05A6A2F3A5A1902404C7C16B419D8EDA0FC271624FD950C5D1B16B2D0A706BD2400BBE67C1BE2D748637375A1D08FF771AD43D23751E3E2620B2B82FFC9C60BBE1A843FA5BEFEEF2102400F9F8E497279C4FEDF35939C6C53CAB9F713677A703A56CE3959D876AC260FE0F6D9F8E3FA0B90AF4313926280E6BE31FCD8924C0394D407ACADBA3779E6EA69";
 
 namespace
 {
@@ -302,41 +295,20 @@ void StreamControler::loadExistingStream(QString streamFileName, StreamWork::SwC
 	streamControlerChanged();
 }
 
-//-----------------------------------------------------------------------
-std::string StreamControler::getStreamSignature(std::string stream) const
-{
-	try
-	{
-		// Génération du signer a partir de la clef privé
-		std::string privateKeyBin;
-		CryptoPP::StringSource(private_key, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(privateKeyBin)));
-		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PrivateKey privKey;
-		privKey.BERDecode(CryptoPP::StringStore(privateKeyBin).Ref());
-		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Signer priv(privKey);
 
-		// génération de la signature
-		CryptoPP::AutoSeededRandomPool rng;
-		byte *signature = new byte[priv.MaxSignatureLength()];
-		size_t size = priv.SignMessage(rng, (const byte*)stream.c_str(), stream.length(), signature);
-
-		// Transformation de la signature de binaire a hexa
-		std::string signatureStringBinaire(reinterpret_cast<char const*>(signature), size);
-		std::string signatureStringhex;
-		CryptoPP::StringSource(signatureStringBinaire, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
-		return signatureStringhex;
-	}
-	catch (...)
-	{
-		return "";
-	}
-}
 
 //-----------------------------------------------------------------------
 void StreamControler::saveStream()
 {
-	// Generate stream
-	QString stream;
-	QXmlStreamWriter streamWriter(&stream);
+	QFile file(_streamFileName);	
+	//Ouverture d'un fichier en ecriture
+	if ( file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false )
+	{
+		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(_streamFileName));
+		return;
+	}
+
+	QXmlStreamWriter streamWriter(&file);
 	streamWriter.setCodec("UTF-8");
 	streamWriter.setAutoFormatting(true);
 
@@ -349,36 +321,7 @@ void StreamControler::saveStream()
 	saveVisualData(streamWriter);
 
 	streamWriter.writeEndDocument();
-
-	std::string signature = getStreamSignature(stream.toStdString());
-
-	// Generate file
-	QString finalstream;
-	QXmlStreamWriter fileWriter(&finalstream);
-	fileWriter.setCodec("UTF-8");
-	fileWriter.setAutoFormatting(true);
-
-	//serialisation du stream
-	SwSaver_Class saver2;
-	fileWriter.writeStartDocument();
-
-	saver2.Save(_rootComponent, fileWriter);
-	//Ajout donnees visuelles
-	saveVisualData(fileWriter);
-
-	fileWriter.writeTextElement("Signature", QString::fromStdString(signature));
-
-	fileWriter.writeEndDocument();
-
-	QFile file(_streamFileName);
-	//Ouverture d'un fichier en ecriture
-	if (file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false)
-	{
-		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(_streamFileName));
-		return;
-	}
-
-	file.write(finalstream.toStdString().c_str(), finalstream.size());
+	//Fermeture du fichier
 	file.close();
 }
 
@@ -427,10 +370,10 @@ QMenu * StreamControler::getContextualMenu(const QPointF & p)
 }
 
 //-----------------------------------------------------------------------
-void StreamControler::addComponent(const QString & pluginName, const QString & name, const QPointF & p)
+void StreamControler::addComponent(const QString & name, const QPointF & p)
 {
 	_creationPosition = p;
-	SwComponent_ClassPtr component = SW_FACTORIES.CreateComponent(pluginName, name);
+	SwComponent_ClassPtr component = SW_FACTORIES.CreateComponent(name);
 	QList<QGraphicsItem *> list = _streamScene->items(p);
 	QList<ComponentGraphicItem *> listc;
 	for ( int i = 0; i < list.count(); i++ )
@@ -946,7 +889,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 
 	QString modelHostName = "__host";
 	//Ajout model host
-	SwComponent_Class * modelHost = SW_APP->ComponentsBank().CreateComponent("SwModel", "SwModelHost");
+	SwComponent_Class * modelHost = SW_APP->ComponentsBank().CreateComponent("SwModelHost");
 	modelHost->SetName(modelHostName);
 
 	SwComponent_Class *cp = _rootComponent->GetChild(modelHostName);
@@ -1100,7 +1043,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 
 
 	// Insertion du model final
-	SwComponent_Class * model = SW_APP->ComponentsBank().CreateComponent("SwModel", modelName);
+	SwComponent_Class * model = SW_APP->ComponentsBank().CreateComponent(modelName);
 	model->SetName(modelName + "_instance");
 
 	_creationPosition = targetpos;

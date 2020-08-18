@@ -18,7 +18,7 @@
   * INCLUDES LOCAUX
   */
 //#include "SwGuiConstantes.h"
-#include <SwProtectedPluginFactory_Class.h>
+#include <SwPluginFactory_Class.h>
 #include "_SwModelsList.h"
 
 using namespace StreamWork::SwCore;
@@ -27,7 +27,7 @@ using namespace StreamWork::SwCore;
 	\class SwPluginFactory_Class 
 	\brief classe definissant un plugin usine
 */
-class _SwModelPluginFactory_Class : public SwProtectedPluginFactory_Class, public _ISwModelsListListener
+class _SwModelPluginFactory_Class : public SwPluginFactory_Class, public _ISwModelsListListener
 { 
 protected:
 
@@ -51,12 +51,11 @@ public:
     void Liberate();
     /*! \brief Acces a la version du plugin */
     QString GetPluginVersion();
-	/*! \brief Acces a la date de compilation du plugin */
-	QDateTime GetPluginCompilationDate() override;
+	/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/
+	virtual double GetPluginCompilationDate();
     //Here public method
     virtual void modelAdded(QString name,QString description);
 
-	QString GetPluginName() const override;
 };
 
 extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();
