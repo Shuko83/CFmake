@@ -303,7 +303,7 @@ void StreamControler::loadExistingStream(QString streamFileName, StreamWork::SwC
 }
 
 //-----------------------------------------------------------------------
-std::string StreamControler::getStreamSignature(std::string stream) const
+QString StreamControler::getStreamSignature(QString stream) const
 {
 	try
 	{
@@ -317,13 +317,13 @@ std::string StreamControler::getStreamSignature(std::string stream) const
 		// génération de la signature
 		CryptoPP::AutoSeededRandomPool rng;
 		byte *signature = new byte[priv.MaxSignatureLength()];
-		size_t size = priv.SignMessage(rng, (const byte*)stream.c_str(), stream.length(), signature);
+		size_t size = priv.SignMessage(rng, (const byte*)stream.toUtf8().constData(), stream.toUtf8().size(), signature);
 
 		// Transformation de la signature de binaire a hexa
 		std::string signatureStringBinaire(reinterpret_cast<char const*>(signature), size);
 		std::string signatureStringhex;
 		CryptoPP::StringSource(signatureStringBinaire, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
-		return signatureStringhex;
+		return QString::fromStdString(signatureStringhex);
 	}
 	catch (...)
 	{
@@ -350,11 +350,18 @@ void StreamControler::saveStream()
 
 	streamWriter.writeEndDocument();
 
-	std::string signature = getStreamSignature(stream.toStdString());
+	QString signature = getStreamSignature(stream);
 
 	// Generate file
-	QString finalstream;
-	QXmlStreamWriter fileWriter(&finalstream);
+	QFile file(_streamFileName);
+	//Ouverture d'un fichier en ecriture
+	if (file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false)
+	{
+		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(_streamFileName));
+		return;
+	}
+
+	QXmlStreamWriter fileWriter(&file);
 	fileWriter.setCodec("UTF-8");
 	fileWriter.setAutoFormatting(true);
 
@@ -366,22 +373,12 @@ void StreamControler::saveStream()
 	//Ajout donnees visuelles
 	saveVisualData(fileWriter);
 
-	fileWriter.writeTextElement("Signature", QString::fromStdString(signature));
+	fileWriter.writeTextElement("Signature", signature);
 
 	fileWriter.writeEndDocument();
 
-	QFile file(_streamFileName);
-	//Ouverture d'un fichier en ecriture
-	if (file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false)
-	{
-		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(_streamFileName));
-		return;
-	}
-
-	file.write(finalstream.toStdString().c_str(), finalstream.size());
 	file.close();
 }
-
 
 //-----------------------------------------------------------------------
 void StreamControler::saveStreamAs(QString streamFileName)

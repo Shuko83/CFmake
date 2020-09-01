@@ -168,7 +168,7 @@ private:
 	// Signature
 	//--------------------------------------------------------------------------
 	/** @brief Récupère la signature du stream */
-	std::string getStreamSignature(std::string stream) const;
+	QString getStreamSignature(QString stream) const;
 
 private:
 	/** @brief Scene */

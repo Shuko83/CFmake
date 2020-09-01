@@ -10,7 +10,7 @@ namespace StreamWork
         class BUILD_SWCORE SwProtectedPluginFactory_Class : virtual public SwPluginFactory_Class
 		{
 		public:
-			bool unlock(const char *hash) const;
+			bool unlock(std::string hash) const;
         };
 	}
 }

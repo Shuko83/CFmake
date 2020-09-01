@@ -127,9 +127,10 @@ bool StreamWork::SwCore::SwApplication::isValidSignature(QString stream_desc) co
 	if (signatureStart == -1 || signatureEnd == -1)
 		return false;
 
+	QString signatureData = stream_desc.mid(signatureStart + START_SIGNATURE.length(), signatureEnd - (signatureStart + START_SIGNATURE.length()));
+
 	std::string signatureDecoded;
-	std::string signatureData = stream_desc.toStdString().substr(signatureStart + START_SIGNATURE.length(), signatureEnd - (signatureStart + START_SIGNATURE.length()));
-	CryptoPP::StringSource(signatureData.c_str(), true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(signatureDecoded)));
+	CryptoPP::StringSource(signatureData.toUtf8().constData(), true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(signatureDecoded)));
 
 	int startLine;
 	for (startLine = signatureStart; startLine != -1; --startLine)
@@ -154,7 +155,7 @@ bool StreamWork::SwCore::SwApplication::isValidSignature(QString stream_desc) co
 	if (startLine == -1 || endLine == stream_desc.length())
 		return false;
 
-	std::string message = stream_desc.toStdString().erase(startLine, endLine - startLine);
+	QString message = stream_desc.remove(startLine, endLine - startLine);
 
 	// Génération du verifier a partir de la clef publique
 	string publicKeyBin;
@@ -166,7 +167,7 @@ bool StreamWork::SwCore::SwApplication::isValidSignature(QString stream_desc) co
 	if (signatureDecoded.length() != verifier.SignatureLength())
 		return false;
 
-	return verifier.VerifyMessage((const byte*)message.c_str(), message.length(), (const byte*)signatureDecoded.c_str(), signatureDecoded.size());
+	return verifier.VerifyMessage((const byte*)message.toUtf8().constData(), message.toUtf8().size(), (const byte*)signatureDecoded.c_str(), signatureDecoded.size());
 }
 
 //-----------------------------------------------------------------------

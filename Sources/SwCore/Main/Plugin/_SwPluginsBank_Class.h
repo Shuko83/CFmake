@@ -65,7 +65,7 @@ namespace StreamWork
             /*! \brief trayIcon */
             QSystemTrayIcon * _trayIcon;
             /*! \brief user */
-            QString userName;
+            QString _userName;
             /*! \brief list path user */
             QList<QString> globalUserPathList;
             /*! \brief Reconstruction du modele*/

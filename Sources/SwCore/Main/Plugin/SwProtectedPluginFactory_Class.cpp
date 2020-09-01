@@ -14,7 +14,7 @@ using namespace StreamWork::SwCore;
 static const std::string publicKey = "30819D300D06092A864886F70D010101050003818B0030818702818100A8B3838DAE1FC7F9F33C643BBF5A3B5B2D3E1A7C94319BD00353B8538CE6F38503B5AD74EBAF5D6BB80870ECD1D1C79BD1E735E70BD02B76BBB06184D3CA4024D87433C49006E1D9EA568F08468F990E8E9D66D3E875D9711B6A30C7EA311871DF77FD503335EDFDB1CF9B58BB8BE8855BA63162B4EDCC3EDD5CBCA5904B0F47020111";
 
 //---------------------------------------------------------------------------------
-bool StreamWork::SwCore::SwProtectedPluginFactory_Class::unlock(const char * hash) const
+bool StreamWork::SwCore::SwProtectedPluginFactory_Class::unlock(std::string hash) const
 {
 	HANDLE	process = GetCurrentProcess();
 	DWORD	size;
@@ -23,8 +23,8 @@ bool StreamWork::SwCore::SwProtectedPluginFactory_Class::unlock(const char * has
 	int		processId = GetCurrentProcessId();
 
 	// Process Name
-	char processName[4096];
-	size = GetModuleBaseNameA(process, NULL, processName, 4095);
+	WCHAR processName[4096];
+	size = GetModuleBaseNameW(process, NULL, processName, 4095);
 	processName[size] = '\0';
 
 	// Process Times
@@ -36,24 +36,24 @@ bool StreamWork::SwCore::SwProtectedPluginFactory_Class::unlock(const char * has
 		return false;
 
 	// User name
-	char userName[4096];
+	WCHAR userName[4096];
 	size = 4096;
-	GetUserNameA(userName, &size);
+	GetUserNameW(userName, &size);
 	userName[size] = '\0';
 
 	// Computer name
-	char computerName[4096];
+	WCHAR computerName[4096];
 	size = 4096;
-	GetComputerNameA(computerName, &size);
+	GetComputerNameW(computerName, &size);
 	computerName[size] = 0;
 
 	QJsonObject jsonInfo;
 	jsonInfo.insert("ProcessID", processId);
-	jsonInfo.insert("ProcessName", processName);
+	jsonInfo.insert("ProcessName", QString::fromWCharArray(processName));
 	jsonInfo.insert("ProcessLowDateTime", (int)lpCreationTime.dwLowDateTime);
 	jsonInfo.insert("ProcessHighDateTime", (int)lpCreationTime.dwHighDateTime);
-	jsonInfo.insert("UserName", userName);
-	jsonInfo.insert("ComputerName", computerName);
+	jsonInfo.insert("UserName", QString::fromWCharArray(userName));
+	jsonInfo.insert("ComputerName", QString::fromWCharArray(computerName));
 
 	// json info to string
 	QJsonDocument doc(jsonInfo);
@@ -71,5 +71,5 @@ bool StreamWork::SwCore::SwProtectedPluginFactory_Class::unlock(const char * has
 	if (hashHexDecoded.length() != verifier.SignatureLength())
 		return false;
 
-	return verifier.VerifyMessage((const byte*)data.toStdString().c_str(), data.length(), (const byte*)hashHexDecoded.c_str(), hashHexDecoded.size());
+	return verifier.VerifyMessage((const byte*)data.toUtf8().constData(), data.toUtf8().size(), (const byte*)hashHexDecoded.c_str(), hashHexDecoded.size());
 }

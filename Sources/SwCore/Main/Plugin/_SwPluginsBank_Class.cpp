@@ -44,7 +44,6 @@
 #include "ImageHlp.h"
 #define WIN32_BUFSIZE 30000
 #include <QMessageBox>
-TCHAR chNewEnv[WIN32_BUFSIZE];
 #define VARNAME_PATH "PATH"
 #define VARNAME_USER TEXT("USERNAME")
 #endif
@@ -138,7 +137,7 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
 										   image->MappedAddress) );
 			//qDebug("Checking %s", result.toLatin1().data());
 			SW_APP->Logger().Log(LogLvl_Info,QString("Checking %1").arg(result));
-			if (0==LoadLibrary(result.toStdWString().c_str())) {
+			if (0==LoadLibraryW(result.toStdWString().c_str())) {
 					 DWORD error=GetLastError();
 					 qDebug(QString("-->LoadLibrary failed for %1:%2)").arg(result).arg(error).toLatin1().data());
 					 SW_APP->Logger().Log(LogLvl_Critical,QString("Check %1 failed :error core:%2").arg(result).arg(error));
@@ -156,7 +155,8 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
 //
 
 /*! \brief Constructeur */
-_SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel() {
+_SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel()
+{
 	_tree_items=NULL;
 	_has_changed=false;
 	RebuildModel();
@@ -166,14 +166,9 @@ _SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel() {
 	_trayIcon->setVisible(false);
 	connect(_trayIcon,SIGNAL(messageClicked ()),this,SLOT(hideDisplayUpdate()));
 	DWORD dwRet;
-	dwRet = GetEnvironmentVariable(VARNAME_USER, chNewEnv, WIN32_BUFSIZE);
-	if (dwRet<=WIN32_BUFSIZE) {
-#ifdef UNICODE
-		userName = (LPSTR)chNewEnv;
-#else
-	   userName = QString::fromLocal8Bit(chNewEnv);
-#endif
-	}
+	WCHAR chNewEnv[WIN32_BUFSIZE];
+	dwRet = GetEnvironmentVariableW(VARNAME_USER, chNewEnv, WIN32_BUFSIZE);
+	_userName = QString::fromWCharArray(chNewEnv);
 	_pluginLicence = getPluginLicence();
 	_productLicense = new ProductLicense(licenseId::ProductId::Product_SX);
 	_productLicense->takeCore();
@@ -309,7 +304,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 
 				// Check if plugin is protected
 				SwProtectedPluginFactory_Class* protectedPlugin = dynamic_cast<SwProtectedPluginFactory_Class*>(plugin);
-				if (protectedPlugin && !protectedPlugin->unlock(_pluginLicence.c_str()))
+				if (protectedPlugin && !protectedPlugin->unlock(_pluginLicence))
 				{
 					qDebug() << QString("Plugin %1 is protected").arg(plugin->GetPluginName());
 					delete plugin;
@@ -363,7 +358,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 				qDebug(QString("QLoadLibrary failed for %1").arg(real_file).toLatin1().data()); 
 				DumpDllFromPath(real_file.toStdWString().c_str(),5);
 				_dllWithError.append(realPath.toLower());
-				if(0 == LoadLibrary(real_file.toStdWString().c_str())) {
+				if(0 == LoadLibraryW(real_file.toStdWString().c_str())) {
 					DWORD error=GetLastError();
 					 qDebug(QString("LoadLibrary failed for %1:%2)").arg(real_file).arg(error).toLatin1().data()); 
 				} 
@@ -429,8 +424,8 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 	int		processId = GetCurrentProcessId();
 
 	// Process Name
-	char processName[4096];
-	size = GetModuleBaseNameA(process, NULL, processName, 4095);
+	WCHAR processName[4096];
+	size = GetModuleBaseNameW(process, NULL, processName, 4095);
 	processName[size] = '\0';
 
 	// Process Times
@@ -442,24 +437,24 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 		return false;
 
 	// User name
-	char userName[4096];
+	WCHAR userName[4096];
 	size = 4096;
-	GetUserNameA(userName, &size);
+	GetUserNameW(userName, &size);
 	userName[size] = '\0';
 
 	// Computer name
-	char computerName[4096];
+	WCHAR computerName[4096];
 	size = 4096;
-	GetComputerNameA(computerName, &size);
+	GetComputerNameW(computerName, &size);
 	computerName[size] = 0;
 
 	QJsonObject jsonInfo;
 	jsonInfo.insert("ProcessID", processId);
-	jsonInfo.insert("ProcessName", processName);
+	jsonInfo.insert("ProcessName", QString::fromWCharArray(processName));
 	jsonInfo.insert("ProcessLowDateTime", (int)lpCreationTime.dwLowDateTime);
 	jsonInfo.insert("ProcessHighDateTime", (int)lpCreationTime.dwHighDateTime);
-	jsonInfo.insert("UserName", userName);
-	jsonInfo.insert("ComputerName", computerName);
+	jsonInfo.insert("UserName", QString::fromWCharArray(userName));
+	jsonInfo.insert("ComputerName", QString::fromWCharArray(computerName));
 
 	// json info to string
 	QJsonDocument doc(jsonInfo);
@@ -477,7 +472,7 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 		// génération de la signature
 		CryptoPP::AutoSeededRandomPool rng;
 		byte *signature = new byte[priv.MaxSignatureLength()];
-		size_t size = priv.SignMessage(rng, (const byte*)data.toStdString().c_str(), data.length(), signature);
+		size_t size = priv.SignMessage(rng, (const byte*)data.toUtf8().constData(), data.toUtf8().size(), signature);
 
 		// Transformation de la signature de binaire a hexa
 		std::string signatureStringBinaire(reinterpret_cast<char const*>(signature), size);
@@ -504,7 +499,7 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
 	QFile * f=new QFile(pathsdescriptor);
 	pathList=getPathsFromFile(f);
 	//Chargement du descripteur user
-	f=new QFile(pathsdescriptor+"."+userName);
+	f = new QFile(pathsdescriptor + "." + _userName);
 	if(f->exists()) {
 		pathListUser=getPathsFromFile(f);
 
