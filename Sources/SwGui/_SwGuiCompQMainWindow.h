@@ -22,7 +22,6 @@
 #include <ISwProperty.h>
 #include <SwEnum.h>
 #include "ISwMenu.h"
-#include "ISwAction.h"
 #include "ISwToolBar.h"
 #include "ISwQDockWidget.h"
 #include "ISwShortcut.h"
@@ -69,9 +68,9 @@ protected:
     /* propriété nombre d'actions*/
     ISwProperty * _actions_nb_property;
     /* map des interfaces actions*/
-    QMap<QString, ISwAction *> _actions;
+    QMap<QString, QAction *> _actions;
     /* handle temporaire d'interface menus*/
-    ISwAction * _tmp_handle_action;
+    QAction * _tmp_handle_action;
     // --- ToolBars ---
     /* default toolbar position */
     SwEnum _default_toolbar_position;

@@ -21,14 +21,9 @@
 #include <SwInterfaces_Provider_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwAction.h"
 #include "SwQActionAdapter.h"
 
-
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
-
-
 /*!
 \class _SwGuiCompActionProvider 
 \brief _SwGuiCompActionProvider generant un QMenu

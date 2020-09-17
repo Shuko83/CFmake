@@ -14,57 +14,49 @@ using namespace StreamWork::SwEditor;
 
 _SwStreamOperationsActions::_SwStreamOperationsActions(QObject *parent,SwInterfaces_Provider_Class * provider_service)
 	: QObject(parent)
+	, _selection(nullptr)
+	, _provider_service(provider_service)
 {
-    _selection=NULL;
-    _provider_service=provider_service;
-
     _select_all=new QAction("Select &All",this);
     _select_all->setShortcut(QKeySequence("Ctrl+A"));
     _select_all->setStatusTip("Select All");
-    connect(_select_all, SIGNAL(triggered()), this, SLOT(OnSelectAll()));
-    _select_all_c=new _ActionContainer(_select_all);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionSelectAll",(ISwAction *)_select_all_c);
+    connect(_select_all, &QAction::triggered, this,&_SwStreamOperationsActions::OnSelectAll);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionSelectAll",_select_all);
 
     _select_none=new QAction("Select None",this);
     _select_none->setStatusTip("Select None");
-    connect(_select_none, SIGNAL(triggered()), this, SLOT(OnSelectNone()));
-    _select_none_c=new _ActionContainer(_select_none);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionSelectNone",(ISwAction *)_select_none_c);
+    connect(_select_none, &QAction::triggered, this,&_SwStreamOperationsActions::OnSelectNone);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionSelectNone",_select_none);
 
     _select_invert=new QAction("Invert Selection",this);
     _select_invert->setShortcut(QKeySequence("Ctrl+Shift+I"));
     _select_invert->setStatusTip("Invert Selection");
-    connect(_select_invert, SIGNAL(triggered()), this, SLOT(OnSelectInvert()));
-    _select_invert_c=new _ActionContainer(_select_invert);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionSelectInvert",(ISwAction *)_select_invert_c);
+    connect(_select_invert, &QAction::triggered, this,&_SwStreamOperationsActions::OnSelectInvert);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionSelectInvert",_select_invert);
 
     _remove_selection=new QAction(QIcon(":/SwEditor/editdelete.png"),"Remove",this);
     _remove_selection->setShortcut(QKeySequence(QKeySequence::Delete));
     _remove_selection->setStatusTip("Remove Selection");
-    connect(_remove_selection, SIGNAL(triggered()), this, SLOT(OnRemoveSelection()));
-    _remove_selection_c=new _ActionContainer(_remove_selection);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionRemoveSelection",(ISwAction *)_remove_selection_c);
+    connect(_remove_selection, &QAction::triggered, this,&_SwStreamOperationsActions::OnRemoveSelection);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionRemoveSelection",_remove_selection);
 
     _copy_selection=new QAction(QIcon(":/SwEditor/editcopy.png"),"Copy",this);
     _copy_selection->setShortcut(QKeySequence(QKeySequence::Copy));
     _copy_selection->setStatusTip("Copy Selection");
-    connect(_copy_selection, SIGNAL(triggered()), this, SLOT(OnCopySelection()));
-    _copy_selection_c=new _ActionContainer(_copy_selection);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionCopySelection",(ISwAction *)_copy_selection_c);
+    connect(_copy_selection, &QAction::triggered, this,&_SwStreamOperationsActions::OnCopySelection);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionCopySelection",_copy_selection);
 
     _paste_selection=new QAction(QIcon(":/SwEditor/editpaste.png"),"Paste",this);
     _paste_selection->setShortcut(QKeySequence(QKeySequence::Paste));
     _paste_selection->setStatusTip("Paste Selection");
-    connect(_paste_selection, SIGNAL(triggered()), this, SLOT(OnPasteSelection()));
-    _paste_selection_c=new _ActionContainer(_paste_selection);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionPasteSelection",(ISwAction *)_paste_selection_c);
+    connect(_paste_selection, &QAction::triggered, this,&_SwStreamOperationsActions::OnPasteSelection);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionPasteSelection",_paste_selection);
 
     _cut_selection=new QAction(QIcon(":/SwEditor/editcut.png"),"Cut",this);
     _cut_selection->setShortcut(QKeySequence(QKeySequence::Cut));
     _cut_selection->setStatusTip("Cut Selection");
-    connect(_cut_selection, SIGNAL(triggered()), this, SLOT(OnCutSelection()));
-    _cut_selection_c=new _ActionContainer(_cut_selection);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionCutSelection",(ISwAction *)_cut_selection_c);
+    connect(_cut_selection, &QAction::triggered, this,&_SwStreamOperationsActions::OnCutSelection);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionCutSelection",_cut_selection);
 
 
     _select_all->setEnabled(false);
@@ -85,19 +77,12 @@ _SwStreamOperationsActions::~_SwStreamOperationsActions()
     _provider_service->UnregisterProvidedInterface("ActionCopySelection");
     _provider_service->UnregisterProvidedInterface("ActionPasteSelection");
     _provider_service->UnregisterProvidedInterface("ActionCutSelection");
-    delete _select_all_c;
     delete _select_all;
-    delete _select_none_c;
     delete _select_none;
-    delete _select_invert_c;
-    delete _select_invert;
-    delete _remove_selection_c;
+	delete _select_invert;
     delete _remove_selection;
-    delete _copy_selection_c;
     delete _copy_selection;
-    delete _paste_selection_c;
     delete _paste_selection;
-    delete _cut_selection_c;
     delete _cut_selection;
 }
 /*! \brief Attach un stream manager */
@@ -112,45 +97,38 @@ void _SwStreamOperationsActions::DetachStreamOperations() {
 }
 /*! \brief callback sur tout selectionner*/
 void _SwStreamOperationsActions::OnSelectAll(){
-    if (_selection!=NULL) _selection->SelectAll();
+    if (_selection) _selection->SelectAll();
 }
 /*! \brief callback sur select none*/
 void _SwStreamOperationsActions::OnSelectNone() {
-    if (_selection!=NULL) _selection->SelectNone();
+    if (_selection) _selection->SelectNone();
 }
 /*! \brief callback sur inversion de selection*/
 void _SwStreamOperationsActions::OnSelectInvert(){
-    if (_selection!=NULL) _selection->SelectInvert();
+    if (_selection) _selection->SelectInvert();
 }
 /*! \brief callback sur suppression de la selection*/
 void _SwStreamOperationsActions::OnRemoveSelection(){
-    if (_selection!=NULL) _selection->RemoveSelection();
+    if (_selection) _selection->RemoveSelection();
 }
 /*! \brief callback sur copy de la selection*/
 void _SwStreamOperationsActions::OnCopySelection(){
-    if (_selection!=NULL) _selection->CopySelection();
+    if (_selection) _selection->CopySelection();
 }
 /*! \brief callback sur coller la selection*/
 void _SwStreamOperationsActions::OnPasteSelection(){
-    if (_selection!=NULL) _selection->PasteSelection();
+    if (_selection) _selection->PasteSelection();
 }
 /*! \brief callback sur couper la selection*/
 void _SwStreamOperationsActions::OnCutSelection(){
-    if (_selection!=NULL) _selection->CutSelection();
-}
-/*! \brief Construction*/
-_SwStreamOperationsActions::_ActionContainer::_ActionContainer(QAction * action) {
-    _action=action;
-}/*! \brief Construction*/
-QAction & _SwStreamOperationsActions::_ActionContainer::GetAction() {
-    return *_action;
+    if (_selection) _selection->CutSelection();
 }
 //---------------------------------------------------------------------
 // Interface ISwObserver
 //---------------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
 void _SwStreamOperationsActions::Update(StreamWork::SwCore::ISwObservable* sender) {
-    if (_selection==NULL) {
+    if (!_selection) {
         _select_all->setEnabled(false);
         _select_none->setEnabled(false);
         _select_invert->setEnabled(false);

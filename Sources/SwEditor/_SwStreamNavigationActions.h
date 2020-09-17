@@ -13,12 +13,10 @@
 #include <QAction>
 #include <QLineEdit>
 #include <ISwObserver.h>
-#include <ISwAction.h>
 #include <SwInterfaces_Provider_Class.h>
 #include "ISwEditorStreamNavigation.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 namespace StreamWork {
     namespace SwEditor {
@@ -30,24 +28,12 @@ namespace StreamWork {
         {
             Q_OBJECT
         private:
-            /*! \brief container d'actions */
-            class _ActionContainer : public ISwAction
-            {
-            private:
-                QAction * _action;
-            public:
-                _ActionContainer( QAction * action );
-                /*! \brief Renvoie le Action
-                \return le Action */
-                virtual QAction & GetAction();
-            };
             /*! \brief StreamsManager */
             ISwEditorStreamNavigation * _navigator;
             /* \brief service de fourniture d'interface */
             SwInterfaces_Provider_Class * _provider_service;
             /* \brief Actions */
             QAction * _go_to_parent;
-            _ActionContainer * _go_to_parent_c;
             /* \brief Widget */
             QLineEdit * _current_path;
         public:

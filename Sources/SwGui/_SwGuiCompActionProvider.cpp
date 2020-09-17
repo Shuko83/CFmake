@@ -13,16 +13,16 @@
 #include "SwQActionAdapter.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 #define CL_ACTION_INTERFACE_NAME "Action_%1"
 
 //-----------------------------------------------------------------------
-_SwGuiCompActionProvider::_SwGuiCompActionProvider(): SwComponent_Class()
+_SwGuiCompActionProvider::_SwGuiCompActionProvider()
+	: SwComponent_Class()
+	, _provider_service(nullptr)
+	, _properties_service(nullptr)
+	, _actions_nb(0)
 {
-    _provider_service=NULL;
-    _properties_service=NULL;
-    _actions_nb=0;
 }
 
 //-----------------------------------------------------------------------
@@ -51,7 +51,7 @@ void _SwGuiCompActionProvider::InitializeResources() throw(SwException)
 
 	//Gestion des actions
 	_actions_nb_property=_properties_service->CreateProperty<uint>("nb_actions");
-	_actions_nb_property->SetDescription("Define how many ISwAction interfaces this component provide");  
+	_actions_nb_property->SetDescription("Define how many QAction interfaces this component provide");  
 	_actions_nb_property->SetValue(QVariant(_actions_nb));
 	_actions_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompActionProvider::OnPropertyChange);
 
@@ -93,7 +93,7 @@ void _SwGuiCompActionProvider::OnPropertyChange(ISwProperty * property)
 				_properties_service->CreatePropertiesForQObject(tmp,interface_name,true);
 				tmp->setActionName(interface_name);
                 _actions.insert(interface_name,tmp);
-                _provider_service->RegisterProvidedInterface<ISwAction>(interface_name,tmp);
+                _provider_service->RegisterProvidedInterface<QAction>(interface_name,&(tmp->GetAction()));
             }
         }
         _actions_nb=val;

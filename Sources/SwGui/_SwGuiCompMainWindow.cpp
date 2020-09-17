@@ -40,26 +40,27 @@ QString APP_PATH;
 
 //-----------------------------------------------------------------------------
 /*! \brief Constructeur */
-_SwGuiCompMainWindow::_SwGuiCompMainWindow() : SwAssistedComponent()
+_SwGuiCompMainWindow::_SwGuiCompMainWindow() 
+	: SwAssistedComponent()
+	, _use_aswidget_property(nullptr)
+	, _menus_nb(0)
+	, _actions_nb(0)
+	, _toolbars_nb(0)
+	, _dockwidgets_nb(0)
+	, _listdockwidgets_nb(0)
+	, _saveAutoPeriod(0)
+	, _mainWindow(nullptr)
+	, _absolutePath (QStringLiteral("Undefined Value - will not be saved"))
+	, _useAsWidget (false)
+	, _finalized(false)
+	, _quitOnClose(false)
 {
     setConsumerServiceAvaibility( true );
     setProviderServiceAvaibility( true );
     setPropertyServiceAvaibility( true );
     setOwnerServiceAvaibility( true );
     
-    _relativePath = "Undefined Value - will not be saved";
-    _absolutePath = "Undefined Value - will not be saved";
     _pathType = UserHomeDir;
-    
-    _use_aswidget_property = 0;
-    _menus_nb = 0;
-    _actions_nb = 0;
-    _toolbars_nb = 0;
-    _dockwidgets_nb = 0;
-    _listdockwidgets_nb = 0;
-    _saveAutoPeriod = 0;
-    
-    _mainWindow = nullptr;
     
     _default_toolbar_position.AddKey( Qt::LeftToolBarArea, "Left" );
     _default_toolbar_position.AddKey( Qt::RightToolBarArea, "Right" );
@@ -74,15 +75,10 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow() : SwAssistedComponent()
     _show_mode.AddKey( SW_SHOW_MINIMIZED, "Minimized" );
     _show_mode.FromInt( SW_SHOW_NORMAL );
     
-    _useAsWidget = false;
-    _finalized = false;
-    
     HOME_PATH = QDir::rootPath() + QDir::separator();
     APP_PATH = SwApplication::GetInstance()->GetApplicationDirPath() + QDir::separator();
     
     _relativePath = QString( "ProgramData" ) + QDir::separator() + "DIGINEXT" + QDir::separator() + "Starlinx" + QDir::separator() + "Configuration" + QDir::separator() + "dockParameters.xml";
-    
-    _quitOnClose = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -103,13 +99,13 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
     }
     
     //Actions
-    QMap<QString, ISwAction *>::iterator action_it = _actions.begin();
+    QMap<QString, QAction *>::iterator action_it = _actions.begin();
     while( action_it != _actions.end() )
     {
         if( action_it.value() )
         {
             //Si elle etait definie, on la detache de la menubar
-            action_it.value()->GetAction().setParent( nullptr );
+            action_it.value()->setParent( nullptr );
             action_it.value() = nullptr;
         }
         action_it++;
@@ -228,7 +224,7 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_actions property\n" ) );
     }
-    _actions_nb_property->SetDescription( "Define how many ISwAction interfaces this component accept" );
+    _actions_nb_property->SetDescription( "Define how many QAction interfaces this component accept" );
     _actions_nb_property->SetValue( QVariant( _actions_nb ) );
     _actions_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
     
@@ -391,7 +387,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
             {
                 interface_name = QString( CL_ACTION_INTERFACE_NAME ).arg( i );
                 _actions.insert( interface_name, nullptr );
-                consummeInterface<ISwAction>( interface_name );
+                consummeInterface<QAction>( interface_name );
             }
         }
         _actions_nb = val;
@@ -688,14 +684,14 @@ void _SwGuiCompMainWindow::interfaceAvailable( QString interfaceName )
     }
     
     //Action
-    QMap<QString, ISwAction *>::iterator action_it = _actions.find( interfaceName );
+    QMap<QString, QAction *>::iterator action_it = _actions.find( interfaceName );
     if( action_it != _actions.end() && action_it.value() == nullptr )
     {
-        ISwAction * action = getInterface<ISwAction>( interfaceName );
+		QAction * action = getInterface<QAction>( interfaceName );
         if( action )
         {
             action_it.value() = action;
-            _mainWindow->menuBar()->addAction( &( action->GetAction() ) );
+            _mainWindow->menuBar()->addAction( action );
         }
         return;
     }
@@ -780,10 +776,10 @@ void _SwGuiCompMainWindow::interfaceUnavailable( QString interfaceName )
     }
     
     //Action
-    QMap<QString, ISwAction *>::iterator action_it = _actions.find( interfaceName );
+    QMap<QString, QAction *>::iterator action_it = _actions.find( interfaceName );
     if( action_it != _actions.end() && action_it.value() )
     {
-        action_it.value()->GetAction().setParent( nullptr );
+        action_it.value()->setParent( nullptr );
         action_it.value() = nullptr;
         return;
     }

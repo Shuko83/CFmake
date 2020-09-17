@@ -10,17 +10,19 @@
 #include "_SwEditorStreamsManagerActions.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 using namespace StreamWork::SwEditor;
 
 /*! \brief Constructeur */
-_SwEditorStreamsManagerActions::_SwEditorStreamsManagerActions(): SwComponent_Class(){
-    _provider_service=NULL;
-    _consumer_service=NULL;
-    _properties_service=NULL;
-    _actions_object=NULL;
-    _manager=NULL;
+_SwEditorStreamsManagerActions::_SwEditorStreamsManagerActions()
+	: SwComponent_Class()
+	, _provider_service(nullptr)
+	, _consumer_service(nullptr)
+	, _properties_service(nullptr)
+	, _actions_object(nullptr)
+	, _manager(nullptr)
+{
 }
+
 /*! \brief Destructeur */
 _SwEditorStreamsManagerActions::~_SwEditorStreamsManagerActions(){
     _consumer_service->UnregisterConsumedInterface("StreamsManager");
@@ -47,7 +49,7 @@ void _SwEditorStreamsManagerActions::InitializeResources() throw(SwException) {
     this->RegisterService(_consumer_service);
     this->RegisterService(_provider_service);
     //Creation de l'interface principale
-    _actions_object=new _SwStreamsActions(NULL,_provider_service);
+    _actions_object=new _SwStreamsActions(nullptr,_provider_service);
 
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver(this);
@@ -61,13 +63,13 @@ void _SwEditorStreamsManagerActions::InitializeResources() throw(SwException) {
 //---------------------------------------------------------------------
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwEditorStreamsManagerActions::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
-    if (_manager!=NULL) {
+    if (_manager) {
         _actions_object->DetachStreamsManager();
     }
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwEditorStreamsManagerActions::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
-    if (_manager!=NULL) {
+    if (_manager) {
         _actions_object->AttachStreamsManager(_manager);
     }
 }

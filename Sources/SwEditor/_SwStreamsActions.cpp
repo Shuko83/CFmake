@@ -15,51 +15,45 @@ using namespace StreamWork::SwEditor;
 
 _SwStreamsActions::_SwStreamsActions(QObject *parent,SwInterfaces_Provider_Class * provider_service)
 	: QObject(parent)
+	, _manager(nullptr)
+	,_provider_service(provider_service)
 {
-    _manager=NULL;
-    _provider_service=provider_service;
 
     _new=new QAction(QIcon(":/SwEditor/new.png"),"&New",this);
     _new->setShortcut(QKeySequence("Ctrl+N"));
     _new->setStatusTip("Create new stream");
-    connect(_new, SIGNAL(triggered()), this, SLOT(OnNew()));
-    _new_c=new _ActionContainer(_new);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionNew",(ISwAction *)_new_c);
+    connect(_new, &QAction::triggered, this, &_SwStreamsActions::OnNew);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionNew",_new);
 
     _open=new QAction(QIcon(":/SwEditor/open.png"),"&Open",this);
     _open->setShortcut(QKeySequence("Ctrl+O"));
     _open->setStatusTip("Open an existing stream");
-    connect(_open, SIGNAL(triggered()), this, SLOT(OnOpen()));
-    _open_c=new _ActionContainer(_open);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionOpen",(ISwAction *)_open_c);
+    connect(_open, &QAction::triggered, this, &_SwStreamsActions::OnOpen);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionOpen",_open);
 
     _save=new QAction(QIcon(":/SwEditor/save.png"),"&Save",this);
     _save->setShortcut(QKeySequence("Ctrl+S"));
     _save->setStatusTip("Save current stream");
-    connect(_save, SIGNAL(triggered()), this, SLOT(OnSave()));
-    _save_c=new _ActionContainer(_save);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionSave",(ISwAction *)_save_c);
+    connect(_save, &QAction::triggered, this, &_SwStreamsActions::OnSave);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionSave",_save);
 
     _saveas=new QAction(QIcon(":/SwEditor/save.png"),"&Save as ...",this);
     _saveas->setStatusTip("Save current stream as ...");
-    connect(_saveas, SIGNAL(triggered()), this, SLOT(OnSaveAs()));
-    _saveas_c=new _ActionContainer(_saveas);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionSaveAs",(ISwAction *)_saveas_c);
+    connect(_saveas, &QAction::triggered, this, &_SwStreamsActions::OnSaveAs);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionSaveAs",_saveas);
 
     _close=new QAction(QIcon(":/SwEditor/close.png"),"Close",this);
     _close->setStatusTip("Close current stream");
-    connect(_close, SIGNAL(triggered()), this, SLOT(OnClose()));
-    _close_c=new _ActionContainer(_close);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionClose",(ISwAction *)_close_c);
+    connect(_close, &QAction::triggered, this, &_SwStreamsActions::OnClose);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionClose",_close);
 
     _quit=new QAction("Quit",this);
     _quit->setStatusTip("Quit");
-    connect(_quit, SIGNAL(triggered()), this, SLOT(OnQuit()));
+    connect(_quit, &QAction::triggered, this, &_SwStreamsActions::OnQuit);
     QApplication * gui_app=dynamic_cast<QApplication *>(qApp);
     gui_app->setQuitOnLastWindowClosed(false);
-    gui_app->connect(gui_app, SIGNAL(lastWindowClosed()), this, SLOT(OnQuit()));
-    _quit_c=new _ActionContainer(_quit);
-    _provider_service->RegisterProvidedInterface<ISwAction>("ActionQuit",(ISwAction *)_quit_c);
+    gui_app->connect(gui_app, &QApplication::lastWindowClosed, this, &_SwStreamsActions::OnQuit);
+    _provider_service->RegisterProvidedInterface<QAction>("ActionQuit",_quit);
 
     _new->setEnabled(false);
     _open->setEnabled(false);
@@ -78,12 +72,7 @@ _SwStreamsActions::~_SwStreamsActions()
     _provider_service->UnregisterProvidedInterface("ActionSaveAs");
     _provider_service->UnregisterProvidedInterface("ActionClose");
     _provider_service->UnregisterProvidedInterface("ActionQuit"); 
-    delete _new_c;
-    delete _open_c;
-    delete _save_c;
-    delete _saveas_c;
-    delete _close_c;
-    delete _quit_c;
+
     delete _new;
     delete _open;
     delete _save;
@@ -102,49 +91,43 @@ void _SwStreamsActions::AttachStreamsManager(ISwEditorStreamsManager * manager) 
 /*! \briefdetach un stream manager */
 void _SwStreamsActions::DetachStreamsManager() {
     _manager->DetachStreamManagerObserver(this); 
-    _manager=NULL;
+    _manager=nullptr;
     Update();
 }
 /*! \brief callback _new*/
 void _SwStreamsActions::OnNew(){
-    if (_manager!=NULL) _manager->NewStream();
+    if (_manager) _manager->NewStream();
 }
 /*! \brief callback _open*/
 void _SwStreamsActions::OnOpen(){
-    if (_manager!=NULL) _manager->OpenStream();
+    if (_manager) _manager->OpenStream();
 }
 /*! \brief callback _save*/
 void _SwStreamsActions::OnSave(){
-    if (_manager!=NULL) _manager->SaveStream();
+    if (_manager) _manager->SaveStream();
 }
 /*! \brief callback _save*/
 void _SwStreamsActions::OnSaveAs(){
-    if (_manager!=NULL) _manager->SaveStreamAs();
+    if (_manager) _manager->SaveStreamAs();
 }
 /*! \brief callback _close*/
 void _SwStreamsActions::OnClose(){
-    if (_manager!=NULL) _manager->CloseStream();
+    if (_manager) _manager->CloseStream();
 }
 /*! \brief callback _quit*/
 void _SwStreamsActions::OnQuit() {
-    if (_manager!=NULL && !_quit_in_progress) {
+    if (_manager && !_quit_in_progress) {
         _quit_in_progress=true;    
         _manager->QuitEditor();
     }
 }
-/*! \brief Construction*/
-_SwStreamsActions::_ActionContainer::_ActionContainer(QAction * action) {
-    _action=action;
-}/*! \brief Construction*/
-QAction & _SwStreamsActions::_ActionContainer::GetAction() {
-    return *_action;
-}
+
 //---------------------------------------------------------------------
 // Interface ISwObserver
 //---------------------------------------------------------------------
 /*! \brief methode appelée par l'observable*/
 void _SwStreamsActions::Update(StreamWork::SwCore::ISwObservable* sender) {
-    if (_manager==NULL) {
+    if (!_manager) {
         _new->setEnabled(false);
         _open->setEnabled(false);
         _save->setEnabled(false);

@@ -10,14 +10,12 @@
 #define __SxQActionAdapter_H
 
 
-#include "ISwAction.h"
 #include <QAction.h>
 /**
 *	@class SwQActionAdapter 
 */   
 class  SwQActionAdapter : 
-	public QObject,
-	virtual public StreamWork::SwGui::ISwAction
+	public QObject
 {
 	Q_OBJECT
 

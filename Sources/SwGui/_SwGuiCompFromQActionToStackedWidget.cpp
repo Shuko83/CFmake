@@ -21,14 +21,15 @@ using namespace StreamWork::SwGui;
 
 
 /*****************************************************************************/
-_SwGuiCompFromQActionToStackedWidget::_SwGuiCompFromQActionToStackedWidget(): SwComponent_Class()
+_SwGuiCompFromQActionToStackedWidget::_SwGuiCompFromQActionToStackedWidget()
+	: SwComponent_Class()
+	, _provider_service(nullptr)
+	, _consumer_service(nullptr)
+	, _properties_service(nullptr)
+	, _tmp_handle_StackedWidget(nullptr)
+	, _tmp_handle_action(nullptr)
+	, _typeOfConnection(TOGGLED)
 {
-    _provider_service=NULL;
-    _consumer_service=NULL;
-    _properties_service=NULL;
-	_tmp_handle_StackedWidget = NULL;
-	_tmp_handle_action = NULL;
-	_typeOfConnection = TOGGLED;
 }
 
 /*****************************************************************************/
@@ -101,7 +102,7 @@ void _SwGuiCompFromQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QSt
 	{
 		// on parcours la map pour savoir si l'interface_name est contenu dans la clé
 		// et si c'est le cas on disconnect l'action
-		QMap<QString,ISwAction*>::iterator it;
+		QMap<QString,QAction*>::iterator it;
 
 		it = _actions.find(interface_name);
 
@@ -109,7 +110,7 @@ void _SwGuiCompFromQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QSt
 		{
 			if(it.value() && _tmp_handle_action)
 			{
-				QAction * tmpAction = &(it.value()->GetAction());
+				QAction * tmpAction = (it.value());
 				if(_typeOfConnection == TOGGLED)
 					disconnect(tmpAction,SIGNAL( triggered (bool) ),this,SLOT(switchStackedWidget(bool)));
 				else
@@ -131,7 +132,7 @@ void _SwGuiCompFromQActionToStackedWidget::AfterInterfaceAvailabilityChange(QStr
 
 	if (_tmp_handle_action!=NULL)
 	{
-		QMap<QString,ISwAction*>::iterator it;
+		QMap<QString,QAction*>::iterator it;
 		
 		it = _actions.find(interface_name);
 
@@ -141,7 +142,7 @@ void _SwGuiCompFromQActionToStackedWidget::AfterInterfaceAvailabilityChange(QStr
 
 			if(it.value())
 			{
-				QAction * tmpAction = &(it.value()->GetAction());
+				QAction * tmpAction = it.value();
 				if(_typeOfConnection == TOGGLED)
 					connect(tmpAction,SIGNAL( toggled (bool) ),this,SLOT(switchStackedWidget(bool)));
 				else
@@ -154,7 +155,7 @@ void _SwGuiCompFromQActionToStackedWidget::AfterInterfaceAvailabilityChange(QStr
 /*****************************************************************************/
 void _SwGuiCompFromQActionToStackedWidget::notify()
 {
-	QMap<QString,ISwAction *>::iterator action_it;
+	QMap<QString,QAction *>::iterator action_it;
 	int t_size = _actions.size();
 
 	for(int j = _tmp_handle_StackedWidget->getNbPage(); j < t_size; j ++)
@@ -172,7 +173,7 @@ void _SwGuiCompFromQActionToStackedWidget::notify()
 		action_it=_actions.find(interface_name);
 		if (action_it==_actions.end()) 
 		{
-			_consumer_service->RegisterConsumedInterface<ISwAction>(interface_name,&_tmp_handle_action);
+			_consumer_service->RegisterConsumedInterface<QAction>(interface_name,&_tmp_handle_action);
 			_actions.insert(interface_name,_tmp_handle_action);
 		}
 	}
@@ -185,12 +186,12 @@ void _SwGuiCompFromQActionToStackedWidget::switchStackedWidget( bool val )
 
 	if(action)
 	{
-		QMap<QString,ISwAction*>::iterator it = _actions.begin();
-		QMap<QString,ISwAction*>::iterator itEnd = _actions.end();
+		QMap<QString, QAction*>::iterator it = _actions.begin();
+		QMap<QString, QAction*>::iterator itEnd = _actions.end();
 
 		for (it; it != itEnd ; it++)
 		{
-			if(it.value() && &(it.value()->GetAction()) == action)
+			if(it.value() && it.value() == action)
 			{
 				QString tmpVal = it.key();
 				tmpVal.replace(CL_FROM_ACTION_INTERFACE_NAME_EMPTY_NUMBER,"");

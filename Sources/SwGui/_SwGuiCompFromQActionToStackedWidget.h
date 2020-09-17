@@ -22,8 +22,6 @@
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
 #include "ISwStackedWidget_Controler.h"
-#include "ISwAction.h"
-
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -92,13 +90,13 @@ protected:
 	// --- Widgets ---
 
 	/* map des interfaces widgets*/
-	QMap<QString,ISwAction *> _actions;
+	QMap<QString,QAction *> _actions;
 
 	/* handle temporaire d'interface widget*/
 	ISwStackedWidget_Controler * _tmp_handle_StackedWidget;
 
 	/* handle temporaire d'interface action*/
-	ISwAction * _tmp_handle_action;
+	QAction * _tmp_handle_action;
 
 	SLOTCONNECTION _typeOfConnection;
 

@@ -6,8 +6,8 @@
 \date 09/01/2015
 */
 
-#ifndef SWGUI_SWACTIONTOTOOLBUTTON_H
-#define SWGUI_SWACTIONTOTOOLBUTTON_H
+#ifndef SWGUI_QACTIONTOTOOLBUTTON_H
+#define SWGUI_QACTIONTOTOOLBUTTON_H
 
 /*
 * INCLUDES LOCAUX
@@ -21,15 +21,15 @@ namespace StreamWork {
         *   @class SwActionToToolButton
         *   @brief
         */
-        class SwActionToToolButton : public StreamWork::SwFoundation::SwAssistedComponent
+        class QActionToToolButton : public StreamWork::SwFoundation::SwAssistedComponent
         {
             Q_OBJECT
         public:
             /*! \brief Constructeur */
-            SwActionToToolButton();
+			QActionToToolButton();
             
             /*! \brief Destructeur */
-            virtual ~SwActionToToolButton();
+            virtual ~QActionToToolButton();
             
             /**
             * @brief    : Initialisation du composant

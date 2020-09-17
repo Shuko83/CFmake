@@ -18,15 +18,12 @@
 /*
 * INCLUDES LOCAUX
 */
-#include <ISwAction.h>
-
-using namespace StreamWork::SwGui;
 
 /*!
 \class _SwActionStackedWidget 
 \brief Implementation of the Class _ISwControllerAction 
 */
-class _SwActionStackedWidget :  public QObject, public virtual ISwAction
+class _SwActionStackedWidget :  public QObject
 {
 	Q_OBJECT
 public:
@@ -39,7 +36,7 @@ public:
 
 	/*! \brief Renvoie le Action
 	\return le Action */
-	virtual QAction & GetAction() ;
+	QAction & GetAction() ;
 
 protected:
 	void setAction(QAction * action);

@@ -1,6 +1,6 @@
 /**
  * @file SwGuiQActionToWidget2.h
- * @brief Composant qui consomme un ISwAction et une QWidget et qui, sur le triggered de l'action
+ * @brief Composant qui consomme un QAction et une QWidget et qui, sur le triggered de l'action
  *		  ouvre ou ferme le widget associé.
  *		  Le Widget n'est pas encapsulé
  * @version 1.0
@@ -12,10 +12,10 @@
 #define _SwGuiQActionConsumedToWidget_H
 
 #include <Component.h>
-#include <ISwAction.h>
+
+class QAction;
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 class _SwGuiQActionConsumedToWidget : public Component 
 {
@@ -25,13 +25,6 @@ class _SwGuiQActionConsumedToWidget : public Component
 public slots:
 		void ManageAction();
 		
-
-protected:
-
-	/** @brief Interface QAction*/
-	ISwAction * _i_Action;
-
-
 public:
     /** @brief Constructeur */
     _SwGuiQActionConsumedToWidget();
@@ -50,7 +43,7 @@ public:
 
 private:
 	QWidget * _widget;
-	QAction *_action;
+	QAction * _action;
 
 	QWidget* topParent;
 

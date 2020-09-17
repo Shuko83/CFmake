@@ -15,12 +15,12 @@
 #include <Component.h>
 #include <SwPin.h>
 #include <ISwProperty.h>
+#include <QAction>
 
-#include <ISwAction.h>
 #include "_SwContainerCloseableWidget.h"
 #include "ISwQMainWindow.h"
 
-//Check namespace needed (for exemple ISwAction need namespace StreamWork::SwGui)
+//Check namespace needed 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
@@ -28,7 +28,7 @@ using namespace StreamWork::SwGui;
  *	@class SwGuiQActionToWidget
  *	@brief NoDescription
  */ 
-class _SwGuiQActionToWidget : public Component, virtual ISwAction
+class _SwGuiQActionToWidget : public Component
 {
 	Q_OBJECT
 public:
@@ -115,7 +115,7 @@ public:
 
 	/*! \brief Renvoie le Action
 	\return le Action */
-	virtual QAction & GetAction() ;
+	QAction & GetAction() ;
 
 private:
 	QAction _action;

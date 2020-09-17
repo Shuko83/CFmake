@@ -52,7 +52,7 @@ void ManageLinkColor::loadStaticColor()
 		_mapColor.clear();
 		_mapColor.insert("QWidget", "#9E6DFF");
 		_mapColor.insert("ISxModel", "#40E1E7");
-		_mapColor.insert("ISwAction", "#AAE740");
+		_mapColor.insert("QAction", "#AAE740");
 		_mapColor.insert("ISwToolBar", "#E7408B");
 		_mapColor.insert("IGuDatabase", "#ff0000");
 		_mapColor.insert("IGuReplay", "#FDFF55");

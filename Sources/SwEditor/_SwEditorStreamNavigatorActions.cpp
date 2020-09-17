@@ -10,17 +10,19 @@
 #include "_SwEditorStreamNavigatorActions.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 using namespace StreamWork::SwEditor;
 
 /*! \brief Constructeur */
-_SwEditorStreamNavigatorActions::_SwEditorStreamNavigatorActions(): SwComponent_Class(){
-    _provider_service=NULL;
-    _consumer_service=NULL;
-    _properties_service=NULL;
-    _actions_object=NULL;
-    _navigator=NULL;
+_SwEditorStreamNavigatorActions::_SwEditorStreamNavigatorActions()	
+	: SwComponent_Class()
+	, _provider_service(nullptr)
+	, _consumer_service(nullptr)
+	, _properties_service(nullptr)
+	, _actions_object(nullptr)
+	, _navigator(nullptr)
+{
 }
+
 /*! \brief Destructeur */
 _SwEditorStreamNavigatorActions::~_SwEditorStreamNavigatorActions(){
     _consumer_service->UnregisterConsumedInterface("StreamNavigator");
@@ -47,7 +49,7 @@ void _SwEditorStreamNavigatorActions::InitializeResources() throw(SwException) {
     this->RegisterService(_consumer_service);
     this->RegisterService(_provider_service);
     //Creation de l'interface principale
-    _actions_object=new _SwStreamNavigationActions(NULL,_provider_service);
+    _actions_object=new _SwStreamNavigationActions(nullptr,_provider_service);
 
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver(this);
@@ -61,13 +63,13 @@ void _SwEditorStreamNavigatorActions::InitializeResources() throw(SwException) {
 //---------------------------------------------------------------------
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwEditorStreamNavigatorActions::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
-    if (_navigator!=NULL) {
+    if (_navigator) {
         _actions_object->DetachStreamNavigator();
     }
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwEditorStreamNavigatorActions::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
-    if (_navigator!=NULL) {
+    if (_navigator) {
         _actions_object->AttachStreamNavigator(_navigator);
     }
 }

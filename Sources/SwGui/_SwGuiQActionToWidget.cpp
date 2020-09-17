@@ -14,24 +14,26 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
+const QString INTERFACE_WIDGET = QStringLiteral("Widget");
+const QString INTERFACE_ACTION = QStringLiteral("Action");
 //-----------------------------------------------------------------------
-_SwGuiQActionToWidget::_SwGuiQActionToWidget() : Component(), _action( 0 )
+_SwGuiQActionToWidget::_SwGuiQActionToWidget() 
+	: Component()
+	, _action(nullptr)
+	, _widget(nullptr)
+	, _hostWidget(new _SwContainerCloseableWidget(nullptr))
+	, _isVisible(false)
+	, _stayOnTop(false)
+	, _showName(QStringLiteral("Default visible"))
+	, _hiddenName(QStringLiteral("Default hidden"))
 {
     //RESET Interfaces
-    _widget = NULL;
-    _hostWidget = new _SwContainerCloseableWidget( 0 );
-    connect( _hostWidget, SIGNAL( onClose() ), this, SLOT( ManageWidget() ) );
-    //RESET Pins
-    
+    connect( _hostWidget, &_SwContainerCloseableWidget::onClose, this, &_SwGuiQActionToWidget::ManageWidget);
+
     //RESET Properties
-    //INITIALIZER LES AUTRES ATTRIBUTS DE LA CLASSE
-    _isVisible = false;
-    _stayOnTop = false;
-    _showName = "Default visible";
-    _hiddenName = "Default hidden";
     
     _action.setCheckable( true ); //rend l'action checkable (du coup utiliser le SIGNAL cganged() sinon triggered()
-    if( !connect( &_action, SIGNAL( changed() ), this, SLOT( ManageAction() ) ) )
+    if( !connect( &_action, &QAction::changed, this, &_SwGuiQActionToWidget::ManageAction))
     {
         qDebug() << "QObject::connect(_action)" << "\t" << "failed";
     }
@@ -43,8 +45,8 @@ _SwGuiQActionToWidget::_SwGuiQActionToWidget() : Component(), _action( 0 )
 _SwGuiQActionToWidget::~_SwGuiQActionToWidget()
 {
 
-    getIConsumerService().UnregisterConsumedInterface( "Widget" );
-    getIProviderService().UnregisterProvidedInterface( "Action" );
+    getIConsumerService().UnregisterConsumedInterface(INTERFACE_WIDGET);
+    getIProviderService().UnregisterProvidedInterface(INTERFACE_ACTION);
     
     delete _hostWidget;
 }
@@ -57,11 +59,11 @@ void _SwGuiQActionToWidget::initializeComponent() throw( SwException )
     //--------------------------------------
     //Definition Interfaces fournis
     //--------------------------------------
-    getIProviderService().RegisterProvidedInterface<ISwAction>( "Action", ( ISwAction * )this );
+    getIProviderService().RegisterProvidedInterface<QAction>(INTERFACE_ACTION, (QAction * )this );
     //--------------------------------------
     //Definition Interfaces consommés
     //--------------------------------------
-    getIConsumerService().RegisterConsumedInterface<QWidget>( "Widget", &_widget);
+    getIConsumerService().RegisterConsumedInterface<QWidget>(INTERFACE_WIDGET, &_widget);
     
     //--------------------------------------
     //Definition Pins
@@ -71,7 +73,7 @@ void _SwGuiQActionToWidget::initializeComponent() throw( SwException )
     //Definition Properties
     //--------------------------------------
     
-    getPropertiesService().CreatePropertiesForQObject( this, "", true );
+    getPropertiesService().CreatePropertiesForQObject( this, QString(), true );
     getPropertiesService().CreatePropertiesForQObject( _hostWidget, "HostWidget", true );
     
     //--------------------------------------
@@ -93,7 +95,7 @@ void _SwGuiQActionToWidget::eventBeforeInterfaceAvailability( QString interface_
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::eventAfterInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
 {
-    if( interface_name == "Widget" && _widget)
+    if( interface_name == INTERFACE_WIDGET && _widget)
     {
         _hostWidget->setContainedWidget( _widget );
     }
@@ -119,7 +121,7 @@ QString _SwGuiQActionToWidget::getShowName()
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::setShowName( QString name )
 {
-    if( name != "" )
+    if( !name.isEmpty() )
     {
         _showName = name;
         _action.setText( _showName );
@@ -135,7 +137,7 @@ QString _SwGuiQActionToWidget::getHiddenName()
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::setHiddenName( QString name )
 {
-    if( name != "" )
+    if( !name.isEmpty() )
     {
         _hiddenName = name;
         _action.setText( _hiddenName );

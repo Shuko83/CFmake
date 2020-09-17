@@ -20,13 +20,14 @@ using namespace StreamWork::SwGui;
 
 
 /*****************************************************************************/
-_SwGuiCompQActionToStackedWidget::_SwGuiCompQActionToStackedWidget(): SwComponent_Class()
+_SwGuiCompQActionToStackedWidget::_SwGuiCompQActionToStackedWidget()
+	: SwComponent_Class()
+	, _provider_service(nullptr)
+	, _consumer_service(nullptr)
+	, _properties_service(nullptr)
+	, _tmp_handle_StackedWidget(nullptr)
+	, _tmp_handle_action(nullptr)
 {
-    _provider_service=NULL;
-    _consumer_service=NULL;
-    _properties_service=NULL;
-	_tmp_handle_StackedWidget = NULL;
-	_tmp_handle_action = NULL;
 }
 
 /*****************************************************************************/
@@ -92,7 +93,7 @@ void _SwGuiCompQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QString
 /*****************************************************************************/
 void _SwGuiCompQActionToStackedWidget::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) 
 {
-	if (_tmp_handle_StackedWidget!=NULL) 
+	if (_tmp_handle_StackedWidget) 
 	{
 		_tmp_handle_StackedWidget->registerStackedWidgetObserver(this);
 		notify();
@@ -115,7 +116,7 @@ void _SwGuiCompQActionToStackedWidget::notify()
 	}
 	else
 	{
-		QMap<QString,ISwAction *>::iterator action_it;
+		QMap<QString,QAction *>::iterator action_it;
 		int t_size = _actions.size();
 
 		for(int j = _tmp_handle_StackedWidget->getNbPage(); j < t_size; j ++)
@@ -135,14 +136,14 @@ void _SwGuiCompQActionToStackedWidget::notify()
 				_SwActionStackedWidget *handle_action = new _SwActionStackedWidget(_tmp_handle_StackedWidget->getWidgetName(i).replace(" ","_"),i);
 				handle_action->GetAction().setIcon(_tmp_handle_StackedWidget->getWidgetIcon(i));
 
-				QObject::connect(handle_action,SIGNAL(callback(int)),this,SLOT(switchStackedWidget(int)));
-				_provider_service->RegisterProvidedInterface<ISwAction>(interface_name,handle_action);
-				_actions.insert(interface_name,handle_action);
+				QObject::connect(handle_action, &_SwActionStackedWidget::callback, this, &_SwGuiCompQActionToStackedWidget::switchStackedWidget);
+				_provider_service->RegisterProvidedInterface<QAction>(interface_name,&handle_action->GetAction());
+				_actions.insert(interface_name,&handle_action->GetAction());
 			}
 			else
 			{
-				_actions[interface_name]->GetAction().setText(_tmp_handle_StackedWidget->getWidgetName(i).replace(" ","_"));
-				_actions[interface_name]->GetAction().setIcon(_tmp_handle_StackedWidget->getWidgetIcon(i));
+				_actions[interface_name]->setText(_tmp_handle_StackedWidget->getWidgetName(i).replace(" ","_"));
+				_actions[interface_name]->setIcon(_tmp_handle_StackedWidget->getWidgetIcon(i));
 			}
 
 		}

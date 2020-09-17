@@ -21,12 +21,10 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include <ISwAction.h>
 #include "ISwEditorStreamOperations.h"
 #include "_SwStreamOperationsActions.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 namespace StreamWork
 {

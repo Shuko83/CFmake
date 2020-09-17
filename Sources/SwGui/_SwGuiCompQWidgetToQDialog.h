@@ -6,7 +6,6 @@
 #include "qboxlayout.h"
 #include "SwServiceManager_Helper.h"
 #include "ISwServiceMainWindow.h"
-#include "ISwAction.h"
 #include "qevent.h"
 
 #define QWIDGET_TO_QDIALOG_COMPONENT "_SwGuiCompQWidgetToQDialog"
@@ -75,7 +74,7 @@ private:
 *   @class _SwGuiCompQWidgetToQDialog
 *   @brief Charger de convertir un widget en QDialog parenté
 */
-class _SwGuiCompQWidgetToQDialog : public StreamWork::SwFoundation::SwAssistedComponent, public StreamWork::SwGui::ISwAction
+class _SwGuiCompQWidgetToQDialog : public StreamWork::SwFoundation::SwAssistedComponent
 {
     Q_OBJECT;
     Q_PROPERTY( bool EnableMaximize READ getEnableMaximize WRITE setEnableMaximize );
@@ -104,9 +103,7 @@ public:
     virtual void interfaceUnavailable( QString interfaceName );
     
     void onService( bool available );
-    
-    virtual QAction & GetAction();
-    
+        
 protected:
     DialogContainer _container;
     QWidget * _widget;

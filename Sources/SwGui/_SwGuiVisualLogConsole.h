@@ -29,7 +29,7 @@
 #include <QColor>
 #include "_SwConsoleWidget.h"
 
-//Check namespace needed (for exemple ISwAction need namespace StreamWork::SwGui)
+//Check namespace needed
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 

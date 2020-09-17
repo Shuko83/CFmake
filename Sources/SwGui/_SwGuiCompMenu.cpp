@@ -19,15 +19,18 @@ using namespace StreamWork::SwGui;
 #define CL_ACTION_INTERFACE_NAME "Action_%1"
 
 /*! \brief Constructeur */
-_SwGuiCompMenu::_SwGuiCompMenu(): SwComponent_Class(){
-    _provider_service=NULL;
-    _consumer_service=NULL;
-    _properties_service=NULL;
-    _menu=NULL;
-    _menus_nb=0;
-    _actions_nb=0;
-    _tmp_handle_menu=NULL;
-    _tmp_handle_action=NULL;
+_SwGuiCompMenu::_SwGuiCompMenu()
+	: SwComponent_Class()
+	, _provider_service(nullptr)
+	, _consumer_service(nullptr)
+	, _properties_service(nullptr)
+	, _menu(nullptr)
+	, _menus_nb(0)
+	, _actions_nb(0)
+	, _tmp_handle_menu(nullptr)
+	, _tmp_handle_action(nullptr)
+{
+
 }
 /*! \brief Destructeur */
 _SwGuiCompMenu::~_SwGuiCompMenu(){
@@ -67,7 +70,7 @@ void _SwGuiCompMenu::InitializeResources() throw(SwException) {
 
     //Gestion des menus
     _menus_nb_property=_properties_service->CreateProperty<uint>("nb_menus");
-    if (_menus_nb_property==NULL) {
+    if (!_menus_nb_property) {
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register nb_menus property\n"));
     }
     _menus_nb_property->SetDescription("Define how many ISwMenu interfaces this component accept");  
@@ -75,10 +78,10 @@ void _SwGuiCompMenu::InitializeResources() throw(SwException) {
     _menus_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompMenu::OnPropertyChange);
     //Gestion des actions
     _actions_nb_property=_properties_service->CreateProperty<uint>("nb_actions");
-    if (_actions_nb_property==NULL) {
+    if (!_actions_nb_property) {
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register nb_menus property\n"));
     }
-    _actions_nb_property->SetDescription("Define how many ISwAction interfaces this component accept");  
+    _actions_nb_property->SetDescription("Define how many QAction interfaces this component accept");  
     _actions_nb_property->SetValue(QVariant(_actions_nb));
     _actions_nb_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompMenu::OnPropertyChange);
 
@@ -102,7 +105,7 @@ void _SwGuiCompMenu::OnPropertyChange(ISwProperty * property) {
         } else {
             for (uint i=_menus_nb;i<val;i++) {
                 interface_name=QString(CL_MENU_INTERFACE_NAME).arg(i);
-                _menus.insert(interface_name,(ISwMenu *)NULL);
+                _menus.insert(interface_name,nullptr);
                 _consumer_service->RegisterConsumedInterface<ISwMenu>(interface_name,&_tmp_handle_menu);
             }
         }
@@ -119,8 +122,8 @@ void _SwGuiCompMenu::OnPropertyChange(ISwProperty * property) {
         } else {
             for (uint i=_actions_nb;i<val;i++) {
                 interface_name=QString(CL_ACTION_INTERFACE_NAME).arg(i);
-                _actions.insert(interface_name,(ISwAction *)NULL);
-                _consumer_service->RegisterConsumedInterface<ISwAction>(interface_name,&_tmp_handle_action);
+                _actions.insert(interface_name,nullptr);
+                _consumer_service->RegisterConsumedInterface<QAction>(interface_name,&_tmp_handle_action);
             }
         }
         _actions_nb=val;
@@ -133,25 +136,25 @@ void _SwGuiCompMenu::OnPropertyChange(ISwProperty * property) {
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwGuiCompMenu::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     QMap<QString,ISwMenu *>::iterator menu_it;
-    QMap<QString,ISwAction *>::iterator action_it;
+    QMap<QString, QAction *>::iterator action_it;
     
     //Si c'est un menu
     menu_it=_menus.find(interface_name);
     if (menu_it!=_menus.end()) {
-        if (menu_it.value()!=NULL) {
+        if (menu_it.value()) {
             //Et qu'il etait defini, on le detache de la menubar
-            menu_it.value()->GetMenu().setParent(NULL);  
-            menu_it.value()=NULL;
+            menu_it.value()->GetMenu().setParent(nullptr);
+            menu_it.value()= nullptr;
         }
         return;
     } 
     //Si c'est une action
     action_it=_actions.find(interface_name);
     if (action_it!=_actions.end()) {
-        if (action_it.value()!=NULL) {
+        if (action_it.value()) {
             //Et qu'ellle etait definie, on la detache de la menubar
-            _menu->removeAction(&action_it.value()->GetAction());
-            action_it.value()=NULL;
+            _menu->removeAction(action_it.value());
+            action_it.value()= nullptr;
         }
         return;
     } 
@@ -159,12 +162,12 @@ void _SwGuiCompMenu::BeforeInterfaceAvailabilityChange(QString interface_name,Sw
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwGuiCompMenu::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     QMap<QString,ISwMenu *>::iterator menu_it;
-    QMap<QString,ISwAction *>::iterator action_it;
+    QMap<QString, QAction *>::iterator action_it;
     
     //Si c'est un menu
     menu_it=_menus.find(interface_name);
     if (menu_it!=_menus.end()) {
-        if (menu_it.value()==NULL  && _tmp_handle_menu!=NULL) {
+        if (!menu_it.value()  && _tmp_handle_menu) {
             //Et qu'il etait non defini, on l'enregistre et l'attache a la menubar
             menu_it.value()=_tmp_handle_menu;  
             _menu->addMenu(&(_tmp_handle_menu->GetMenu()));
@@ -174,10 +177,10 @@ void _SwGuiCompMenu::AfterInterfaceAvailabilityChange(QString interface_name,SwC
     //Si c'est une action
     action_it=_actions.find(interface_name);
     if (action_it!=_actions.end()) {
-        if (action_it.value()==NULL && _tmp_handle_action!=NULL) {
+        if (!action_it.value() && _tmp_handle_action) {
             //Et qu'ellle etait non definie,on l'enregistre et l'attache a la menubar
             action_it.value()=_tmp_handle_action;
-            _menu->addAction(&(_tmp_handle_action->GetAction()));
+            _menu->addAction(_tmp_handle_action);
         }
         return;
     } 

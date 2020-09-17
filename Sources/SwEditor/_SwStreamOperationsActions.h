@@ -12,12 +12,10 @@
 #include <QObject>
 #include <QAction>
 #include <ISwObserver.h>
-#include <ISwAction.h>
 #include <SwInterfaces_Provider_Class.h>
 #include "ISwEditorStreamOperations.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 namespace StreamWork
 {
@@ -31,16 +29,6 @@ namespace StreamWork
 		{
 			Q_OBJECT
         private:
-            /*! \brief container d'actions */
-            class _ActionContainer : public ISwAction {
-            private:
-                QAction * _action;
-            public:
-                _ActionContainer(QAction * action);
-                /*! \brief Renvoie le Action
-                \return le Action */
-			    virtual QAction & GetAction();
-            };
             /*! \brief StreamsManager */
             ISwEditorStreamOperations * _selection;
             /* \brief service de fourniture d'interface */
@@ -53,13 +41,6 @@ namespace StreamWork
             QAction * _copy_selection;
             QAction * _paste_selection;
             QAction * _cut_selection;
-            _ActionContainer * _select_all_c;
-            _ActionContainer * _select_none_c;
-            _ActionContainer * _select_invert_c;
-            _ActionContainer * _remove_selection_c;
-            _ActionContainer * _copy_selection_c;
-            _ActionContainer * _paste_selection_c;
-            _ActionContainer * _cut_selection_c;
 		public:
 		    _SwStreamOperationsActions(QObject *parent,SwInterfaces_Provider_Class * provider_service);
 		    ~_SwStreamOperationsActions();

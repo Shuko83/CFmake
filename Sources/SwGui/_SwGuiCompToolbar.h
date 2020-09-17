@@ -21,7 +21,6 @@
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
 #include "ISwToolBar.h"
-#include "ISwAction.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -46,9 +45,9 @@ protected:
     /* propriété nombre d'actions*/
     ISwProperty * _actions_nb_property;
     /* map des interfaces actions*/
-    QMap<QString,ISwAction *> _actions;
+    QMap<QString,QAction *> _actions;
     /* handle temporaire d'interface action*/
-    ISwAction * _tmp_handle_action;
+    QAction * _tmp_handle_action;
 public:
     /*! \brief Constructeur */
     _SwGuiCompToolBar();

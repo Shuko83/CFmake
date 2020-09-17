@@ -8,11 +8,10 @@
 
 #include "SwQActionAdapter.h"
 
-using namespace StreamWork::SwGui;
 //-----------------------------------------------------------------------
 SwQActionAdapter::SwQActionAdapter()
+	: _action(new QAction)
 {
-	_action = new QAction(NULL);
 }
 
 //-----------------------------------------------------------------------
@@ -24,7 +23,7 @@ QAction & SwQActionAdapter::GetAction()
 //-----------------------------------------------------------------------
 SwQActionAdapter::~SwQActionAdapter()
 {
-	_action->setParent(NULL);
+	_action->setParent(nullptr);
 	delete _action;
 }
 

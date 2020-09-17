@@ -1,6 +1,6 @@
 /**
  * @file SwGuiQActionToWidget2.h
- * @brief Composant qui consomme un ISwAction et une QWidget et qui, sur le triggered de l'action
+ * @brief Composant qui consomme une QAction et une QWidget et qui, sur le triggered de l'action
  *        ouvre ou ferme le widget associé.
  *        Le Widget n'est pas encapsulé
  * @version 1.0
@@ -13,17 +13,19 @@
 #include <QDebug>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QAction>
+
+const QString ACTION = QStringLiteral("Action");
+const QString WIDGET = QStringLiteral("Widget");
 
 //-------------------------------------------------------------------------
-_SwGuiQActionConsumedToWidget::_SwGuiQActionConsumedToWidget(): Component()
+_SwGuiQActionConsumedToWidget::_SwGuiQActionConsumedToWidget()
+	: Component()
+	, _widget (nullptr)
+	, _action (nullptr)
+	, _isVisible (false)
+	, isMoved (false)
 {
-    _widget = NULL;
-    _i_Action = NULL;
-    _action = NULL;
-    
-    _isVisible = false;
-    
-    isMoved = false;
 }
 
 //-------------------------------------------------------------------------
@@ -36,8 +38,8 @@ _SwGuiQActionConsumedToWidget::~_SwGuiQActionConsumedToWidget()
 //-------------------------------------------------------------------------
 void _SwGuiQActionConsumedToWidget::initializeComponent() throw( SwException )
 {
-    getIConsumerService().RegisterConsumedInterface<ISwAction>( "Action", &_i_Action );
-    getIConsumerService().RegisterConsumedInterface<QWidget>( "Widget", &_widget);
+    getIConsumerService().RegisterConsumedInterface<QAction>( ACTION, &_action );
+    getIConsumerService().RegisterConsumedInterface<QWidget>( WIDGET, &_widget);
     
     getPropertiesService().CreatePropertiesForQObject( this, "", true );
 }
@@ -55,7 +57,7 @@ void _SwGuiQActionConsumedToWidget::eventBeforeInterfaceAvailability( QString in
 //-------------------------------------------------------------------------
 void _SwGuiQActionConsumedToWidget::eventAfterInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
 {
-    if( interface_name == "Widget"  &&  _widget)
+    if( interface_name == WIDGET  &&  _widget)
     {
         
         // Récupération de la fenêtre parente du widget concerné
@@ -69,13 +71,11 @@ void _SwGuiQActionConsumedToWidget::eventAfterInterfaceAvailability( QString int
                 break;
         }
     }
-    
-    if( ( interface_name == "Action" ) && ( _i_Action != 0 ) )
+    else if( ( interface_name == ACTION ) && ( _action ) )
     {
-        _action = &( _i_Action->GetAction() );
         if( !connect( _action, SIGNAL( triggered() ), this, SLOT( ManageAction() ) ) )
         {
-            qDebug() << "QObject::connect(_i_Action)" << "\t" << "failed";
+            qDebug() << "QObject::connect(_action)" << "\t" << "failed";
         }
     }
 }

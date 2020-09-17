@@ -2,14 +2,13 @@
 #define _STREAMWORK_SWGUI_SWACTIVATIONTOQACTION_H
 
 #include "SwAssistedComponent.h"
-#include "ISwAction.h"
 #include <QAction>
 
 namespace StreamWork {
 
     namespace SwGui {
    
-		class SwActivationToQAction : public SwFoundation::SwAssistedComponent, public ISwAction, public SwCore::ISwFinalizer
+		class SwActivationToQAction : public SwFoundation::SwAssistedComponent, public SwCore::ISwFinalizer
 		{
 			Q_OBJECT
 			Q_PROPERTY(QString componentNameToControl READ getComponentName WRITE setComponentName)
@@ -25,10 +24,7 @@ namespace StreamWork {
 			// ------------------------------------------------------------------------
 			virtual void initializeComponent() throw(SwCore::SwException);
 
-			// ------------------------------------------------------------------------
-			//				ISwAction
-			// ------------------------------------------------------------------------
-			virtual QAction & GetAction();
+			QAction & GetAction();
 
 			// ------------------------------------------------------------------------
 			//				ISwFinalizer

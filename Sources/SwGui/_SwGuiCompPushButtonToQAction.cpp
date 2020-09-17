@@ -9,20 +9,17 @@
 #include <SwApplication.h>
 #include <SwMacros.h>
 #include "_SwGuiCompPushButtonToQAction.h"
+#include <QAction>
 
 /*! \brief Constructeur */
-_SwGuiCompPushButtonToQAction::_SwGuiCompPushButtonToQAction(): SwComponent_Class()
+_SwGuiCompPushButtonToQAction::_SwGuiCompPushButtonToQAction()
+	: SwComponent_Class()
+	, _provider_service(nullptr)
+	, _consumer_service(nullptr)
+	, _properties_service(nullptr)
+	, pushButton(nullptr)
+	, _handle_action(nullptr)
 {
-    _provider_service = NULL;
-    _consumer_service = NULL;
-    _properties_service = NULL;
-    pushButton = NULL;
-    
-    _handle_action = NULL;
-    
-    //  _i_Widget=this; /* Remplacer null par le bon handle pour les interfaces fournies */
-    
-    
 }
 
 //*! \brief Destructeur */
@@ -60,7 +57,7 @@ void _SwGuiCompPushButtonToQAction::InitializeResources() throw( SwException )
     this->RegisterService( _consumer_service );
     this->RegisterService( _provider_service );
     
-    _consumer_service->RegisterConsumedInterface<ISwAction>( "Action", &_handle_action );
+    _consumer_service->RegisterConsumedInterface<QAction>( "Action", &_handle_action );
     
     //Exportation de l'interface QWidget
     _provider_service->RegisterProvidedInterface<QWidget>( "Widget", pushButton);
@@ -94,5 +91,5 @@ void _SwGuiCompPushButtonToQAction::AfterInterfaceAvailabilityChange( QString in
 
 void _SwGuiCompPushButtonToQAction::commandApply( bool state )
 {
-    _handle_action->GetAction().trigger();
+    _handle_action->trigger();
 }

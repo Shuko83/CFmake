@@ -5,6 +5,8 @@
 
 using namespace StreamWork::SwCore;
 
+const QString PROVIDED_QACTION = QStringLiteral("ProvidedQAction");
+
 namespace StreamWork {
 	namespace SwGui {
 
@@ -13,20 +15,20 @@ namespace StreamWork {
 		{
 			setOwnerServiceAvaibility(true);
 			_activableComponent = 0;
-			connect(&_action, SIGNAL(triggered(bool)), this, SLOT(toggleExecute(bool)));
+			connect(&_action, &QAction::triggered, this, &SwActivationToQAction::toggleExecute);
 		}
 
 		//---------------------------------------------------------------------------------
 		SwActivationToQAction::~SwActivationToQAction()
 		{
-			unprovideInterface("ProvidedISwAction");
+			unprovideInterface(PROVIDED_QACTION);
 		}
 
 		//---------------------------------------------------------------------------------
 		void SwActivationToQAction::setComponentName( QString name )
 		{
 			_componentToControl = name;
-			if(_isConstructed && name != "")
+			if(_isConstructed && !name.isEmpty() )
 			{
 				SwComponent_Class * component = SwAddress_ToolBox::FindTarget(_componentToControl, this->GetHostComponent());
 				if(component)
@@ -65,7 +67,7 @@ namespace StreamWork {
 		//---------------------------------------------------------------------------------
 		void SwActivationToQAction::initializeComponent() throw(SwException)
 		{
-			provideInterface<ISwAction>("ProvidedISwAction", this);
+			provideInterface<QAction>(PROVIDED_QACTION, &_action);
 			createPropertiesForThisObject();
 			createPropertiesForQObject(&_action);
 		}

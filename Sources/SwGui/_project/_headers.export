@@ -1,7 +1,4 @@
 BaseDir=..
-ISwAction.h
-ISwActionList.h
-ISwActionListListener.h
 ISwDockWidget.h
 ISwEvent.h
 ISwEventObserver.h

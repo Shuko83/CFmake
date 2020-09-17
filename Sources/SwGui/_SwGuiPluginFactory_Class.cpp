@@ -39,7 +39,6 @@
 #include "_SwPerspectivesManager.h"
 #include "_SwBasicPerspective.h"
 #include "_SwGuiCompGridLayout.h"
-#include "_SwGuiCompActionList.h"
 #include "_SwGuiCompActionProvider.h"
 #include "_SwGuiCssEditor.h"
 #include "_SwGuiConsole.h"
@@ -52,12 +51,13 @@
 #include "_SwGuiCompPushButtonToQAction.h"
 #include "SwEventToPopup.h"
 #include "SwActivationToQAction.h"
-#include "SwActionToToolButton.h"
+#include "QActionToToolButton.h"
 #include "_SwGuiCompQWidgetToQDialog.h"
 
 #include "info_SwGui.h"
 
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwGui;
 
 //---------------------------------------------------------------------
 _SwGuiPluginFactory_Class::_SwGuiPluginFactory_Class() :SwPluginFactory_Class()
@@ -108,12 +108,12 @@ void _SwGuiPluginFactory_Class::Initialize()
 	RegisterComponent("SwGuiStackedWidget", "Simple StackedWidget (QStackedWidget)");
 	RegisterComponent("SwGuiQActionToStackedWidget", "Interface de mapping des QActions sur les index d'un QStackedWidget");
 	RegisterComponent("SwGuiFromQActionToStackedWidget", "Interface de mapping des QActions sur les index d'un QStackedWidget");
-	RegisterComponent("SwGuiQActionToWidget", "Produit un ISwAction permettant de cacher ou d'afficher la widget");
-	RegisterComponent("SwGuiQActionConsumedToWidget", "Consomme un ISwAction permettant de cacher ou d'afficher la widget");
+	RegisterComponent("SwGuiQActionToWidget", "Produit un QAction permettant de cacher ou d'afficher la widget");
+	RegisterComponent("SwGuiQActionConsumedToWidget", "Consomme un QAction permettant de cacher ou d'afficher la widget");
 	RegisterComponent("SwGuiPushButtonToQAction", "Produit un button widget qui permet d'exécuter des actions");
 	RegisterComponent("SwEventToPopup", "Popup sur SwEvent");
 	RegisterComponent("SwActivationToQAction", "Permet de d'activer un composant via une QAction");
-	RegisterComponent("SwActionToToolButton", "Permet de convertir une action en QToolButton");
+	RegisterComponent("QActionToToolButton", "Permet de convertir une QAction en QToolButton");
 	RegisterComponent("SwGuiQWidgetToQDialog", "Permet de convertir un qwidget en dialog avec gestion parent");
 
 }
@@ -129,7 +129,6 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name)
 
 	SW_PUBLISH_COMPONENT("SwGuiMainWindow", _SwGuiCompMainWindow);
 	SW_PUBLISH_COMPONENT("SwGuiMenu", _SwGuiCompMenu);
-	SW_PUBLISH_COMPONENT("SwGuiActionList", _SwGuiCompActionList);
 	SW_PUBLISH_COMPONENT("SwGuiActionProvider", _SwGuiCompActionProvider);
 	SW_PUBLISH_COMPONENT("SwGuiToolBar", _SwGuiCompToolBar);
 	SW_PUBLISH_COMPONENT("SwGuiQDockWidget", _SwGuiCompQDockWidget);
@@ -162,7 +161,7 @@ SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name)
 	SW_PUBLISH_COMPONENT("SwGuiPushButtonToQAction", _SwGuiCompPushButtonToQAction);
 	SW_PUBLISH_COMPONENT("SwEventToPopup", SwEventToPopup);
 	SW_PUBLISH_COMPONENT("SwActivationToQAction", SwActivationToQAction);
-	SW_PUBLISH_COMPONENT("SwActionToToolButton", SwActionToToolButton);
+	SW_PUBLISH_COMPONENT("QActionToToolButton", QActionToToolButton);
 	SW_PUBLISH_COMPONENT("SwGuiQWidgetToQDialog", _SwGuiCompQWidgetToQDialog);
 	
 	return NULL;
@@ -234,10 +233,9 @@ QString _SwGuiPluginFactory_Class::GetPluginVersion()
 void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
 {
 	ISwServiceExtensions * eservice = dynamic_cast<ISwServiceExtensions *>(service);
-	if ( eservice != 0 )
+	if ( eservice )
 	{
 		eservice->registerExtension<ISwPerspective>("Perspective", GetPluginName(), "SwBasicPerspective");
-		eservice->registerExtension<ISwActionList>("ActionList", GetPluginName(), "SwGuiActionList");
 		eservice->registerExtension<QAbstractItemModel>("Model", GetPluginName(), "SwGuiToPropertiesModel");
 		eservice->registerExtension<ISwQAbstractItemViewSlots>("ViewSlots", GetPluginName(), "SwGuiToPropertiesModel");
 		eservice->registerExtension<ISwQDockWidget>("QDockWidget", GetPluginName(), "SwGuiQDockWidget");
@@ -253,9 +251,9 @@ void _SwGuiPluginFactory_Class::OnRegisterService(ISwService * service)
 		eservice->registerExtension<ISwQMainWindow>("QMainWindow", GetPluginName(), "SwGuiQMainWindow");
 		eservice->registerExtension<ISwMainWindow>("MainWindow", GetPluginName(), "SwGuiMainWindow");
 		eservice->registerExtension<ISwMenu>("Menu", GetPluginName(), "SwGuiMenu");
-		eservice->registerExtension<ISwAction>("Action", GetPluginName(), "SwGuiPluginsTree");
-		eservice->registerExtension<ISwAction>("Action", GetPluginName(), "SwGuiQActionToWidget");
-		eservice->registerExtension<ISwAction>("Action", GetPluginName(), "SwGuiQActionConsumedToWidget");
+		eservice->registerExtension<QAction>("Action", GetPluginName(), "SwGuiPluginsTree");
+		eservice->registerExtension<QAction>("Action", GetPluginName(), "SwGuiQActionToWidget");
+		eservice->registerExtension<QAction>("Action", GetPluginName(), "SwGuiQActionConsumedToWidget");
 		eservice->registerExtension<QWidget>("Widget", GetPluginName(), "SwGuiSplitterWidget");
 		eservice->registerExtension<QWidget>("Widget", GetPluginName(), "SwGuiStackedWidget");
 		eservice->registerExtension<ISwStackedWidget_Controler>("StackedWidget_Controler", GetPluginName(), "SwGuiStackedWidget");

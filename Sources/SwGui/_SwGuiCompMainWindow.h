@@ -24,7 +24,6 @@
 #include <ISwProperty.h>
 #include <SwEnum.h>
 #include "ISwMenu.h"
-#include "ISwAction.h"
 #include "ISwToolBar.h"
 #include "ISwListDockWidget.h"
 #include "ISwListDockWidgetListener.h"
@@ -93,7 +92,7 @@ protected:
     /* propriété nombre d'actions*/
     ISwProperty * _actions_nb_property;
     /* map des interfaces actions*/
-    QMap<QString, ISwAction *> _actions;
+    QMap<QString, QAction *> _actions;
     
     // --- ToolBars ---
     /* default toolbar position */

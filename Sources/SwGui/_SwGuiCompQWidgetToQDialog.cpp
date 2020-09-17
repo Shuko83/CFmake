@@ -6,7 +6,7 @@
 #include <QDir>
 #include <QFile>
 #include <QWidget>
-
+#include <QAction>
 /**
   * Includes Locaux
   */
@@ -15,7 +15,7 @@
 
 #define WIDGET_INTERFACE_NAME "Widget"
 #define WIDGETP_INTERFACE_NAME "WidgetP"
-#define ISWACTION_INTERFACE_NAME "ISwAction"
+#define QACTION_INTERFACE_NAME "QAction"
 
 using namespace StreamWork::SwCore;
 
@@ -51,7 +51,7 @@ _SwGuiCompQWidgetToQDialog::~_SwGuiCompQWidgetToQDialog()
     _helper.setCallback(nullptr);
 
     unconsumeInterface( WIDGET_INTERFACE_NAME );
-    unprovideInterface( ISWACTION_INTERFACE_NAME );
+    unprovideInterface( QACTION_INTERFACE_NAME );
     unprovideInterface( WIDGETP_INTERFACE_NAME );
 
     delete _action;
@@ -65,7 +65,7 @@ void _SwGuiCompQWidgetToQDialog::initializeComponent() throw( SwException )
     consummeInterface<QWidget>( WIDGET_INTERFACE_NAME );
     
     provideInterface<QWidget>( WIDGETP_INTERFACE_NAME, &_container );
-    provideInterface<ISwAction>( ISWACTION_INTERFACE_NAME, this );
+    provideInterface<QAction>( QACTION_INTERFACE_NAME, _action );
     
     getPropertiesService().CreatePropertyForQObject( this, "EnableMaximize" );
     getPropertiesService().CreatePropertyForQObject( this, "SaveDialogPosition" );
@@ -110,10 +110,4 @@ void _SwGuiCompQWidgetToQDialog::onService( bool available )
     }
     else
         _container.setParent( nullptr );
-}
-
-//-----------------------------------------------------------------------
-QAction & _SwGuiCompQWidgetToQDialog::GetAction()
-{
-    return *_action;
 }

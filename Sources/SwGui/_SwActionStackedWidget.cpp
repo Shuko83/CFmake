@@ -8,10 +8,8 @@
 #include "QApplication.h"
 #include "_SwActionStackedWidget.h"
 
-using namespace StreamWork::SwGui;
-
 /*! \brief Constructeur */
-_SwActionStackedWidget::_SwActionStackedWidget(QString name,int index):QObject(),_action(NULL)
+_SwActionStackedWidget::_SwActionStackedWidget(QString name,int index):QObject(),_action(nullptr)
 {
 	setAction( new QAction(name,0));
 	_action->setIconText(name);
@@ -23,15 +21,11 @@ _SwActionStackedWidget::_SwActionStackedWidget(QString name,int index):QObject()
 /*! \brief Destructeur */
 _SwActionStackedWidget::~_SwActionStackedWidget()
 {
-    if (_action != 0)
+    if (_action)
         delete _action;
-    _action = 0;
+    _action = nullptr;
    
 }
-
-//---------------------------------------------------------------------
-// Interface ISwAction
-//---------------------------------------------------------------------
 
 /*! \brief Renvoie l' Action
 \return le Action */
@@ -42,14 +36,14 @@ QAction & _SwActionStackedWidget::GetAction()
 
 void _SwActionStackedWidget::setAction(QAction * action)
 {
-    if (_action != 0)
+    if (_action)
         delete _action;
 
     _action = action;
 
-    if (_action != 0)
+    if (_action)
     {
-        _action->connect(_action, SIGNAL(triggered()), this, SLOT(actionActivated()));
+        _action->connect(_action, &QAction::triggered, this, &_SwActionStackedWidget::actionActivated);
         _action->setEnabled(false);
     }
 }       
@@ -57,7 +51,7 @@ void _SwActionStackedWidget::setAction(QAction * action)
 void _SwActionStackedWidget::actionActivated()
 {
     QWidget * focusWidget = QApplication::focusWidget();
-    if (focusWidget != 0)
+    if (focusWidget)
         focusWidget->clearFocus();
 
     onActionActivated();

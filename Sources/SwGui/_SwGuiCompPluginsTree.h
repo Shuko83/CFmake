@@ -22,17 +22,15 @@
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
 #include <QAction>
-#include "ISwAction.h"
 
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*!
 	\class _SwGuiCompPluginsTree 
 	\brief Implementation of the Class _SwGuiCompPluginsTree generant un QTreeView contenant la liste des plugins
 */
-class _SwGuiCompPluginsTree : public SwComponent_Class, public ISwAction
+class _SwGuiCompPluginsTree : public SwComponent_Class
 {
     Q_OBJECT
 protected:
@@ -55,12 +53,10 @@ public:
     /*! \brief Initialisation des ressources
           \note tous les services du composants doivent être déclarés dans cette methodes*/
     virtual void InitializeResources() throw(SwException);
-    //---------------------------------------------------------------------
-    // Interface ISwAction
-    //---------------------------------------------------------------------
+
     /*! \brief Renvoie le Action
     \return le Action */
-	virtual QAction & GetAction();
+	QAction & GetAction();
 	/** @brief changement de proprietes */
 	void OnPropertyChange(ISwProperty * property);
 protected slots:

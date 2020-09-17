@@ -38,20 +38,26 @@ using namespace StreamWork::SwGui;
 #define SW_CLOSE_HIDE 1
 #define TOGGLE_FULLSCREEN "Show Fullscreen"
 
+const QString DISPLAY_COMMAND = QStringLiteral("Display");
+
 //-----------------------------------------------------------------------
-_SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
+_SwGuiCompQMainWindow::_SwGuiCompQMainWindow() 
+	: Component()
+	, _firstTimeRestore(true)
+	, _use_aswidget_property(nullptr)
+	, _menus_nb(0)
+	, _actions_nb(0)
+	, _toolbars_nb(0)
+	, _dockwidgets_nb(0)
+	, _tmp_handle_menu(nullptr)
+	, _tmp_handle_action(nullptr)
+	, _tmp_handle_toolbar(nullptr)
+	, _tmp_handle_dockwidget(nullptr)
+	, _handle_central_widget(nullptr)
+	, _useAsWidget(false)
+	, _protectClosing(false)
+	, _save_geometry_ini_file (false)
 {
-    _firstTimeRestore = true;
-    _use_aswidget_property = 0;
-    _menus_nb = 0;
-    _actions_nb = 0;
-    _toolbars_nb = 0;
-    _dockwidgets_nb = 0;
-    _tmp_handle_menu = nullptr;
-    _tmp_handle_action = nullptr;
-    _tmp_handle_toolbar = nullptr;
-    _tmp_handle_dockwidget = nullptr;
-    _handle_central_widget = nullptr;
     _default_toolbar_position.AddKey( Qt::LeftToolBarArea, "Left" );
     _default_toolbar_position.AddKey( Qt::RightToolBarArea, "Right" );
     _default_toolbar_position.AddKey( Qt::TopToolBarArea, "Top" );
@@ -72,10 +78,6 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
 	_close_mode.AddKey(SW_CLOSE_CLOSED, "Closed");
 	_close_mode.AddKey(SW_CLOSE_HIDE, "Hide");
 	_close_mode.FromInt(SW_CLOSE_CLOSED);
-    _useAsWidget = false;
-    _protectClosing = false;
-	_save_geometry_ini_file = false;
-	_geometryPath = "";
 
 	_windowFlagsEnum.ChangeFlagStatus(true);
 	const QMetaObject * metaEnumMetaObject = QMetaType::metaObjectForType(qMetaTypeId<Qt::WindowFlags>());
@@ -94,7 +96,7 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow() : Component()
     // Shortcuts
     ISwServiceShortcuts * serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>( SW_APP->QueryService( CG_SW_SERVICE_SHORTCUTS ) );
     if( serviceShortcuts )
-        serviceShortcuts->registerCommand( "Display", TOGGLE_FULLSCREEN, this );
+        serviceShortcuts->registerCommand( DISPLAY_COMMAND, TOGGLE_FULLSCREEN, this );
 }
 
 //-----------------------------------------------------------------------
@@ -105,7 +107,7 @@ _SwGuiCompQMainWindow::~_SwGuiCompQMainWindow()
     delete _mainWindowService;
     
     QMap<QString, ISwMenu *>::iterator menu_it;
-    QMap<QString, ISwAction *>::iterator action_it;
+    QMap<QString, QAction *>::iterator action_it;
     QMap<QString, ISwToolBar *>::iterator toolbar_it;
     QMap<QString, ISwQDockWidget *>::iterator dockwidget_it;
     
@@ -128,7 +130,7 @@ _SwGuiCompQMainWindow::~_SwGuiCompQMainWindow()
         if( action_it.value() )
         {
             //Et qu'ellle etait definie, on la detache de la menubar
-            action_it.value()->GetAction().setParent( nullptr );
+            action_it.value()->setParent( nullptr );
             action_it.value() = nullptr;
         }
         action_it++;
@@ -165,7 +167,7 @@ _SwGuiCompQMainWindow::~_SwGuiCompQMainWindow()
         
     ISwServiceShortcuts * serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>( SW_APP->QueryService( CG_SW_SERVICE_SHORTCUTS ) );
     if( serviceShortcuts )
-        serviceShortcuts->unregisterCommand( "Display", TOGGLE_FULLSCREEN, this );
+        serviceShortcuts->unregisterCommand( DISPLAY_COMMAND, TOGGLE_FULLSCREEN, this );
 }
 
 
@@ -202,7 +204,7 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_actions property\n" ) );
     }
-    _actions_nb_property->SetDescription( "Define how many ISwAction interfaces this component accept" );
+    _actions_nb_property->SetDescription( "Define how many QAction interfaces this component accept" );
     _actions_nb_property->SetValue( QVariant( _actions_nb ) );
     enableListeningChangeForProperty( _actions_nb_property );
     
@@ -237,7 +239,7 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
     enableListeningChangeForProperty( _use_aswidget_property );
     
     _show_property = getPropertiesService().CreateProperty<SwEnum>( "ShowMode" );
-    if( _show_property != nullptr )
+    if( _show_property )
     {
         QVariant variant;
         variant.setValue( _show_mode );
@@ -247,7 +249,7 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
     }
     
     _protect_closing_property = getPropertiesService().CreateProperty<bool>( "confirm closing dialog" );
-    if( _protect_closing_property == nullptr )
+    if( !_protect_closing_property )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register _protect_closing_property property\n" ) );
     }
@@ -256,7 +258,7 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
     enableListeningChangeForProperty( _protect_closing_property );
 
 	_save_geometry_ini_file_property = getPropertiesService().CreateProperty<bool>("save geometry");
-	if (_save_geometry_ini_file_property == nullptr)
+	if (!_save_geometry_ini_file_property)
 	{
 		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register _save_geometry_ini_file property\n"));
 	}
@@ -266,7 +268,7 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
 	enableListeningChangeForProperty(_save_geometry_ini_file_property);
 
 	_config_path_property = getPropertiesService().CreateProperty<QString>("configPath");
-	if (_config_path_property == nullptr)
+	if (!_config_path_property)
 	{
 		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register _config_path_property property\n"));
 	}	
@@ -285,7 +287,7 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
 	}
 
 	_windowFlags = getPropertiesService().CreateProperty<SwEnum>("Window flags");
- 	if (_windowFlags != nullptr)
+ 	if (_windowFlags)
 	{
 		QVariant variant;
 		variant.setValue(_windowFlagsEnum);
@@ -370,8 +372,8 @@ void _SwGuiCompQMainWindow::eventPropertyChange( ISwProperty * property )
             for( uint i = _actions_nb; i < val; i++ )
             {
                 interface_name = QString( CL_ACTION_INTERFACE_NAME ).arg( i );
-                _actions.insert( interface_name, ( ISwAction * ) nullptr );
-                getIConsumerService().RegisterConsumedInterface<ISwAction>( interface_name, &_tmp_handle_action );
+                _actions.insert( interface_name,nullptr );
+                getIConsumerService().RegisterConsumedInterface<QAction>( interface_name, &_tmp_handle_action );
             }
         }
         _actions_nb = val;
@@ -506,7 +508,7 @@ QMainWindow & _SwGuiCompQMainWindow::GetMainWindow()
 void _SwGuiCompQMainWindow::eventBeforeInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
 {
     QMap<QString, ISwMenu *>::iterator menu_it;
-    QMap<QString, ISwAction *>::iterator action_it;
+    QMap<QString, QAction *>::iterator action_it;
     QMap<QString, ISwToolBar *>::iterator toolbar_it;
     QMap<QString, ISwQDockWidget *>::iterator dockwidget_it;
     
@@ -529,7 +531,7 @@ void _SwGuiCompQMainWindow::eventBeforeInterfaceAvailability( QString interface_
         if( action_it.value() )
         {
             //Et qu'elle etait definie, on la detache de la menubar
-            action_it.value()->GetAction().setParent( nullptr );
+            action_it.value()->setParent( nullptr );
             action_it.value() = nullptr;
         }
         return;
@@ -572,7 +574,7 @@ void _SwGuiCompQMainWindow::eventBeforeInterfaceAvailability( QString interface_
 void _SwGuiCompQMainWindow::eventAfterInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
 {
     QMap<QString, ISwMenu *>::iterator menu_it;
-    QMap<QString, ISwAction *>::iterator action_it;
+    QMap<QString, QAction *>::iterator action_it;
     QMap<QString, ISwToolBar *>::iterator toolbar_it;
     QMap<QString, ISwProperty *>::iterator toolbar_position_it;
     QMap<QString, ISwQDockWidget *>::iterator dockwidget_it;
@@ -598,7 +600,7 @@ void _SwGuiCompQMainWindow::eventAfterInterfaceAvailability( QString interface_n
         {
             //Et qu'ellle etait non definie,on l'enregistre et l'attache a la menubar
             action_it.value() = _tmp_handle_action;
-            this->menuBar()->addAction( &( _tmp_handle_action->GetAction() ) );
+            this->menuBar()->addAction( _tmp_handle_action );
         }
         return;
     }

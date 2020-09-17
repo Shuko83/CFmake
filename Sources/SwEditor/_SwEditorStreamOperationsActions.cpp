@@ -10,16 +10,17 @@
 #include "_SwEditorStreamOperationsActions.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 using namespace StreamWork::SwEditor;
 
 /*! \brief Constructeur */
-_SwEditorStreamOperationsActions::_SwEditorStreamOperationsActions(): SwComponent_Class(){
-    _provider_service=NULL;
-    _consumer_service=NULL;
-    _properties_service=NULL;
-    _actions_object=NULL;
-    _selection=NULL;
+_SwEditorStreamOperationsActions::_SwEditorStreamOperationsActions()
+	: SwComponent_Class()
+	, _provider_service(nullptr)
+	, _consumer_service(nullptr)
+	, _properties_service(nullptr)
+	, _actions_object(nullptr)
+	, _selection(nullptr)
+{
 }
 /*! \brief Destructeur */
 _SwEditorStreamOperationsActions::~_SwEditorStreamOperationsActions(){
@@ -47,7 +48,7 @@ void _SwEditorStreamOperationsActions::InitializeResources() throw(SwException) 
     this->RegisterService(_consumer_service);
     this->RegisterService(_provider_service);
     //Creation de l'interface principale
-    _actions_object=new _SwStreamOperationsActions(NULL,_provider_service);
+    _actions_object=new _SwStreamOperationsActions(nullptr,_provider_service);
 
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver(this);
@@ -61,13 +62,15 @@ void _SwEditorStreamOperationsActions::InitializeResources() throw(SwException) 
 //---------------------------------------------------------------------
 /*! \brief Avant changement de la disponibilité de l'interface */
 void _SwEditorStreamOperationsActions::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
-    if (_selection!=NULL) {
+    if (_selection) 
+	{
         _actions_object->DetachStreamOperations();
     }
 }
 /*! \brief Apres changement de la disponibilité de l'interface */
 void _SwEditorStreamOperationsActions::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
-    if (_selection!=NULL) {
+    if (_selection) 
+	{
         _actions_object->AttachStreamOperations(_selection);
     }
 }

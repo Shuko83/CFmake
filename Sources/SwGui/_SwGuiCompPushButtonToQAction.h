@@ -22,10 +22,8 @@
 #include <SwInterfaces_Consumer_Class.h>
 #include <SwProperties_Class.h>
 #include <ISwProperty.h>
-#include "ISwAction.h"
 
 using namespace StreamWork::SwCore;
-using namespace StreamWork::SwGui;
 
 /*!
     \class _SwGuiCompPushButtonToQAction
@@ -46,7 +44,7 @@ protected:
     SwProperties_Class * _properties_service;
     
     /* interface action a consommée */
-    ISwAction * _handle_action;
+    QAction * _handle_action;
     
     /** @brief Interface Widget*/
     //QWidget * _i_Widget;
