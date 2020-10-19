@@ -24,7 +24,7 @@
 #endif
 
 //Version
-#define CG_STREAMWORK_VERSION "3.0.3"
+#define CG_STREAMWORK_VERSION "4.0.0"
 
 //PATH Separator
 #define CG_PATH_SEPARATOR '.'
@@ -32,7 +32,7 @@
 #define CG_PATH_STREAM_HEADER '$'
 
 //XML
-#define CG_SW_XML_DOCUMENT_NODE    "streamwork"
+#define CG_SW_XML_DOCUMENT_NODE    "Streamwork"
 #define CG_SW_XML_GROUP_DOCUMENT_NODE    "streamwork_group"
 #define CG_SW_XML_DOCUMENT_NODE_ATT_VERSION    "version"
 #define CG_SW_XML_DOCUMENT_NODE_ATT_DATE    "build_date"
@@ -48,6 +48,8 @@
 #define CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME    "factory_name"
 #define CG_SW_XML_COMPONENT_NODE_ATT_FACTORY    "factory"
 #define CG_SW_XML_COMPONENT_NODE_ATT_PLUGIN_NAME    "plugin_name"
+#define CG_SW_XML_STREAM_NODE    "Stream"
+#define CG_SW_XML_STREAMSIGNATURE_NODE "StreamSignature"
 
 #define CG_SW_XML_SERVICE_NODE    "service"
 #define CG_SW_XML_SERVICE_ATT_NAME    "name"

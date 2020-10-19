@@ -14,6 +14,7 @@
 #include "ISwPersistent.h"
 #include "QDebug.h"
 #include "ISwServiceOwner.h"
+#include <QRegularExpression>
 
 using namespace StreamWork::SwCore;
 
@@ -33,14 +34,44 @@ SwLoader_Class::~SwLoader_Class(){
 \return le neoud racine*/
 SwComponent_ClassPtr SwLoader_Class::Load(QDomDocument & doc) throw(SwException) {
     SwComponent_ClassPtr root_component;  
-    QDomElement path_elt;
         
     //Check du header
-    QDomElement root_elt=doc.documentElement();
-    if (root_elt.tagName()!=QString(CG_SW_XML_DOCUMENT_NODE)) {
-        QString msg=QString("Invalid XML stream format");
-        LAUNCH_SWEXCEPTION("SwCore",msg)
-    }
+	QDomElement streamWork_elt = doc.firstChildElement(CG_SW_XML_DOCUMENT_NODE);
+	bool swVersion4orHigher = false;
+	if (!streamWork_elt.isNull() && streamWork_elt.hasAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION))
+	{
+		QString version = streamWork_elt.attribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION);
+		bool conversionOk  = false;
+		QRegularExpression regExpVersion(QStringLiteral("^(\\d*).\\d*.\\d*$"));
+		auto match = regExpVersion.match(version);
+		int majorVersion;
+		if (match.hasMatch())
+		{
+			majorVersion = match.captured(1).toInt(&conversionOk);
+		}
+		if (conversionOk && majorVersion > 3)
+			swVersion4orHigher = true;
+	}
+
+    QDomElement root_elt;
+	if (swVersion4orHigher)
+	{
+		root_elt = streamWork_elt.firstChildElement(CG_SW_XML_STREAM_NODE);
+		if (root_elt.isNull())
+		{
+			QString msg = QString("Invalid XML stream format");
+			LAUNCH_SWEXCEPTION("SwCore", msg)
+		}
+	}
+	else
+	{
+		root_elt = doc.documentElement();
+		if (root_elt.tagName().compare(QString(CG_SW_XML_DOCUMENT_NODE),Qt::CaseInsensitive)) {
+			QString msg = QString("Invalid XML stream format");
+			LAUNCH_SWEXCEPTION("SwCore", msg)
+		}
+	}
+
     //Ajout des paths
     for(QDomElement path_node = root_elt.firstChildElement(QString(CG_SW_XML_PATH_NODE)); !path_node.isNull(); path_node = path_node.nextSiblingElement(QString(CG_SW_XML_PATH_NODE)))
     {
@@ -50,7 +81,7 @@ SwComponent_ClassPtr SwLoader_Class::Load(QDomDocument & doc) throw(SwException)
     }   
 
     //Construction du stream
-    QDomElement elt=root_elt.firstChildElement(QString(CG_SW_XML_COMPONENT_NODE));
+    QDomElement elt= root_elt.firstChildElement(QString(CG_SW_XML_COMPONENT_NODE));
     root_component=BuildStream(elt,NULL);
     //Finalization
     FinalizeUnfinalized();

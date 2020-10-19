@@ -9,6 +9,9 @@
 #include <QApplication>
 #include <QDir>
 #include <QTextCodec>
+#include <QXmlReader>
+#include <QXmlStreamWriter>
+
 #include "SwApplication.h"
 #include "_SwPluginsBank_Class.h"
 #include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
@@ -121,53 +124,35 @@ QString SwApplication::GetWorkingPath()
 //-----------------------------------------------------------------------
 bool StreamWork::SwCore::SwApplication::isValidSignature(QString stream_desc) const
 {
-	int signatureStart = stream_desc.indexOf(START_SIGNATURE);
-	int signatureEnd = stream_desc.indexOf(END_SIGNATURE);
+	QString minifiedStream;
+	QString signature;
 
-	if (signatureStart == -1 || signatureEnd == -1)
-		return false;
+	QXmlStreamReader reader(stream_desc);
+	QXmlStreamWriter writer(&minifiedStream);
 
-	QString signatureData = stream_desc.mid(signatureStart + START_SIGNATURE.length(), signatureEnd - (signatureStart + START_SIGNATURE.length()));
-
-	std::string signatureDecoded;
-	CryptoPP::StringSource(signatureData.toUtf8().constData(), true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(signatureDecoded)));
-
-	int startLine;
-	for (startLine = signatureStart; startLine != -1; --startLine)
-	{
-		if (stream_desc.at(startLine) == '\n')
+	bool inStreamElement = false;
+	while (!reader.atEnd()) {
+		reader.readNext();
+		if (reader.tokenType() == QXmlStreamReader::StartElement && reader.name() == CG_SW_XML_STREAM_NODE)
 		{
-			startLine += 1;
-			break;
+			inStreamElement = true;
+		}
+		else if (reader.tokenType() == QXmlStreamReader::EndElement && reader.name() == CG_SW_XML_STREAM_NODE)
+		{
+			writer.writeCurrentToken(reader);
+			inStreamElement = false;
+		}
+		if (inStreamElement && !reader.isWhitespace())
+		{
+			writer.writeCurrentToken(reader);
+		}
+		if (reader.tokenType() == QXmlStreamReader::StartElement && reader.name() == CG_SW_XML_STREAMSIGNATURE_NODE)
+		{
+			signature += reader.readElementText();
 		}
 	}
 
-	int endLine;
-	for (endLine = signatureEnd; endLine != stream_desc.length(); ++endLine)
-	{
-		if (stream_desc.at(endLine) == '\n')
-		{
-			endLine += 1;
-			break;
-		}
-	}
-
-	if (startLine == -1 || endLine == stream_desc.length())
-		return false;
-
-	QString message = stream_desc.remove(startLine, endLine - startLine);
-
-	// Génération du verifier a partir de la clef publique
-	string publicKeyBin;
-	CryptoPP::StringSource(publicKey, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(publicKeyBin)));
-	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PublicKey pubKey;
-	pubKey.BERDecode(CryptoPP::StringStore(publicKeyBin).Ref());
-	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Verifier verifier(pubKey);
-
-	if (signatureDecoded.length() != verifier.SignatureLength())
-		return false;
-
-	return verifier.VerifyMessage((const byte*)message.toUtf8().constData(), message.toUtf8().size(), (const byte*)signatureDecoded.c_str(), signatureDecoded.size());
+	return isValidSignature(minifiedStream, signature);
 }
 
 //-----------------------------------------------------------------------
@@ -349,6 +334,21 @@ void SwApplication::enableDeveloperMode()
 bool StreamWork::SwCore::SwApplication::developerMode() const
 {
 	return _developerMode;
+}
+
+//-------------------------------------------------------------------------
+bool StreamWork::SwCore::SwApplication::isValidSignature(QString message, QString signature) const
+{
+	std::string publicKeyBin;
+	CryptoPP::StringSource(publicKey, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(publicKeyBin)));
+	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PublicKey pubKey;
+	pubKey.BERDecode(CryptoPP::StringStore(publicKeyBin).Ref());
+	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Verifier verifier(pubKey);
+
+	byte *signatureDecoded = new byte[verifier.MaxSignatureLength()];
+	CryptoPP::StringSource(signature.toStdString(), true, new CryptoPP::HexDecoder(new CryptoPP::ArraySink(signatureDecoded, verifier.MaxSignatureLength())));
+
+	return verifier.VerifyMessage(reinterpret_cast<const byte*>(message.toUtf8().constData()), message.toUtf8().size(), signatureDecoded, verifier.MaxSignatureLength());
 }
 
 //-----------------------------------------------------------------------

@@ -29,8 +29,7 @@ SwSaver_Class::~SwSaver_Class(){
 void SwSaver_Class::Save(SwComponent_Class * root_component, QXmlStreamWriter & writer)
 {
 	//Ecriture du header	
-	writer.writeStartElement(CG_SW_XML_DOCUMENT_NODE);
-	writer.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION, CG_STREAMWORK_VERSION);
+	writer.writeStartElement(CG_SW_XML_STREAM_NODE);
 		
 	//Ajout des path
 	QMap<QString, bool> paths = SW_APP->ComponentsBank().GetPathList();
@@ -46,7 +45,7 @@ void SwSaver_Class::Save(SwComponent_Class * root_component, QXmlStreamWriter & 
 	//Construction du flux
 	BuildXMLStream(root_component, writer);
 
-	// L'appelant doit fermer le stream (car on laisse la possibilité d'ajotuer des informations de positionnement des Composants)
+	writer.writeEndElement();
 }
 /*! Sauvegarde groupe */
 void SwSaver_Class::SaveGroup(QList<SwComponent_Class *> & components, QXmlStreamWriter & writer)

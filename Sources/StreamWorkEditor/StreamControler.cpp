@@ -317,12 +317,11 @@ QString StreamControler::getStreamSignature(QString stream) const
 		// génération de la signature
 		CryptoPP::AutoSeededRandomPool rng;
 		byte *signature = new byte[priv.MaxSignatureLength()];
-		size_t size = priv.SignMessage(rng, (const byte*)stream.toUtf8().constData(), stream.toUtf8().size(), signature);
+		size_t size = priv.SignMessage(rng, reinterpret_cast<const byte*>(stream.toUtf8().constData()), stream.toUtf8().size(), signature);
 
 		// Transformation de la signature de binaire a hexa
-		std::string signatureStringBinaire(reinterpret_cast<char const*>(signature), size);
 		std::string signatureStringhex;
-		CryptoPP::StringSource(signatureStringBinaire, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
+		CryptoPP::StringSource(signature, size, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
 		return QString::fromStdString(signatureStringhex);
 	}
 	catch (...)
@@ -334,25 +333,17 @@ QString StreamControler::getStreamSignature(QString stream) const
 //-----------------------------------------------------------------------
 void StreamControler::saveStream()
 {
+	//serialisation du stream
+	SwSaver_Class saver;
+
 	// Generate stream
 	QString stream;
 	QXmlStreamWriter streamWriter(&stream);
-	streamWriter.setCodec("UTF-8");
-	streamWriter.setAutoFormatting(true);
-
-	//serialisation du stream
-	SwSaver_Class saver;
-	streamWriter.writeStartDocument();
 
 	saver.Save(_rootComponent, streamWriter);
-	//Ajout donnees visuelles
-	saveVisualData(streamWriter);
-
-	streamWriter.writeEndDocument();
-
 	QString signature = getStreamSignature(stream);
-
-	// Generate file
+	
+ 	// Generate file
 	QFile file(_streamFileName);
 	//Ouverture d'un fichier en ecriture
 	if (file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false)
@@ -366,14 +357,17 @@ void StreamControler::saveStream()
 	fileWriter.setAutoFormatting(true);
 
 	//serialisation du stream
-	SwSaver_Class saver2;
 	fileWriter.writeStartDocument();
 
-	saver2.Save(_rootComponent, fileWriter);
+	fileWriter.writeStartElement(CG_SW_XML_DOCUMENT_NODE);
+	fileWriter.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION, CG_STREAMWORK_VERSION);
+
+	saver.Save(_rootComponent, fileWriter);
+
 	//Ajout donnees visuelles
 	saveVisualData(fileWriter);
 
-	fileWriter.writeTextElement("Signature", signature);
+	fileWriter.writeTextElement(CG_SW_XML_STREAMSIGNATURE_NODE, signature);
 
 	fileWriter.writeEndDocument();
 
@@ -386,8 +380,6 @@ void StreamControler::saveStreamAs(QString streamFileName)
 	_streamFileName = streamFileName;
 	saveStream();
 }
-
-
 
 //-----------------------------------------------------------------------
 QString StreamControler::getStreamFileName()

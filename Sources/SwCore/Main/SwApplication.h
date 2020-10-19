@@ -149,6 +149,13 @@ namespace StreamWork
             SwAlerter_Class _alerter;
             /*! \brief Initialisation des types*/
             void Initialize_Types();
+			/*! \brief Check if the xml signature is valid */
+			// message the xml file stream without signature
+			// signature of the stream
+			bool isValidSignature(QString message, QString signature) const;
+			/*! \brief Check if the xml signature is valid */
+			bool isValidSignature(QString stream_desc) const;
+		
             /*! \brief Constructeur*/
             SwApplication();
             /*! \brief Destructeur*/
@@ -162,8 +169,6 @@ namespace StreamWork
             const QString & GetApplicationDirPath();
 			/*! \brief Acces au path de l'application ou celui configure comme tel par l'utilisateur*/
             void SetApplicationDirPath(const QString & path);
-			/*! \brief Check if the xml signature is valid */
-			bool isValidSignature(QString stream_desc) const;
             /*! \brief Lancement de l'application avec un stream definit dans une chaine*/
             int Launch(QString stream_desc) throw(SwException);
             /*! \brief Finalisation de l'initialisation*/
@@ -229,7 +234,7 @@ namespace StreamWork
 
 		protected :
 			virtual void raiseQueryError(QString serviceName);
-
+			
 		};
 	}
 }
