@@ -18,7 +18,7 @@
 #include "info_SwFoundation.h"
 
 /*! \brief Constructeur */
-_SwFoundationPluginFactory_Class::_SwFoundationPluginFactory_Class():SwPluginFactory_Class() {
+_SwFoundationPluginFactory_Class::_SwFoundationPluginFactory_Class():SwProtectedPluginFactory_Class() {
 
 }
 /*! \brief Destructeur */

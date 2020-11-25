@@ -18,7 +18,7 @@
 using namespace StreamWork::SwCore;
 
 //-----------------------------------------------------------------------
-_SwExecutionPluginFactory_Class::_SwExecutionPluginFactory_Class() :SwPluginFactory_Class()
+_SwExecutionPluginFactory_Class::_SwExecutionPluginFactory_Class() :SwProtectedPluginFactory_Class()
 {
 
 }

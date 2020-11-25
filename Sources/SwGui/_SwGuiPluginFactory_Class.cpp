@@ -60,7 +60,7 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
 
 //---------------------------------------------------------------------
-_SwGuiPluginFactory_Class::_SwGuiPluginFactory_Class() :SwPluginFactory_Class()
+_SwGuiPluginFactory_Class::_SwGuiPluginFactory_Class() :SwProtectedPluginFactory_Class()
 {
 
 }

@@ -28,7 +28,7 @@ using namespace StreamWork::SwModel;
 
 
 //-----------------------------------------------------------------------
-_SwModelPluginFactory_Class::_SwModelPluginFactory_Class() :SwPluginFactory_Class()
+_SwModelPluginFactory_Class::_SwModelPluginFactory_Class() :SwProtectedPluginFactory_Class()
 {
 
 }
