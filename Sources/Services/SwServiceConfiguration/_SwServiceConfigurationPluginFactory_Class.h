@@ -10,7 +10,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwPluginFactory_Class.h>
+#include <SwProtectedPluginFactory_Class.h>
 #include "SwServiceSaveConfiguration.h"
 
 using namespace StreamWork::SwCore;
@@ -19,7 +19,7 @@ using namespace StreamWork::SwCore;
 	\class SwPluginFactory_Class
 	\brief classe definissant un plugin usine
 	*/
-class _SwServiceConfigurationPluginFactory_Class : public SwPluginFactory_Class
+class _SwServiceConfigurationPluginFactory_Class : public SwProtectedPluginFactory_Class
 {
 protected:
 	/*! \brief instanciation d'un composant */

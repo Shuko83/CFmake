@@ -9,7 +9,7 @@
 using namespace StreamWork::SwCore;
 
 //----------------------------------------------------------------------------------------------
-_SwServiceConfigurationPluginFactory_Class::_SwServiceConfigurationPluginFactory_Class() :SwPluginFactory_Class()
+_SwServiceConfigurationPluginFactory_Class::_SwServiceConfigurationPluginFactory_Class() :SwProtectedPluginFactory_Class()
 {
 
 }
