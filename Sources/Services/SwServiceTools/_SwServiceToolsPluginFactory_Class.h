@@ -9,7 +9,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwPluginFactory_Class.h>
+#include <SwProtectedPluginFactory_Class.h>
 #include "_SwServiceRefProfiler.h"
 #include "_SwServiceParametersImpl.h"
 #include "_SwServiceExtensionsImpl.h"
@@ -23,7 +23,7 @@ using namespace StreamWork::SwCore;
 	\class SwPluginFactory_Class 
 	\brief classe definissant un plugin usine
 */
-class _SwServiceToolsPluginFactory_Class : public SwPluginFactory_Class
+class _SwServiceToolsPluginFactory_Class : public SwProtectedPluginFactory_Class
 { 
 	protected:
 		/*! \brief instanciation d'un composant */

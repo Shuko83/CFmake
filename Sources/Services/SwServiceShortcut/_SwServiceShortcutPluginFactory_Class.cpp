@@ -8,7 +8,7 @@
 using namespace StreamWork::SwCore;
 
 //----------------------------------------------------------------------------------------------
-_SwServiceShortcutPluginFactory_Class::_SwServiceShortcutPluginFactory_Class():SwPluginFactory_Class() 
+_SwServiceShortcutPluginFactory_Class::_SwServiceShortcutPluginFactory_Class():SwProtectedPluginFactory_Class()
 {
 
 }
