@@ -139,11 +139,11 @@ int main(int argc, char *argv[])
 	QApplication app(argc, argv);
 
 	// Licence
-	ProductLicense productLicense(licenseId::ProductId::Product_SX);
+	ProductLicense productLicense(licenseId::ProductId::Product_STREAMWORK);
 	bool licenseLost = false;
 
 	QObject::connect(&productLicense, &ProductLicense::error, [&licenseLost]() {licenseLost = true; qApp->exit(EXIT_FAILURE); });
-	if (!productLicense.takeCore())
+	if (!productLicense.takeFeatures({licenseId::FunctionId::Function_CORE, licenseId::FunctionId::Function_DEVELOPPER}))
 	{
 		QMessageBox::information(0, QStringLiteral("No license"), QStringLiteral("No licence for StreamWork could be found."), QMessageBox::Ok);
 		return EXIT_FAILURE;
