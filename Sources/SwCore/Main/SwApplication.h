@@ -20,6 +20,7 @@
 #include "SwLogger_Class.h"
 #include "SwAlerter_Class.h"
 
+class ProductLicense;
 namespace StreamWork 
 {
 	namespace SwCore
@@ -121,6 +122,7 @@ namespace StreamWork
 			bool _logTime;
 			bool _autoStart;
 			bool _developerMode;
+			bool _runtimeMode;
             /*! \brief Est une application avec ihm (QApplication et non QCoreApplication) */
             bool _isGuiApp;
             /*! \brief mode affichage */
@@ -160,6 +162,8 @@ namespace StreamWork
             SwApplication();
             /*! \brief Destructeur*/
             ~SwApplication();
+
+			ProductLicense *_productLicense;
         public:
             /*! \brief Acces a l'instance unique*/
             static SwApplication * GetInstance();

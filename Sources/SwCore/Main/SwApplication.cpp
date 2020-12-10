@@ -30,6 +30,7 @@
 #include "cryptlib.h"
 #include "rsa.h"
 #include "hex.h"
+#include "ProductLicense.h"
 
 using namespace StreamWork::SwCore;
 using namespace std;
@@ -46,7 +47,27 @@ SwApplication::SwApplication()
 	, _logTime(false)
 	, _autoStart(false)
 	, _developerMode(false)
+	, _runtimeMode(false)
+	, _productLicense (nullptr)
 {
+	_productLicense = new ProductLicense(licenseId::ProductId::Product_STREAMWORK);
+	if (!_productLicense->takeCore())
+	{
+		LAUNCH_SWEXCEPTION("SwCore", "No licence for StreamWork could be found.");
+	}
+	if (_productLicense->takeFeature(licenseId::FunctionId::Function_DEVELOPPER))
+	{
+		_developerMode = true;
+	}
+	else if (_productLicense->takeFeature(licenseId::FunctionId::Function_RUNTIME))
+	{
+		_runtimeMode = true;
+	}
+	else
+	{
+		LAUNCH_SWEXCEPTION("SwCore", "No feature runtime or developper could be found.");
+	}
+
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 	_startPath = QDir::currentPath();
 
@@ -65,7 +86,7 @@ SwApplication::SwApplication()
 	//Finalisation de l'initialisation
 	_initialisationFinalized = false;
 	//Creation de la banque de plugin
-	_bank = new _SwPluginsBank_Class;
+	_bank = new _SwPluginsBank_Class(_productLicense);
 	//Creation de la banque des fabriques des adatpateurs de type complexe
 	_ctadaptersbank = new _SwComplexeTypeAdaptersFactoriesBankImpl;
 	//Pas de stream
@@ -162,13 +183,12 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 	QString xml_error;
 	int error_line, error_column;
 	SwComponent_ClassPtr root_component;
-
 	FinalizeInitialisation();
 	if (_is_launch)
 	{
 		LAUNCH_SWEXCEPTION("SwCore", "Only one launch can be done simultaneously");
 	}
-	if (!isValidSignature(stream_desc))
+	if (_runtimeMode && !isValidSignature(stream_desc))
 	{
 		LAUNCH_SWEXCEPTION("SwCore", "Signature not valid");
 	}

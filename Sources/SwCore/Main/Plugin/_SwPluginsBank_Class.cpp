@@ -155,10 +155,12 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
 //
 
 /*! \brief Constructeur */
-_SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel()
+_SwPluginsBank_Class::_SwPluginsBank_Class(ProductLicense * productLicense)
+	: QAbstractItemModel()
+	, _tree_items(nullptr)
+	, _has_changed(false)
+	, _productLicense(productLicense)
 {
-	_tree_items=NULL;
-	_has_changed=false;
 	RebuildModel();
 	_data_to_factory.insert(SwUUID(),NULL);
 	_trayIcon=new QSystemTrayIcon(this);
@@ -170,8 +172,6 @@ _SwPluginsBank_Class::_SwPluginsBank_Class():QAbstractItemModel()
 	dwRet = GetEnvironmentVariableW(VARNAME_USER, chNewEnv, WIN32_BUFSIZE);
 	_userName = QString::fromWCharArray(chNewEnv);
 	_pluginLicence = getPluginLicence();
-	_productLicense = new ProductLicense(licenseId::ProductId::Product_SX);
-	_productLicense->takeCore();
 }
 /*! \brief Destructeur */
 _SwPluginsBank_Class::~_SwPluginsBank_Class(){
@@ -295,9 +295,9 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 				SwPluginFactory_Class * plugin=plugin_entry();
 
 				// Check if plugin compilation date is older than the licence
- 				if (!_productLicense->checkBuildDate(plugin->GetPluginCompilationDate()))
+ 				if (!_productLicense || !_productLicense->checkBuildDate(plugin->GetPluginCompilationDate()))
 				{
-					qDebug() << QString("Plugin %1 is too recent").arg(plugin->GetPluginName());
+					 qDebug() << QString("Plugin %1 is too recent").arg(plugin->GetPluginName());
 					delete plugin;
 					continue;
 				}

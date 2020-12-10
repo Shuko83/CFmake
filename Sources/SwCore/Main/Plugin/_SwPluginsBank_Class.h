@@ -83,7 +83,7 @@ namespace StreamWork
 			ProductLicense * _productLicense;
 		public:
             /*! \brief Constructeur */
-            _SwPluginsBank_Class();
+            _SwPluginsBank_Class(ProductLicense * productLicense = nullptr);
             /*! \brief Destructeur */
             ~_SwPluginsBank_Class();
             //------------------------------------------------------------------
