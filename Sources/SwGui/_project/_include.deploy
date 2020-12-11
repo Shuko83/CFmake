@@ -1,0 +1,30 @@
+{
+	"deploy" : [
+		{
+			"sourceDir" : "../ComponentTools",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ComponentTableWidget.h"
+			]
+		},
+		{
+			"sourceDir" : "..",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwQDockWidget.h",
+				"ISwQDockWidgetListener.h",
+				"ISwQMainWindow.h",
+				"ISwStackedWidget_Controler.h",
+				"ISwStackedWidget_Observer.h",
+				"ISwToolBar.h",
+				"SwDefaultPerspective.h",
+				"SwGuiDefaultItemDelegate.h",
+				"_QRcViewer.h",
+				"_SwGuiCompMainWindow.h",
+				"_SwGuiPluginsFrontEnd.h",
+				"SwGuiConstantes.h",
+				"SwGuiComponentTools.h"
+			]
+		}
+	]
+}
