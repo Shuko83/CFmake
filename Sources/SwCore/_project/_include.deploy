@@ -121,7 +121,7 @@
 			]
 		},
 		{
-			"sourceDir" : "../Main/Properties",
+			"sourceDir" : "../Properties",
 			"destDir" : "${INSTALLDIR}/include",
 			"files" : [
 				"ISwProperty2.h",
