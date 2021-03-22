@@ -1,11 +1,19 @@
 [
 	{
+		"destination": "3rdParty/Cryptopp",
+		"repository": "https://tt4.aix.diginext.fr/svn/3rdParty.Cryptopp/tags/5.6.5.1"
+	},
+	{
 		"destination": "Frameworks/StreamWork",
 		"repository": "https://tt4.aix.diginext.fr/svn/Frameworks.StreamWork/branches/feature/V3"
 	},
 	{
 		"destination": "Libraries/Components",
 		"repository": "https://tt4.aix.diginext.fr/svn/Libraries.Components/branches/feature/StreamWorkV3"
+	},
+	{
+		"destination": "Libraries/Licensing",
+		"repository": "https://tt4.aix.diginext.fr/svn/Libraries.Licensing/branches/release/4.0"
 	},
 	{
 		"destination": "Libraries/Qst/Base",
