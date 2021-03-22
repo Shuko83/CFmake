@@ -1,0 +1,18 @@
+[
+	{
+		"destination": "Frameworks/StreamWork",
+		"repository": "https://tt4.aix.diginext.fr/svn/Frameworks.StreamWork/branches/feature/V3"
+	},
+	{
+		"destination": "Libraries/Components",
+		"repository": "https://tt4.aix.diginext.fr/svn/Libraries.Components/branches/feature/StreamWorkV3"
+	},
+	{
+		"destination": "Libraries/Qst/Base",
+		"repository": "https://tt4.aix.diginext.fr/svn/Libraries.Qst.Base/trunk"
+	},
+	{
+		"destination": "Libraries/Qst/Modules",
+		"repository": "https://tt4.aix.diginext.fr/svn/Libraries.Qst.Modules/trunk"
+	}
+]
