@@ -45,7 +45,7 @@ const char * VL_Version = "%1\n\
 						  Description\n\
 						  StreamWorkEditor\n\
 						  Build on %2 at %3\n";
-						  
+
 namespace
 {
 	struct Parameters
@@ -144,12 +144,41 @@ int main(int argc, char *argv[])
 	QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	QApplication app(argc, argv);
 
+	Parameters params = readParamaters();
+
 	// Licence
 	ProductLicense productLicense(licenseId::ProductId::Product_STREAMWORK);
 	bool licenseLost = false;
-
 	QObject::connect(&productLicense, &ProductLicense::error, [&licenseLost]() {licenseLost = true; qApp->exit(EXIT_FAILURE); });
-	if (!productLicense.takeFeatures({licenseId::FunctionId::Function_CORE, licenseId::FunctionId::Function_DEVELOPPER}))
+	bool licenseOk = productLicense.takeFeatures({ licenseId::FunctionId::Function_CORE, licenseId::FunctionId::Function_DEVELOPPER });
+
+	//Signature des streams
+	if (!params.folderToSign.isEmpty())
+	{
+		if (licenseOk)
+		{
+			QFileInfoList xmlInfoList;
+			QDirIterator it(params.folderToSign, { QString("*.xml") }, QDir::Files | QDir::Readable, QDirIterator::Subdirectories);
+			while (it.hasNext())
+			{
+				xmlInfoList.append(it.fileInfo());
+				it.next();
+			}
+			for (QFileInfo fileInfo : xmlInfoList)
+			{
+				QFile file(fileInfo.absoluteFilePath());
+				StreamControler::SaveStream(file);
+			}
+			return EXIT_SUCCESS;
+		}
+		else
+		{
+			qInfo() << "No license for StreamWorkEditor could be find.";
+			return EXIT_FAILURE;
+		}
+	}
+
+	if (!licenseOk)
 	{
 		QMessageBox::information(0, QStringLiteral("No license"), QStringLiteral("No licence for StreamWork could be found."), QMessageBox::Ok);
 		return EXIT_FAILURE;
@@ -165,40 +194,22 @@ int main(int argc, char *argv[])
 	SwLogPreRecorder::PreAttachLogRecorder(LogView::getInstance());
 
 	// SwApplication
-	Parameters params = readParamaters();
-	
+
 	// Application des arguments
 	// Aide
-	if(params.help)
+	if (params.help)
 	{
 		QString s = QString(VL_Help).arg(QCoreApplication::instance()->arguments().first());
 		QMessageBox::information(0, QString("Help"), s, QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
-		exit(0);
+		return EXIT_SUCCESS;
 	}
 
-	//Signature des streams
-	if (!params.folderToSign.isEmpty())
-	{
-		QFileInfoList xmlInfoList;
-		QDirIterator it(params.folderToSign, { QString("*.xml") }, QDir::Files | QDir::Readable, QDirIterator::Subdirectories);
-		while (it.hasNext())
-		{
-			xmlInfoList.append(it.fileInfo());
-			it.next();
-		}
- 		for (QFileInfo fileInfo : xmlInfoList)
- 		{
-			QFile file(fileInfo.absoluteFilePath());
-			StreamControler::SaveStream(file);
- 		}
-		exit(0);
-	}
 	// Version
 	if (params.version)
 	{
 		QString s = QString(VL_Version).arg(QCoreApplication::instance()->arguments().first()).arg(QString(__DATE__)).arg(QString(__TIME__));
 		QMessageBox::information(0, QString("Version"), s, QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
-		exit(0);
+		return EXIT_SUCCESS;
 	}
 	// Definition d'un fichier de log
 	SwFileLogRecorder_Class *log_recorder = nullptr;
@@ -253,7 +264,7 @@ int main(int argc, char *argv[])
 			SW_APP->ComponentsBank().AddPath(dir.path());
 	}
 	// Ajout d'un descripteur de paths
-	if(!params.pluginPathFile.isEmpty())
+	if (!params.pluginPathFile.isEmpty())
 	{
 		if (!QFileInfo::exists(params.pluginPathFile))
 			qCritical() << QString("PluginPathFile %1 doesn't exist").arg(params.pluginPathFile);
@@ -261,7 +272,7 @@ int main(int argc, char *argv[])
 			SW_APP->ComponentsBank().AddPaths(params.pluginPathFile);
 	}
 	// Demarrage retarde
-	if(params.restart != 0)
+	if (params.restart != 0)
 	{
 #ifdef Q_OS_WIN
 		//Recherche du process origine,
@@ -287,12 +298,12 @@ int main(int argc, char *argv[])
 		}
 #endif
 	}
-	
+
 	SW_APP->enableDeveloperMode();
 
 	// Finalisation de l'initialisation
 	SW_APP->FinalizeInitialisation();
-	
+
 	EditionService *editionService = new EditionService();
 	SW_APP->RegisterService(editionService);
 
@@ -305,10 +316,10 @@ int main(int argc, char *argv[])
 
 	// Destruction du log_recorder
 	delete log_recorder;
-	
+
 	// Destruction du service d'édition
 	SW_APP->UnregisterService(editionService->GetServiceName());
-    delete editionService;
+	delete editionService;
 
 	return result;
 }
