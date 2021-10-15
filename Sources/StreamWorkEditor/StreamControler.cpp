@@ -157,6 +157,20 @@ StreamScene * StreamControler::getScene()
 	return _streamScene;
 }
 
+//-------------------------------------------------------------------------
+bool StreamControler::isStream(const QString & fileDesc)
+{
+	QXmlStreamReader reader(fileDesc);
+	while (!reader.atEnd()) {
+		reader.readNext();
+		if (reader.tokenType() == QXmlStreamReader::StartElement && reader.name() == CG_SW_XML_STREAM_NODE)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 //-----------------------------------------------------------------------
 void StreamControler::setView(StreamView * view)
 {
@@ -303,7 +317,7 @@ void StreamControler::loadExistingStream(QString streamFileName, StreamWork::SwC
 }
 
 //-----------------------------------------------------------------------
-QString StreamControler::getStreamSignature(QString stream) const
+QString StreamControler::getStreamSignature(QString stream)
 {
 	try
 	{
@@ -327,6 +341,67 @@ QString StreamControler::getStreamSignature(QString stream) const
 	catch (...)
 	{
 		return "";
+	}
+}
+
+//-------------------------------------------------------------------------
+void StreamControler::writeToken(const QString & streamDesc, QXmlStreamWriter& writer, QString tokenName, bool checkIsWhiteSpace /*= false*/)
+{
+	QXmlStreamReader reader(streamDesc);
+
+	bool inTokenElement = false;
+	while (!reader.atEnd()) {
+		reader.readNext();
+		if (reader.tokenType() == QXmlStreamReader::StartElement && reader.name() == tokenName)
+		{
+			inTokenElement = true;
+		}
+		else if (reader.tokenType() == QXmlStreamReader::EndElement && reader.name() == tokenName)
+		{
+			writer.writeCurrentToken(reader);
+			inTokenElement = false;
+		}
+		if (inTokenElement && (!checkIsWhiteSpace || !reader.isWhitespace()))
+		{
+			writer.writeCurrentToken(reader);
+		}
+	}
+}
+
+//-------------------------------------------------------------------------
+void StreamControler::SaveStream(QFile& file)
+{
+	if (file.open(QIODevice::ReadWrite))
+	{
+		QString streamDesc(file.readAll());
+		if (isStream(streamDesc))
+		{
+			file.reset();
+			QXmlStreamWriter fileWriter(&file);
+			fileWriter.setCodec("UTF-8");
+			fileWriter.setAutoFormatting(true);
+
+			//serialisation du stream
+			fileWriter.writeStartDocument();
+
+			fileWriter.writeStartElement(CG_SW_XML_DOCUMENT_NODE);
+			fileWriter.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION, CG_STREAMWORK_VERSION);
+
+			// Generate stream
+			writeToken(streamDesc, fileWriter, CG_SW_XML_STREAM_NODE);
+
+			//Ajout donnees visuelles
+			writeToken(streamDesc, fileWriter,CL_SCENE_NODE);
+
+			QString stream;
+			QXmlStreamWriter signatureWriter(&stream);
+			writeToken(streamDesc, signatureWriter,CG_SW_XML_STREAM_NODE, true);
+			QString signature = getStreamSignature(stream);
+			fileWriter.writeTextElement(CG_SW_XML_STREAMSIGNATURE_NODE, signature);
+
+			fileWriter.writeEndDocument();
+			file.close();
+		}
 	}
 }
 
@@ -370,7 +445,6 @@ void StreamControler::saveStream()
 	fileWriter.writeTextElement(CG_SW_XML_STREAMSIGNATURE_NODE, signature);
 
 	fileWriter.writeEndDocument();
-
 	file.close();
 }
 
@@ -1056,13 +1130,13 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 	QList<SwComponent_Class *> components_and_model_host = components;
 	components_and_model_host.push_back(modelHost);
 	QString models_path = serviceModel->getModelsDirectory();
-	QString _streamFileName = models_path + "/" + modelName + ".xml";
+	QString streamFileName = models_path + "/" + modelName + ".xml";
 	QFile file;
 	//Ouverture d'un fichier en ecriture
-	file.setFileName(_streamFileName);
+	file.setFileName(streamFileName);
 	if (file.open(QIODevice::WriteOnly | QIODevice::Truncate) == false)
 	{
-		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(_streamFileName));
+		QMessageBox::critical(NULL, "StreamWorkEditor critical", QString("Fail to save stream in file %1").arg(streamFileName));
 		return;
 	}
 	QXmlStreamWriter writer(&file);

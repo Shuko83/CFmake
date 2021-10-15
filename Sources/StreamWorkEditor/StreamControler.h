@@ -40,7 +40,9 @@ public:
 	void saveStream();
 	/** @brief Save stream as */
 	void saveStreamAs(QString streamFileName);
-    
+
+	static void SaveStream(QFile& file);
+
     /** @brief Stream file name access */
 	QString getStreamFileName();
     /** @brief Scene access */
@@ -168,8 +170,10 @@ private:
 	// Signature
 	//--------------------------------------------------------------------------
 	/** @brief Récupère la signature du stream */
-	QString getStreamSignature(QString stream) const;
+	static QString getStreamSignature(QString stream);
 
+	static void writeToken(const QString & streamDesc, QXmlStreamWriter& writer, QString tokenName, bool checkIsWhiteSpace = false);
+	static bool isStream(const QString & fileDesc);
 private:
 	/** @brief Scene */
     StreamScene * _streamScene;

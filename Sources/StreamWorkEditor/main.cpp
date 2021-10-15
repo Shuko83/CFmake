@@ -17,6 +17,7 @@
 #include "QsLog.h"
 #include "SwTime_ToolBox.h"
 #include "ProductLicense.h"
+#include "StreamControler.h"
 
 #ifdef Q_OS_WIN
 #include <psapi.h>
@@ -61,6 +62,7 @@ namespace
 		QString appDirPath;
 		bool autostart;
 		unsigned int restart;
+		QString folderToSign;
 
 		Parameters()
 			: help(false)
@@ -75,6 +77,7 @@ namespace
 			, pluginPathFile()
 			, autostart(false)
 			, restart(0)
+			, folderToSign()
 		{}
 	};
 }
@@ -122,6 +125,9 @@ Parameters readParamaters()
 		// Demarrage retarde
 		else if (liste_arg[i] == "-restart" && i + 1 < nb_args)
 			params.restart = liste_arg[++i].toUInt();
+		// Permet de signer les fichiers contenu dans le dossier fourni en paramètre
+		else if (liste_arg[i] == "-sign" && i + 1 < nb_args)
+			params.folderToSign = liste_arg[++i];
 	}
 	return params;
 }
@@ -167,6 +173,24 @@ int main(int argc, char *argv[])
 	{
 		QString s = QString(VL_Help).arg(QCoreApplication::instance()->arguments().first());
 		QMessageBox::information(0, QString("Help"), s, QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
+		exit(0);
+	}
+
+	//Signature des streams
+	if (!params.folderToSign.isEmpty())
+	{
+		QFileInfoList xmlInfoList;
+		QDirIterator it(params.folderToSign, { QString("*.xml") }, QDir::Files | QDir::Readable, QDirIterator::Subdirectories);
+		while (it.hasNext())
+		{
+			xmlInfoList.append(it.fileInfo());
+			it.next();
+		}
+ 		for (QFileInfo fileInfo : xmlInfoList)
+ 		{
+			QFile file(fileInfo.absoluteFilePath());
+			StreamControler::SaveStream(file);
+ 		}
 		exit(0);
 	}
 	// Version
