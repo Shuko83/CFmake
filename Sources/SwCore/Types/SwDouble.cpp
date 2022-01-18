@@ -32,7 +32,7 @@ SwDouble::SwDouble(const SwDouble & source)
 //---------------------------------------------------------------------------------
 SwDouble::~SwDouble() 
 {
-    //Nothing to do
+	delete _doubleValidator;
 }
 
 //-------------------------------------------------------------------------

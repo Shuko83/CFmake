@@ -30,7 +30,7 @@ SwInteger::SwInteger(const SwInteger & source)
 //-------------------------------------------------------------------------
 SwInteger::~SwInteger() 
 {
-    //Nothing to do
+	delete _intValidator;
 }
 
 //-------------------------------------------------------------------------
