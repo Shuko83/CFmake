@@ -30,7 +30,7 @@ _SwGuiCompDockToQDock::~_SwGuiCompDockToQDock()
 //-----------------------------------------------------------------------------
 void _SwGuiCompDockToQDock::initializeComponent() throw(SwException)
 {
-	consummeInterface<ISwDockWidget>(DOCKWIDGET_INTERFACE_NAME);
+	consumeInterface<ISwDockWidget>(DOCKWIDGET_INTERFACE_NAME);
 	provideInterface<ISwQDockWidget>(QDOCKWIDGET_INTERFACE_NAME,(ISwQDockWidget*)this);
 }
 

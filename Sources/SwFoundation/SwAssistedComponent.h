@@ -418,7 +418,7 @@ namespace StreamWork {
 			 * @brief    : Permet de consommer une interface
 			 * @param	 : QString pinterface_name - Nom de l'interface
 			 */
-			template<typename T> void consummeInterface(QString pinterface_name) 
+			template<typename T> void consumeInterface(QString pinterface_name) 
 			{
 				if(!_isConsumer)
 					return;

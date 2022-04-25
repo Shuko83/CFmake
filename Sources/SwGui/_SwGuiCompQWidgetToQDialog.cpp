@@ -62,7 +62,7 @@ void _SwGuiCompQWidgetToQDialog::initializeComponent() throw( SwException )
 {
     _helper.setCallback(this, &_SwGuiCompQWidgetToQDialog::onService);
     
-    consummeInterface<QWidget>( WIDGET_INTERFACE_NAME );
+    consumeInterface<QWidget>( WIDGET_INTERFACE_NAME );
     
     provideInterface<QWidget>( WIDGETP_INTERFACE_NAME, &_container );
     provideInterface<QAction>( QACTION_INTERFACE_NAME, _action );

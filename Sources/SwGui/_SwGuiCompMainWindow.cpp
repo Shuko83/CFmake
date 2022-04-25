@@ -196,13 +196,13 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
         provideInterface<QWidget>( "MainWindowAsWidget", _mainWindow );
         
     //Central widget
-    consummeInterface<QWidget>( CL_CENTRALWIDGET_INTERFACE_NAME );
+    consumeInterface<QWidget>( CL_CENTRALWIDGET_INTERFACE_NAME );
     
     //Exportation de l'interface QWidget
     provideInterface<ISwEvent>( "ISwEvent", ( ISwEvent * )this );
     
     //Status bar
-    consummeInterface<QWidget>( STATUSBAR_INTERFACE );
+    consumeInterface<QWidget>( STATUSBAR_INTERFACE );
     
     //Enregistrement des propriétés
     createPropertiesForThisObject( QString(), true );
@@ -359,7 +359,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
             {
                 interface_name = QString( CL_MENU_INTERFACE_NAME ).arg( i );
                 _menus.insert( interface_name,nullptr );
-                consummeInterface<ISwMenu>( interface_name );
+                consumeInterface<ISwMenu>( interface_name );
             }
         }
         _menus_nb = val;
@@ -387,7 +387,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
             {
                 interface_name = QString( CL_ACTION_INTERFACE_NAME ).arg( i );
                 _actions.insert( interface_name, nullptr );
-                consummeInterface<QAction>( interface_name );
+                consumeInterface<QAction>( interface_name );
             }
         }
         _actions_nb = val;
@@ -420,7 +420,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
             {
                 interface_name = QString( CL_TOOLBAR_INTERFACE_NAME ).arg( i );
                 _toolbars.insert( interface_name, nullptr );
-                consummeInterface<ISwToolBar>( interface_name );
+                consumeInterface<ISwToolBar>( interface_name );
                 //Positionnement
                 property_name = interface_name + ".where";
                 toolbar_position = getPropertiesService().CreateProperty<SwEnum>( property_name.toLatin1().constData() );
@@ -469,7 +469,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
                 SwDockWidget_DockWidget * dock = new SwDockWidget_DockWidget();
                 createPropertiesForQObject( dock, interface_name, true );
                 _dockwidgets.insert( interface_name, dock );
-                consummeInterface<QWidget>( interface_name );
+                consumeInterface<QWidget>( interface_name );
             }
         }
         _dockwidgets_nb = val;
@@ -497,7 +497,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
             {
                 interface_name = QString( CL_LISTDOCKWIDGET_INTERFACE_NAME ).arg( i );
                 _listdockwidgets.insert( interface_name, nullptr );
-                consummeInterface<ISwListDockWidget>( interface_name );
+                consumeInterface<ISwListDockWidget>( interface_name );
             }
         }
         _listdockwidgets_nb = val;

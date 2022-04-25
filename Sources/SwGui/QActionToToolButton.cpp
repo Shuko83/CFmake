@@ -32,7 +32,7 @@ QActionToToolButton::~QActionToToolButton()
 //---------------------------------------------------
 void QActionToToolButton::initializeComponent() throw( SwException )
 {
-    consummeInterface<QAction>(QACTION);
+    consumeInterface<QAction>(QACTION);
     provideInterface<QWidget>(WIDGET, _toolButton);
     
     createPropertiesForThisObject( QString(), true );

@@ -31,8 +31,8 @@ void SwEventToPopup::initializeComponent() throw(SwException)
 	//---------------------------------------------------
 	//				Gestion des Interfaces
 	//---------------------------------------------------
-	consummeInterface<ISwEvent>("ISwEvent");
-	consummeInterface<ISwQMainWindow>("ISwQMainWindow");
+	consumeInterface<ISwEvent>("ISwEvent");
+	consumeInterface<ISwQMainWindow>("ISwQMainWindow");
 
 	createPropertiesForThisObject(QString(),true);
 }

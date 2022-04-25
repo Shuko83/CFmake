@@ -116,7 +116,7 @@ void _SwGuiCompListDockWidget::setWidgetNumber( uint nb )
                 SwDockWidget_DockWidget * dock = new SwDockWidget_DockWidget();
                 createPropertiesForQObject( dock, interface_name, true );
                 _dockwidgets.insert( interface_name, dock );
-                consummeInterface<QWidget>( interface_name );
+                consumeInterface<QWidget>( interface_name );
             }
         }
         
