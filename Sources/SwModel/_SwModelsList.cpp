@@ -57,6 +57,10 @@ void _SwModelsList::LoadModels() {
             QFileInfo fi(filename);
             dir=QDir(fi.absoluteDir().absolutePath()+QDir::separator()+CL_MODELS_DIRECTORY);
         }
+		else if (liste_arg[i] == "-modelsDirPath") {
+			modelsPath = liste_arg[i + 1];
+			dir = QDir(modelsPath);
+		}
     }
     //Test ressources
     QFile resourceList(QString(":/SwModel/")+CL_MODELS_LIST);
@@ -79,7 +83,7 @@ void _SwModelsList::LoadModels() {
         modelsListFile.setFileName(filename);
     }
 
-    modelsPath=dir.absolutePath();
+	modelsPath=dir.absolutePath();
     
     if (!modelsListFile.exists() || !modelsListFile.open(QIODevice::ReadOnly | QIODevice::Text)) 
         return;
