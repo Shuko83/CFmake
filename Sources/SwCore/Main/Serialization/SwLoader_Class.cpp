@@ -44,7 +44,7 @@ SwComponent_ClassPtr SwLoader_Class::Load(QDomDocument & doc) throw(SwException)
 		bool conversionOk  = false;
 		QRegularExpression regExpVersion(QStringLiteral("^(\\d*).\\d*.\\d*$"));
 		auto match = regExpVersion.match(version);
-		int majorVersion;
+		int majorVersion = 0;
 		if (match.hasMatch())
 		{
 			majorVersion = match.captured(1).toInt(&conversionOk);
@@ -134,8 +134,6 @@ SwComponent_ClassPtr SwLoader_Class::BuildStream(QDomElement & node,SwComponent_
 	QString factory_name;
     QString name;
     QString description;
-    QDomElement service_node;
-    QDomElement child_node;
     QString service_name;
     ISwService * service;
     ISwPersistent * persistent_interface;

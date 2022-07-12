@@ -21,7 +21,6 @@ void SwPropertiesPersistentToolbox::Load(QDomElement & elt,ISwProperties * prope
 
 /*! \brief methode permettant de sauver des donnees de propriétés */
 void SwPropertiesPersistentToolbox::Save(QXmlStreamWriter &writer,ISwProperties * properties) {
-    QList<ISwProperty *>::iterator it;
     for (auto it = properties->GetProperties().constBegin(); it != properties->GetProperties().constEnd(); ++it) {
         SwPropertyPersistentToolbox::SavePropertyExtended(writer, (*it)->GetRealName(), properties, true);
     }

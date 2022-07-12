@@ -472,10 +472,10 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 		// génération de la signature
 		CryptoPP::AutoSeededRandomPool rng;
 		byte *signature = new byte[priv.MaxSignatureLength()];
-		size_t size = priv.SignMessage(rng, (const byte*)data.toUtf8().constData(), data.toUtf8().size(), signature);
+		size_t messageSize = priv.SignMessage(rng, (const byte*)data.toUtf8().constData(), data.toUtf8().size(), signature);
 
 		// Transformation de la signature de binaire a hexa
-		std::string signatureStringBinaire(reinterpret_cast<char const*>(signature), size);
+		std::string signatureStringBinaire(reinterpret_cast<char const*>(signature), messageSize);
 		std::string signatureStringhex;
 		CryptoPP::StringSource(signatureStringBinaire, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
 		return signatureStringhex;

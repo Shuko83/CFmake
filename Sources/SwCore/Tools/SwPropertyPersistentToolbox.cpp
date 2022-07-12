@@ -599,8 +599,8 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 				alpha = text.right (2);
 				text = text.left (7);
 			}
-			QVariant var = text;
-			QColor color = qvariant_cast<QColor>(var);
+			QVariant variant = text;
+			QColor color = qvariant_cast<QColor>(variant);
 			if (alpha.length ())
 			{
 				bool ok = false;
@@ -656,9 +656,9 @@ void SwPropertyPersistentToolbox::setProperty(QDomElement & property_node, ISwPr
 	}
 	//Type SwString
 	else if (var.userType()==qMetaTypeId<SwString>() && property_node.hasAttribute(CL_XML_ATT_STRING)) {
-		QString s=property_node.attribute(CL_XML_ATT_STRING);
+		QString string=property_node.attribute(CL_XML_ATT_STRING);
 		SwString string_value=var.value<SwString>();        
-		string_value.fromString(s);
+		string_value.fromString(string);
 		tmp.setValue(string_value);
 		inProperty->SetValue(tmp, true);
 		valueSetted = true;
@@ -1049,8 +1049,8 @@ QVariant SwPropertyPersistentToolbox::createQVariantFromString(ISwProperty* prop
 					alpha = text.right(2);
 					text = text.left(7);
 				}
-				QVariant var = text;
-				QColor color = qvariant_cast<QColor>(var);
+				QVariant variant = text;
+				QColor color = qvariant_cast<QColor>(variant);
 				if (alpha.length())
 				{
 					bool ok = false;

@@ -189,7 +189,6 @@ int _SwRouting_ToolBox::ChangeControlPoint(int index,const QPointF & new_val){
         _control_points[index]=new_val;
         _control_points[index-1]=GetMiddlePoint(_path[index_in_path-1],_path[index_in_path]);
         _control_points[index+1]=GetMiddlePoint(_path[index_in_path],_path[index_in_path+1]);
-        return index;
     } else {
         //On le cree dans le path 
         int index_to_insert=(index/2+1);
@@ -200,9 +199,9 @@ int _SwRouting_ToolBox::ChangeControlPoint(int index,const QPointF & new_val){
         _control_points.insert(index+1,GetMiddlePoint(_path[index_to_insert],_path[index_to_insert+1]));
         //Celui avant
         _control_points.insert(index,GetMiddlePoint(_path[index_to_insert-1],_path[index_to_insert]));
-        return index+1;
+        index += 1;
     }
-    return -1;
+    return index;
 }
 /*! \brief Change la position du point de depart*/
 void _SwRouting_ToolBox::ChangeStartPoint(const QPointF & new_val){
