@@ -79,7 +79,7 @@ _SwModelHostSelector::_SwModelHostSelector(QWidget *parent,SwComponent_Class * s
     button_layout->addWidget(but);
     button_layout->setAlignment(but,Qt::AlignLeft);
     if (_selected_model_host!=NULL) {
-        QPushButton *but=new QPushButton(QString("Unbind"),this);
+        but=new QPushButton(QString("Unbind"),this);
         but->connect(but,SIGNAL(clicked()),this,SLOT(OnUnBind()));
         button_layout->addWidget(but);
         button_layout->setAlignment(but,Qt::AlignCenter);        

@@ -49,11 +49,11 @@ protected:
     /*! \brief Map contenant la liste des modeles */
     QMap<QString,_ModelDesc> _liste;
     /*! \brief Path des models */
-    QString modelsPath;
+    QString _modelsPath;
     /*! \brief model list file name */
-    QFile modelsListFile;
+    QFile _modelsListFile;
     /*! \brief listener*/
-    _ISwModelsListListener * listener;
+    _ISwModelsListListener * _listener;
 public:
     /*! \brief Constructeur */
     _SwModelsList();

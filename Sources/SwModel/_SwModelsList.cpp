@@ -32,23 +32,16 @@ using namespace StreamWork::SwCore;
 
 /*! \brief Constructeur */
 _SwModelsList::_SwModelsList() {
-    listener=0;
+    _listener=0;
 }
 /*! \brief Destructeur */
 _SwModelsList::~_SwModelsList() {
 
 }
 /*! \brief Chargement de la liste des modeles */
-void _SwModelsList::LoadModels() {
-    QString xml_error;
-    int error_line,error_column;
-    
-    QString filename; 
-    QDomDocument doc;
-    QDomElement root_elt;
-    QDomElement model_elt;
-    QDir dir;
-
+void _SwModelsList::LoadModels() {     
+     QString filename; 
+     QDir dir;
     //Test arguments
     QStringList liste_arg=QCoreApplication::instance()->arguments();
     for(int i=0;i<(liste_arg.count()-1);i++) {
@@ -58,8 +51,8 @@ void _SwModelsList::LoadModels() {
             dir=QDir(fi.absoluteDir().absolutePath()+QDir::separator()+CL_MODELS_DIRECTORY);
         }
 		else if (liste_arg[i] == "-modelsDirPath") {
-			modelsPath = liste_arg[i + 1];
-			dir = QDir(modelsPath);
+			_modelsPath = liste_arg[i + 1];
+			dir = QDir(_modelsPath);
 		}
     }
     //Test ressources
@@ -77,24 +70,28 @@ void _SwModelsList::LoadModels() {
             return;
         //Chargement de la liste des models
         dir.cdUp();
-        modelsListFile.setFileName(dir.absoluteFilePath(CL_MODELS_LIST));
+        _modelsListFile.setFileName(dir.absoluteFilePath(CL_MODELS_LIST));
         dir.cd(CL_MODELS_DIRECTORY);
     } else {
-        modelsListFile.setFileName(filename);
+        _modelsListFile.setFileName(filename);
     }
 
-	modelsPath=dir.absolutePath();
+	_modelsPath=dir.absolutePath();
     
-    if (!modelsListFile.exists() || !modelsListFile.open(QIODevice::ReadOnly | QIODevice::Text)) 
+    if (!_modelsListFile.exists() || !_modelsListFile.open(QIODevice::ReadOnly | QIODevice::Text)) 
         return;
 
-    if (!doc.setContent(QString(modelsListFile.readAll()),&xml_error,&error_line,&error_column)) {
+    QDomDocument doc;
+    QString xml_error;
+    int error_line,error_column;
+    if (!doc.setContent(QString(_modelsListFile.readAll()),&xml_error,&error_line,&error_column)) {
         QString msg=QString("XML Parsing:%1 at position %2,%3 of %4").arg(xml_error).arg(error_line).arg(error_column).arg(CL_MODELS_LIST);
-        modelsListFile.close();    
+        _modelsListFile.close();    
         LAUNCH_SWEXCEPTION("SwModel",msg)
     }
-    modelsListFile.close();    
+    _modelsListFile.close();    
 
+    QDomElement root_elt;
     //Lecture de la liste des models
     root_elt=doc.documentElement();
     for(QDomElement model_elt = root_elt.firstChildElement(CL_MODEL_NODE); !model_elt.isNull(); model_elt = model_elt.nextSiblingElement(CL_MODEL_NODE))
@@ -124,82 +121,75 @@ const QMap<QString,_SwModelsList::_ModelDesc> * _SwModelsList::GetModelList() co
 }
 /*! \brief getModelsPath */
 QString _SwModelsList::getModelPaths() {
-    return modelsPath;
+    return _modelsPath;
 }
 /** @brief add model */
 void _SwModelsList::addModel(QString hostComponent,QString modelName) {
-    QString xml_error;
-    int error_line,error_column;
-    QString filename; 
-    QDomDocument doc;
-    QDomElement root_elt;
-    QDomElement model_elt;
-    QByteArray stream_desc;
-
-    if (!modelsListFile.exists() || !modelsListFile.open(QIODevice::ReadWrite | QIODevice::Text)) 
+    if (!_modelsListFile.exists() || !_modelsListFile.open(QIODevice::ReadWrite | QIODevice::Text)) 
         return;
 
-    if (!doc.setContent(QString(modelsListFile.readAll()),&xml_error,&error_line,&error_column)) {
+    QString xml_error;
+    int error_line,error_column;
+    QDomDocument doc;
+    if (!doc.setContent(QString(_modelsListFile.readAll()),&xml_error,&error_line,&error_column)) {
         QString msg=QString("XML Parsing:%1 at position %2,%3 of %4").arg(xml_error).arg(error_line).arg(error_column).arg(CL_MODELS_LIST);
-        modelsListFile.close();
+        _modelsListFile.close();
         LAUNCH_SWEXCEPTION("SwModel",msg)
     }
-    modelsListFile.close();
+    _modelsListFile.close();
+    QDomElement model_elt;
     model_elt=doc.createElement(CL_MODEL_NODE);
     model_elt.setAttribute(CL_MODEL_NAME,modelName);
     model_elt.setAttribute(CL_MODEL_FILE,modelName+".xml");
     model_elt.setAttribute(CL_MODEL_IPATH,"."+hostComponent);
     model_elt.appendChild(doc.createTextNode("Description of "+modelName));
+    QDomElement root_elt;
     root_elt=doc.documentElement();
     root_elt.appendChild(model_elt);
 
+    QByteArray stream_desc;
     stream_desc=doc.toByteArray(4); //Indentation de quatre espace
     //Ecriture du fichier
-    if (!modelsListFile.open(QIODevice::WriteOnly  | QIODevice::Truncate)) 
+    if (!_modelsListFile.open(QIODevice::WriteOnly  | QIODevice::Truncate)) 
         return;
-    modelsListFile.write(stream_desc);
+    _modelsListFile.write(stream_desc);
 
     _ModelDesc mdesc;
-    QDir dir=QDir(modelsPath);
+    QDir dir=QDir(_modelsPath);
     mdesc._model_source_file=dir.absoluteFilePath(modelName+".xml");
     mdesc._model_host_path="."+hostComponent;
     mdesc._model_description="Description of "+modelName;
     _liste.insert(modelName,mdesc);
 
     //Fermeture du fichier
-    modelsListFile.close();    
-    if (listener!=0) {
-        listener->modelAdded(modelName,"Description of "+modelName);
+    _modelsListFile.close();    
+    if (_listener!=0) {
+        _listener->modelAdded(modelName,"Description of "+modelName);
     }
 }
 void _SwModelsList::registerListener(_ISwModelsListListener * listener) {
-    this->listener=listener;
+    _listener = listener;
 }
 
 //-----------------------------------------------------------------------
 bool _SwModelsList::checkModelName(QString modelName)
 {
-	QString xml_error;
-	int error_line, error_column;
-	QString filename;
-	QDomDocument doc;
-	QDomElement root_elt;
-	QDomElement model_elt;
-	QByteArray stream_desc;
-
-	if ( !modelsListFile.exists() || !modelsListFile.open(QIODevice::ReadWrite | QIODevice::Text) )
+	if ( !_modelsListFile.exists() || !_modelsListFile.open(QIODevice::ReadWrite | QIODevice::Text) )
 		return false;
 
-	if ( !doc.setContent(QString(modelsListFile.readAll()), &xml_error, &error_line, &error_column) )
+	QString xml_error;
+	int error_line, error_column;
+	QDomDocument doc;
+	if ( !doc.setContent(QString(_modelsListFile.readAll()), &xml_error, &error_line, &error_column) )
 	{
 		QString msg = QString("XML Parsing:%1 at position %2,%3 of %4").arg(xml_error).arg(error_line).arg(error_column).arg(CL_MODELS_LIST);
-		modelsListFile.close();
+		_modelsListFile.close();
 		LAUNCH_SWEXCEPTION("SwModel", msg)
 	}
-	modelsListFile.close();
-
+	_modelsListFile.close();
 
 	//Lecture de la liste des models
+	QDomElement root_elt;
 	root_elt = doc.documentElement();
 	for ( QDomElement model_elt = root_elt.firstChildElement(CL_MODEL_NODE); !model_elt.isNull(); model_elt = model_elt.nextSiblingElement(CL_MODEL_NODE) )
 	{
@@ -212,6 +202,5 @@ bool _SwModelsList::checkModelName(QString modelName)
 				return true;
 		}
 	}
-
 	return false;
 }

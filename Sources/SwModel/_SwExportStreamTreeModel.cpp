@@ -213,8 +213,6 @@ _SwExportStreamTreeModel::_Item::_Item(_Item * parent,SwComponent_Class * host,_
 }
 /*! \brief Destructeur */
 _SwExportStreamTreeModel::_Item::~_Item() {
-    _Item * child;
-
 	for (auto child : _childs) {
         delete child;
     }
