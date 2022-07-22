@@ -85,7 +85,6 @@ QRectF _SwEditorPinGraphicItem::boundingRect() const {
 }
 /*! \brief Dessine l'item*/
 void _SwEditorPinGraphicItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){
-    int startAngle,spanAngle;
     QPen p;
     QString label;
 
@@ -119,6 +118,7 @@ void _SwEditorPinGraphicItem::paint(QPainter *painter, const QStyleOptionGraphic
         }
     }
     //Calcul des cnagle de pie
+	int startAngle = 0, spanAngle = 0;
     if (_start_port_linear_position==0.0 || _start_port_linear_position==0.25 || _start_port_linear_position==0.50|| _start_port_linear_position==0.75) {
         if (_start_port_linear_position==0.0) startAngle=0;
         if (_start_port_linear_position==0.25) startAngle=-1440;
@@ -156,40 +156,40 @@ void _SwEditorPinGraphicItem::paint(QPainter *painter, const QStyleOptionGraphic
     //Dessin de la connection
     if (_connecting_mode) {
         painter->setPen(QColor(0,0,0));
-        QPen p=painter->pen();
-        p.setStyle(Qt::DotLine);
-        p.setWidthF(2.0);
-        painter->setPen(p);
+        QPen pen=painter->pen();
+        pen.setStyle(Qt::DotLine);
+        pen.setWidthF(2.0);
+        painter->setPen(pen);
         painter->drawLine(QPointF(0.0,0.0),_end_port_position);
         if (_routing.GetPath().count()>=2) {
             painter->drawPolyline(_routing.GetPath().data(),_routing.GetPath().count());
         }
-        p.setStyle(Qt::SolidLine);
+        pen.setStyle(Qt::SolidLine);
     }
     if (_remote_item!=NULL && _is_connection_draw_responsable) {
         if (_is_start_port_editing || _remote_item->_is_start_port_editing)
             painter->setPen(QColor(255,100,100));
         else
             painter->setPen(QColor(0,114,188,200));
-        QPen p=painter->pen();
-        p.setWidthF(3.0);
-        painter->setPen(p);
+        QPen pen=painter->pen();
+        pen.setWidthF(3.0);
+        painter->setPen(pen);
         //painter->drawLine(_symbol_start_port_position,_symbol_end_port_position);
-        if (_routing.GetPath().count()>=2) {
+		if (_routing.GetPath().count() >= 2) {
             painter->drawPolyline(_routing.GetPath().data(),_routing.GetPath().count());
         }
         if (_routing.GetControlPoints().count()>=1 && isSelected()) {
-            p.setWidthF(CL_CTRL_POINT_SIZE);
-            p.setColor(QColor(255,255,255));
-            painter->setPen(p);
+            pen.setWidthF(CL_CTRL_POINT_SIZE);
+            pen.setColor(QColor(255,255,255));
+            painter->setPen(pen);
             painter->drawPoints(_routing.GetControlPoints().data(),_routing.GetControlPoints().count());
-            p.setWidthF(CL_CTRL_POINT_SIZE-2.0);
-            p.setColor(QColor(0,0,0));
+            pen.setWidthF(CL_CTRL_POINT_SIZE-2.0);
+            pen.setColor(QColor(0,0,0));
             painter->setPen(p);
             painter->drawPoints(_routing.GetControlPoints().data(),_routing.GetControlPoints().count());
             if (_control_index!=-1) {
-                p.setColor(QColor(255,0,0));
-                painter->setPen(p);
+                pen.setColor(QColor(255,0,0));
+                painter->setPen(pen);
                 painter->drawPoint(_routing.GetControlPoints()[_control_index]);
             }
         }
@@ -263,7 +263,7 @@ void _SwEditorPinGraphicItem::mouseMoveEvent ( QGraphicsSceneMouseEvent * event 
         }
         if (_connecting_mode) {
             QPointF tmp_point;
-            int index_grab;
+            int index_grab = 0;
             bool grab_pos=false;
             for (int i=0;i<_connectables_positions.count();i++) {
                 //On regarde si une interface est proche

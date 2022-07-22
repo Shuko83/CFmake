@@ -72,7 +72,7 @@ void _SwGuiCompQActionToStackedWidget::InitializeResources() throw(SwException)
 //---------------------------------------------------------------------
 
 /*****************************************************************************/
-void _SwGuiCompQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) 
+void _SwGuiCompQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QString,SwComponent_Class *) 
 {
 	if (_tmp_handle_StackedWidget!=NULL) 
 	{
@@ -85,9 +85,6 @@ void _SwGuiCompQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QString
 			_actions.remove(interface_name);
 		}
 	}
-
-
-
 }
 
 /*****************************************************************************/

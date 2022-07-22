@@ -124,19 +124,18 @@ void _SwExecutorListEditor::dropEvent ( QDropEvent *event )
 	if ( event->mimeData ()->hasFormat ( "application/exe_instance" ) )
 	{
 		QString comps;
-		QStringList allNewItems;
-		QStringList newItems;
-		QStringList newItemsModeString;
-		QList<_SwExecutionMode> newItemsMode;
-		QString item;
 		comps = QString ( event->mimeData ()->data ( "application/exe_instance" ).data () );
+		QStringList allNewItems;
 		allNewItems = comps.split ( "\n", QString::SkipEmptyParts );
 		if ( allNewItems.count () == 0 )
 			return;
 
+		QStringList newItems;
 		newItems = allNewItems[0].split ( ";", QString::SkipEmptyParts );
+		QList<_SwExecutionMode> newItemsMode;
 		if ( allNewItems.count () == 2 )
 		{
+			QStringList newItemsModeString;
 			newItemsModeString = allNewItems[1].split ( ";", QString::SkipEmptyParts );
 			for ( QString itemModeString : newItemsModeString )
 			{
@@ -356,8 +355,6 @@ void _SwExecutorListEditor::keyPressEvent ( QKeyEvent * event )
 	if ( event->matches ( QKeySequence::Delete ) )
 	{
 		QStringList ltext;
-		QString item;
-		int item_to_remove;
 
 		for ( int i = 0; i < _path_list->count (); i++ )
 		{
@@ -369,6 +366,7 @@ void _SwExecutorListEditor::keyPressEvent ( QKeyEvent * event )
 		emit OnExeRemoved ( ltext );
 		for (auto item : ltext )
 		{
+			int item_to_remove;
 			item_to_remove = _path_list->indexOf ( item );
 			_path_list->removeAt ( item_to_remove );
 			_sel_list.removeAt ( item_to_remove );
@@ -388,7 +386,7 @@ void _SwExecutorListEditor::paintEvent ( QPaintEvent *event )
 	painter.fillRect ( QRect ( 0, 0, this->width (), CL_HEADER_HEIGHT ), Qt::gray );
 	painter.drawText ( CL_X_OFFSET, 0, this->width () - CL_X_OFFSET, CL_HEADER_HEIGHT, Qt::TextSingleLine, QString ( CL_TEXT_HEADER ) );
 	painter.drawText ( CL_X_MODE_OFFSET, 0, CL_X_OFFSET - CL_X_MODE_OFFSET, CL_HEADER_HEIGHT, Qt::TextSingleLine, QString ( CL_TEXT_MODE_HEADER ) );
-	int i;
+	int i = 0;
 	for ( i = 0; i < _path_list->count (); i++ )
 	{
 		if ( _sel_list[i] )
@@ -427,7 +425,7 @@ void _SwExecutorListEditor::paintEvent ( QPaintEvent *event )
 
 	//Resize
 	QRect r = painter.boundingRect ( CL_X_OFFSET, 0, this->width (), CL_HEADER_HEIGHT, Qt::TextSingleLine, QString ( CL_TEXT_HEADER ) );
-	for ( int i = 0; i < _path_list->count (); i++ )
+	for ( i = 0; i < _path_list->count (); i++ )
 	{
 		r |= painter.boundingRect ( CL_X_OFFSET, CL_HEADER_HEIGHT + i*CL_ROW_HEIGHT, this->width (), CL_HEADER_HEIGHT, Qt::TextSingleLine, (*_path_list)[i] );
 	}

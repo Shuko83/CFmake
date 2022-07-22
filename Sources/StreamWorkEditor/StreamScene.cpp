@@ -243,15 +243,15 @@ void StreamScene::mouseReleaseEvent(QGraphicsSceneMouseEvent * mouseEvent)
 			ConnectorGraphicItem * targetConnector = dynamic_cast<ConnectorGraphicItem *>(tmpTarget);
 			if ( targetConnector != 0 )
 			{
-				ComponentGraphicItem * parent = (ComponentGraphicItem *) _connectorToMove->parentItem();
-				QList<ConnectorGraphicItem *> * liste = parent->getConnectors();
+				ComponentGraphicItem * p = (ComponentGraphicItem *) _connectorToMove->parentItem();
+				QList<ConnectorGraphicItem *> * liste = p->getConnectors();
 				int i = liste->indexOf(_connectorToMove);
 				int j = liste->indexOf(targetConnector);
 				liste->swap(i, j);
 				TConnectorPosition cpos = _connectorToMove->getParentPosition();
 				_connectorToMove->setParentPosition(targetConnector->getParentPosition());
 				targetConnector->setParentPosition(cpos);
-				parent->updateAttributs();
+				p->updateAttributs();
 			}
 			else
 			{

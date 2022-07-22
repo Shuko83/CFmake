@@ -620,9 +620,9 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 		QKeyEvent * e = (QKeyEvent*)event;
 		if (e && e->key() == Qt::Key_F12 && e->modifiers() & Qt::ControlModifier && e->modifiers() & Qt::ShiftModifier)
 		{
-			for(QObject * obj : _list)
+			for(QObject * o : _list)
 			{
-				SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
+				SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(o);
 				if (dock)
 				{
 					dock->blink();
@@ -878,7 +878,6 @@ QWidget * SwDockWidget_MainArea::pinDockTo(QObject * obj, QWidget * mainWidget, 
 	if (mainWidget && dock)
 	{
 		//Recuperation de la position du widget principal
-		int row, column, rowSpan, columnSpan, num;
 		QSize size = dock->getRawSize();
 		//Verification de tous les cas possible (horizontal ou vertical layout, grid layout, splitter, tabWidget)
 		QGridLayout *glayout = NULL;
@@ -905,12 +904,14 @@ QWidget * SwDockWidget_MainArea::pinDockTo(QObject * obj, QWidget * mainWidget, 
 			parentSplitter = qobject_cast<SwDockWidget_Splitter*>(parentWidget);
 		}
 
+		int num = 0;
 		//Recuperation de la position du widget principal dans le parent pour le repositionner apres ancrage du SwDockWidget_DockWidget
 		if (tabWidget)
 		{
 			num = tabWidget->indexOf(mainWidget);
 			secondDock = qobject_cast<SwDockWidget_DockWidget*>(tabWidget->widget(0));
 		}
+		int row = 0, column = 0, rowSpan = 0, columnSpan = 0;
 		if (glayout)
 		{
 			if (glayout->indexOf(mainWidget) < 0)
@@ -1283,7 +1284,7 @@ void SwDockWidget_MainArea::releaseDock(QObject * obj)
 					SwDockWidget_Splitter *parentSplitter = qobject_cast<SwDockWidget_Splitter*>(parentWidget);
 
 					//Recuperation de la position dans le parent
-					int row, column, rowSpan, columnSpan, num;
+					int row = 0 , column = 0 , rowSpan = 0 , columnSpan = 0 , num = 0 ;
 					if (glayout)
 						glayout->getItemPosition(glayout->indexOf(tab), &row, &column, &rowSpan, &columnSpan);
 					else if (vlayout)
@@ -1392,7 +1393,7 @@ void SwDockWidget_MainArea::releaseDock(QObject * obj)
 					}
 
 					//Recuperation de la position du splitter dans le parent
-					int row, column, rowSpan, columnSpan, num;
+					int row = 0 , column = 0 , rowSpan = 0 , columnSpan = 0 , num = 0 ;
 					if (glayout)
 						glayout->getItemPosition(glayout->indexOf(splitter), &row, &column, &rowSpan, &columnSpan);
 					else if (vlayout)
@@ -2263,10 +2264,10 @@ void SwDockWidget_MainArea::savePosition(QDomDocument doc, QDomElement dom, QWid
 				QDomElement noeud = writeWidgetParameters(doc, mainNoeud, mainDock->getWidget(i));
 				noeud.setAttribute("name", mainDock->tabText(i));
 				//Contenu de l'onglet
-				QWidget * widget = mainDock->getWidget(i);
-				if (widget->layout())
+				QWidget * w = mainDock->getWidget(i);
+				if (w->layout())
 				{
-					QLayoutItem * litem = widget->layout()->itemAt(0);
+					QLayoutItem * litem = w->layout()->itemAt(0);
 					if (litem)
 						savePosition(doc, noeud, litem->widget());
 				}

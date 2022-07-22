@@ -398,13 +398,13 @@ void _SwServiceShortcuts::shortcutSlot()
 		{
 			if(it.value().contains(sequenceAsString) && _mapShortcuts.contains(it.key()))
 			{
-				ISwShortcut * lShortcut = _mapShortcuts.value(it.key());
-				if(lShortcut)
+				ISwShortcut * shortcut = _mapShortcuts.value(it.key());
+				if(shortcut)
 				{
 #ifdef _DEBUGAA
 					qDebug() << "[Shortcut Services] Keyboard - ProcessCommand ("<< getShortcutName(it.key()) <<","<<lShortcut->getCategory() << ")";
 #endif
-					lShortcut->processCommand(getShortcutName(it.key()));
+					shortcut->processCommand(getShortcutName(it.key()));
 				}
 			}
 		}

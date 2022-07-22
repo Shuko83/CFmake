@@ -165,9 +165,9 @@ void _SwGuiCssHighlighter::highlight(const QString &text, int start, int length,
 			while (match.hasMatch())
 			{
 				int index = match.capturedStart();
-				int length = match.capturedLength();
-				setFormat(index, length, myClassFormat);
-				index = text.indexOf(expression, index + length);
+				int capturedLength = match.capturedLength();
+				setFormat(index, capturedLength, myClassFormat);
+				index = text.indexOf(expression, index + capturedLength);
 			}
 		}
 		else

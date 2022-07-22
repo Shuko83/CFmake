@@ -96,9 +96,9 @@ void  _SwPropertiesModelImpl::CreateItem(ISwProperty * property) {
 }
 /*! \brief destruction d'un item */
 void _SwPropertiesModelImpl::DestroyItem(ISwProperty * property) {
-    PropertyItem * item;
-    PropertyItem * c_item;
-    PropertyItem * d_item;
+    PropertyItem * item = nullptr;
+    PropertyItem * c_item = nullptr;
+    PropertyItem * d_item = nullptr;
     QStringList liste=property->GetRealName().split(".");
     if (liste.count()<=1) {
         liste=property->GetRealName().split("_");

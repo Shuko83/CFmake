@@ -209,12 +209,11 @@ QModelIndex _SwExecutorStreamTreeModel::parent ( const QModelIndex & index ) con
 //-------------------------------------------------------------------------
 void _SwExecutorStreamTreeModel::OnExeAdded ( const QStringList & comps )
 {
-	QString item;
-	SwComponent_Class * comp;
 
 	emit layoutAboutToBeChanged ();
 	for ( auto item : comps )
 	{
+		SwComponent_Class * comp;
 		comp = SwAddress_ToolBox::FindTarget ( item, _root_component );
 		if ( (comp != NULL) && (_registered_components.find ( comp ) == _registered_components.end ()) )
 		{
@@ -227,16 +226,14 @@ void _SwExecutorStreamTreeModel::OnExeAdded ( const QStringList & comps )
 //-------------------------------------------------------------------------
 void _SwExecutorStreamTreeModel::OnExeRemoved ( const QStringList & comps )
 {
-	QString item;
-	SwComponent_Class * comp;
-	QSet<SwComponent_Class *>::iterator it;
-
 	emit layoutAboutToBeChanged ();
 	for ( auto item : comps )
 	{
+		SwComponent_Class * comp;
 		comp = SwAddress_ToolBox::FindTarget ( item, _root_component );
 		if ( comp != NULL )
 		{
+			QSet<SwComponent_Class *>::iterator it;
 			it = _registered_components.find ( comp );
 			if ( it != _registered_components.end () )
 			{
@@ -245,5 +242,4 @@ void _SwExecutorStreamTreeModel::OnExeRemoved ( const QStringList & comps )
 		}
 	}
 	emit layoutChanged ();
-
 }

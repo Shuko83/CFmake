@@ -188,13 +188,13 @@ bool SwServiceSaveConfiguration::registerConfCollector(QString confName, QString
 	if (insertCollector)
 	{
 		//checker s'il y a déja un confCollector associé au confName
-		QHash<QString, QHash<QString, ISwConfCollector*>>::iterator it = _confCollectors.find(confName);
+		QHash<QString, QHash<QString, ISwConfCollector*>>::iterator confCollectorsIt = _confCollectors.find(confName);
 
 
-		if (it != _confCollectors.end())
+		if (confCollectorsIt != _confCollectors.end())
 		{
 			// Si l'entrée existe déja dans la QHash, on fusionne les properties dans les confCollectors
-			if (it.value().contains(prefix))
+			if (confCollectorsIt.value().contains(prefix))
 			{
 				QHash<QString, ISwProperty*> propertiesToMerge = confCollector->getProperties();
 
@@ -204,7 +204,7 @@ bool SwServiceSaveConfiguration::registerConfCollector(QString confName, QString
 				{
 					it_properties.next();
 					ISwProperty* propertyToMerge = it_properties.value();
-					auto collector = it.value().value(prefix);
+					auto collector = confCollectorsIt.value().value(prefix);
 					bool retInsertion = collector->addExternalProperty(it_properties.key(), propertyToMerge);
 					if (!retInsertion)
 					{
@@ -221,7 +221,7 @@ bool SwServiceSaveConfiguration::registerConfCollector(QString confName, QString
 			// Sinon, on lui rajoute un confCollector
 			else
 			{
-				it.value().insert(prefix, confCollector);
+				confCollectorsIt.value().insert(prefix, confCollector);
 				ret = true;
 			}
 		}
@@ -470,7 +470,6 @@ bool SwServiceSaveConfiguration::createNewConfiguration(QString confName, QStrin
 		root_node.appendChild(newProfileConfDatas);
 
 		QDomDocument tempDoc;
-		QDomNode tempNode;
 
 		// Il faut mettre les valeurs de current à "false" pour tous les autres profils de conf
 		QHash<QString, QHash<QString, QString>>::iterator it_profiles = _confProfilesDatas.find(confName);
@@ -508,6 +507,7 @@ bool SwServiceSaveConfiguration::createNewConfiguration(QString confName, QStrin
 
 			// Ajout d'une entrée dans confProfileDatas[confName] avec la key confProfileName et la valeur du QDomElement précédement créé.
 			tempDoc.clear();
+			QDomNode tempNode;
 			tempNode = tempDoc.importNode(newProfileConfDatas, true).toElement();
 			tempDoc.appendChild(tempNode);
 			it_profiles.value().insert(confProfileName, tempDoc.toString());
@@ -623,11 +623,11 @@ bool SwServiceSaveConfiguration::renameConfiguration(QString confName, QString n
 				_currentConfs.insert(confName, newConfProfileName);
 
 				// Modif de l'entrée dans  _configsProfilesList[confName]
-				QHash<QString, QList<QString>>::iterator it = _configsProfilesList.find(confName);
-				if (it != _configsProfilesList.end())
+				QHash<QString, QList<QString>>::iterator configProfilesIt = _configsProfilesList.find(confName);
+				if (configProfilesIt != _configsProfilesList.end())
 				{
-					it.value().removeOne(oldCurrentConfigProfileName);
-					it.value().append(newConfProfileName);
+					configProfilesIt.value().removeOne(oldCurrentConfigProfileName);
+					configProfilesIt.value().append(newConfProfileName);
 				}
 
 				// appel de la méthode saveConfFile[confName]
@@ -1106,7 +1106,7 @@ ISwProperty* SwServiceSaveConfiguration::getProperty(QString confName, QString p
 					if (collectorName == prefix)
 						continue; // déjà testé
 
-					ISwConfCollector *collector = it->value(collectorName);
+					collector = it->value(collectorName);
 					if (collector)
 					{
 						returnedProp = collector->getProperty(decoratedName);
@@ -1197,7 +1197,7 @@ QHash<QString, int> SwServiceSaveConfiguration::getAllPropertiesOrder(QString co
 
 
 //-------------------------------------------------------------------------
-bool SwServiceSaveConfiguration::updateProperty(QString confName, QString prefix, ISwProperty* propToUpdate)
+bool SwServiceSaveConfiguration::updateProperty(QString confName, ISwProperty* propToUpdate)
 {
 	//Récupération de la confCourrante 
 	QString	currentConfigProfile = "";
@@ -1662,10 +1662,10 @@ QString SwServiceSaveConfiguration::parseConfigurationFile(QString confName, QSt
 					QHash<QString, QString>::iterator it = it_profiles.value().find(CFM_DEFAULT_FILENAME);
 					if (it != it_profiles.value().end())
 					{
-						QDomDocument doc;
+						QDomDocument tmpDoc;
 						// Récupération des datas (QString) pour le profil voulu
-						doc.setContent(it.value());
-						elt_factory_config = doc.firstChildElement(CFM_XML_TAG_CONFIG);
+						tmpDoc.setContent(it.value());
+						elt_factory_config = tmpDoc.firstChildElement(CFM_XML_TAG_CONFIG);
 					}
 				}
 			}
@@ -1794,11 +1794,11 @@ bool SwServiceSaveConfiguration::setPropertiesValuesFromProfile(QString confName
 					// Le *ISwProperty est récupéré via confCollectors[confName][prefix]->getProperty(name)
 					ISwProperty* prop = 0;
 
-					QHash<QString, QHash<QString, ISwConfCollector*>>::const_iterator it = _confCollectors.find(confName);
-					if (it != _confCollectors.constEnd())
+					QHash<QString, QHash<QString, ISwConfCollector*>>::const_iterator confCollectorIt = _confCollectors.find(confName);
+					if (confCollectorIt != _confCollectors.constEnd())
 					{
-						QHash<QString, ISwConfCollector*>::const_iterator it2 = it.value().find(prefix);
-						if (it2 != it.value().constEnd())
+						QHash<QString, ISwConfCollector*>::const_iterator it2 = confCollectorIt.value().find(prefix);
+						if (it2 != confCollectorIt.value().constEnd())
 						{
 							prop = it2.value()->getProperty(decoratedName);
 

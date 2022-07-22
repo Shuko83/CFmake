@@ -116,8 +116,8 @@ void _SwEditorGraphicItem::dragEnterEvent(QGraphicsSceneDragDropEvent *event) {
 }
 /*! \brief Sur drop event*/           
 void _SwEditorGraphicItem::dropEvent ( QGraphicsSceneDragDropEvent * event ) {
-    SwComponent_Class * comp;
-    _SwEditorGraphicItem * iitem;
+    SwComponent_Class * comp = nullptr;
+    _SwEditorGraphicItem * iitem = nullptr;
     QPointF drop_pos=event->pos();
     try {
         QList< QPair<QString, QString> > comps_list;
@@ -741,8 +741,8 @@ void _SwEditorGraphicItem::ShowPopup(const QPoint &globalpos) {
     _SwEditorGIMenu * menu=new _SwEditorGIMenu(_operations,_navigation);      
     QMenu * il_menu=_il_manager->GetInterfaceDisplayStateMenu();
     QMenu * pl_menu=_pl_manager->GetPinDisplayStateMenu();
-    QAction * il_menu_action;
-    QAction * pl_menu_action;
+    QAction * il_menu_action = nullptr;
+    QAction * pl_menu_action = nullptr;
 
     //Popup
     if (il_menu!=NULL) {

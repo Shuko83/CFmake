@@ -138,17 +138,17 @@ void _SwGuiCssDialog::showEvent(QShowEvent *event)
 }
 
 /*****************************************************************************/
-void _SwGuiCssDialog::documentWasModified(bool _isModified)
+void _SwGuiCssDialog::documentWasModified(bool isModified)
 {
-	if(_isModified)
+	if(isModified)
 	{
-		_isModified=true;
+		isModified=true;
 		if(!windowTitle().contains(QRegularExpression("\\*")))
 			this->setWindowTitle(windowTitle()+" *");
 	}
 	else
 	{
-		_isModified=false;
+		isModified=false;
 		this->setWindowTitle(windowTitle().mid(0,windowTitle().indexOf("*")));
 	}
 	

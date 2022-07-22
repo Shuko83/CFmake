@@ -297,11 +297,10 @@ namespace StreamWork
 			/**
 			* @brief	: permet d'updater la valeur d'une property depuis le fichier qui a été loadé
 			* @Param	: QString : nom de la configuration concernée
-			* @Param	: QString : prefix du composant ConfCollector
              * @Param	: ISwProperty* : pointeur sur la propery concernée
 			* @return	: bool : Update réussi ou pas
              */
-			virtual bool updateProperty(QString confName, QString prefix, ISwProperty* propToUpdate);
+			virtual bool updateProperty(QString confName, ISwProperty* propToUpdate);
 
 
 			/**

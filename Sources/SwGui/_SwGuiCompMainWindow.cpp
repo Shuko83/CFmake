@@ -312,7 +312,7 @@ void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
     //Periode sauvegarde automatique de la configuration des docks
     if( _saveAutoPeriod_property == property )
     {
-        unsigned int val = property->GetValue().toUInt();
+        val = property->GetValue().toUInt();
         if( _mainWindow )
             _mainWindow->setSaveAutoPeriod( val * 1000 ); //Conversion en millisecondes
     }
@@ -581,7 +581,6 @@ void _SwGuiCompMainWindow::removeObserver( ISwEventObserver * obs )
 //-----------------------------------------------------------------------------
 void _SwGuiCompMainWindow::notify( QEvent * event )
 {
-    ISwEventObserver * itObs = nullptr;
 	for ( auto itObs : _iSwEvent )
     {
         itObs->onEvent( event );
