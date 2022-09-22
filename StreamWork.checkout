@@ -1,7 +1,7 @@
 [
 	{
 		"destination": "3rdParty/Cryptopp",
-		"repository": "https://tt4.aix.diginext.fr/svn/3rdParty.Cryptopp/tags/5.6.5.1"
+		"artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/Cryptopp/5.6.5.2/win-msvc2015/x64/Cryptopp_5.6.5.2_win-msvc2015-x64.zip"
 	},
 	{
 		"destination": "Frameworks/StreamWork",
