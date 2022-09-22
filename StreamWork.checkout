@@ -1,7 +1,11 @@
 [
 	{
+		"destination": "3rdParty/Cryptopp/Delivery",
+		"artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/Cryptopp/5.6.5.1/win-msvc2015/x64/Cryptopp_5.6.5.1_win-msvc2015-x64.zip"
+	},
+	{
 		"destination": "3rdParty/Cryptopp",
-		"artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/Cryptopp/5.6.5.2/win-msvc2015/x64/Cryptopp_5.6.5.2_win-msvc2015-x64.zip"
+		"artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/Cryptopp/Cryptopp_LDTOOLS.zip"
 	},
 	{
 		"destination": "Frameworks/StreamWork",
