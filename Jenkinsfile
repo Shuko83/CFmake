@@ -100,7 +100,7 @@ pipeline {
             steps {
                 script 
                 {
-                    for (projet in ["StreamWorkEditor2", "SwConfiguration", "SwCore","SwDataBase", "SwEditor", "SwExecution","SwFoundation", "SwGui", "SwLauncher","SwModel2","SwRecord" ,"SwServiceConfiguration","SwServiceMainWindow" ,"SwServiceShortcut" ,"SwServiceTools"])
+                    for (projet in ["StreamWorkEditor", "SwCore", "SwEditor", "SwExecution","SwFoundation", "SwGui", "SwModel", "SwServiceConfiguration","SwServiceMainWindow" ,"SwServiceShortcut" ,"SwServiceTools"])
                     {
                         env.exportname = projet
                         env.artifactoryPath = getArtifactoryPath(projet)
