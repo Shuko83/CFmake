@@ -67,17 +67,13 @@ pipeline {
                 script 
 		        {
 			    	bat label: 'creation sln', script: '''
-                        echo StreamWorkEditor2 > StreamWork.desc
-                        echo SwConfiguration >> StreamWork.desc
+                        echo StreamWorkEditor > StreamWork.desc
                         echo SwCore >> StreamWork.desc
-                        echo SwDataBase >> StreamWork.desc
                         echo SwEditor >> StreamWork.desc
                         echo SwExecution >> StreamWork.desc
                         echo SwFoundation >> StreamWork.desc
                         echo SwGui >> StreamWork.desc
-                        echo SwLauncher >> StreamWork.desc
-                        echo SwModel2 >> StreamWork.desc
-                        echo SwRecord >> StreamWork.desc
+                        echo SwModel >> StreamWork.desc
                         echo SwServiceConfiguration >> StreamWork.desc
                         echo SwServiceMainWindow >> StreamWork.desc
                         echo SwServiceShortcut >> StreamWork.desc
