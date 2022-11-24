@@ -1,0 +1,27 @@
+[
+	{
+		"destination" : "Libraries/Qst/Base/QsCore",
+		"artifactory" : "http://artifactory.divst:8081/artifactory/release/Libraries/Qst/Base/2.0.0/QsCore/QsCore_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
+	},	
+	{
+		"destination" : "Libraries/Qst/Base/QsGui",
+		"artifactory" : "http://artifactory.divst:8081/artifactory/release/Libraries/Qst/Base/2.0.0/QsGui/QsGui_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
+	},
+	{
+		"destination" : "Libraries/Qst/Modules/QsException",
+		"artifactory" : "http://artifactory.divst:8081/artifactory/release/Libraries/Qst/Modules/2.0.0/QsException/QsException_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
+	},
+	{
+		"destination" : "Libraries/Qst/Modules/QsLog",
+		"artifactory" : "http://artifactory.divst:8081/artifactory/release/Libraries/Qst/Modules/2.0.0/QsLog/QsLog_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
+	},
+	{
+		"destination": "Libraries/Licensing/Delivery",
+		"artifactory": "http://10.20.1.10:8081/artifactory/release/Libraries.Licensing/4.0.21/win-msvc2015/x64/Licensing_4.0.21_win-msvc2015-x64.zip"
+	},
+	{
+		"destination": "Libraries/Licensing/Toolchain",
+		"artifactory": "http://10.20.1.10:8081/artifactory/release/Libraries.Licensing/4.0.21/ApiLicensing_4.0.21_Toolchain.zip"
+	}
+
+]
