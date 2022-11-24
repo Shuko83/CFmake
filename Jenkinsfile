@@ -12,6 +12,8 @@ def getBranchVersion()
     if (env.BRANCH_NAME.contains('release/'))
         return env.BRANCH_NAME.substring(env.BRANCH_NAME.lastIndexOf("/") + 1)
     if (env.BRANCH_NAME.contains('master'))
+        return "master"
+    if (env.BRANCH_NAME.contains('develop'))
         return "beta"
     return env.BRANCH_NAME
 }
@@ -105,7 +107,7 @@ pipeline {
                         env.exportname = projet
                         env.artifactoryPath = getArtifactoryPath(projet)
 
-                        if (env.BRANCH_NAME.contains('master') || env.BRANCH_NAME.contains('release/')) {
+                        if (env.BRANCH_NAME.contains('master') || env.BRANCH_NAME.contains('release/') || env.BRANCH_NAME.contains('develop')) {
                             bat label: 'Deploy', script: '''
                                 7z a ".\\%exportname%_%BRANCHVERSION%_%COMPILER%_%ARCHITECTURE%_%QTVERSION%.zip" ".\\Delivery\\%exportname%\\*"
                                 curl -uautomate:APBHo6qrEo4eKC9EigYM3w8Lymu -T "%exportname%_%BRANCHVERSION%_%COMPILER%_%ARCHITECTURE%_%QTVERSION%.zip" "%artifactoryPath%/%exportname%_%BRANCHVERSION%_%COMPILER%_%ARCHITECTURE%_%QTVERSION%.zip"
