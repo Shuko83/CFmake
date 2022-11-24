@@ -124,11 +124,11 @@ pipeline {
                         if (env.BRANCH_NAME.contains('master') || env.BRANCH_NAME.contains('release/') || env.BRANCH_NAME.contains('develop')) {
                             bat label: 'Deploy', script: '''
                                 7z a ".\\%exportname%_%BRANCHVERSION%_%COMPILER%_%ARCHITECTURE%_%QTVERSION%.zip" ".\\Delivery\\Services\\%exportname%\\*"
-                                curl -uautomate:APBHo6qrEo4eKC9EigYM3w8Lymu -T "%exportname%_%BRANCHVERSION%_%COMPILER%_%ARCHITECTURE%_%QTVERSION%.zip" "%artifactoryPath%/Services/%exportname%_%BRANCHVERSION%_%COMPILER%_%ARCHITECTURE%_%QTVERSION%.zip"
+                                curl -uautomate:APBHo6qrEo4eKC9EigYM3w8Lymu -T "%exportname%_%BRANCHVERSION%_%COMPILER%_%ARCHITECTURE%_%QTVERSION%.zip" "%artifactoryPath%/Services/%exportname%/%exportname%_%BRANCHVERSION%_%COMPILER%_%ARCHITECTURE%_%QTVERSION%.zip"
                             '''
                         } else {
                             echo "No deploy on this branch"
-                        }, "SwServiceConfiguration","SwServiceMainWindow" ,"SwServiceShortcut" ,"SwServiceTools"])
+                        }
                     }
                 }
             }
