@@ -8,6 +8,10 @@
 		"artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/Cryptopp/5.6.5.1/Cryptopp_5.6.5.1_Toolchain.zip"
 	},
 	{
+		"destination": "3rdParty/HASP/Delivery/Installer",
+		"artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/HASP/8.2/Installer/hasp.zip"
+	},
+	{
 		"destination" : "Libraries/Qst/Base/QsCore",
 		"artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Base/2.0.0/QsCore/QsCore_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
 	},	
