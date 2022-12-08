@@ -29,7 +29,7 @@
     },
     {
         "destination" : "Libraries/License",
-        "artifactory" : "http://artifactory.divst:8081/artifactory/snapshot/Libraries/License/beta/License_beta_win-msvc2015-x64-QT5.9.6.zip"
+        "artifactory" : "http://10.20.1.10::8081/artifactory/snapshot/Libraries/License/beta/License_beta_win-msvc2015-x64-QT5.9.6.zip"
     },
     {
         "destination": "Libraries/Licensing",
