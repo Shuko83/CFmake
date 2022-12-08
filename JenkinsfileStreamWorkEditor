@@ -1,0 +1,6 @@
+@Library('sx-shared-lib') _
+
+
+stage('Build Frameworks Streamwork') {
+    sxNewSharedLibrary("StreamWork", ["StreamWorkEditor"], "Frameworks/Streamwork", "c", "StreamWorkEditor", false, true, true)
+}
