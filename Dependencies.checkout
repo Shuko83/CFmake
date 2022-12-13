@@ -13,19 +13,19 @@
     },
     {
         "destination" : "Libraries/Qst/Base/QsCore",
-        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Base/2.0.0/QsCore/QsCore_2.0.0_win-msvc2015-x64-QT5.9.6.zip"
+        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Base/2.0.0/QsCore/QsCore_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
     },  
     {
         "destination" : "Libraries/Qst/Base/QsGui",
-        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Base/2.0.0/QsGui/QsGui_2.0.0_win-msvc2015-x64-QT5.9.6.zip"
+        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Base/2.0.0/QsGui/QsGui_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
     },
     {
         "destination" : "Libraries/Qst/Modules/QsException",
-        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Modules/2.0.0/QsException/QsException_2.0.0_win-msvc2015-x64-QT5.9.6.zip"
+        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Modules/2.0.0/QsException/QsException_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
     },
     {
         "destination" : "Libraries/Qst/Modules/QsLog",
-        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Modules/2.0.0/QsLog/QsLog_2.0.0_win-msvc2015-x64-QT5.9.6.zip"
+        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Modules/2.0.0/QsLog/QsLog_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
     },
     {
         "destination" : "Libraries/License",
