@@ -7,7 +7,7 @@
 		<Library name="QsGui" link="false"/>
 		<Library name="cryptopp" type="static"/>
         <Library name="License"/>
-        <Library name="ApiLicensing"/>
+        <Library name="ApiLicensing" type="static"/>
     </Libraries>
     <Qt>
         <Module name="core"/>
