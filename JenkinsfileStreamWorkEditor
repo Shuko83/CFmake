@@ -2,5 +2,5 @@
 
 
 stage('Build Frameworks Streamwork') {
-    sxNewSharedLibrary("StreamWork", ["StreamWorkEditor"], "Frameworks/Streamwork", "c", "StreamWorkEditor", false, false, true)
+    sxNewSharedLibrary("StreamWorkEditor", ["StreamWorkEditor"], "Frameworks/Streamwork", "c", "StreamWorkEditor", false, false, true)
 }
