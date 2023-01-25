@@ -1,0 +1,327 @@
+################################################################################
+# Project definition
+################################################################################
+
+function(define_project)
+
+  # Project source path
+
+  add_subdirectory(src)
+
+endfunction(define_project)
+
+################################################################################
+# Sub-project definition
+################################################################################
+
+function(define_sub_project)
+
+  # Parse arguments
+
+  set(SP_OPTIONS)
+  set(SP_UNIQUE NAME MODE LOCAL_PATH OUTPUT_PATH REMOTE_PATH FIND_PATH GIT_PATH GIT_TAG SVN_PATH SVN_TAG)
+  set(SP_MULTIPLE ARCHS TARGETS ARGUMENTS)
+  cmake_parse_arguments(SP "${SP_OPTIONS}" "${SP_UNIQUE}" "${SP_MULTIPLE}" ${ARGN})
+
+  # Variables
+
+  string(REPLACE "." "" VNAME ${SP_NAME})
+  string(REPLACE "-" "" VNAME ${VNAME})
+  string(TOLOWER ${SP_NAME} LNAME)
+  string(TOLOWER ${VNAME} LVNAME)
+
+  if(NOT DEFINED ${VNAME}_MODE)
+
+    # Set variables only on first call
+
+    set_variable(SP_MODE "remote")
+    set_variable(SP_LOCAL_PATH ${WORKSPACE_PATH}/${LNAME})
+    set_variable(SP_OUTPUT_PATH ${SUBPROJECTS_PATH}/${LNAME})
+    set_variable(SP_FIND_PATH ${SUBPROJECTS_PATH}/${LNAME}/lib/${TARGET_NAME})
+    set_variable(SP_GIT_PATH ${GIT_URL}/${LNAME}.git)
+    set_variable(SP_GIT_TAG ${${VNAME}_VERSION})
+    set_variable(SP_SVN_PATH ${SUBVERSION_URL}/${LNAME})
+    set_variable(SP_SVN_TAG ${${VNAME}_VERSION})
+
+    set(${VNAME}_MODE ${SP_MODE} CACHE STRING "${SP_NAME} sub-project mode")
+    set(${VNAME}_LOCAL_PATH ${SP_LOCAL_PATH} CACHE PATH "${SP_NAME} sub-project local path")
+    set(${VNAME}_OUTPUT_PATH ${SP_OUTPUT_PATH} CACHE PATH "${SP_NAME} sub-project output path")
+    set(${VNAME}_REMOTE_PATH ${SP_REMOTE_PATH} CACHE STRING "${SP_NAME} sub-project remote path")
+    set(${VNAME}_FIND_PATH ${SP_FIND_PATH} CACHE PATH "${SP_NAME} sub-project find path")
+    set(${VNAME}_GIT_PATH ${SP_GIT_PATH} CACHE STRING "${SP_NAME} sub-project Git path")
+    set(${VNAME}_GIT_TAG ${SP_GIT_TAG} CACHE STRING "${SP_NAME} sub-project Git branch, tag or revision")
+    set(${VNAME}_SVN_PATH ${SP_SVN_PATH} CACHE STRING "${SP_NAME} sub-project Subversion path")
+    set(${VNAME}_SVN_TAG ${SP_SVN_TAG} CACHE STRING "${SP_NAME} sub-project Subversion branch or tag")
+    set(${VNAME}_ARCHS ${SP_ARCHS} CACHE INTERNAL "${SP_NAME} sub-project architectures")
+    set(${VNAME}_TARGETS ${SP_TARGETS} CACHE INTERNAL "${SP_NAME} sub-project targets")
+    set(${VNAME}_ARGUMENTS ${SP_ARGUMENTS} CACHE INTERNAL "${SP_NAME} sub-project arguments")
+    set_property(CACHE ${VNAME}_MODE PROPERTY STRINGS "local" "remote" "git" "svn")
+
+  endif(NOT DEFINED ${VNAME}_MODE)
+
+  # Report (before definition)
+
+  message(STATUS "==================================================")
+  message(STATUS "Sub-project ${SP_NAME} (${VNAME}) imported as ${${VNAME}_MODE}")
+  message(STATUS "  - Local path: ${${VNAME}_LOCAL_PATH}")
+  message(STATUS "  - Output path: ${${VNAME}_OUTPUT_PATH} ${${VNAME}_FIND_PATH}")
+  message(STATUS "  - Remote path: ${${VNAME}_REMOTE_PATH}")
+  message(STATUS "  - Git path: ${${VNAME}_GIT_PATH} ${${VNAME}_GIT_TAG}")
+  message(STATUS "  - Subversion path: ${${VNAME}_SVN_PATH} ${${VNAME}_SVN_TAG}")
+  message(DEBUG "  - Archs: ${${VNAME}_ARCHS}")
+  message(DEBUG "  - Targets: ${${VNAME}_TARGETS}")
+  message(DEBUG "  - Arguments: ${${VNAME}_ARGUMENTS}")
+
+  # Configuration for selected mode
+
+  if(${VNAME}_MODE STREQUAL "remote")
+
+    # Download remote path
+
+    get_filename_component(${VNAME}_PARENT_PATH ${${VNAME}_OUTPUT_PATH} DIRECTORY)
+    download_dependency(
+      DIRNAME ${LNAME}
+      OUTPUT_PATH ${${VNAME}_PARENT_PATH}
+      REMOTE_PATH ${${VNAME}_REMOTE_PATH}
+      ARCHS ${${VNAME}_ARCHS}
+      TARGETS ${${VNAME}_TARGETS})
+    find_package(${VNAME} REQUIRED PATHS ${${VNAME}_FIND_PATH})
+    message(DEBUG "Found ${VNAME} libraries: ${${VNAME}_LIBRARIES}")
+
+    # Set sub-project cache variables
+
+    set(${VNAME}_FOUND ${${VNAME}_FOUND} CACHE INTERNAL "${VNAME} found status")
+    set(${VNAME}_DIR ${${VNAME}_DIR} CACHE INTERNAL "${VNAME} directory")
+    set(${VNAME}_INCLUDE_DIR ${${VNAME}_INCLUDE_DIR} CACHE INTERNAL "${VNAME} include directory")
+    set(${VNAME}_LIBRARIES ${${VNAME}_LIBRARIES} CACHE INTERNAL "${VNAME} libraries")
+
+  else(${${VNAME}_MODE} STREQUAL "remote")
+
+    # Fetch local, Git or Subversion content
+
+    include(FetchContent)
+    set(FETCHCONTENT_BASE_DIR ${SUBPROJECTS_PATH}/_deps)
+    if(${VNAME}_MODE STREQUAL "local")
+      FetchContent_Declare(${LVNAME} SOURCE_DIR ${${VNAME}_LOCAL_PATH})
+    elseif(${VNAME}_MODE STREQUAL "git")
+      FetchContent_Declare(${LVNAME} GIT_REPOSITORY ${${VNAME}_GIT_PATH} GIT_TAG ${${VNAME}_GIT_TAG})
+    elseif(${VNAME}_MODE STREQUAL "svn")
+      FetchContent_Declare(${LVNAME} SVN_REPOSITORY ${${VNAME}_SVN_PATH}/${${VNAME}_SVN_TAG})
+    endif(${VNAME}_MODE STREQUAL "local")
+    FetchContent_GetProperties(${LVNAME})
+    if(NOT ${LVNAME}_POPULATED)
+      FetchContent_Populate(${LVNAME})
+      add_subdirectory(${${LVNAME}_SOURCE_DIR} ${${LVNAME}_BINARY_DIR})
+    endif(NOT ${LVNAME}_POPULATED)
+
+  endif(${VNAME}_MODE STREQUAL "remote")
+
+endfunction(define_sub_project)
+
+################################################################################
+# Component definition
+################################################################################
+
+function(define_component)
+
+  # Parse arguments
+
+  set(COMPONENT_OPTIONS EXECUTABLE STATIC INTERFACE RECURSIVE NOINSTALL)
+  set(COMPONENT_UNIQUE NAME PATH INSTALLNAME INSTALLDIR)
+  set(COMPONENT_MULTIPLE PUBLIC_BUILD_DEPS PRIVATE_BUILD_DEPS INTERFACE_BUILD_DEPS RUNTIME_DEPS)
+  cmake_parse_arguments(COMPONENT "${COMPONENT_OPTIONS}" "${COMPONENT_UNIQUE}" "${COMPONENT_MULTIPLE}" ${ARGN})
+
+  # Paths
+
+  if(NOT DEFINED COMPONENT_PATH)
+    string(REPLACE "." "/" COMPONENT_PATH ${COMPONENT_NAME})
+  endif(NOT DEFINED COMPONENT_PATH)
+  set(COMPONENT_PUBLIC_HEADERS_PATH ${PROJECT_SOURCE_DIR}/include/${COMPONENT_PATH})
+  set(COMPONENT_PRIVATE_HEADERS_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+  set(COMPONENT_SOURCES_PATH ${CMAKE_CURRENT_SOURCE_DIR})
+
+  # Sources
+
+  if(NOT COMPONENT_RECURSIVE)
+    file(GLOB COMPONENT_PUBLIC_HEADERS_FILES ${COMPONENT_PUBLIC_HEADERS_PATH}/*.h ${COMPONENT_PUBLIC_HEADERS_PATH}/*.hpp)
+    file(GLOB COMPONENT_PRIVATE_HEADERS_FILES ${COMPONENT_PRIVATE_HEADERS_PATH}/*.h ${COMPONENT_PRIVATE_HEADERS_PATH}/*.hpp)
+    file(GLOB COMPONENT_SOURCES_FILES ${COMPONENT_SOURCES_PATH}/*.c ${COMPONENT_SOURCES_PATH}/*.cpp)
+  else(NOT COMPONENT_RECURSIVE)
+    file(GLOB_RECURSE COMPONENT_PUBLIC_HEADERS_FILES ${COMPONENT_PUBLIC_HEADERS_PATH}/*.h ${COMPONENT_PUBLIC_HEADERS_PATH}/*.hpp)
+    file(GLOB_RECURSE COMPONENT_PRIVATE_HEADERS_FILES ${COMPONENT_PRIVATE_HEADERS_PATH}/*.h ${COMPONENT_PRIVATE_HEADERS_PATH}/*.hpp)
+    file(GLOB_RECURSE COMPONENT_SOURCES_FILES ${COMPONENT_SOURCES_PATH}/*.c ${COMPONENT_SOURCES_PATH}/*.cpp)
+  endif(NOT COMPONENT_RECURSIVE)
+
+  source_group(TREE ${COMPONENT_PUBLIC_HEADERS_PATH} PREFIX "Header Files (public)" FILES ${COMPONENT_PUBLIC_HEADERS_FILES})
+  source_group(TREE ${COMPONENT_PRIVATE_HEADERS_PATH} PREFIX "Header Files (private)" FILES ${COMPONENT_PRIVATE_HEADERS_FILES})
+  source_group(TREE ${COMPONENT_SOURCES_PATH} PREFIX "Source Files" FILES ${COMPONENT_SOURCES_FILES})
+
+  # Resource
+
+  set(RCFILE_COMPONENT_NAME ${COMPONENT_NAME})
+  set(RCFILE_PROJECT_NAME ${CMAKE_PROJECT_NAME})
+  set(RCFILE_PROJECT_VERSION ${CMAKE_PROJECT_VERSION})
+
+  execute_process(COMMAND git rev-parse --short HEAD WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE RCFILE_PROJECT_VERSION_HASH)
+  string(STRIP ${RCFILE_PROJECT_VERSION_HASH} RCFILE_PROJECT_VERSION_HASH)
+
+  set(COMPONENT_RCFILE_IN ${CMAKE_MODULE_TEMPLATES_PATH}/ComponentProperties.rc.in)
+  set(COMPONENT_RCFILE_OUT ${CMAKE_CURRENT_BINARY_DIR}/ComponentProperties.rc)
+  configure_file(${COMPONENT_RCFILE_IN} ${COMPONENT_RCFILE_OUT} @ONLY)
+
+  # Library
+
+  if(NOT COMPONENT_EXECUTABLE)
+    if(NOT COMPONENT_STATIC AND NOT COMPONENT_INTERFACE)
+      add_library(${COMPONENT_NAME} SHARED ${COMPONENT_PUBLIC_HEADERS_FILES} ${COMPONENT_PRIVATE_HEADERS_FILES} ${COMPONENT_SOURCES_FILES} ${COMPONENT_RCFILE_OUT})
+    elseif(COMPONENT_STATIC)
+      add_library(${COMPONENT_NAME} STATIC ${COMPONENT_PUBLIC_HEADERS_FILES} ${COMPONENT_PRIVATE_HEADERS_FILES} ${COMPONENT_SOURCES_FILES})
+    elseif(COMPONENT_INTERFACE)
+      add_library(${COMPONENT_NAME} INTERFACE)
+      add_custom_target(${COMPONENT_NAME}.interface SOURCES ${COMPONENT_PUBLIC_HEADERS_FILES} ${COMPONENT_PRIVATE_HEADERS_FILES})
+    endif(NOT COMPONENT_STATIC AND NOT COMPONENT_INTERFACE)
+  endif(NOT COMPONENT_EXECUTABLE)
+
+  # Executable
+
+  if(COMPONENT_EXECUTABLE)
+    add_executable(${COMPONENT_NAME} ${COMPONENT_PUBLIC_HEADERS_FILES} ${COMPONENT_PRIVATE_HEADERS_FILES} ${COMPONENT_SOURCES_FILES} ${COMPONENT_RCFILE_OUT})
+  endif(COMPONENT_EXECUTABLE)
+
+  # Definitions
+
+  if(NOT COMPONENT_EXECUTABLE)
+    string(TOUPPER ${COMPONENT_NAME} COMPONENT_EXPORTS)
+    string(REPLACE "." "_" COMPONENT_EXPORTS ${COMPONENT_EXPORTS})
+    string(APPEND COMPONENT_EXPORTS "_EXPORTS")
+    add_compile_definitions(${COMPONENT_EXPORTS})
+  endif(NOT COMPONENT_EXECUTABLE)
+
+  # Includes
+
+  if(NOT COMPONENT_INTERFACE)
+    target_include_directories(${COMPONENT_NAME}
+      PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+      PUBLIC $<INSTALL_INTERFACE:include>
+      PRIVATE $<BUILD_INTERFACE:${COMPONENT_PUBLIC_HEADERS_PATH}>
+      PRIVATE $<BUILD_INTERFACE:${COMPONENT_PRIVATE_HEADERS_PATH}>)
+  else(NOT COMPONENT_INTERFACE)
+    target_include_directories(${COMPONENT_NAME} INTERFACE
+      $<BUILD_INTERFACE:${COMPONENT_PUBLIC_HEADERS_PATH}>
+      $<BUILD_INTERFACE:${COMPONENT_PRIVATE_HEADERS_PATH}>)
+  endif(NOT COMPONENT_INTERFACE)
+
+  # Links
+
+  target_link_libraries(${COMPONENT_NAME}
+    PUBLIC ${COMPONENT_PUBLIC_BUILD_DEPS}
+    PRIVATE ${COMPONENT_PRIVATE_BUILD_DEPS}
+    INTERFACE ${COMPONENT_INTERFACE_BUILD_DEPS})
+
+  # Runtime
+
+  list(APPEND RUNTIME_DEPS ${COMPONENT_RUNTIME_DEPS})
+  get_runtime_dependencies(${COMPONENT_NAME})
+  foreach(RUNTIME_DEP IN LISTS RUNTIME_DEPS)
+    if(TARGET ${RUNTIME_DEP})
+      get_target_property(RUNTIME_DEP_CONFIGS ${RUNTIME_DEP} IMPORTED_CONFIGURATIONS)
+      foreach(RUNTIME_DEP_CONFIG IN LISTS RUNTIME_DEP_CONFIGS)
+        get_target_property(RUNTIME_DEP_LOCATION ${RUNTIME_DEP} IMPORTED_LOCATION_${RUNTIME_DEP_CONFIG})
+        if(EXISTS ${RUNTIME_DEP_LOCATION})
+          get_filename_component(RUNTIME_DEP_NAME ${RUNTIME_DEP_LOCATION} NAME)
+          add_custom_command(TARGET ${COMPONENT_NAME} POST_BUILD
+            COMMAND cmake -E
+            $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,copy_if_different,echo_append>
+            $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${RUNTIME_DEP_LOCATION},>
+            $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${RUNTIME_DEP_NAME},>)
+          if(ENABLE_PDB_COPY)
+            string(REPLACE ".dll" ".pdb" RUNTIME_DEP_PDB_NAME ${RUNTIME_DEP_NAME})
+            string(REPLACE ".dll" ".pdb" RUNTIME_DEP_PDB_LOCATION ${RUNTIME_DEP_LOCATION})
+            if(EXISTS ${RUNTIME_DEP_PDB_LOCATION})
+              add_custom_command(TARGET ${COMPONENT_NAME} POST_BUILD
+                COMMAND cmake -E
+                $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,copy_if_different,echo_append>
+                $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${RUNTIME_DEP_PDB_LOCATION},>
+                $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${RUNTIME_DEP_PDB_NAME},>)
+            endif(EXISTS ${RUNTIME_DEP_PDB_LOCATION})
+          endif(ENABLE_PDB_COPY)
+        endif(EXISTS ${RUNTIME_DEP_LOCATION})
+      endforeach(RUNTIME_DEP_CONFIG IN LISTS RUNTIME_DEP_CONFIGS)
+    endif(TARGET ${RUNTIME_DEP})
+  endforeach(RUNTIME_DEP IN LISTS RUNTIME_DEPS)
+
+  # Installation
+
+  if(NOT PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
+    set(COMPONENT_NOINSTALL TRUE)
+  endif(NOT PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
+
+  if(NOT COMPONENT_NOINSTALL)
+    if(NOT DEFINED COMPONENT_INSTALLNAME)
+      set(COMPONENT_INSTALLNAME ${COMPONENT_NAME})
+    endif(NOT DEFINED COMPONENT_INSTALLNAME)
+    if(NOT DEFINED COMPONENT_INSTALLDIR)
+      set(COMPONENT_BINARY_INSTALLDIR bin/${TARGET_NAME}/$<LOWER_CASE:$<CONFIG>>)
+      set(COMPONENT_LIBRARY_INSTALLDIR lib/${TARGET_NAME}/$<LOWER_CASE:$<CONFIG>>)
+    else(NOT DEFINED COMPONENT_INSTALLDIR)
+      set(COMPONENT_BINARY_INSTALLDIR ${COMPONENT_INSTALLDIR})
+      set(COMPONENT_LIBRARY_INSTALLDIR ${COMPONENT_INSTALLDIR})
+    endif(NOT DEFINED COMPONENT_INSTALLDIR)
+    install(TARGETS ${COMPONENT_NAME}
+      EXPORT ${CMAKE_PROJECT_NAME}Targets
+      ARCHIVE DESTINATION ${COMPONENT_LIBRARY_INSTALLDIR}
+      LIBRARY DESTINATION ${COMPONENT_LIBRARY_INSTALLDIR}
+      RUNTIME DESTINATION ${COMPONENT_BINARY_INSTALLDIR}
+      COMPONENT ${COMPONENT_INSTALLNAME})
+    if(ENABLE_PDB_INSTALL AND NOT COMPONENT_INTERFACE)
+      install(FILES $<TARGET_PDB_FILE:${COMPONENT_NAME}>
+        DESTINATION ${COMPONENT_BINARY_INSTALLDIR}
+        COMPONENT ${COMPONENT_INSTALLNAME}
+        OPTIONAL)
+    endif(ENABLE_PDB_INSTALL AND NOT COMPONENT_INTERFACE)
+  endif(NOT COMPONENT_NOINSTALL)
+
+  # Variables
+
+  if(NOT COMPONENT_EXECUTABLE AND ((NOT COMPONENT_STATIC AND NOT COMPONENT_INTERFACE) OR COMPONENT_STATIC))
+    list(APPEND ${PROJECT_NAME}_LIBRARIES ${COMPONENT_NAME})
+    list(SORT ${PROJECT_NAME}_LIBRARIES)
+    list(REMOVE_DUPLICATES ${PROJECT_NAME}_LIBRARIES)
+    set(${PROJECT_NAME}_LIBRARIES ${${PROJECT_NAME}_LIBRARIES} CACHE INTERNAL "${PROJECT_NAME} libraries")
+  endif(NOT COMPONENT_EXECUTABLE AND ((NOT COMPONENT_STATIC AND NOT COMPONENT_INTERFACE) OR COMPONENT_STATIC))
+
+  set(${COMPONENT_NAME}_RUNTIME_DEPS ${RUNTIME_DEPS} CACHE INTERNAL "${COMPONENT_NAME} runtime dependencies")
+
+  # Report
+
+  if(NOT COMPONENT_EXECUTABLE AND NOT COMPONENT_STATIC AND NOT COMPONENT_INTERFACE)
+    set(COMPONENT_TYPE "shared library")
+  elseif(COMPONENT_EXECUTABLE)
+    set(COMPONENT_TYPE "executable")
+  elseif(COMPONENT_STATIC)
+    set(COMPONENT_TYPE "static library")
+  elseif(COMPONENT_INTERFACE)
+    set(COMPONENT_TYPE "interface")
+  endif(NOT COMPONENT_EXECUTABLE AND NOT COMPONENT_STATIC AND NOT COMPONENT_INTERFACE)
+
+  set(COMPONENT_INSTALL FALSE)
+  if(NOT COMPONENT_NOINSTALL)
+    set(COMPONENT_INSTALL TRUE)
+  endif(NOT COMPONENT_NOINSTALL)
+
+  message(STATUS "==================================================")
+  message(STATUS "Component ${COMPONENT_NAME} is ${COMPONENT_TYPE} at ${COMPONENT_PATH}")
+  message(STATUS "  - Public headers path: ${COMPONENT_PUBLIC_HEADERS_PATH}")
+  message(STATUS "  - Private headers path: ${COMPONENT_PRIVATE_HEADERS_PATH}")
+  message(STATUS "  - Sources path: ${COMPONENT_SOURCES_PATH}")
+  message(STATUS "  - Recursive: ${COMPONENT_RECURSIVE}")
+  message(DEBUG "  - Public headers files: ${COMPONENT_PUBLIC_HEADERS_FILES}")
+  message(DEBUG "  - Private headers files: ${COMPONENT_PRIVATE_HEADERS_FILES}")
+  message(DEBUG "  - Sources files: ${COMPONENT_SOURCES_FILES}")
+  message(DEBUG "  - Public build dependencies: ${COMPONENT_PUBLIC_BUILD_DEPS}")
+  message(DEBUG "  - Private build dependencies: ${COMPONENT_PRIVATE_BUILD_DEPS}")
+  message(DEBUG "  - Interface build dependencies: ${COMPONENT_INTERFACE_BUILD_DEPS}")
+  message(DEBUG "  - Runtime dependencies: ${COMPONENT_RUNTIME_DEPS}")
+  message(STATUS "  - Installation: ${COMPONENT_INSTALL} ${COMPONENT_INSTALLNAME} ${COMPONENT_INSTALLDIR}")
+
+endfunction(define_component)
