@@ -24,7 +24,10 @@ set(SUBVERSION_URL "https://10.20.1.30/svn" CACHE STRING "Subversion base URL")
 set(FrameworksDLPXPICore_NAME "Frameworks.DLPX-PI.Core" CACHE INTERNAL "Frameworks.DLPX-PI.Core sub-project name")
 set(LibrariesDLPXPICorrelator_NAME "Libraries.DLPX-PI.Correlator" CACHE INTERNAL "Libraries.DLPX-PI.Correlator sub-project name")
 set(LibrariesDLPXPIReadOLMWrapper_NAME "Libraries.DLPX-PI.ReadOLMWrapper" CACHE INTERNAL "Libraries.DLPX-PI.ReadOLMWrapper sub-project name")
+set(LibrariesDLPXPISNC_NAME "Libraries.DLPX-PI.SNC" CACHE INTERNAL "Libraries.DLPX-PI.SNC sub-project name")
+set(LibrariesDLPXPITacticalX_NAME "Libraries.DLPX-PI.TacticalX" CACHE INTERNAL "Libraries.DLPX-PI.TacticalX sub-project name")
 set(ProductsDLPXPIAsterix204DLP_NAME "Products.DLPX-PI.Asterix204DLP" CACHE INTERNAL "Products.DLPX-PI.Asterix204DLP sub-project name")
+set(ProductsDLPXPIL22DLP_NAME "Products.DLPX-PI.L22DLP" CACHE INTERNAL "Products.DLPX-PI.L22DLP sub-project name")
 set(ProductsDLPXPITestDLP_NAME "Products.DLPX-PI.TestDLP" CACHE INTERNAL "Products.DLPX-PI.TestDLP sub-project name")
 set(ProtocolsDLPXPIL11_NAME "Protocols.DLPX-PI.L11" CACHE INTERNAL "Protocols.DLPX-PI.L11 sub-project name")
 set(ProtocolsDLPXPIL16_NAME "Protocols.DLPX-PI.L16" CACHE INTERNAL "Protocols.DLPX-PI.L16 sub-project name")
@@ -33,7 +36,10 @@ set(ProtocolsDLPXPIL22_NAME "Protocols.DLPX-PI.L22" CACHE INTERNAL "Protocols.DL
 set(FrameworksDLPXPICore_VERSION "develop-aix" CACHE STRING "Frameworks.DLPX-PI.Core sub-project version")
 set(LibrariesDLPXPICorrelator_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.Correlator sub-project version")
 set(LibrariesDLPXPIReadOLMWrapper_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.ReadOLMWrapper sub-project version")
+set(LibrariesDLPXPISNC_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.SNC sub-project version")
+set(LibrariesDLPXPITacticalX_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.TacticalX sub-project version")
 set(ProductsDLPXPIAsterix204DLP_VERSION "develop" CACHE STRING "Products.DLPX-PI.Asterix204DLP sub-project version")
+set(ProductsDLPXPIL22DLP_VERSION "develop" CACHE STRING "Products.DLPX-PI.L22DLP sub-project version")
 set(ProductsDLPXPITestDLP_VERSION "develop" CACHE STRING "Products.DLPX-PI.TestDLP sub-project version")
 set(ProtocolsDLPXPIL11_VERSION "develop" CACHE STRING "Protocols.DLPX-PI.L11 sub-project version")
 set(ProtocolsDLPXPIL16_VERSION "develop" CACHE STRING "Protocols.DLPX-PI.L16 sub-project version")
@@ -98,35 +104,49 @@ function(get_sub_project_dlpxpi NAME)
   if(NAME STREQUAL "Correlator")
     define_sub_project(
       NAME "${LibrariesDLPXPICorrelator_NAME}"
-      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${LibrariesDLPXPICorrelator_NAME}/${LibrariesDLPXPICorrelator_VERSION}/${LibrariesDLPXPICorrelator_NAME}.${LibrariesDLPXPICorrelator_VERSION}.zip")
+      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${LibrariesDLPXPICorrelator_NAME}/${LibrariesDLPXPICorrelator_VERSION}/${LibrariesDLPXPICorrelator_NAME}.n.${LibrariesDLPXPICorrelator_VERSION}.zip")
   endif(NAME STREQUAL "Correlator")
 
   # Libraries.DLPX-PI.ReadOLMWrapper
   if(NAME STREQUAL "ReadOLMWrapper")
     define_sub_project(
       NAME "${LibrariesDLPXPIReadOLMWrapper_NAME}"
-      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${LibrariesDLPXPIReadOLMWrapper_NAME}/${LibrariesDLPXPIReadOLMWrapper_VERSION}/${LibrariesDLPXPIReadOLMWrapper_NAME}.${LibrariesDLPXPIReadOLMWrapper_VERSION}.zip")
+      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${LibrariesDLPXPIReadOLMWrapper_NAME}/${LibrariesDLPXPIReadOLMWrapper_VERSION}/${LibrariesDLPXPIReadOLMWrapper_NAME}.n.${LibrariesDLPXPIReadOLMWrapper_VERSION}.zip")
   endif(NAME STREQUAL "ReadOLMWrapper")
+
+  # Libraries.DLPX-PI.SNC
+  if(NAME STREQUAL "SNC")
+    define_sub_project(
+      NAME "${LibrariesDLPXPISNC_NAME}"
+      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${LibrariesDLPXPISNC_NAME}/${LibrariesDLPXPISNC_VERSION}/${LibrariesDLPXPISNC_NAME}.ni.${LibrariesDLPXPISNC_VERSION}.zip")
+  endif(NAME STREQUAL "SNC")
+
+  # Libraries.DLPX-PI.TacticalX
+  if(NAME STREQUAL "TacticalX")
+    define_sub_project(
+      NAME "${LibrariesDLPXPITacticalX_NAME}"
+      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${LibrariesDLPXPITacticalX_NAME}/${LibrariesDLPXPITacticalX_VERSION}/${LibrariesDLPXPITacticalX_NAME}.ni.${LibrariesDLPXPITacticalX_VERSION}.zip")
+  endif(NAME STREQUAL "TacticalX")
 
   # Protocols.DLPX-PI.L11
   if(NAME STREQUAL "L11")
     define_sub_project(
       NAME "${ProtocolsDLPXPIL11_NAME}"
-      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${ProtocolsDLPXPIL11_NAME}/${ProtocolsDLPXPIL11_VERSION}/${ProtocolsDLPXPIL11_NAME}.ni.${ProtocolsDLPXPIL11_VERSION}.zip")
+      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${ProtocolsDLPXPIL11_NAME}/${ProtocolsDLPXPIL11_VERSION}/${ProtocolsDLPXPIL11_NAME}.n.${ProtocolsDLPXPIL11_VERSION}.zip")
   endif(NAME STREQUAL "L11")
 
   # Protocols.DLPX-PI.L16
   if(NAME STREQUAL "L16")
     define_sub_project(
       NAME "${ProtocolsDLPXPIL16_NAME}"
-      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${ProtocolsDLPXPIL16_NAME}/${ProtocolsDLPXPIL16_VERSION}/${ProtocolsDLPXPIL16_NAME}.ni.${ProtocolsDLPXPIL16_VERSION}.zip")
+      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${ProtocolsDLPXPIL16_NAME}/${ProtocolsDLPXPIL16_VERSION}/${ProtocolsDLPXPIL16_NAME}.n.${ProtocolsDLPXPIL16_VERSION}.zip")
   endif(NAME STREQUAL "L16")
 
   # Protocols.DLPX-PI.L22
   if(NAME STREQUAL "L22")
     define_sub_project(
       NAME "${ProtocolsDLPXPIL22_NAME}"
-      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${ProtocolsDLPXPIL22_NAME}/${ProtocolsDLPXPIL22_VERSION}/${ProtocolsDLPXPIL22_NAME}.ni.${ProtocolsDLPXPIL22_VERSION}.zip")
+      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${ProtocolsDLPXPIL22_NAME}/${ProtocolsDLPXPIL22_VERSION}/${ProtocolsDLPXPIL22_NAME}.n.${ProtocolsDLPXPIL22_VERSION}.zip")
   endif(NAME STREQUAL "L22")
 
 endfunction(get_sub_project_dlpxpi NAME)
@@ -196,7 +216,7 @@ function(get_dependency_dlpxpi NAME)
     define_dependency(
       NAME "L16OPSTranslation"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/L16OPS_Translation/1.1.4/CODX.STANAG_5616.1.1.4.2.cpp11.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/L16OPS_Translations/1.1.5/CODX.STANAG_5616.1.1.5.3.cpp11.zip"
       FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L16OPSTranslation/Delivery"
       CREATEDIR)
   endif(NAME STREQUAL "L16OPSTranslation")
@@ -234,7 +254,7 @@ function(get_dependency_dlpxpi NAME)
   if(NAME STREQUAL "APITacticalX")
     define_dependency(
       NAME "ApiTacticalX"
-      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/INM"
       REMOTE_PATH "${ARTIFACTORY_URL}/snapshot/DLPX-PI.SVN.Exports/Libraries.DCLI.ApiTacticalX_trunk.zip"
       CREATEDIR)
   endif(NAME STREQUAL "APITacticalX")
