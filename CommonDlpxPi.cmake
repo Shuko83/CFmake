@@ -376,6 +376,7 @@ function(get_dependency_dlpxpi NAME)
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/3rdParty"
       REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/TracyClient/0.9.0/%TARGET%/%ARCH%/TracyClient-0.9.0_%TARGET%-%ARCH%.zip"
       CMAKE)
+    find_package(Threads)
     add_compile_definitions(ENABLE_TELEMETRY)
   endif(NAME STREQUAL "Tracy" AND ENABLE_TELEMETRY)
 
