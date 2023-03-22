@@ -246,7 +246,7 @@ function(get_dependency_dlpxpi NAME)
     define_dependency(
       NAME "Licensing"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries.Licensing/5.0.4/%TARGET%/%ARCH%/Licensing_5.0.4_win-msvc2015-x64.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries.Licensing/5.1.0/%TARGET%/%ARCH%/Libraries.Licensing-5.1.0-%TARGET%-%ARCH%.zip"
       CREATEDIR)
   endif(NAME STREQUAL "APILicensing")
 
@@ -358,14 +358,14 @@ function(get_dependency_dlpxpi NAME)
   # HASP for GEMALTO RTE
   if(NAME STREQUAL "HASP")
     download_dependency(
-      DIRNAME "HASP-8.2"
+      DIRNAME "HASP-8.4"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/3rdParty"
-      REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/HASP/8.2/Installer/hasp_rt.exe")
+      REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/HASP/8.4/Installer/Windows/hasp_rt.exe")
     download_dependency(
-      DIRNAME "HASP-8.2"
+      DIRNAME "HASP-8.4"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/3rdParty"
-      REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/HASP/8.2/Installer/haspdinst.exe")
-    set(HASP_ROOT "${CMAKE_PREFIX_PATH}/3rdParty/HASP-8.2" PARENT_SCOPE)
+      REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/HASP/8.4/Installer/Windows/haspdinst.exe")
+    set(HASP_ROOT "${CMAKE_PREFIX_PATH}/3rdParty/HASP-8.4" PARENT_SCOPE)
   endif(NAME STREQUAL "HASP")
 
   # Tracy
