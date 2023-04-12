@@ -8,8 +8,8 @@
         "artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/Cryptopp/5.6.5.1/Cryptopp_5.6.5.1_Toolchain.zip"
     },
     {
-        "destination": "3rdParty/HASP/Delivery/Installer",
-        "artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/HASP/8.2/Installer/hasp.zip"
+        "destination": "3rdParty/HASP",
+        "artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/HASP/8.4/Delivery_GEMALTO/Delivery_GEMALTO_8.4_20220914.zip"
     },
     {
         "destination" : "Libraries/Qst/Base/QsCore",
@@ -33,10 +33,14 @@
     },
 	{
         "destination": "Libraries/Licensing/Delivery",
-        "artifactory": "http://artifactory.divst:8081/artifactory/release/Libraries.Licensing/4.0.21/win-msvc2015/x64/Licensing_4.0.21_win-msvc2015-x64.zip"
+        "artifactory": "http://10.20.1.10:8081/artifactory/release/Libraries.Licensing/5.1.0/win-msvc2015/x64/Libraries.Licensing-5.1.0-win-msvc2015-x64.zip"
+    },
+    {
+        "destination": "Libraries/Licensing/EULA",
+        "artifactory": "http://10.20.1.10:8081/artifactory/release/EULA/1.0/EULA.rtf"
     },
     {
         "destination": "Libraries/Licensing/Toolchain",
-        "artifactory": "http://artifactory.divst:8081/artifactory/release/Libraries.Licensing/4.0.21/ApiLicensing_4.0.21_Toolchain.zip"
+        "artifactory": "http://10.20.1.10:8081/artifactory/release/Libraries.Licensing/5.1.0/ApiLicensing_5.1.0_Toolchain.zip"
     }
 ]

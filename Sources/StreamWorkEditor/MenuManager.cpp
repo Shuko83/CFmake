@@ -20,9 +20,8 @@ using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
 
 /** @brief Constructor */
-MenuManager::MenuManager():QObject() {
-	_menu=new QMenu(0);
-    _menu->setTitle("Edition");
+MenuManager::MenuManager():QObject() 
+{
 	_contextualMenu=new QMenu(0);
     _contextualMenu->setWindowOpacity(0.9);
     _contextualMenu->setStyleSheet("* { border: 1px solid gray; background: #ccc; font-size:10px}");
@@ -32,8 +31,8 @@ MenuManager::MenuManager():QObject() {
     _copyBgColor=HEADER_COLOR;
 }
 /** @brief Destructor */
-MenuManager::~MenuManager() {
-    delete _menu;
+MenuManager::~MenuManager() 
+{
     delete _contextualMenu;
 }
 /** @brief acces singleton */
@@ -56,7 +55,6 @@ void MenuManager::setControler(StreamControler * controler) {
         _connectorList.clear();
     }
     _streamControler=controler;
-    _menu->clear();
 }
 /** @brief acces au controleur */
 StreamControler * MenuManager::getControler() {

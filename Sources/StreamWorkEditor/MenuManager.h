@@ -80,8 +80,6 @@ private:
     /** @brief build action name for citem */
     QString buildActionNameForConnector(ConnectorGraphicItem *citem);
 private:
-    /** @brief Menu */
-    QMenu * _menu;
     /** @brief Menu contextuel*/
     QMenu * _contextualMenu;
     /** @brief Menu */

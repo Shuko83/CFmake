@@ -1,0 +1,10 @@
+Delivery/*
+**/generated
+**/_binaries.deploy
+*.pro
+*.vcxproj**
+*.rc
+*.stash
+*.bak
+*.filters
+*.opt

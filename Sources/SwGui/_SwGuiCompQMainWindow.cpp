@@ -772,10 +772,17 @@ void _SwGuiCompQMainWindow::closeEvent( QCloseEvent * event )
 		return;
 	}
 
-    if( _protectClosing )
+    if (_protectClosing)
     {
-        int ret = QMessageBox::question( this, "Exit", "Do you really want to exit?", QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes );
-        if( ret == QMessageBox::No )
+        QMessageBox msgBox(this);
+        msgBox.setObjectName(QStringLiteral("mainCloseMsgBox"));
+        msgBox.setIcon(QMessageBox::Question);
+        msgBox.setWindowTitle(QStringLiteral("Exit"));
+        msgBox.setText(QStringLiteral("Do you really want to exit ?"));
+        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+
+        int ret = msgBox.exec();
+        if (ret == QMessageBox::No)
             event->ignore();
     }	
 
