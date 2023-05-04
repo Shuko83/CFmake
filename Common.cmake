@@ -42,6 +42,7 @@ option(BUILD_TESTING "Build unit tests" TRUE)
 option(ENABLE_DOCUMENTATION_FULL "Enable full documentation" FALSE)
 option(ENABLE_PDB_COPY "Enable PDB files copy" FALSE)
 option(ENABLE_PDB_INSTALL "Enable PDB files installation" TRUE)
+option(ENABLE_PDB_RELEASE "Enable PDB files for release" TRUE)
 
 ################################################################################
 # Compilation definition
@@ -66,6 +67,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   set(CMAKE_GENERATOR_PLATFORM "x64" CACHE INTERNAL "Target architecture")
   string(APPEND CMAKE_CXX_FLAGS " /MP /W4 /wd4251 /wd4373")
   add_compile_definitions(NOMINMAX WIN32_LEAN_AND_MEAN)
+  if(ENABLE_PDB_RELEASE)
+    string(APPEND CMAKE_CXX_FLAGS_RELEASE " /Zi")
+    string(APPEND CMAKE_EXE_LINKER_FLAGS_RELEASE " /DEBUG /INCREMENTAL")
+    string(APPEND CMAKE_MODULE_LINKER_FLAGS_RELEASE " /DEBUG /INCREMENTAL")
+    string(APPEND CMAKE_SHARED_LINKER_FLAGS_RELEASE " /DEBUG /INCREMENTAL")
+    string(APPEND CMAKE_STATIC_LINKER_FLAGS_RELEASE " /DEBUG /INCREMENTAL")
+  endif(ENABLE_PDB_RELEASE)
 endif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
 # GCC configuration
