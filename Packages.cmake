@@ -80,7 +80,10 @@ function(define_package)
 
   # Package configuration
 
-  include(InstallRequiredSystemLibraries)
+  get_cmake_property(CPACK_COMPONENTS_ALL COMPONENTS)
+  list(REMOVE_ITEM CPACK_COMPONENTS_ALL "Debugging")
+
+  # include(InstallRequiredSystemLibraries)
   include(CPack)
 
 endfunction(define_package)
