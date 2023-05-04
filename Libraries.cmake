@@ -75,3 +75,68 @@ function(find_package_library NAME LIBNAME LIBPATH_D LIBPATH_R)
   set(${NAME}_${LIBNAME}_LIB_R ${${NAME}_${LIBNAME}_LIB_R} CACHE INTERNAL "${NAME}::${LIBNAME} release library")
 
 endfunction(find_package_library NAME LIBNAME LIBPATH_D LIBPATH_R)
+
+################################################################################
+# Package unique libraries finder
+################################################################################
+
+function(find_package_unique_libraries NAME LIBNAMES INCPATH LIBPATH)
+
+  # libfind_pkg_check_modules()
+
+  find_path(${NAME}_INCLUDE_DIR
+    NAMES ${INCPATH}
+    PATHS ${${NAME}_ROOT} ${${NAME}_PKGCONF_INCLUDE_DIRS})
+
+  foreach(LIBNAME IN LISTS LIBNAMES)
+    find_package_unique_library(${NAME} ${LIBNAME} ${LIBPATH})
+    list(APPEND ${NAME}_LIBRARY "${NAME}::${LIBNAME}")
+  endforeach(LIBNAME IN LISTS LIBNAMES)
+
+  set(${NAME}_PROCESS_INCLUDES ${NAME}_INCLUDE_DIR)
+  set(${NAME}_PROCESS_LIBS ${NAME}_LIBRARY)
+
+  libfind_process(${NAME})
+
+  get_filename_component(${NAME}_DIR ${${NAME}_ROOT} ABSOLUTE)
+  set(${NAME}_FOUND TRUE PARENT_SCOPE)
+  set(${NAME}_DIR ${${NAME}_DIR} PARENT_SCOPE)
+  set(${NAME}_INCLUDE_DIR ${${NAME}_INCLUDE_DIR} PARENT_SCOPE)
+  set(${NAME}_LIBRARIES ${${NAME}_LIBRARIES} PARENT_SCOPE)
+
+endfunction(find_package_unique_libraries NAME LIBNAMES INCPATH LIBPATH)
+
+################################################################################
+# Package unique library finder
+################################################################################
+
+function(find_package_unique_library NAME LIBNAME LIBPATH)
+
+  find_library(${NAME}_${LIBNAME}_LIB
+    NAMES ${LIBNAME}.lib
+    PATHS ${${NAME}_ROOT}/${LIBPATH} ${${NAME}_PKGCONF_LIBRARY_DIRS})
+
+  get_filename_component(${NAME}_${LIBNAME}_LIBPATH ${${NAME}_${LIBNAME}_LIB} DIRECTORY)
+
+  add_library(${NAME}::${LIBNAME} SHARED IMPORTED)
+
+  set_target_properties(${NAME}::${LIBNAME} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${${NAME}_INCLUDE_DIR})
+
+  if(${NAME}_${LIBNAME}_LIB)
+    set_property(TARGET ${NAME}::${LIBNAME} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG RELEASE MINSIZEREL RELWITHDEBINFO)
+    set_target_properties(${NAME}::${LIBNAME} PROPERTIES
+      IMPORTED_IMPLIB_DEBUG ${${NAME}_${LIBNAME}_LIB}
+      IMPORTED_IMPLIB_RELEASE ${${NAME}_${LIBNAME}_LIB}
+      IMPORTED_IMPLIB_MINSIZEREL ${${NAME}_${LIBNAME}_LIB}
+      IMPORTED_IMPLIB_RELWITHDEBINFO ${${NAME}_${LIBNAME}_LIB}
+      IMPORTED_LOCATION_DEBUG ${${NAME}_${LIBNAME}_LIBPATH}/${LIBNAME}.dll
+      IMPORTED_LOCATION_RELEASE ${${NAME}_${LIBNAME}_LIBPATH}/${LIBNAME}.dll
+      IMPORTED_LOCATION_MINSIZEREL ${${NAME}_${LIBNAME}_LIBPATH}/${LIBNAME}.dll
+      IMPORTED_LOCATION_RELWITHDEBINFO ${${NAME}_${LIBNAME}_LIBPATH}/${LIBNAME}.dll)
+  else(${NAME}_${LIBNAME}_LIB)
+    message(DEBUG "Could not find unique library ${NAME}::${LIBNAME}")
+  endif(${NAME}_${LIBNAME}_LIB)
+
+  set(${NAME}_${LIBNAME}_LIB ${${NAME}_${LIBNAME}_LIB} CACHE INTERNAL "${NAME}::${LIBNAME} unique library")
+
+endfunction(find_package_unique_library NAME LIBNAME LIBPATH)
