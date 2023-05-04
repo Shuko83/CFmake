@@ -91,6 +91,7 @@ Les options suivantes sont disponibles.
 | `ENABLE_DOCUMENTATION_FULL` | `FALSE` | Documentation complète _(développeur)_ |
 | `ENABLE_PDB_COPY`           | `FALSE` | Copie des fichiers PDB des dépendances |
 | `ENABLE_PDB_INSTALL`        | `TRUE`  | Installation des fichiers PDB          |
+| `ENABLE_PDB_RELEASE`        | `TRUE`  | Génération des fichiers PDB `RELEASE`  |
 
 ### Définition de la construction
 
@@ -232,7 +233,7 @@ Le module [`Libraries`](Libraries.cmake) met à disposition un ensemble de fonct
 La fonction `find_package_libraries` permet de rechercher les bibliothèques d'un paquetage et d'en définir les variables associées.
 
 ```cmake
-find_package_libraries(<name> <libnames> <include_path> <lib_path_debug> <lib_path_release)
+find_package_libraries(<name> <libnames> <include_path> <lib_path_debug> <lib_path_release>)
 ```
 
 | Nom                | Description                   |
@@ -250,7 +251,7 @@ Les variables `<name>_FOUND`, `<name>_DIR`, `<name>_INCLUDE_DIR` et `<name>_LIBR
 La fonction `find_package_library` permet de rechercher une bibliothèque d'un paquetage et de l'ajouter aux cibles connues.
 
 ```cmake
-find_package_library(<name> <libname> <include_path> <lib_path_debug> <lib_path_release)
+find_package_library(<name> <libname> <include_path> <lib_path_debug> <lib_path_release>)
 ```
 
 | Nom                | Description                   |
@@ -260,6 +261,40 @@ find_package_library(<name> <libname> <include_path> <lib_path_debug> <lib_path_
 | `include_path`     | Chemin de l'entête principal  |
 | `lib_path_debug`   | Chemin des binaires `DEBUG`   |
 | `lib_path_release` | Chemin des binaires `RELEASE` |
+
+La cible `<name>::<libname>` est définie et ajoutée aux cibles connues.
+
+### Fonction `find_package_unique_libraries`
+
+La fonction `find_package_unique_libraries` permet de rechercher les bibliothèques d'un paquetage et d'en définir les variables associées.
+
+```cmake
+find_package_unique_libraries(<name> <libnames> <include_path> <lib_path>)
+```
+
+| Nom            | Description                  |
+|----------------|------------------------------|
+| `name`         | Nom du paquetage             |
+| `libnames`     | Noms des bibliothèques       |
+| `include_path` | Chemin de l'entête principal |
+| `lib_path`     | Chemin des binaires          |
+
+Les variables `<name>_FOUND`, `<name>_DIR`, `<name>_INCLUDE_DIR` et `<name>_LIBRARIES` sont définies en sortie de l'appel de la fonction.
+
+### Fonction `find_package_unique_library`
+
+La fonction `find_package_unique_library` permet de rechercher une bibliothèque d'un paquetage et de l'ajouter aux cibles connues.
+
+```cmake
+find_package_unique_library(<name> <libname> <include_path> <lib_path>)
+```
+
+| Nom            | Description                  |
+|----------------|------------------------------|
+| `name`         | Nom du paquetage             |
+| `libname`      | Nom de la bibliothèque       |
+| `include_path` | Chemin de l'entête principal |
+| `lib_path`     | Chemin des binaires          |
 
 La cible `<name>::<libname>` est définie et ajoutée aux cibles connues.
 
