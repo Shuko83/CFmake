@@ -368,6 +368,17 @@ function(get_dependency_dlpxpi NAME)
     set(HASP_ROOT "${CMAKE_PREFIX_PATH}/3rdParty/HASP-8.4" PARENT_SCOPE)
   endif(NAME STREQUAL "HASP")
 
+  # CrashRpt
+  if(NAME STREQUAL "CrashRpt")
+    define_dependency(
+      NAME "CrashRpt"
+      DIRNAME "CrashRpt-2.0.2"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/3rdParty"
+      REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/CrashRpt/2.0.2/CrashRpt-2.0.2.zip"
+      FIND_PATH "${CMAKE_PREFIX_PATH}/3rdParty/CrashRpt-2.0.2/Delivery"
+      CREATEDIR)
+  endif(NAME STREQUAL "CrashRpt")
+
   # Tracy
   if(NAME STREQUAL "Tracy" AND ENABLE_TELEMETRY)
     define_dependency(
