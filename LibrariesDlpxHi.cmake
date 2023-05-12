@@ -63,6 +63,8 @@ function(find_dlpxhi_package_library_1 NAME PATTERN LIBNAME LIBPATH_D LIBPATH_R)
     set_target_properties(${NAME}::${LIBNAME_S} PROPERTIES
       IMPORTED_IMPLIB_DEBUG ${${NAME}_${LIBNAME_S}_LIB_D}
       IMPORTED_LOCATION_DEBUG ${${NAME}_${LIBNAME_S}_LIBPATH_D}/${LIBNAME}d.dll)
+  else(${NAME}_${LIBNAME_S}_LIB_D)
+    message(DEBUG "Could not find debug library ${NAME}::${LIBNAME_S}")
   endif(${NAME}_${LIBNAME_S}_LIB_D)
 
   if(${NAME}_${LIBNAME_S}_LIB_R)
@@ -74,6 +76,8 @@ function(find_dlpxhi_package_library_1 NAME PATTERN LIBNAME LIBPATH_D LIBPATH_R)
       IMPORTED_LOCATION_RELEASE ${${NAME}_${LIBNAME_S}_LIBPATH_R}/${LIBNAME}.dll
       IMPORTED_LOCATION_MINSIZEREL ${${NAME}_${LIBNAME_S}_LIBPATH_R}/${LIBNAME}.dll
       IMPORTED_LOCATION_RELWITHDEBINFO ${${NAME}_${LIBNAME_S}_LIBPATH_R}/${LIBNAME}.dll)
+  else(${NAME}_${LIBNAME_S}_LIB_R)
+    message(DEBUG "Could not find release library ${NAME}::${LIBNAME_S}")
   endif(${NAME}_${LIBNAME_S}_LIB_R)
 
   set(${NAME}_${LIBNAME_S}_LIB_D ${${NAME}_${LIBNAME_S}_LIB_D} CACHE INTERNAL "${NAME}::${LIBNAME_S} debug library")
@@ -109,6 +113,8 @@ function(find_dlpxhi_package_library_2 NAME PATTERN LIBNAME LIBPATH_D LIBPATH_R)
     set_target_properties(${NAME}::${LIBNAME_S} PROPERTIES
       IMPORTED_IMPLIB_DEBUG ${${NAME}_${LIBNAME_S}_LIB_D}
       IMPORTED_LOCATION_DEBUG ${${NAME}_${LIBNAME_S}_LIBPATH_D}/${LIBNAME}d.dll)
+  else(${NAME}_${LIBNAME_S}_LIB_D)
+    message(DEBUG "Could not find debug library ${NAME}::${LIBNAME_S}")
   endif(${NAME}_${LIBNAME_S}_LIB_D)
 
   if(${NAME}_${LIBNAME_S}_LIB_R)
@@ -120,6 +126,8 @@ function(find_dlpxhi_package_library_2 NAME PATTERN LIBNAME LIBPATH_D LIBPATH_R)
       IMPORTED_LOCATION_RELEASE ${${NAME}_${LIBNAME_S}_LIBPATH_R}/${LIBNAME}.dll
       IMPORTED_LOCATION_MINSIZEREL ${${NAME}_${LIBNAME_S}_LIBPATH_R}/${LIBNAME}.dll
       IMPORTED_LOCATION_RELWITHDEBINFO ${${NAME}_${LIBNAME_S}_LIBPATH_R}/${LIBNAME}.dll)
+  else(${NAME}_${LIBNAME_S}_LIB_R)
+    message(DEBUG "Could not find release library ${NAME}::${LIBNAME_S}")
   endif(${NAME}_${LIBNAME_S}_LIB_R)
 
   set(${NAME}_${LIBNAME_S}_LIB_D ${${NAME}_${LIBNAME_S}_LIB_D} CACHE INTERNAL "${NAME}::${LIBNAME_S} debug library")

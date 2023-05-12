@@ -45,21 +45,18 @@ set(ProtocolsDLPXPIL11_VERSION "develop" CACHE STRING "Protocols.DLPX-PI.L11 sub
 set(ProtocolsDLPXPIL16_VERSION "develop" CACHE STRING "Protocols.DLPX-PI.L16 sub-project version")
 set(ProtocolsDLPXPIL22_VERSION "develop" CACHE STRING "Protocols.DLPX-PI.L22 sub-project version")
 
-set(L11_EDITION "7" CACHE STRING "L11 edition")
-set(L16_EDITION "7" CACHE STRING "L16 edition")
-set(L22_EDITION "5" CACHE STRING "L22 edition")
+set(L11_EDITION "8" CACHE STRING "L11 edition")
+set(L16_EDITION "8" CACHE STRING "L16 edition")
+set(L22_EDITION "6" CACHE STRING "L22 edition")
 
-set(CODX_CORE_VERSION "0.10.4" CACHE STRING "CODX Core version")
-set(CODX_L11_VERSION "5.1.16" CACHE STRING "CODX L11 version")
-set(CODX_L16_VERSION "5.1.16" CACHE STRING "CODX L16 version")
-set(CODX_L22_VERSION "5.1.16" CACHE STRING "CODX L22 version")
-set(CODX_L11_BUILD "32" CACHE STRING "CODX L11 build")
-set(CODX_L16_BUILD "45" CACHE STRING "CODX L16 build")
-set(CODX_L22_BUILD "23" CACHE STRING "CODX L22 build")
+set(CODX_CORE_VERSION "1.4.0" CACHE STRING "CODX Core version")
+set(CODX_L11_VERSION "10.3.9.060800" CACHE STRING "CODX L11 version")
+set(CODX_L16_VERSION "10.3.9.060800" CACHE STRING "CODX L16 version")
+set(CODX_L22_VERSION "10.3.9.060701" CACHE STRING "CODX L22 version")
 
-set(DLPX_HI_VERSION "3.1.21" CACHE STRING "DLPX-HI version")
-set(DLPX_HI_COMMON_VERSION "3.1.17" CACHE STRING "DLPX-HI Common version")
-set(DLPX_HI_CODX_VERSION "3.1.12" CACHE STRING "DLPX-HI CODX version")
+set(DLPX_HI_VERSION "3.2.4" CACHE STRING "DLPX-HI version")
+set(DLPX_HI_COMMON_VERSION "3.2.2" CACHE STRING "DLPX-HI Common version")
+set(DLPX_HI_CODX_VERSION "10.3.9.030204" CACHE STRING "DLPX-HI CODX version")
 
 set(Qt5_VERSION "5.9.6" CACHE INTERNAL "Qt5 version")
 set(Qt5_ARCH "msvc2015_64" CACHE INTERNAL "Qt5 architecture")
@@ -184,8 +181,8 @@ function(get_dependency_dlpxpi NAME)
       NAME "CodxL11"
       DIRNAME "L11ED${L11_EDITION}"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols.CODX.L11ED${L11_EDITION}/${CODX_L11_VERSION}/CODX.L11_ED${L11_EDITION}.${CODX_L11_VERSION}.${CODX_L11_BUILD}.cpp11.zip"
-      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L11ED${L11_EDITION}/Delivery"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols/CODX/L11/ED${L11_EDITION}/${CODX_L11_VERSION}/internal/L11_ED${L11_EDITION}_${CODX_L11_VERSION}_internal_%TARGET%-%ARCH%_Delivery.zip"
+      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L11ED${L11_EDITION}"
       CREATEDIR)
   endif(NAME STREQUAL "CodxL11")
 
@@ -195,8 +192,8 @@ function(get_dependency_dlpxpi NAME)
       NAME "CodxL16"
       DIRNAME "L16ED${L16_EDITION}"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols.CODX.L16ED${L16_EDITION}/${CODX_L16_VERSION}/CODX.L16_ED${L16_EDITION}.${CODX_L16_VERSION}.${CODX_L16_BUILD}.cpp11.zip"
-      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L16ED${L16_EDITION}/Delivery"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols/CODX/L16/ED${L16_EDITION}/${CODX_L16_VERSION}/internal/L16_ED${L16_EDITION}_${CODX_L16_VERSION}_internal_%TARGET%-%ARCH%_Delivery.zip"
+      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L16ED${L16_EDITION}"
       CREATEDIR)
   endif(NAME STREQUAL "CodxL16")
 
@@ -206,8 +203,8 @@ function(get_dependency_dlpxpi NAME)
       NAME "CodxL22"
       DIRNAME "L22ED${L22_EDITION}"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols.CODX.L22ED${L22_EDITION}/${CODX_L22_VERSION}/CODX.L22_ED${L22_EDITION}.${CODX_L22_VERSION}.${CODX_L22_BUILD}.cpp11.zip"
-      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L22ED${L22_EDITION}/Delivery"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols/CODX/L22/ED${L22_EDITION}/${CODX_L22_VERSION}/internal/L22_ED${L22_EDITION}_${CODX_L22_VERSION}_internal_%TARGET%-%ARCH%_Delivery.zip"
+      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L22ED${L22_EDITION}"
       CREATEDIR)
   endif(NAME STREQUAL "CodxL22")
 
@@ -273,7 +270,7 @@ function(get_dependency_dlpxpi NAME)
     define_dependency(
       NAME "LogX"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LogX/1.0.0/LogX_1.0.0.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LogX/1.3.4/LogX_1.3.4.zip"
       CREATEDIR)
   endif(NAME STREQUAL "LogX")
 
@@ -318,9 +315,9 @@ function(get_dependency_dlpxpi NAME)
   if(NAME STREQUAL "VortexOpenSplice")
     define_dependency(
       NAME "VortexOpenSplice"
-      DIRNAME "VortexOpenSplice-6.10.4p1"
+      DIRNAME "VortexOpenSplice-6.11.2p5"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/3rdParty"
-      REMOTE_PATH "${ARTIFACTORY_URL}/customLib/VortexOpenSplice/6.10.4p1/%TARGET%/%ARCH%/VortexOpenSplice_6.10.4p1_%TARGET%_%ARCH%.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/VortexOpenSplice/6.11.2p5/%TARGET%/%ARCH%/VortexOpenSplice_6.11.2p5_%TARGET%_%ARCH%.zip"
       CREATEDIR)
   endif(NAME STREQUAL "VortexOpenSplice")
 
@@ -420,32 +417,21 @@ function(get_dependency_components_dlpxpi NAME COMPONENTS)
           NAME "DlpxHiDlpxStates"
           DIRNAME "DlpxStates"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/DlpxStates_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/LOC/ED${L16_EDITION}/${DLPX_HI_VERSION}/DlpxStates_LOCED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
         list(APPEND ${NAME}_LIBRARIES "${DlpxHiDlpxStates_LIBRARIES}")
       endif(COMPONENT STREQUAL "DlpxStates")
 
-      # DLPX-HI MDlpConsolidatedL16ED${L16_EDITION}
-      if(COMPONENT STREQUAL "MDlpConsolidatedL16ED${L16_EDITION}")
+      # DLPX-HI MDlpConsolidated
+      if(COMPONENT STREQUAL "MDlpConsolidated")
         define_dependency(
-          NAME "DlpxHiMDlpConsolidatedL16ED${L16_EDITION}"
-          DIRNAME "MDlpConsolidatedL16ED${L16_EDITION}"
+          NAME "DlpxHiMDlpConsolidated"
+          DIRNAME "MDlpConsolidated"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/MDlpConsolidatedL16ED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L16/ED${L16_EDITION}/${DLPX_HI_VERSION}/MDlpConsolidated_L16ED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiMDlpConsolidatedL16ED${L16_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "MDlpConsolidatedL16ED${L16_EDITION}")
-
-      # DLPX-HI MDlpManager
-      if(COMPONENT STREQUAL "MDlpManager")
-        define_dependency(
-          NAME "DlpxHiMDlpManager"
-          DIRNAME "MDlpManager"
-          OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/MDlpManager_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
-          CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiMDlpManager_LIBRARIES}")
-      endif(COMPONENT STREQUAL "MDlpManager")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiMDlpConsolidated_LIBRARIES}")
+      endif(COMPONENT STREQUAL "MDlpConsolidated")
 
       # DLPX-HI MDlpSettings
       if(COMPONENT STREQUAL "MDlpSettings")
@@ -453,7 +439,7 @@ function(get_dependency_components_dlpxpi NAME COMPONENTS)
           NAME "DlpxHiMDlpSettings"
           DIRNAME "MDlpSettings"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/MDlpSettings_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/LOC/ED${L16_EDITION}/${DLPX_HI_VERSION}/MDlpSettings_LOCED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
         list(APPEND ${NAME}_LIBRARIES "${DlpxHiMDlpSettings_LIBRARIES}")
       endif(COMPONENT STREQUAL "MDlpSettings")
@@ -464,109 +450,109 @@ function(get_dependency_components_dlpxpi NAME COMPONENTS)
           NAME "DlpxHiMDlpSurv"
           DIRNAME "MDlpSurv"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/MDlpSurv_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/LOC/ED${L16_EDITION}/${DLPX_HI_VERSION}/MDlpSurv_LOCED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
         list(APPEND ${NAME}_LIBRARIES "${DlpxHiMDlpSurv_LIBRARIES}")
       endif(COMPONENT STREQUAL "MDlpSurv")
 
-      # DLPX-HI TnpL11ED${L11_EDITION}
-      if(COMPONENT STREQUAL "TnpL11ED${L11_EDITION}")
+      # DLPX-HI TnpL11
+      if(COMPONENT STREQUAL "TnpL11")
         define_dependency(
-          NAME "DlpxHiTnpL11ED${L11_EDITION}"
-          DIRNAME "TnpL11ED${L11_EDITION}"
+          NAME "DlpxHiTnpL11"
+          DIRNAME "TnpL11"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/TnpL11ED${L11_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L11/ED${L11_EDITION}/${DLPX_HI_VERSION}/TnpL11_L11ED${L11_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpL11ED${L11_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "TnpL11ED${L11_EDITION}")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpL11_LIBRARIES}")
+      endif(COMPONENT STREQUAL "TnpL11")
 
-      # DLPX-HI TnpL16ED${L16_EDITION}
-      if(COMPONENT STREQUAL "TnpL16ED${L16_EDITION}")
+      # DLPX-HI TnpL16
+      if(COMPONENT STREQUAL "TnpL16")
         define_dependency(
-          NAME "DlpxHiTnpL16ED${L16_EDITION}"
-          DIRNAME "TnpL16ED${L16_EDITION}"
+          NAME "DlpxHiTnpL16"
+          DIRNAME "TnpL16"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/TnpL16ED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L16/ED${L16_EDITION}/${DLPX_HI_VERSION}/TnpL16_L16ED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpL16ED${L16_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "TnpL16ED${L16_EDITION}")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpL16_LIBRARIES}")
+      endif(COMPONENT STREQUAL "TnpL16")
 
-      # DLPX-HI TnpL22ED${L22_EDITION}
-      if(COMPONENT STREQUAL "TnpL22ED${L22_EDITION}")
+      # DLPX-HI TnpL22
+      if(COMPONENT STREQUAL "TnpL22")
         define_dependency(
-          NAME "DlpxHiTnpL22ED${L22_EDITION}"
-          DIRNAME "TnpL22ED${L22_EDITION}"
+          NAME "DlpxHiTnpL22"
+          DIRNAME "TnpL22"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/TnpL22ED${L22_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L22/ED${L22_EDITION}/${DLPX_HI_VERSION}/TnpL22_L22ED${L22_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpL22ED${L22_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "TnpL22ED${L22_EDITION}")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpL22_LIBRARIES}")
+      endif(COMPONENT STREQUAL "TnpL22")
 
-      # DLPX-HI TnpSettingsL11ED${L11_EDITION}
-      if(COMPONENT STREQUAL "TnpSettingsL11ED${L11_EDITION}")
+      # DLPX-HI TnpSettingsL11
+      if(COMPONENT STREQUAL "TnpSettingsL11")
         define_dependency(
-          NAME "DlpxHiTnpSettingsL11ED${L11_EDITION}"
-          DIRNAME "TnpSettingsL11ED${L11_EDITION}"
+          NAME "DlpxHiTnpSettingsL11"
+          DIRNAME "TnpSettingsL11"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/TnpSettingsL11ED${L11_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L11/ED${L11_EDITION}/${DLPX_HI_VERSION}/TnpSettingsL11_L11ED${L11_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSettingsL11ED${L11_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "TnpSettingsL11ED${L11_EDITION}")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSettingsL11_LIBRARIES}")
+      endif(COMPONENT STREQUAL "TnpSettingsL11")
 
-      # DLPX-HI TnpSettingsL16ED${L16_EDITION}
-      if(COMPONENT STREQUAL "TnpSettingsL16ED${L16_EDITION}")
+      # DLPX-HI TnpSettingsL16
+      if(COMPONENT STREQUAL "TnpSettingsL16")
         define_dependency(
-          NAME "DlpxHiTnpSettingsL16ED${L16_EDITION}"
-          DIRNAME "TnpSettingsL16ED${L16_EDITION}"
+          NAME "DlpxHiTnpSettingsL16"
+          DIRNAME "TnpSettingsL16"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/TnpSettingsL16ED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L16/ED${L16_EDITION}/${DLPX_HI_VERSION}/TnpSettingsL16_L16ED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSettingsL16ED${L16_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "TnpSettingsL16ED${L16_EDITION}")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSettingsL16_LIBRARIES}")
+      endif(COMPONENT STREQUAL "TnpSettingsL16")
 
-      # DLPX-HI TnpSettingsL22ED${L22_EDITION}
-      if(COMPONENT STREQUAL "TnpSettingsL22ED${L22_EDITION}")
+      # DLPX-HI TnpSettingsL22
+      if(COMPONENT STREQUAL "TnpSettingsL22")
         define_dependency(
-          NAME "DlpxHiTnpSettingsL22ED${L22_EDITION}"
-          DIRNAME "TnpSettingsL22ED${L22_EDITION}"
+          NAME "DlpxHiTnpSettingsL22"
+          DIRNAME "TnpSettingsL22"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/TnpSettingsL22ED${L22_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L22/ED${L22_EDITION}/${DLPX_HI_VERSION}/TnpSettingsL22_L22ED${L22_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSettingsL22ED${L22_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "TnpSettingsL22ED${L22_EDITION}")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSettingsL22_LIBRARIES}")
+      endif(COMPONENT STREQUAL "TnpSettingsL22")
 
-      # DLPX-HI TnpSurvL11ED${L11_EDITION}
-      if(COMPONENT STREQUAL "TnpSurvL11ED${L11_EDITION}")
+      # DLPX-HI TnpSurvL11
+      if(COMPONENT STREQUAL "TnpSurvL11")
         define_dependency(
-          NAME "DlpxHiTnpSurvL11ED${L11_EDITION}"
-          DIRNAME "TnpSurvL11ED${L11_EDITION}"
+          NAME "DlpxHiTnpSurvL11"
+          DIRNAME "TnpSurvL11"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/TnpSurvL11ED${L11_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L11/ED${L11_EDITION}/${DLPX_HI_VERSION}/TnpSurvL11_L11ED${L11_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSurvL11ED${L11_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "TnpSurvL11ED${L11_EDITION}")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSurvL11_LIBRARIES}")
+      endif(COMPONENT STREQUAL "TnpSurvL11")
 
-      # DLPX-HI TnpSurvL16ED${L16_EDITION}
-      if(COMPONENT STREQUAL "TnpSurvL16ED${L16_EDITION}")
+      # DLPX-HI TnpSurvL16
+      if(COMPONENT STREQUAL "TnpSurvL16")
         define_dependency(
-          NAME "DlpxHiTnpSurvL16ED${L16_EDITION}"
-          DIRNAME "TnpSurvL16ED${L16_EDITION}"
+          NAME "DlpxHiTnpSurvL16"
+          DIRNAME "TnpSurvL16"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/TnpSurvL16ED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L16/ED${L16_EDITION}/${DLPX_HI_VERSION}/TnpSurvL16_L16ED${L16_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSurvL16ED${L16_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "TnpSurvL16ED${L16_EDITION}")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSurvL16_LIBRARIES}")
+      endif(COMPONENT STREQUAL "TnpSurvL16")
 
-      # DLPX-HI TnpSurvL22ED${L22_EDITION}
-      if(COMPONENT STREQUAL "TnpSurvL22ED${L22_EDITION}")
+      # DLPX-HI TnpSurvL22
+      if(COMPONENT STREQUAL "TnpSurvL22")
         define_dependency(
-          NAME "DlpxHiTnpSurvL22ED${L22_EDITION}"
-          DIRNAME "TnpSurvL22ED${L22_EDITION}"
+          NAME "DlpxHiTnpSurvL22"
+          DIRNAME "TnpSurvL22"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/TnpSurvL22ED${L22_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L22/ED${L22_EDITION}/${DLPX_HI_VERSION}/TnpSurvL22_L22ED${L22_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
-        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSurvL22ED${L22_EDITION}_LIBRARIES}")
-      endif(COMPONENT STREQUAL "TnpSurvL22ED${L22_EDITION}")
+        list(APPEND ${NAME}_LIBRARIES "${DlpxHiTnpSurvL22_LIBRARIES}")
+      endif(COMPONENT STREQUAL "TnpSurvL22")
 
       # DLPX-HI ZTA
       if(COMPONENT STREQUAL "ZTA")
@@ -574,7 +560,7 @@ function(get_dependency_components_dlpxpi NAME COMPONENTS)
           NAME "DlpxHiZTA"
           DIRNAME "ZTA"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/${DLPX_HI_VERSION}/ZTA_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Models/L11/ED${L11_EDITION}/${DLPX_HI_VERSION}/ZTA_L11ED${L11_EDITION}_${DLPX_HI_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
           CREATEDIR)
         list(APPEND ${NAME}_LIBRARIES "${DlpxHiZTA_LIBRARIES}")
       endif(COMPONENT STREQUAL "ZTA")
@@ -585,8 +571,8 @@ function(get_dependency_components_dlpxpi NAME COMPONENTS)
           NAME "DlpxHiCODX"
           DIRNAME "DlpxHiCODX"
           OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI"
-          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.CODX.LOCED2/${DLPX_HI_CODX_VERSION}/DlpxHiCodx_LOCED2_${DLPX_HI_CODX_VERSION}_%TARGET%_%ARCH%_Codx3.zip"
-          FIND_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI/DlpxHiCODX/Delivery"
+          REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.CODX.LOC/ED${L16_EDITION}/${DLPX_HI_CODX_VERSION}/DlpxHiCodx_LOC_ED${L16_EDITION}_${DLPX_HI_CODX_VERSION}_%TARGET%_%ARCH%_Delivery.zip"
+          FIND_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-HI/DlpxHiCODX"
           CREATEDIR)
         list(APPEND ${NAME}_LIBRARIES "${DlpxHiCODX_LIBRARIES}")
       endif(COMPONENT STREQUAL "CODX")
