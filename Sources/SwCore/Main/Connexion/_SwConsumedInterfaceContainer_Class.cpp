@@ -18,8 +18,8 @@ _SwConsumedInterfaceContainer_Class::_SwConsumedInterfaceContainer_Class(SwInter
 {
 	_parent = parent;
 	_name = QString();
-	QString _provider_name = QString();
-	QString _type = QString();
+	_provider_name = QString();
+	_type = QString();
 	_isAvailable = false;
 	_hhandle = NULL;
 	_provider_parent = NULL;
