@@ -49,7 +49,8 @@ set(L11_EDITION "8" CACHE STRING "L11 edition")
 set(L16_EDITION "8" CACHE STRING "L16 edition")
 set(L22_EDITION "6" CACHE STRING "L22 edition")
 
-set(CODX_CORE_VERSION "1.4.0" CACHE STRING "CODX Core version")
+set(CODX_CORE_VERSION "1.6.2" CACHE STRING "CODX Core version")
+set(CODX_GENERATOR_VERSION "10.3.9" CACHE STRING "CODX Generator version")
 set(CODX_L11_VERSION "10.3.9.060800" CACHE STRING "CODX L11 version")
 set(CODX_L16_VERSION "10.3.9.060800" CACHE STRING "CODX L16 version")
 set(CODX_L22_VERSION "10.3.9.060701" CACHE STRING "CODX L22 version")
@@ -57,6 +58,7 @@ set(CODX_L22_VERSION "10.3.9.060701" CACHE STRING "CODX L22 version")
 set(DLPX_HI_VERSION "3.2.4" CACHE STRING "DLPX-HI version")
 set(DLPX_HI_COMMON_VERSION "3.2.2" CACHE STRING "DLPX-HI Common version")
 set(DLPX_HI_CODX_VERSION "10.3.9.030204" CACHE STRING "DLPX-HI CODX version")
+set(DLPX_HI_GENERATOR_VERSION "3.2.3" CACHE STRING "DLPX-HI Generator version")
 
 set(Qt5_VERSION "5.9.6" CACHE INTERNAL "Qt5 version")
 set(Qt5_ARCH "msvc2015_64" CACHE INTERNAL "Qt5 architecture")
@@ -165,6 +167,24 @@ function(get_dependency_dlpxpi NAME)
       REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%/%ARCH%/Frameworks.CODX.Core.ConversionUtils_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
       CREATEDIR)
   endif(NAME STREQUAL "CxConversionUtils")
+
+  # CODX CxLicensing
+  if(NAME STREQUAL "CxLicensing")
+    define_dependency(
+      NAME "CxLicensing"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Frameworks/CODX/Core"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%/%ARCH%/Frameworks.CODX.Core.CxLicensing_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      CREATEDIR)
+  endif(NAME STREQUAL "CxLicensing")
+
+  # CODX CxMessagesUtils
+  if(NAME STREQUAL "CxMessagesUtils")
+    define_dependency(
+      NAME "CxMessagesUtils"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Frameworks/CODX/Core"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%/%ARCH%/Frameworks.CODX.Core.MessagesUtils_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      CREATEDIR)
+  endif(NAME STREQUAL "CxMessagesUtils")
 
   # CODX CxUtils
   if(NAME STREQUAL "CxUtils")
@@ -282,6 +302,28 @@ function(get_dependency_dlpxpi NAME)
       REMOTE_PATH "${ARTIFACTORY_URL}/snapshot/DLPX-PI.SVN.Exports/Libraries.ReadOLM_1.1.0.zip"
       CREATEDIR)
   endif(NAME STREQUAL "ReadOLM")
+
+  # CodxGenerator
+  if(NAME STREQUAL "CodxGenerator")
+    download_dependency(
+      DIRNAME "CodxGenerator"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Products/CODX"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.MessagesGenerator/${CODX_GENERATOR_VERSION}/MessageGenerator_${CODX_GENERATOR_VERSION}.zip"
+      CREATEDIR)
+    set(CodxGenerator_DIR "${CMAKE_PREFIX_PATH}/Products/CODX/CodxGenerator/release" PARENT_SCOPE)
+  endif(NAME STREQUAL "CodxGenerator")
+
+  # DlpxHiGenerator
+  if(NAME STREQUAL "DlpxHiGenerator")
+    download_dependency(
+      DIRNAME "DlpxHiGenerator"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Products/DLPX-HI"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Generator/${DLPX_HI_GENERATOR_VERSION}/DlpxHiGenerator_${DLPX_HI_GENERATOR_VERSION}_c_%ARCH%.zip"
+      ARCHS "x64"
+      TARGETS "2015"
+      CREATEDIR)
+    set(DlpxHiGenerator_DIR "${CMAKE_PREFIX_PATH}/Products/DLPX-HI/DlpxHiGenerator" PARENT_SCOPE)
+  endif(NAME STREQUAL "DlpxHiGenerator")
 
   # Qt5
   if(NAME STREQUAL "Qt5")
