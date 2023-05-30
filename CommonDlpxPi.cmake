@@ -281,7 +281,7 @@ function(get_dependency_dlpxpi NAME)
     define_dependency(
       NAME "LnkMgrFwk"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/INM"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LnkMgrFwk/0.0.5.0/%TARGET%/%ARCH%/LnkMgrFwk_0.0.5.0_%TARGET%-%ARCH%.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LnkMgrFwk/1.0.2.0/%TARGET%/%ARCH%/LnkMgrFwk_1.0.2.0_%TARGET%-%ARCH%.zip"
       CREATEDIR)
   endif(NAME STREQUAL "LinkManagerFramework")
 
