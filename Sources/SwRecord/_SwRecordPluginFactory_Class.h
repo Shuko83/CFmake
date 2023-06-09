@@ -53,15 +53,17 @@ public:
     void Liberate();
     /** @brief Acces a la version du plugin */
     QString GetPluginVersion();
-	/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/
-	virtual double GetPluginCompilationDate();
+	/*! \brief Acces a la date de compilation du plugin */
+    QDateTime GetPluginCompilationDate() override;	
+    /*! \brief Acces au nom du plugin*/
+    QString GetPluginName() const override;
     //---------------------------------------------------------------------
     // Interface ISwServicesManager_Listener
     //---------------------------------------------------------------------
     /*! \brief sur ajout d'un service */
-    virtual void OnRegisterService(ISwService * service);            
+    void OnRegisterService(ISwService * service) override;
     /*! \brief sur suppression d'une  interface */
-    virtual void OnUnregisterService(ISwService * service);            
+    void OnUnregisterService(ISwService * service) override;
 };
 
 extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();

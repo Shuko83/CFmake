@@ -236,7 +236,7 @@ double _TimeLine::queryExecuteTime(bool * isLast)
 					}*/
 					
 
-					foreach(ISwRecordPoint * tmpRP, tmp->_recordPoints)
+					for(ISwRecordPoint * tmpRP: tmp->_recordPoints)
 					{
 						tmpRP->cleanKeys();
 					}
@@ -254,9 +254,9 @@ double _TimeLine::queryExecuteTime(bool * isLast)
 		if(_executionKeys.count() == 0)
 		{
 			//Clean ceux de la liste
-			foreach(_ExecutionKey *tmp, _tmpList)
+			for(_ExecutionKey *tmp : _tmpList)
 			{	
-				foreach(ISwRecordPoint * tmpRP, tmp->_recordPoints)
+				for(ISwRecordPoint * tmpRP : tmp->_recordPoints)
 				{
 					tmpRP->cleanKeys();
 				}

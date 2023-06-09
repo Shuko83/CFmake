@@ -260,7 +260,7 @@ void _RecordManager::removeRecordManagerListener(ISwRecordManagerListener * list
 }
 
 //-------------------------------------------------------------------------
-void _RecordManager::Initialize(double start_time,ISwExecution_Service * executor) throw (SwException) 
+void _RecordManager::Initialize(double start_time, StreamWork::SwExecution::ISwExecution_Service * executor) throw (SwException) 
 {
 	_currentTime=start_time;
 

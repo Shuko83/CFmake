@@ -53,14 +53,6 @@ namespace StreamWork
 
             /** @brief sur changement d etat*/
             virtual void OnConfigurationEditedChanged(ISwConfigurationController *);
-
-        	//---------------------------------------------------------------------
-        	// Interface ISwAction
-        	//---------------------------------------------------------------------
-        	
-            /*! \brief Renvoie le Action
-            \return le Action */
-			virtual QAction & GetAction() ;
         
         protected:
             virtual void onActionActivated();

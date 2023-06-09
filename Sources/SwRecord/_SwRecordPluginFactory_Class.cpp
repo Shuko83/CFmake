@@ -15,6 +15,7 @@
 #include "_RecordPoint.h"
 #include "_ReplayManager.h"
 #include "_SwRecordDataCodecDefaultFactory.h"
+#include "info_SwRecord.h"
 
 /** @brief Constructeur */
 _SwRecordPluginFactory_Class::_SwRecordPluginFactory_Class():SwPluginFactory_Class() {
@@ -106,7 +107,7 @@ void _SwRecordPluginFactory_Class::OnUnregisterService(ISwService * service) {
 
 }
 
-double _SwRecordPluginFactory_Class::GetPluginCompilationDate(){	
+QDateTime _SwRecordPluginFactory_Class::GetPluginCompilationDate(){	
 	//recup de la date à partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
 
@@ -120,8 +121,14 @@ double _SwRecordPluginFactory_Class::GetPluginCompilationDate(){
 	//set le time dans QDateTime
 	finalDateTime.setTime(time);
 
-	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
+	return finalDateTime;
 
+}
+
+//---------------------------------------------------------------------------------
+QString _SwRecordPluginFactory_Class::GetPluginName() const
+{
+    return SwRecord::name();
 }
 
 //---------------------------------------------------------------------------------

@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------
 StreamView::StreamView(QWidget * parent) :QGraphicsView(parent)
 {
-	//setViewport(new QGLWidget(QGLFormat(QGL::SampleBuffers)));
+	//setViewport(new QOpenGLWidget(QGLFormat(QGL::SampleBuffers)));
 	setStyleSheet("QGraphicsView { background:#323232 }");
 	setViewportUpdateMode(QGraphicsView::FullViewportUpdate);
 	setResizeAnchor(QGraphicsView::AnchorViewCenter);

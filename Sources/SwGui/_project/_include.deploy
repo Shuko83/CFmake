@@ -37,7 +37,9 @@
 				"_SwGuiCompMainWindow.h",
 				"_SwGuiPluginsFrontEnd.h",
 				"SwGuiConstantes.h",
-				"SwGuiComponentTools.h"
+				"SwGuiComponentTools.h",
+				"ISwActionListListener.h",
+				"ISwActionList.h"
 			]
 		}
 	]

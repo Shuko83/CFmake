@@ -15,6 +15,7 @@
 #include "_SwGuiCompQMainWindow.h"
 #include "_SwGuiCompMainWindow.h"
 #include "_SwGuiCompMenu.h"
+#include "_SwGuiCompActionList.h"
 #include "_SwGuiCompToolbar.h"
 #include "_SwGuiCompQDockWidget.h"
 #include "_SwGuiCompDockWidget.h"
@@ -126,9 +127,9 @@ void _SwGuiPluginFactory_Class::Liberate()
 SwComponent_Class * _SwGuiPluginFactory_Class::CreateInstanceOf(QString name)
 {
 	SW_PUBLISH_COMPONENT("SwGuiQMainWindow", _SwGuiCompQMainWindow);
-
 	SW_PUBLISH_COMPONENT("SwGuiMainWindow", _SwGuiCompMainWindow);
 	SW_PUBLISH_COMPONENT("SwGuiMenu", _SwGuiCompMenu);
+    SW_PUBLISH_COMPONENT("SwGuiActionList", _SwGuiCompActionList);
 	SW_PUBLISH_COMPONENT("SwGuiActionProvider", _SwGuiCompActionProvider);
 	SW_PUBLISH_COMPONENT("SwGuiToolBar", _SwGuiCompToolBar);
 	SW_PUBLISH_COMPONENT("SwGuiQDockWidget", _SwGuiCompQDockWidget);

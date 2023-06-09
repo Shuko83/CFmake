@@ -47,7 +47,10 @@ public:
     /*! \brief Acces a la version du plugin */
     QString GetPluginVersion();
 	/*! \brief Acces a la date de compilation du plugin depuis le 1er janvier 1970*/
-	virtual double GetPluginCompilationDate();
+	QDateTime GetPluginCompilationDate() override;
+
+    QString GetPluginName() const override;
+
 };
 
 extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();

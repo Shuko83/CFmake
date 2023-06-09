@@ -44,16 +44,6 @@ void _SwControllerActionRestart::OnConfigurationEditedChanged(ISwConfigurationCo
 {
     
 }
-//---------------------------------------------------------------------
-// Interface ISwAction
-//---------------------------------------------------------------------
-
-/*! \brief Renvoie le Action
-\return le Action */
-QAction & _SwControllerActionRestart::GetAction()
-{
-    return *_action;
-}
 
 void _SwControllerActionRestart::onActionActivated()
 {

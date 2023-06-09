@@ -76,17 +76,6 @@ void _SwControllerActionSave::OnConfigurationEditedChanged(ISwConfigurationContr
     }
 }
 
-//---------------------------------------------------------------------
-// Interface ISwAction
-//---------------------------------------------------------------------
-
-/*! \brief Renvoie le Action
-\return le Action */
-QAction & _SwControllerActionSave::GetAction()
-{
-    return *_action;
-}
-
 void _SwControllerActionSave::onActionActivated()
 {
     if (_configurationController != 0)

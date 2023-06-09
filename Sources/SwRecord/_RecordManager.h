@@ -170,7 +170,7 @@ public:
 	 * @param	 : double start_time - le temps de début
 	 * @param	 : ISwExecution_Service * executor - Pointeur sur le service d'exécution
 	 */
-	virtual void Initialize(double start_time,ISwExecution_Service * executor) throw (SwException);   
+	virtual void Initialize(double start_time, StreamWork::SwExecution::ISwExecution_Service * executor) throw (SwException);   
 
 	/**
 	 * @brief    : Démarage (Premier pas d'execution)

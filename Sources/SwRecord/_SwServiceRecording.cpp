@@ -107,14 +107,14 @@ ISwRecordDataCodec * _SwServiceRecording::buildCodec(QString swDataName) {
 QList<ISwRecordDataCodec *> _SwServiceRecording::buildCodecs(QString swDataName) {
     QList<ISwRecordDataCodec *> returnList;
     QList<ISwRecordDataCodecFactory *> fs=_factories.values(swDataName);
-    foreach(ISwRecordDataCodecFactory * f,fs) {
+    for(ISwRecordDataCodecFactory * f :fs) {
         //Construction du codec
         ISwRecordDataCodec * codec=f->buildCodec();
         QStringList liste=f->supportedDataTypes();
         //Ajout des sous codecs
         for(int i=0;i<liste.count();i++) {
             QList<ISwRecordDataCodec *> subcodecs=buildCodecs(liste[i]);
-            foreach(ISwRecordDataCodec* subcodec,subcodecs) {
+            for(ISwRecordDataCodec* subcodec : subcodecs) {
                 codec->addCodec(subcodec);
             }
         }

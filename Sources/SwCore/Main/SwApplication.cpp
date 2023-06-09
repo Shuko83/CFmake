@@ -82,7 +82,6 @@ SwApplication::SwApplication()
 	_isVerboseMode = false;
 	//Pas d'executeur
 	_executor = NULL;
-	_executor2 = NULL;
 	//Finalisation de l'initialisation
 	_initialisationFinalized = false;
 	//Creation de la banque de plugin
@@ -250,9 +249,9 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 				Logger().Log(LogLvl_Warning, QString("No Executor found! \n"));
 		}
 	}
-	if (_executor2)
+	if (_executor)
 	{
-		_executor2->StreamStop();
+		_executor->StreamStop();
 	}
 	//Fin
 	if (IsVerbose())
@@ -293,7 +292,6 @@ void SwApplication::FinalizeInitialisation()
 void SwApplication::RegisterExecutor(ISwExecutor * executor)
 {
 	_executor = executor;
-	_executor2 = _executor;
 }
 
 //-----------------------------------------------------------------------
@@ -479,7 +477,7 @@ bool SwApplication::LaunchAutoStart()
 	{
 		_executor->StreamExecute();
 		_executor = 0;
-		return (_executor2 != 0);
+		return true;
 	}
 	return false;
 }
@@ -487,10 +485,10 @@ bool SwApplication::LaunchAutoStart()
 //-----------------------------------------------------------------------
 void SwApplication::StopLaunch()
 {
-	if (_executor2 != 0)
+	if (_executor != 0)
 	{
-		_executor2->StreamStop();
-		_executor2 = 0;
+		_executor->StreamStop();
+		_executor = 0;
 	}
 }
 

@@ -112,4 +112,6 @@ private slots:
     void onCurrentConfigTreeViewClicked(const QModelIndex & );
 };
 
+Q_DECLARE_METATYPE(_SwManagedConfiguration *);
+
 #endif // __SWCONFIGURATIONMANAGERGUI_H

@@ -137,8 +137,6 @@ namespace StreamWork
             QString _applicationDirPath;
             /*! \brief Handle sur l'executeur (Que pour les applications consoles)*/
             ISwExecutor * _executor;
-            /*! \brief Handle sur l'executeur2 (Que pour les applications consoles)*/
-            ISwExecutor * _executor2;
             /*! \brief QSet des stream */
             QSet<SwComponent_ClassPtr> _streams;
             /*! \brief iterateur de parcours sur la QMap du stream */

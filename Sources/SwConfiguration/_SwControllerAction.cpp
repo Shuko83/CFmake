@@ -55,15 +55,12 @@ void _SwControllerAction::OnConfigurationEditedChanged(ISwConfigurationControlle
 {
     
 }
-//---------------------------------------------------------------------
-// Interface ISwAction
-//---------------------------------------------------------------------
 
 /*! \brief Renvoie le Action
 \return le Action */
-QAction & _SwControllerAction::GetAction()
+QAction* _SwControllerAction::getAction()
 {
-    return *_action;
+    return _action;
 }
 void _SwControllerAction::setAction(QAction * action)
 {

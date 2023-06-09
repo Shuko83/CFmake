@@ -73,17 +73,6 @@ void _SwControllerActionLoad::OnConfigurationEditedChanged(ISwConfigurationContr
     
 }
 
-//---------------------------------------------------------------------
-// Interface ISwAction
-//---------------------------------------------------------------------
-
-/*! \brief Renvoie le Action
-\return le Action */
-QAction & _SwControllerActionLoad::GetAction()
-{
-    return *_action;
-}
-
 void _SwControllerActionLoad::onActionActivated()
 {
 

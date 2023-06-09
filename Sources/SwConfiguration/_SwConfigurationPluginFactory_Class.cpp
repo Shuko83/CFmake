@@ -13,28 +13,35 @@
 #include "_SwConfiguration.h"
 #include "_SwConfigurationManager.h"
 
+#include "info_SwConfiguration.h"
+
 using namespace StreamWork::SwCore;
 
 /*! \brief Constructeur */
-_SwConfigurationPluginFactory_Class::_SwConfigurationPluginFactory_Class():SwPluginFactory_Class() {
-
+_SwConfigurationPluginFactory_Class::_SwConfigurationPluginFactory_Class():SwPluginFactory_Class() 
+{
 }
+
 /*! \brief Destructeur */
-_SwConfigurationPluginFactory_Class::~_SwConfigurationPluginFactory_Class() {
-
+_SwConfigurationPluginFactory_Class::~_SwConfigurationPluginFactory_Class() 
+{
 }
+
 /*! \brief Initialisation */
-void _SwConfigurationPluginFactory_Class::Initialize() {
+void _SwConfigurationPluginFactory_Class::Initialize() 
+{
     RegisterComponent("SwConfiguration","Configuration Component");
     RegisterComponent("SwConfigManager","Configuration Manager");
-
 }
+
 /*! \brief Liberation */
-void _SwConfigurationPluginFactory_Class::Liberate() {
-
+void _SwConfigurationPluginFactory_Class::Liberate() 
+{
 }
+
 /*! \brief instanciation d'un composant */
-SwComponent_Class * _SwConfigurationPluginFactory_Class::CreateInstanceOf(QString name) {
+SwComponent_Class * _SwConfigurationPluginFactory_Class::CreateInstanceOf(QString name) 
+{
     if (name=="SwConfiguration") {
         return new _SwConfiguration;
     }
@@ -45,14 +52,16 @@ SwComponent_Class * _SwConfigurationPluginFactory_Class::CreateInstanceOf(QStrin
 }
 
 /*! \brief instanciation d'une data */
-SwData_Class * _SwConfigurationPluginFactory_Class::CreateInstanceOf(unsigned int type_id) {
+SwData_Class * _SwConfigurationPluginFactory_Class::CreateInstanceOf(unsigned int type_id) 
+{
     return NULL;
 }
 
 /*! \brief acces a l'icone d'un composant
 \param[in] name nom du composant
 \return l'incone ou icone vide si non trouvé*/
-QIcon _SwConfigurationPluginFactory_Class::CreateIconOf(QString name) const {
+QIcon _SwConfigurationPluginFactory_Class::CreateIconOf(QString name) const 
+{
     QIcon ico;
     if (name=="SwConfiguration") {
         return QIcon(":/SwConfiguration/configuration.png"); 
@@ -65,7 +74,8 @@ QIcon _SwConfigurationPluginFactory_Class::CreateIconOf(QString name) const {
 
 /*! \brief Acces a la version du plugin
 \return version*/
-QString _SwConfigurationPluginFactory_Class::GetPluginVersion(){
+QString _SwConfigurationPluginFactory_Class::GetPluginVersion()
+{
     QString build;
 
     build=QString("%1 %2").arg(__DATE__).arg(__TIME__);
@@ -79,25 +89,33 @@ QString _SwConfigurationPluginFactory_Class::GetPluginVersion(){
     return build;
 }
 
-double _SwConfigurationPluginFactory_Class::GetPluginCompilationDate(){	
-	//recup de la date à partir de __DATE__
-	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
-	
-	//recup de l'heure à partir de __TIME__
-	QString strTime = __TIME__;
-	QTime time = time.fromString(strTime,"hh:mm:ss");
-	
-	QDateTime finalDateTime;
-	//set la date dans QDateTime
-	finalDateTime.setDate(date);
-	//set le time dans QDateTime
-	finalDateTime.setTime(time);
+//---------------------------------------------------------------------------------
+QDateTime _SwConfigurationPluginFactory_Class::GetPluginCompilationDate()
+{
+    //recup de la date ? partir de __DATE__
+    QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
 
-	return (finalDateTime.toMSecsSinceEpoch() / 1000.0);//retourne la date en secondes depuis le 1er janvier 1970
+    //recup de l'heure ? partir de __TIME__
+    QString strTime = __TIME__;
+    QTime time = time.fromString(strTime, "hh:mm:ss");
 
+    QDateTime finalDateTime;
+    //set la date dans QDateTime
+    finalDateTime.setDate(date);
+    //set le time dans QDateTime
+    finalDateTime.setTime(time);
+
+    return finalDateTime;
 }
 
+//---------------------------------------------------------------------------------
+QString _SwConfigurationPluginFactory_Class::GetPluginName() const
+{
+    return SwConfiguration::name();
+}
+
+//---------------------------------------------------------------------------------
 SwPluginFactory_Class *  GetPluginInterface()
 {
-    return new _SwConfigurationPluginFactory_Class;    
+    return new _SwConfigurationPluginFactory_Class;
 }

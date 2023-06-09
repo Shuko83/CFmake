@@ -190,12 +190,12 @@ void _SwConfigurationManager::InitializeResources() throw(SwException) {
     _provider_service->RegisterProvidedInterface<QWidget>("Widget",(QWidget *) _mainWidget);
 
     //Exportation des interfaces d actions
-    _provider_service->RegisterProvidedInterface<ISwAction>("StartAction",(ISwAction *) _actionStart);
-    _provider_service->RegisterProvidedInterface<ISwAction>("StopAction",(ISwAction *) _actionStop);
-    _provider_service->RegisterProvidedInterface<ISwAction>("RestartAction",(ISwAction *) _actionRestart);  
-    _provider_service->RegisterProvidedInterface<ISwAction>("SaveAction",(ISwAction *) _actionSave);  
-    _provider_service->RegisterProvidedInterface<ISwAction>("ExportConfiguration",(ISwAction *) _actionExportConfig);  
-    _provider_service->RegisterProvidedInterface<ISwAction>("LoadConfiguration",(ISwAction *) _actionLoadConfig);
+    _provider_service->RegisterProvidedInterface<QAction>("StartAction", _actionStart->getAction());
+    _provider_service->RegisterProvidedInterface<QAction>("StopAction", _actionStop->getAction());
+    _provider_service->RegisterProvidedInterface<QAction>("RestartAction", _actionRestart->getAction());
+    _provider_service->RegisterProvidedInterface<QAction>("SaveAction", _actionSave->getAction());
+    _provider_service->RegisterProvidedInterface<QAction>("ExportConfiguration", _actionExportConfig->getAction());
+    _provider_service->RegisterProvidedInterface<QAction>("LoadConfiguration", _actionLoadConfig->getAction());
     
     // creation de la propriété de renommage de la configuration
     _provider_service->RegisterProvidedInterface<ISwConfigurationNameProvider>(
@@ -265,6 +265,11 @@ int _SwConfigurationManager::StreamExecute()
             }
         }
     }
+    return 0;
+}
+
+int _SwConfigurationManager::StreamStop()
+{
     return 0;
 }
 
@@ -535,8 +540,6 @@ bool _SwConfigurationManager::Start()
 
 bool _SwConfigurationManager::Stop()
 {
-
-
     if (_managedConfigurations == 0)
         return false;
 
@@ -722,6 +725,7 @@ void _SwConfigurationManager::removeControllerListener(ISwConfigurationControlle
     if (_configurationControllerListeners.contains(listener))
 		_configurationControllerListeners.removeOne(listener);
 }
+
 /** @brief signale une modification de l etat du controller */
 void _SwConfigurationManager::signalControllerStartChanged()
 {

@@ -71,17 +71,6 @@ void _SwControllerActionExportConfig::OnConfigurationEditedChanged(ISwConfigurat
     
 }
 
-//---------------------------------------------------------------------
-// Interface ISwAction
-//---------------------------------------------------------------------
-
-/*! \brief Renvoie le Action
-\return le Action */
-QAction & _SwControllerActionExportConfig::GetAction()
-{
-    return *_action;
-}
-
 void _SwControllerActionExportConfig::onActionActivated()
 {
     if (_configSaver != 0)

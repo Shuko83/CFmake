@@ -20,7 +20,6 @@
 
 #include <ISwConfigurationController.h>
 #include <ISwConfigurationControllerListener.h>
-#include <ISwAction.h>
 
 using namespace StreamWork::SwCore;
     
@@ -34,9 +33,7 @@ namespace StreamWork
         */
         class _SwControllerAction : 
             public QObject,
-            public ISwConfigurationControllerListener,
-            public StreamWork::SwGui::ISwAction
-            
+            public ISwConfigurationControllerListener
         {
             Q_OBJECT
             public:
@@ -57,13 +54,10 @@ namespace StreamWork
 
                 /** @brief sur changement d etat*/
                 virtual void OnConfigurationEditedChanged(ISwConfigurationController *);
-        	    //---------------------------------------------------------------------
-        	    // Interface ISwAction
-        	    //---------------------------------------------------------------------
-            	
+
                 /*! \brief Renvoie le Action
                 \return le Action */
-			    virtual QAction & GetAction() ;
+			    QAction * getAction();
 			
             protected:
                 void setAction(QAction * action);

@@ -9,6 +9,7 @@
 #include <QMessageBox>
 
 using namespace StreamWork::SwCore;
+using namespace StreamWork::SwGui;
 
 _SwConfigurationManagerGui::_SwConfigurationManagerGui(QWidget *parent)
     : QWidget(parent)
@@ -104,14 +105,6 @@ void _SwConfigurationManagerGui::setEdition(bool enabled)
     ui.treeView->setEnabled(enabled);
 }
 
-/*! \brief Renvoie le widget
-\return le widget */
-QWidget * _SwConfigurationManagerGui::GetWidget()
-{
-    return this;
-}
-
-
 void _SwConfigurationManagerGui::setConfigurationController (
     ISwConfigurationController * controller)
 {
@@ -130,8 +123,6 @@ void _SwConfigurationManagerGui::setConfigurationController (
 void _SwConfigurationManagerGui::setConfigurationsList(QList<_SwManagedConfiguration *> & configList)
 {
     _configList = configList;
-    void *pointer = 0;
-    QVariant nullVariant(reinterpret_cast<uint>(pointer));
 
     ui.comboBox->clear();
     ui.comboBox->setCurrentIndex(-1);
@@ -143,7 +134,7 @@ void _SwConfigurationManagerGui::setConfigurationsList(QList<_SwManagedConfigura
         if (*it!=0)
         {
             _SwManagedConfiguration * config = *it;
-            QVariant variant (reinterpret_cast<uint> (config));
+            QVariant variant = QVariant::fromValue<_SwManagedConfiguration*>(config);
             ui.comboBox->addItem((*it)->getName(),variant);
         }
         it++;
@@ -227,9 +218,7 @@ void _SwConfigurationManagerGui::onCurrentConfigurationChanged()
         while (!found && cpt < ui.comboBox->count ())
         {
             QVariant data  = ui.comboBox->itemData(cpt);
-            void * ptr = reinterpret_cast<void*>(data.toUInt());
-            _SwManagedConfiguration *  conf = 0;
-            conf = reinterpret_cast<_SwManagedConfiguration *> (ptr);
+            _SwManagedConfiguration *  conf = data.value<_SwManagedConfiguration *>();
             
             if (conf != 0 && conf->getName().compare(config->getName()) == 0)
             {
@@ -392,12 +381,8 @@ void _SwConfigurationManagerGui::on_comboBox_activated(int index)
     {
         setConfigurationEdited(true);
         QVariant data  = ui.comboBox->itemData(index);
-        _SwManagedConfiguration *  config = 0;
+        _SwManagedConfiguration *  config = data.value<_SwManagedConfiguration*>();
 
-        void * ptr = reinterpret_cast<void*>(data.toUInt());
-
-        config = reinterpret_cast<_SwManagedConfiguration *> (ptr);
-        
         _configurations->setSelectedConfiguration(config); 
     }
     if (_configurations != 0 && _configurations->getSelectedConfiguration() != 0 && _launchConfiguration->getStartMode().ToInt() == 0)

@@ -8,3 +8,6 @@ Delivery/*
 *.bak
 *.filters
 *.opt
+3rdParty/*
+Libraries/*
+.vs/*

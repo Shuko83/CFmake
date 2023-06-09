@@ -8,7 +8,7 @@
 #define _STREAMVIEW_H
 
 #include <QtWidgets>
-#include <QGLWidget>
+#include <QOpenGLWidget>
 #include <QGraphicsView>
 #include <QLineEdit>
 #include "IStreamViewObserver.h"
