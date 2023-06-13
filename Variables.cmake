@@ -23,6 +23,38 @@ macro(set_cache_variable NAME VALUE TYPE DESCRIPTION)
 endmacro(set_cache_variable NAME VALUE TYPE DESCRIPTION)
 
 ################################################################################
+# Set operating system variable
+################################################################################
+
+macro(set_os_variable NAME WIN32VALUE LINUXVALUE)
+
+  if(NOT DEFINED ${NAME})
+    if(WIN32)
+      set(${NAME} ${WIN32VALUE})
+    else(WIN32)
+      set(${NAME} ${LINUXVALUE})
+    endif(WIN32)
+  endif(NOT DEFINED ${NAME})
+
+endmacro(set_os_variable NAME WIN32VALUE LINUXVALUE)
+
+################################################################################
+# Set operating system cache variable
+################################################################################
+
+macro(set_os_cache_variable NAME WIN32VALUE LINUXVALUE TYPE DESCRIPTION)
+
+  if(NOT DEFINED ${NAME})
+    if(WIN32)
+      set(${NAME} ${WIN32VALUE} CACHE ${TYPE} "${DESCRIPTION}")
+    else(WIN32)
+      set(${NAME} ${LINUXVALUE} CACHE ${TYPE} "${DESCRIPTION}")
+    endif(WIN32)
+  endif(NOT DEFINED ${NAME})
+
+endmacro(set_os_cache_variable NAME WIN32VALUE LINUXVALUE TYPE DESCRIPTION)
+
+################################################################################
 # Display variables
 ################################################################################
 

@@ -35,17 +35,24 @@ endfunction(find_vos_package_libraries NAME LIBNAMES INCPATH LIBPATH BINPATH)
 function(find_vos_package_library NAME LIBNAME LIBPATH BINPATH)
 
   find_library(${NAME}_${LIBNAME}_LIB_D
-    NAMES ${LIBNAME}.lib
+    NAMES ${LIBNAME}
     PATHS ${${NAME}_ROOT}/${LIBPATH}_debug ${${NAME}_PKGCONF_LIBRARY_DIRS}
     NO_DEFAULT_PATH)
 
   find_library(${NAME}_${LIBNAME}_LIB_R
-    NAMES ${LIBNAME}.lib
+    NAMES ${LIBNAME}
     PATHS ${${NAME}_ROOT}/${LIBPATH} ${${NAME}_PKGCONF_LIBRARY_DIRS}
     NO_DEFAULT_PATH)
 
-  get_filename_component(${NAME}_${LIBNAME}_LIBPATH_D ${${NAME}_${LIBNAME}_LIB_D} DIRECTORY)
-  get_filename_component(${NAME}_${LIBNAME}_LIBPATH_R ${${NAME}_${LIBNAME}_LIB_R} DIRECTORY)
+  if(WIN32)
+    get_filename_component(${NAME}_${LIBNAME}_LIBPATH_D ${${NAME}_${LIBNAME}_LIB_D} DIRECTORY)
+    get_filename_component(${NAME}_${LIBNAME}_LIBPATH_R ${${NAME}_${LIBNAME}_LIB_R} DIRECTORY)
+    set(${NAME}_${LIBNAME}_DLL_D ${${NAME}_${LIBNAME}_LIBPATH_D}/../${BINPATH}_debug/${LIBNAME}.dll)
+    set(${NAME}_${LIBNAME}_DLL_R ${${NAME}_${LIBNAME}_LIBPATH_R}/../${BINPATH}/${LIBNAME}.dll)
+  else(WIN32)
+    set(${NAME}_${LIBNAME}_DLL_D ${${NAME}_${LIBNAME}_LIB_D})
+    set(${NAME}_${LIBNAME}_DLL_R ${${NAME}_${LIBNAME}_LIB_R})
+  endif(WIN32)
 
   add_library(${NAME}::${LIBNAME} SHARED IMPORTED)
 
@@ -55,7 +62,7 @@ function(find_vos_package_library NAME LIBNAME LIBPATH BINPATH)
     set_property(TARGET ${NAME}::${LIBNAME} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
     set_target_properties(${NAME}::${LIBNAME} PROPERTIES
       IMPORTED_IMPLIB_DEBUG ${${NAME}_${LIBNAME}_LIB_D}
-      IMPORTED_LOCATION_DEBUG ${${NAME}_${LIBNAME}_LIBPATH_D}/../${BINPATH}_debug/${LIBNAME}.dll)
+      IMPORTED_LOCATION_DEBUG ${${NAME}_${LIBNAME}_DLL_D})
   else(${NAME}_${LIBNAME}_LIB_D)
     message(DEBUG "Could not find debug library ${NAME}::${LIBNAME}")
   endif(${NAME}_${LIBNAME}_LIB_D)
@@ -66,9 +73,9 @@ function(find_vos_package_library NAME LIBNAME LIBPATH BINPATH)
       IMPORTED_IMPLIB_RELEASE ${${NAME}_${LIBNAME}_LIB_R}
       IMPORTED_IMPLIB_MINSIZEREL ${${NAME}_${LIBNAME}_LIB_R}
       IMPORTED_IMPLIB_RELWITHDEBINFO ${${NAME}_${LIBNAME}_LIB_R}
-      IMPORTED_LOCATION_RELEASE ${${NAME}_${LIBNAME}_LIBPATH_R}/../${BINPATH}/${LIBNAME}.dll
-      IMPORTED_LOCATION_MINSIZEREL ${${NAME}_${LIBNAME}_LIBPATH_R}/../${BINPATH}/${LIBNAME}.dll
-      IMPORTED_LOCATION_RELWITHDEBINFO ${${NAME}_${LIBNAME}_LIBPATH_R}/../${BINPATH}/${LIBNAME}.dll)
+      IMPORTED_LOCATION_RELEASE ${${NAME}_${LIBNAME}_DLL_R}
+      IMPORTED_LOCATION_MINSIZEREL ${${NAME}_${LIBNAME}_DLL_R}
+      IMPORTED_LOCATION_RELWITHDEBINFO ${${NAME}_${LIBNAME}_DLL_R})
   else(${NAME}_${LIBNAME}_LIB_R)
     message(DEBUG "Could not find release library ${NAME}::${LIBNAME}")
   endif(${NAME}_${LIBNAME}_LIB_R)
