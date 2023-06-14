@@ -36,6 +36,36 @@ set_cache_variable(<name> <value> <type> <description>)
 | `type`        | Type                  |
 | `description` | Description textuelle |
 
+### Fonction `set_os_variable`
+
+La fonction `set_os_variable` permet de définir une variable spécifique selon le système d'exploitation seulement si elle n'est pas préalablement définie.
+
+```cmake
+set_os_variable(<name> <win32value> <linuxvalue>)
+```
+
+| Nom          | Description         |
+|--------------|---------------------|
+| `name`       | Nom                 |
+| `win32value` | Valeur sous Windows |
+| `linuxvalue` | Valeur sous Linux   |
+
+### Fonction `set_os_cache_variable`
+
+La fonction `set_os_cache_variable` permet de définir une variable cache spécifique selon le système d'exploitation seulement si elle n'est pas préalablement définie.
+
+```cmake
+set_os_cache_variable(<name> <win32value> <linuxvalue> <type> <description>)
+```
+
+| Nom           | Description           |
+|---------------|-----------------------|
+| `name`        | Nom                   |
+| `win32value`  | Valeur sous Windows   |
+| `linuxvalue`  | Valeur sous Linux     |
+| `type`        | Type                  |
+| `description` | Description textuelle |
+
 ### Fonction `display_variables`
 
 La fonction `display_variables` permet d'afficher dans la sortie standard CMake l'ensemble des variables du périmètre courant.
