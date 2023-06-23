@@ -19,7 +19,6 @@ _SwServiceConfigurationPluginFactory_Class::_SwServiceConfigurationPluginFactory
 //----------------------------------------------------------------------------------------------
 _SwServiceConfigurationPluginFactory_Class::~_SwServiceConfigurationPluginFactory_Class()
 {
-	//SW_APP->UnregisterService(_serviceconfiguration->GetServiceName());
 	delete _serviceconfiguration;
 }
 
@@ -35,7 +34,14 @@ void _SwServiceConfigurationPluginFactory_Class::Initialize()
 //----------------------------------------------------------------------------------------------
 void _SwServiceConfigurationPluginFactory_Class::Liberate()
 {
-
+    try
+    {
+        SW_APP->UnregisterService(_serviceconfiguration->GetServiceName());
+    }
+    catch (SwException& e)
+    {
+        qCritical() << e.GetReason();
+    }
 }
 
 ///----------------------------------------------------------------------------------------------

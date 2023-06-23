@@ -76,7 +76,14 @@ void _SwModelPluginFactory_Class::modelAdded(QString name, QString description)
 //-----------------------------------------------------------------------
 void _SwModelPluginFactory_Class::Liberate()
 {
-
+    try
+    {
+        SW_APP->UnregisterService(SwModelsListAccess::getInstance()->GetServiceName());
+    }
+    catch (SwException& e)
+    {
+        qCritical() << e.GetReason();
+    }
 }
 
 //-----------------------------------------------------------------------

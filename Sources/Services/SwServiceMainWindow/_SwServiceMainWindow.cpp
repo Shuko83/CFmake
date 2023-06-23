@@ -15,7 +15,9 @@
 #include <QApplication>
 #include "SwMacros.h"
 #include <QTimer>
+
 using namespace StreamWork::Service;
+using namespace StreamWork::SwCore;
 
 //-------------------------------------------------------------------------
 _SwServiceMainWindow::_SwServiceMainWindow() : QObject()
@@ -33,7 +35,14 @@ _SwServiceMainWindow::_SwServiceMainWindow(QMainWindow *window)
 //-------------------------------------------------------------------------
 _SwServiceMainWindow::~_SwServiceMainWindow()
 {
-	SW_APP->UnregisterService(GetServiceName());
+    try
+    {
+        SW_APP->UnregisterService(GetServiceName());
+    }
+    catch (SwException& e)
+    {
+        qCritical() << e.GetReason();
+    }
 }
 
 //-----------------------------------------------------------------------

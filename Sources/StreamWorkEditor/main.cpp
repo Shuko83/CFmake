@@ -318,7 +318,15 @@ int main(int argc, char *argv[])
 	delete log_recorder;
 
 	// Destruction du service d'édition
-	SW_APP->UnregisterService(editionService->GetServiceName());
+    try
+    {
+        SW_APP->UnregisterService(editionService->GetServiceName());
+    }
+    catch (SwException& e)
+    {
+        qCritical() << e.GetReason();
+    }
+
 	delete editionService;
 
 	return result;

@@ -18,7 +18,6 @@ _SwServiceShortcutPluginFactory_Class::_SwServiceShortcutPluginFactory_Class()
 //----------------------------------------------------------------------------------------------
 _SwServiceShortcutPluginFactory_Class::~_SwServiceShortcutPluginFactory_Class() 
 {
-	//SW_APP->UnregisterService(_serviceShortcuts->GetServiceName());
 	delete _serviceShortcuts;
 }
 
@@ -32,7 +31,14 @@ void _SwServiceShortcutPluginFactory_Class::Initialize()
 //----------------------------------------------------------------------------------------------
 void _SwServiceShortcutPluginFactory_Class::Liberate() 
 {
-
+    try
+    {
+        SW_APP->UnregisterService(_serviceShortcuts->GetServiceName());
+    }
+    catch (SwException& e)
+    {
+        qCritical() << e.GetReason();
+    }
 }
 
 ///----------------------------------------------------------------------------------------------
