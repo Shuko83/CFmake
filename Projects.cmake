@@ -25,6 +25,14 @@ function(define_sub_project)
 
   # Variables
 
+  if(NOT DEFINED SP_ARCHS)
+    list(APPEND SP_ARCHS "${DD_ARCHS}")
+  endif(NOT DEFINED SP_ARCHS)
+
+  if(NOT DEFINED SP_TARGETS)
+    list(APPEND SP_TARGETS "${DD_TARGETS}")
+  endif(NOT DEFINED SP_TARGETS)
+
   string(REPLACE "." "" VNAME ${SP_NAME})
   string(REPLACE "-" "" VNAME ${VNAME})
   string(TOLOWER ${SP_NAME} LNAME)

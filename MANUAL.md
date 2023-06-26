@@ -205,8 +205,8 @@ define_sub_project(
 | `git_tag`     | `${<name:var>_VERSION}`                               | Branche, étiquette ou révision Git        |
 | `svn_path`    | `${SUBVERSION_URL}/<name:lower>`                      | Adresse du dépôt Subversion               |
 | `svn_tag`     | `${<name:var>_VERSION}`                               | Branche ou étiquette Subversion           |
-| `arch`        |                                                       | Architecture de l'artefact                |
-| `target`      |                                                       | Cible de l'artefact                       |
+| `arch`        | `${DD_ARCHS}`                                         | Architecture de l'artefact                |
+| `target`      | `${DD_TARGETS}`                                       | Cible de l'artefact                       |
 | `argument`    |                                                       | Argument de compilation                   |
 
 La considération du sous-projet s'effectue depuis un chemin local ou une adresse distante _(artefact ou dépôt)_ selon le mode d'import sélectionné.
