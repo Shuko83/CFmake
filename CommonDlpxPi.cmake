@@ -67,6 +67,10 @@ set(ARTIFACTORY_DIR "snapshot" CACHE INTERNAL "Artifactory directory")
 
 set(ENABLE_NATO_RESTRICTION TRUE CACHE INTERNAL "Enable NATO restriction")
 set(ENABLE_ITAR_RESTRICTION FALSE CACHE INTERNAL "Enable ITAR restriction")
+set(ENABLE_SPECIAL_RESTRICTION FALSE CACHE INTERNAL "Enable special restriction")
+set(NATO_IDENTIFIER "0000" CACHE INTERNAL "NATO identifier")
+set(ITAR_IDENTIFIER "0000" CACHE INTERNAL "ITAR identifier")
+set(SPECIAL_IDENTIFIER "000" CACHE INTERNAL "Special identifier")
 
 ################################################################################
 # Project options
