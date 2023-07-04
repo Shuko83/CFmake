@@ -384,6 +384,16 @@ function(get_dependency_dlpxpi NAME)
       CMAKE)
   endif(NAME STREQUAL "GeographicLib")
 
+  # NMEA
+  if(NAME STREQUAL "NMEA")
+    define_dependency(
+      NAME "NMEA"
+      DIRNAME "NMEA-0.5.3"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/3rdParty"
+      REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/NMEA/0.5.3/%TARGET%/%ARCH%/NMEA-0.5.3_%TARGET%-%ARCH%.zip"
+      CREATEDIR)
+  endif(NAME STREQUAL "NMEA")
+
   # VortexOpenSplice
   if(NAME STREQUAL "VortexOpenSplice")
     define_dependency(
