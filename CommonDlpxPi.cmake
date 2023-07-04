@@ -48,12 +48,14 @@ set(ProtocolsDLPXPIL22_VERSION "develop" CACHE STRING "Protocols.DLPX-PI.L22 sub
 set(L11_EDITION "8" CACHE STRING "L11 edition")
 set(L16_EDITION "8" CACHE STRING "L16 edition")
 set(L22_EDITION "6" CACHE STRING "L22 edition")
+set(CLA_EDITION "1" CACHE STRING "CLA edition")
 
 set(CODX_CORE_VERSION "1.6.2" CACHE STRING "CODX Core version")
 set(CODX_GENERATOR_VERSION "10.3.10" CACHE STRING "CODX Generator version")
 set(CODX_L11_VERSION "10.3.10.060800" CACHE STRING "CODX L11 version")
 set(CODX_L16_VERSION "10.3.10.060800" CACHE STRING "CODX L16 version")
 set(CODX_L22_VERSION "10.3.11.060701" CACHE STRING "CODX L22 version")
+set(CODX_CLA_VERSION "TBD" CACHE STRING "CODX CLA version")
 
 set(DLPX_HI_VERSION "3.2.4" CACHE STRING "DLPX-HI version")
 set(DLPX_HI_COMMON_VERSION "3.2.2" CACHE STRING "DLPX-HI Common version")
@@ -235,6 +237,17 @@ function(get_dependency_dlpxpi NAME)
       CREATEDIR)
   endif(NAME STREQUAL "CodxL22")
 
+  # CODX CLA
+  if(NAME STREQUAL "CodxCLA")
+    define_dependency(
+      NAME "CodxCLA"
+      DIRNAME "CLAED${CLA_EDITION}"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
+      REMOTE_PATH "${ARTIFACTORY_URL}/snapshot/DLPX-PI/external/CLAED${CLA_EDITION}_${CODX_GENERATOR_VERSION}_%TARGET%-%ARCH%.zip"
+      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/CLAED${CLA_EDITION}"
+      CREATEDIR)
+  endif(NAME STREQUAL "CodxCLA")
+
   # CODX L16OPSTranslation
   if(NAME STREQUAL "L16OPSTranslation")
     define_dependency(
@@ -254,6 +267,17 @@ function(get_dependency_dlpxpi NAME)
       REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/DCLI/ExportControlFree/L16MsgJUtils/1.0.0.2/%TARGET%/%ARCH%/L16MsgJUtils_1.0.0.2_%TARGET%-%ARCH%.zip"
       CREATEDIR)
   endif(NAME STREQUAL "DCLIL16MsgJUtils")
+
+  # DLPX-PI CLAModels
+  if(NAME STREQUAL "CLAModels")
+    define_dependency(
+      NAME "DlpxPiCLAModels"
+      DIRNAME "CLAModels"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-PI"
+      REMOTE_PATH "${ARTIFACTORY_URL}/snapshot/DLPX-PI/external/CLAModels_${DLPX_HI_GENERATOR_VERSION}_%TARGET%-%ARCH%.zip"
+      FIND_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-PI/CLAModels"
+      CREATEDIR)
+  endif(NAME STREQUAL "CLAModels")
 
   # DCLI Utils
   if(NAME STREQUAL "DCLIUtils")
