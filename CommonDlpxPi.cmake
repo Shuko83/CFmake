@@ -23,6 +23,7 @@ set(SUBVERSION_URL "https://10.20.1.30/svn" CACHE STRING "Subversion base URL")
 
 set(FrameworksDLPXPICore_NAME "Frameworks.DLPX-PI.Core" CACHE INTERNAL "Frameworks.DLPX-PI.Core sub-project name")
 set(LibrariesDLPXPICorrelator_NAME "Libraries.DLPX-PI.Correlator" CACHE INTERNAL "Libraries.DLPX-PI.Correlator sub-project name")
+set(LibrariesDLPXPINMEA_NAME "Libraries.DLPX-PI.NMEA" CACHE INTERNAL "Libraries.DLPX-PI.NMEA sub-project name")
 set(LibrariesDLPXPIReadOLMWrapper_NAME "Libraries.DLPX-PI.ReadOLMWrapper" CACHE INTERNAL "Libraries.DLPX-PI.ReadOLMWrapper sub-project name")
 set(LibrariesDLPXPISNC_NAME "Libraries.DLPX-PI.SNC" CACHE INTERNAL "Libraries.DLPX-PI.SNC sub-project name")
 set(LibrariesDLPXPITacticalX_NAME "Libraries.DLPX-PI.TacticalX" CACHE INTERNAL "Libraries.DLPX-PI.TacticalX sub-project name")
@@ -35,6 +36,7 @@ set(ProtocolsDLPXPIL22_NAME "Protocols.DLPX-PI.L22" CACHE INTERNAL "Protocols.DL
 
 set(FrameworksDLPXPICore_VERSION "develop-aix" CACHE STRING "Frameworks.DLPX-PI.Core sub-project version")
 set(LibrariesDLPXPICorrelator_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.Correlator sub-project version")
+set(LibrariesDLPXPINMEA_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.NMEA sub-project version")
 set(LibrariesDLPXPIReadOLMWrapper_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.ReadOLMWrapper sub-project version")
 set(LibrariesDLPXPISNC_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.SNC sub-project version")
 set(LibrariesDLPXPITacticalX_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.TacticalX sub-project version")
@@ -114,6 +116,13 @@ function(get_sub_project_dlpxpi NAME)
       NAME "${LibrariesDLPXPICorrelator_NAME}"
       REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${LibrariesDLPXPICorrelator_NAME}/${LibrariesDLPXPICorrelator_VERSION}/${LibrariesDLPXPICorrelator_NAME}_${LibrariesDLPXPICorrelator_VERSION}_%TARGET%-%ARCH%.zip")
   endif(NAME STREQUAL "Correlator")
+
+  # Libraries.DLPX-PI.NMEA
+  if(NAME STREQUAL "NMEA")
+    define_sub_project(
+      NAME "${LibrariesDLPXPINMEA_NAME}"
+      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${LibrariesDLPXPINMEA_NAME}/${LibrariesDLPXPINMEA_VERSION}/${LibrariesDLPXPINMEA_NAME}_${LibrariesDLPXPINMEA_VERSION}_%TARGET%-%ARCH%.zip")
+  endif(NAME STREQUAL "NMEA")
 
   # Libraries.DLPX-PI.ReadOLMWrapper
   if(NAME STREQUAL "ReadOLMWrapper")
