@@ -90,51 +90,30 @@ void SwServicesManager_Class::RegisterService(ISwService * service) throw(SwExce
 //---------------------------------------------------------------------------------
 void SwServicesManager_Class::UnregisterService(QString service_name) throw(SwException)
 {
-    QMap<QString, ISwService *>::iterator it;
-    QList<QString>::iterator itd;
-
-    it = _services.find(service_name);
-    if (it == _services.end())
+    ISwService * service = _services.value(service_name);
+    if (!service)
     {
         QString msg = QString("Try to unregister unknown service %1").arg(service_name);
         LAUNCH_SWEXCEPTION("SwCore", msg);
-    }
+    }    
 
-    // Créer la pair itérateur/bool pour cette itération de la méthode
-    _itForUnregisterService.push_back(qMakePair(_servicesObservers.begin(), false));
-    // Il faut vérifier que l'itérateur ne dépasse pas la fin de la liste (suite à de multiple supression)
-    for (auto iterator = _servicesObservers.begin(); iterator.i < _servicesObservers.end().i;)
+    // Copie de la liste des observers au cas ou un observer se désenregistre à l'appel de OnUnregisterService
+    QList<ISwServicesManager_Listener *> observersCopy = _servicesObservers;
+    // On stock la liste des observers détruit suite à l'appel de OnUnregisterService pour ne pas notifier un observer détruit.
+    QSet<ISwServicesManager_Listener*> currentDeletedObservers;
+    _deletedObservers.insert(&currentDeletedObservers);
+    for (ISwServicesManager_Listener* observer : observersCopy)
     {
-        _itForUnregisterService.last().first = iterator;
-        (*iterator)->OnUnregisterService(it.value());
-        if (!_itForUnregisterService.last().second)
-            ++iterator;
-        else
-        {
-            // On est notifié d'une supression et que l'itérateur est déjà avancé
-            // Cf. RemoveServicesManagerObserver()
-            _itForUnregisterService.last().second = false;
-            iterator = _itForUnregisterService.last().first;
-        }
+        if(!currentDeletedObservers.contains(observer))
+            observer->OnUnregisterService(service);
     }
+    _deletedObservers.remove(&currentDeletedObservers);
 
-	it.value()->Liberate();
+    service->Liberate();
 
-    // Retirer la pair itérateur/bool à la fin de la boucle
-    _itForUnregisterService.pop_back();
-    _services.erase(it);
+    _services.remove(service_name);
 
-    itd = _ordered_services.begin();
-    while (itd != _ordered_services.end())
-    {
-        if ((*itd) == service_name)
-        {
-            _ordered_services.erase(itd);
-            return;
-        }
-        itd++;
-    }
-
+    _ordered_services.removeAll(service_name);
 }
 
 //---------------------------------------------------------------------------------
@@ -149,19 +128,8 @@ void SwServicesManager_Class::AddServicesManagerObserver(ISwServicesManager_List
 //---------------------------------------------------------------------------------
 void SwServicesManager_Class::RemoveServicesManagerObserver(ISwServicesManager_Listener * observer)
 {
-    // Vérifier pour chaque itérateur de la fonction UnregisterService() que l'on ne va pas retirer l'observeur en cours de notification
-    // Si c'est le cas, on avance l'itérateur et on le notifie via le booléen
-    for (auto pair : _itForUnregisterService)
-    {
-        if (*pair.first == observer)
-        {
-            ++pair.first;
-            pair.second = true;
-        }
-    }
-	
-    int index = _servicesObservers.indexOf(observer);
-
-    if (index >= 0)
-        _servicesObservers.removeAt(index);
+    //Ajoute un observerSi cette méthode est appelé pendant la boucle de notification de UnregisterService
+    for(auto list : _deletedObservers)
+        list->insert(observer);
+    _servicesObservers.removeAll(observer);
 }

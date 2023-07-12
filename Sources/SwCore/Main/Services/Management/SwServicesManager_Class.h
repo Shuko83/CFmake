@@ -82,11 +82,9 @@ namespace StreamWork
             QList<QString> _ordered_services;
             /*! \brief liste des observers */
             QList<ISwServicesManager_Listener *> _servicesObservers;
-            // Liste permettant de garder en mémoire les itérateurs en cours lorsque l'on notifie les observeurs
-            // Cette liste permet de tenir compte de l'appel en cascade de la méthode UnregisterService()
-			// La notification des observeurs peut déclencher le désenregistrement d'observeurs ou de services
-            QList< QPair< QList<ISwServicesManager_Listener *>::iterator, bool> > _itForUnregisterService;
-
+            /*! \brief Set de set permettant de garder en mémoire les observers delete par la méthode
+            onUnregisterService. Le set de set permet une méthode réentrante.*/
+            QSet < QSet<ISwServicesManager_Listener *>* > _deletedObservers;
 		public:
             /*! \brief Constructeur */
             SwServicesManager_Class();
