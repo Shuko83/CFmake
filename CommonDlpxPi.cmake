@@ -22,6 +22,7 @@ set(SUBVERSION_URL "https://10.20.1.30/svn" CACHE STRING "Subversion base URL")
 ################################################################################
 
 set(FrameworksDLPXPICore_NAME "Frameworks.DLPX-PI.Core" CACHE INTERNAL "Frameworks.DLPX-PI.Core sub-project name")
+set(LibrariesDLPXPICLAModels_NAME "Libraries.DLPX-PI.CLAModels" CACHE INTERNAL "Libraries.DLPX-PI.CLAModels sub-project name")
 set(LibrariesDLPXPICorrelator_NAME "Libraries.DLPX-PI.Correlator" CACHE INTERNAL "Libraries.DLPX-PI.Correlator sub-project name")
 set(LibrariesDLPXPINMEA_NAME "Libraries.DLPX-PI.NMEA" CACHE INTERNAL "Libraries.DLPX-PI.NMEA sub-project name")
 set(LibrariesDLPXPIReadOLMWrapper_NAME "Libraries.DLPX-PI.ReadOLMWrapper" CACHE INTERNAL "Libraries.DLPX-PI.ReadOLMWrapper sub-project name")
@@ -35,6 +36,7 @@ set(ProtocolsDLPXPIL16_NAME "Protocols.DLPX-PI.L16" CACHE INTERNAL "Protocols.DL
 set(ProtocolsDLPXPIL22_NAME "Protocols.DLPX-PI.L22" CACHE INTERNAL "Protocols.DLPX-PI.L22 sub-project name")
 
 set(FrameworksDLPXPICore_VERSION "develop-aix" CACHE STRING "Frameworks.DLPX-PI.Core sub-project version")
+set(LibrariesDLPXPICLAModels_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.CLAModels sub-project version")
 set(LibrariesDLPXPICorrelator_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.Correlator sub-project version")
 set(LibrariesDLPXPINMEA_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.NMEA sub-project version")
 set(LibrariesDLPXPIReadOLMWrapper_VERSION "develop" CACHE STRING "Libraries.DLPX-PI.ReadOLMWrapper sub-project version")
@@ -109,6 +111,13 @@ function(get_sub_project_dlpxpi NAME)
       NAME "${FrameworksDLPXPICore_NAME}"
       REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${FrameworksDLPXPICore_NAME}/${FrameworksDLPXPICore_VERSION}/${FrameworksDLPXPICore_NAME}_${FrameworksDLPXPICore_VERSION}_%TARGET%-%ARCH%.zip")
   endif(NAME STREQUAL "Core")
+
+  # Libraries.DLPX-PI.CLAModels
+  if(NAME STREQUAL "CLAModels")
+    define_sub_project(
+      NAME "${LibrariesDLPXPICLAModels_NAME}"
+      REMOTE_PATH "${ARTIFACTORY_URL}/${ARTIFACTORY_DIR}/DLPX-PI/${LibrariesDLPXPICLAModels_NAME}/${LibrariesDLPXPICLAModels_VERSION}/${LibrariesDLPXPICLAModels_NAME}_${LibrariesDLPXPICLAModels_VERSION}_%TARGET%-%ARCH%.zip")
+  endif(NAME STREQUAL "CLAModels")
 
   # Libraries.DLPX-PI.Correlator
   if(NAME STREQUAL "Correlator")
@@ -246,17 +255,6 @@ function(get_dependency_dlpxpi NAME)
       CREATEDIR)
   endif(NAME STREQUAL "CodxL22")
 
-  # CODX CLA
-  if(NAME STREQUAL "CodxCLA")
-    define_dependency(
-      NAME "CodxCLA"
-      DIRNAME "CLAED${CLA_EDITION}"
-      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
-      REMOTE_PATH "${ARTIFACTORY_URL}/snapshot/DLPX-PI/external/CLAED${CLA_EDITION}_${CODX_GENERATOR_VERSION}_%TARGET%-%ARCH%.zip"
-      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/CLAED${CLA_EDITION}"
-      CREATEDIR)
-  endif(NAME STREQUAL "CodxCLA")
-
   # CODX L16OPSTranslation
   if(NAME STREQUAL "L16OPSTranslation")
     define_dependency(
@@ -276,17 +274,6 @@ function(get_dependency_dlpxpi NAME)
       REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/DCLI/ExportControlFree/L16MsgJUtils/1.0.0.2/%TARGET%/%ARCH%/L16MsgJUtils_1.0.0.2_%TARGET%-%ARCH%.zip"
       CREATEDIR)
   endif(NAME STREQUAL "DCLIL16MsgJUtils")
-
-  # DLPX-PI CLAModels
-  if(NAME STREQUAL "CLAModels")
-    define_dependency(
-      NAME "DlpxPiCLAModels"
-      DIRNAME "CLAModels"
-      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-PI"
-      REMOTE_PATH "${ARTIFACTORY_URL}/snapshot/DLPX-PI/external/CLAModels_${DLPX_HI_GENERATOR_VERSION}_%TARGET%-%ARCH%.zip"
-      FIND_PATH "${CMAKE_PREFIX_PATH}/Libraries/DLPX-PI/CLAModels"
-      CREATEDIR)
-  endif(NAME STREQUAL "CLAModels")
 
   # DCLI Utils
   if(NAME STREQUAL "DCLIUtils")
