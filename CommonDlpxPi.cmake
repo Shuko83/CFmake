@@ -11,11 +11,11 @@ include(LibrariesVortexOpenSplice)
 # Workspace definition
 ################################################################################
 
-set(ARTIFACTORY_URL "http://10.20.1.10:8081/artifactory" CACHE STRING "Artifactory base URL")
-set(GIT_URL "https://10.19.74.16/dlpx-pi" CACHE STRING "Git base URL")
-set(JENKINS_URL "https://10.19.74.19" CACHE STRING "Jenkins base URL")
-set(NEXUS_URL "https://10.19.74.15" CACHE STRING "Nexus base URL")
-set(SUBVERSION_URL "https://10.20.1.30/svn" CACHE STRING "Subversion base URL")
+set(ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory" CACHE STRING "Artifactory base URL")
+set(GIT_URL "https://dr-aix-git-01v.sccoa.si.c-s.fr/dlpx-pi" CACHE STRING "Git base URL")
+set(JENKINS_URL "https://dr-aix-portail-devops-01v.sccoa.si.c-s.fr" CACHE STRING "Jenkins base URL")
+set(NEXUS_URL "https://dr-aix-nexus-01v.sccoa.si.c-s.fr" CACHE STRING "Nexus base URL")
+set(SUBVERSION_URL "https://tt4.aix.diginext.fr/svn" CACHE STRING "Subversion base URL")
 
 ################################################################################
 # Project definition
