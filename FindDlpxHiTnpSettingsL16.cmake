@@ -3,5 +3,5 @@ find_dlpxhi_package_libraries(
   "TnpSettingsL16"
   "TnpSettingsL16ConfigReaders;TnpSettingsL16ConfigWriters;TnpSettingsL16Objects"
   "Objects/LibEntry/TnpSettingsL16ObjectsExport.h"
-  "${TARGET_NAME}/debug"
-  "${TARGET_NAME}/release")
+  "${DEP_TARGET_NAME}/debug"
+  "${DEP_TARGET_NAME}/release")

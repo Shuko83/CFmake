@@ -54,16 +54,18 @@ set(L16_EDITION "8" CACHE STRING "L16 edition")
 set(L22_EDITION "6" CACHE STRING "L22 edition")
 set(CLA_EDITION "1" CACHE STRING "CLA edition")
 
-set(CODX_CORE_VERSION "1.8.1" CACHE STRING "CODX Core version")
-set(CODX_GENERATOR_VERSION "10.4.2" CACHE STRING "CODX Generator version")
-set(CODX_L11_VERSION "10.4.2.060800" CACHE STRING "CODX L11 version")
-set(CODX_L16_VERSION "10.4.2.060800" CACHE STRING "CODX L16 version")
-set(CODX_L22_VERSION "10.4.2.060800" CACHE STRING "CODX L22 version")
+# TODO: Restore unique version on next DLPX-HI release
+set(CODX_CORE_VERSION "1.8.2" CACHE STRING "CODX Core version")
+set_os_cache_variable(CODX_GENERATOR_VERSION "10.4.2" "10.4.3" STRING "CODX Generator version")
+set_os_cache_variable(CODX_L11_VERSION "10.4.2.060800" "10.4.3.060800" STRING "CODX L11 version")
+set_os_cache_variable(CODX_L16_VERSION "10.4.2.060800" "10.4.3.060800" STRING "CODX L16 version")
+set_os_cache_variable(CODX_L22_VERSION "10.4.2.060800" "10.4.3.060800" STRING "CODX L22 version")
 set(CODX_CLA_VERSION "TBD" CACHE STRING "CODX CLA version")
 
-set(DLPX_HI_VERSION "3.2.6" CACHE STRING "DLPX-HI version")
-set(DLPX_HI_COMMON_VERSION "3.2.3" CACHE STRING "DLPX-HI Common version")
-set(DLPX_HI_CODX_VERSION "10.4.2.030205" CACHE STRING "DLPX-HI CODX version")
+# TODO: Restore unique version on next DLPX-HI release
+set_os_cache_variable(DLPX_HI_VERSION "3.2.6" "3.2.6.1" STRING "DLPX-HI version")
+set_os_cache_variable(DLPX_HI_COMMON_VERSION "3.2.3" "3.2.4" STRING "DLPX-HI Common version")
+set_os_cache_variable(DLPX_HI_CODX_VERSION "10.4.2.030205" "10.4.3.030206" STRING "DLPX-HI CODX version")
 set(DLPX_HI_GENERATOR_VERSION "3.2.4" CACHE STRING "DLPX-HI Generator version")
 
 set(Qt5_VERSION "5.9.6" CACHE INTERNAL "Qt5 version")
@@ -103,7 +105,7 @@ option(ENABLE_TELEMETRY "Enable telemetry" FALSE)
 function(get_sub_project_dlpxpi NAME)
 
   set(DD_ARCHS "x64")
-  set(DD_TARGETS "win-msvc2015")
+  set_os_variable(DD_TARGETS "win-msvc2015" "linux-gcc12.2")
 
   # Frameworks.DLPX-PI.Core
   if(NAME STREQUAL "Core")
@@ -184,14 +186,23 @@ endfunction(get_sub_project_dlpxpi NAME)
 function(get_dependency_dlpxpi NAME)
 
   set(DD_ARCHS "x64")
-  set(DD_TARGETS "win-msvc2015")
+  set_os_variable(DD_TARGETS "win-msvc2015" "linux-gcc12.2")
+  set_os_variable(TARGET_ARCH_SEPARATOR "/" "-")  # TODO: Remove when unnecessary
+  set_os_variable(CODX_CORE_TARGETS ${DD_TARGETS} "linux-gcc8.5.0")
+  set_os_variable(CODX_MESSAGES_TARGETS ${DD_TARGETS} "linux-gcc10.2.1")
+  set_os_variable(APILICENSING_TARGETS ${DD_TARGETS} "linux-gcc8.5.0")
+  set_os_variable(LINKMANAGERFRAMEWORK_TARGETS ${DD_TARGETS} "linux-gcc8.5.0")
+  set_os_variable(LOGX_TARGETS ${DD_TARGETS} "linux-gcc10.2.1")
+  set_os_variable(VORTEXOPENSPLICE_TARGETS ${DD_TARGETS} "linux-gcc9")
+  set_os_variable(TINYXML2_TARGETS ${DD_TARGETS} "linux-gcc10.2.1")
 
   # CODX CxConversionUtils
   if(NAME STREQUAL "CxConversionUtils")
     define_dependency(
       NAME "CxConversionUtils"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Frameworks/CODX/Core"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%/%ARCH%/Frameworks.CODX.Core.ConversionUtils_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%${TARGET_ARCH_SEPARATOR}%ARCH%/Frameworks.CODX.Core.ConversionUtils_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      TARGETS "${CODX_CORE_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "CxConversionUtils")
 
@@ -200,7 +211,8 @@ function(get_dependency_dlpxpi NAME)
     define_dependency(
       NAME "CxLicensing"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Frameworks/CODX/Core"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%/%ARCH%/Frameworks.CODX.Core.CxLicensing_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%${TARGET_ARCH_SEPARATOR}%ARCH%/Frameworks.CODX.Core.CxLicensing_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      TARGETS "${CODX_CORE_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "CxLicensing")
 
@@ -209,7 +221,8 @@ function(get_dependency_dlpxpi NAME)
     define_dependency(
       NAME "CxMessagesUtils"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Frameworks/CODX/Core"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%/%ARCH%/Frameworks.CODX.Core.MessagesUtils_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%${TARGET_ARCH_SEPARATOR}%ARCH%/Frameworks.CODX.Core.MessagesUtils_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      TARGETS "${CODX_CORE_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "CxMessagesUtils")
 
@@ -218,7 +231,8 @@ function(get_dependency_dlpxpi NAME)
     define_dependency(
       NAME "CxUtils"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Frameworks/CODX/Core"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%/%ARCH%/Frameworks.CODX.Core.CxUtils_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Frameworks.CODX.Core/${CODX_CORE_VERSION}/%TARGET%${TARGET_ARCH_SEPARATOR}%ARCH%/Frameworks.CODX.Core.CxUtils_${CODX_CORE_VERSION}_%TARGET%-%ARCH%.zip"
+      TARGETS "${CODX_CORE_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "CxUtils")
 
@@ -230,6 +244,7 @@ function(get_dependency_dlpxpi NAME)
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
       REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols/CODX/L11/ED${L11_EDITION}/${CODX_L11_VERSION}/internal/L11_ED${L11_EDITION}_${CODX_L11_VERSION}_internal_%TARGET%-%ARCH%_Delivery.zip"
       FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L11ED${L11_EDITION}"
+      TARGETS "${CODX_MESSAGES_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "CodxL11")
 
@@ -241,6 +256,7 @@ function(get_dependency_dlpxpi NAME)
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
       REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols/CODX/L16/ED${L16_EDITION}/${CODX_L16_VERSION}/internal/L16_ED${L16_EDITION}_${CODX_L16_VERSION}_internal_%TARGET%-%ARCH%_Delivery.zip"
       FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L16ED${L16_EDITION}"
+      TARGETS "${CODX_MESSAGES_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "CodxL16")
 
@@ -252,6 +268,7 @@ function(get_dependency_dlpxpi NAME)
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
       REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols/CODX/L22/ED${L22_EDITION}/${CODX_L22_VERSION}/internal/L22_ED${L22_EDITION}_${CODX_L22_VERSION}_internal_%TARGET%-%ARCH%_Delivery.zip"
       FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L22ED${L22_EDITION}"
+      TARGETS "${CODX_MESSAGES_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "CodxL22")
 
@@ -262,6 +279,7 @@ function(get_dependency_dlpxpi NAME)
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
       REMOTE_PATH "${ARTIFACTORY_URL}/release/L16OPS_Translations/1.1.6/CODX.STANAG_5616.1.1.6.3.cpp11.zip"
       FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L16OPSTranslation/Delivery"
+      TARGETS "${CODX_MESSAGES_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "L16OPSTranslation")
 
@@ -291,6 +309,7 @@ function(get_dependency_dlpxpi NAME)
       NAME "Licensing"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
       REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries.Licensing/5.1.0/%TARGET%/%ARCH%/Libraries.Licensing-5.1.0-%TARGET%-%ARCH%.zip"
+      TARGETS "${APILICENSING_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "APILicensing")
 
@@ -308,17 +327,28 @@ function(get_dependency_dlpxpi NAME)
     define_dependency(
       NAME "LnkMgrFwk"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries/INM"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LnkMgrFwk/1.0.2.0/%TARGET%/%ARCH%/LnkMgrFwk_1.0.2.0_%TARGET%-%ARCH%.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LnkMgrFwk/1.0.2.0/%TARGET%${TARGET_ARCH_SEPARATOR}%ARCH%/LnkMgrFwk_1.0.2.0_%TARGET%-%ARCH%.zip"
+      TARGETS "${LINKMANAGERFRAMEWORK_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "LinkManagerFramework")
 
+  # TODO: Restore unique version on next DLPX-HI release
   # LogX
   if(NAME STREQUAL "LogX")
-    define_dependency(
-      NAME "LogX"
-      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LogX/1.3.4/LogX_1.3.4.zip"
-      CREATEDIR)
+    if(WIN32)
+      define_dependency(
+        NAME "LogX"
+        OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
+        REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LogX/1.3.4/LogX_1.3.4.zip"
+        CREATEDIR)
+    else(WIN32)
+      define_dependency(
+        NAME "LogX"
+        OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
+        REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LogX/1.3.5/LogX_1.3.5_%TARGET%-%ARCH%.zip"
+        TARGETS "${LOGX_TARGETS}"
+        CREATEDIR)
+    endif(WIN32)
   endif(NAME STREQUAL "LogX")
 
   # ReadOLM
@@ -397,6 +427,7 @@ function(get_dependency_dlpxpi NAME)
       DIRNAME "VortexOpenSplice-6.11.2p5"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/3rdParty"
       REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/VortexOpenSplice/6.11.2p5/%TARGET%/%ARCH%/VortexOpenSplice_6.11.2p5_%TARGET%_%ARCH%.zip"
+      TARGETS "${VORTEXOPENSPLICE_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "VortexOpenSplice")
 
@@ -407,6 +438,7 @@ function(get_dependency_dlpxpi NAME)
       DIRNAME "TinyXML2-5.0.1"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/3rdParty"
       REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/TinyXML2/5.0.1/%TARGET%/%ARCH%/TinyXML2_5.0.1_%TARGET%-%ARCH%.zip"
+      TARGETS "${TINYXML2_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "TinyXML2")
 
@@ -472,7 +504,7 @@ endfunction(get_dependency_dlpxpi NAME)
 function(get_dependency_components_dlpxpi NAME COMPONENTS)
 
   set(DD_ARCHS "x64")
-  set(DD_TARGETS "win-msvc2015")
+  set_os_variable(DD_TARGETS "win-msvc2015" "linux-gcc10.2.1")
 
   # DLPX-HI
   if(NAME STREQUAL "DlpxHi")

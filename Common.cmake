@@ -51,7 +51,7 @@ option(ENABLE_PDB_RELEASE "Enable PDB files for release" TRUE)
 if(WIN32)
   set(TARGET_NAME "win-msvc2015-x64" CACHE INTERNAL "Target name")
 else(WIN32)
-  set(TARGET_NAME "linux-gcc10.2.1-x64" CACHE INTERNAL "Target name")
+  set(TARGET_NAME "linux-gcc12.2-x64" CACHE INTERNAL "Target name")
 endif(WIN32)
 
 # Common configuration

@@ -3,5 +3,5 @@ find_dlpxhi_package_libraries(
   "MDlpSettings"
   "MDlpSettingsConfigReaders;MDlpSettingsConfigWriters;MDlpSettingsObjects"
   "Objects/LibEntry/MDlpSettingsObjectsExport.h"
-  "${TARGET_NAME}/debug"
-  "${TARGET_NAME}/release")
+  "${DEP_TARGET_NAME}/debug"
+  "${DEP_TARGET_NAME}/release")

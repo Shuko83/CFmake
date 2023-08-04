@@ -1,4 +1,4 @@
-# TODO: Use ${TARGET_NAME} when related target name has been available
+# TODO: Use ${DEP_TARGET_NAME} when related target name has been available
 
 find_package_libraries(
   "ApiTacticalX"

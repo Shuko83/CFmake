@@ -1,6 +1,9 @@
+# TODO: Use unique name when available
+set_os_variable(ApiLicensing "ApiLicensing" "ApiLicensingLinux")
+
 find_package_libraries(
   "Licensing"
-  "ApiLicensing"
+  "${ApiLicensing}"
   "ILicensing.h"
-  "${TARGET_NAME}/debug"
-  "${TARGET_NAME}/release")
+  "${DEP_TARGET_NAME}/debug"
+  "${DEP_TARGET_NAME}/release")

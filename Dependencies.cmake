@@ -37,6 +37,8 @@ function(define_dependency)
     list(APPEND DEP_TARGETS "${DD_TARGETS}")
   endif(NOT DEFINED DEP_TARGETS)
 
+  set_os_variable(DEP_TARGET_NAME ${TARGET_NAME} "${DEP_TARGETS}-${DEP_ARCHS}")
+
   # Report (before download and find package)
 
   set(DEP_FIND FALSE)

@@ -3,5 +3,5 @@ find_dlpxhi_package_libraries(
   "ZTA"
   "ZTAObjects;ZTAReportReaders;ZTAReportWriters"
   "Objects/LibEntry/ZTAObjectsExport.h"
-  "${TARGET_NAME}/debug"
-  "${TARGET_NAME}/release")
+  "${DEP_TARGET_NAME}/debug"
+  "${DEP_TARGET_NAME}/release")
