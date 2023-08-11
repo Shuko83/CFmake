@@ -53,6 +53,7 @@ set(L11_EDITION "8" CACHE STRING "L11 edition")
 set(L16_EDITION "8" CACHE STRING "L16 edition")
 set(L22_EDITION "6" CACHE STRING "L22 edition")
 set(CLA_EDITION "1" CACHE STRING "CLA edition")
+set(ASTERIX_EDITION "1" CACHE STRING "Asterix edition")
 
 # TODO: Restore unique version on next DLPX-HI release
 set(CODX_CORE_VERSION "1.8.2" CACHE STRING "CODX Core version")
@@ -61,6 +62,7 @@ set_os_cache_variable(CODX_L11_VERSION "10.4.2.060800" "10.4.3.060800" STRING "C
 set_os_cache_variable(CODX_L16_VERSION "10.4.2.060800" "10.4.3.060800" STRING "CODX L16 version")
 set_os_cache_variable(CODX_L22_VERSION "10.4.2.060800" "10.4.3.060800" STRING "CODX L22 version")
 set(CODX_CLA_VERSION "TBD" CACHE STRING "CODX CLA version")
+set(CODX_ASTERIX_VERSION "10.4.0.030102" CACHE STRING "CODX Asterix version")
 
 # TODO: Restore unique version on next DLPX-HI release
 set_os_cache_variable(DLPX_HI_VERSION "3.2.6" "3.2.6.1" STRING "DLPX-HI version")
@@ -271,6 +273,18 @@ function(get_dependency_dlpxpi NAME)
       TARGETS "${CODX_MESSAGES_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "CodxL22")
+
+  # CODX Asterix
+  if(NAME STREQUAL "CodxAsterix")
+    define_dependency(
+      NAME "CodxAsterix"
+      DIRNAME "ASTERIXED${ASTERIX_EDITION}"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols/CODX/ASTERIX/ED${ASTERIX_EDITION}/${CODX_ASTERIX_VERSION}/internal/ASTERIX_ED${ASTERIX_EDITION}_${CODX_ASTERIX_VERSION}_internal_%TARGET%-%ARCH%_Delivery.zip"
+      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/ASTERIXED${ASTERIX_EDITION}"
+      TARGETS "${CODX_MESSAGES_TARGETS}"
+      CREATEDIR)
+  endif(NAME STREQUAL "CodxAsterix")
 
   # CODX L16OPSTranslation
   if(NAME STREQUAL "L16OPSTranslation")
