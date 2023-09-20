@@ -69,27 +69,25 @@ set(CMAKE_RELWITHDEBINFO_POSTFIX rd)
 # MSVC configuration
 if(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
   set(CMAKE_GENERATOR_PLATFORM "x64" CACHE INTERNAL "Target architecture")
-  string(APPEND CMAKE_CXX_FLAGS " /MP /W4 /wd4251 /wd4373")
+  add_compile_options(/MP /W4 /wd4251 /wd4373)
   add_compile_definitions(NOMINMAX WIN32_LEAN_AND_MEAN)
   if(ENABLE_PDB_RELEASE)
-    string(APPEND CMAKE_CXX_FLAGS_RELEASE " /Zi")
-    string(APPEND CMAKE_EXE_LINKER_FLAGS_RELEASE " /DEBUG /INCREMENTAL")
-    string(APPEND CMAKE_MODULE_LINKER_FLAGS_RELEASE " /DEBUG /INCREMENTAL")
-    string(APPEND CMAKE_SHARED_LINKER_FLAGS_RELEASE " /DEBUG /INCREMENTAL")
-    string(APPEND CMAKE_STATIC_LINKER_FLAGS_RELEASE " /DEBUG /INCREMENTAL")
+    add_compile_options($<$<CONFIG:RELEASE>:/Zi>)
+    add_link_options($<$<CONFIG:RELEASE>:/DEBUG>)
+    add_link_options($<$<CONFIG:RELEASE>:/INCREMENTAL>)
   endif(ENABLE_PDB_RELEASE)
 endif(CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
 
 # GCC configuration
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-  string(APPEND CMAKE_CXX_FLAGS_DEBUG " -Wall -Wextra -Wconversion -Wsign-conversion -Wold-style-cast")  # TODO: Add other warnings ?
-  string(APPEND CMAKE_CXX_FLAGS_RELEASE " -w -Wl,-s")  # TODO: Set linker strip flag here ?
+  add_compile_options(-Wall -Wextra -Wconversion -Wsign-conversion -Wold-style-cast)  # TODO: Add other warnings ?
+  add_link_options($<$<CONFIG:RELEASE>:-Wl,-strip-all>)
 endif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
 # Clang configuration
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  string(APPEND CMAKE_CXX_FLAGS_DEBUG " -Weverything -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic")
-  string(APPEND CMAKE_CXX_FLAGS_RELEASE " -w -Wl,-s")  # TODO: Set linker strip flag here ?
+  add_compile_options(-Weverything -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic)
+  add_link_options($<$<CONFIG:RELEASE>:-Wl,-strip-all>)
 endif(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 
 ################################################################################
@@ -102,15 +100,15 @@ option(ENABLE_CODE_SANITIZERS "Enable code sanitizers" FALSE)
 
 # Code coverage
 if(ENABLE_CODE_COVERAGE)
-  string(APPEND CMAKE_CXX_FLAGS_DEBUG " --coverage")
+  add_compile_options($<$<CONFIG:DEBUG>:--coverage>)
 endif(ENABLE_CODE_COVERAGE)
 
 # Code guidelines
 if(ENABLE_CODE_GUIDELINES)
-  string(APPEND CMAKE_CXX_CLANG_TIDY " clang-tidy -header-filter=.* -checks=*,-llvmlibc-*,-modernize-use-nodiscard,-modernize-use-trailing-return-type --extra-arg=-I${CMAKE_CURRENT_SOURCE_DIR}/include")
+  set(CMAKE_CXX_CLANG_TIDY "clang-tidy;-header-filter=.*;-checks=*,-llvmlibc-*,-modernize-use-nodiscard,-modernize-use-trailing-return-type")
 endif(ENABLE_CODE_GUIDELINES)
 
 # Code sanitizers
 if(ENABLE_CODE_SANITIZERS)
-  string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address,dataflow,leak,memory,thread,undefined")  # TODO: Set enabled sanitizers ?
+  add_compile_options($<$<CONFIG:DEBUG>:-fsanitize=address,dataflow,leak,memory,thread,undefined>)  # TODO: Set enabled sanitizers ?
 endif(ENABLE_CODE_SANITIZERS)
