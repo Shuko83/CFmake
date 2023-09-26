@@ -1,5 +1,5 @@
 # TODO: Use unique name when available
-set_os_variable(LinkManagerFramework "LinkManagerFramework" "LnkMgrFwk")
+set_os_variable(LinkManagerFramework "LinkManagerFramework" "LinkManagerFrameworkProto;LnkMgrFwk")
 
 find_package_libraries(
   "LnkMgrFwk"

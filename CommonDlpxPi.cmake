@@ -466,6 +466,16 @@ function(get_dependency_dlpxpi NAME)
       CMAKE)
   endif(NAME STREQUAL "GoogleTest")
 
+  # gRPC
+  if(NAME STREQUAL "gRPC")
+    define_dependency(
+      NAME "gRPC"
+      DIRNAME "gRPC-1.45.0"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/3rdParty"
+      REMOTE_PATH "${ARTIFACTORY_URL}/thirdParty/gRPC/1.45.0/%TARGET%/%ARCH%/gRPC_1.45.0_%TARGET%-%ARCH%.zip"
+      CMAKE)
+  endif(NAME STREQUAL "gRPC")
+
   # VCRedist
   if(NAME STREQUAL "VCRedist")
     download_dependency(
