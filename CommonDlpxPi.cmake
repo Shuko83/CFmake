@@ -378,7 +378,7 @@ function(get_dependency_dlpxpi NAME)
     download_dependency(
       DIRNAME "DlpxHiGenerator"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Products/DLPX-HI"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Generator/${DLPX_HI_GENERATOR_VERSION}/DlpxHiGenerator_${DLPX_HI_GENERATOR_VERSION}_c-%ARCH%-Qt5.9.zip"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/DLPX.HI.Generator/${DLPX_HI_GENERATOR_VERSION}/DlpxHiGenerator_${DLPX_HI_GENERATOR_VERSION}_c_%ARCH%.zip"
       ARCHS "x64"
       TARGETS "2015"
       CREATEDIR)
