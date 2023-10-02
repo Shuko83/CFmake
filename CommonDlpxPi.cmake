@@ -49,26 +49,24 @@ set(ProtocolsDLPXPIL11_VERSION "develop" CACHE STRING "Protocols.DLPX-PI.L11 sub
 set(ProtocolsDLPXPIL16_VERSION "develop" CACHE STRING "Protocols.DLPX-PI.L16 sub-project version")
 set(ProtocolsDLPXPIL22_VERSION "develop" CACHE STRING "Protocols.DLPX-PI.L22 sub-project version")
 
-set(L11_EDITION "8" CACHE STRING "L11 edition")
+set(L11_EDITION "7" CACHE STRING "L11 edition")
 set(L16_EDITION "8" CACHE STRING "L16 edition")
 set(L22_EDITION "6" CACHE STRING "L22 edition")
 set(CLA_EDITION "1" CACHE STRING "CLA edition")
 set(ASTERIX_EDITION "1" CACHE STRING "Asterix edition")
 
-# TODO: Restore unique version on next DLPX-HI release
 set(CODX_CORE_VERSION "1.8.2" CACHE STRING "CODX Core version")
-set_os_cache_variable(CODX_GENERATOR_VERSION "10.4.2" "10.4.3" STRING "CODX Generator version")
-set_os_cache_variable(CODX_L11_VERSION "10.4.2.060800" "10.4.3.060800" STRING "CODX L11 version")
-set_os_cache_variable(CODX_L16_VERSION "10.4.2.060800" "10.4.3.060800" STRING "CODX L16 version")
-set_os_cache_variable(CODX_L22_VERSION "10.4.2.060800" "10.4.3.060800" STRING "CODX L22 version")
+set(CODX_GENERATOR_VERSION "10.4.4" CACHE STRING "CODX Generator version")
+set(CODX_L11_VERSION "10.4.4.060602" CACHE STRING "CODX L11 version")
+set(CODX_L16_VERSION "10.4.4.060800" CACHE STRING "CODX L16 version")
+set(CODX_L22_VERSION "10.4.4.060900" CACHE STRING "CODX L22 version")
 set(CODX_CLA_VERSION "TBD" CACHE STRING "CODX CLA version")
 set(CODX_ASTERIX_VERSION "10.4.0.030102" CACHE STRING "CODX Asterix version")
 
-# TODO: Restore unique version on next DLPX-HI release
-set_os_cache_variable(DLPX_HI_VERSION "3.2.6" "3.2.6.1" STRING "DLPX-HI version")
-set_os_cache_variable(DLPX_HI_COMMON_VERSION "3.2.3" "3.2.4" STRING "DLPX-HI Common version")
-set_os_cache_variable(DLPX_HI_CODX_VERSION "10.4.2.030205" "10.4.3.030206" STRING "DLPX-HI CODX version")
-set(DLPX_HI_GENERATOR_VERSION "3.2.4" CACHE STRING "DLPX-HI Generator version")
+set(DLPX_HI_VERSION "3.2.7" CACHE STRING "DLPX-HI version")
+set(DLPX_HI_COMMON_VERSION "3.2.5" CACHE STRING "DLPX-HI Common version")
+set(DLPX_HI_CODX_VERSION "10.4.4.030207" CACHE STRING "DLPX-HI CODX version")
+set(DLPX_HI_GENERATOR_VERSION "3.2.5" CACHE STRING "DLPX-HI Generator version")
 
 set(Qt5_VERSION "5.9.6" CACHE INTERNAL "Qt5 version")
 set(Qt5_ARCH "msvc2015_64" CACHE INTERNAL "Qt5 architecture")
@@ -346,23 +344,14 @@ function(get_dependency_dlpxpi NAME)
       CREATEDIR)
   endif(NAME STREQUAL "LinkManagerFramework")
 
-  # TODO: Restore unique version on next DLPX-HI release
   # LogX
   if(NAME STREQUAL "LogX")
-    if(WIN32)
-      define_dependency(
-        NAME "LogX"
-        OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
-        REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LogX/1.3.4/LogX_1.3.4.zip"
-        CREATEDIR)
-    else(WIN32)
-      define_dependency(
-        NAME "LogX"
-        OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
-        REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LogX/1.3.5/LogX_1.3.5_%TARGET%-%ARCH%.zip"
-        TARGETS "${LOGX_TARGETS}"
-        CREATEDIR)
-    endif(WIN32)
+    define_dependency(
+      NAME "LogX"
+      OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Libraries"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Libraries/LogX/1.3.5/LogX_1.3.5_%TARGET%-%ARCH%.zip"
+      TARGETS "${LOGX_TARGETS}"
+      CREATEDIR)
   endif(NAME STREQUAL "LogX")
 
   # ReadOLM
