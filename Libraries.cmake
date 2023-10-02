@@ -54,6 +54,7 @@ function(find_package_library NAME LIBNAME LIBPATH_D LIBPATH_R)
 
   add_library(${NAME}::${LIBNAME} SHARED IMPORTED)
 
+  set_target_properties(${NAME}::${LIBNAME} PROPERTIES IMPORTED_NO_SONAME TRUE)
   set_target_properties(${NAME}::${LIBNAME} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${${NAME}_INCLUDE_DIR})
 
   if(${NAME}_${LIBNAME}_LIB_D)
@@ -132,6 +133,7 @@ function(find_package_unique_library NAME LIBNAME LIBPATH)
 
   add_library(${NAME}::${LIBNAME} SHARED IMPORTED)
 
+  set_target_properties(${NAME}::${LIBNAME} PROPERTIES IMPORTED_NO_SONAME TRUE)
   set_target_properties(${NAME}::${LIBNAME} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${${NAME}_INCLUDE_DIR})
 
   if(${NAME}_${LIBNAME}_LIB)

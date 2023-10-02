@@ -63,6 +63,7 @@ function(find_dlpxhi_package_library_1 NAME PATTERN LIBNAME LIBPATH_D LIBPATH_R)
 
   add_library(${NAME}::${LIBNAME_S} SHARED IMPORTED)
 
+  set_target_properties(${NAME}::${LIBNAME_S} PROPERTIES IMPORTED_NO_SONAME TRUE)
   set_target_properties(${NAME}::${LIBNAME_S} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${${NAME}_INCLUDE_DIR})
 
   if(${NAME}_${LIBNAME_S}_LIB_D)
@@ -120,6 +121,7 @@ function(find_dlpxhi_package_library_2 NAME PATTERN LIBNAME LIBPATH_D LIBPATH_R)
 
   add_library(${NAME}::${LIBNAME_S} SHARED IMPORTED)
 
+  set_target_properties(${NAME}::${LIBNAME_S} PROPERTIES IMPORTED_NO_SONAME TRUE)
   set_target_properties(${NAME}::${LIBNAME_S} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${${NAME}_INCLUDE_DIR}/${LIBNAME_S})
 
   if(${NAME}_${LIBNAME_S}_LIB_D)

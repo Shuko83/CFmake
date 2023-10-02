@@ -57,6 +57,7 @@ function(find_codx_package_library NAME PATTERN LIBNAME LIBPATH_D LIBPATH_R)
 
   add_library(${NAME}::${LIBNAME_S} SHARED IMPORTED)
 
+  set_target_properties(${NAME}::${LIBNAME_S} PROPERTIES IMPORTED_NO_SONAME TRUE)
   set_target_properties(${NAME}::${LIBNAME_S} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${${NAME}_INCLUDE_DIR})
 
   if(${NAME}_${LIBNAME_S}_LIB_D)

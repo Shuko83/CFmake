@@ -56,6 +56,7 @@ function(find_vos_package_library NAME LIBNAME LIBPATH BINPATH)
 
   add_library(${NAME}::${LIBNAME} SHARED IMPORTED)
 
+  set_target_properties(${NAME}::${LIBNAME} PROPERTIES IMPORTED_NO_SONAME TRUE)
   set_target_properties(${NAME}::${LIBNAME} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${${NAME}_INCLUDE_DIR})
 
   if(WIN32)
