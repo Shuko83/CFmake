@@ -231,6 +231,7 @@ function(define_component)
 
   # Runtime
 
+  set_os_variable(COMPONENT_OUTPUT_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
   list(APPEND RUNTIME_DEPS ${COMPONENT_RUNTIME_DEPS})
   get_runtime_dependencies(${COMPONENT_NAME})
   foreach(RUNTIME_DEP IN LISTS RUNTIME_DEPS)
@@ -244,7 +245,7 @@ function(define_component)
             COMMAND cmake -E
             $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,copy_if_different,echo_append>
             $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${RUNTIME_DEP_LOCATION},>
-            $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${RUNTIME_DEP_NAME},>)
+            $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${COMPONENT_OUTPUT_DIRECTORY}/${RUNTIME_DEP_NAME},>)
           if(WIN32 AND MSVC AND ENABLE_PDB_COPY)
             string(REPLACE ".dll" ".pdb" RUNTIME_DEP_PDB_NAME ${RUNTIME_DEP_NAME})
             string(REPLACE ".dll" ".pdb" RUNTIME_DEP_PDB_LOCATION ${RUNTIME_DEP_LOCATION})
@@ -253,7 +254,7 @@ function(define_component)
                 COMMAND cmake -E
                 $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,copy_if_different,echo_append>
                 $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${RUNTIME_DEP_PDB_LOCATION},>
-                $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${RUNTIME_DEP_PDB_NAME},>)
+                $<IF:$<CONFIG:${RUNTIME_DEP_CONFIG}>,${COMPONENT_OUTPUT_DIRECTORY}/${RUNTIME_DEP_PDB_NAME},>)
             endif(EXISTS ${RUNTIME_DEP_PDB_LOCATION})
           endif(WIN32 AND MSVC AND ENABLE_PDB_COPY)
         endif(EXISTS ${RUNTIME_DEP_LOCATION})

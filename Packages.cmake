@@ -67,16 +67,20 @@ function(define_package)
 
   # VisualRedistributable
 
-  set(VISUALREDISTRIBUTABLE_COMPONENT_NAME "VisualRedistributable")
-  install(FILES ${VCRedist_ROOT}/vc_redist.${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}.exe DESTINATION "." COMPONENT ${VISUALREDISTRIBUTABLE_COMPONENT_NAME})
-  list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "ExecWait \\\"$INSTDIR\\\\vc_redist.${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}.exe /install /passive /norestart\\\"")
+  if(WIN32)
+    set(VISUALREDISTRIBUTABLE_COMPONENT_NAME "VisualRedistributable")
+    install(FILES ${VCRedist_ROOT}/vc_redist.${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}.exe DESTINATION "." COMPONENT ${VISUALREDISTRIBUTABLE_COMPONENT_NAME})
+    list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "ExecWait \\\"$INSTDIR\\\\vc_redist.${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}.exe /install /passive /norestart\\\"")
+  endif(WIN32)
 
   # LicenseManager
 
-  set(LICENSEMANAGER_COMPONENT_NAME "LicenseManager")
-  install(FILES ${HASP_ROOT}/hasp_rt.exe DESTINATION "." COMPONENT ${LICENSEMANAGER_COMPONENT_NAME})
-  install(FILES ${HASP_ROOT}/haspdinst.exe DESTINATION "." COMPONENT ${LICENSEMANAGER_COMPONENT_NAME})
-  list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "ExecWait \\\"$INSTDIR\\\\haspdinst.exe -i -criticalmsg\\\"")
+  if(WIN32)
+    set(LICENSEMANAGER_COMPONENT_NAME "LicenseManager")
+    install(FILES ${HASP_ROOT}/hasp_rt.exe DESTINATION "." COMPONENT ${LICENSEMANAGER_COMPONENT_NAME})
+    install(FILES ${HASP_ROOT}/haspdinst.exe DESTINATION "." COMPONENT ${LICENSEMANAGER_COMPONENT_NAME})
+    list(APPEND CPACK_NSIS_EXTRA_INSTALL_COMMANDS "ExecWait \\\"$INSTDIR\\\\haspdinst.exe -i -criticalmsg\\\"")
+  endif(WIN32)
 
   # Install and uninstall commands + create and delete icons
 
