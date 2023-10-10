@@ -240,6 +240,7 @@ function(define_component)
       foreach(RUNTIME_DEP_CONFIG IN LISTS RUNTIME_DEP_CONFIGS)
         get_target_property(RUNTIME_DEP_LOCATION ${RUNTIME_DEP} IMPORTED_LOCATION_${RUNTIME_DEP_CONFIG})
         if(EXISTS ${RUNTIME_DEP_LOCATION})
+          relocate_runtime_dependency(${RUNTIME_DEP} ${RUNTIME_DEP_CONFIG} ${RUNTIME_DEP_LOCATION})
           get_filename_component(RUNTIME_DEP_NAME ${RUNTIME_DEP_LOCATION} NAME)
           add_custom_command(TARGET ${COMPONENT_NAME} POST_BUILD
             COMMAND cmake -E

@@ -381,3 +381,58 @@ function(get_runtime_dependencies COMPONENT_NAME)
   set(RUNTIME_DEPS ${RUNTIME_DEPS} PARENT_SCOPE)
 
 endfunction(get_runtime_dependencies)
+
+################################################################################
+# Set target SONAME property
+################################################################################
+
+function(set_target_soname TARGET_NAME)
+
+  get_target_property(TARGET_LOCATION_D ${TARGET_NAME} IMPORTED_LOCATION_DEBUG)
+  get_target_property(TARGET_LOCATION_R ${TARGET_NAME} IMPORTED_LOCATION_RELEASE)
+  get_filename_component(TARGET_DIR_D ${TARGET_LOCATION_D} DIRECTORY)
+  get_filename_component(TARGET_DIR_R ${TARGET_LOCATION_R} DIRECTORY)
+  get_filename_component(TARGET_LIB_D ${TARGET_LOCATION_D} NAME)
+  get_filename_component(TARGET_LIB_R ${TARGET_LOCATION_R} NAME)
+  get_filename_component(TARGET_SONAME_D ${TARGET_LOCATION_D} NAME)
+  get_filename_component(TARGET_SONAME_R ${TARGET_LOCATION_R} NAME)
+
+  file(GLOB TARGET_PATHS_D ${TARGET_DIR_D}/${TARGET_LIB_D}*)
+  file(GLOB TARGET_PATHS_R ${TARGET_DIR_R}/${TARGET_LIB_R}*)
+  foreach(TARGET_PATH_D IN LISTS TARGET_PATHS_D)
+    string(REGEX MATCH "${TARGET_DIR_D}/${TARGET_LIB_D}.[0-9]+" TARGET_MATCH_D ${TARGET_PATH_D})
+    if(TARGET_MATCH_D)
+      get_filename_component(TARGET_SONAME_D ${TARGET_MATCH_D} NAME)
+    endif(TARGET_MATCH_D)
+  endforeach(TARGET_PATH_D IN LISTS TARGET_PATHS_D)
+  foreach(TARGET_PATH_R IN LISTS TARGET_PATHS_R)
+    string(REGEX MATCH "${TARGET_DIR_R}/${TARGET_LIB_R}.[0-9]+" TARGET_MATCH_R ${TARGET_PATH_R})
+    if(TARGET_MATCH_R)
+      get_filename_component(TARGET_SONAME_R ${TARGET_MATCH_R} NAME)
+    endif(TARGET_MATCH_R)
+  endforeach(TARGET_PATH_R IN LISTS TARGET_PATHS_R)
+
+  set_target_properties(${TARGET_NAME} PROPERTIES
+    IMPORTED_SONAME_DEBUG ${TARGET_SONAME_D}
+    IMPORTED_SONAME_RELEASE ${TARGET_SONAME_R}
+    IMPORTED_SONAME_MINSIZEREL ${TARGET_SONAME_R}
+    IMPORTED_SONAME_RELWITHDEBINFO ${TARGET_SONAME_R})
+
+endfunction(set_target_soname TARGET_NAME)
+
+################################################################################
+# Relocate runtime dependency using target SONAME property
+################################################################################
+
+function(relocate_runtime_dependency RUNTIME_DEP RUNTIME_DEP_CONFIG RUNTIME_DEP_LOCATION)
+
+  if(NOT WIN32)
+    get_filename_component(RUNTIME_DEP_NAME ${RUNTIME_DEP_LOCATION} NAME)
+    get_target_property(RUNTIME_DEP_SONAME ${RUNTIME_DEP} IMPORTED_SONAME_${RUNTIME_DEP_CONFIG})
+    if(RUNTIME_DEP_SONAME AND NOT RUNTIME_DEP_SONAME STREQUAL ${RUNTIME_DEP_NAME})
+      string(REPLACE ${RUNTIME_DEP_NAME} ${RUNTIME_DEP_SONAME} RUNTIME_DEP_LOCATION ${RUNTIME_DEP_LOCATION})
+      set(RUNTIME_DEP_LOCATION ${RUNTIME_DEP_LOCATION} PARENT_SCOPE)
+    endif(RUNTIME_DEP_SONAME AND NOT RUNTIME_DEP_SONAME STREQUAL ${RUNTIME_DEP_NAME})
+  endif(NOT WIN32)
+
+endfunction(relocate_runtime_dependency RUNTIME_DEP RUNTIME_DEP_CONFIG RUNTIME_DEP_LOCATION)

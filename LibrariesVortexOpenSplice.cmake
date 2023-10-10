@@ -45,10 +45,10 @@ function(find_vos_package_library NAME LIBNAME LIBPATH BINPATH)
     NO_DEFAULT_PATH)
 
   if(WIN32)
-    get_filename_component(${NAME}_${LIBNAME}_LIBPATH_D ${${NAME}_${LIBNAME}_LIB_D} DIRECTORY)
-    get_filename_component(${NAME}_${LIBNAME}_LIBPATH_R ${${NAME}_${LIBNAME}_LIB_R} DIRECTORY)
-    set(${NAME}_${LIBNAME}_DLL_D ${${NAME}_${LIBNAME}_LIBPATH_D}/../${BINPATH}_debug/${LIBNAME}.dll)
-    set(${NAME}_${LIBNAME}_DLL_R ${${NAME}_${LIBNAME}_LIBPATH_R}/../${BINPATH}/${LIBNAME}.dll)
+    get_filename_component(${NAME}_${LIBNAME}_DIR_D ${${NAME}_${LIBNAME}_LIB_D} DIRECTORY)
+    get_filename_component(${NAME}_${LIBNAME}_DIR_R ${${NAME}_${LIBNAME}_LIB_R} DIRECTORY)
+    set(${NAME}_${LIBNAME}_DLL_D ${${NAME}_${LIBNAME}_DIR_D}/../${BINPATH}_debug/${LIBNAME}.dll)
+    set(${NAME}_${LIBNAME}_DLL_R ${${NAME}_${LIBNAME}_DIR_R}/../${BINPATH}/${LIBNAME}.dll)
   else(WIN32)
     set(${NAME}_${LIBNAME}_DLL_D ${${NAME}_${LIBNAME}_LIB_D})
     set(${NAME}_${LIBNAME}_DLL_R ${${NAME}_${LIBNAME}_LIB_R})
@@ -88,9 +88,11 @@ function(find_vos_package_library NAME LIBNAME LIBPATH BINPATH)
     if(${NAME}_${LIBNAME}_LIB_R)
       set_property(TARGET ${NAME}::${LIBNAME} APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE DEBUG MINSIZEREL RELWITHDEBINFO)
       set_target_properties(${NAME}::${LIBNAME} PROPERTIES
+        IMPORTED_IMPLIB_DEBUG ${${NAME}_${LIBNAME}_LIB_R}
         IMPORTED_IMPLIB_RELEASE ${${NAME}_${LIBNAME}_LIB_R}
         IMPORTED_IMPLIB_MINSIZEREL ${${NAME}_${LIBNAME}_LIB_R}
         IMPORTED_IMPLIB_RELWITHDEBINFO ${${NAME}_${LIBNAME}_LIB_R}
+        IMPORTED_LOCATION_DEBUG ${${NAME}_${LIBNAME}_DLL_R}
         IMPORTED_LOCATION_RELEASE ${${NAME}_${LIBNAME}_DLL_R}
         IMPORTED_LOCATION_MINSIZEREL ${${NAME}_${LIBNAME}_DLL_R}
         IMPORTED_LOCATION_RELWITHDEBINFO ${${NAME}_${LIBNAME}_DLL_R})
@@ -99,6 +101,8 @@ function(find_vos_package_library NAME LIBNAME LIBPATH BINPATH)
     endif(${NAME}_${LIBNAME}_LIB_R)
 
   endif(WIN32)
+
+  set_target_soname(${NAME}::${LIBNAME})
 
   set(${NAME}_${LIBNAME}_LIB_D ${${NAME}_${LIBNAME}_LIB_D} CACHE INTERNAL "${NAME}::${LIBNAME} debug library")
   set(${NAME}_${LIBNAME}_LIB_R ${${NAME}_${LIBNAME}_LIB_R} CACHE INTERNAL "${NAME}::${LIBNAME} release library")
