@@ -127,30 +127,32 @@ Les options suivantes sont disponibles.
 
 Les variables suivantes définissent la construction.
 
-| Nom                              | Type     | Valeur                              | Description                           |
-|----------------------------------|----------|-------------------------------------|---------------------------------------|
-| `TARGET_NAME`                    | `STRING` | `win-msvc2015-x64`                  | Architecture cible                    |
-| `CMAKE_CXX_STANDARD`             | `NUMBER` | `11`                                | Version du langage C++                |
-| `CMAKE_CXX_STANDARD_REQUIRED`    | `BOOL`   | `TRUE`                              | Norme standard C++                    |
-| `CMAKE_CXX_EXTENSIONS`           | `BOOL`   | `FALSE`                             | Extensions C++                        |
-| `CMAKE_ARCHIVE_OUTPUT_DIRECTORY` | `PATH`   | `${CMAKE_BINARY_DIR}/lib/$<CONFIG>` | Chemin des archives                   |
-| `CMAKE_LIBRARY_OUTPUT_DIRECTORY` | `PATH`   | `${CMAKE_BINARY_DIR}/lib/$<CONFIG>` | Chemin des bibliothèques              |
-| `CMAKE_RUNTIME_OUTPUT_DIRECTORY` | `PATH`   | `${CMAKE_BINARY_DIR}/bin/$<CONFIG>` | Chemin des exécutables                |
-| `CMAKE_DEBUG_POSTFIX`            | `STRING` | `d`                                 | Suffixe des binaires `DEBUG`          |
-| `CMAKE_MINSIZEREL_POSTFIX`       | `STRING` | `s`                                 | Suffixe des binaires `MINSIZEREL`     |
-| `CMAKE_RELWITHDEBINFO_POSTFIX`   | `STRING` | `rd`                                | Suffixe des binaires `RELWITHDEBINFO` |
-| `CMAKE_GENERATOR_PLATFORM`       | `STRING` | `x64`                               | Plateforme du générateur _(MSVC)_     |
-| `CMAKE_CXX_FLAGS`                | `STRING` | _(voir ci-dessous)_                 | Options de compilation                |
-| `CMAKE_CXX_FLAGS_DEBUG`          | `STRING` | _(voir ci-dessous)_                 | Options de compilation `DEBUG`        |
-| `CMAKE_CXX_FLAGS_RELEASE`        | `STRING` | _(voir ci-dessous)_                 | Options de compilation `RELEASE`      |
+| Nom                              | Type     | Valeur                                    | Description                           |
+|----------------------------------|----------|-------------------------------------------|---------------------------------------|
+| `TARGET_NAME`                    | `STRING` | `win-msvc2015-x64`<br>`linux-gcc12.2-x64` | Architecture cible                    |
+| `CMAKE_CXX_STANDARD`             | `NUMBER` | `11`                                      | Version du langage C++                |
+| `CMAKE_CXX_STANDARD_REQUIRED`    | `BOOL`   | `TRUE`                                    | Norme standard C++                    |
+| `CMAKE_CXX_EXTENSIONS`           | `BOOL`   | `FALSE`                                   | Extensions C++                        |
+| `CMAKE_ARCHIVE_OUTPUT_DIRECTORY` | `PATH`   | `${CMAKE_BINARY_DIR}/lib/$<CONFIG>`       | Chemin des archives                   |
+| `CMAKE_LIBRARY_OUTPUT_DIRECTORY` | `PATH`   | `${CMAKE_BINARY_DIR}/lib/$<CONFIG>`       | Chemin des bibliothèques              |
+| `CMAKE_RUNTIME_OUTPUT_DIRECTORY` | `PATH`   | `${CMAKE_BINARY_DIR}/bin/$<CONFIG>`       | Chemin des exécutables                |
+| `CMAKE_DEBUG_POSTFIX`            | `STRING` | `d`                                       | Suffixe des binaires `DEBUG`          |
+| `CMAKE_MINSIZEREL_POSTFIX`       | `STRING` | `s`                                       | Suffixe des binaires `MINSIZEREL`     |
+| `CMAKE_RELWITHDEBINFO_POSTFIX`   | `STRING` | `rd`                                      | Suffixe des binaires `RELWITHDEBINFO` |
+| `CMAKE_GENERATOR_PLATFORM`       | `STRING` | `x64`                                     | Plateforme du générateur _(MSVC)_     |
+| `CMAKE_CXX_FLAGS`                | `STRING` | _(voir ci-dessous)_                       | Options de compilation                |
+| `CMAKE_CXX_FLAGS_DEBUG`          | `STRING` | _(voir ci-dessous)_                       | Options de compilation `DEBUG`        |
+| `CMAKE_CXX_FLAGS_RELEASE`        | `STRING` | _(voir ci-dessous)_                       | Options de compilation `RELEASE`      |
 
 Les options de compilation sont les suivantes.
 
-| Compilateur | Nom                                                   | Valeur                                                                                  |
-|-------------|-------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| MSVC        | `CMAKE_CXX_FLAGS`                                     | `/MP /W4 /wd4251 /wd4373`                                                               |
-| GNU         | `CMAKE_CXX_FLAGS_DEBUG`<br/>`CMAKE_CXX_FLAGS_RELEASE` | `-Wall -Wextra -Wconversion -Wsign-conversion -Wold-style-cast`<br/>`-w -Wl,-s`         |
-| Clang       | `CMAKE_CXX_FLAGS_DEBUG`<br/>`CMAKE_CXX_FLAGS_RELEASE` | `-Weverything -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic`<br/>`-w -Wl,-s` |
+| Compilateur | Nom                       | Valeur                                                                                 |
+|-------------|---------------------------|----------------------------------------------------------------------------------------|
+| MSVC        | `CMAKE_CXX_FLAGS`         | `/MP /W4 /wd4251 /wd4373`                                                              |
+| GNU         | `CMAKE_CXX_FLAGS_DEBUG`   | `-Wall -Wextra -Wconversion -Wsign-conversion -Wold-style-cast`                        |
+| GNU         | `CMAKE_CXX_FLAGS_RELEASE` | `-Wall -Wextra -Wconversion -Wsign-conversion -Wold-style-cast -Wl,-strip-all`         |
+| Clang       | `CMAKE_CXX_FLAGS_DEBUG`   | `-Weverything -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic`                |
+| Clang       | `CMAKE_CXX_FLAGS_RELEASE` | `-Weverything -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wl,-strip-all` |
 
 Les options suivantes sont disponibles.
 
