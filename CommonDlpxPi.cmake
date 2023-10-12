@@ -289,8 +289,8 @@ function(get_dependency_dlpxpi NAME)
     define_dependency(
       NAME "L16OPSTranslation"
       OUTPUT_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX"
-      REMOTE_PATH "${ARTIFACTORY_URL}/release/L16OPS_Translations/1.1.6/CODX.STANAG_5616.1.1.6.3.cpp11.zip"
-      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L16OPSTranslation/Delivery"
+      REMOTE_PATH "${ARTIFACTORY_URL}/release/Protocols/CODX/5616_CDC/1.0.1/internal/5616_CDC_L16_L11_1.0.1_%TARGET%-%ARCH%_Delivery.zip"
+      FIND_PATH "${CMAKE_PREFIX_PATH}/Protocols/CODX/L16OPSTranslation"
       TARGETS "${CODX_MESSAGES_TARGETS}"
       CREATEDIR)
   endif(NAME STREQUAL "L16OPSTranslation")
