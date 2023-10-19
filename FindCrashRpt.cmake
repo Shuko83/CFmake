@@ -1,6 +1,6 @@
 find_package_unique_libraries(
   "CrashRpt"
-  "crashrpt"
+  "CrashRpt"
   "CrashRpt.h"
   "${DEP_TARGET_NAME}")
 
