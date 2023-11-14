@@ -74,20 +74,16 @@ void _SwGuiQActionToWidget::initializeComponent() throw( SwException )
     
     getPropertiesService().CreatePropertiesForQObject( this, QString(), true );
     getPropertiesService().CreatePropertiesForQObject( _hostWidget, "HostWidget", true );
-    
-    //--------------------------------------
-    //Autres
-    //--------------------------------------
-
+   
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiQActionToWidget::eventPropertyChange( ISwProperty * property )
+void _SwGuiQActionToWidget::eventPropertyChange( ISwProperty * )
 {
 }
 
 //-----------------------------------------------------------------------
-void _SwGuiQActionToWidget::eventBeforeInterfaceAvailability( QString interface_name, SwComponent_Class * provider_host )
+void _SwGuiQActionToWidget::eventBeforeInterfaceAvailability( QString , SwComponent_Class * )
 {
 }
 
@@ -198,7 +194,7 @@ void _SwGuiQActionToWidget::setStayOnTop( bool val )
 //-----------------------------------------------------------------------
 void _SwGuiQActionToWidget::ManageAction()
 {
-    if( _widget != 0 )
+    if( _widget != nullptr )
     {
         bool isChecked = _action.isChecked();//isChecked =  fenetre visible sauf si l'user clique sur la croix de la fenetre
         _hostWidget->setVisible( isChecked );
