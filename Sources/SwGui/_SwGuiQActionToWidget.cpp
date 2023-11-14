@@ -19,7 +19,6 @@ const QString INTERFACE_ACTION = QStringLiteral("Action");
 //-----------------------------------------------------------------------
 _SwGuiQActionToWidget::_SwGuiQActionToWidget() 
 	: Component()
-	, _action(nullptr)
 	, _widget(nullptr)
 	, _hostWidget(new _SwContainerCloseableWidget(nullptr))
 	, _isVisible(false)
@@ -59,7 +58,7 @@ void _SwGuiQActionToWidget::initializeComponent() throw( SwException )
     //--------------------------------------
     //Definition Interfaces fournis
     //--------------------------------------
-    getIProviderService().RegisterProvidedInterface<QAction>(INTERFACE_ACTION, (QAction * )this );
+    getIProviderService().RegisterProvidedInterface<QAction>(INTERFACE_ACTION, &_action );
     //--------------------------------------
     //Definition Interfaces consommés
     //--------------------------------------
