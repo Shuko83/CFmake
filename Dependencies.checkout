@@ -28,8 +28,8 @@
         "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Modules/2.0.0/QsLog/QsLog_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
     },
     {
-        "destination" : "Libraries/License",
-        "git" : "https://gitlab.divst/starlinx/libraries/license.git"
+        "destination": "Libraries/License",
+        "artifactory": "http://artifactory.divst:8081/artifactory/release/Libraries/License/1.1.1/License_1.1.1_win-msvc2015-x64-QT5.9.6.zip"
     },
 	{
         "destination": "Libraries/Licensing/Delivery",
