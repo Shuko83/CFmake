@@ -1,9 +1,6 @@
 win32:{
     LIBS += -lPsapi -limagehlp
 } 
-PRECOMPILED_HEADER = ../pch/StdAfx.h
-
-SOURCES -= ../pch/StdAfx.h.cpp
 
 DEFINES += UNICODE 
 

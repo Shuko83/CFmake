@@ -5,6 +5,9 @@
 
 #include "info_SwServiceTools.h"
 
+#include <QDebug>
+#include <QRegularExpression>
+
 using namespace StreamWork::SwCore;
 
 //----------------------------------------------------------------------------------------------

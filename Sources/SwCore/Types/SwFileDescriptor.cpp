@@ -8,6 +8,8 @@
 #include "SwMacros.h"
 #include <QApplication>
 #include <QDir>
+#include <QRegularExpression>
+#include <QDebug>
 
 using namespace StreamWork::SwCore;
 
