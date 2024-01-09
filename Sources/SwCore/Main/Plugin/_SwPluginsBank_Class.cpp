@@ -295,13 +295,14 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 				SwPluginFactory_Class * plugin=plugin_entry();
 
 				// Check if plugin compilation date is older than the licence
+#ifndef NO_LICENSE
  				if (!_productLicense || !_productLicense->checkBuildDate(plugin->GetPluginCompilationDate()))
 				{
 					 qDebug() << QString("Plugin %1 is too recent").arg(plugin->GetPluginName());
 					delete plugin;
 					continue;
 				}
-
+#endif
 				// Check if plugin is protected
 				SwProtectedPluginFactory_Class* protectedPlugin = dynamic_cast<SwProtectedPluginFactory_Class*>(plugin);
 				if (protectedPlugin && !protectedPlugin->unlock(_pluginLicence))

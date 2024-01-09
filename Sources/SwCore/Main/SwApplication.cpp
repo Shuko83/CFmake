@@ -50,6 +50,7 @@ SwApplication::SwApplication()
 	, _runtimeMode(false)
 	, _productLicense (nullptr)
 {
+#ifndef NO_LICENSE
 	_productLicense = new ProductLicense(licenseId::ProductId::Product_STREAMWORK);
 	if (!_productLicense->takeCore())
 	{
@@ -67,6 +68,7 @@ SwApplication::SwApplication()
 	{
 		LAUNCH_SWEXCEPTION("SwCore", "No feature runtime or developper could be found.");
 	}
+#endif
 
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 	_startPath = QDir::currentPath();
