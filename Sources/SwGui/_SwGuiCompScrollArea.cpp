@@ -63,7 +63,8 @@ void _SwGuiCompScrollArea::InitializeResources() throw( SwException )
     //Creation de l'interface principale
     _scrollArea = new QScrollArea();
     _scrollArea->setWidget( new QWidget() );
-    _scrollArea->widget()->setLayout( new QVBoxLayout() );
+    _scrollArea->setWidgetResizable(true);
+    _scrollArea->widget()->setLayout(new QVBoxLayout());
     _scrollArea->widget()->installEventFilter( this );
     
     //Enregistrement des services
@@ -141,6 +142,7 @@ void _SwGuiCompScrollArea::BeforeInterfaceAvailabilityChange( QString interface_
             //Et qu'il etait defini, on le detache de la widgetbar
             widget_it.value()->setParent( nullptr );
             widget_it.value() = nullptr;
+            _widgets.erase(widget_it);
             _registered_widgets_nb--;
         }
     }
@@ -159,7 +161,7 @@ void _SwGuiCompScrollArea::AfterInterfaceAvailabilityChange( QString interface_n
         {
             //Et qu'il etait non defini, on l'enregistre et l'attache a la widgetbar
             widget_it.value() = _tmp_handle_widget;
-            _tmp_handle_widget->layout()->addWidget( _scrollArea->widget() );
+            _scrollArea->widget()->layout()->addWidget(_tmp_handle_widget);
             _registered_widgets_nb++;
         }
     }
