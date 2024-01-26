@@ -63,7 +63,7 @@ function(find_package_library NAME LIBNAME LIBPATH_D LIBPATH_R)
       IMPORTED_IMPLIB_DEBUG ${${NAME}_${LIBNAME}_LIB_D}
       IMPORTED_LOCATION_DEBUG ${${NAME}_${LIBNAME}_DLL_D})
   else(${NAME}_${LIBNAME}_LIB_D)
-    message(DEBUG "Could not find debug library ${NAME}::${LIBNAME}")
+    message(FATAL_ERROR "Could not find debug library ${NAME}::${LIBNAME}")
   endif(${NAME}_${LIBNAME}_LIB_D)
 
   if(${NAME}_${LIBNAME}_LIB_R)
@@ -76,7 +76,7 @@ function(find_package_library NAME LIBNAME LIBPATH_D LIBPATH_R)
       IMPORTED_LOCATION_MINSIZEREL ${${NAME}_${LIBNAME}_DLL_R}
       IMPORTED_LOCATION_RELWITHDEBINFO ${${NAME}_${LIBNAME}_DLL_R})
   else(${NAME}_${LIBNAME}_LIB_R)
-    message(DEBUG "Could not find release library ${NAME}::${LIBNAME}")
+    message(FATAL_ERROR "Could not find release library ${NAME}::${LIBNAME}")
   endif(${NAME}_${LIBNAME}_LIB_R)
 
   set_target_soname(${NAME}::${LIBNAME})
@@ -150,7 +150,7 @@ function(find_package_unique_library NAME LIBNAME LIBPATH)
       IMPORTED_LOCATION_MINSIZEREL ${${NAME}_${LIBNAME}_DLL}
       IMPORTED_LOCATION_RELWITHDEBINFO ${${NAME}_${LIBNAME}_DLL})
   else(${NAME}_${LIBNAME}_LIB)
-    message(DEBUG "Could not find unique library ${NAME}::${LIBNAME}")
+    message(FATAL_ERROR "Could not find unique library ${NAME}::${LIBNAME}")
   endif(${NAME}_${LIBNAME}_LIB)
 
   set_target_soname(${NAME}::${LIBNAME})
