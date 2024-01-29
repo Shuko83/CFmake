@@ -65,7 +65,7 @@ void _SwGuiCompScrollArea::InitializeResources() throw( SwException )
     _scrollArea->setWidget( new QWidget() );
     _scrollArea->setWidgetResizable(true);
     _scrollArea->widget()->setLayout(new QVBoxLayout());
-    _scrollArea->widget()->installEventFilter( this );
+    _scrollArea->installEventFilter( this );
     
     //Enregistrement des services
     this->RegisterService( _properties_service );
