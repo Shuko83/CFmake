@@ -22,16 +22,17 @@ include(Variables)
 set(WORKSPACE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/.." CACHE PATH "Workspace path")
 set(SUBPROJECTS_PATH "${CMAKE_BINARY_DIR}/.." CACHE PATH "Sub-projects path")
 set(CMAKE_PREFIX_PATH "${WORKSPACE_PATH}/external" CACHE PATH "External dependencies path")
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" CACHE INTERNAL "CMake module path")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(CMAKE_MODULE_LICENSE_PATH "${CMAKE_MODULE_PATH}/license" CACHE INTERNAL "CMake module license path")
 set(CMAKE_MODULE_TEMPLATES_PATH "${CMAKE_MODULE_PATH}/templates" CACHE INTERNAL "CMake module templates path")
 
 ################################################################################
 # Project definition
 ################################################################################
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Project installation path" FORCE)
+endif()
 
-set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/install" CACHE PATH "Project installation path")
-set(CMAKE_PROJECT_VERSION "0.0.0" CACHE INTERNAL "Project version")
 
 ################################################################################
 # Project options

@@ -1,0 +1,37 @@
+!build_pass(): \
+    qsmessage( "Meta-target generation pass completed" )
+
+else {
+
+    static_and_shared {
+
+        !TEMPLATE( static|shared ): \
+            qserror( "Unsupported library type build pass detected" )
+    }
+
+    build_mode( release ) {
+
+        !static_and_shared: !static_or_shared: \
+            qsmessage( "Target release build pass completed" )
+
+        else {
+
+            TEMPLATE( shared ):       qsmessage( "Shared library release build pass completed" )
+            else: TEMPLATE( static ): qsmessage( "Static library release build pass completed" )
+        }
+    }
+
+    else: build_mode( debug ) {
+
+        !static_and_shared: !static_or_shared: \
+            qsmessage( "Target debug build pass completed" )
+
+        else {
+
+            TEMPLATE( shared ):       qsmessage( "Shared library debug build pass completed" )
+            else: TEMPLATE( static ): qsmessage( "Static library debug build pass completed" )
+        }
+    }
+
+    else: qserror( "Unsupported target build pass detected" )
+}

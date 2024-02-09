@@ -1,0 +1,12 @@
+include( $PWD/global/qt-html-templates-online.qdocconf )
+
+project     = qstoolkit
+description = QS Toolkit
+
+language = Cpp
+sources  = $PWD/src/qstoolkit-index.qdoc
+indexes  = $PWD/../html/qsfeatures/qsfeatures.index \
+           $PWD/../html/strules/strules.index
+
+outputformats = HTML
+outputdir     = $PWD/../html/qstoolkit

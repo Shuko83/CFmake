@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- mkspecs-manual.qdoc -->
+  <title>qmake Features </title>
+<link rel="stylesheet" type="text/css" href="style/online.css" />
+</head>
+<body>
+<div class="header" id="header">
+<header id="navbar" class="">
+   <div class="container">
+       <div class="navbar-header clearfix">
+           <a href="http://qt.io/" class="navbar-oneQt retina" data-icon=""></a>
+           <nav class="navbar-menu clearfix" role="navigation">
+               <ul id="mainmenu" class="menu">                    <li id="menu-item-18" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18"><a href="http://doc.qt.io/qt-5/qmake-manual.html">qmake Manual</a></li>
+               </ul>
+           </nav>
+       </div>
+   </div>
+</header>
+</div>
+<div class="main">
+   <div class="main-rounded">
+       <div class="navigationbar">
+           <div id="main_title_bar">
+               <h1>Qt Documentation</h1>
+           </div>
+           <ul>
+<li><a href="../qstoolkit/qstoolkit-index.html">QS Toolkit</a></li>
+<li>qmake Features</li>
+           </ul>
+       </div>
+       <div class="content">
+           <div class="line">
+               <div class="content mainContent">
+  <link rel="next" href="mkspecs-predefined-rules.html" />
+  <link rel="start" href="mkspecs-manual.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="nextPage" href="mkspecs-predefined-rules.html">Predefined Rules</a>
+</p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#overview">Overview</a></li>
+<li class="level1"><a href="#installation">Installation</a></li>
+<li class="level1"><a href="#table-of-contents">Table of Contents</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<div class="context">
+<h1 class="title">qmake Features</h1>
+<span class="subtitle"></span>
+<!-- $$$mkspecs-manual.html-description -->
+<div class="descr"> <a name="details"></a>
+<a name="overview"></a>
+<h2 id="overview">Overview</h2>
+<p>This set of features extends default qmake features, in order to simplify and unify the generation of development projects across different platforms and build environments. The following table lists configurations supported by these features.</p>
+<a name="qt-4-x"></a>
+<h4 >Qt 4.x</h4>
+<div class="table"><table class="generic" width="95%">
+ <thead><tr class="qt-style"><th >Platform</th><th >Compiler</th><th >qmake Platform and Compilers Scope</th></tr>
+<tr class="qt-style"><th  colspan="3" rowspan=" 1">Desktop Platforms</th></tr></thead>
+<tr valign="top" class="odd"><td >Windows 7 <br />
+ (32 and 64-bit)</td><td >MSVC 2010, MSVC 2008 <br />
+ MinGW 4.4</td><td ><i>plaftorm:</i> <code>win32</code> <br />
+ <i>compiler:</i> <code>msvc</code>, <code>msvc-proj</code>, <code>mingw</code>, <code>gcc</code></td></tr>
+<tr valign="top" class="even"><td >Linux / X11 <br />
+ (32 and 64-bit)</td><td >GCC 4.2 and above</td><td ><i>plaftorm:</i> <code>linux</code>, <code>gnu</code> <br />
+ <i>compiler:</i> <code>gcc</code></td></tr>
+</table></div>
+<a name="qt-5-x"></a>
+<h4 >Qt 5.x</h4>
+<div class="table"><table class="generic" width="95%">
+ <thead><tr class="qt-style"><th >Platform</th><th >Compiler</th><th >qmake Platform and Compilers Scope</th></tr>
+<tr class="qt-style"><th  colspan="3" rowspan=" 1">Desktop Platforms</th></tr></thead>
+<tr valign="top" class="odd"><td >Windows 7 and later <br />
+ (32 and 64-bit)</td><td >MSVC 2015, MSVC 2013, MSVC 2012, MSVC 2010 <br />
+ MinGW 4.7 and above</td><td ><i>plaftorm:</i> <code>win32</code> <br />
+ <i>compiler:</i> <code>msvc</code>, <code>msvc-proj</code>, <code>mingw</code>, <code>gcc</code></td></tr>
+<tr valign="top" class="even"><td >Linux / X11 <br />
+ (32 and 64-bit)</td><td >GCC 4.8 and above</td><td ><i>plaftorm:</i> <code>linux</code>, <code>gnu</code> <br />
+ <i>compiler:</i> <code>gcc</code></td></tr>
+<tr valign="top" class="odd"><td  colspan="3" rowspan=" 1"></td></tr>
+<thead><tr class="qt-style"><th  colspan="3" rowspan=" 1">Mobile Platforms</th></tr></thead>
+<tr valign="top" class="even"><td >Android <br />
+ (x86, armv5, armv7)</td><td >GCC 4.8 and above (provided by Android NDK) <br />
+ <i>Toolchain:</i> Windows MinGW</td><td ><i>plaftorm:</i> <code>mobile</code>, <code>android</code>, <code>linux</code> <br />
+ <i>compiler:</i> <code>gcc</code></td></tr>
+</table></div>
+<p><b>Note: </b>QS features requires <b>qmake 2.01a (Qt 4.7)</b> or later to be processed.</p><a name="installation"></a>
+<h2 id="installation">Installation</h2>
+<p>QS features directory location is free. To be taken into account by qmake tool, just set <code>QMAKEPATH</code> environment variable to qstoolkit directory path.</p>
+<a name="table-of-contents"></a>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="mkspecs-predefined-rules.html">Predefined Rules</a></li>
+<li><a href="mkspecs-metadata-generation.html">Metadata Generation</a></li>
+<li><a href="mkspecs-reference.html">Reference</a><ul>
+<li><a href="mkspecs-variable-reference.html">Variables</a></li>
+<li><a href="mkspecs-pseudo-variable-reference.html">Pseudo Variables</a></li>
+<li><a href="mkspecs-replace-function-reference.html">Replace Functions</a></li>
+<li><a href="mkspecs-test-function-reference.html">Test Functions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<!-- @@@mkspecs-manual.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="nextPage" href="mkspecs-predefined-rules.html">Predefined Rules</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

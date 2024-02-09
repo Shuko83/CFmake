@@ -1,0 +1,316 @@
+########################
+## Properties Queries ##
+########################
+
+# -- Target property queries -- #
+
+!isEmpty( QUERY_TARGET_PROPERTY ): \
+    include( $${PWD}/../common/target_queries.conf )
+
+# -- Toolkit property queries -- #
+
+else: !isEmpty( QUERY_TOOLKIT_PROPERTY ): \
+    include( $${PWD}/../common/toolkit_queries.conf )
+
+else {
+
+
+######################
+## Deprecated Rules ##
+######################
+
+# -- Deprecated rules detection -- #
+
+# -- TO REMOVE: deprecated rules skip post features -- #
+
+deprecated_rules: \
+    include( $${PWD}/../common/deprecated_support.conf )
+
+# -- TO REMOVE: deprecated rules skip post features -- #
+
+### deprecated_rules: \
+###     qserror( "Deprecated rules not compliant with '$$system_path( $${QSMAKEPATH} )' features" )
+
+
+#################
+## Qt Settings ##
+#################
+    
+# -- Qt modules definition -- #
+
+TEMPLATE( aux ): \
+    CONFIG -= qt
+
+qt: QT = $$unique( QT )
+else: unset( QT )
+
+# -- Qt default configurations -- #
+
+include( $${PWD}/../common/qt_config_post.conf )
+CONFIG = $$unique( CONFIG )
+
+
+#######################
+## Builtin Variables ##
+#######################
+
+## BUILD_MODE    = debug, release (build pass only)
+## LIBRARY_MODE  = static, shared (library and build pass only)
+
+BUILD_MODE =
+
+build_pass() {
+
+    build_mode( release ):     BUILD_MODE = release
+    else: build_mode( debug ): BUILD_MODE = debug
+
+    isEmpty( BUILD_MODE ): \
+        qserror( "Target build mode cannot be resolved" )
+}
+
+LIBRARY_MODE =
+
+build_pass( lib ): \
+    static_and_shared| \
+    static_or_shared {
+
+        TEMPLATE( shared ):       LIBRARY_MODE = shared
+        else: TEMPLATE( static ): LIBRARY_MODE = static
+    }
+
+add_pseudo_var( BUILD_MODE )
+add_pseudo_var( LIBRARY_MODE )
+
+# pseudo-variables resolution over all project variables
+# for qmake 2.x compatibility, only specific variables will be processed
+
+qtGreaterThan( 5.0, true ): \
+    resolve_pseudo_vars()
+
+else {
+
+    # output variables processing
+
+    resolve_pseudo_vars( DESTDIR \
+                         DLLDESTDIR \
+                         INSTALLDIR )
+
+    # include variables processing
+
+    resolve_pseudo_vars( IQUOTEPATH \
+                         INCLUDEPATH )
+
+    # dependencies variables processing
+
+    resolve_pseudo_vars( LIBS \
+                         COMBINED_LIBS \
+                         PLUGINS \
+                         PRE_TARGETDEPS \
+                         POST_TARGETDEPS )
+}
+
+
+#########################
+## Install Definitions ##
+#########################
+
+## INSTALLDIR = installation directory path relative to project path in use
+
+!isEmpty( INSTALLDIR ): \
+    INSTALLDIR = $$relative_path( $${INSTALLDIR}, $${_PRO_FILE_PWD_} )
+
+
+# -- Installation rules resolution -- #
+
+for( install, INSTALLS ) {
+
+    # skip install rules without source files
+
+    !equals( install, target ): \
+    isEmpty( $${install}.files ) {
+
+        qswarning( "Empty files detected in '$${install}' install rule. Install rule skipped..." )
+        _skipped_installs *= $${install}
+    }
+
+    else {
+
+        # target files resets to default empty value
+
+        equals( install, target ): \
+            clear( target.files )
+
+        # pseudo-variables resolution for qmake 2.x compatibility
+
+        qtLessThan( 5.0 ) {
+
+            resolve_pseudo_vars( $${install}.files )
+            resolve_pseudo_vars( $${install}.extra )
+            resolve_pseudo_vars( $${install}.path )
+        }
+
+        # project files installed under INSTALLDIR if path is relative
+        # if INSTALLDIR is empty, current project path will be taken into account
+
+        isEmpty( $${install}.path ): eval( $${install}.path = . )
+        eval( $${install}.path = $$absolute_path( $$eval( $${install}.path ), $${_PRO_FILE_PWD_}/$${INSTALLDIR} ) )
+    }
+}
+
+INSTALLS -= $${_skipped_installs}
+unset( _skipped_installs )
+
+
+# -- Visual C++ projects installation support -- #
+
+include( $${PWD}/../common/target_msvcinstall.conf )
+
+
+##########################
+## Metadata Generations ##
+##########################
+
+# -- Metadata generators activation -- #
+
+!isEmpty( METADATA ) {
+
+    METADATA = $$unique( METADATA )
+    QMAKE_METADATA_GENERATORS = $$unique( QMAKE_METADATA_GENERATORS )
+
+    CONFIG *= generate_metadata
+}
+
+
+# -- Metadata generators features resolution -- #
+
+# Following features are supported by any metadata generators:
+#   - no_target option inhibits project generation by qmake
+#   - have_target option keeps project generation by qmake (by default)
+#   - debug or release options restrict metadata generation to corresponding mode
+
+generate_metadata {
+
+    ## metadata generators not availables for deprecated rules
+
+    deprecated_rules: \
+        qserror( "Deprecated rules detected. '$${METADATA}' cannot be generated" )
+
+    ## merges metadata generators target features: have_target option deactivates no_target option
+
+    for( metadata, METADATA ) {
+
+        !contains( QMAKE_METADATA_GENERATORS, $${metadata} ): \
+            qserror( "'$${metadata}' metadata generator not defined" )
+
+        contains( $${metadata}.CONFIG, no_target ):    _metadata_config *= no_target
+        else: contains( _metadata_config, no_target ): _metadata_config *= have_target
+    }
+
+    _metadata_config = $$unique( _metadata_config )
+
+    contains( _metadata_config, have_target ): \
+        _metadata_config -= no_target
+
+    ## if no_target option set: disables project and target informations generation
+
+    contains( _metadata_config, no_target ) {
+
+        CONFIG *= no_generate_project
+        CONFIG *= no_generated_target_info
+    }
+
+    unset( _metadata_config )
+}
+
+
+####################
+## Boost Settings ##
+####################
+
+include( $${PWD}/../common/boost_settings.conf )        # Boost compiler settings (binary and build pass only)
+
+
+#############################
+## Compilation Definitions ##
+#############################
+
+include( $${PWD}/../common/compiler_outputs.conf )      # compiler outputs definitions (auxiliary/binary and build pass only)
+include( $${PWD}/../common/target_properties.conf )     # target properties management (binary and build pass only)
+include( $${PWD}/../common/compiler_inputs.conf )       # compiler inputs definitions (auxiliary/binary only)
+
+include( $${PWD}/../common/compiler_flags.conf )        # compiler flags definitions (binary and build pass only)
+include( $${PWD}/../common/compiler_msvcpch.conf )      # Visual C++ precompiled header management (binary and build pass only)
+
+include( $${PWD}/../common/compiler_makefile.conf )     # makefile definition
+include( $${PWD}/../common/compiler_target.conf )       # target name definition
+include( $${PWD}/../common/target_resources.conf )      # target resources management (application/shared library and build pass only)
+
+
+###########################
+## Target Pre/Post-Links ##
+###########################
+
+msvc-proj {
+
+    QMAKE_PRE_LINK = $$join( QMAKE_PRE_LINK, " && " )
+    QMAKE_POST_LINK = $$join( QMAKE_POST_LINK, " && " )
+}
+
+else {
+
+    QMAKE_PRE_LINK = $$join( QMAKE_PRE_LINK, $$escape_expand( \\n\\t ) )
+    QMAKE_POST_LINK = $$join( QMAKE_POST_LINK, $$escape_expand( \\n\\t ) )
+}
+
+
+###############################
+## static_and_shared Feature ##
+###############################
+
+# -- Both static and shared modes for qmake 3.0 (Qt5.2) and later compatibility -- #
+
+qtGreaterThan( 5.2, true ) {
+
+    TEMPLATE( lib ): \
+        static_and_shared {
+
+            CONFIG *= fix_output_dirs
+            addExclusiveBuilds( static, shared )
+            CONFIG -= fix_output_dirs
+        }
+}
+
+
+#################################
+## Visual C++ Auxiliary Target ##
+#################################
+
+msvc-proj: \
+TEMPLATE( aux ) {
+
+    # Convert auxiliary target into static library target for Visual C++ projects compatibility
+    # Remove specific binary features to emulate an auxiliary target
+
+    TEMPLATE = lib
+    CONFIG *= static vcaux
+
+    CONFIG -= debug_and_release_target
+    CONFIG -= precompile_header
+}
+
+
+############################
+## Default Postprocessing ##
+############################
+
+load( default_post )
+
+
+#######################
+## qmake Pass Traces ##
+#######################
+
+!no_pass_traces: \
+    include( $${PWD}/../common/qmake_pass_traces.conf )
+
+}

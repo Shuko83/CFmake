@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- strules-manual.qdoc -->
+  <title>Pseudo Variables | ST Specific Rules </title>
+<link rel="stylesheet" type="text/css" href="style/online.css" />
+</head>
+<body>
+<div class="header" id="header">
+<header id="navbar" class="">
+   <div class="container">
+       <div class="navbar-header clearfix">
+           <a href="http://qt.io/" class="navbar-oneQt retina" data-icon=""></a>
+           <nav class="navbar-menu clearfix" role="navigation">
+               <ul id="mainmenu" class="menu">                    <li id="menu-item-18" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18"><a href="http://doc.qt.io/qt-5/qmake-manual.html">qmake Manual</a></li>
+               </ul>
+           </nav>
+       </div>
+   </div>
+</header>
+</div>
+<div class="main">
+   <div class="main-rounded">
+       <div class="navigationbar">
+           <div id="main_title_bar">
+               <h1>Qt Documentation</h1>
+           </div>
+           <ul>
+<li><a href="../qstoolkit/qstoolkit-index.html">QS Toolkit</a></li>
+<li><a href="strules-manual.html">ST Specific Rules</a></li>
+<li>Pseudo Variables</li>
+           </ul>
+       </div>
+       <div class="content">
+           <div class="line">
+               <div class="content mainContent">
+  <link rel="prev" href="strules-metadata-generation.html" />
+  <link rel="next" href="strules-examples.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="strules-metadata-generation.html">Metadata Generation</a>
+<a class="nextPage" href="strules-examples.html">Examples</a>
+</p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#build-mkspec">BUILD_MKSPEC</a></li>
+<li class="level1"><a href="#delivery">DELIVERY</a></li>
+<li class="level1"><a href="#package">PACKAGE</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<div class="context">
+<h1 class="title">Pseudo Variables</h1>
+<span class="subtitle"></span>
+<!-- $$$strules-pseudo-variable-reference.html-description -->
+<div class="descr"> <a name="details"></a>
+<a name="build-mkspec"></a>
+<h2 id="build-mkspec">BUILD_MKSPEC</h2>
+<p>Specifies a subdirectory path based on toolkit mkspec shortname. In case of Qt-based project, this path will be suffixed by the Qt version used.</p>
+<p>For example, for a 64-bit application built on Visual C++ 12.0, using Qt 5.6&#x2e;3 modules:</p>
+<pre class="cpp">DESTDIR = &quot;builds/${BUILD_MKSPEC}&quot;   # application based on Qt: DESTDIR = &quot;builds/win-msvc2013-x64-QT5.6.3&quot;
+CONFIG -= qt                         # application no more based on Qt: DESTDIR = &quot;builds/win-msvc2013-x64&quot;</pre>
+<a name="delivery"></a>
+<h2 id="delivery">DELIVERY</h2>
+<p>Specifies the absolute path to installation package root directory, i.e&#x2e; <code>${<a href="strules-pseudo-variable-reference.html#package">PACKAGE</a>}/Delivery</code>.</p>
+<a name="package"></a>
+<h2 id="package">PACKAGE</h2>
+<p>Specifies the absolute path to package containing current project.</p>
+<p>See also <a href="strules-predefined-rules.html#projects-package">Projects Package</a>.</p>
+</div>
+<!-- @@@strules-pseudo-variable-reference.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="strules-metadata-generation.html">Metadata Generation</a>
+<a class="nextPage" href="strules-examples.html">Examples</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

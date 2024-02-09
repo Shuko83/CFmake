@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- strules-manual.qdoc -->
+  <title>ST Specific Rules </title>
+<link rel="stylesheet" type="text/css" href="style/online.css" />
+</head>
+<body>
+<div class="header" id="header">
+<header id="navbar" class="">
+   <div class="container">
+       <div class="navbar-header clearfix">
+           <a href="http://qt.io/" class="navbar-oneQt retina" data-icon=""></a>
+           <nav class="navbar-menu clearfix" role="navigation">
+               <ul id="mainmenu" class="menu">                    <li id="menu-item-18" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18"><a href="http://doc.qt.io/qt-5/qmake-manual.html">qmake Manual</a></li>
+               </ul>
+           </nav>
+       </div>
+   </div>
+</header>
+</div>
+<div class="main">
+   <div class="main-rounded">
+       <div class="navigationbar">
+           <div id="main_title_bar">
+               <h1>Qt Documentation</h1>
+           </div>
+           <ul>
+<li><a href="../qstoolkit/qstoolkit-index.html">QS Toolkit</a></li>
+<li>ST Specific Rules</li>
+           </ul>
+       </div>
+       <div class="content">
+           <div class="line">
+               <div class="content mainContent">
+  <link rel="next" href="strules-predefined-rules.html" />
+  <link rel="start" href="strules-manual.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="nextPage" href="strules-predefined-rules.html">Predefined Rules</a>
+</p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#overview">Overview</a></li>
+<li class="level1"><a href="#prerequisites">Prerequisites</a></li>
+<li class="level1"><a href="#table-of-contents">Table of Contents</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<div class="context">
+<h1 class="title">ST Specific Rules</h1>
+<span class="subtitle"></span>
+<!-- $$$strules-manual.html-description -->
+<div class="descr"> <a name="details"></a>
+<a name="overview"></a>
+<h2 id="overview">Overview</h2>
+<p>ST specific rules override <a href="../qsfeatures/mkspecs-manual.html">QS features</a> by defining additional rules common to development projects of ST division. Two set of rules, implemented in qmake project include files (<code>.pri</code>), are available in the <code>$${<a href="../qsfeatures/mkspecs-variable-reference.html#qsmakepath">QSMAKEPATH</a>}/rules</code> directory:</p>
+<ul>
+<li>standard project rules (<code>standard_project.pri</code> file), which define variables and compiler rules specific to any ST development project.</li>
+<li>LDTools project rules (<code>ldtools_project.pri</code> file), based on standard project rules, which define additional features specific to project files generated with LDTools.</li>
+</ul>
+<a name="prerequisites"></a>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>QS qmake features must be installed. See <a href="../qsfeatures/mkspecs-manual.html#installation">features installation</a> section for more details.</li>
+<li>Any project source tree must contain only one qmake project file (<code>.pro</code>).</li>
+<li>qmake project file has to include the desired ST specific rules file, at least after target-specific variables definition. Prefers use <a href="../qsfeatures/mkspecs-variable-reference.html#qsmakepath">QSMAKEPATH</a> variable to retrieve the rules file location.</li>
+</ul>
+<p>For example, for a project including standard project rules:</p>
+<pre class="cpp"># Target Definition
+
+TARGET = MyLib
+TEMPLATE = lib
+CONFIG += shared
+
+INSTALLDIR = ../../Delivery/AppDir
+
+# Sources Definition
+
+HEADERS = ...
+SOURCES = ...
+
+# ST Rules Include
+
+include( $${QSMAKEPATH}/rules/standard_project.pri )</pre>
+<a name="table-of-contents"></a>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="strules-predefined-rules.html">Predefined Rules</a></li>
+<li><a href="strules-metadata-generation.html">Metadata Generation</a></li>
+<li><a href="strules-pseudo-variable-reference.html">Pseudo Variables</a></li>
+<li><a href="strules-examples.html">Examples</a></li>
+</ul>
+</div>
+<!-- @@@strules-manual.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="nextPage" href="strules-predefined-rules.html">Predefined Rules</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

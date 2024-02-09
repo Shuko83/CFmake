@@ -1,0 +1,16 @@
+include( $PWD/global/qt-html-templates-online.qdocconf )
+
+project     = strules
+description = ST specific rules
+
+language    = Cpp
+sources     = $PWD/src/strules-manual.qdoc
+exampledirs = $PWD/snippets
+indexes     = $PWD/../html/qstoolkit/qstoolkit.index \
+              $PWD/../html/qsfeatures/qsfeatures.index
+
+outputformats = HTML
+outputdir     = $PWD/../html/strules
+
+navigation.homepage    = "QS Toolkit"
+navigation.landingpage = "ST Specific Rules"

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- mkspecs-manual.qdoc -->
+  <title>Test Functions | qmake Features </title>
+<link rel="stylesheet" type="text/css" href="style/online.css" />
+</head>
+<body>
+<div class="header" id="header">
+<header id="navbar" class="">
+   <div class="container">
+       <div class="navbar-header clearfix">
+           <a href="http://qt.io/" class="navbar-oneQt retina" data-icon=""></a>
+           <nav class="navbar-menu clearfix" role="navigation">
+               <ul id="mainmenu" class="menu">                    <li id="menu-item-18" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18"><a href="http://doc.qt.io/qt-5/qmake-manual.html">qmake Manual</a></li>
+               </ul>
+           </nav>
+       </div>
+   </div>
+</header>
+</div>
+<div class="main">
+   <div class="main-rounded">
+       <div class="navigationbar">
+           <div id="main_title_bar">
+               <h1>Qt Documentation</h1>
+           </div>
+           <ul>
+<li><a href="../qstoolkit/qstoolkit-index.html">QS Toolkit</a></li>
+<li><a href="mkspecs-manual.html">qmake Features</a></li>
+<li>Test Functions</li>
+           </ul>
+       </div>
+       <div class="content">
+           <div class="line">
+               <div class="content mainContent">
+  <link rel="prev" href="mkspecs-replace-function-reference.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="mkspecs-replace-function-reference.html">Replace Functions</a>
+</p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#add-subdir-target-path-depends">add_subdir(target, path[, depends])</a></li>
+<li class="level1"><a href="#add-library-type-path-targets">add_library(type, path, targets)</a></li>
+<li class="level1"><a href="#add-plugin-path-targets">add_plugin(path, targets)</a></li>
+<li class="level1"><a href="#assert-condition">assert(condition)</a></li>
+<li class="level1"><a href="#build-mode-mode">build_mode(mode)</a></li>
+<li class="level1"><a href="#build-pass-types">build_pass([types])</a></li>
+<li class="level1"><a href="#endswith-variablename-value">endsWith(variablename, value)</a></li>
+<li class="level1"><a href="#find-variablename-substr">find(variablename, substr)</a></li>
+<li class="level1"><a href="#glob-variablename-patterns-base">glob(variablename, patterns[, base])</a></li>
+<li class="level1"><a href="#is-absolute-path-path">is_absolute_path(path)</a></li>
+<li class="level1"><a href="#isnull-variablename">isNull(variablename)</a></li>
+<li class="level1"><a href="#is-relative-path-path">is_relative_path(path)</a></li>
+<li class="level1"><a href="#qsdeprecated-string">qsdeprecated(string)</a></li>
+<li class="level1"><a href="#qserror-string">qserror(string)</a></li>
+<li class="level1"><a href="#qsmessage-string">qsmessage(string)</a></li>
+<li class="level1"><a href="#qswarning-string">qswarning(string)</a></li>
+<li class="level1"><a href="#qt-modules">QT(modules)</a></li>
+<li class="level1"><a href="#qtgreaterthan-version-equals">qtGreaterThan(version[, equals])</a></li>
+<li class="level1"><a href="#qtlessthan-version-equals">qtLessThan(version[, equals])</a></li>
+<li class="level1"><a href="#rglob-variablename-patterns-base">rglob(variablename, patterns[, base])</a></li>
+<li class="level1"><a href="#startswith-variablename-value">startsWith(variablename, value)</a></li>
+<li class="level1"><a href="#template-types">TEMPLATE(types)</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<div class="context">
+<h1 class="title">Test Functions</h1>
+<span class="subtitle"></span>
+<!-- $$$mkspecs-test-function-reference.html-description -->
+<div class="descr"> <a name="details"></a>
+<a name="add-subdir-target-path-depends"></a>
+<h2 id="add-subdir-target-path-depends">add_subdir(target, path[, depends])</h2>
+<p>Subdirs-based project only. Specifies a subdirectory <i>target</i>, located in <i>path</i>, that will be registered as part of the projects group. <i>path</i> argument may:</p>
+<ul>
+<li>be empty. In this case <i>target</i> value will be used as subdirectory path.</li>
+<li>point to a subdirectory. In this case subproject <code>.pro</code> file should have the same base name as the subdirectory itself.</li>
+<li>point to a subproject <code>.pro</code> file.</li>
+</ul>
+<p>Optional subdirectories targets may be passed in <i>depends</i> argument to define subproject build start constraints. Note that to ensure subdirs dependencies resolution, <i>target</i> should have the same name as subproject's <code>TARGET</code> '<code>release</code>' value.</p>
+<a name="add-library-type-path-targets"></a>
+<h2 id="add-library-type-path-targets">add_library(type, path, targets)</h2>
+<p>Binary target only. Specifies library <i>targets</i>, located in <i>path</i>, to use when linking to / archiving the current target. <i>type</i> should be given to specify the type of dependency:</p>
+<ul>
+<li><code>static</code> defines static libraries linked to this target (ignored for static library project).</li>
+<li><code>shared</code> defines shared libraries linked to this target (ignored for static library project).</li>
+<li><code>combined</code> defines static libraries combined to this target in case of static library project; otherwise is same as <code>static</code> value.</li>
+</ul>
+<p>Any library in <i>targets</i> can be defined either by library name (without extension and optional platform dependent prefix), or by file name. Optional <code>[.ext]</code> modifier can also be used in <i>targets</i> values in order to append system-default library extension.</p>
+<p>If <i>path</i> is set to <code>system</code> value, this function registers the given system libraries as target dependencies. Note that <code>system</code> path is not supported for <code>combined</code> dependencies on static library project. Furthermore, any pseudo variable <code>${<a href="mkspecs-pseudo-variable-reference.html#library-mode">LIBRARY_MODE</a>}</code> occurrence defined in <i>path</i> argument will be substituted by <i>type</i> argument value.</p>
+<p>For example:</p>
+<pre class="cpp">add_library( static, $${INSTALLDIR}/static, MyLib )           # links to static library &quot;MyLib&quot;
+add_library( shared, $${INSTALLDIR}/shared, MyLib1 MyLib2 )   # links to shared libraries &quot;MyLib1&quot; and &quot;MyLib2&quot;</pre>
+<p>See also <a href="mkspecs-predefined-rules.html#target-dependencies">Target Dependencies</a>.</p>
+<a name="add-plugin-path-targets"></a>
+<h2 id="add-plugin-path-targets">add_plugin(path, targets)</h2>
+<p>Binary target only. Specifies plugin <i>targets</i>, located in <i>path</i>, dynamically loadable by the current target. Any library in <i>targets</i> can be defined either by library name (without extension and optional platform dependent prefix), or by file name. Optional <code>[.ext]</code> modifier can also be used in <i>targets</i> values in order to append system-default library extension.</p>
+<p>Any pseudo variable <code>${<a href="mkspecs-pseudo-variable-reference.html#library-mode">LIBRARY_MODE</a>}</code> occurrence defined in <i>path</i> argument will be substituted by <code>shared</code> value.</p>
+<p>For example:</p>
+<pre class="cpp">add_plugin( $${INSTALLDIR}/plugins, MyPlugin )   # registers plugin &quot;MyPlugin&quot;</pre>
+<p>See also <a href="mkspecs-predefined-rules.html#target-dependencies">Target Dependencies</a>.</p>
+<a name="assert-condition"></a>
+<h2 id="assert-condition">assert(condition)</h2>
+<p>Evaluates given <i>condition</i>. If the condition is <code>false</code>, qmake aborts this project (and its <code>SUBDIRS</code>) processing.</p>
+<p>For example, processing of the project below will stop if <code>SOURCES</code> variable is empty:</p>
+<pre class="cpp">assert( !isEmpty( SOURCES ) )</pre>
+<a name="build-mode-mode"></a>
+<h2 id="build-mode-mode">build_mode(mode)</h2>
+<p>Succeeds if the target is being built in the specified <i>mode</i>; otherwise fails. <i>mode</i> can have one of the following values: <code>debug</code> or <code>release</code>.</p>
+<p>For example:</p>
+<pre class="cpp">build_mode( release ): DESTDIR = &quot;builds/release&quot;
+build_mode( debug ): DESTDIR = &quot;builds/debug&quot;</pre>
+<p>See also <a href="mkspecs-test-function-reference.html#build-pass-types">build_pass()</a>.</p>
+<a name="build-pass-types"></a>
+<h2 id="build-pass-types">build_pass([types])</h2>
+<p>Succeeds if the target is being built; otherwise fails. If <i>types</i> is specified, this function also checks the type of target currently processed. See <a href="mkspecs-test-function-reference.html#template-types">TEMPLATE()</a> for more details about <i>types</i> argument.</p>
+<p>For example:</p>
+<pre class="cpp">TARGET = MyApp
+TEMPLATE = app
+
+build_pass(): message( $${TARGET} )        # prints: &quot;MyApp&quot; in debug/release target build pass
+build_pass( lib ): message( $${TARGET} )   # never prints: &quot;MyApp&quot;</pre>
+<p>This function never fails if <i>types</i> is not specified and if <code>debug_and_release</code> / <code>static_and_shared</code> options are disabled.</p>
+<a name="endswith-variablename-value"></a>
+<h2 id="endswith-variablename-value">endsWith(variablename, value)</h2>
+<p>Tests whether <i>variablename</i> ends with a value that matches the regular expression <i>value</i>.</p>
+<p>For example:</p>
+<pre class="cpp">endsWith( ICONS, .ico ): \
+    message( &quot;$${ICONS} is a valid Windows icon file&quot; )</pre>
+<p>See also <a href="mkspecs-test-function-reference.html#startswith-variablename-value">startsWith()</a>.</p>
+<a name="find-variablename-substr"></a>
+<h2 id="find-variablename-substr">find(variablename, substr)</h2>
+<p>Tests whether at least one of the values in <i>variablename</i> matches the regular expression <i>substr</i>.</p>
+<p>For example:</p>
+<pre class="cpp">find( QMAKE_ARGS, ^CONFIG ): \
+    message( &quot;qmake arguments defines CONFIG variable&quot; )</pre>
+<a name="glob-variablename-patterns-base"></a>
+<h2 id="glob-variablename-patterns-base">glob(variablename, patterns[, base])</h2>
+<p>Expands the specified wildcard <i>patterns</i>, and adds the resolved list of filenames in <i>variablename</i>. If <i>base</i> is specified, filenames added will be relative to the given <i>base</i> path.</p>
+<p>See also <a href="mkspecs-test-function-reference.html#rglob-variablename-patterns-base">rglob()</a>.</p>
+<a name="is-absolute-path-path"></a>
+<h2 id="is-absolute-path-path">is_absolute_path(path)</h2>
+<p>Succeeds if <i>path</i> is an absolute path; otherwise fails if it is relative.</p>
+<a name="isnull-variablename"></a>
+<h2 id="isnull-variablename">isNull(variablename)</h2>
+<p>Succeeds if the variable <i>variablename</i> is defined (even if it is empty); otherwise fails.</p>
+<p>For example:</p>
+<pre class="cpp">isNull( TARGET ): \
+    error( &quot;TARGET variable must be defined&quot; )</pre>
+<p><b>Note: </b>This function requires <b>qmake 3.0 (Qt 5.0)</b> or later.</p><a name="is-relative-path-path"></a>
+<h2 id="is-relative-path-path">is_relative_path(path)</h2>
+<p>Succeeds if <i>path</i> is a relative path; otherwise fails if it is absolute.</p>
+<a name="qsdeprecated-string"></a>
+<h2 id="qsdeprecated-string">qsdeprecated(string)</h2>
+<p>Displays <i>string</i> as a deprecation message to the user. Message is prefixed by the processed project name.</p>
+<a name="qserror-string"></a>
+<h2 id="qserror-string">qserror(string)</h2>
+<p>Displays <i>string</i> as an error message to the user and exits. Message is prefixed by the processed project name.</p>
+<a name="qsmessage-string"></a>
+<h2 id="qsmessage-string">qsmessage(string)</h2>
+<p>Displays <i>string</i> as a general message to the user. Message is prefixed by the processed project name.</p>
+<a name="qswarning-string"></a>
+<h2 id="qswarning-string">qswarning(string)</h2>
+<p>Displays <i>string</i> as a warning message to the user. Message is prefixed by the processed project name.</p>
+<a name="qt-modules"></a>
+<h2 id="qt-modules">QT(modules)</h2>
+<p>Succeeds if the <code>QT</code> variable contains the specied <i>modules</i>; otherwise fails. It is possible to specify a regular expression for <i>modules</i> parameter.</p>
+<p>For example:</p>
+<pre class="cpp">QT( gui ): message( &quot;Windowed application detected&quot; )
+else:  message( &quot;Console application detected&quot; )</pre>
+<a name="qtgreaterthan-version-equals"></a>
+<h2 id="qtgreaterthan-version-equals">qtGreaterThan(version[, equals])</h2>
+<p>Tests that the current Qt version is greater than value <i>version</i>, or equals if <i>equals</i> argument is set to <code>true</code>. Version argument expects a <code>major.minor[.patch]</code> format to be taken into account.</p>
+<p>For example:</p>
+<pre class="cpp">qtGreaterThan( 5.2, true ): \
+    message( &quot;Qt 5.2 or later detected&quot; )</pre>
+<p>See also <a href="mkspecs-test-function-reference.html#qtlessthan-version-equals">qtLessThan()</a>.</p>
+<a name="qtlessthan-version-equals"></a>
+<h2 id="qtlessthan-version-equals">qtLessThan(version[, equals])</h2>
+<p>Tests that the current Qt version is smaller than value <i>version</i>, or equals if <i>equals</i> argument is set to <code>true</code>. Works as <a href="mkspecs-test-function-reference.html#qtgreaterthan-version-equals">qtGreaterThan()</a> function.</p>
+<a name="rglob-variablename-patterns-base"></a>
+<h2 id="rglob-variablename-patterns-base">rglob(variablename, patterns[, base])</h2>
+<p>Expands the specified wildcard <i>patterns</i> recursively into subdirectories, and adds the resolved list of filenames in <i>variablename</i>. If <i>base</i> is specified, filenames added will be relative to the given <i>base</i> path.</p>
+<p>See also <a href="mkspecs-test-function-reference.html#glob-variablename-patterns-base">glob()</a>.</p>
+<a name="startswith-variablename-value"></a>
+<h2 id="startswith-variablename-value">startsWith(variablename, value)</h2>
+<p>Tests whether <i>variablename</i> starts with a value that matches the regular expression <i>value</i>.</p>
+<p>For example:</p>
+<pre class="cpp">win32: !startsWith( _PRO_FILE_PWD_, [A-Z]: ) \
+    message( &quot;_PRO_FILE_PWD_ defines an absolute path&quot; )</pre>
+<p>See also <a href="mkspecs-test-function-reference.html#endswith-variablename-value">endsWith()</a>.</p>
+<a name="template-types"></a>
+<h2 id="template-types">TEMPLATE(types)</h2>
+<p>Tests whether the type of target currently processed matches one of the specified <i>types</i>:</p>
+<ul>
+<li><code>aux</code> defines an auxiliary project.</li>
+<li><code>subdirs</code> defines a subdirs-based project.</li>
+<li><code>app</code> defines an application target.</li>
+<li><code>static</code> defines a static library target.</li>
+<li><code>shared</code> defines a shared library target.</li>
+<li><code>lib</code> defines a static or shared library target.</li>
+<li><code>plugin</code> defines a static or shared plugin target.</li>
+<li><code>pseudo</code> defines a non-build artifact project (auxiliary or subdirs-based).</li>
+<li><code>binary</code> defines a binary file project (application or library).</li>
+</ul>
+<p><i>types</i> argument supports a set of types separated by <code>|</code> character.</p>
+<p>For example:</p>
+<pre class="cpp">TEMPLATE( static ): INSTALLDIR = &quot;../delivery/static&quot;
+TEMPLATE( shared ): INSTALLDIR = &quot;../delivery/shared&quot;</pre>
+<p>Note that above <code>TEMPLATE</code> values may be queried from a qmake command line, by passing the <code>QUERY_TARGET_PROPERTY=template</code> argument. For example, the following command line returns the type of target defined in the current project:</p>
+<pre class="cpp">qmake QUERY_TARGET_PROPERTY=template</pre>
+</div>
+<!-- @@@mkspecs-test-function-reference.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="mkspecs-replace-function-reference.html">Replace Functions</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

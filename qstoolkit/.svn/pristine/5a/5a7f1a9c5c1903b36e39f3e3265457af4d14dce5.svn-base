@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- mkspecs-manual.qdoc -->
+  <title>Reference | qmake Features </title>
+<link rel="stylesheet" type="text/css" href="style/online.css" />
+</head>
+<body>
+<div class="header" id="header">
+<header id="navbar" class="">
+   <div class="container">
+       <div class="navbar-header clearfix">
+           <a href="http://qt.io/" class="navbar-oneQt retina" data-icon=""></a>
+           <nav class="navbar-menu clearfix" role="navigation">
+               <ul id="mainmenu" class="menu">                    <li id="menu-item-18" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18"><a href="http://doc.qt.io/qt-5/qmake-manual.html">qmake Manual</a></li>
+               </ul>
+           </nav>
+       </div>
+   </div>
+</header>
+</div>
+<div class="main">
+   <div class="main-rounded">
+       <div class="navigationbar">
+           <div id="main_title_bar">
+               <h1>Qt Documentation</h1>
+           </div>
+           <ul>
+<li><a href="../qstoolkit/qstoolkit-index.html">QS Toolkit</a></li>
+<li><a href="mkspecs-manual.html">qmake Features</a></li>
+<li>Reference</li>
+           </ul>
+       </div>
+       <div class="content">
+           <div class="line">
+               <div class="content mainContent">
+  <link rel="prev" href="mkspecs-metadata-generation.html" />
+  <link rel="next" href="mkspecs-variable-reference.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="mkspecs-metadata-generation.html">Metadata Generation</a>
+<a class="nextPage" href="mkspecs-variable-reference.html">Variables</a>
+</p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#variable-reference">Variable Reference</a></li>
+<li class="level1"><a href="#function-reference">Function Reference</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<div class="context">
+<h1 class="title">Reference</h1>
+<span class="subtitle"></span>
+<!-- $$$mkspecs-reference.html-description -->
+<div class="descr"> <a name="details"></a>
+<p>The reference sections describes in detail additonnal variables and functions that are available for use in qmake project files.</p>
+<a name="variable-reference"></a>
+<h2 id="variable-reference">Variable Reference</h2>
+<p><a href="mkspecs-variable-reference.html">Variables</a> describes the additonnal variables that are recognized by qmake when configuring the build process for projects.</p>
+<p><a href="mkspecs-pseudo-variable-reference.html">Pseudo Variables</a> describes the variables that are evaluated late in project build process. In contrary to standard variables, they only use a single dollar-sign and their contents is not available during project file processing.</p>
+<p><b>Note: </b>Pseudo variables requires <b>qmake 3.0 (Qt 5.0)</b> or later, except if used in:</p><ul>
+<li>output variables: <code>DESTDIR</code>, <code>DLLDESTDIR</code>, <a href="mkspecs-variable-reference.html#installdir">INSTALLDIR</a>.</li>
+<li>include variables: <a href="mkspecs-variable-reference.html#iquotepath">IQUOTEPATH</a>, <code>INCLUDEPATH</code>.</li>
+<li>dependencies variables: <code>LIBS</code>, <a href="mkspecs-variable-reference.html#plugins">PLUGINS</a>, <code>PRE_TARGETDEPS</code>, <code>POST_TARGETDEPS</code>.</li>
+<li>installation variables (i.e&#x2e; <code>INSTALLS</code> sub-variables).</li>
+</ul>
+<a name="function-reference"></a>
+<h2 id="function-reference">Function Reference</h2>
+<p>These functions are divided into categories according to their type:</p>
+<ul>
+<li><a href="mkspecs-replace-function-reference.html">Replace Functions</a></li>
+<li><a href="mkspecs-test-function-reference.html">Test Functions</a></li>
+</ul>
+</div>
+<!-- @@@mkspecs-reference.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="mkspecs-metadata-generation.html">Metadata Generation</a>
+<a class="nextPage" href="mkspecs-variable-reference.html">Variables</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- mkspecs-manual.qdoc -->
+  <title>Predefined Rules | qmake Features </title>
+<link rel="stylesheet" type="text/css" href="style/online.css" />
+</head>
+<body>
+<div class="header" id="header">
+<header id="navbar" class="">
+   <div class="container">
+       <div class="navbar-header clearfix">
+           <a href="http://qt.io/" class="navbar-oneQt retina" data-icon=""></a>
+           <nav class="navbar-menu clearfix" role="navigation">
+               <ul id="mainmenu" class="menu">                    <li id="menu-item-18" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18"><a href="http://doc.qt.io/qt-5/qmake-manual.html">qmake Manual</a></li>
+               </ul>
+           </nav>
+       </div>
+   </div>
+</header>
+</div>
+<div class="main">
+   <div class="main-rounded">
+       <div class="navigationbar">
+           <div id="main_title_bar">
+               <h1>Qt Documentation</h1>
+           </div>
+           <ul>
+<li><a href="../qstoolkit/qstoolkit-index.html">QS Toolkit</a></li>
+<li><a href="mkspecs-manual.html">qmake Features</a></li>
+<li>Predefined Rules</li>
+           </ul>
+       </div>
+       <div class="content">
+           <div class="line">
+               <div class="content mainContent">
+  <link rel="prev" href="mkspecs-manual.html" />
+  <link rel="next" href="mkspecs-metadata-generation.html" />
+<p class="naviNextPrevious headerNavi">
+<a class="prevPage" href="mkspecs-manual.html">qmake Features</a>
+<a class="nextPage" href="mkspecs-metadata-generation.html">Metadata Generation</a>
+</p><p/>
+<div class="sidebar">
+<div class="toc">
+<h3><a name="toc">Contents</a></h3>
+<ul>
+<li class="level1"><a href="#default-qt-configurations">Default Qt Configurations</a></li>
+<li class="level1"><a href="#additional-features">Additional Features</a></li>
+<li class="level1"><a href="#project-building">Project Building</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<div class="context">
+<h1 class="title">Predefined Rules</h1>
+<span class="subtitle"></span>
+<!-- $$$mkspecs-predefined-rules.html-description -->
+<div class="descr"> <a name="details"></a>
+<a name="default-qt-configurations"></a>
+<h2 id="default-qt-configurations">Default Qt Configurations</h2>
+<p>QS features overrides default project configuration and compiler options defined by qmake mkspecs. Below a description of <code>CONFIG</code> values that are predefined:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th  colspan="2" rowspan=" 1">Option</th><th >Description</th></tr>
+<tr class="qt-style"><th  colspan="3" rowspan=" 1">Build Modes</th></tr></thead>
+<tr valign="top" class="odd"><td ><code>-</code></td><td ><code>debug_and_release</code></td><td >Project built in both debug and release modes. When enabling this option:<ul>
+<li><i>from Qt 5.2:</i> <code>debug_and_release</code> option will be deactivated if <code>CONFIG</code> option <code>debug</code> or <code>release</code> is set through qmake arguments.</li>
+<li>debug and release builds end up in separate debug and release directories (<code>debug_and_release_target</code> option automatically set).</li>
+</ul>
+</td></tr>
+<tr valign="top" class="even"><td ><code>+</code></td><td ></td><td >By default, <code>debug_and_release</code> mode is activated only for Visual C++ projects.</td></tr>
+<tr valign="top" class="odd"><td ><code>-</code></td><td ><code>build_all</code></td><td >Disables project built in both debug and release modes by default.</td></tr>
+<tr valign="top" class="even"><td ><code>-</code></td><td ><code>static_and_shared</code></td><td ><i>Library target only:</i> project built in both static and shared versions. When enabling this option:<ul>
+<li><i>from Qt 5.2:</i> <code>static_and_shared</code> option will be deactivated if <code>CONFIG</code> option <code>static</code>, <code>staticlib</code>, <code>shared</code>, <code>dll</code> or <code>dylib</code> is set through qmake arguments.</li>
+<li>static and shared builds end up in separate static and shared directories.</li>
+</ul>
+</td></tr>
+<tr valign="top" class="odd"><td  colspan="3" rowspan=" 1"></td></tr>
+<thead><tr class="qt-style"><th  colspan="3" rowspan=" 1">Compiler Versions</th></tr></thead>
+<tr valign="top" class="even"><td ><code>+</code></td><td ><code>c++11</code></td><td ><i>From Qt 5.0:</i> enables C++11 support.</td></tr>
+<tr valign="top" class="odd"><td ><code>-</code></td><td ><code>c++14</code></td><td ><i>From Qt 5.4:</i> disables C++14 support.</td></tr>
+<tr valign="top" class="even"><td  colspan="3" rowspan=" 1"></td></tr>
+<thead><tr class="qt-style"><th  colspan="3" rowspan=" 1">Compiler Options</th></tr></thead>
+<tr valign="top" class="odd"><td ><code>+</code></td><td ><code>warn_on</code></td><td >Compiler prints as many warnings as possible.</td></tr>
+<tr valign="top" class="even"><td ><code>+</code></td><td ><code>exceptions</code></td><td >Enables exception support.</td></tr>
+<tr valign="top" class="odd"><td ><code>+</code></td><td ><code>rtti</code></td><td >Enables RTTI support.</td></tr>
+<tr valign="top" class="even"><td ><code>+</code></td><td ><code>stl</code></td><td >Enables STL support.</td></tr>
+<tr valign="top" class="odd"><td ><code>+</code></td><td ><code>thread</code></td><td >Enables threads support.</td></tr>
+<tr valign="top" class="even"><td ><code>+</code></td><td ><code>no_include_pwd</code></td><td >Omits project directory from include paths.</td></tr>
+<tr valign="top" class="odd"><td ><code>+</code></td><td ><code>depend_includepath</code></td><td >Appends the value of <code>INCLUDEPATH</code> to <code>DEPENDPATH</code>.</td></tr>
+<tr valign="top" class="even"><td ><code>-</code></td><td ><code>lex</code> <br />
+ <code>yacc</code></td><td >Disables Lex and Yacc supports.</td></tr>
+<tr valign="top" class="odd"><td ><code>-</code></td><td ><code>precompile_header</code></td><td >Disables precompiled headers support.</td></tr>
+<tr valign="top" class="even"><td ><code>-</code></td><td ><code>no_lflags_merge</code></td><td >Ensures <code>LIBS</code> variable to be reduced to a list of unique libraries.</td></tr>
+<tr valign="top" class="odd"><td ><code>-</code></td><td ><code>force_debug_info</code></td><td >Disables release with debug info mode.</td></tr>
+<tr valign="top" class="even"><td  colspan="3" rowspan=" 1"></td></tr>
+<thead><tr class="qt-style"><th  colspan="3" rowspan=" 1">Static Libraries Dependencies</th></tr></thead>
+<tr valign="top" class="odd"><td ><code>-</code></td><td ><code>create_prl</code></td><td >Deactivates static libraries qmake tracking.</td></tr>
+<tr valign="top" class="even"><td  colspan="3" rowspan=" 1"></td></tr>
+<thead><tr class="qt-style"><th  colspan="3" rowspan=" 1">Windows Specific Features</th></tr></thead>
+<tr valign="top" class="odd"><td ><code>+</code></td><td ><code>embed_manifest_dll</code></td><td >Embeds a manifest file in the .dll created as part of a library project.</td></tr>
+<tr valign="top" class="even"><td ><code>+</code></td><td ><code>embed_manifest_exe</code></td><td >Embeds a manifest file in the .exe created as part of an application project.</td></tr>
+<tr valign="top" class="odd"><td ><code>-</code></td><td ><code>flat</code></td><td ><i>Visual C++ projects only:</i> groups the files within the source / header group depending on the directory they reside.</td></tr>
+<tr valign="top" class="even"><td ><code>-</code></td><td ><code>incremental</code></td><td ><i>Visual C++ compiler only:</i> disables incremental linking.</td></tr>
+<tr valign="top" class="odd"><td  colspan="3" rowspan=" 1"></td></tr>
+<thead><tr class="qt-style"><th  colspan="3" rowspan=" 1">Linux Specific Features</th></tr></thead>
+<tr valign="top" class="even"><td ><code>+</code></td><td ><code>largefile</code></td><td >Includes support for large files.</td></tr>
+<tr valign="top" class="odd"><td ><code>-</code></td><td ><code>separate_debug_info</code></td><td >Deactivates debugging information for applications / shared libraries in separate files.</td></tr>
+</table></div>
+<a name="additional-features"></a>
+<h2 id="additional-features">Additional Features</h2>
+<p>QS features also provides following <code>CONFIG</code> additional features:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Option</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td ><code>boost</code></td><td >Enables Boost support.</td></tr>
+<tr valign="top" class="even"><td ><code>build_and_install</code></td><td ><i>Visual C++ projects only:</i> enables post generation installation step.</td></tr>
+<tr valign="top" class="odd"><td ><code>no_generate_project</code></td><td >Inhibits qmake outputs generation.</td></tr>
+<tr valign="top" class="even"><td ><code>no_literals_cast</code></td><td >Disables automatic casts between <code>QString</code> / <code>QByteArray</code> objects and string literals.</td></tr>
+<tr valign="top" class="odd"><td ><code>no_pass_traces</code></td><td >Inhibits qmake generation pass traces.</td></tr>
+<tr valign="top" class="even"><td ><code>mkspec_makefile</code></td><td >Suffixes generated project / makefile with current toolkit mkspec shortname.</td></tr>
+<tr valign="top" class="odd"><td ><code>utf8</code></td><td >Specifies both the source and execution character sets as UTF-8. <br />
+<br />
+ <b><i>Visual C++ compiler note:</i></b><ul>
+<li>resource file codepage will be set to Unicode UTF-8.</li>
+<li>MSVC 2013 and previous versions only support execution character set.</li>
+</ul>
+</td></tr>
+</table></div>
+<a name="boost-support"></a>
+<h4 >Boost Support</h4>
+<p>In order to build a project using Boost libraries, following steps are required:</p>
+<ul>
+<li>set <code>BOOST_ROOT</code> environment variable to Boost root directory path.</li>
+<li>add <code>CONFIG</code> <code>+=</code> <code>boost</code> in your project file to enable Boost support.</li>
+</ul>
+<p>Then, header-only Boost libraries will be automatically accessible from your project. Moreover, if you want to use any of the separately-compiled Boost libraries, uses <a href="mkspecs-variable-reference.html#boost">BOOST</a> variable to specify the list of modules which will be linked to the target.</p>
+<p>For example:</p>
+<pre class="cpp">TARGET = MyApp
+TEMPLATE = app
+
+CONFIG += boost   # enables Boost support
+BOOST += log      # link to Boost Log library</pre>
+<p>The following table lists configurations supported by this feature.</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Platform</th><th >Compiler</th><th >Notes</th></tr>
+<tr class="qt-style"><th  colspan="3" rowspan=" 1">Desktop Platforms</th></tr></thead>
+<tr valign="top" class="odd"><td ><span class=nowrap>Windows 7 and later</span> <br />
+ (32 and 64-bit)</td><td >MSVC 2015, MSVC 2013, MSVC 2012, MSVC 2010, MSVC 2008</td><td >Requires prebuilt Windows binaries installer. <br />
+ <span class=nowrap><a href="https://sourceforge.net/projects/boost/files/boost-binaries">https://sourceforge.net/projects/boost/files/boost-binaries</a></span></td></tr>
+</table></div>
+<a name="project-building"></a>
+<h2 id="project-building">Project Building</h2>
+<a name="target-definition"></a>
+<h4 >Target Definition</h4>
+<p>Specifies the name of the target with <code>TARGET</code> variable. For binary targets, optional debug modifiers can be applied to this name by using <code>[..&#x2e;]</code> patterns.</p>
+<p>For example, project below will generate <code>MyAppd</code> application in debug mode, and <code>MyApp</code> application in release mode:</p>
+<pre class="cpp">TARGET = MyApp[d]
+TEMPLATE = app</pre>
+<p>Following target features will be automatically applied, according to project type:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th ><span class=nowrap>Project Type</span></th><th ><code>CONFIG</code> Flags</th><th >Description</th></tr></thead>
+<tr valign="top" class="odd"><td  rowspan=" 2"><span class=nowrap>subdirs-based</span></td><td ><code>no_empty_targets</code></td><td >Project doesn't have targets that do nothing.</td></tr>
+<tr valign="top" class="even"><td ><code>ordered</code></td><td ><i>Visual C++ projects only:</i> force directories listed to be processed in the order in which they are given. From <b>qmake 3.0 (Qt 5.4&#x2e;1)</b>, this feature has been given up in favour of <code>SUBDIRS</code> <code>.depends</code> modifier use.</td></tr>
+<tr valign="top" class="odd"><td  rowspan=" 2">binary</td><td ><code>x11</code></td><td ><i>Linux only:</i> identifies target as a X11 application or library if Qt <code>gui</code> module is used.</td></tr>
+<tr valign="top" class="even"><td ><code>skip_target_version_ext</code></td><td ><i>Windows only:</i> version number is removed on target file name.</td></tr>
+<tr valign="top" class="odd"><td >application</td><td ><code>windows</code></td><td ><i>Windows only:</i> identifies target as a windowed application if Qt <code>gui</code> module is used or if target is not identified as a <code>console</code> application.</td></tr>
+</table></div>
+<p>See also <a href="mkspecs-variable-reference.html#properties">PROPERTIES</a> variable for more details about target properties.</p>
+<a name="target-dependencies"></a>
+<h4 >Target Dependencies</h4>
+<p>Binary target only. Specifies static and shared libraries dependencies by using <a href="mkspecs-test-function-reference.html#add-library-type-path-targets">add_library()</a> function. Prefers using this function to qmake variables, since it automatically manages the related qmake variables assignment according to the type of library. Likewise, specifies plugin libraries dependencies by using <a href="mkspecs-test-function-reference.html#add-plugin-path-targets">add_plugin()</a> function.</p>
+<p>According to the current project type, following rules are applied:</p>
+<ul>
+<li>static library target supports only combination of other archives; any library linked to this target will be ignored.</li>
+<li>application or shared library target supports archives and shared libraries link; archives combination is not applicable.</li>
+</ul>
+<p>Library dependencies support optional debug modifiers syntax, such as described in <a href="mkspecs-predefined-rules.html#target-definition">Target Definition</a> section.</p>
+<p>For example:</p>
+<pre class="cpp">add_library( shared, $${INSTALLDIR}/shared, MyLib[d] )</pre>
+<a name="outputs-definition"></a>
+<h4 >Outputs Definition</h4>
+<p>Binary target only. Below directories are defined to store files generated by the compiler:</p>
+<ul>
+<li>intermediate generated files root path: <code>generated/$${<a href="mkspecs-variable-reference.html#toolkit">TOOLKIT</a>.mkspec}/${<a href="mkspecs-pseudo-variable-reference.html#library-mode">LIBRARY_MODE</a>}/${<a href="mkspecs-pseudo-variable-reference.html#build-mode">BUILD_MODE</a>}</code>.</li>
+<li>default built output files path: <code>builds/$${<a href="mkspecs-variable-reference.html#toolkit">TOOLKIT</a>.mkspec}/${<a href="mkspecs-pseudo-variable-reference.html#library-mode">LIBRARY_MODE</a>}/${<a href="mkspecs-pseudo-variable-reference.html#build-mode">BUILD_MODE</a>}</code>, overridable by using <code>DESTDIR</code> or <code>DLLDESTDIR</code> variable.</li>
+</ul>
+<a name="installation-definition"></a>
+<h4 >Installation Definition</h4>
+<p><a href="mkspecs-variable-reference.html#installdir">INSTALLDIR</a> variable specifies the root directory for any item <code>path</code> defined in <code>INSTALLS</code>. If not defined, current project file path will be taken into account by default.</p>
+<p>For example:</p>
+<pre class="cpp">TARGET = MyLib
+TEMPLATE = lib
+CONFIG += shared
+
+target.path = library    # MyLib deployed in delivery/library
+
+include.files = *.h
+include.path = include   # header files deployed in delivery/include
+
+INSTALLDIR = delivery
+INSTALLS += target include</pre>
+<p>Note that QS features implement <code>INSTALLS</code> support for Visual C++ projects, by generating an additional batch file (named <i>project name</i><code>.install.bat</code>) which provides installation rules. This file implements an install target by build mode if there are more than one (in this case, targets can be passed as batch arguments).</p>
+<a name="compiler-options"></a>
+<h4 >Compiler Options</h4>
+<p>Binary target only. QS features overrides default compiler and linker options defined by qmake mkspecs. Below table lists additional and overriden compilation rules implemented:</p>
+<div class="table"><table class="generic">
+ <thead><tr class="qt-style"><th >Scope</th><th >Value</th><th >Description</th></tr>
+<tr class="qt-style"><th  colspan="3" rowspan=" 1">Preprocessor Macros</th></tr></thead>
+<tr valign="top" class="odd"><td ></td><td ><code>NDEBUG</code></td><td ><i><code>release</code> mode only:</i> disables assertions.</td></tr>
+<tr valign="top" class="even"><td  rowspan=" 4"><span class=nowrap>Windows based</span></td><td ><code>_WIN32</code> <br />
+ <code>_WIN64</code></td><td >Standard Windows 32/64 bits platform preprocessor macros.</td></tr>
+<tr valign="top" class="odd"><td ><code>UNICODE</code> <br />
+ <code>_UNICODE</code></td><td >Enables Unicode characters set. <br />
+ <i>Visual C++ compiler only:</i> not applicable if multi-byte character set (<code>_MBCS</code> preprocessor macro) is defined.</td></tr>
+<tr valign="top" class="even"><td ><code>_USE_MATH_DEFINES</code></td><td >Enables mathematical constants defined in C/C++ math headers.</td></tr>
+<tr valign="top" class="odd"><td ><code>WIN32_LEAN_AND_MEAN</code></td><td >Excludes APIs such as Cryptography, DDE, RPC, Shell, and Windows Sockets.</td></tr>
+<tr valign="top" class="even"><td  rowspan=" 2">Linux based</td><td ><code>__linux__</code></td><td >Standard Linux platform preprocessor macro.</td></tr>
+<tr valign="top" class="odd"><td  colspan="3" rowspan=" 1"></td></tr>
+<thead><tr class="qt-style"><th  colspan="3" rowspan=" 1">C/C++ Compiler Options</th></tr></thead>
+<tr valign="top" class="even"><td  rowspan=" 5">Visual C++</td><td ><code>/MP</code></td><td >Enables multi-processors compilation.</td></tr>
+<tr valign="top" class="odd"><td ><code>/RTCs</code></td><td ><i><code>debug</code> mode only:</i> enables stack frame run-time errors check.</td></tr>
+<tr valign="top" class="even"><td >no <code>/RTC</code> flag</td><td ><i><code>release</code> mode only:</i> disables run-time errors checks.</td></tr>
+<tr valign="top" class="odd"><td >no <code>/EH</code> flag</td><td ><i><code>no_exceptions</code> option only:</i> defines no exception handling model.</td></tr>
+<tr valign="top" class="even"><td ><code>/W4</code></td><td ><i><code>warn_on</code> option only:</i> enables level 4 compiler warnings. <br />
+ <i>Visual C++ compiler only:</i> for Qt-based projects, following level 4 warnings are deactivated:<ul>
+<li>C4127, C4512 and C4714 in any mode.</li>
+<li>C4718 in <code>release</code> mode only.</li>
+</ul>
+</td></tr>
+<tr valign="top" class="odd"><td  colspan="3" rowspan=" 1"></td></tr>
+<thead><tr class="qt-style"><th  colspan="3" rowspan=" 1">Linker Options</th></tr></thead>
+<tr valign="top" class="even"><td >Visual C++</td><td ><code>/INCREMENTAL:NO</code></td><td >Disables incremental link.</td></tr>
+<tr valign="top" class="odd"><td >GCC</td><td ><code>-Wl,-rpath $$ORIGIN</code></td><td >Add application path to shared libraries search path.</td></tr>
+</table></div>
+</div>
+<!-- @@@mkspecs-predefined-rules.html -->
+<p class="naviNextPrevious footerNavi">
+<a class="prevPage" href="mkspecs-manual.html">qmake Features</a>
+<a class="nextPage" href="mkspecs-metadata-generation.html">Metadata Generation</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

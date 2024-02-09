@@ -1,0 +1,80 @@
+cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+
+if(WIN32)
+
+    set(QS_TOOLKIT_HOST_PLATFORM win)
+
+    if(MSVC)
+    
+        set(QS_TOOLKIT_COMPILER_NAME msvc)
+        
+        if(MSVC_VERSION EQUAL 1500)
+            set(QS_TOOLKIT_COMPILER_VERSION 2008)
+        elseif(MSVC_VERSION EQUAL 1600)
+            set(QS_TOOLKIT_COMPILER_VERSION 2010)
+        elseif(MSVC_VERSION EQUAL 1700)
+            set(QS_TOOLKIT_COMPILER_VERSION 2012)
+        elseif(MSVC_VERSION EQUAL 1800)
+            set(QS_TOOLKIT_COMPILER_VERSION 2013)
+        elseif(MSVC_VERSION EQUAL 1900)
+            set(QS_TOOLKIT_COMPILER_VERSION 2015)
+        else()
+            message(FATAL_ERROR "Windows MSVC compiler cannot be resolved")
+        endif()
+        
+    elseif(BORLAND)
+    
+        set(QS_TOOLKIT_COMPILER_NAME bl)
+        set(QS_TOOLKIT_COMPILER_VERSION 2010)
+    
+    elseif(MINGW)
+    
+        set(QS_TOOLKIT_COMPILER_NAME gcc)
+        set(QS_TOOLKIT_COMPILER_VERSION ${CMAKE_CXX_COMPILER_VERSION})
+
+        if(NOT QS_TOOLKIT_COMPILER_VERSION)
+            message(FATAL_ERROR "Windows MinGW compiler cannot be resolved")
+        endif()
+        
+    else()
+        message(FATAL_ERROR "Windows compiler not supported")
+    endif()
+
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(QS_TOOLKIT_HOST_ARCH x64)
+    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+        set(QS_TOOLKIT_HOST_ARCH x86)
+    else()
+        message(FATAL_ERROR "Windows architecture not supported")
+    endif()
+
+elseif(UNIX)
+
+    set(QS_TOOLKIT_HOST_PLATFORM linux)
+
+    set(QS_TOOLKIT_COMPILER_NAME gcc)
+    set(QS_TOOLKIT_COMPILER_VERSION ${CMAKE_CXX_COMPILER_VERSION})
+
+    if(NOT QS_TOOLKIT_COMPILER_VERSION)
+        message(FATAL_ERROR "Linux GCC compiler cannot be resolved")
+    endif()
+
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+        set(QS_TOOLKIT_HOST_ARCH x64)
+    elseif(CMAKE_SIZEOF_VOID_P STREQUAL 4)
+        set(QS_TOOLKIT_HOST_ARCH x86)
+    else()
+        message(FATAL_ERROR "Linux architecture not supported")
+    endif()
+    
+else()
+    message(FATAL_ERROR "Unknown platform not supported")
+endif()
+
+set(QS_TOOLKIT_COMPILER ${QS_TOOLKIT_COMPILER_NAME}${QS_TOOLKIT_COMPILER_VERSION})
+
+if(BORLAND)
+    set(QS_TOOLKIT_MKSPEC ${QS_TOOLKIT_HOST_PLATFORM}_${QS_TOOLKIT_COMPILER}_${QS_TOOLKIT_HOST_ARCH})
+else()
+    set(QS_TOOLKIT_MKSPEC ${QS_TOOLKIT_HOST_PLATFORM}-${QS_TOOLKIT_COMPILER}-${QS_TOOLKIT_HOST_ARCH})
+endif()

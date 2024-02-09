@@ -12,7 +12,7 @@ function(define_installation)
 
   # Install headers
 
-  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include DESTINATION ".")
+  #install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include DESTINATION ".")
 
   # Install targets
 

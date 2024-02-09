@@ -1,0 +1,219 @@
+# -- QMAKESPEC variable definition -- #
+
+qtLessThan( 5.0 ) {
+
+    # resolves QMAKESPEC variable for qmake 2.x compatibility
+
+    _qmakespec = $$(QMAKESPEC)
+
+    isEmpty( _qmakespec ): \
+        _qmakespec = $$[QMAKESPEC]
+
+    isEmpty( _qmakespec ): \
+        qserror( "QMAKESPEC environment variable must be set" )
+
+    rglob( QMAKESPEC, $$[QT_INSTALL_PREFIX]/mkspecs/*/$${_qmakespec} )
+    !count( QMAKESPEC, 1 ): QMAKESPEC = $$clean_path( $$[QT_INSTALL_PREFIX]/mkspecs/$${_qmakespec} )
+
+    unset( _qmakespec )
+}
+
+!exists( $${QMAKESPEC} ): \
+    qserror( "Cannot found '$${QMAKESPEC}' qmakespec path" )
+
+
+# -- Unsupported environments -- #
+
+winrt:     qserror( "Windows Runtime platforms not supported" )
+else: mac: qserror( "Darwin-based platforms not supported" )
+
+
+# -- Android environment -- #
+
+## TOOLKIT.host.platform    = android
+## TOOLKIT.host.arch        = armv5, armv7, x86
+## TOOLKIT.compiler.name    = gcc
+## TOOLKIT.compiler.version = compiler version
+## CONFIG                     add mobile and gcc features
+
+else: android {
+
+    !equals( QMAKE_HOST.os, Windows ): \
+        qserror( "Android project generation not available on this platform" )
+
+    CONFIG *= mobile gcc
+    TOOLKIT.host.platform = android
+
+    equals( ANDROID_TARGET_ARCH, armeabi ):           TOOLKIT.host.arch = armv5
+    else: equals( ANDROID_TARGET_ARCH, armeabi-v7a ): TOOLKIT.host.arch = armv7
+    else: equals( ANDROID_TARGET_ARCH, x86 ):         TOOLKIT.host.arch = x86
+
+    isEmpty( TOOLKIT.host.arch ) {
+
+        isEmpty( ANDROID_TARGET_ARCH ): ANDROID_TARGET_ARCH = unknown
+        qserror( "Android architecture '$${ANDROID_TARGET_ARCH}' not supported" )
+    }
+
+    !isEmpty( NDK_TOOLCHAIN_VERSION ) {
+
+        TOOLKIT.compiler.name = gcc
+        TOOLKIT.compiler.version = $${NDK_TOOLCHAIN_VERSION}
+    }
+
+    isEmpty( TOOLKIT.compiler.name ): \
+        qserror( "Android toolchain compiler cannot be resolved" )
+}
+
+
+# -- Windows 32/64 bits environment -- #
+
+## TOOLKIT.host.platform    = win
+## TOOLKIT.host.arch        = x86, x64
+## TOOLKIT.compiler.name    = gcc, msvc[-proj]
+## TOOLKIT.compiler.version = compiler version
+## CONFIG                     add gcc feature for MinGW compiler
+
+else: win32 {
+
+    !equals( QMAKE_HOST.os, Windows ): \
+        qserror( "Windows project generation not available on this platform" )
+
+    qtLessThan( 5.0 ) {
+
+        _qmakespec = $$basename( QMAKESPEC )
+
+        find( _qmakespec, msvc ):      CONFIG *= msvc
+        else: find( _qmakespec, g++ ): CONFIG *= mingw
+
+        unset( _qmakespec )
+    }
+
+    include( $${PWD}/toolkit_toolchain.conf )
+
+    mingw: CONFIG *= gcc
+    TOOLKIT.host.platform = win
+
+    startsWith( TEMPLATE, vc ) {
+
+        msvc: CONFIG *= msvc-proj
+        else: qserror( "Visual C++ project template not supported" )
+    }
+
+	msvc: QMAKE_HOST.arch = $${QMAKE_TARGET.arch}
+
+    equals( QMAKE_HOST.arch, x86 ):          TOOLKIT.host.arch = x86
+    else: equals( QMAKE_HOST.arch, x86_64 ): TOOLKIT.host.arch = x64
+
+    isEmpty( TOOLKIT.host.arch ) {
+
+        isEmpty( QMAKE_HOST.arch ): QMAKE_HOST.arch = unknown
+        qserror( "Windows architecture '$${QMAKE_HOST.arch}' not supported" )
+    }
+
+    !equals( QMAKE_TARGET.arch, $${QMAKE_HOST.arch} ): \
+    !equals( QMAKE_TARGET.arch, $${TOOLKIT.host.arch} ): \
+        qserror( "Windows architecture mismatch detected ($${TOOLKIT.host.arch} architecture expected)" )
+
+    msvc {
+
+        _MSC_VER = $$find( QMAKE_COMPILER_DEFINES, _MSC_VER )
+        _MSC_VER = $$remove( _MSC_VER, ^_MSC_VER= )
+
+        isEmpty( MSVC_VER ) {
+
+            equals( _MSC_VER, 1500 ):       MSVC_VER = 9.0
+            else: equals( _MSC_VER, 1600 ): MSVC_VER = 10.0
+            else: equals( _MSC_VER, 1700 ): MSVC_VER = 11.0
+            else: equals( _MSC_VER, 1800 ): MSVC_VER = 12.0
+            else: equals( _MSC_VER, 1900 ): MSVC_VER = 14.0
+        }
+
+        equals( MSVC_VER, 9.0 ):        TOOLKIT.compiler.version = 2008
+        else: equals( MSVC_VER, 10.0 ): TOOLKIT.compiler.version = 2010
+        else: equals( MSVC_VER, 11.0 ): TOOLKIT.compiler.version = 2012
+        else: equals( MSVC_VER, 12.0 ): TOOLKIT.compiler.version = 2013
+        else: equals( MSVC_VER, 14.0 ): TOOLKIT.compiler.version = 2015
+
+        !isEmpty( TOOLKIT.compiler.version ) {
+
+            TOOLKIT.compiler.name = msvc
+
+            !isEmpty( QMAKE_MSC_VER ): \
+            !equals( QMAKE_MSC_VER, $${_MSC_VER} ): \
+                qserror( "Windows MSVC environment mismatch detected (MSVC.NET $${TOOLKIT.compiler.version} expected)" )
+        }
+    }
+
+    else: mingw {
+
+        TOOLKIT.compiler.version = $${QMAKE_GCC_MAJOR_VERSION}.$${QMAKE_GCC_MINOR_VERSION}.$${QMAKE_GCC_PATCH_VERSION}
+        TOOLKIT.compiler.version = $$find( TOOLKIT.compiler.version, (?:^|\\s)\\d+\\.\\d+(?:\\.\\d+)?(?:\\s|$) )
+
+        !isEmpty( TOOLKIT.compiler.version ): \
+            TOOLKIT.compiler.name = gcc
+    }
+
+    isEmpty( TOOLKIT.compiler.name ) {
+
+        msvc:        qserror( "Windows MSVC compiler cannot be resolved" )
+        else: mingw: qserror( "Windows MinGW compiler cannot be resolved" )
+        else:        qserror( "Windows compiler not supported" )
+    }
+}
+
+
+# -- GNU Linux environment -- #
+
+## TOOLKIT.host.platform    = linux
+## TOOLKIT.host.arch        = x86, x64
+## TOOLKIT.compiler.name    = gcc
+## TOOLKIT.compiler.version = compiler version
+## CONFIG                     add gnu and gcc features
+
+else: linux {
+
+    !equals( QMAKE_HOST.os, Linux ): \
+        qserror( "Linux project generation not available on this platform" )
+
+    include( $${PWD}/toolkit_toolchain.conf )
+
+    CONFIG *= gnu gcc
+    TOOLKIT.host.platform = linux
+
+    contains( QMAKE_HOST.arch, i386|i686 ):  TOOLKIT.host.arch = x86
+    else: equals( QMAKE_HOST.arch, x86_64 ): TOOLKIT.host.arch = x64
+
+    isEmpty( TOOLKIT.host.arch ) {
+
+        isEmpty( QMAKE_HOST.arch ): QMAKE_HOST.arch = unknown
+        qserror( "Linux architecture '$${QMAKE_HOST.arch}' not supported" )
+    }
+
+    !equals( QMAKE_TARGET.arch, $${QMAKE_HOST.arch} ): \
+    !equals( QMAKE_TARGET.arch, $${TOOLKIT.host.arch} ): \
+        qserror( "Linux architecture mismatch detected ($${TOOLKIT.host.arch} architecture expected)" )
+
+    TOOLKIT.compiler.version = $${QMAKE_GCC_MAJOR_VERSION}.$${QMAKE_GCC_MINOR_VERSION}.$${QMAKE_GCC_PATCH_VERSION}
+    TOOLKIT.compiler.version = $$find( TOOLKIT.compiler.version, (?:^|\\s)\\d+\\.\\d+(?:\\.\\d+)?(?:\\s|$) )
+
+    !isEmpty( TOOLKIT.compiler.version ): \
+        TOOLKIT.compiler.name = gcc
+
+    isEmpty( TOOLKIT.compiler.name ): \
+        qserror( "Linux GCC compiler cannot be resolved" )
+}
+
+
+# -- Unknown environments -- #
+
+isEmpty( TOOLKIT.host.platform ): \
+    qserror( "Unknown platform not supported" )
+
+
+# -- Toolkit definitions -- #
+
+## TOOLKIT.compiler = toolkit compiler: $${TOOLKIT.compiler.name}$${TOOLKIT.compiler.version}
+## TOOLKIT.mkspec   = toolkit mkspec shortname: $${TOOLKIT.host.platform}-$${TOOLKIT.compiler}-$${TOOLKIT.host.arch}
+
+TOOLKIT.compiler = $${TOOLKIT.compiler.name}$${TOOLKIT.compiler.version}
+TOOLKIT.mkspec = $${TOOLKIT.host.platform}-$${TOOLKIT.compiler}-$${TOOLKIT.host.arch}
