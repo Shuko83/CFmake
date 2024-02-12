@@ -62,8 +62,14 @@ function(generate_target_info)
     endif()
 
     if(WIN32)
-    
-        set(INFO_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${COMPONENT_NAME}_autogen/info)
+        get_target_property(AUTOGEN_BUILD_DIR ${PARAMS_TARGET} AUTOGEN_BUILD_DIR)
+
+        if(AUTOGEN_BUILD_DIR AND NOT "${AUTOGEN_BUILD_DIR}" STREQUAL "")
+            set(INFO_DIRECTORY ${AUTOGEN_BUILD_DIR}/info)
+        else()
+            set(INFO_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PARAMS_TARGET}_autogen/info)
+        endif()
+        
         set(PARAMS_VERSION ${PARAMS_MAJOR_VERSION}.${PARAMS_MINOR_VERSION}.${PARAMS_PATCH_VERSION}.${PARAMS_BUILD_VERSION})
         set(cmake_target_cpp_info ${INFO_DIRECTORY}/info_${PARAMS_TARGET}.cpp)
         set(cmake_target_h_info ${INFO_DIRECTORY}/info_${PARAMS_TARGET}.h)
@@ -87,6 +93,7 @@ function(generate_target_info)
             configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/info_lib_target.h.in ${cmake_target_h_info} @ONLY)
 
             target_sources("${PARAMS_PRODUCT}" PRIVATE ${cmake_target_cpp_info} ${cmake_target_h_info})
+            source_group(TREE ${INFO_DIRECTORY} PREFIX "Generated Files" FILES ${cmake_target_cpp_info} ${cmake_target_h_info})
 
             message("Target informations generation success !!")
         endif()

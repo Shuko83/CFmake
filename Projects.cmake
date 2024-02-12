@@ -171,13 +171,11 @@ function(define_component)
   endif(NOT COMPONENT_RECURSIVE)
 
   message(${COMPONENT_UI_FILES})
-  #  source_group(TREE ${COMPONENT_PUBLIC_HEADERS_PATH} PREFIX "Header Files (public)" FILES ${COMPONENT_PUBLIC_HEADERS_FILES})
-  #  source_group(TREE ${COMPONENT_PRIVATE_HEADERS_PATH} PREFIX "Header Files (private)" FILES ${COMPONENT_PRIVATE_HEADERS_FILES})
   source_group(TREE ${COMPONENT_PRIVATE_HEADERS_PATH}/..  PREFIX "Header Files" FILES ${COMPONENT_PRIVATE_HEADERS_FILES})
   source_group(TREE ${COMPONENT_SOURCES_PATH} PREFIX "Source Files" FILES ${COMPONENT_SOURCES_FILES})
   source_group(TREE ${COMPONENT_UI_PATH} PREFIX "Form Files" FILES ${COMPONENT_UI_FILES})
   source_group(TREE ${COMPONENT_RESSOURCES_PATH} PREFIX "Resource Files" FILES ${COMPONENT_RESSOURCES_FILES})
-
+  #source_group(TREE "C:/QsBase/build/Sources/Module/QsCore/generated/info" PREFIX "dzdqzdqd Files" FILES "C:/QsBase/build/Sources/Module/QsCore/generated/info/info_QsCore.cpp")
   # Resource
 
   if(WIN32 AND MSVC)
@@ -213,16 +211,19 @@ function(define_component)
     add_executable(${COMPONENT_NAME} ${COMPONENT_PUBLIC_HEADERS_FILES} ${COMPONENT_PRIVATE_HEADERS_FILES} ${COMPONENT_SOURCES_FILES} ${COMPONENT_RCFILE_OUT})
   endif(COMPONENT_EXECUTABLE)
 
-    # Dossier des projets
-  
-    message(STATUS "ANI - Debug :" "${PROJECT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}")
-  #set_target_properties(${COMPONENT_NAME} PROPERTIES FOLDER GIACOMO)
-    #------------------------------------------------------------------------------------
-    # Component directory in IDE
-    #------------------------------------------------------------------------------------
-    string(REPLACE "${PROJECT_SOURCE_DIR}" "" FOLDER "${CMAKE_CURRENT_SOURCE_DIR}")
-    string(REPLACE "/${COMPONENT_NAME}" "" FOLDER "${FOLDER}")
-    set_target_properties(${COMPONENT_NAME} PROPERTIES FOLDER "${FOLDER}")
+  # Dossier des projets
+
+  message(STATUS "ANI - Debug :" "${PROJECT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}")
+  #------------------------------------------------------------------------------------
+  # Component directory in IDE
+  #------------------------------------------------------------------------------------
+  string(REPLACE "${PROJECT_SOURCE_DIR}" "" FOLDER "${CMAKE_CURRENT_SOURCE_DIR}")
+  string(REPLACE "/${COMPONENT_NAME}" "" FOLDER "${FOLDER}")
+  string(REPLACE "/Sources" "" FOLDER "${FOLDER}")
+  string(REPLACE "/src" "" FOLDER "${FOLDER}")
+  set_target_properties(${COMPONENT_NAME} PROPERTIES FOLDER "${FOLDER}")
+
+  set_target_properties(${COMPONENT_NAME} PROPERTIES AUTOGEN_BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
 
   # Definitions
 
