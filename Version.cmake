@@ -3,8 +3,3 @@ set(SOLUTION_VERSION 0.0.0.0 CACHE STRING "Version of the solution, will set CMA
 set(CMAKE_PROJECT_VERSION ${SOLUTION_VERSION} CACHE INTERNAL "...")
 set(PROJECT_VERSION ${SOLUTION_VERSION})
 set(${PROJECT_NAME}_VERSION ${SOLUTION_VERSION})
-
-# Definition de Qt5
-
-set(Qt5_DIR "C:/Qt/Qt${Qt5_VERSION}/${Qt5_VERSION}/${Qt5_ARCH}/lib/cmake/Qt5")
-find_package(Qt5 ${Qt5_VERSION} COMPONENTS Core Gui Widgets Xml Network REQUIRED)
