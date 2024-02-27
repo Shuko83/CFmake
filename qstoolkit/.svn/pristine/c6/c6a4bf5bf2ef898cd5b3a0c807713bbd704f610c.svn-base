@@ -1,8 +1,0 @@
-build_pass( binary ) {
-
-    # -- Qt preprocessor macros definition -- #
-
-    DEFINES *= QT_NO_CAST_FROM_ASCII        # disables automatic conversions from 8-bit strings (char *) to unicode QStrings
-    DEFINES *= QT_NO_CAST_TO_ASCII          # disables automatic conversion from QString to 8-bit strings (char *)
-    DEFINES *= QT_NO_CAST_FROM_BYTEARRAY    # disables automatic conversions from QByteArray to const char * or const void *
-}

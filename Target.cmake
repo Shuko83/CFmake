@@ -1,0 +1,183 @@
+function(add_target TARGET_TYPE)
+  
+  # Parse arguments
+
+  set(TARGET_OPTIONS EXECUTABLE STATIC INTERFACE RECURSIVE NOINSTALL)
+  set(TARGET_UNIQUE NAME PATH INSTALLNAME INSTALLDIR)
+  set(TARGET_MULTIPLE PUBLIC_BUILD_DEPS PRIVATE_BUILD_DEPS HEADER_BUILD_DEPS RUNTIME_DEPS)
+  cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
+
+  message("\nadd_target(${TARGET_NAME})")
+
+  if(DEFINED TARGET_UNPARSED_ARGUMENTS)
+    message(SEND_ERROR "Unkown arguments : ${TARGET_UNPARSED_ARGUMENTS}")
+  endif()
+
+  if(NOT DEFINED TARGET_NAME OR TARGET_NAME STREQUAL "")
+    message(SEND_ERROR "No NAME defined for target")
+    return()
+  endif()
+
+  if(TARGET_TYPE STREQUAL "EXECUTABLE")
+    set(TARGET_EXECUTABLE TRUE)
+  elseif(TARGET_TYPE STREQUAL "SHARED")
+    set(TARGET_SHARED TRUE)
+  elseif(TARGET_TYPE STREQUAL "STATIC")
+    set(TARGET_STATIC TRUE)
+  elseif(TARGET_TYPE STREQUAL "INTERFACE")
+    set(TARGET_INTERFACE TRUE)
+  else()
+    message(SEND_ERROR "Incorrect TARGET_TYPE \"${TARGET_TYPE}\" for target \"${TARGET_NAME}\". Must be either EXECUTABLE, SHARED, STATIC or INTERFACE.")
+    return()
+  endif()
+
+  # Paths
+
+  string(REPLACE "/_project" "" TARGET_PUBLIC_HEADERS_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+  string(REPLACE "/_project" "" TARGET_PRIVATE_HEADERS_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+  string(REPLACE "/_project" "" TARGET_SOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+  string(REPLACE "/_project" "" TARGET_UI_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+  string(REPLACE "/_project" "" TARGET_RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+  string(REPLACE "/_project" "" TARGET_TRANSLATION_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+
+  #set(TARGET_PUBLIC_HEADERS_DIR ${TARGET_PUBLIC_HEADERS_DIR}/include)
+
+  set(TARGET_INSTALL_LIB_DIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
+  set(TARGET_INSTALL_BIN_DIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
+  set(TARGET_INSTALL_INCLUDE_DIR ${TARGET_NAME}/include)
+
+  # Sources
+  if(TARGET_RECURSIVE)
+    file(GLOB_RECURSE TARGET_PUBLIC_HEADERS_FILES ${TARGET_PUBLIC_HEADERS_DIR}/*.h ${TARGET_PUBLIC_HEADERS_DIR}/*.hpp)
+    file(GLOB_RECURSE TARGET_PRIVATE_HEADERS_FILES ${TARGET_PRIVATE_HEADERS_DIR}/*.h ${TARGET_PRIVATE_HEADERS_DIR}/*.hpp)
+    file(GLOB_RECURSE TARGET_SOURCES_FILES ${TARGET_SOURCES_DIR}/*.c ${TARGET_SOURCES_DIR}/*.cpp)
+    file(GLOB_RECURSE TARGET_UI_FILES ${TARGET_UI_DIR}/*.ui)
+    file(GLOB_RECURSE TARGET_RESOURCES_FILES ${TARGET_RESOURCES_DIR}/*.qrc)
+    file(GLOB_RECURSE TARGET_TRANSLATION_FILES ${TARGET_TRANSLATION_DIR}/*.ts)
+  else()
+    file(GLOB TARGET_PUBLIC_HEADERS_FILES ${TARGET_PUBLIC_HEADERS_DIR}/*.h ${TARGET_PUBLIC_HEADERS_DIR}/*.hpp)
+    file(GLOB TARGET_PRIVATE_HEADERS_FILES ${TARGET_PRIVATE_HEADERS_DIR}/*.h ${TARGET_PRIVATE_HEADERS_DIR}/*.hpp)
+    file(GLOB TARGET_SOURCES_FILES ${TARGET_SOURCES_DIR}/*.c ${TARGET_SOURCES_DIR}/*.cpp)
+    file(GLOB TARGET_UI_FILES ${TARGET_UI_DIR}/*.ui)
+    file(GLOB TARGET_RESOURCES_FILES ${TARGET_RESOURCES_DIR}/*.qrc)
+    file(GLOB TARGET_TRANSLATION_FILES ${TARGET_TRANSLATION_DIR}/*.ts)
+  endif()
+
+  # Library
+
+  if(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
+    add_library(${TARGET_NAME} ${TARGET_TYPE} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
+  endif()
+
+  # Executable
+
+  if(TARGET_EXECUTABLE)
+    add_executable(${TARGET_NAME} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
+  endif()
+
+  # Dossier des projets
+
+  source_group(TREE ${TARGET_PRIVATE_HEADERS_DIR}  PREFIX "Header Files (Private)" FILES ${TARGET_PRIVATE_HEADERS_FILES})
+  source_group(TREE ${TARGET_PUBLIC_HEADERS_DIR}  PREFIX "Header Files (Public)" FILES ${TARGET_PUBLIC_HEADERS_FILES})
+  source_group(TREE ${TARGET_SOURCES_DIR} PREFIX "Source Files" FILES ${TARGET_SOURCES_FILES})
+  source_group(TREE ${TARGET_UI_DIR} PREFIX "Form Files" FILES ${TARGET_UI_FILES})
+  source_group(TREE ${TARGET_RESOURCES_DIR} PREFIX "Resource Files" FILES ${TARGET_RESOURCES_FILES})
+  source_group(TREE ${TARGET_TRANSLATION_DIR} PREFIX "Translation Files" FILES ${TARGET_TRANSLATION_FILES})
+
+  string(REPLACE "${PROJECT_SOURCE_DIR}" "" FOLDER "${CMAKE_CURRENT_SOURCE_DIR}")
+  string(REPLACE "/${TARGET_NAME}" "" FOLDER "${FOLDER}")
+  string(REPLACE "/Sources" "" FOLDER "${FOLDER}")
+  string(REPLACE "/src" "" FOLDER "${FOLDER}")
+  string(REPLACE "/test" "" FOLDER "${FOLDER}")
+  string(REPLACE "/_project" "" FOLDER "${FOLDER}")
+  set_target_properties(${TARGET_NAME} PROPERTIES FOLDER "${FOLDER}")
+
+  set_target_properties(${TARGET_NAME} PROPERTIES AUTOGEN_BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
+
+  # Definitions
+
+  if(TARGET_SHARED OR TARGET_STATIC)
+    string(TOUPPER ${TARGET_NAME} TARGET_EXPORTS)
+    string(REPLACE "." "_" TARGET_EXPORTS ${TARGET_EXPORTS})
+    string(APPEND TARGET_EXPORTS "_LIB")
+    add_compile_definitions(${TARGET_EXPORTS})
+  endif()
+
+  # Dependencies
+
+  list(APPEND ALL_DEPS ${TARGET_PUBLIC_BUILD_DEPS} ${TARGET_PRIVATE_BUILD_DEPS} ${TARGET_INTERFACE_BUILD_DEPS} ${TARGET_RUNTIME_DEPS})
+
+  foreach(item ${ALL_DEPS})
+    # Vérifier si le motif "Qt5::" existe dans l'élément actuel     
+    string(REGEX MATCH "^Qt5::(.|..|...|....|.....|......|.......|.+[^P]......|.+P[^r].....|.+Pr[^i]....|.+Pri[^v]...|.+Priv[^a]..|.+Priva[^t].|.+Privat[^e])(Private$|$)" HAS_QT5 ${item})     
+    # Si le motif est trouvé     
+    if(HAS_QT5)         
+      # Récupérer ce qui se trouve après "Qt5::"
+      list(APPEND QT5_MODULES ${CMAKE_MATCH_1})
+    endif()
+  endforeach()
+
+  if (QT5_MODULES)
+    find_package(Qt5 ${Qt5_VERSION} COMPONENTS ${QT5_MODULES} REQUIRED)
+  endif()
+
+  # Includes
+
+  target_sources(${TARGET_NAME}
+    PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_DIR} FILES ${TARGET_PUBLIC_HEADERS_FILES}
+    PRIVATE FILE_SET "interditdemettreunemajuscule" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIR} FILES ${TARGET_PRIVATE_HEADERS_FILES}
+  )
+
+  # Links
+
+  target_link_libraries(${TARGET_NAME}
+    PUBLIC ${TARGET_PUBLIC_BUILD_DEPS}
+    PRIVATE ${TARGET_PRIVATE_BUILD_DEPS}
+    INTERFACE ${TARGET_INTERFACE_BUILD_DEPS})
+  
+  # Installation
+
+  if(NOT TARGET_NOINSTALL)
+    install(TARGETS ${TARGET_NAME} DESTINATION ${TARGET_NAME}
+      ARCHIVE DESTINATION ${TARGET_INSTALL_LIB_DIR}
+      RUNTIME DESTINATION ${TARGET_INSTALL_BIN_DIR}
+      FILE_SET HEADERS DESTINATION ${TARGET_INSTALL_INCLUDE_DIR}
+#      LIBRARY DESTINATION ${TARGET_NAME}/LIBRARY
+#      OBJECTS DESTINATION ${TARGET_NAME}/OBJECTS
+#      FRAMEWORK DESTINATION ${TARGET_NAME}/FRAMEWORK
+#      BUNDLE DESTINATION ${TARGET_NAME}/BUNDLE
+#      PUBLIC_HEADER DESTINATION ${TARGET_NAME}/PUBLIC_HEADER
+#      PRIVATE_HEADER DESTINATION ${TARGET_NAME}/PRIVATE_HEADER
+#      RESOURCE DESTINATION ${TARGET_NAME}/RESOURCE
+    )
+    
+    # PDBS
+    install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)
+
+  endif()
+
+  # Generation des fichiers infos
+
+  generate_target_info(TARGET ${TARGET_NAME} COPYRIGHT CSGroup COMPANY CSGroup PRODUCT ${TARGET_NAME})
+
+  # Debug Messages
+
+  message(STATUS "==================================================")
+  message(STATUS "Component ${TARGET_NAME} is ${TARGET_TYPE}")
+  message(STATUS "  - Dependencies: ${ALL_DEPS}")
+  message(STATUS "  - Public headers path: ${TARGET_PUBLIC_HEADERS_DIR}")
+  message(STATUS "  - Private headers path: ${TARGET_PRIVATE_HEADERS_DIR}")
+  message(STATUS "  - Sources path: ${TARGET_SOURCES_DIR}")
+  message(STATUS "  - Recursive: ${TARGET_RECURSIVE}")
+  message(DEBUG  "  - Public headers files: ${TARGET_PUBLIC_HEADERS_FILES}")
+  message(DEBUG  "  - Private headers files: ${TARGET_PRIVATE_HEADERS_FILES}")
+  message(DEBUG  "  - Sources files: ${TARGET_SOURCES_FILES}")
+  message(DEBUG  "  - Public build dependencies: ${TARGET_PUBLIC_BUILD_DEPS}")
+  message(DEBUG  "  - Private build dependencies: ${TARGET_PRIVATE_BUILD_DEPS}")
+  message(DEBUG  "  - Interface build dependencies: ${TARGET_INTERFACE_BUILD_DEPS}")
+  message(DEBUG  "  - Runtime dependencies: ${TARGET_RUNTIME_DEPS}")
+  if(NOT TARGET_NOINSTALL)
+    message(STATUS "  - Installation: Default")
+  endif()
+
+endfunction()
