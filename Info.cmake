@@ -12,7 +12,7 @@ function(generate_target_info)
     
     cmake_parse_arguments(PARAMS "${options}" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN})
 
-    MESSAGE("Valeur Target : " ${PARAMS_TARGET})
+    #MESSAGE("Valeur Target : " ${PARAMS_TARGET})
 
     if(NOT PARAMS_TARGET OR PARAMS_TARGET STREQUAL "")
         message(FATAL_ERROR "TARGET argument must be defined")
@@ -20,12 +20,12 @@ function(generate_target_info)
     
         get_target_property(template ${PARAMS_TARGET} TYPE)
 
-        MESSAGE("Valeur template : " ${template})
+        #MESSAGE("Valeur template : " ${template})
 
         if(NOT template STREQUAL "EXECUTABLE" AND 
            NOT template STREQUAL "SHARED_LIBRARY" AND
            NOT template STREQUAL "MODULE_LIBRARY")
-            message(FATAL_ERROR "${template} target not supported")
+            message(FATAL_ERROR "generate_target_info : ${template} target not supported")
         endif()
         
     endif()
@@ -73,8 +73,8 @@ function(generate_target_info)
         set(cmake_target_h_info ${INFO_DIRECTORY}/info_${PARAMS_TARGET}.h)
         string(REPLACE "(C)" "\\251" PARAMS_COPYRIGHT ${PARAMS_COPYRIGHT})         
 
-        message("Target info path cpp : " ${cmake_target_cpp_info})
-        message("Target info path h : " ${cmake_target_h_info})
+        #message("Target info path cpp : " ${cmake_target_cpp_info})
+        #message("Target info path h : " ${cmake_target_h_info})
 
         if(template STREQUAL "EXECUTABLE")
                     
@@ -93,7 +93,7 @@ function(generate_target_info)
             target_sources("${PARAMS_PRODUCT}" PRIVATE ${cmake_target_cpp_info} ${cmake_target_h_info})
             source_group(TREE ${INFO_DIRECTORY} PREFIX "Generated Files" FILES ${cmake_target_cpp_info} ${cmake_target_h_info})
 
-            message("Target informations generation success !!")
+            #message("Target informations generation success !!")
         endif()
 
     elseif(UNIX)

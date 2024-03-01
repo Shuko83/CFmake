@@ -6,13 +6,13 @@ cmake_minimum_required(VERSION 3.17)
 
 include(Target)
 include(Info)
-include(Qt)
+include(PostConfigure)
 
 ################################################################################
 # Workspace definition
 ################################################################################
 
-set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}" CACHE PATH "Directories to be searched by find_package()")
+set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/external" CACHE PATH "Directories to be searched by find_package()")
 # set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}") // Done in the CMakeList.txt
 set(ARTIFACTORY_URL "https://artifactory.divst:8081/artifactory" CACHE STRING "Artifactory base URL")
 
@@ -23,6 +23,8 @@ set(ARTIFACTORY_URL "https://artifactory.divst:8081/artifactory" CACHE STRING "A
 #set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install") // Done in Project.cmake
 set(CMAKE_PROJECT_INCLUDE "${CMAKE_CURRENT_LIST_DIR}/Project.cmake")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL post_configure())
 
 ################################################################################
 # Project options

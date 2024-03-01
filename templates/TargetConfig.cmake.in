@@ -1,0 +1,7 @@
+if(TARGET @PROJECT_NAME@::@TARGET_NAME@)
+  return()
+endif()
+
+include(CMakeFindDependencyMacro)
+@FIND_DEPENDENCY_COMMANDS@
+include(${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@_@TARGET_NAME@Targets.cmake)
