@@ -82,7 +82,11 @@ function(generate_target_info)
             configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/info_exe_target.cpp.in ${cmake_target_cpp_info} @ONLY)
             configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/info_exe_target.h.in ${cmake_target_h_info} @ONLY)
 
-            target_sources("${PARAMS_PRODUCT}" PRIVATE ${cmake_target_cpp_info} ${cmake_target_h_info})
+            target_sources(${PARAMS_PRODUCT} PRIVATE ${cmake_target_cpp_info} )
+            target_sources(${PARAMS_PRODUCT}
+                PRIVATE FILE_SET "info" TYPE HEADERS BASE_DIRS ${INFO_DIRECTORY} FILES ${cmake_target_h_info}
+            )
+            source_group(TREE ${INFO_DIRECTORY}/.. PREFIX "Generated Files" FILES ${cmake_target_cpp_info} ${cmake_target_h_info})
 
         else()
                     
@@ -90,8 +94,13 @@ function(generate_target_info)
             configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/info_lib_target.cpp.in ${cmake_target_cpp_info} @ONLY)
             configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/info_lib_target.h.in ${cmake_target_h_info} @ONLY)
 
-            target_sources("${PARAMS_PRODUCT}" PRIVATE ${cmake_target_cpp_info} ${cmake_target_h_info})
-            source_group(TREE ${INFO_DIRECTORY} PREFIX "Generated Files" FILES ${cmake_target_cpp_info} ${cmake_target_h_info})
+
+
+            target_sources(${PARAMS_PRODUCT} PRIVATE ${cmake_target_cpp_info} )
+            target_sources(${PARAMS_PRODUCT}
+                PRIVATE FILE_SET "info" TYPE HEADERS BASE_DIRS ${INFO_DIRECTORY} FILES ${cmake_target_h_info}
+            )
+            source_group(TREE ${INFO_DIRECTORY}/.. PREFIX "Generated Files" FILES ${cmake_target_cpp_info} ${cmake_target_h_info})
 
             #message("Target informations generation success !!")
         endif()
