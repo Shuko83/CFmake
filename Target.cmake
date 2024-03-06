@@ -93,6 +93,12 @@ function(add_target TARGET_TYPE)
 
     set_target_properties(${TARGET_NAME} PROPERTIES AUTOGEN_BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
 
+    set_target_properties(${TARGET_NAME} PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin"
+    )
+
     # Definitions
 
     if(TARGET_SHARED OR TARGET_STATIC)
@@ -132,9 +138,9 @@ function(add_target TARGET_TYPE)
 
     # Links
 
-    target_link_libraries_custom(${TARGET_NAME}
-        PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
-        PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
+    #target_link_libraries_custom(${TARGET_NAME}
+    #    PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
+    #    PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
 
     # Compile Definitions
 
@@ -147,6 +153,13 @@ function(add_target TARGET_TYPE)
     # Link Options
 
     add_link_options(${TARGET_LINK_OPTIONS})
+
+    if(TARGET_EXECUTABLE)
+        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${TARGET_NAME}> $<TARGET_RUNTIME_DLLS:${TARGET_NAME}>
+            COMMAND_EXPAND_LISTS
+        )
+    endif()
 
     # Installation
 
@@ -178,7 +191,6 @@ function(add_target TARGET_TYPE)
             DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
         )
         generate_target_config()
-
     endif()
 
     # Generation des fichiers infos
