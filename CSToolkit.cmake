@@ -20,6 +20,7 @@ set(CSTOOLKIT_PROJECT_VERSION 3.0.0.0 CACHE STRING "Version of the project, will
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+
 ################################################################################
 # Options
 ################################################################################
