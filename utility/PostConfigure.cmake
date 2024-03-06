@@ -1,5 +1,5 @@
-function(post_configure)
-    message(STATUS "POSTCONFIGURE")
+function(cstoolkit_post_configure)
+    #message(STATUS "CSTOOLKIT_POST_CONFIGURE")
 
     get_all_targets(ALL_TARGETS)
   

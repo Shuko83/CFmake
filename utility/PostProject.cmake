@@ -9,7 +9,5 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Project installation path" FORCE)
 endif()
 
-set(_WINDOWS_KITS_LIB_DIR "C:/Program Files (x86)/Windows Kits/10/Lib/${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}/um/x64")
-message("_WINDOWS_KITS_LIB_DIR ${_WINDOWS_KITS_LIB_DIR}")
-
-include(Qt)
+include(${CMAKE_CURRENT_LIST_DIR}/Qt.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/Windows.cmake)
