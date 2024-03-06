@@ -6,8 +6,8 @@
  * @author ATN
  */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiQActionToWidget.h"
 #include <QDebug>
 
@@ -60,7 +60,7 @@ void _SwGuiQActionToWidget::initializeComponent() throw( SwException )
     //--------------------------------------
     getIProviderService().RegisterProvidedInterface<QAction>(INTERFACE_ACTION, &_action );
     //--------------------------------------
-    //Definition Interfaces consommés
+    //Definition Interfaces consommÃ©s
     //--------------------------------------
     getIConsumerService().RegisterConsumedInterface<QWidget>(INTERFACE_WIDGET, &_widget);
     
@@ -209,7 +209,7 @@ void _SwGuiQActionToWidget::ManageAction()
         
         if( isChecked )
         {
-            _hostWidget->setWindowTitle( _showName ); //affecte le titre de l'action à la fenetre
+            _hostWidget->setWindowTitle( _showName ); //affecte le titre de l'action Ã  la fenetre
             setShowName( _showName ); //change le nom du menu
         }
         else
@@ -233,7 +233,7 @@ void _SwGuiQActionToWidget::MoveCenter()
     QDesktopWidget * desktop = QApplication::desktop();
     QRect r = _hostWidget->frameGeometry();
     QRect rd = desktop->availableGeometry();
-    QPoint pCenter = rd.center(); //centre de l'écran
+    QPoint pCenter = rd.center(); //centre de l'Ã©cran
     r.moveCenter( pCenter );
     _hostWidget->move( r.topLeft() );
 }

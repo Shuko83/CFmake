@@ -1,12 +1,12 @@
 /*!
  \file SwRefParent.cpp
  \brief Implementation of the Class SwRefParent
- \date 23-août-2006 10:35:13
+ \date 23-aoÃ»t-2006 10:35:13
  \author F.Bighelli
 */
 
-#include "SwRefParent.h"
-#include "SwRefPtrTools.h"
+#include "SwRef/SwRefParent.h"
+#include "Tools/SwRefPtrTools.h"
 //#include "SwException.h"
 
 using namespace StreamWork::SwCore;
@@ -23,13 +23,13 @@ SwRefParent::~SwRefParent(){
 }
 
 
-/*! \brief Ajout d'une référence */
+/*! \brief Ajout d'une rÃ©fÃ©rence */
 void SwRefParent::_addRef(){
 	_parent->_addRef();
 }
 
 
-/*! \brief Retrait d'une référence */
+/*! \brief Retrait d'une rÃ©fÃ©rence */
 void SwRefParent::_release(){
 	_parent->_release();
 }

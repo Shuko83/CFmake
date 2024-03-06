@@ -15,14 +15,14 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPointF>
-#include <SwException.h>
-#include <SwMacros.h>
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
 #include <QGraphicsSceneMouseEvent>
 #include "_SwEditorInterfaceGraphicItem.h"
 #include "_SwEditorGIInterfaceMenu.h"
 #include <math.h>
-#include <ISwInterfaces_Provider.h>
-#include <ISwInterfaces_Consumer.h>
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwEditor;
@@ -367,7 +367,7 @@ double _SwEditorInterfaceGraphicItem::GetPortLinearPosition() {
     return _start_port_linear_position;
 }
 /*! \brief Permet de connaitre la position linaire du port de l'interface s'approchant le plus
-de la position passé en parametres*/
+de la position passÃ© en parametres*/
 QPointF _SwEditorInterfaceGraphicItem::GetPortNearestValidPosition(const QPointF & pos,double * reminding_linear_position) {
     QRectF host_box;
 

@@ -8,7 +8,7 @@
 #define _STREAMWORK_SWRECORD_ISWRECORDMANAGER_H
 
 #include <QXmlStreamWriter>
-#include <ISwRecordManagerListener.h>
+#include "ISwRecordManagerListener.h"
 
 namespace StreamWork 
 {
@@ -39,18 +39,18 @@ namespace StreamWork
 
             /**
              * @brief    : Definition du repertoire d'enregistrement
-             * @param	 : QString directoryName - Path du répertoire
+             * @param	 : QString directoryName - Path du rÃ©pertoire
              */
             virtual void setRecordDirectory(QString directoryName)=0;
 			
 			/**
              * @brief    : Definition du repertoire contenant tout les enregistrements
-             * @param	 : QString directoryName - Path du répertoire
+             * @param	 : QString directoryName - Path du rÃ©pertoire
              */
             virtual void setMainDir(QString directoryName)=0;
 
             /**
-             * @brief    : Démarre l'enregistrement
+             * @brief    : DÃ©marre l'enregistrement
              */
             virtual void startRecording()=0;
 
@@ -61,7 +61,7 @@ namespace StreamWork
 
             /**
              * @brief    : Demande de creation de clef d'enregistrement
-             * @return   : QXmlStreamWriter * - Permet d'écrire dans ce writer
+             * @return   : QXmlStreamWriter * - Permet d'Ã©crire dans ce writer
              * @param	 : ISwRecordPoint * recordPoint - Pointeru vers le recordPoint qui veut la clef
              * @param	 : double currentTime - Le temps courant au moment de la demande
              */
@@ -75,8 +75,8 @@ namespace StreamWork
 
 
 			/**
-             * @brief    : Demande de creation de clef d'enregistrement pour les propriétés
-             * @return   : QXmlStreamWriter * - Permet d'écrire dans ce writer
+             * @brief    : Demande de creation de clef d'enregistrement pour les propriÃ©tÃ©s
+             * @return   : QXmlStreamWriter * - Permet d'Ã©crire dans ce writer
              * @param	 : ISwRecordPoint * recordPoint - Pointeur vers le recordPoint qui veut la clef
              * @param	 : double currentTime - Le temps courant au moment de la demande
              */
@@ -101,7 +101,7 @@ namespace StreamWork
             virtual void removeRecordManagerListener(ISwRecordManagerListener * listener)=0;
 
 			/**
-			 * @brief    : Permet de recupérer l'état du recordManager
+			 * @brief    : Permet de recupÃ©rer l'Ã©tat du recordManager
 			 * @return   : bool true si l'enregistrement est en cours
 			 */
 			virtual bool isRecording()=0;

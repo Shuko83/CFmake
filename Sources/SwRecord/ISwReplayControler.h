@@ -7,7 +7,7 @@
 #ifndef _STREAMWORK_SWRECORD_ISWREPLAYCONTROLER_H
 #define _STREAMWORK_SWRECORD_ISWREPLAYCONTROLER_H
 
-#include <ISwExecution_Service.h>
+#include "ISwExecution_Service.h"
 #include "ISwReplayListener.h"
 
 namespace StreamWork {
@@ -31,7 +31,7 @@ namespace StreamWork {
         public:
             /**
              * @brief    : definition du repertoire de rejeu
-             * @param	 : QString directoryName - Chemin complet du répertoire
+             * @param	 : QString directoryName - Chemin complet du rÃ©pertoire
              */
             virtual void loadReplay(QString directoryName)=0;
 

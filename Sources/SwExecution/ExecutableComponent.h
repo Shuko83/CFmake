@@ -7,13 +7,13 @@
 #ifndef _STREAMWORK_SWEXECUTION_EXECUTABLECOMPONENT_H
 #define _STREAMWORK_SWEXECUTION_EXECUTABLECOMPONENT_H
 
-#include <SwComponent_Class.h>
-#include <ISwInterfaces_Provider.h>
-#include <ISwInterfaces_Consumer.h>
-#include <ISwProperties.h>
-#include <ISwInterfaces_ConsumerObserver.h>
-#include <ISwPin_Listener.h>
-#include <ISwPins_Manager.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Services/ISwProperties.h"
+#include "Component/Interfaces/ISwInterfaces_ConsumerObserver.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
+#include "Component/Services/ISwPins_Manager.h"
 #include "SwExecutionConstantes.h"
 #include "ISwExecutable_Service.h"
 
@@ -89,8 +89,8 @@ namespace StreamWork {
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------            
-            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-            lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+            lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
             void Liberate();  
             //---------------------------------------------------------------------
             // Interface ISwHost

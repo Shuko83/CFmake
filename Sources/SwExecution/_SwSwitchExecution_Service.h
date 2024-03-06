@@ -18,10 +18,10 @@
  */
 #include <QThread>
 #include <QTimer>
-#include <ISwPersistent.h>
-#include <ISwService.h>
-#include <SwException.h>
-#include <ISwProperty.h>
+#include "Component/Interfaces/ISwPersistent.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Tools/Exception/SwException.h"
+#include "Properties/ISwProperty.h"
 #include "ISwExecution_Service.h"
 #include "ISwExecutable_Service.h"
 #include "_SwSwitchExecutionList.h"
@@ -49,9 +49,9 @@ public:
     SwComponent_Class * _host;
     /* Est ce la premiere execution */
     bool _is_first_execute;
-    /* Indique que la boucle d'execution doit être arretée */
+    /* Indique que la boucle d'execution doit Ãªtre arretÃ©e */
     bool _must_be_stopped;
-    /* Indique que la boucle d'execution est arretée */
+    /* Indique que la boucle d'execution est arretÃ©e */
     bool _is_stopped;
     /* Indique que le stop est necessaire */
     bool _persistentStopNeeded;
@@ -75,8 +75,8 @@ public:
     //---------------------------------------------------------------------
     // Interface ISwService
     //---------------------------------------------------------------------
-    /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-    lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+    /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+    lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
     void Liberate();  
     //---------------------------------------------------------------------
     // Interface ISwPersistence
@@ -97,7 +97,7 @@ public:
 	/*! \brief acces a son composant hote */
 	SwComponent_Class * GetHostComponent();            
     //---------------------------------------------------------------------
-    // Gestion de l'execution des composants selectionnés
+    // Gestion de l'execution des composants selectionnÃ©s
     //---------------------------------------------------------------------
 	/*! \brief Resolution des liens */
     void ResolveLinks();

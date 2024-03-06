@@ -15,7 +15,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QPointF>
-#include <SwException.h>
+#include "Tools/Exception/SwException.h"
 #include <QGraphicsSceneMouseEvent>
 #include "_SwEditorPinGraphicItem.h"
 #include "_SwEditorGIPinMenu.h"
@@ -491,7 +491,7 @@ double _SwEditorPinGraphicItem::GetPortLinearPosition() {
     return _start_port_linear_position;
 }
 /*! \brief Permet de connaitre la position linaire du port de l'interface s'approchant le plus
-de la position passé en parametres*/
+de la position passÃ© en parametres*/
 QPointF _SwEditorPinGraphicItem::GetPortNearestValidPosition(const QPointF & pos,double * reminding_linear_position) {
     QRectF host_box;
 
@@ -709,7 +709,7 @@ void _SwEditorPinGraphicItem::UpdateDrawPath(const QPointF & pos) {
         _routing.ChangeEndPoint(pos);
     }
 }
-/*! \brief Acces au données de routage*/
+/*! \brief Acces au donnÃ©es de routage*/
 _SwRouting_ToolBox * _SwEditorPinGraphicItem::GetRouting() {
     return &_routing;
 }

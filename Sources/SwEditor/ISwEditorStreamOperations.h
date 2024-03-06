@@ -12,8 +12,8 @@
   * INCLUDES GLOBAUX
   */
 #include <QWidget>
-#include <SwComponent_Class.h>
-#include <ISwObserver.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Interfaces/ISwObserver.h"
 
 
 
@@ -50,13 +50,13 @@ namespace StreamWork
             //-------------------------------------------------------------
             // Consultation de la selection 
             //-------------------------------------------------------------
-            /*! \brief Acces au nombre d'elements selectionnée*/
+            /*! \brief Acces au nombre d'elements selectionnÃ©e*/
 			virtual int GetSelectedComponentNumber()=0;
-            /*! \brief Acces a un element selectionné*/
+            /*! \brief Acces a un element selectionnÃ©*/
             virtual SwCore::SwComponent_Class * GetSelectedComponent(int index)=0;
-            /*! \brief Acces au nombre d'elements non selectionnée*/
+            /*! \brief Acces au nombre d'elements non selectionnÃ©e*/
 			virtual int GetUnselectedComponentNumber()=0;
-            /*! \brief Acces a un element non selectionné*/
+            /*! \brief Acces a un element non selectionnÃ©*/
             virtual SwCore::SwComponent_Class * GetUnselectedComponent(int index)=0;
             /*! \brief Permet de savoir si un composant est dans la selection*/
             virtual bool IsInSelection(SwCore::SwComponent_Class * component)=0;

@@ -1,7 +1,7 @@
 #include "_SwServiceToolsPluginFactory_Class.h"
 
-#include "SwApplication.h"
-#include "SwMacros.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 
 #include "info_SwServiceTools.h"
 
@@ -29,7 +29,7 @@ _SwServiceToolsPluginFactory_Class::~_SwServiceToolsPluginFactory_Class()
 //----------------------------------------------------------------------------------------------
 void _SwServiceToolsPluginFactory_Class::Initialize() 
 {
-	auto app = SW_APP;	// La fonction GetInstance() est très chronophage
+	auto app = SW_APP;	// La fonction GetInstance() est trÃ¨s chronophage
 	_serviceRefProfiler = new _SwServiceRefProfiler();
 	app->RegisterService(_serviceRefProfiler);
 	_serviceParameters = new _SwServiceParametersImpl();
@@ -97,9 +97,9 @@ QString _SwServiceToolsPluginFactory_Class::GetPluginVersion()
 //----------------------------------------------------------------------------------------------
 QDateTime _SwServiceToolsPluginFactory_Class::GetPluginCompilationDate()
 {	
-	//recup de la date à partir de __DATE__
+	//recup de la date Ã  partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
-	//recup de l'heure à partir de __TIME__
+	//recup de l'heure Ã  partir de __TIME__
 	QString strTime = __TIME__;
 	QTime time = time.fromString(strTime,"hh:mm:ss");
 

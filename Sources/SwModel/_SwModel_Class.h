@@ -2,7 +2,7 @@
  \file _SwModel_Class.h
  \brief Implementation d'un model
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -16,18 +16,18 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
-#include <ISwAdminSetup.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
-#include <ISwInterfaces_ConsumerObserver.h>
-#include <ISwPin_Listener.h>
-#include <SwPins_Manager_Class.h>
-#include <ISwVisitor.h>
-#include <ISwActivable.h>
-#include <ISwSubStream.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Interfaces/ISwAdminSetup.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Interfaces/ISwInterfaces_ConsumerObserver.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Component/Interfaces/ISwVisitor.h"
+#include "Component/Interfaces/ISwActivable.h"
+#include "Component/Interfaces/ISwSubStream.h"
 
 class _SwModelHost_Class;
 
@@ -50,13 +50,13 @@ protected:
     QString _ipath;
      /*! \brief Model host entry */   
     _SwModelHost_Class * _host_entry;
-    /*! \brief IsDefault (construit avec le constructeur sans paramètre) */
+    /*! \brief IsDefault (construit avec le constructeur sans paramÃ¨tre) */
     bool _isDefault;
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
     SwInterfaces_Consumer_Class * _consumer_service;
-    /* service de gestion des propriétés */
+    /* service de gestion des propriÃ©tÃ©s */
     SwProperties_Class * _properties_service;
     /* service de gestion des pins */
     SwPins_Manager_Class * _pins_service;
@@ -70,7 +70,7 @@ public:
     /*! \brief Destructeur */
     virtual ~_SwModel_Class();
     /*! \brief Initialisation des ressources
-          \note tous les services du composants doivent être déclarés dans cette methodes*/
+          \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
     virtual void InitializeResources() throw(SwException);
 	/*! \brief Permet de definir le nom de l'instance nomme*/
 	virtual void SetName(const QString & new_name) throw(SwException);

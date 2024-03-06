@@ -1,4 +1,4 @@
-#include "SwEventToPopup.h" 
+#include "SwEventToPopup.h"
 #include <QMessagebox.h>
 
 SwEventToPopup::SwEventToPopup()

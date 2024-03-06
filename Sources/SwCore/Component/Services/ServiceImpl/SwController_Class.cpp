@@ -6,11 +6,11 @@
 \version 1.0
 */
 
-#include "SwController_Class.h"
-#include "_SwPropertyImpl_Class.h"
-#include "SwAddress_ToolBox.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
+#include "Component/Services/ServiceImpl/SwController_Class.h"
+#include "Properties/_SwPropertyImpl_Class.h"
+#include "Tools/SwAddress_ToolBox.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwCore;
 

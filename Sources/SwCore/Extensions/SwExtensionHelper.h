@@ -7,9 +7,9 @@
 #ifndef _STREAMWORK_SWCORE_SWEXTENSIONHELPER_H
 #define _STREAMWORK_SWCORE_SWEXTENSIONHELPER_H
 
-#include "SwComponent_Class.h"
-#include "ISwExtensionPoint.h"
-#include "ISwExtension.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Extensions/ISwExtensionPoint.h"
+#include "Extensions/ISwExtension.h"
 
 namespace StreamWork {
 
@@ -25,13 +25,13 @@ namespace StreamWork {
             SwExtensionHelper(SwComponent_Class * component);
             /** @brief Destructor */
             virtual ~SwExtensionHelper();
-            /** @brief Renvoie une liste des points d'extension a un instant t, les objects doivent etre liberé apres usages */
+            /** @brief Renvoie une liste des points d'extension a un instant t, les objects doivent etre liberÃ© apres usages */
             QList<ISwExtensionPoint *> getAllExtensionPoints();  
-            /** @brief Renvoie un point d'extension donnée */
+            /** @brief Renvoie un point d'extension donnÃ©e */
             ISwExtensionPoint * getExtensionPoint(QString type,QString name);
-            /** @brief Renvoie une liste des extension a un instant t, les objects doivent etre liberé apres usages */
+            /** @brief Renvoie une liste des extension a un instant t, les objects doivent etre liberÃ© apres usages */
             QList<ISwExtension *> getAllExtensions();      
-            /** @brief Renvoie une extension donnée */
+            /** @brief Renvoie une extension donnÃ©e */
             ISwExtension * getExtension(QString type,QString name);
         private:
             SwComponent_Class * _component;

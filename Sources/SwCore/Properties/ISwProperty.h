@@ -16,7 +16,7 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "LibIndeSig.h"
+#include "Tools/Signal/LibIndeSig.h"
 
 namespace StreamWork
 {

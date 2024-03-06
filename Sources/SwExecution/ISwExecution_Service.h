@@ -15,12 +15,12 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "ISwHost.h"
-#include "ISwService.h"
-#include "SwException.h"
-#include "ISwPersistent.h"
+#include "Component/Interfaces/ISwHost.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Tools/Exception/SwException.h"
+#include "Component/Interfaces/ISwPersistent.h"
 #include "ISwClockProvider.h"
-#include "ISwHost.h"
+#include "Component/Interfaces/ISwHost.h"
 
 //Nom du service
 #define CG_SW_SERVICE_EXECUTION "Execution"
@@ -55,7 +55,7 @@ namespace StreamWork
             QString GetServiceName(){return QString(CG_SW_SERVICE_EXECUTION); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
             \return le nom du service reel (le nom de l'interface)
-            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+            \note au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()*/
             QString GetServiceRealName() {return QString(typeid(*this).name());}    
        };
     }

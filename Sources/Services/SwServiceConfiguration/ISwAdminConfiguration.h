@@ -28,19 +28,19 @@ namespace StreamWork
         public:
             /**
              * @brief	: permet de charger un fichier xml de configuration
-             * @Param	: QString, nom de la configuration concernée
+             * @Param	: QString, nom de la configuration concernÃ©e
              * @Param	: QString, data du fichier de configuration
              */
 			virtual bool loadConfigurationFile (QString confName, QString confFileToBeLoaded) = 0;
 
             /**
-             * @brief	: Permet de récupérer tous les ConfCollectors registered
+             * @brief	: Permet de rÃ©cupÃ©rer tous les ConfCollectors registered
              * @Return	: List<QHash<QString, ISwConfCollector*>, liste des pointeurs sur les Prefix/ConfCollectors
              */
             virtual QHash<QString, ISwConfCollector*> getConfCollectors (QString confName) = 0;
 
 			/**
-             * @brief	: Permet de récupérer un ConfCollector particulier
+             * @brief	: Permet de rÃ©cupÃ©rer un ConfCollector particulier
              * @Param	: QString, nom du confCollector voulu
              * @Param	: QString, prefix du confCollector
              * @Return	: ISwConfCollector*, pointeur sur le ConfCollector 
@@ -49,37 +49,37 @@ namespace StreamWork
 
 			/**
              * @brief	: Permet d'enregistrer un ConfCollector
-             * @Param	: QString, nom de la configuration concernée
+             * @Param	: QString, nom de la configuration concernÃ©e
              * @Param	: QString, prefix du confCollector
-             * @Param	: ISwConfCollector* pointeur vers le confCollector à registered
+             * @Param	: ISwConfCollector* pointeur vers le confCollector Ã  registered
              */
             virtual bool registerConfCollector (QString confName, QString prefix, ISwConfCollector* confCollector, bool autoSave) = 0;
 
 			/**
-             * @brief	: Permet désenregistrer un ConfCollector
-             * @Param	: QString, nom de la configuration concernée
-             * @Param	: ISwConfCollector* pointeur vers le confCollector à désenregistrer
+             * @brief	: Permet dÃ©senregistrer un ConfCollector
+             * @Param	: QString, nom de la configuration concernÃ©e
+             * @Param	: ISwConfCollector* pointeur vers le confCollector Ã  dÃ©senregistrer
              */
             virtual void unregisterConfCollector (QString confName, QString prefix, ISwConfCollector* confCollector) = 0;
 
 			/**
              * @brief	: Permet d'enregistrer un IConfSaver (confLoader)
-             * @Param	: QString, nom de la configuration concernée
-             * @Param	: IConfSaver* pointeur vers le confSaver à registered
+             * @Param	: QString, nom de la configuration concernÃ©e
+             * @Param	: IConfSaver* pointeur vers le confSaver Ã  registered
              */
             virtual bool registerConfSaver (QString confName, ISwConfSaver* confSaver) = 0;
 
 			/**
-             * @brief	: Permet désenregistrer un IConfSaver (confLoader)
-             * @Param	: QString, nom de la configuration concernée
-             * @Param	: IConfSaver* pointeur vers le confCollector à désenregistrer
+             * @brief	: Permet dÃ©senregistrer un IConfSaver (confLoader)
+             * @Param	: QString, nom de la configuration concernÃ©e
+             * @Param	: IConfSaver* pointeur vers le confCollector Ã  dÃ©senregistrer
              */
             virtual void unregisterConfSaver (QString confName) = 0;
 
 			/**
-             * @brief	: Permet de savoir si une conf a été chargée ou non
-             * @Param	: QString, nom de la configuration concernée
-             * @return	: bool, true si configuration chargée (finalized via le composant ConfLoader)
+             * @brief	: Permet de savoir si une conf a Ã©tÃ© chargÃ©e ou non
+             * @Param	: QString, nom de la configuration concernÃ©e
+             * @return	: bool, true si configuration chargÃ©e (finalized via le composant ConfLoader)
              */
             virtual bool isConfLoaded (QString confName) = 0;
 
@@ -90,7 +90,7 @@ namespace StreamWork
             virtual bool registerConfigServiceListener (ISwConfigListener *listener) = 0;
 
 			/**
-             * @brief	: Permet de désenregister les listeners
+             * @brief	: Permet de dÃ©senregister les listeners
              * @Param	: ISwConfigListener, listener du service    
              */
             virtual void unregisterConfigServiceListener (ISwConfigListener *listener) = 0;

@@ -16,8 +16,8 @@
   * INCLUDES LOCAUX
   */
 #include "SwCoreConstantes.h"
-#include "SwException.h"
-#include "LibIndeSig.h"
+#include "Tools/Exception/SwException.h"
+#include "Tools/Signal/LibIndeSig.h"
 
 namespace StreamWork
 {

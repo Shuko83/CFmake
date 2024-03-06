@@ -40,7 +40,7 @@ SetCompressor lzma
 ;--------------------------------
 ;Pages
 
-; le Titre sera affiché sur 3 lignes... du coup plus de problème de nom tronqué
+; le Titre sera affichÃ© sur 3 lignes... du coup plus de problÃ¨me de nom tronquÃ©
 !define MUI_WELCOMEPAGE_TITLE_3LINES
 
 ; Welcome page
@@ -74,7 +74,7 @@ SetCompressor lzma
 ; MUI end ------
 
 ;--------------------------------
-;macro de vérification des droits administrateur
+;macro de vÃ©rification des droits administrateur
 ;--------------------------------
 !macro VerifyUserIsAdmin
 UserInfo::GetAccountType
@@ -88,7 +88,7 @@ ${EndIf}
 ;--------------------------------
 
 ;--------------------------------
-;macro permettant de vérifier si l'application est en cours avant de désinstaller
+;macro permettant de vÃ©rifier si l'application est en cours avant de dÃ©sinstaller
 ;--------------------------------
 !macro FindProc processName
 	nsExec::Exec "taskkill /F /FI $\"IMAGENAME eq ${processName}$\""     
@@ -282,7 +282,7 @@ Function un.onUninstSuccess
 	${case} ${LANG_ENGLISH}
 		MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) was successfully removed from your computer." /SD IDOK
 	${case} ${LANG_FRENCH}
-		MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) a été désinstallé avec succès de votre ordinateur." /SD IDOK
+		MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) a Ã©tÃ© dÃ©sinstallÃ© avec succÃ¨s de votre ordinateur." /SD IDOK
 	${EndSelect}	
 FunctionEnd
 
@@ -296,7 +296,7 @@ Function un.onInit
 		MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove $(^Name) and all of its components? Please stop the program before." /SD IDYES IDYES +2
 		Abort
 	${case} ${LANG_FRENCH}
-		MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Êtes-vous certains de vouloir désinstaller totalement $(^Name) et tous ses composants ? Veuillez arrêter le programme avant de poursuivre." /SD IDYES IDYES +2
+		MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "ÃŠtes-vous certains de vouloir dÃ©sinstaller totalement $(^Name) et tous ses composants ? Veuillez arrÃªter le programme avant de poursuivre." /SD IDYES IDYES +2
 		Abort
 	${EndSelect}	
 	!insertmacro FindProc "${FULL_EXE_NAME}"

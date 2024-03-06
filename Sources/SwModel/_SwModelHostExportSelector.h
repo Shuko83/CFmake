@@ -1,7 +1,7 @@
 /*!
 \file _SwModelHostExportSelector.h
 \date 12/04/2006
-\brief Ihm de selection des entites exportées par le model host
+\brief Ihm de selection des entites exportÃ©es par le model host
 \author  Big
 \version 1.0
  */
@@ -19,7 +19,7 @@
   * INCLUDES LOCAUX
   */
 
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwModelExportedEntity.h"
 #include "_SwModelExportedEntitiesModel.h"
 
@@ -27,7 +27,7 @@ using namespace StreamWork::SwCore;
 
 /*!
 	\class _SwModelHostExportSelector 
-	\brief  Ihm de selection des entites exportées par le model host
+	\brief  Ihm de selection des entites exportÃ©es par le model host
 */
 class _SwModelHostExportSelector : public QDialog
 {
@@ -35,7 +35,7 @@ class _SwModelHostExportSelector : public QDialog
 protected:
     /* composant racine selectionne */
     SwComponent_Class * _root_comp;
-    /* liste des entités */
+    /* liste des entitÃ©s */
     QList<_SwModelExportedEntity *> * _entities_list;
     /* model pour l'edition */
     _SwModelExportedEntitiesModel * _entities_model;

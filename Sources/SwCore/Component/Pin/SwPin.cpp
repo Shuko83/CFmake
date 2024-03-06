@@ -10,7 +10,7 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "SwPin.h"
+#include "Component/Pin/SwPin.h"
 
 using namespace StreamWork::SwCore;
 
@@ -37,7 +37,7 @@ void SwPin::ProcessReceivedData(SwData_Class * data){
 
 
 }
-/*! \brief Acces au type de données pris en charge par le pin */
+/*! \brief Acces au type de donnÃ©es pris en charge par le pin */
 QString SwPin::GetType(){
 
 	return _data_type;
@@ -46,11 +46,11 @@ QString SwPin::GetType(){
 QString SwPin::GetName(){
 	return _pin_name;
 }
-/*! \brief Permet au pin de recevoir une donnée */
+/*! \brief Permet au pin de recevoir une donnÃ©e */
 void SwPin::PushData(SwData_Class * data){
 	ProcessReceivedData(data);
 }
-/*! \brief Permet au pin d'envoyer une donnée */
+/*! \brief Permet au pin d'envoyer une donnÃ©e */
 void SwPin::SendData(SwData_Class * data) {
 	if (_remote_pin!=nullptr) {
 		_remote_pin->PushData(data);

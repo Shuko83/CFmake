@@ -13,7 +13,7 @@
  */
 #include <QString>
 #include <QMap>
-#include "ISwComplexeTypeAdaptersFactoriesBank.h"
+#include "Types/UserType/ISwComplexeTypeAdaptersFactoriesBank.h"
 
 
 namespace StreamWork

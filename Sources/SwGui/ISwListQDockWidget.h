@@ -34,7 +34,7 @@ namespace StreamWork
 			virtual  ~ISwListQDockWidget(){}
 
 			/**
-			 * @brief    : Permet de récupérer la liste des QDockWidget initiale
+			 * @brief    : Permet de rÃ©cupÃ©rer la liste des QDockWidget initiale
 			 * @return   : QList<QDockWidget*> - Liste de pointeur QDockWidget
 			 */
 			virtual QList<QDockWidget*> get() = 0;  
@@ -46,7 +46,7 @@ namespace StreamWork
 			virtual void addQDockWidgetListener(ISwListQDockWidgetListener * observer) = 0;  
 
 			/**
-			 * @brief    : Se désenregistrer 
+			 * @brief    : Se dÃ©senregistrer 
 			 * @param	 : ISwListQDockWidgetListener * observer - Pointeur sur l'oberserveur
 			 */
 			virtual void removeQDockWidgetListener(ISwListQDockWidgetListener * observer) = 0;

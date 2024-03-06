@@ -18,7 +18,7 @@ author:		QBN
 * INCLUDES LOCAUX
 */
 #include "SwCoreConstantes.h"
-#include "SwRefPtr.h"
+#include "SwRef/SwRefPtr.h"
 
 namespace StreamWork
 {
@@ -43,20 +43,20 @@ namespace StreamWork
 			/*! \brief Operateur de comparaison*/
 			bool operator==(const SwString& source) const;
 
-			/** @brief Permet d'affecter le QValidator ‡ utiliser
+			/** @brief Permet d'affecter le QValidator √† utiliser
 			*	@param QValidator * => validator : this ne gere pas la destruction du validator */			
 			void setValidator(QValidator * validator);
 
-			/** @brief Test si une chaine de caractere est valide selon le validator settÈ via setValidator()
-			*	@return QValidator::State =>  valid si pas de validateur settÈ, la valeur de retour du validator sinon */
+			/** @brief Test si une chaine de caractere est valide selon le validator sett√© via setValidator()
+			*	@return QValidator::State =>  valid si pas de validateur sett√©, la valeur de retour du validator sinon */
 			QValidator::State validate ( QString & input, int & pos ) const	;
 
-			/** @brief Permet de rÈcupÈrer le QValidator affectÈ
+			/** @brief Permet de r√©cup√©rer le QValidator affect√©
 			*	@return QValidator * => validator  */			
 			QValidator * getValidator();
 
 			/** @brief Affecte la valeur interne de la chaine de caractere
-			*	@param QString & => utilisÈ pour affecter ‡ la chaine interne si valide */			
+			*	@param QString & => utilis√© pour affecter √† la chaine interne si valide */			
 			void fromString(const QString &);
 
 			/** @brief renvoi la valeur interne de la chaine de caractere

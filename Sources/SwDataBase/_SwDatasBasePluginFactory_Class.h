@@ -1,7 +1,7 @@
 /*!
  \file _SwDatasBasePluginFactory_Class.h
  \brief Factory de gui de base 
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -18,7 +18,7 @@
   * INCLUDES LOCAUX
   */
 //#include "SwGuiConstantes.h"
-#include <SwPluginFactory_Class.h>
+#include "Main/Plugin/SwPluginFactory_Class.h"
 
 using namespace StreamWork::SwCore;
 

@@ -6,8 +6,8 @@
  \author PGA
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompLabel.h"
 
 using namespace StreamWork::SwCore;
@@ -36,7 +36,7 @@ _SwGuiCompLabel::~_SwGuiCompLabel()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompLabel::InitializeResources() throw( SwException )
 {
     //Creation des service
@@ -66,18 +66,18 @@ void _SwGuiCompLabel::InitializeResources() throw( SwException )
                               QString( "InitializeResources of SwLabel done\n" ) );
                               
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwGuiCompLabel::OnPropertyChange( ISwProperty * property )
 {
 }
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompLabel::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompLabel::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
 }

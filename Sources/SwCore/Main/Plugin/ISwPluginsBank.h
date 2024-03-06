@@ -1,7 +1,7 @@
 /*!
  \file ISwPluginsBank.h
  \brief Implementation of the Interface ISwPluginsBank
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -21,9 +21,9 @@
 #include "SwCoreConstantes.h"
 #include "ISwPluginFactory.h"
 #include "SwPluginFactory_Class.h"
-#include "ISwCreationPostProcessor.h"
-#include "SwUUID.h"
-#include "ISwObjectFactory.h"
+#include "Component/Interfaces/ISwCreationPostProcessor.h"
+#include "Types/SwUUID.h"
+#include "Component/Interfaces/ISwObjectFactory.h"
 
 namespace StreamWork
 {
@@ -34,7 +34,7 @@ namespace StreamWork
 		 \brief Interface definissant l'acces a la banque de plugins
         @ingroup SwCoreGrp
         @swinterface
-         Cette interfaces definit le mecanisme d'acces aux fabriques de composants et de données
+         Cette interfaces definit le mecanisme d'acces aux fabriques de composants et de donnÃ©es
          
          L'acces a cet interface se fait grace a la macro SW_FACTORIES
 
@@ -48,7 +48,7 @@ namespace StreamWork
          SwComponent_Class * my_comp=SW_FACTORIES.CreateComponent(my_component_type_name);
          \endcode
 
-         Pour creer une donnée
+         Pour creer une donnÃ©e
          \code
          SwData_Class * my_data=SW_FACTORIES.CreateData(my_data_type_id);
          \endcode
@@ -57,8 +57,8 @@ namespace StreamWork
          SwData_Class * my_data=SW_CREATE_DATA(my_data_type_id);
          \endcode
          
-         On peut ajouter un observateur qui est alerté lors de la création d’un nouveau composant.
-         L’enregistrement de ce type d’observer se fait via la méthode AddCreationPostProcessor et
+         On peut ajouter un observateur qui est alertÃ© lors de la crÃ©ation dâ€™un nouveau composant.
+         Lâ€™enregistrement de ce type dâ€™observer se fait via la mÃ©thode AddCreationPostProcessor et
          le desenregistrement via RemoveCreationPostProcessor.
 
 		*/
@@ -75,7 +75,7 @@ namespace StreamWork
             virtual QSet<ISwPluginFactory *> & GetPluginList(QString path) throw(SwException)=0;
             /*! \brief Acces a liste de tous les plugins */
             virtual QMap<QString,SwPluginFactory_Class *> * GetAllPlugins()=0;
-            /*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donné*/
+            /*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donnÃ©*/
             virtual QList< QPair<QString, QString> > GetControllersListForType(int type_identifier)=0;
             /*! \brief Acces a la description d'un composant */
             virtual QString GetComponentDescription(QString plugin_name, QString component_name) throw(SwException)=0;
@@ -85,13 +85,13 @@ namespace StreamWork
             virtual SwComponent_Class * CreateComponent(QString plugin_name, QString component_name) throw(SwException)=0;
             /*! \brief Relire le contenu d'un plugin (pour les plugins dont le contenu a changer)*/
             virtual void RereadPluginContent(SwPluginFactory_Class * plugin) throw(SwException)=0;
-            /*! \brief Acces au modèle pour l'affichage*/
+            /*! \brief Acces au modÃ¨le pour l'affichage*/
             virtual QAbstractItemModel * GetModel()=0;
 			/*! \brief Demande au model de se reconstruire pour optimiser l'affichage*/
 			virtual void RebuildModel() = 0;
             /*! \brief Acces a la liste des noms de tous les composants */
             virtual QSet<SwUUID> GetDataList()=0;
-            /*! \brief Acces au nom du type d'une donnée definie par son id */
+            /*! \brief Acces au nom du type d'une donnÃ©e definie par son id */
             virtual QString GetDataTypeNameFromDataTypeId(const SwUUID &)=0;
             /*! \brief Creation d'une data */
             virtual SwData_Class * CreateData(const SwUUID &) throw(SwException)=0;

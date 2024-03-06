@@ -10,7 +10,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwProtectedPluginFactory_Class.h>
+#include "Main/Plugin/SwProtectedPluginFactory_Class.h"
 #include "SwServiceSaveConfiguration.h"
 
 using namespace StreamWork::SwCore;

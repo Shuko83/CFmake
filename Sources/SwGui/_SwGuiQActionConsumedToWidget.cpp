@@ -1,14 +1,14 @@
 /**
  * @file SwGuiQActionToWidget2.h
  * @brief Composant qui consomme une QAction et une QWidget et qui, sur le triggered de l'action
- *        ouvre ou ferme le widget associé.
- *        Le Widget n'est pas encapsulé
+ *        ouvre ou ferme le widget associÃ©.
+ *        Le Widget n'est pas encapsulÃ©
  * @version 1.0
  * @date  21/03/2014
  * @author  CGD
  */
 
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include "_SwGuiQActionConsumedToWidget.h"
 #include <QDebug>
 #include <QApplication>
@@ -60,7 +60,7 @@ void _SwGuiQActionConsumedToWidget::eventAfterInterfaceAvailability( QString int
     if( interface_name == WIDGET  &&  _widget)
     {
         
-        // Récupération de la fenêtre parente du widget concerné
+        // RÃ©cupÃ©ration de la fenÃªtre parente du widget concernÃ©
         topParent = qobject_cast<QWidget *>( parent() );
         while( qobject_cast<QWidget *>( _widget->parent() ) )
         {
@@ -85,11 +85,11 @@ void _SwGuiQActionConsumedToWidget::ManageAction()
 {
     if( _widget != 0 )
     {
-        // récupération de l'état de la fenêtre associée
+        // rÃ©cupÃ©ration de l'Ã©tat de la fenÃªtre associÃ©e
         bool state = _widget->isVisible();
         
         
-        // L'action déclenche l'ouverture ou la fermeture du widget associé
+        // L'action dÃ©clenche l'ouverture ou la fermeture du widget associÃ©
         if( topParent )
             topParent->setVisible( !state );
         _widget->setVisible( !state );
@@ -117,7 +117,7 @@ void _SwGuiQActionConsumedToWidget::MoveCenter()
     QDesktopWidget * desktop = QApplication::desktop();
     QRect r = toMove->frameGeometry();
     QRect rd = desktop->availableGeometry();
-    QPoint pCenter = rd.center(); //centre de l'écran
+    QPoint pCenter = rd.center(); //centre de l'Ã©cran
     r.moveCenter( pCenter );
     toMove->move( r.topLeft() );
 }

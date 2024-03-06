@@ -19,7 +19,7 @@
   * INCLUDES LOCAUX
   */
 
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwModelHost_Class.h"
 #include "_SwModelStreamTreeModel.h"
 

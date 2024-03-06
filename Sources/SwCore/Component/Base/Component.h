@@ -7,13 +7,13 @@
 #ifndef _STREAMWORK_SWCORE_COMPONENT_H
 #define _STREAMWORK_SWCORE_COMPONENT_H
 
-#include <SwComponent_Class.h>
-#include <ISwInterfaces_Provider.h>
-#include <ISwInterfaces_Consumer.h>
-#include <ISwProperties.h>
-#include <ISwInterfaces_ConsumerObserver.h>
-#include <ISwPin_Listener.h>
-#include <ISwPins_Manager.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Services/ISwProperties.h"
+#include "Component/Interfaces/ISwInterfaces_ConsumerObserver.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
+#include "Component/Services/ISwPins_Manager.h"
 
 namespace StreamWork {
 
@@ -37,21 +37,21 @@ namespace StreamWork {
             virtual ~Component();
 
             /*! \brief Initialisation des ressources
-            \note tous les services du composants doivent être déclarés dans cette methodes*/
+            \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
             virtual void InitializeResources() throw(SwException);
 
             /*! \brief surcharge du setter pour signaler le changement d'activation */
             virtual void setActive(bool active);
 
 
-             /*! \brief Callback sur les changements de propriétés */
+             /*! \brief Callback sur les changements de propriÃ©tÃ©s */
             void OnPropertyChange(ISwProperty * property);
             //---------------------------------------------------------------------
             // Interface ISwInterfaces_ConsumerObserver
             //---------------------------------------------------------------------
-	        /*! \brief Callback avant changement de la disponibilité de l'interface */
+	        /*! \brief Callback avant changement de la disponibilitÃ© de l'interface */
             void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);
-	        /*! \brief Callback apres changement de la disponibilité de l'interface */
+	        /*! \brief Callback apres changement de la disponibilitÃ© de l'interface */
 	        void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
             //----------------------------------------------------
             // Interface ISwPin_Listener
@@ -67,10 +67,10 @@ namespace StreamWork {
             /*! \brief evenement de changement de propriete
                 \note A Surcharger*/
             virtual void eventPropertyChange(ISwProperty * property);
-            /*! \brief evenement avant changement de la disponibilité de l'interface
+            /*! \brief evenement avant changement de la disponibilitÃ© de l'interface
                 \note A Surcharger*/
             virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
-            /*! \brief evenement apres changement de la disponibilité de l'interface
+            /*! \brief evenement apres changement de la disponibilitÃ© de l'interface
                 \note A Surcharger*/
             virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
             /*! \brief evenement sur reception d'une data
@@ -99,7 +99,7 @@ namespace StreamWork {
             SwInterfaces_Provider_Class * _provider_service;
             /* service de consommation d'interface */
             SwInterfaces_Consumer_Class * _consumer_service;
-            /* service de gestion des propriétés */
+            /* service de gestion des propriÃ©tÃ©s */
             SwProperties_Class * _properties_service;
             /* service de gestion des pins */
             SwPins_Manager_Class * _pins_service;

@@ -1,6 +1,6 @@
 /**
 @file ComponentGraphicItem.h
-@brief Item Graphique correspondant à un composant
+@brief Item Graphique correspondant Ã  un composant
 @author F.Bighelli
  */
 
@@ -9,9 +9,9 @@
 
 #include <QtCore>
 #include <QtWidgets>
-#include <SwComponent_Class.h>
-#include <ISwExecutable_Service.h>
-#include <ISwExecution_Service.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "ISwExecutable_Service.h"
+#include "ISwExecution_Service.h"
 #include "ConnectorGraphicItem.h"
 
 #define HEADER_COLOR QColor(0,0,128)
@@ -21,7 +21,7 @@
 class StreamControler;
 /**
 @class ComponentGraphicItem
-@brief Item Graphique correspondant à un composant
+@brief Item Graphique correspondant Ã  un composant
 */
 class ComponentGraphicItem : public QGraphicsItem {
 

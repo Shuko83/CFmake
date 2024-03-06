@@ -19,7 +19,7 @@
 #include <QMessageBox>
 #include <QFileInfo>
 #include <QDir>
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 
 using namespace StreamWork::SwConfiguration;
 using namespace StreamWork::SwCore;

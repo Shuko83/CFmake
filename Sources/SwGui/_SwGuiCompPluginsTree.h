@@ -2,7 +2,7 @@
  \file _SwGuiCompPluginsTree.h
  \brief Implementation of the Class _SwGuiCompPluginsTree generant un QTreeView contenant la liste des plugins
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -17,10 +17,10 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Properties/ISwProperty.h"
 #include <QAction>
 
 
@@ -36,9 +36,9 @@ class _SwGuiCompPluginsTree : public SwComponent_Class
 protected:
     /* service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
-    /* service de gestion des propriétés */
+    /* service de gestion des propriÃ©tÃ©s */
     SwProperties_Class * _properties_service;
-	/* @brief propriété window title */
+	/* @brief propriÃ©tÃ© window title */
     ISwProperty * _window_title_property;
 	/* @brief window title utilise */
 	QString	_window_title;
@@ -51,7 +51,7 @@ public:
     virtual ~_SwGuiCompPluginsTree();
 
     /*! \brief Initialisation des ressources
-          \note tous les services du composants doivent être déclarés dans cette methodes*/
+          \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
     virtual void InitializeResources() throw(SwException);
 
     /*! \brief Renvoie le Action

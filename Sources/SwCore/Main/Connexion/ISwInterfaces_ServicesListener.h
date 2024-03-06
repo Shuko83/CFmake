@@ -15,8 +15,8 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "ISwService.h"
-#include "SwComponent_Class.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Component/Base/SwComponent_Class.h"
 
 namespace StreamWork 
 {

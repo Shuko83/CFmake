@@ -2,12 +2,12 @@
  \file _SwEditorCompStreamTabBar.cpp
  \brief Implementation of the Class _SwEditorCompStreamTabBar une tabbar des streams editer
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 #include <QTabBar>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwEditorCompStreamTabBar.h"
 
 using namespace StreamWork::SwCore;
@@ -37,7 +37,7 @@ _SwEditorCompStreamTabBar::~_SwEditorCompStreamTabBar()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwEditorCompStreamTabBar::InitializeResources() throw( SwException )
 {
     //Creation des service
@@ -65,7 +65,7 @@ void _SwEditorCompStreamTabBar::InitializeResources() throw( SwException )
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwEditorCompStreamTabBar::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( _manager != NULL )
@@ -73,7 +73,7 @@ void _SwEditorCompStreamTabBar::BeforeInterfaceAvailabilityChange( QString inter
         _tabbar->DetachStreamsManager();
     }
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwEditorCompStreamTabBar::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( _manager != NULL )

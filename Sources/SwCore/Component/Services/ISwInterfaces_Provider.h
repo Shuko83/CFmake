@@ -15,8 +15,8 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "ISwInterfaces_Service.h"
-#include "ISwHost.h"
+#include "Main/Connexion/ISwInterfaces_Service.h"
+#include "Component/Interfaces/ISwHost.h"
 
 //Nom du service
 #define CG_SW_SERVICE_INTERFACES_PROVIDER "InterfacesProvider"
@@ -39,7 +39,7 @@ namespace StreamWork
             template<typename T> inline void RegisterProvidedInterface(QString pinterface_name,T * handle_interface) {
                 RegisterProvidedInterfaceWithType(pinterface_name, QStringLiteral("%1 *").arg(QString(typeid(T).name())),(void *)handle_interface);
             }
-	        /*! \brief Enregistre une interface a fournir préférer le methode precedente*/
+	        /*! \brief Enregistre une interface a fournir prÃ©fÃ©rer le methode precedente*/
             virtual void RegisterProvidedInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface)  throw(SwException)=0;
 	        /*! \brief Desenregistre une interface fournie */
             virtual void UnregisterProvidedInterface(QString pinterface_name) throw(SwException)=0;
@@ -51,12 +51,12 @@ namespace StreamWork
             template<typename T> void SubstituteInterface(QString pinterface_name,T * handle_interface) {
                 SubstituteInterfaceWithType(pinterface_name,QString(typeid(handle_interface).name()),(void *)handle_interface);
             }
- 	        /*! \brief Remplacer une interface (DP strategie capability) préférer le methode precedente*/
+ 	        /*! \brief Remplacer une interface (DP strategie capability) prÃ©fÃ©rer le methode precedente*/
             virtual void SubstituteInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface) throw(SwException)=0;
 
-            /*! \brief Ajoute un consommateur a une interface donnée (est appelé par le consommateur)*/
+            /*! \brief Ajoute un consommateur a une interface donnÃ©e (est appelÃ© par le consommateur)*/
 	        virtual void AddConsumer(ISwInterfaces_Consumer * consumer,QString cinterface_name,QString pinterface_name)=0;
-	        /*! \brief Supprime un consommateur d'une interface donnée (est appelé par le consommateur)*/
+	        /*! \brief Supprime un consommateur d'une interface donnÃ©e (est appelÃ© par le consommateur)*/
 	        virtual void RemoveConsumer(ISwInterfaces_Consumer * consumer,QString cinterface_name,QString pinterface_name)=0;
 	        /*! \brief Permet de recuperer le type de l'interface (via typeid)*/
 	        virtual QString GetInterfaceType(QString)=0;
@@ -66,9 +66,9 @@ namespace StreamWork
             virtual QString GetFirstInterface()=0;
             /*! \brief Permet de connaitre l'interface suivante ( si retour isNull, plus d'interface) */
             virtual QString GetNextInterface()=0;
-             /*! \brief Permet de connaitre le premier consommateur et son interface consommé pour une interface( si retour NULL, plus de consommateur) */
+             /*! \brief Permet de connaitre le premier consommateur et son interface consommÃ© pour une interface( si retour NULL, plus de consommateur) */
             virtual ISwInterfaces_Consumer * GetFirstConsumer(QString pinterface_name,QString * pt_cinterfacename)=0;
-             /*! \brief Permet de connaitre le consommateur suivant et son interface consommé pour une interface( si retour NULL, plus de consommateur) */
+             /*! \brief Permet de connaitre le consommateur suivant et son interface consommÃ© pour une interface( si retour NULL, plus de consommateur) */
             virtual ISwInterfaces_Consumer * GetNextConsumer(QString * pt_cinterfacename)=0;
             //---------------------------------------------------------------------
             // Interface ISwService
@@ -78,7 +78,7 @@ namespace StreamWork
             QString GetServiceName(){return QString(CG_SW_SERVICE_INTERFACES_PROVIDER); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
             \return le nom du service reel (le nom de l'interface)
-            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+            \note au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()*/
             QString GetServiceRealName() {return QString(typeid(*this).name());}    
             
         };

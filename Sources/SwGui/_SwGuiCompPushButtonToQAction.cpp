@@ -6,8 +6,8 @@
  \author ATN
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompPushButtonToQAction.h"
 #include <QAction>
 
@@ -37,7 +37,7 @@ _SwGuiCompPushButtonToQAction::~_SwGuiCompPushButtonToQAction()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompPushButtonToQAction::InitializeResources() throw( SwException )
 {
     //Creation des service
@@ -74,17 +74,17 @@ void _SwGuiCompPushButtonToQAction::InitializeResources() throw( SwException )
                               QString( "InitializeResources of QPushButton done\n" ) );
                               
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 //void _SwGuiCompPushButtonToQAction::OnPropertyChange(ISwProperty * property) {
 //}
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompPushButtonToQAction::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompPushButtonToQAction::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
 }

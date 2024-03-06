@@ -1,7 +1,7 @@
 /*!
  \file _SwDatasBasePluginFactory_Class.cpp
  \brief Factory de gui de base 
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -13,7 +13,7 @@
 #include "_SwDatasBasePluginFactory_Class.h"
 #include "_SwDatasBaseBasicRouter.h"
 #include "SwDataBasicBuffer_Class.h"
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 #include "_SwSimpleDataExecutable.h"
 
 #include "info_SwDataBase.h"
@@ -58,7 +58,7 @@ SwData_Class * _SwDatasBasePluginFactory_Class::CreateInstanceOf(const SwUUID & 
 }
 /*! \brief acces a l'icone d'un composant
 \param[in] name nom du composant
-\return l'incone ou icone vide si non trouvé*/
+\return l'incone ou icone vide si non trouvÃ©*/
 QIcon _SwDatasBasePluginFactory_Class::CreateIconOf(QString name) const {
     QIcon ico;
     if (name=="SwDatasBaseBasicRouter") {
@@ -83,10 +83,10 @@ QString _SwDatasBasePluginFactory_Class::GetPluginVersion(){
 }
 
 QDateTime _SwDatasBasePluginFactory_Class::GetPluginCompilationDate(){	
-	//recup de la date à partir de __DATE__
+	//recup de la date Ã  partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
 
-	//recup de l'heure à partir de __TIME__
+	//recup de l'heure Ã  partir de __TIME__
 	QString strTime = __TIME__;
 	QTime time = time.fromString(strTime,"hh:mm:ss");
 

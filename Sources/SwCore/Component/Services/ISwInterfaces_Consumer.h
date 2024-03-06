@@ -15,9 +15,9 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "ISwInterfaces_Service.h"
-#include "ISwHost.h"
-#include "ISwPersistent.h"
+#include "Main/Connexion/ISwInterfaces_Service.h"
+#include "Component/Interfaces/ISwHost.h"
+#include "Component/Interfaces/ISwPersistent.h"
 
 //Nom du service
 #define CG_SW_SERVICE_INTERFACES_CONSUMER "InterfacesConsumer"
@@ -39,25 +39,25 @@ namespace StreamWork
             template<typename T> inline void RegisterConsumedInterface(QString cinterface_name,T ** handle_handle_interface) {
                 RegisterConsumedInterfaceWithType(cinterface_name,QStringLiteral("%1 *").arg(QString(typeid( T ).name())),(void **)handle_handle_interface);
             }
-	        /*! \brief Enregistre une interface a fournir (utliser de préférence la methode précédente)*/
+	        /*! \brief Enregistre une interface a fournir (utliser de prÃ©fÃ©rence la methode prÃ©cÃ©dente)*/
             virtual void RegisterConsumedInterfaceWithType(QString cinterface_name,QString cinterface_type,void ** handle_handle_interface)=0;
 	        /*! \brief Desenregistre une interface fournie */
             virtual void UnregisterConsumedInterface(QString cinterface_name)=0;
 	        /*! \brief Permet de savoir si une interface est disponible */
             virtual bool IsInterfaceAvailable(QString cinterface_name)=0;
-	        /*! \brief Attache un fournisseur a une interface donnée */
+	        /*! \brief Attache un fournisseur a une interface donnÃ©e */
 	        virtual void AttachProvider(ISwInterfaces_Provider * provider,QString cinterface_name,QString pinterface_name)=0;
-	        /*! \brief Detache un fournisseur d'une interface donnée */
+	        /*! \brief Detache un fournisseur d'une interface donnÃ©e */
 	        virtual void DetachProvider(QString cinterface_name)=0;
-	        /*! \brief Fournit l'interface (est appelé par le fournisseur)*/
+	        /*! \brief Fournit l'interface (est appelÃ© par le fournisseur)*/
 	        virtual void ProvideInterface(QString cinterface_name,void *)=0;
-	        /*! \brief Ne fournit plus l'interface (est appelé par le fournisseur)*/
+	        /*! \brief Ne fournit plus l'interface (est appelÃ© par le fournisseur)*/
 	        virtual void UnprovideInterface(QString cinterface_name)=0;
-	        /*! \brief Permet d'acceder a la premier interface consommé 
+	        /*! \brief Permet d'acceder a la premier interface consommÃ© 
             (renvoie aussi le type, le fournisseur et le nom de l'interface fournie)
             Quand la chaine renvoye Null plus d'interface)*/
 	        virtual QString GetFirstInterface(QString * nametype,ISwInterfaces_Provider ** pt_provider,QString * pt_pinterface_name)=0;
-	        /*! \brief Permet d'acceder a l'interface consommé suivante 
+	        /*! \brief Permet d'acceder a l'interface consommÃ© suivante 
             (renvoie aussi le type, le fournisseur et le nom de l'interface fournie)
             Quand la chaine renvoye Null plus d'interface)*/
 	        virtual QString GetNextInterface(QString * nametype,ISwInterfaces_Provider ** pt_provider,QString * pt_pinterface_name)=0;
@@ -71,7 +71,7 @@ namespace StreamWork
             QString GetServiceName(){return QString(CG_SW_SERVICE_INTERFACES_CONSUMER); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
             \return le nom du service reel (le nom de l'interface)
-            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+            \note au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()*/
             QString GetServiceRealName() {return QString(typeid(*this).name());}    
         };
     }

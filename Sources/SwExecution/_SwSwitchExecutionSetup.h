@@ -28,8 +28,8 @@
   * INCLUDES LOCAUX
   */
 
-#include <SwComponent_Class.h>
-#include <ISwProperty.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Properties/ISwProperty.h"
 #include "ISwExecutable_Service.h"
 #include "_SwExecutorStreamTreeModel.h"
 #include "_SwExecutorListEditor.h"

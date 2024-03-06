@@ -2,16 +2,16 @@
  \file _SwExecutor.cpp
  \brief Implementation of the Class _SwExecutor realisant la fonction d'executeur
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 #include <QSet>
 #include <QApplication>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwExecutor.h"
 #include <QMessageBox>
-#include <SwTime_ToolBox.h>
+#include "Tools/SwTime_ToolBox.h"
 #include <QElapsedTimer>
 #include <QFile>
 
@@ -302,7 +302,7 @@ void _SwExecutor::Initialize(double start_time, ISwExecution_Service * executor)
 	// parcours de tous les executables (independants de l'activation)
 	for (ISwExecutable_Service* executable : _exe_service.GetExecutablesList())
 	{
-		// on vérifie si l'activation de l'executable a changé
+		// on vÃ©rifie si l'activation de l'executable a changÃ©
 		if ( executable->isActive() )
 		{
 			// on initialise le composant
@@ -323,7 +323,7 @@ void _SwExecutor::Start(double current_time) throw (SwException)
 	// parcours de tous les executables (independants de l'activation)
 	for (ISwExecutable_Service* executable : _exe_service.GetExecutablesList())
 	{
-		// on vérifie l'activation de l'executable
+		// on vÃ©rifie l'activation de l'executable
 		if ( executable->isActive() )
 		{
 			if ( !executable->isRunning() )
@@ -364,7 +364,7 @@ void _SwExecutor::Execute(double current_time, bool is_first_call) throw (SwExce
 	// parcours de tous les executables (independants de l'activation)
 	for (ISwExecutable_Service* executable : _exe_service.GetExecutablesList())
 	{
-		// on vérifie l'activation de l'executable
+		// on vÃ©rifie l'activation de l'executable
 		if ( executable->isActive() )
 		{
 			if ( !executable->isRunning() )

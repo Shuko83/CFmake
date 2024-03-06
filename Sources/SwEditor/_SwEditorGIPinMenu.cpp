@@ -2,13 +2,13 @@
  \file _SwEditorGIPinMenu.cpp
  \brief menu pour un graphics item pin composant
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
 
 #include "_SwEditorGIPinMenu.h"
-#include <ISwPins_Manager.h>
+#include "Component/Services/ISwPins_Manager.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwEditor;

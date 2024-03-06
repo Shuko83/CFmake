@@ -9,10 +9,10 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "_SwPropertyImplForQOject_Class.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "SwEnum.h"
+#include "Properties/_SwPropertyImplForQOject_Class.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Types/SwEnum.h"
 using namespace StreamWork::SwCore;
 
 /*! \brief Constructor */
@@ -59,11 +59,11 @@ _SwPropertyImplForQOject_Class::_SwPropertyImplForQOject_Class(QObject * host,QS
 /*! \brief Destructor */
 _SwPropertyImplForQOject_Class::~_SwPropertyImplForQOject_Class(){
 }
-/*! \brief methode de recuperer le nom reel d'une propriété */
+/*! \brief methode de recuperer le nom reel d'une propriÃ©tÃ© */
 QString _SwPropertyImplForQOject_Class::GetRealName() {
     return _real_name;
 }
-/*! \brief methode de recuperer la valeur d'une propriété en interne*/
+/*! \brief methode de recuperer la valeur d'une propriÃ©tÃ© en interne*/
 QVariant _SwPropertyImplForQOject_Class::GetInternalValue() {
     if (_metaproperty.isEnumType()) {
         SwEnum tmp_enum=_value.value<SwEnum>();
@@ -77,7 +77,7 @@ QVariant _SwPropertyImplForQOject_Class::GetInternalValue() {
     }
     return _value;
 }
-/*! \brief methode permettant de definir la valeur d'une propriété en interne*/
+/*! \brief methode permettant de definir la valeur d'une propriÃ©tÃ© en interne*/
 void _SwPropertyImplForQOject_Class::SetInternalValue (const QVariant & val) {
     if (_value.userType()!=val.userType()) {
          QString s=QString("Unable to change property %1 because types are different %2!=%3").arg(_name).arg(QString(_value.typeName())).arg(QString(val.typeName()));

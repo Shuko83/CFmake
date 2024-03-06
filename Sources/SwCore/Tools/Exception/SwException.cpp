@@ -1,7 +1,7 @@
 /*!
  \file SwException.cpp
  \brief Implementation of the Class SwException
- \date 23-août-2006 10:35:13
+ \date 23-aoÃ»t-2006 10:35:13
  \author F.Bighelli
 */
 /*
@@ -9,7 +9,7 @@
   */
 #include <stdio.h>
 
-#include "SwException.h"
+#include "Tools/Exception/SwException.h"
 
 using namespace StreamWork::SwCore;
 
@@ -99,8 +99,8 @@ QString SwException::GetReason(){
 }
 
 
-/*! \brief Renvoie une chaine de caractères C décrivant la cause générale de l'erreur courante
-\return une chaine de caractères C décrivant la cause générale de l'erreur courante
+/*! \brief Renvoie une chaine de caractÃ¨res C dÃ©crivant la cause gÃ©nÃ©rale de l'erreur courante
+\return une chaine de caractÃ¨res C dÃ©crivant la cause gÃ©nÃ©rale de l'erreur courante
 */
 const char * SwException::what(){
 	return _c_what_string;

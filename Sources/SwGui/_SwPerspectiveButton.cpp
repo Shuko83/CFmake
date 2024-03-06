@@ -5,7 +5,7 @@
  */
 
 #include "_SwPerspectiveButton.h"
-#include "_SwPerspectivesManager.h" 
+#include "_SwPerspectivesManager.h"
 
 using namespace StreamWork::SwGui;
 

@@ -2,12 +2,12 @@
  \file _SwGuiCompQDockWidget.cpp
  \brief Implementation of the Class _SwGuiCompQDockWidget generant un QDockWidget
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompQDockWidget.h"
 
 using namespace StreamWork::SwCore;
@@ -40,7 +40,7 @@ _SwGuiCompQDockWidget::~_SwGuiCompQDockWidget()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompQDockWidget::InitializeResources() throw( SwException )
 {
     //Creation des service
@@ -65,7 +65,7 @@ void _SwGuiCompQDockWidget::InitializeResources() throw( SwException )
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
     
-    //Enregistrement des propriétés
+    //Enregistrement des propriÃ©tÃ©s
     _properties_service->CreatePropertiesForQObject( _dockwidget, "QDockWidget" );
     _properties_service->CreatePropertiesForQObject( this, "", true );
     
@@ -74,7 +74,7 @@ void _SwGuiCompQDockWidget::InitializeResources() throw( SwException )
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompQDockWidget::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( _handle_widget )
@@ -82,7 +82,7 @@ void _SwGuiCompQDockWidget::BeforeInterfaceAvailabilityChange( QString interface
         _handle_widget->setParent( nullptr );
     }
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompQDockWidget::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( _handle_widget )

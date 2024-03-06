@@ -9,8 +9,8 @@
 #ifndef _SwRefPtr_H
 #define _SwRefPtr_H
 
-#include "LibIndeSig.h"
-#include "SwRefPtrTools.h"
+#include "Tools/Signal/LibIndeSig.h"
+#include "Tools/SwRefPtrTools.h"
 
 #include <QHash>
 
@@ -25,11 +25,11 @@ namespace StreamWork
         @ingroup SwCoreGrp
         \author  BIG
         \note
-            Un pointeur correspond a une instance d'une classe derivée de SwRef
+            Un pointeur correspond a une instance d'une classe derivÃ©e de SwRef
             Quand il est detruit, le compteur de reference sur l'instance de la 
-            classe dérivée est incrementé
-            Quand il est affecté, le compteur de reference sur l'instance de la 
-            classe dérivée est decrémenté
+            classe dÃ©rivÃ©e est incrementÃ©
+            Quand il est affectÃ©, le compteur de reference sur l'instance de la 
+            classe dÃ©rivÃ©e est decrÃ©mentÃ©
         */
 		template <class T> 
         class SwRefPtr {
@@ -99,7 +99,7 @@ namespace StreamWork
                 }
                 return *this;
             }
-            //Operateur d'egalité
+            //Operateur d'egalitÃ©
             SwRefPtr<T> & operator=(T * source) 
             {
                 if (_elt != source) {                    

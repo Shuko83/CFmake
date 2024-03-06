@@ -52,7 +52,7 @@ _QRcViewer::~_QRcViewer()
 QPixmap _QRcViewer::makeThumbnail(const QPixmap &pix) const
 {
 	//Generer une image de 48x48 pour que tous les icons soient 
- 	//de la même taille
+ 	//de la mÃªme taille
 	int w = qMax(48, pix.width());
 	int h = qMax(48, pix.height());
 	QRect imgRect(0, 0, w, h);
@@ -70,7 +70,7 @@ QPixmap _QRcViewer::makeThumbnail(const QPixmap &pix) const
 /*****************************************************************************/
 void _QRcViewer::setIconName( QString name )
 {
-	//Parcours la liste des QListWidgetItem pour savoir lequel est sélectionné
+	//Parcours la liste des QListWidgetItem pour savoir lequel est sÃ©lectionnÃ©
 	for (int i = 0; i < LW_icon->count() ; i++)
 	{
 		if(LW_icon->item(i) && LW_icon->item(i)->data(Qt::UserRole).toString() == name)
@@ -87,7 +87,7 @@ void _QRcViewer::itemSelected( QListWidgetItem * item)
 /*****************************************************************************/
 void _QRcViewer::selectItem()
 {
-	// On récupère a selection qui est unique (seulement un item)
+	// On rÃ©cupÃ¨re a selection qui est unique (seulement un item)
 	QList<QListWidgetItem*> tmpList = LW_icon->selectedItems();
 
 	if(tmpList.count() == 1 && tmpList.at(0))

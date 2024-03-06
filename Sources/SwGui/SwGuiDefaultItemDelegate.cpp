@@ -12,13 +12,13 @@
 #include <QLocale>
 #include <QMetaType>
 #include <QFileDialog>
-#include <SwEnum.h>
-#include <SwIntegerEnum.h>
-#include <SwInteger.h>
-#include <SwString.h>
-#include <SwDouble.h>
-#include <SwIpv4Address.h>
-#include <SwUUID.h>
+#include "Types/SwEnum.h"
+#include "Types/SwIntegerEnum.h"
+#include "Types/SwInteger.h"
+#include "Types/SwString.h"
+#include "Types/SwDouble.h"
+#include "Types/SwIpV4Address.h"
+#include "Types/SwUUID.h"
 #include "SwGuiEnumComboBox.h"
 #include "SwGuiFlagComboBox.h"
 #include "SwGuiIntegerSpinBox.h"
@@ -26,7 +26,7 @@
 #include "SwGuiEnumIntComboBox.h"
 #include "SwGuiStringLineEdit.h"
 #include "_QRcViewer.h"
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwGui;
 using namespace StreamWork::SwCore;

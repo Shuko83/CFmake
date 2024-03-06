@@ -7,7 +7,7 @@
 #ifndef _STREAMWORK_SWCORE_ISWSERVICESMANAGER_LISTENER_H
 #define _STREAMWORK_SWCORE_ISWSERVICESMANAGER_LISTENER_H
 
-#include "ISwService.h"
+#include "Main/Services/Management/ISwService.h"
 
 namespace StreamWork {
 

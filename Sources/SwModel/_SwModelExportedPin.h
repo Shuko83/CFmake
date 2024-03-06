@@ -2,7 +2,7 @@
  \file _SwModelExportedPin.h
  \brief Class implementant une entite exportable pin
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -10,14 +10,14 @@
 #define __SwModelExportedPin_H
 
 #include <QString>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwModelExportedEntity.h"
-#include <ISwPin_Listener.h>
-#include <ISwPins_ManagerListener.h>
-#include <SwPin.h>
-#include <SwPins_Manager_Class.h>
-#include <LibIndeSig.h>
-#include <SwProperties_Class.h>
+#include "Component/Interfaces/ISwPin_Listener.h"
+#include "Main/Connexion/ISwPins_ManagerListener.h"
+#include "Component/Pin/SwPin.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Tools/Signal/LibIndeSig.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
 
 using namespace StreamWork::SwCore;
 /*!
@@ -61,7 +61,7 @@ class _SwModelExportedPin : public _SwModelExportedEntity, public ISwPin_Listene
         //-------------------------------------------------------------------------
         //Interface ISwPin_Listener
         //-------------------------------------------------------------------------
-	    /*! \brief Sur reception d'une donnée*/
+	    /*! \brief Sur reception d'une donnÃ©e*/
 	    void OnReceiveData(SwPin *p,SwData_Class *data);            
 		
 

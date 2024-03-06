@@ -1,25 +1,25 @@
 /*!
  \file _SwModelPluginFactory_Class.cpp
  \brief Factory de modeles
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
  */
 
 #include <QRegularExpression>
-#include <SwLoader_Class.h>
+#include "Main/Serialization/SwLoader_Class.h"
 #include <QFile>
 #include <QDomDocument>
 #include <QDomElement>
 
-#include <SwApplication.h>
-#include <SwException.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
 #include "_SwModelPluginFactory_Class.h"
 #include "_SwModel_Class.h"
 #include "_SwModelHost_Class.h"
-#include "SwSnapShotPropertiesService.h"
-#include "ISwEditionService.h"
+#include "Component/Services/ServiceImpl/SwSnapShotPropertiesService.h"
+#include "Main/Services/ISwEditionService.h"
 #include "SwModelsListAccess.h"
 #include "info_SwModel.h"
 
@@ -181,10 +181,10 @@ QString _SwModelPluginFactory_Class::GetPluginVersion()
 //-----------------------------------------------------------------------
 QDateTime _SwModelPluginFactory_Class::GetPluginCompilationDate()
 {
-	//recup de la date à partir de __DATE__
+	//recup de la date Ã  partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
 
-	//recup de l'heure à partir de __TIME__
+	//recup de l'heure Ã  partir de __TIME__
 	QString strTime = __TIME__;
 	QTime time = time.fromString(strTime, "hh:mm:ss");
 

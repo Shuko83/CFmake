@@ -13,7 +13,7 @@
 * INCLUDES GLOBAUX
 */
 #include <QDialog>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 
 
 /*
@@ -23,7 +23,7 @@
 namespace Ui{ class ComponentToolsGui; }
 
 #include "SwGuiConstantes.h"
-#include "ComponentTableWidget.h"
+#include "ComponentTools/ComponentTableWidget.h"
 
 namespace StreamWork 
 {
@@ -51,7 +51,7 @@ namespace StreamWork
 		private:
 			Ui::ComponentToolsGui * _ui;
 
-			/** @brief widget IHM pour la QTable où glisser les composants */
+			/** @brief widget IHM pour la QTable oÃ¹ glisser les composants */
 			ComponentTableWidget *_compoTableWidget;
 
 			/* List des path des composants */

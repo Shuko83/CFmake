@@ -17,7 +17,7 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "ISwFinalizerManager.h"
+#include "Component/Interfaces/ISwFinalizerManager.h"
 
 namespace StreamWork 
 {
@@ -29,7 +29,7 @@ namespace StreamWork
         @ingroup SwCoreGrp
         @swinterface
         \note
-        Toute entité implémentant cette interface peut être enregistrer et charger.
+        Toute entitÃ© implÃ©mentant cette interface peut Ãªtre enregistrer et charger.
         */
 
         class ISwPersistent  {

@@ -21,7 +21,7 @@ namespace StreamWork {
         */
         class _SwFileEditorManager : public ISwServiceFileEditorManager{
         private:
-            /** @brief base de donnée des editeurs */
+            /** @brief base de donnÃ©e des editeurs */
             QMap<QString,QList<ISwFileEditor *> *> _db;
         public:
 	        /** @brief Constructor */
@@ -47,7 +47,7 @@ namespace StreamWork {
             /** 
             * @brief edition d'un fichier (methode non bloquante)
             * @param descriteur de fichier
-            * @return false si aucun editeur n'a été trouvé
+            * @return false si aucun editeur n'a Ã©tÃ© trouvÃ©
             */            
             bool edit(SwFileDescriptor fd);
 

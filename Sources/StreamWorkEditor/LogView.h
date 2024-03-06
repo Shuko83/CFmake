@@ -12,7 +12,7 @@
 #include <QMutex>
 #include <QRegexp>
 #include "ui_LogView.h"
-#include "ISwLogRecorder.h"
+#include "Tools/Log/ISwLogRecorder.h"
 /**
 @class LogView
 @brief Vue log

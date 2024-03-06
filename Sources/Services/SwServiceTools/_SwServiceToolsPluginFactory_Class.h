@@ -9,7 +9,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwProtectedPluginFactory_Class.h>
+#include "Main/Plugin/SwProtectedPluginFactory_Class.h"
 #include "_SwServiceRefProfiler.h"
 #include "_SwServiceParametersImpl.h"
 #include "_SwServiceExtensionsImpl.h"

@@ -4,7 +4,7 @@
 @author Big
  */
 
-#include "SwIconDescriptor.h"
+#include "Types/SwIconDescriptor.h"
  
 using namespace StreamWork::SwCore;
 

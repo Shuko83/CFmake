@@ -5,8 +5,8 @@
  */
 
 #include "_SwServiceRecording.h"
-#include <SwApplication.h> 
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <QDebug>
 
 /** @brief Constructor */
@@ -74,7 +74,7 @@ QStringList _SwServiceRecording::getSwDataCodecs() {
     pin_types=SW_FACTORIES.GetDataList();
     it=pin_types.begin();
     while (it!=pin_types.end()) {
-        //Recuperation d'un type de donnée
+        //Recuperation d'un type de donnÃ©e
         QString swdataName=SW_FACTORIES.GetDataTypeNameFromDataTypeId(*it);
         //Recherche de codec
         QMap<QString,ISwRecordDataCodecFactory *>::iterator itf=_factories.find(swdataName);
@@ -127,8 +127,8 @@ QList<ISwRecordDataCodec *> _SwServiceRecording::buildCodecs(QString swDataName)
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwServiceRecording::Liberate(){
     delete this;
 }   

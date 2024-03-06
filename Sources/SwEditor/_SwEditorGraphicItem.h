@@ -26,11 +26,11 @@
 #include "ISwEditorGraphicItem.h"
 #include "ISwEditorStreamNavigation.h"
 #include "ISwEditorStreamOperations.h"
-#include <ISwObserver.h>
+#include "Component/Interfaces/ISwObserver.h"
 #include "_ISwEditorGraphicItemListener.h"
-#include <ISwFinalizer.h>
-#include <ISwExecution_Service.h>
-#include <ISwExecutable_Service.h>
+#include "Component/Interfaces/ISwFinalizer.h"
+#include "ISwExecution_Service.h"
+#include "ISwExecutable_Service.h"
 
 namespace StreamWork
 {
@@ -112,8 +112,8 @@ namespace StreamWork
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------
-            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-            lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+            lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
             void Liberate(); 
             //---------------------------------------------------------------------
             // Gestion de drag and drop
@@ -192,7 +192,7 @@ namespace StreamWork
             //---------------------------------------------------------------------
             // Sur mise a jour
             //---------------------------------------------------------------------
-	        /*! \brief methode appelée par l'observable*/
+	        /*! \brief methode appelÃ©e par l'observable*/
 			void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
 	        /*! \brief Active le capacite de selection des items dont le composant est selectionnable*/
 	        void SetSelectionModeOn();

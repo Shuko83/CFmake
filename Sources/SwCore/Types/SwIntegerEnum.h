@@ -18,15 +18,15 @@
   * INCLUDES LOCAUX
   */
 #include "SwCoreConstantes.h"
-#include "SwRefPtr.h"
+#include "SwRef/SwRefPtr.h"
 
 namespace StreamWork
 {
 	namespace SwCore
 	{
 		/*!
-		*	@brief Class QVariant encapsulant un entier ayant certaines valeurs dÈfini dans dans une Ènumeration
-		*	La valeur interne peut prendre des valeurs non dÈfini dans l'enum, si elles rentrent dans les bornes
+		*	@brief Class QVariant encapsulant un entier ayant certaines valeurs d√©fini dans dans une √©numeration
+		*	La valeur interne peut prendre des valeurs non d√©fini dans l'enum, si elles rentrent dans les bornes
 		*/
         class BUILD_SWCORE SwIntegerEnum 
 		{
@@ -40,14 +40,14 @@ namespace StreamWork
         public:
 			/*! \brief Constructeur de base */
 			SwIntegerEnum();
-			/*! \brief Constructeur de copie, necessaire pour enregistrer en QVariant /!\ le pointeur sur le validator est copiÈ */
+			/*! \brief Constructeur de copie, necessaire pour enregistrer en QVariant /!\ le pointeur sur le validator est copi√© */
 			SwIntegerEnum(const SwIntegerEnum & source);
 			/*! \brief Destructeur */
 			virtual ~SwIntegerEnum();
 			/*! \brief Operateur de comparaison*/
 			bool operator==(const SwIntegerEnum& source) const;
 
-			/** @brief Permet d'affecter le QValidator ‡ utiliser
+			/** @brief Permet d'affecter le QValidator √† utiliser
 			*	@param QValidator * => validator : this ne gere pas la destruction du validator */			
 			void setValidator(QValidator * validator);
 			
@@ -61,15 +61,15 @@ namespace StreamWork
 			/** @brief accesseur valeur minimum */
 			int getMin();
 
-			/** @brief permet de valider qu'une chaine de caractere correspond ‡ une valeur de cette enum 
-			*	Appel en premier le validateur settÈ via la methode setValidator(...) puis transforme la chaine en entier 
-			*   puis verifie que l'entier dÈfini par la chaine de caractere est compris entre les bornes min et max.
-			*	@param QString & => input : chaine ‡ tester
-			*	@param int => pos : position dans la chaine (utilisÈ uniquement pas le validateur)	*/
+			/** @brief permet de valider qu'une chaine de caractere correspond √† une valeur de cette enum 
+			*	Appel en premier le validateur sett√© via la methode setValidator(...) puis transforme la chaine en entier 
+			*   puis verifie que l'entier d√©fini par la chaine de caractere est compris entre les bornes min et max.
+			*	@param QString & => input : chaine √† tester
+			*	@param int => pos : position dans la chaine (utilis√© uniquement pas le validateur)	*/
 			QValidator::State validate ( QString & input, int & pos ) const	;		
 
-			/** @brief permet de tester si la valeur entiere ‡ nom associÈ dÈfini dans l'enum
-			*	@param int => val : valeur ‡ tester	*/
+			/** @brief permet de tester si la valeur entiere √† nom associ√© d√©fini dans l'enum
+			*	@param int => val : valeur √† tester	*/
 			bool isValidEnum(int val);
 
 			/** @brief accesseur sur la valeur courante de l'enum */
@@ -82,18 +82,18 @@ namespace StreamWork
 			/** @brief supprime une valeur d'enum */
 			void removeKey(int val);
 
-			/** @brief accesseur ‡ la map de l'enum */
+			/** @brief accesseur √† la map de l'enum */
 			QMap<int, QString> & getValues();
 			
 			/** @brief permet de transformer une chaine de caractere vers une valeur d'enum
 			*	Si la chaine est un nom de l'enum, la valeur courante prends la valeur correspondant au nom,
 			*	Sinon on verifie que la chaine est un entier valide via la methode 'validate' 
-			*	et on affecte ‡ la valeur courante l'entier contenu dans la chaine de caractere
-			*	@param QString => chaine de caractere ‡ utiliser pour affecter la valeur courante de l'enum */
+			*	et on affecte √† la valeur courante l'entier contenu dans la chaine de caractere
+			*	@param QString => chaine de caractere √† utiliser pour affecter la valeur courante de l'enum */
 			void fromString(QString &);
 
 			/** @brief permet de transformer en chaine de caractere
-			*	@return QString =>	Si la valeur est contenu dans la map d'enum, on retourne le nom associÈ
+			*	@return QString =>	Si la valeur est contenu dans la map d'enum, on retourne le nom associ√©
 			*						sinon on retourne la valeur d'enume courante entiere sous forme de chaine de caractere */
 			QString toString();
 

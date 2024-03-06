@@ -2,15 +2,15 @@
  \file SwEnumModel.cpp
  \brief Classe pour la gestion des enumeres
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 
 */
 
-#include "SwEnumModel.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "_SwEnumKeys_Class.h"
+#include "Types/SwEnumModel.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Types/_SwEnumKeys_Class.h"
 
 using namespace StreamWork::SwCore;
 
@@ -27,7 +27,7 @@ SwEnumModel::~SwEnumModel() {
 SwEnum  SwEnumModel::GetEnum()  const {
     return _content;
 }
-/*! \brief Acces valeur pour un index donné*/
+/*! \brief Acces valeur pour un index donnÃ©*/
 int SwEnumModel::GetVal(int index) const {
     //Test  validite index et validite numero de ligne 
     if (index<0 || index>=_bridge_list.count()) {
@@ -35,7 +35,7 @@ int SwEnumModel::GetVal(int index) const {
     }
     return _bridge_list[index];   
 }
-/*! \brief Acces index pour une valeur donné*/
+/*! \brief Acces index pour une valeur donnÃ©*/
 int SwEnumModel::GetIndex(int val) const {
     return _bridge_list.indexOf(val);  
 }

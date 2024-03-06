@@ -5,7 +5,7 @@
  */
 
 #include "GraphicsLoaderV1.h"
-#include "SwCoreConstantes.h" 
+#include "SwCoreConstantes.h"
 
 /** @brief Constructeur */
 GraphicsLoaderV1::GraphicsLoaderV1() {
@@ -46,12 +46,12 @@ void GraphicsLoaderV1::loadGraphicsInfoFromDom(QDomDocument & doc,QList<Componen
 
 /** @brief Constructeur */
 void GraphicsLoaderV1::loadGraphicData(ComponentGraphicItem * gitem,QDomElement parentNode) {
-    //Recherche du dom node associé
+    //Recherche du dom node associÃ©
     QDomElement cElt=parentNode.firstChildElement(QString(CG_SW_XML_COMPONENT_NODE));
     while (!cElt.isNull() && cElt.attribute(CG_SW_XML_COMPONENT_NODE_ATT_NAME)!=gitem->getComponent()->GetName()) {
         cElt=cElt.nextSiblingElement(CG_SW_XML_COMPONENT_NODE);
     }
-    //Si le neoud n'est pas trouvé
+    //Si le neoud n'est pas trouvÃ©
     if (cElt.isNull()) {
         return; //Fin
     }

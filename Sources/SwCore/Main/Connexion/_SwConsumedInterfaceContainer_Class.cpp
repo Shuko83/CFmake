@@ -1,13 +1,13 @@
 /*!
 \file _SwConsumedInterfaceContainer_Class.cpp
 \date 12/04/2006
-\brief conteneur de stockage des informations relatives a une interface consommée
+\brief conteneur de stockage des informations relatives a une interface consommÃ©e
 \author  Big
 \version 1.0
 */
 #include <QtGlobal>
-#include "SwApplication.h"
-#include "_SwConsumedInterfaceContainer_Class.h"
+#include "Main/SwApplication.h"
+#include "Main/Connexion/_SwConsumedInterfaceContainer_Class.h"
 
 using namespace StreamWork::SwCore;
 

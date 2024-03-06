@@ -11,11 +11,11 @@
 /*
   * INCLUDES GLOBAUX
   */
-#include <SwProperties_Class.h>
-#include <SwFileDescriptor.h>
-#include <SwEnum.h>
-#include <_ISwConfigurationLaunchManager.h>
-#include <_ISwConfigurationLaunchEditor.h>
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Types/SwFileDescriptor.h"
+#include "Types/SwEnum.h"
+#include "_ISwConfigurationLaunchManager.h"
+#include "_ISwConfigurationLaunchEditor.h"
 #include <QObject>
 /*
   * INCLUDES LOCAUX

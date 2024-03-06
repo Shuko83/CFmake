@@ -2,13 +2,13 @@
  \file _SwGuiCompActionList.cpp
  \brief Implementation of the Class _SwGuiCompActionList generant une QMenu
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
 #include <QMenuBar>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompActionList.h"
 #include "qmessagebox.h"
 
@@ -41,7 +41,7 @@ _SwGuiCompActionList::~_SwGuiCompActionList(){
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompActionList::InitializeResources() throw(SwException) {
     
 	
@@ -74,7 +74,7 @@ void _SwGuiCompActionList::InitializeResources() throw(SwException) {
 	if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiMenu done\n"));
 	
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwGuiCompActionList::OnPropertyChange(ISwProperty * property) {
     uint val;
     QString interface_name;
@@ -103,7 +103,7 @@ void _SwGuiCompActionList::OnPropertyChange(ISwProperty * property) {
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompActionList::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
 
     QMap<QString, QAction *>::iterator action_it;
@@ -123,7 +123,7 @@ void _SwGuiCompActionList::BeforeInterfaceAvailabilityChange(QString interface_n
         return;
     } 
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompActionList::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     QMap<QString, QAction *>::iterator action_it;
     

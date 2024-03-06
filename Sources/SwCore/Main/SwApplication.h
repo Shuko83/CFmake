@@ -11,14 +11,14 @@
 /*
   * INCLUDES LOCAUX
   */
-#include "SwException.h"
+#include "Tools/Exception/SwException.h"
 #include "SwCoreConstantes.h"
-#include "ISwExecutor.h"
-#include "ISwPluginsBank.h"
-#include "ISwComplexeTypeAdaptersFactoriesBank.h"
-#include "SwServicesManager_Class.h"
-#include "SwLogger_Class.h"
-#include "SwAlerter_Class.h"
+#include "Component/Interfaces/ISwExecutor.h"
+#include "Main/Plugin/ISwPluginsBank.h"
+#include "Types/UserType/ISwComplexeTypeAdaptersFactoriesBank.h"
+#include "Main/Services/Management/SwServicesManager_Class.h"
+#include "Tools/Log/SwLogger_Class.h"
+#include "Tools/Log/SwAlerter_Class.h"
 
 class ProductLicense;
 namespace StreamWork 
@@ -35,9 +35,9 @@ namespace StreamWork
 
         Il y a toujours une seule instance de cette classe dans un executable
 
-        Grace a ce singleton, on accède à tous les streams disponibles et à la banque des plugins disponibles
+        Grace a ce singleton, on accÃ¨de Ã  tous les streams disponibles et Ã  la banque des plugins disponibles
 
-        Par ailleurs, si l'on souhaite mettre a disposition des services accessibles par tout entité de l'application, on utlisera les fonctionnalités de manager de services (SwServicesManager_Class) de ce singleton. 
+        Par ailleurs, si l'on souhaite mettre a disposition des services accessibles par tout entitÃ© de l'application, on utlisera les fonctionnalitÃ©s de manager de services (SwServicesManager_Class) de ce singleton. 
 
         Mise en oeuvre 
         \code 
@@ -54,7 +54,7 @@ namespace StreamWork
                 //Lancement
                 return swApp->Launch(my_stream_desc);
             } catch(exception & e) {
-                //L'application a levé une exception
+                //L'application a levÃ© une exception
                 //Traiter l'exception
                 //Si on arrive ici, fin anormale
                 return -1;
@@ -77,7 +77,7 @@ namespace StreamWork
         Pour executer un stream (dont la description xml est defini dans la chaine my_stream_desc)
         \code
         //Si ce n'est pas une application console
-        //Definir le point d'entrée de l'execution via la methode RegisterExecutor
+        //Definir le point d'entrÃ©e de l'execution via la methode RegisterExecutor
         //Puis
         try {
             //Enregistrer les paths de plugins
@@ -89,13 +89,13 @@ namespace StreamWork
         }
         \endcode
 
-        Pour accéder a la banque des fabriques
+        Pour accÃ©der a la banque des fabriques
         \code
         SW_APP->ComponentsBank();
         \endcode
         ou mieux utliser la macro SW_FACTORIES
 
-        Pour accéder a l'interface de log
+        Pour accÃ©der a l'interface de log
         \code
         SW_APP->Logger();
         \endcode

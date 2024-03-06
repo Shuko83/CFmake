@@ -8,7 +8,7 @@
 
 #include <QRegularExpression>
 
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 #include "ISwServiceExtensions.h"
 
 #include "_SwGuiPluginFactory_Class.h"
@@ -46,7 +46,7 @@
 #include "_SwGuiCompStackedWidget.h"
 #include "_SwGuiCompQActionToStackedWidget.h"
 #include "_SwGuiCompFromQActionToStackedWidget.h"
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiQActionToWidget.h"
 #include "_SwGuiQActionConsumedToWidget.h"
 #include "_SwGuiCompPushButtonToQAction.h"

@@ -81,7 +81,7 @@ QMimeData * ComponentListModel::mimeData(const QModelIndexList &indexes) const{
      return mimeData;
 }
 
-/** @brief sur changement du plugin activé */
+/** @brief sur changement du plugin activÃ© */
 void ComponentListModel::onSelectedPluginChanged(const QModelIndex & index) 
 {
 	_map.clear();

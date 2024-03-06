@@ -2,24 +2,24 @@
  \file _SwConfigurationStreamTreeModel.cpp
  \brief Modele pour la selection de l'export model
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 /*
   * INCLUDES LOCAUX
   */
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QMessageBox>
 #include <QMimeData>
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include "_SwConfigurationStreamTreeModel.h"
-#include <ISwProperties.h>
-#include <ISwProperty.h>
-#include <ISwInterfaces_Provider.h>
-#include <ISwInterfaces_Consumer.h>
-#include <ISwPins_Manager.h>
-#include <ISwExecutable_Service.h>
-#include <_SwConfiguration.h>
+#include "Component/Services/ISwProperties.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Services/ISwPins_Manager.h"
+#include "ISwExecutable_Service.h"
+#include "_SwConfiguration.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -43,7 +43,7 @@ _SwConfigurationStreamTreeModel::_SwConfigurationStreamTreeModel(QObject * paren
 _SwConfigurationStreamTreeModel::~_SwConfigurationStreamTreeModel() {
     delete _root_item;
 }
-/*! \brief Renvoie les capacites du modèle */
+/*! \brief Renvoie les capacites du modÃ¨le */
 Qt::ItemFlags _SwConfigurationStreamTreeModel::flags ( const QModelIndex & index ) const {
     _Item * item;
 
@@ -97,11 +97,11 @@ QMimeData * _SwConfigurationStreamTreeModel::mimeData(const QModelIndexList &ind
     return mimeData;
 }
 
-/*! \brief Renvoie le nombre de colonne pour parent donné */
+/*! \brief Renvoie le nombre de colonne pour parent donnÃ© */
 int _SwConfigurationStreamTreeModel::columnCount ( const QModelIndex & parent ) const{
     return 1;
 }
-/*! \brief Renvoie le nombre de ligne pour un parent donné */
+/*! \brief Renvoie le nombre de ligne pour un parent donnÃ© */
 int _SwConfigurationStreamTreeModel::rowCount ( const QModelIndex & parent ) const {
     _Item * item;
 
@@ -111,7 +111,7 @@ int _SwConfigurationStreamTreeModel::rowCount ( const QModelIndex & parent ) con
     item=(_Item *)parent.internalPointer();
     return item->_childs.count();
 }
-/*! \brief Renvoie les données d'entete */
+/*! \brief Renvoie les donnÃ©es d'entete */
 QVariant _SwConfigurationStreamTreeModel::headerData ( int section, Qt::Orientation orientation, int role) const {
     if (role == Qt::DisplayRole) {
         switch(section) {
@@ -124,7 +124,7 @@ QVariant _SwConfigurationStreamTreeModel::headerData ( int section, Qt::Orientat
     }
     return QVariant();
 }
-/*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
+/*! \brief Renvoie les donnÃ©es stockÃ©es sous un certain role pour un item nommÃ© index */
 QVariant _SwConfigurationStreamTreeModel::data ( const QModelIndex & index, int role ) const{
     _Item * item;
      if (!index.isValid())
@@ -153,7 +153,7 @@ QVariant _SwConfigurationStreamTreeModel::data ( const QModelIndex & index, int 
     }
     return QVariant();
 }
-/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donné*/
+/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donnÃ©*/
 QModelIndex _SwConfigurationStreamTreeModel::index ( int row, int column, const QModelIndex & parent  ) const{
     _Item * pitem;
 
@@ -163,7 +163,7 @@ QModelIndex _SwConfigurationStreamTreeModel::index ( int row, int column, const 
     pitem=(_Item *)parent.internalPointer();
     return createIndex(row,column,(void *)pitem->_childs[row]);
 }
-/*! \brief Renvoie l'item parent d'un item index donné */
+/*! \brief Renvoie l'item parent d'un item index donnÃ© */
 QModelIndex _SwConfigurationStreamTreeModel::parent ( const QModelIndex & index ) const{
     _Item * item;
     _Item * pitem;
@@ -220,7 +220,7 @@ void _SwConfigurationStreamTreeModel::BuildItems(SwComponent_Class * comp,_Item 
         new _Item(item,comp,IT_OwnerConfigurable,"OwnerConfiguration interface");
     }
     
-    //Creation des neoud propriétés
+    //Creation des neoud propriÃ©tÃ©s
     ISwProperties *  properties_handle=dynamic_cast<ISwProperties *>(comp->QueryService(CG_SW_SERVICE_PROPERTIES));
     if (properties_handle!=NULL) {
         QList<ISwProperty *> properties=properties_handle->GetProperties();

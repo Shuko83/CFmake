@@ -2,7 +2,7 @@
  \file _SwSimpleExecutable.h
  \brief Implementation of the Class _SwSimpleExecutable permettant de tester l'executeur
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 

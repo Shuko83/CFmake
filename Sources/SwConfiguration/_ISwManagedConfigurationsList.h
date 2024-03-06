@@ -17,9 +17,9 @@
   * INCLUDES LOCAUX
   */
 
-#include <_SwManagedConfiguration.h>
-#include <ISwConfigurationEditor.h>
-#include <ISwConfigurationSaver.h>
+#include "_SwManagedConfiguration.h"
+#include "ISwConfigurationEditor.h"
+#include "ISwConfigurationSaver.h"
 #include <QList>
 
 

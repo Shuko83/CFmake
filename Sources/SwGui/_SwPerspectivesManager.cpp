@@ -3,8 +3,8 @@
 @brief Perspectives Manager
 @author F.Bighelli
  */
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwPerspectivesManager.h"
 
 using namespace StreamWork::SwGui;
@@ -41,7 +41,7 @@ _SwPerspectivesManager::~_SwPerspectivesManager()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwPerspectivesManager::InitializeResources() throw( SwException )
 {
     //Creation des service
@@ -106,7 +106,7 @@ void _SwPerspectivesManager::InitializeResources() throw( SwException )
     _perspective_title_property->GetOnChangeSignal().iconnect( *this, &_SwPerspectivesManager::OnPropertyChange );
     
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwPerspectivesManager::OnPropertyChange( ISwProperty * property )
 {
     if( _buttons_stylesheet_property == property )
@@ -172,7 +172,7 @@ void _SwPerspectivesManager::OnPropertyChange( ISwProperty * property )
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwPerspectivesManager::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     QMap<QString, ISwPerspective *>::iterator perspective_it;
@@ -199,7 +199,7 @@ void _SwPerspectivesManager::BeforeInterfaceAvailabilityChange( QString interfac
     }
     
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwPerspectivesManager::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     QMap<QString, ISwPerspective *>::iterator perspective_it;

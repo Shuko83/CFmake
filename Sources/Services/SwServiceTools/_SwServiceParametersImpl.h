@@ -27,7 +27,7 @@ namespace StreamWork
             virtual ~_SwServiceParametersImpl();
             /*! \brief Permet d'enregistrer un parametre avec sa valeur */
             void registerParameter (QString parameter, QString value);            
-            /*! \brief Permet de savoir si un parametre est enregistre et récupérer sa valeur le cas echeant */
+            /*! \brief Permet de savoir si un parametre est enregistre et rÃ©cupÃ©rer sa valeur le cas echeant */
             bool getParameter (QString parameter, QString & value);
 
         private:

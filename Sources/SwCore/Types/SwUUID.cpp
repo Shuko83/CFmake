@@ -6,7 +6,7 @@
 \version 1.0
  */
 
-#include "SwUUID.h"
+#include "Types/SwUUID.h"
 #include <QUuid>
 #include <QStringList>
 #include <QDataStream>

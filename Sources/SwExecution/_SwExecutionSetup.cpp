@@ -14,7 +14,7 @@
 #include <QTreeView>
 #include <QTableView>
 #include <QVBoxLayout>
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include "_SwExecutorStreamTreeModel.h"
 #include "_SwExecutorListEditor.h"
 #include "_SwExecutionSetup.h"

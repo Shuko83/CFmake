@@ -17,9 +17,9 @@
   * INCLUDES LOCAUX
  */
 #include "SwCoreConstantes.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "SwInterfaces_Provider_Class.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
 
 namespace StreamWork 
 {

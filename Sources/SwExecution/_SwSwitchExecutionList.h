@@ -1,7 +1,7 @@
 /**
 * @file _SwSwitchExecutionList.h
 * @brief permet de stocker :
-*       la propriété concernant le nom de la liste d'exe
+*       la propriÃ©tÃ© concernant le nom de la liste d'exe
 *       les noms des listes d'execution et leur index
 *       une map avec le nom de la liste et sa liste de composants executables 
 */
@@ -11,8 +11,8 @@
 
 #include <QMap>
 
-#include <SwEnum.h>
-#include <ISwProperty.h>
+#include "Types/SwEnum.h"
+#include "Properties/ISwProperty.h"
 #include "_SwExecution_Service.h"
 
 using namespace StreamWork::SwCore;

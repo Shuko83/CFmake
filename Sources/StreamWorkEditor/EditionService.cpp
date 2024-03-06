@@ -15,8 +15,8 @@ EditionService::EditionService() {
 EditionService::~EditionService() {
   //TO DO destruction
 }
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void EditionService::Liberate() {
 
 }

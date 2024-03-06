@@ -1,6 +1,6 @@
 /**
 @file PropertiesWidget.cpp
-@brief Widget d'edition des propriétés
+@brief Widget d'edition des propriÃ©tÃ©s
 @author F.Bighelli
  */
 

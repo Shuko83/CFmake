@@ -11,7 +11,7 @@
 /*
 * INCLUDES LOCAUX
 */
-#include "SwDouble.h"
+#include "Types/SwDouble.h"
 #include "SwGuiConstantes.h"
 /*
 * INCLUDES GLOBAUX

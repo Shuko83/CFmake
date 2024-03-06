@@ -1,17 +1,17 @@
 /*!
  \file SwPluginFactory_Class.h
  \brief Implementation of class SwPluginFactory_Class
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 
  \note
-    Toute instance de SwPluginFactory_Class est crée via la methode exporté de la librairie dynamique
+    Toute instance de SwPluginFactory_Class est crÃ©e via la methode exportÃ© de la librairie dynamique
  \code   
     extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();
  \endcode
  \note
-    Une fois l'instance crée la vie du plugin usine ressemble a ceci
+    Une fois l'instance crÃ©e la vie du plugin usine ressemble a ceci
  \code
     //Initialisation
     my_plugin_factory->SetPath(path);
@@ -40,9 +40,9 @@
 /*
   * INCLUDES LOCAUX
   */
-#include "ISwPluginFactory.h"
-#include "ISwPluginOverview.h"
-#include "ISwServicesManager_Listener.h"
+#include "Main/Plugin/ISwPluginFactory.h"
+#include "Main/Plugin/ISwPluginOverview.h"
+#include "Main/Services/Management/ISwServicesManager_Listener.h"
 
 namespace StreamWork
 {
@@ -132,13 +132,13 @@ namespace StreamWork
             QIcon GetComponentIcon(QString component_name) const throw(SwException);
             /*! \brief Creation d'un composant */
             SwComponent_Class * CreateComponent(QString component_name)  throw(SwException);
-            /*! \brief Acces au modèle liste */
+            /*! \brief Acces au modÃ¨le liste */
             QAbstractListModel * GetModelList();
             /*! \brief Acces a la liste des noms de tous les composants */
             QSet<SwUUID> GetDataList();
             /*! \brief Acces a la multimap des controlleyr */
             QMultiMap<int,QString> & GetControllersMap();
-            /*! \brief Acces au nom du type d'une donnée definie par son id */
+            /*! \brief Acces au nom du type d'une donnÃ©e definie par son id */
             QString GetDataTypeNameFromDataTypeId(const SwUUID & id);
             /*! \brief Creation d'une data */
             SwData_Class * CreateData(const SwUUID & id) throw(SwException);
@@ -160,7 +160,7 @@ namespace StreamWork
             QMimeData * mimeData(const QModelIndexList &indexes) const;
             /*! \brief Renvoie le nombre de lignes */
             int rowCount(const QModelIndex &parent = QModelIndex()) const;
-            /*! \brief Renvoie la donnée correspondante*/
+            /*! \brief Renvoie la donnÃ©e correspondante*/
             QVariant data(const QModelIndex &index, int role) const;
         };
         /*! \brief type definissant la methode d'acces au plugin */

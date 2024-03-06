@@ -1,13 +1,13 @@
 /*!
  \file _SwGuiCompActionProvider.cpp
- \brief Implementation of the Class _SwGuiCompActionProvider permettant de générer des QAction
+ \brief Implementation of the Class _SwGuiCompActionProvider permettant de gÃ©nÃ©rer des QAction
  \version 1.0
  \date 01/09/2013 2:00
  \author AAY
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompActionProvider.h"
 #include <QMessageBox>
 #include "SwQActionAdapter.h"

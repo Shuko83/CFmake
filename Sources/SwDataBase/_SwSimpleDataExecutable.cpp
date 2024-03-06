@@ -1,16 +1,16 @@
 /*!
  \file _SwSimpleDataExecutable.cpp
- \brief Implementation of the Class _SwSimpleDataExecutable permettant de tester l'executeur l'executeur et l'echange de données
+ \brief Implementation of the Class _SwSimpleDataExecutable permettant de tester l'executeur l'executeur et l'echange de donnÃ©es
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 #include <QSet>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwSimpleDataExecutable.h"
 #include "SwDataBasicBuffer_Class.h"
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -25,7 +25,7 @@ _SwSimpleDataExecutable::~_SwSimpleDataExecutable(){
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwSimpleDataExecutable::InitializeResources() throw(SwException) {
     //Enregistrement des services
     this->RegisterService(this);
@@ -57,8 +57,8 @@ void _SwSimpleDataExecutable::Stop(double current_time){
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------            
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwSimpleDataExecutable::Liberate(){
 	//Rien a faire
 }             

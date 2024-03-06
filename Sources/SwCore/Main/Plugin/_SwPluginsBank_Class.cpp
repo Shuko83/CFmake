@@ -1,7 +1,7 @@
 /*!
  \file _SwPluginsBank_Class.cpp
  \brief Implementation of the class _SwPluginsBank_Class
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -23,12 +23,12 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-#include "_SwPluginsBank_Class.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
-#include "SwData_Class.h"
-#include "_SwTreeItem.h"
-#include "SwProtectedPluginFactory_Class.h"
+#include "Main/Plugin/_SwPluginsBank_Class.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Component/Pin/SwData_Class.h"
+#include "Component/Base/_SwTreeItem.h"
+#include "Main/Plugin/SwProtectedPluginFactory_Class.h"
 #include "cryptlib.h"
 #include "rsa.h"
 #include "hex.h"
@@ -50,7 +50,7 @@
 
 using namespace StreamWork::SwCore;
 
-/*! \brief list des popups déjà popé pour une DLL pour éviter le flood */
+/*! \brief list des popups dÃ©jÃ  popÃ© pour une DLL pour Ã©viter le flood */
 static QList<QString> _msgBoxAllReadyPopup;
 
 static std::string private_key = "30820274020100300D06092A864886F70D01010105000482025E3082025A02010002818100A8B3838DAE1FC7F9F33C643BBF5A3B5B2D3E1A7C94319BD00353B8538CE6F38503B5AD74EBAF5D6BB80870ECD1D1C79BD1E735E70BD02B76BBB06184D3CA4024D87433C49006E1D9EA568F08468F990E8E9D66D3E875D9711B6A30C7EA311871DF77FD503335EDFDB1CF9B58BB8BE8855BA63162B4EDCC3EDD5CBCA5904B0F470201110281800881858EAC467157E58A9309775CC04DBD70D8762596F03135F302D709416D15C3F3A5C9A8ECE0238C818050C7E3DABC8FF62523503137F91438388C1348958500B2000F86410E31C934803312DAA1288A3869FFC47B5216904CD9DF2A1BBC0821B9C708EBEDB8EACDC67F1DCFACFBA5EB51F1F0443B2EB759696BFA4B932151024100C74A47926015FC6109568C552CCE79B80C7E35DEABAA3ACB960C429E2D5DA52E28CC447F725DDD60005943ECBC9F6814D626FFC605518C6FCF9080166D92AA4F024100D8B4EAFE493BF69D75196968CE7BA307CCC04FF9D93DC290ACBF0D0A4F02B74D19C7229FCEED3D176AEAD39CBD5B016B1FA5F32A1106769AA076B4559D27A5890241008CACE73A25B52A9ED96A44F0D4558318814A07E8792CDE355ADB7A51896F476BE0903059F660600787C68A4CC16176A54BDF4B225E1B7230CEC05A6A2F3A5A1902404C7C16B419D8EDA0FC271624FD950C5D1B16B2D0A706BD2400BBE67C1BE2D748637375A1D08FF771AD43D23751E3E2620B2B82FFC9C60BBE1A843FA5BEFEEF2102400F9F8E497279C4FEDF35939C6C53CAB9F713677A703A56CE3959D876AC260FE0F6D9F8E3FA0B90AF4313926280E6BE31FCD8924C0394D407ACADBA3779E6EA69";
@@ -285,7 +285,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 			real_file+="/";real_file+=list_files[j];
 			QFileInfo fileInfo(real_file);
 			QString libPath = fileInfo.absoluteFilePath();
-			//On recherche le point d'entrée du plugin
+			//On recherche le point d'entrÃ©e du plugin
 			QLibrary lib(libPath);
 #ifndef QT_NO_DEBUG
 			Tf_getPluginEntry plugin_entry = (Tf_getPluginEntry)lib.resolve("GetPluginInterfaceD");
@@ -297,7 +297,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 			Tf_getPluginEntry plugin_entry=(Tf_getPluginEntry)lib.resolve("GetPluginInterface");
 #endif
 			if (plugin_entry!=NULL) {
-				//Si trouvé extraction du plugin
+				//Si trouvÃ© extraction du plugin
 				SwPluginFactory_Class * plugin=plugin_entry();
 
 				// Check if plugin compilation date is older than the licence
@@ -337,7 +337,7 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 				//Enregistrement des data types
 				set_of_data=plugin->GetDataList();
 				for (itd=set_of_data.begin();itd!=set_of_data.end();itd++) {
-					//Si un type de données de même nom n'est pas enregistrer
+					//Si un type de donnÃ©es de mÃªme nom n'est pas enregistrer
 					if (_data_to_factory.find(*itd)==_data_to_factory.end()) {
 						//info
 						if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("\t\tRegistering data type id %1\n").arg(itd->toQString()));
@@ -469,14 +469,14 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 
 	try
 	{
-		// Génération du signer a partir de la clef privé
+		// GÃ©nÃ©ration du signer a partir de la clef privÃ©
 		std::string privateKeyBin;
 		CryptoPP::StringSource stringSourcePrivateKey(private_key, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(privateKeyBin)));
 		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PrivateKey privKey;
 		privKey.BERDecode(CryptoPP::StringStore(privateKeyBin).Ref());
 		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Signer priv(privKey);
 
-		// génération de la signature
+		// gÃ©nÃ©ration de la signature
 		CryptoPP::AutoSeededRandomPool rng;
 		byte *signature = new byte[priv.MaxSignatureLength()];
 		size_t messageSize = priv.SignMessage(rng, (const byte*)data.toUtf8().constData(), data.toUtf8().size(), signature);
@@ -540,14 +540,14 @@ void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
 	}
 
 }
-/*! \brief Acces a QMap des paths (le champs bool suivant indique s'il doivent etre enregistré
+/*! \brief Acces a QMap des paths (le champs bool suivant indique s'il doivent etre enregistrÃ©
 \return la QMap des paths*/
 QMap<QString,bool> _SwPluginsBank_Class::GetPathList(){
 	return _paths;
 }
 /*! \brief Acces a liste des plugins usine par path
 \param[in] path path conteneur des plugins
-\return la liste des plugins associés
+\return la liste des plugins associÃ©s
 \exception SwException Unable to return plugin list of unknown path
 */
 QSet<ISwPluginFactory *> & _SwPluginsBank_Class::GetPluginList(QString path)  throw(SwException){
@@ -564,7 +564,7 @@ QSet<ISwPluginFactory *> & _SwPluginsBank_Class::GetPluginList(QString path)  th
 QMap<QString,SwPluginFactory_Class *> * _SwPluginsBank_Class::GetAllPlugins() {
 	return & _plugin_by_name;
 }
-/*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donné*/
+/*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donnÃ©*/
 QList< QPair<QString,QString> > _SwPluginsBank_Class::GetControllersListForType(int type_identifier) {
 	return _controllers.values(type_identifier);
 }
@@ -652,7 +652,7 @@ void _SwPluginsBank_Class::RereadPluginContent(SwPluginFactory_Class * plugin) t
 	RebuildModel();
 }
 
-/*! \brief Acces au modèle pour l'affichage*/
+/*! \brief Acces au modÃ¨le pour l'affichage*/
 QAbstractItemModel * _SwPluginsBank_Class::GetModel() {
 	return this;
 }
@@ -666,7 +666,7 @@ QSet<SwUUID> _SwPluginsBank_Class::GetDataList() {
 	}
 	return liste;
 }
-/*! \brief Acces au nom du type d'une donnée definie par son id */
+/*! \brief Acces au nom du type d'une donnÃ©e definie par son id */
 QString _SwPluginsBank_Class::GetDataTypeNameFromDataTypeId(const SwUUID & id){
 	QMap<SwUUID,SwPluginFactory_Class *>::const_iterator it;
 
@@ -883,7 +883,7 @@ void _SwPluginsBank_Class::hideDisplayUpdate() {
 //---------------------------------------------------------------------------------
 void _SwPluginsBank_Class::addPluginToModel(QString name, TL_plugins& plugins)
 {
-	if (!_tree_items) //Si model non initialisé, initialisation du model
+	if (!_tree_items) //Si model non initialisÃ©, initialisation du model
 	{
 		RebuildModel();
 	}
@@ -940,7 +940,7 @@ void _SwPluginsBank_Class::RebuildModel() {
 		QList<QVariant> buildData;
 		buildData << "Paths/Plugins/Components" << "Details";
 		_tree_items = new _SwTreeItem(buildData, QIcon());
-		//Remplissage des données
+		//Remplissage des donnÃ©es
 		for (jt = _plugins_paths.begin(); jt != _plugins_paths.end(); jt++) {
 			addPluginToModel(jt.key(), jt.value());
 		}

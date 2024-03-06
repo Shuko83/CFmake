@@ -6,9 +6,9 @@
 \version 1.0
  */
 
-#include "SwFileLogRecorder_Class.h"
-#include "SwException.h"
-#include "SwMacros.h"
+#include "Tools/Log/SwFileLogRecorder_Class.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwCore;
 

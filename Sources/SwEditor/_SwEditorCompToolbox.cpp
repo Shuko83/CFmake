@@ -2,12 +2,12 @@
  \file _SwEditorCompToolbox.cpp
  \brief Implementation of the Class _SwEditorCompToolbox generant un boite a outils contenant la liste des composants
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 #include <QListView>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwEditorCompToolbox.h"
 #include "PluginsListModel.h"
 #include "ComponentListModel.h"
@@ -35,7 +35,7 @@ _SwEditorCompToolbox::~_SwEditorCompToolbox()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwEditorCompToolbox::InitializeResources() throw( SwException )
 {
     //Creation des service

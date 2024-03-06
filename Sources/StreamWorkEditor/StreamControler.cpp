@@ -7,14 +7,14 @@
 #include <QDomElement>
 #include <QMessageBox>
 
-#include <SwApplication.h>
-#include <SwMacros.h>
-#include <SwSaver_Class.h>
-#include <SwLoader_Class.h>
-#include <ISwInterfaces_Provider.h>
-#include <ISwInterfaces_Consumer.h>
-#include <ISwPins_Manager.h>
-#include <SwPin.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Main/Serialization/SwSaver_Class.h"
+#include "Main/Serialization/SwLoader_Class.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Services/ISwPins_Manager.h"
+#include "Component/Pin/SwPin.h"
 
 #include "StreamControler.h"
 #include "MenuManager.h"
@@ -24,7 +24,7 @@
 #include "InterestArea.h"
 #include "ISwModelHostModifier.h"
 #include "ISwModelService.h"
-#include "SwSaver_Class.h"
+#include "Main/Serialization/SwSaver_Class.h"
 #include "ModelCreatorHelper.h"
 #include "cryptlib.h"
 #include "rsa.h"
@@ -79,8 +79,8 @@ namespace
 			name = cgitem->getComponent()->GetName();
 		
 		// On place les IA en premier puis les ComponentGraphicItem ;
-		// Chaque catégorie est trié avec son nom ;
-		// S'il y a des doublons (ce qui a peu de chance d'arriver, les noms des Composants devant êtr euniques),
+		// Chaque catÃ©gorie est triÃ© avec son nom ;
+		// S'il y a des doublons (ce qui a peu de chance d'arriver, les noms des Composants devant Ãªtr euniques),
 		// on se sert de la position et de la taille pour les distinguer.
 		return std::make_tuple(!ia, !cgitem, name, item->x(), item->y());		
 	}
@@ -324,14 +324,14 @@ QString StreamControler::getStreamSignature(QString stream)
 {
 	try
 	{
-		// Génération du signer a partir de la clef privé
+		// GÃ©nÃ©ration du signer a partir de la clef privÃ©
 		std::string privateKeyBin;
 		CryptoPP::StringSource stringSourceKey(private_key, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(privateKeyBin)));
 		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PrivateKey privKey;
 		privKey.BERDecode(CryptoPP::StringStore(privateKeyBin).Ref());
 		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Signer priv(privKey);
 
-		// génération de la signature
+		// gÃ©nÃ©ration de la signature
 		CryptoPP::AutoSeededRandomPool rng;
 		byte *signature = new byte[priv.MaxSignatureLength()];
 		size_t size = priv.SignMessage(rng, reinterpret_cast<const byte*>(stream.toUtf8().constData()), stream.toUtf8().size(), signature);
@@ -585,7 +585,7 @@ void StreamControler::onLinkConnectors(ConnectorGraphicItem * src, ConnectorGrap
 		}
 		catch ( SwException & /*se*/ )
 		{
-			//L'application a levé une exception
+			//L'application a levÃ© une exception
 			//QMessageBox::warning(0,QString("Warning... "),QString(se.what()),QMessageBox::Abort,QMessageBox::NoButton,QMessageBox::NoButton);
 		}
 	}
@@ -603,7 +603,7 @@ void StreamControler::onLinkConnectors(ConnectorGraphicItem * src, ConnectorGrap
 			}
 			catch ( SwException & se )
 			{
-				//L'application a levé une exception
+				//L'application a levÃ© une exception
 				QMessageBox::warning(0, QString("Warning... "), QString(se.what()), QMessageBox::Abort, QMessageBox::NoButton, QMessageBox::NoButton);
 			}
 		}
@@ -1034,7 +1034,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 	QList<ModelCreatorHelper::ConsumerKey*> toremove;
 	for (SwComponent_Class * comp : components)
 	{
-		//pour chaque interface produite linké a un composant exterieur a la selection
+		//pour chaque interface produite linkÃ© a un composant exterieur a la selection
 		//On la rajoute au model host
 		ISwInterfaces_Provider *provider_handle = dynamic_cast<ISwInterfaces_Provider *>(comp->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
 		if ( provider_handle != NULL )
@@ -1064,7 +1064,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 			}
 		}
 
-		//pour chaque interface consommé linké a un composant exterieur a la selection
+		//pour chaque interface consommÃ© linkÃ© a un composant exterieur a la selection
 		//On la rajoute au model host
 		ISwInterfaces_Consumer *consumer_handle = dynamic_cast<ISwInterfaces_Consumer *>(comp->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
 		if ( consumer_handle != NULL )
@@ -1096,7 +1096,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 			}
 		}
 
-		//pour chaque connecteur consommé linké a un composant exterieur a la selection
+		//pour chaque connecteur consommÃ© linkÃ© a un composant exterieur a la selection
 		//On la rajoute au model host
 		ISwPins_Manager *pins_manager_handle = dynamic_cast<ISwPins_Manager *>(comp->QueryService(CG_SW_SERVICE_PINS_MANAGER));
 		if ( pins_manager_handle != NULL )
@@ -1183,7 +1183,7 @@ void StreamControler::createModelFromSelection(QList<SwComponent_Class *> & comp
 }
 
 //--------------------------------------------------------------------------
-// Gestion persistence des données
+// Gestion persistence des donnÃ©es
 //--------------------------------------------------------------------------
 #define CL_IA_NODE "IA"
 #define CL_IA_ATT_X "x"
@@ -1265,7 +1265,7 @@ void StreamControler::saveVisualDataFromSelection(QXmlStreamWriter & writer, QLi
 		ComponentGraphicItem * cgitem = dynamic_cast<ComponentGraphicItem *>(item);
 		if (cgitem != 0 && components.indexOf(cgitem->getComponent()) != -1)
 		{
-			// Redondance mais pour sécurité
+			// Redondance mais pour sÃ©curitÃ©
 			QPointF pt = item->scenePos();
 			item->setParentItem(NULL);
 			item->setPos(pt);
@@ -1639,7 +1639,7 @@ void StreamControler::buildLinks()
 					}
 					if ( !interface_consumer.isNull() && pt_provider != 0 && citem->getModelType() == model_type )
 					{
-						//Interface produite trouvé -> recuperation du connecteur associé
+						//Interface produite trouvÃ© -> recuperation du connecteur associÃ©
 						SwComponent_Class * pcomponent = pt_provider->GetHostComponent();
 						QMap<StreamWork::SwCore::SwComponent_Class *, ComponentGraphicItem *>::iterator itCgItem = _mapCompToItem.find(pcomponent);
 						if (itCgItem != _mapCompToItem.end() )

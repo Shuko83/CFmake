@@ -20,9 +20,9 @@ namespace StreamWork {
         */
         class ISwRecordDataCodecFactory {
         public:
-            /* @brief nom du type de données generé */
+            /* @brief nom du type de donnÃ©es generÃ© */
             virtual QString generatedDataType()=0;
-            /* @brief nom des types de données pris en charge */
+            /* @brief nom des types de donnÃ©es pris en charge */
             virtual QStringList supportedDataTypes()=0;
             /* @brief construction d'un codec */
             virtual ISwRecordDataCodec * buildCodec()=0;

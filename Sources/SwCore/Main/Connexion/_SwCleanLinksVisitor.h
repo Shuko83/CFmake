@@ -7,7 +7,7 @@
 #ifndef _STREAMWORK_SWCORE__SWCLEANLINKSVISITOR_H
 #define _STREAMWORK_SWCORE__SWCLEANLINKSVISITOR_H
 
-#include "ISwVisitor.h"
+#include "Component/Interfaces/ISwVisitor.h"
 
 namespace StreamWork {
 

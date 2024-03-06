@@ -3,7 +3,7 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-#include "SwProtectedPluginFactory_Class.h"
+#include "Main/Plugin/SwProtectedPluginFactory_Class.h"
 
 #include "cryptlib.h"
 #include "rsa.h"

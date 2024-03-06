@@ -22,8 +22,8 @@
 #include "_SwEditorPinGraphicItemManager.h"
 #include "_SwEditorSelection_Class.h"
 #include "_SwEditorGraphicItem.h"
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <math.h>
 #include "_SwEditorGIMenu.h"
 
@@ -326,8 +326,8 @@ void _SwEditorGraphicItem::AdjustParentItemSize() {
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwEditorGraphicItem::Liberate() {
     if (_interface_managers==NULL)
         return;
@@ -599,7 +599,7 @@ void _SwEditorGraphicItem::OnComponentNameChange() {
 //---------------------------------------------------------------------
 // Sur mise a jour
 //---------------------------------------------------------------------
-/*! \brief methode appelée par l'observable*/
+/*! \brief methode appelÃ©e par l'observable*/
 void _SwEditorGraphicItem::Update(StreamWork::SwCore::ISwObservable* sender) {
     _SwEditorSelection_Class * selection;
 

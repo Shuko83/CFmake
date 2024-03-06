@@ -1,7 +1,7 @@
 /*!
  \file _SwExecutionPluginFactory_Class.h
  \brief Factory d'execution
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -18,7 +18,7 @@
   * INCLUDES LOCAUX
   */
 //#include "SwGuiConstantes.h"
-#include <SwProtectedPluginFactory_Class.h>
+#include "Main/Plugin/SwProtectedPluginFactory_Class.h"
 
 using namespace StreamWork::SwCore;
 

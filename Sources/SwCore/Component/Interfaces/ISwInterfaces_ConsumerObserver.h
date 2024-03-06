@@ -15,7 +15,7 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "SwComponent_Class.h"
+#include "Component/Base/SwComponent_Class.h"
 
 namespace StreamWork 
 {
@@ -29,9 +29,9 @@ namespace StreamWork
         */
         class ISwInterfaces_ConsumerObserver  {
         public:
-	        /*! \brief Avant changement de la disponibilité de l'interface */
+	        /*! \brief Avant changement de la disponibilitÃ© de l'interface */
 	        virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host)=0;            
-	        /*! \brief Apres changement de la disponibilité de l'interface */
+	        /*! \brief Apres changement de la disponibilitÃ© de l'interface */
 	        virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host)=0;            
         };
     }

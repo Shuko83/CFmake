@@ -18,8 +18,8 @@
   */
 
 #include <QList.h>
-#include <_SwManagedConfiguration.h>
-#include <_ISwManagedConfigurationsList.h>
+#include "_SwManagedConfiguration.h"
+#include "_ISwManagedConfigurationsList.h"
 
 using namespace StreamWork::SwConfiguration;
 using namespace StreamWork::SwCore;

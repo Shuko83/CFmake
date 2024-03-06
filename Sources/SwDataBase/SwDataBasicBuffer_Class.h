@@ -1,8 +1,8 @@
 /*!
  \file SwDataBasicBuffer_Class.h
- \brief classe representant les données echangées sous forme de buffer
+ \brief classe representant les donnÃ©es echangÃ©es sous forme de buffer
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -16,17 +16,17 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwData_Class.h>
-#include <SwException.h>
-#include <SwRefPtr.h>
+#include "Component/Pin/SwData_Class.h"
+#include "Tools/Exception/SwException.h"
+#include "SwRef/SwRefPtr.h"
 #include "SwDatasBaseConstantes.h"
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 
 #define CG_SW_DATA_BASIC_BUFFER_NAME "BasicBuffer"
 SWDATASBASE_DECLARE_UUID(CG_SW_DATA_BASIC_BUFFER_ID)
 /*!
  \class SwDataBasicBuffer_Class 
- \brief classe representant les données echangées sous forme de buffer
+ \brief classe representant les donnÃ©es echangÃ©es sous forme de buffer
  Commentaire a faire
 */
 class SWDATASBASE_EXPORT SwDataBasicBuffer_Class : public  StreamWork::SwCore::SwData_Class 
@@ -53,10 +53,10 @@ public:
 	//---------------------------------------------------------------------
 	// Identification
 	//---------------------------------------------------------------------
-	/*! \brief Identification de la donnée par chaine de caractere
+	/*! \brief Identification de la donnÃ©e par chaine de caractere
 	A surcharger*/
 	virtual QString GetType();
-	/*! \brief Identification de la donnée par valeur
+	/*! \brief Identification de la donnÃ©e par valeur
 	A surcharger*/
 	virtual StreamWork::SwCore::SwUUID GetTypeId();
 	//---------------------------------------------------------------------

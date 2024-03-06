@@ -2,7 +2,7 @@
  \file _SwEditorApplicativeCore.h
  \brief Coeur de traitement de l'editeur
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -17,10 +17,10 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <ISwComponentProvider.h>
-#include <ISwCreationPostProcessor.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Interfaces/ISwComponentProvider.h"
+#include "Component/Interfaces/ISwCreationPostProcessor.h"
 #include "ISwEditorStreamsManager.h"
 #include "ISwEditorStreamOperations.h"
 #include "_SwEditorNavigator_Class.h"
@@ -78,13 +78,13 @@ namespace StreamWork
                 //-------------------------------------------------------------
                 // Consultation de la selection
                 //-------------------------------------------------------------
-                /*! \brief Acces au nombre d'elements selectionnée*/
+                /*! \brief Acces au nombre d'elements selectionnÃ©e*/
 			    virtual int GetSelectedComponentNumber();
-                /*! \brief Acces a un element selectionné*/
+                /*! \brief Acces a un element selectionnÃ©*/
                 virtual SwCore::SwComponent_Class * GetSelectedComponent(int index);
-                /*! \brief Acces au nombre d'elements non selectionnée*/
+                /*! \brief Acces au nombre d'elements non selectionnÃ©e*/
 			    virtual int GetUnselectedComponentNumber();
-                /*! \brief Acces a un element non selectionné*/
+                /*! \brief Acces a un element non selectionnÃ©*/
                 virtual SwCore::SwComponent_Class * GetUnselectedComponent(int index);
                 /*! \brief Permet de savoir si un composant est dans la selection*/
                 virtual bool IsInSelection(SwCore::SwComponent_Class * component);
@@ -116,7 +116,7 @@ namespace StreamWork
                //-------------------------------------------------------------
                 // ISwObserver
                 //-------------------------------------------------------------
-                /*! \brief methode appelée par l'observable*/
+                /*! \brief methode appelÃ©e par l'observable*/
 				virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
             };
             /* \brief classe permanente de navigation (decorateur)*/
@@ -162,7 +162,7 @@ namespace StreamWork
                 //-------------------------------------------------------------
                 // ISwObserver
                 //-------------------------------------------------------------
-                /*! \brief methode appelée par l'observable*/
+                /*! \brief methode appelÃ©e par l'observable*/
 				virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
             };
         protected:
@@ -202,7 +202,7 @@ namespace StreamWork
             virtual ~_SwEditorApplicativeCore();
 
             /*! \brief Initialisation des ressources
-                \note tous les services du composants doivent être déclarés dans cette methodes*/
+                \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
             virtual void InitializeResources() throw(SwCore::SwException);
             /*! \brief Enregistrement du postprocessing suite a creation de composant*/
             void RegisterPostProcessing();
@@ -217,13 +217,13 @@ namespace StreamWork
             //-------------------------------------------------------------
             /*! \brief Quitter l'application*/
 			virtual void QuitEditor();
-            /*! \brief Crée un nouveau stream vide*/
+            /*! \brief CrÃ©e un nouveau stream vide*/
 	        virtual void NewStream();
             /*! \brief Ouvrir un stream existant*/
 	        virtual void OpenStream();
             /*! \brief Sauvegarde du stream courant */
 	        virtual void SaveStream();
-            /*! \brief Sauvegarde du stream courant sous un nom donné*/
+            /*! \brief Sauvegarde du stream courant sous un nom donnÃ©*/
 	        virtual void SaveStreamAs();
             /*! \brief Fermeture du stream courant*/
 	        virtual void CloseStream();
@@ -255,8 +255,8 @@ namespace StreamWork
             //-------------------------------------------------------------
             // interface ISwCreationPostProcessor
             //-------------------------------------------------------------
-	        /*! \brief methode appelée après la creation d'un composant
-            \param[in] h_comp handle sur le composant qui vient d'etre créé*/
+	        /*! \brief methode appelÃ©e aprÃ¨s la creation d'un composant
+            \param[in] h_comp handle sur le composant qui vient d'etre crÃ©Ã©*/
 	        void AfterCreatePostProcess(SwComponent_Class *h_comp);
             //-------------------------------------------------------------
             // interface ISwComponentProvider

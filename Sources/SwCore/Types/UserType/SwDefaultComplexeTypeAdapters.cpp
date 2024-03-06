@@ -7,7 +7,7 @@
  */
 
  
-#include "SwDefaultComplexeTypeAdapters.h"
+#include "Types/UserType/SwDefaultComplexeTypeAdapters.h"
  
 using namespace StreamWork::SwCore;
  
@@ -32,7 +32,7 @@ void SwDefaultComplexeTypeAdapters::Initialize(ISwProperty * complexe_property) 
     _complexe_property=complexe_property;
 	CreateSimpleTypeAdaptersList(_complexe_property);
 }
-/*! \brief Acces aux adapteurs simples (la liste est vide si le complexe adapter n'est pas attaché a une propriété*/
+/*! \brief Acces aux adapteurs simples (la liste est vide si le complexe adapter n'est pas attachÃ© a une propriÃ©tÃ©*/
 QList<ISwSimpleTypeAdapter *> * SwDefaultComplexeTypeAdapters::GetAdapters() {
     if (_complexe_property==NULL)
         return NULL;

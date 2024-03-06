@@ -7,7 +7,7 @@
 #ifndef _STREAMWORK_SWCORE_ISWSERVICEPARAMETERS_H
 #define _STREAMWORK_SWCORE_ISWSERVICEPARAMETERS_H
 
-#include "ISwService.h"
+#include "Main/Services/Management/ISwService.h"
 
 //Nom du service
 #define CG_SW_SERVICE_PARAMETER_MANAGER "ServiceParameters"
@@ -27,21 +27,21 @@ namespace StreamWork
         public:
             /*! \brief Permet d'enregistrer un parametre avec sa valeur */
             virtual void registerParameter (QString parameter, QString value) = 0;
-            /*! \brief Permet de savoir si un parametre est enregistre et récupérer sa valeur le cas echeant */
+            /*! \brief Permet de savoir si un parametre est enregistre et rÃ©cupÃ©rer sa valeur le cas echeant */
             virtual bool getParameter (QString parameter, QString & value) = 0;
             
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------
-            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-            lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+            lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
             virtual void Liberate(){/*Rien a faire*/}   
             /*! \brief Renvoie le nom du service
             \return le nom du service */
             QString GetServiceName(){return QString(CG_SW_SERVICE_PARAMETER_MANAGER); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
             \return le nom du service reel (le nom de l'interface)
-            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+            \note au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()*/
             QString GetServiceRealName() {return QString(typeid(*this).name());}    
         };
     }

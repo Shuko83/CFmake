@@ -14,9 +14,9 @@
 #include "ComponentGraphicItem.h"
 #include "PropertiesWidget.h"
 #include "IAnchorable.h"
-#include <SwComponent_Class.h>
-#include <ISwInterfaces_ServicesListener.h>
-#include <ISwPins_ManagerListener.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Main/Connexion/ISwInterfaces_ServicesListener.h"
+#include "Main/Connexion/ISwPins_ManagerListener.h"
 #include "ISelectionObserver.h"
 #include "IStreamControlerObserver.h"
 /**
@@ -59,14 +59,14 @@ public:
     // Evenements de la vue 
     //------------------------------------------------------------------------------
 public:
-    /** @brief demande de menu contextuel a une position donnée */
+    /** @brief demande de menu contextuel a une position donnÃ©e */
     QMenu * getContextualMenu(const QPointF & p);
-    /** @brief ajout d'un composant a une position donné */
+    /** @brief ajout d'un composant a une position donnÃ© */
     void addComponent(const QString & pluginName, const QString & name,const QPointF & p);
     //------------------------------------------------------------------------------
     // Evenements Composant
     //------------------------------------------------------------------------------
-    /** @brief demande de visualisation des propriétés */
+    /** @brief demande de visualisation des propriÃ©tÃ©s */
     void showProperties();
 
     //------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ public slots:
     /** @brief sur sceneRectChanged de la scene */
     void onSceneRectChanged(const QRectF & rect);
 public:
-    /** @brief Renvoie le dernier composant ajouté */
+    /** @brief Renvoie le dernier composant ajoutÃ© */
     ComponentGraphicItem * getLastAddedComponent();
     //--------------------------------------------------------------------------
     // Evenements du modele 
@@ -139,18 +139,18 @@ private:
     void recursiveDisconnectToControler(StreamWork::SwCore::SwComponent_Class * component);
 
     //--------------------------------------------------------------------------
-    // Gestion persistence des données
+    // Gestion persistence des donnÃ©es
     //--------------------------------------------------------------------------
-    /** @brief sauvegarde des données visuelles */
+    /** @brief sauvegarde des donnÃ©es visuelles */
     void saveVisualData(QDomDocument & doc);
 	void saveVisualData(QXmlStreamWriter & writer);
-	/** @brief sauvegarde des données visuelles from selection*/
+	/** @brief sauvegarde des donnÃ©es visuelles from selection*/
 	void saveVisualDataFromSelection(QDomDocument & doc, QList<StreamWork::SwCore::SwComponent_Class *> & components);
 	void saveVisualDataFromSelection(QXmlStreamWriter & writer, QList<StreamWork::SwCore::SwComponent_Class *> & components);
     /** @brief sauvegarde d'un item */
     void saveVisualItem(ComponentGraphicItem * item,QDomDocument & doc,QDomElement &parentNode);
 	void saveVisualItem(ComponentGraphicItem * item, QXmlStreamWriter & writer);
-	/** @brief chargement des données visuelles */
+	/** @brief chargement des donnÃ©es visuelles */
     void loadVisualData(QDomDocument & doc);
     /** @brief chargement d'un item */
     void loadVisualItem(QDomDocument & doc,QDomElement &node,StreamWork::SwCore::SwComponent_Class * parentComponent,QGraphicsItem * parentItem);
@@ -169,7 +169,7 @@ private:
 	//--------------------------------------------------------------------------
 	// Signature
 	//--------------------------------------------------------------------------
-	/** @brief Récupère la signature du stream */
+	/** @brief RÃ©cupÃ¨re la signature du stream */
 	static QString getStreamSignature(QString stream);
 
 	static void writeToken(const QString & streamDesc, QXmlStreamWriter& writer, QString tokenName, bool checkIsWhiteSpace = false);
@@ -187,7 +187,7 @@ private:
     QPointF _creationPosition;
     /** @brief Map de composant vers GraphicsItem */
     QMap<StreamWork::SwCore::SwComponent_Class *,ComponentGraphicItem *> _mapCompToItem;
-    /** @brief Widget de propriété */
+    /** @brief Widget de propriÃ©tÃ© */
     PropertiesWidget * _propertiesWidget;
     /** @brief gestion des observers de selection */
     QList<ISelectionObserver *> _selectionObservers;

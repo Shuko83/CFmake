@@ -2,7 +2,7 @@
  \file SwEnum.h
  \brief Classe pour la gestion des enumeres
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 
 */
@@ -22,7 +22,7 @@
   * INCLUDES LOCAUX
   */
 #include "SwCoreConstantes.h"
-#include "SwRefPtr.h"
+#include "SwRef/SwRefPtr.h"
 
 namespace StreamWork
 {
@@ -39,7 +39,7 @@ namespace StreamWork
         @ingroup SwCoreGrp
         \note Permet de convertir une propriete Qt enum ou flag en QVariant
         \warning la methode qRegisterMetaType et qRegisterMetaTypeStreamOperators
-        doivent etre appelé si usage de SwEnum dans les signals/slots
+        doivent etre appelÃ© si usage de SwEnum dans les signals/slots
         */
  
         class BUILD_SWCORE SwEnum {
@@ -75,7 +75,7 @@ namespace StreamWork
 
             /*! \brief Acces aux valeurs possible pour l'enumere*/
             const QMap<int,QString> * GetValues() const;
-            /*! \brief isFlag si true alors les valeurs peuvent etre combinées avec un |*/
+            /*! \brief isFlag si true alors les valeurs peuvent etre combinÃ©es avec un |*/
             bool IsFlag() const;
             
             /*! Indique que cet enumere est un flag */
@@ -87,8 +87,8 @@ namespace StreamWork
 
             /*! demande de model */
             SwEnumModel * QueryModel(QObject * parent=0);
-            /*! affectation du contenu du model à l'enumere + indice de selection (cas non flag)
-            Rq:Le modele est fonctionnlement equivalent a l'enumeré*/
+            /*! affectation du contenu du model Ã  l'enumere + indice de selection (cas non flag)
+            Rq:Le modele est fonctionnlement equivalent a l'enumerÃ©*/
             void AffectModel(SwEnumModel * model,int index=-1);
 
         };

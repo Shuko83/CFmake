@@ -20,12 +20,12 @@
   * INCLUDES LOCAUX
  */
 #include "SwCoreConstantes.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "ISwController.h"
-#include "LibIndeSig.h"
-#include "ISwProperty.h"
-#include "ISwFinalizer.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Component/Services/ISwController.h"
+#include "Tools/Signal/LibIndeSig.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Interfaces/ISwFinalizer.h"
 
 namespace StreamWork
 {

@@ -29,7 +29,7 @@ namespace StreamWork
 		public:
 
 			/*! \brief Renvoie le nombre de page disponible
-			/*	\return un int définissant le nombre de page (0 étant la première)
+			/*	\return un int dÃ©finissant le nombre de page (0 Ã©tant la premiÃ¨re)
 			*/ 
 			virtual int getNbPage()=0;
 
@@ -43,13 +43,13 @@ namespace StreamWork
 			*/
 			virtual int getCurrentIndex()=0;
 
-			/*! \brief Renvoie le nom du widget pour une page donnée
+			/*! \brief Renvoie le nom du widget pour une page donnÃ©e
 			/*  \param l'index de la page contenant le widget
 			/*  \return le nom du widget
 			*/
 			virtual QString getWidgetName(int pageIndex)=0;
 
-			/*! \brief Renvoie l'icon du widget pour une page donnée
+			/*! \brief Renvoie l'icon du widget pour une page donnÃ©e
 			/*  \param l'index de la page contenant le widget
 			/*  \return l'icon du widget
 			*/
@@ -60,7 +60,7 @@ namespace StreamWork
 			*/
 			virtual void registerStackedWidgetObserver(ISwStackedWidget_Observer *o) = 0;
 
-			/*! \brief Permet de désenregistrer un observer
+			/*! \brief Permet de dÃ©senregistrer un observer
 			*! \param pointeur sur l'observer
 			*/
 			virtual void unRegisterStackedWidgetObserver(ISwStackedWidget_Observer *o) = 0;

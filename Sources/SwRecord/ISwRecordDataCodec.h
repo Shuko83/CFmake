@@ -24,10 +24,10 @@ namespace StreamWork {
             virtual void addCodec(ISwRecordDataCodec * codec)=0;
             /* @brief destruction du codec */
             virtual void destroy()=0;
-            /* @brief encodage des données */
+            /* @brief encodage des donnÃ©es */
             virtual void encode(QXmlStreamWriter * writer,void * data)=0;
-            /* @brief decodage des données 
-               @warning si la donnée est reference compté, ajouter une reference avant renvoi */
+            /* @brief decodage des donnÃ©es 
+               @warning si la donnÃ©e est reference comptÃ©, ajouter une reference avant renvoi */
             virtual void * decode(QXmlStreamReader * reader,void * data)=0;
             /* @brief renvoie le nom du header xml */
             virtual QString getXmlName()=0;

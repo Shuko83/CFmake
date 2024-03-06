@@ -1,7 +1,7 @@
 /*!
  \file _SwConfigurationPluginFactory_Class.cpp
  \brief Factory d'execution
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -59,7 +59,7 @@ SwData_Class * _SwConfigurationPluginFactory_Class::CreateInstanceOf(unsigned in
 
 /*! \brief acces a l'icone d'un composant
 \param[in] name nom du composant
-\return l'incone ou icone vide si non trouvé*/
+\return l'incone ou icone vide si non trouvÃ©*/
 QIcon _SwConfigurationPluginFactory_Class::CreateIconOf(QString name) const 
 {
     QIcon ico;

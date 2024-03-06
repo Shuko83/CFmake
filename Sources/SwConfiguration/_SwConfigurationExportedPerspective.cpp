@@ -2,7 +2,7 @@
  \file _SwConfigurationExportedPerspective.cpp
  \brief  Class implementant une entite exportable interface produite
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -39,7 +39,7 @@ void _SwConfigurationExportedPerspective::SpecificBind(){
 void _SwConfigurationExportedPerspective::SpecificUnbind(){
     if (_host_provider==NULL)
         return;
-    //Si l'interface a été crée on la detruit
+    //Si l'interface a Ã©tÃ© crÃ©e on la detruit
     if (_interface_created) {
         OnRemoveInterface(_host_provider,_name);    
     }
@@ -55,7 +55,7 @@ void _SwConfigurationExportedPerspective::SpecificUnbind(){
 /*! \brief Sur ajout d'une nouvelle interface */
 void _SwConfigurationExportedPerspective::OnAddInterface(ISwInterfaces_Service * source,QString interface_name) {
     if (source==(ISwInterfaces_Service *)_host_provider && _name==interface_name) {
-        //Sur creation de l'interface a propager on crée les deux interfaces locales
+        //Sur creation de l'interface a propager on crÃ©e les deux interfaces locales
         //Creation du consommateur interne
         _internal_consumer->RegisterConsumedInterfaceWithType(_exported_name,_host_provider->GetInterfaceType(_name),&_handle);
         //Observation du consommateur interne
@@ -93,14 +93,14 @@ void _SwConfigurationExportedPerspective::OnDisconnectInterface(ISwInterfaces_Se
 //-------------------------------------------------------------------------
 //Interface ISwInterfaces_ConsumerObserver
 //-------------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwConfigurationExportedPerspective::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     if (interface_name==_exported_name &&  _handle!=NULL) {
         //Rendre l'interface non disponible
         //_external_provider->SetInterfaceUnavailable(_exported_name);
     }
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwConfigurationExportedPerspective::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     if (interface_name==_exported_name &&  _handle!=NULL) {
         //Rendre l'interface non disponible

@@ -1,7 +1,7 @@
 /*!
  \file _SwExecutionPluginFactory_Class.h
  \brief Factory d'execution
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author G.Blessas
 */
@@ -17,7 +17,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwPluginFactory_Class.h>
+#include "Main/Plugin/SwPluginFactory_Class.h"
 
 using namespace StreamWork::SwCore;
 

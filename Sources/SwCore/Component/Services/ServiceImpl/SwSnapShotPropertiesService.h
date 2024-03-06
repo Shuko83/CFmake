@@ -7,10 +7,10 @@
 #ifndef _STREAMWORK_SWCORE_SWSNAPSHOTPROPERTIESSERVICE_H
 #define _STREAMWORK_SWCORE_SWSNAPSHOTPROPERTIESSERVICE_H
 
-#include "ISwSnapShotPropertiesService.h"
+#include "Component/Services/ISwSnapShotPropertiesService.h"
 #include "SwCoreConstantes.h"
-#include "ISwProperties.h"
-#include "ISwVisitor.h"
+#include "Component/Services/ISwProperties.h"
+#include "Component/Interfaces/ISwVisitor.h"
 
 namespace StreamWork {
 
@@ -39,8 +39,8 @@ namespace StreamWork {
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------
-            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-            lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+            lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
             void Liberate();             
         private:
             class PropDesc {

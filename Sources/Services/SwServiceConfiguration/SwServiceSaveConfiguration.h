@@ -1,6 +1,6 @@
 /**
   @file : SwServiceSaveConfiguration.h
-  @brief : Service permettant de gérer la sauvegarde de la conf
+  @brief : Service permettant de gÃ©rer la sauvegarde de la conf
   @author : CGD
  */
 
@@ -15,7 +15,7 @@
 
 #include "ISwConfigurationManager.h"
 #include "ISwPropertiesObserver.h"
-#include "ISwProperty.h"
+#include "Properties/ISwProperty.h"
 
 
 namespace StreamWork
@@ -44,13 +44,13 @@ namespace StreamWork
 			bool loadConfigurationFile(QString confName, QString confFileToBeLoaded) override;
 
 			/**
-			 * @brief	: Permet de récupérer tous les ConfCollectors registered
+			 * @brief	: Permet de rÃ©cupÃ©rer tous les ConfCollectors registered
 			 * @Return	: List<QHash<QString, ISwConfCollector*>, liste des pointeurs sur les Prefix/ConfCollectors
 			 */
 			QHash<QString, ISwConfCollector*> getConfCollectors(QString confName) override;
 
 			/**
-			 * @brief	: Permet de récupérer un ConfCollector particulier
+			 * @brief	: Permet de rÃ©cupÃ©rer un ConfCollector particulier
 			 * @Param	: QString, nom du confCollector voulu
 			 * @Param	: QString, prefix du confCollector
 			 * @Return	: ISwConfCollector*, pointeur sur le ConfCollector
@@ -59,37 +59,37 @@ namespace StreamWork
 
 			/**
 			 * @brief	: Permet d'enregistrer un ConfCollector
-			 * @Param	: QString, nom de la configuration concernée
+			 * @Param	: QString, nom de la configuration concernÃ©e
 			 * @Param	: QString, prefix du confCollector
-			 * @Param	: ISwConfCollector* pointeur vers le confCollector à registered
+			 * @Param	: ISwConfCollector* pointeur vers le confCollector Ã  registered
 			 */
 			bool registerConfCollector(QString confName, QString prefix, ISwConfCollector* confCollector, bool autoSave) override;
 
 			/**
-			 * @brief	: Permet désenregistrer un ConfCollector
-			 * @Param	: QString, nom de la configuration concernée
-			 * @Param	: ISwConfCollector* pointeur vers le confCollector à désenregistrer
+			 * @brief	: Permet dÃ©senregistrer un ConfCollector
+			 * @Param	: QString, nom de la configuration concernÃ©e
+			 * @Param	: ISwConfCollector* pointeur vers le confCollector Ã  dÃ©senregistrer
 			 */
 			void unregisterConfCollector(QString confName, QString prefix, ISwConfCollector* confCollector) override;
 
 			/**
 			 * @brief	: Permet d'enregistrer un IConfSaver (confLoader)
-			 * @Param	: QString, nom de la configuration concernée
-			 * @Param	: IConfSaver* pointeur vers le confSaver à registered
+			 * @Param	: QString, nom de la configuration concernÃ©e
+			 * @Param	: IConfSaver* pointeur vers le confSaver Ã  registered
 			 */
 			bool registerConfSaver(QString confName, ISwConfSaver* confSaver) override;
 
 			/**
-			 * @brief	: Permet désenregistrer un IConfSaver (confLoader)
-			 * @Param	: QString, nom de la configuration concernée
-			 * @Param	: IConfSaver* pointeur vers le confCollector à désenregistrer
+			 * @brief	: Permet dÃ©senregistrer un IConfSaver (confLoader)
+			 * @Param	: QString, nom de la configuration concernÃ©e
+			 * @Param	: IConfSaver* pointeur vers le confCollector Ã  dÃ©senregistrer
 			 */
 			void unregisterConfSaver(QString confName) override;
 
 			/**
-			 * @brief	: Permet de savoir si une conf a été chargée ou non
-			 * @Param	: QString, nom de la configuration concernée
-			 * @return	: bool, true si configuration chargée (finalized via le composant ConfLoader)
+			 * @brief	: Permet de savoir si une conf a Ã©tÃ© chargÃ©e ou non
+			 * @Param	: QString, nom de la configuration concernÃ©e
+			 * @return	: bool, true si configuration chargÃ©e (finalized via le composant ConfLoader)
 			 */
 			bool isConfLoaded(QString confName) override;
 
@@ -102,7 +102,7 @@ namespace StreamWork
 
 
 			/**
-			 * @brief	: Permet de désenregister les listeners
+			 * @brief	: Permet de dÃ©senregister les listeners
 			 * @Param	: ISwConfigListener, listener du service
 			 */
 			void unregisterConfigServiceListener(ISwConfigListener *listener) override;
@@ -125,7 +125,7 @@ namespace StreamWork
 			bool registerConfPropertiesObserver(ISwPropertiesObserver * observer) override;
 
 			/**
-			* @brief	: Permet désenregistrer un ConfPropertiesObserver
+			* @brief	: Permet dÃ©senregistrer un ConfPropertiesObserver
 			* @Param	: ISwPropertiesObserver* observer des properties
 			*/
 			void unregisterConfPropertiesObserver(ISwPropertiesObserver * observer) override;
@@ -135,7 +135,7 @@ namespace StreamWork
 			//---------------------------------------------------------------------
 			// Interface ISwPropertiesObserver
 			//---------------------------------------------------------------------
-			/** @brief : Fonction appelée par les confcollectors lors du delete d'une property */
+			/** @brief : Fonction appelÃ©e par les confcollectors lors du delete d'une property */
 			void notifyPropertyDeleted(ISwProperty * propertyDeleted, QString propertyDecoratedName, QString confName = "") override;
 
 
@@ -144,46 +144,46 @@ namespace StreamWork
 			//---------------------------------------------------------------------
 
 			/**
-			 * @brief	: permet de créer un nouveau profil de configuration
-			 * @Param	: QString : nom de la configuration concernée
+			 * @brief	: permet de crÃ©er un nouveau profil de configuration
+			 * @Param	: QString : nom de la configuration concernÃ©e
 			 * @Param	: QString : nom du nouveau profil de conf
-			 * @Param	: bool : nouvelle config par défaut ou depuis la config courante
+			 * @Param	: bool : nouvelle config par dÃ©faut ou depuis la config courante
 			 */
 			bool createNewConfiguration(QString confName, QString confProfileName, bool fromCurrent) override;
 
 			/**
 			 * @brief	: permet de supprimer la configuration courante
-			 * @Param	: QString : nom de la configuration concernée
+			 * @Param	: QString : nom de la configuration concernÃ©e
 			 */
 			bool deleteConfiguration(QString confName, QString inProfileName) override;
 
 			/**
 			 * @brief	: permet de renomer le profil de configuration courant
-			 * @Param	: QString : nom de la configuration concernée
+			 * @Param	: QString : nom de la configuration concernÃ©e
 			 * @Param	: QString : nouveau nom du profil de conf
 			 */
 			bool renameConfiguration(QString confName, QString newConfProfileName) override;
 
 			/**
 			 * @brief	: permet de changer de configuration courante
-			 * @Param	: QString : nom de la configuration concernée
-			 * @Param	: QString : nom du profil de conf à charger
+			 * @Param	: QString : nom de la configuration concernÃ©e
+			 * @Param	: QString : nom du profil de conf Ã  charger
 			 */
 			bool switchConfiguration(QString confName, QString confProfileName) override;
 
 			/**
-			 * @brief	: Permet de savoir si le profil courant chargé pour la configuration dont le nom est
-						  passé en paramètres contient au moins une propriété ayant une valeur non usine.
-			 * @Param	: QString : nom de la configuration concernée
+			 * @brief	: Permet de savoir si le profil courant chargÃ© pour la configuration dont le nom est
+						  passÃ© en paramÃ¨tres contient au moins une propriÃ©tÃ© ayant une valeur non usine.
+			 * @Param	: QString : nom de la configuration concernÃ©e
 			 */
 			bool hasNonDefaultPropertyValuesInCurrentConfigProfile(const QString& configName, const QString& prefix = "all") override;
 
 			/**
 			 * @brief	: permet de recharger les valeurs des properties de
-			 *			  la config courante ou de celle par défaut
-			 * @Param	: QString : nom de la configuration concernée
-			 * @Param	: QString : Groupe de paramètre (préfix) concerné par le restore
-			 * @Param	: bool : restauration des valeurs par défaut ou courantes?
+			 *			  la config courante ou de celle par dÃ©faut
+			 * @Param	: QString : nom de la configuration concernÃ©e
+			 * @Param	: QString : Groupe de paramÃ¨tre (prÃ©fix) concernÃ© par le restore
+			 * @Param	: bool : restauration des valeurs par dÃ©faut ou courantes?
 			 */
 			bool restoreCancelConfiguration(QString confName, QString parametersConcerned, bool fromDefault, bool isStarlinxRunning) override;
 
@@ -191,127 +191,127 @@ namespace StreamWork
 			/**
 			 * @brief	: permet de sauver ( createConfigurationFile + writeConfigurationFile)
 			 *			  un XML file pour la configuration
-			 * @Param	: QString : nom de la configuration concernée
-			 * @Param	: QDomDocument : document de conf à sauvegarder
+			 * @Param	: QString : nom de la configuration concernÃ©e
+			 * @Param	: QDomDocument : document de conf Ã  sauvegarder
 			 */
 			bool saveConfigurationFile(QString confName, QDomDocument* doc = nullptr) override;
 
 			/**
-			* @brief	: dans le cas autoSave, permet de retenir une propriete qui sera ensuite sauvegardee dans le xml à la fermeture
+			* @brief	: dans le cas autoSave, permet de retenir une propriete qui sera ensuite sauvegardee dans le xml Ã  la fermeture
 			* @brief   : a utiliser dans le cas par exemple de la sauvegarde d'une property dont le composant sera delete avant le confCollector a la fermeture du stream
-			* @Param	: QString : nom de la configuration concernée, ISwProperty propriete concernée, QString prefix concerné
+			* @Param	: QString : nom de la configuration concernÃ©e, ISwProperty propriete concernÃ©e, QString prefix concernÃ©
 			*/
 			void saveOnePropertyOnConf(QString confName, ISwProperty *p, QString propCustomName, QString prefix) override;
 
 
 			/**
-			 * @brief	: permet de créer un XML file pour la configuration
-			 *			  récupère les valeurs de la conf courante et concatène avec les autres confs
-			 * @Param	: QString : nom de la configuration concernée
+			 * @brief	: permet de crÃ©er un XML file pour la configuration
+			 *			  rÃ©cupÃ¨re les valeurs de la conf courante et concatÃ¨ne avec les autres confs
+			 * @Param	: QString : nom de la configuration concernÃ©e
 			 */
 			bool createConfigurationFile(QString confName, QDomDocument &tempDoc) override;
 
 			/**
-			 * @brief	: permet de créer un XML file pour un profil d'une conf
-			 *			  récupère les valeurs de la conf courante
-			 * @Param	: QString : nom de la configuration concernée
+			 * @brief	: permet de crÃ©er un XML file pour un profil d'une conf
+			 *			  rÃ©cupÃ¨re les valeurs de la conf courante
+			 * @Param	: QString : nom de la configuration concernÃ©e
 			 */
 			virtual void createCurrentConfProfile(QString confName, QDomDocument &tempDoc);
 
 			/**
 			 * @brief	: permet de sauvegarder les profils de configuration
-			 * @Param	: QString : nom de la configuration concernée
-			 * @Param	: QDomDocument : document de conf à sauvegarder
+			 * @Param	: QString : nom de la configuration concernÃ©e
+			 * @Param	: QDomDocument : document de conf Ã  sauvegarder
 			 */
 			bool writeConfigurationFile(QString confName, QDomDocument &doc) override;
 
 
 			/**
 			 * @brief	: permet d'importer une configuration
-			 * @Param	: QString : nom de la configuration concernée
+			 * @Param	: QString : nom de la configuration concernÃ©e
 			 */
 			bool importConfigurationFile(QString confName) override;
 
 
 			/**
 			* @brief	: permet d'exporter une configuration en XML ( createConfigurationFile + writeConfigurationFile)
-			 * @Param	: QString : nom de la configuration concernée
+			 * @Param	: QString : nom de la configuration concernÃ©e
 			 */
 			bool exportConfigurationFile(QString confName) override;
 
 
 			/**
-			 * @brief	: permet de récupérer une liste de tous les profils de confs dispo
-			 * @Param	: QString : nom de la configuration concernée
-			 * @return	: QList<QString> : nom de la configuration concernée
+			 * @brief	: permet de rÃ©cupÃ©rer une liste de tous les profils de confs dispo
+			 * @Param	: QString : nom de la configuration concernÃ©e
+			 * @return	: QList<QString> : nom de la configuration concernÃ©e
 			 */
 			QList<QString> getConfigurationProfilesList(QString confName) override;
 
 
 			/**
-			* @brief : permets de récupérer le nom du profil de la conf courante chargée pour un confName
-			* @Param : QString : nom de la configuration concernée
-			* @return : QString : nom du profil de la conf courante chargée
+			* @brief : permets de rÃ©cupÃ©rer le nom du profil de la conf courante chargÃ©e pour un confName
+			* @Param : QString : nom de la configuration concernÃ©e
+			* @return : QString : nom du profil de la conf courante chargÃ©e
 			*/
 			QString getCurrentProfile(const QString& confName) override;
 
 			/**
-			* @brief	: permet de récupérer la liste des configurations enregistrées
+			* @brief	: permet de rÃ©cupÃ©rer la liste des configurations enregistrÃ©es
 			* @return	: QList<QString> : liste des configurations
 			*/
 			QList<QString> getAllConfigurations() override;
 
 			/**
-			 * @brief	: permet de récupérer l'interface d'administration de la conf
+			 * @brief	: permet de rÃ©cupÃ©rer l'interface d'administration de la conf
 			 * @return	: ISwAdminConfiguration : pointeur sur l'interface d'admin de la conf (ici this)
 			 */
 			ISwAdminConfiguration* getAdmin() override;
 
 
 			/**
-			 * @brief	: permet de récupérer l'interface de gestion des properties de la conf
+			 * @brief	: permet de rÃ©cupÃ©rer l'interface de gestion des properties de la conf
 			 * @return	: ISwConfigurationManager : pointeur sur l'interface de gestion des properties de la conf
 			 */
 			ISwConfigurationManager* getManager() override;
 
 			/**
-			 * @brief	: permet de récupérer un pointeur sur une property
-			 * @Param	: QString : nom de la configuration concernée
+			 * @brief	: permet de rÃ©cupÃ©rer un pointeur sur une property
+			 * @Param	: QString : nom de la configuration concernÃ©e
 			 * @Param	: QString : prefix du composant ConfCollector
-			 * @Param	: QString : nom décoré de la property
+			 * @Param	: QString : nom dÃ©corÃ© de la property
 			 * @return	: ISwProperty* : pointeur sur la property
 			 */
 			ISwProperty* getProperty(QString confName, QString prefix, QString decoratedName) override;
 
 
 			/**
-			 * @brief	: permet de récupérer les pointeurs de toutes les properties d'une conf
-			 * @Param	: QString : nom de la configuration concernée
-			 * @Param	: QString : nom du groupe paramètres (page) concerné (prefix)
+			 * @brief	: permet de rÃ©cupÃ©rer les pointeurs de toutes les properties d'une conf
+			 * @Param	: QString : nom de la configuration concernÃ©e
+			 * @Param	: QString : nom du groupe paramÃ¨tres (page) concernÃ© (prefix)
 			 * @return	: QList <ISwProperty*> : liste des pointeurs sur les properties
 			 */
 			QHash<ISwProperty*, QString> getAllProperties(const QString& confName, const QString& prefixName) override;
 
 			/**
-			 * @brief	: permet de récupérer l'ordre de toutes les properties d'une conf pour les classer dans un treeview
-			 * @Param	: QString : nom de la configuration concernée
-			 * @Param	: QString : nom du groupe paramètres (page) concerné (prefix)
-			 * @return	: QHash<QString, int> : liste des noms décorés des properties et leur ordre dans le treeview
+			 * @brief	: permet de rÃ©cupÃ©rer l'ordre de toutes les properties d'une conf pour les classer dans un treeview
+			 * @Param	: QString : nom de la configuration concernÃ©e
+			 * @Param	: QString : nom du groupe paramÃ¨tres (page) concernÃ© (prefix)
+			 * @return	: QHash<QString, int> : liste des noms dÃ©corÃ©s des properties et leur ordre dans le treeview
 			 */
 			QHash<QString, int> getAllPropertiesOrder(QString confName, QString prefixName) override;
 
 			/**
-			* @brief	: permet d'updater la valeur d'une property depuis le fichier qui a été loadé
-			* @Param	: QString : nom de la configuration concernée
-            * @Param	: ISwProperty* : pointeur sur la propery concernée
-			* @return	: bool : Update réussi ou pas
+			* @brief	: permet d'updater la valeur d'une property depuis le fichier qui a Ã©tÃ© loadÃ©
+			* @Param	: QString : nom de la configuration concernÃ©e
+            * @Param	: ISwProperty* : pointeur sur la propery concernÃ©e
+			* @return	: bool : Update rÃ©ussi ou pas
             */
 			bool updateProperty(QString confName, ISwProperty* propToUpdate) override;
 
 
 			/**
-			* @brief	: permet d'updater la part XML de la configuration par défault (CFM_DEFAULT_FILENAME)
-			* @Param	: QString : nom de la configuration concernée
+			* @brief	: permet d'updater la part XML de la configuration par dÃ©fault (CFM_DEFAULT_FILENAME)
+			* @Param	: QString : nom de la configuration concernÃ©e
 			*/
 			bool updateDefaultProfile(QString confName, QHash<QString, QString> inNewDefaultValues = QHash<QString, QString>()) override;
 
@@ -342,7 +342,7 @@ namespace StreamWork
 			/** @brief : QHash<confName, QList<confProfileName>> */
 			QHash<QString, QList<QString>>	_configsProfilesList;
 
-			/** @brief : Liste des listeners du service pour notif lors de mise à jour d'une conf */
+			/** @brief : Liste des listeners du service pour notif lors de mise Ã  jour d'une conf */
 			QList<ISwConfigListener*>	_configurationServiceListeners;
 
 			/** @brief : Liste des observers du service pour notif lors d'une suppression de property */
@@ -357,54 +357,54 @@ namespace StreamWork
 
 			/**
 			* @brief : permets de parser le fichier des confs
-			* @Param : QString : nom de la configuration concernée
-			* @Param : QString : fichier à parser contenant les données de conf
+			* @Param : QString : nom de la configuration concernÃ©e
+			* @Param : QString : fichier Ã  parser contenant les donnÃ©es de conf
 			* @Param : bool : true s'il n'y avait pas de fichier de config
-			*			et qu'il a du être créé pour la premiere fois (need un parse à nouveau)
+			*			et qu'il a du Ãªtre crÃ©Ã© pour la premiere fois (need un parse Ã  nouveau)
 			*/
 			QString parseConfigurationFile(QString confName, QString inConfigFileToParse);
 
 			/**
-			* @brief : permets de mettre à jour la factory conf à partir du stream
-			* @Param : QString : nom de la configuration concernée
-			* @Param : QString : contenu à mettre à jour avec le nouveau "factory setting"
+			* @brief : permets de mettre Ã  jour la factory conf Ã  partir du stream
+			* @Param : QString : nom de la configuration concernÃ©e
+			* @Param : QString : contenu Ã  mettre Ã  jour avec le nouveau "factory setting"
 			*/
 			QString updateFactorySetting(QString confName, QString confFileContent);
 
 			/**
-			* @brief : Crée un profile de conf par défaut (a partir des factory settings)
-			* @Param : QString : nom de la configuration concernée
+			* @brief : CrÃ©e un profile de conf par dÃ©faut (a partir des factory settings)
+			* @Param : QString : nom de la configuration concernÃ©e
 			* @Param : QDomElemment : root_node
 			*/
 			void createDefaultFromFactory(QString confName, QDomElement &root_node);
 
 			/**
 			* @brief : permets de parser le fichier des confs
-			* @Param : QString : nom de la configuration concernée
+			* @Param : QString : nom de la configuration concernÃ©e
 			* @Param : QString : nom du profil de conf pour lequel setter les valeurs des properties
-			* @Param : bool : valeur de play du système
+			* @Param : bool : valeur de play du systÃ¨me
 			*/
 			bool setPropertiesValuesFromProfile(QString confName, QString confProfileName, bool isStarlinxRunning = false, QString parametersConcerned = "all");
 
 			/**
-			* @brief : permets de créer un QDom avec les valeurs des properties correspondant à un profil de conf
-			* @Param : QString : nom de la configuration concernée
-			* @Param : QDomDocument : CDomDoc concerné
-			* @Param : QDomElement : à remplir avec les valeurs des properties des collectors associés
+			* @brief : permets de crÃ©er un QDom avec les valeurs des properties correspondant Ã  un profil de conf
+			* @Param : QString : nom de la configuration concernÃ©e
+			* @Param : QDomDocument : CDomDoc concernÃ©
+			* @Param : QDomElement : Ã  remplir avec les valeurs des properties des collectors associÃ©s
 			*/
 			void createQDomProfile(QString confName, QDomDocument &doc, QDomElement &elt_config, QHash<QString, QString> inNewDefaultValues = QHash<QString, QString>());
 
 			/**
 			* @brief : notifie les listeners du service de configuration
-			* @Param : QString : nom de la configuration concernée
+			* @Param : QString : nom de la configuration concernÃ©e
 			*/
 			void notifyServiceListeners(QString confName, bool profilesNotif);
 
 
 			/**
-			* @brief : met à jour dans _confProfilesDatas les données des profils de conf
-			* @Param : QHash<QString, QHash<QString, QString>>::iterator : itérateur sur la configuration concernée
-			* @Param : QString : nom du profil concerné
+			* @brief : met Ã  jour dans _confProfilesDatas les donnÃ©es des profils de conf
+			* @Param : QHash<QString, QHash<QString, QString>>::iterator : itÃ©rateur sur la configuration concernÃ©e
+			* @Param : QString : nom du profil concernÃ©
 			* @Param : QDomElement : nouvelles valeurs des datas du profil
 			*/
 			bool updateConfProfilesDatas(QHash<QString, QHash<QString, QString>>::iterator it_profiles, QString profile, QDomElement newProfileConfDatas);

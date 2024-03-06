@@ -9,10 +9,10 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "_SwPropertyImplSimpleTypeAdapter_Class.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "SwEnum.h"
+#include "Properties/_SwPropertyImplSimpleTypeAdapter_Class.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Types/SwEnum.h"
 using namespace StreamWork::SwCore;
 
 /*! \brief Constructor */
@@ -23,12 +23,12 @@ _SwPropertyImplSimpleTypeAdapter_Class::_SwPropertyImplSimpleTypeAdapter_Class(I
 /*! \brief Destructor */
 _SwPropertyImplSimpleTypeAdapter_Class::~_SwPropertyImplSimpleTypeAdapter_Class(){
 }
-/*! \brief methode de recuperer la valeur d'une propriété en interne*/
+/*! \brief methode de recuperer la valeur d'une propriÃ©tÃ© en interne*/
 QVariant _SwPropertyImplSimpleTypeAdapter_Class::GetInternalValue() {    
     _value=_adapter->Get();
     return _value;
 }
-/*! \brief methode permettant de definir la valeur d'une propriété en interne*/
+/*! \brief methode permettant de definir la valeur d'une propriÃ©tÃ© en interne*/
 void _SwPropertyImplSimpleTypeAdapter_Class::SetInternalValue (const QVariant & val) {
     if (_value.userType()!=val.userType()) {
          QString s=QString("Unable to change property %1 because types are different %2!=%3").arg(_name).arg(QString(_value.typeName())).arg(QString(val.typeName()));
@@ -37,7 +37,7 @@ void _SwPropertyImplSimpleTypeAdapter_Class::SetInternalValue (const QVariant & 
     _value=val;
 	_adapter->Set(_value);	
 }
-/*! \brief methode est une sous propriété*/
+/*! \brief methode est une sous propriÃ©tÃ©*/
 bool _SwPropertyImplSimpleTypeAdapter_Class::IsSubProperty() {
     return true;
 }

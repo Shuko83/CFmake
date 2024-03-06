@@ -6,10 +6,10 @@
  * @author F.Bighelli
  */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_ReplayManager.h"
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include "SwRecordConstantes.h"
 #include "ISwSupportReplay.h"
 #include <QMessageBox>

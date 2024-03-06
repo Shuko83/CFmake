@@ -2,12 +2,12 @@
  \file _SwDatasBaseBasicRouter.cpp
  \brief Implementation of the Class _SwDatasBaseBasicRouter generant un QWidget
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 #include <QSet>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwDatasBaseBasicRouter.h"
 
 using namespace StreamWork::SwCore;
@@ -40,7 +40,7 @@ _SwDatasBaseBasicRouter::~_SwDatasBaseBasicRouter(){
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwDatasBaseBasicRouter::InitializeResources() throw(SwException) {
     //Creation des service
     _pins_service=new SwPins_Manager_Class(this) ;
@@ -72,7 +72,7 @@ void _SwDatasBaseBasicRouter::InitializeResources() throw(SwException) {
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwDatasBaseBasicRouter done\n"));
 
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwDatasBaseBasicRouter::OnPropertyChange(ISwProperty * property) {
     if (property==_pins_nb_property) {
         //Si le nombre de pin n' pas changer on ne fait rien
@@ -127,8 +127,8 @@ void _SwDatasBaseBasicRouter::OnPropertyChange(ISwProperty * property) {
 //----------------------------------------------------
 // Interface ISwPin_Listener
 //----------------------------------------------------
-/*! \brief Callback sur les changements de propriétés*/
-/*! \brief Sur reception d'une donnée*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
+/*! \brief Sur reception d'une donnÃ©e*/
 void _SwDatasBaseBasicRouter::OnReceiveData(SwPin * src,SwData_Class * data) {
     for (int i=0;i<_pins_list.count();i++) {
         if (_pins_list[i]!=src && _pins_list[i]!=NULL) {

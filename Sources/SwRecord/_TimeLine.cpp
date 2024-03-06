@@ -6,7 +6,7 @@
 
 #include "_TimeLine.h"
 #include "SwRecordConstantes.h"
-#include <SwUUID.h>
+#include "Types/SwUUID.h"
 #include "_RecordPoint.h"
  
 using namespace StreamWork::SwCore;
@@ -189,7 +189,7 @@ double _TimeLine::queryExecuteTime(bool * isLast)
 	if(_jumpTime != 0)
 	{
 
-		//Todo Stocké dans 30sec avant et les relires rapidement
+		//Todo StockÃ© dans 30sec avant et les relires rapidement
 		QList<_ExecutionKey *> _tmpList;
 		QList<_ExecutionKey *> _tmpList30;
 		int diff = _executionKeys.front()->_currentTime - _initTime;
@@ -209,7 +209,7 @@ double _TimeLine::queryExecuteTime(bool * isLast)
 				//Clean ceux de la liste
 				foreach(_ExecutionKey *tmp, _tmpList)
 				{	
-					//parcours la liste précédente
+					//parcours la liste prÃ©cÃ©dente
 					/*double t=tmp->_currentTime;
 					QList<ISwRecordPoint *>::iterator itrp=tmp->_recordPoints.begin();
 					QList<int>::iterator itrpcall=tmp->_recordPointsCall.begin();
@@ -267,7 +267,7 @@ double _TimeLine::queryExecuteTime(bool * isLast)
 		{
 			/*foreach(_ExecutionKey *tmp, _tmpList30)
 			{
-				//parcours la liste précédente
+				//parcours la liste prÃ©cÃ©dente
 				double t=tmp->_currentTime;
 				QList<ISwRecordPoint *>::iterator itrp=tmp->_recordPoints.begin();
 				QList<int>::iterator itrpcall=tmp->_recordPointsCall.begin();

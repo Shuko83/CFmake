@@ -2,7 +2,7 @@
  \file _SwConfigurationExportedPerspective.h
  \brief Class implementant une entite exportable interface produite
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -10,12 +10,12 @@
 #define __SwConfigurationExportedPerspective_H
 
 #include <QString>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwConfigurationExportedEntity.h"
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <ISwInterfaces_ConsumerObserver.h>
-#include <LibIndeSig.h>
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Interfaces/ISwInterfaces_ConsumerObserver.h"
+#include "Tools/Signal/LibIndeSig.h"
 
 using namespace StreamWork::SwCore;
 /*!
@@ -35,7 +35,7 @@ class _SwConfigurationExportedPerspective :
 		SwInterfaces_Provider_Class * _external_provider;
 		/*! \brief Pointer de stockage*/
         void * _handle;
-        /*! \brief Indique que l'interface est crée*/
+        /*! \brief Indique que l'interface est crÃ©e*/
         bool _interface_created;
 	protected:
 	    /*! \brief Specific bind */
@@ -61,9 +61,9 @@ class _SwConfigurationExportedPerspective :
         //-------------------------------------------------------------------------
         //Interface ISwInterfaces_ConsumerObserver
         //-------------------------------------------------------------------------
-	    /*! \brief Avant changement de la disponibilité de l'interface */
+	    /*! \brief Avant changement de la disponibilitÃ© de l'interface */
 	    virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-	    /*! \brief Apres changement de la disponibilité de l'interface */
+	    /*! \brief Apres changement de la disponibilitÃ© de l'interface */
 	    virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
 		
 };

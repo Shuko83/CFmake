@@ -2,7 +2,7 @@
  \file _SwGuiCompHttpServer.h
  \brief Implementation of the Class _SwGuiCompHttpServer gerant un serveur HTTP simple
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -17,10 +17,10 @@
   */
 #include <QMap>
 #include <QTcpServer>
-#include <SwComponent_Class.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Properties/ISwProperty.h"
 #include "ISwExecutable_Service.h"
 #include "ISwHttpServer.h"
 
@@ -42,11 +42,11 @@ class _SwGuiCompHttpServer : public SwComponent_Class,
 protected:
     /* @brief service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
-    /* @brief service de gestion des propriétés */
+    /* @brief service de gestion des propriÃ©tÃ©s */
     SwProperties_Class * _properties_service;
     /* @brief port du serveur */
     uint _portServer;
-    /* @brief propriété port du serveur */
+    /* @brief propriÃ©tÃ© port du serveur */
     ISwProperty * _portServer_property;
     /* @brief Serveur */
     QTcpServer * _server;
@@ -61,9 +61,9 @@ public:
     virtual ~_SwGuiCompHttpServer();
 
     /*! \brief Initialisation des ressources
-    \note tous les services du composants doivent être déclarés dans cette methodes*/
+    \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
     virtual void InitializeResources() throw(SwException);
-     /*! \brief Callback sur les changements de propriétés*/
+     /*! \brief Callback sur les changements de propriÃ©tÃ©s*/
     void OnPropertyChange(ISwProperty * property);
     //---------------------------------------------------------------------
     // Interface ISwHttpServer

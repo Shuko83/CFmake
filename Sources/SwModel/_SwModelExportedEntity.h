@@ -2,7 +2,7 @@
  \file _SwModelExportedEntity.h
  \brief Class implementant une entite exportable
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -10,7 +10,7 @@
 #define __SwModelExportedEntity_H
 
 #include <QString>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 
 class _SwModel_Class;
 class _SwModelHost_Class;

@@ -9,12 +9,12 @@
 /*
   * INCLUDES LOCAUX
   */
-#include "SwPins_Manager_Class.h"
-#include "SwApplication.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Main/SwApplication.h"
 #include "SwCoreConstantes.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "SwAddress_ToolBox.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Tools/SwAddress_ToolBox.h"
 
 using namespace StreamWork::SwCore;
 

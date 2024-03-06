@@ -5,10 +5,10 @@
 \author  Big
 \version 1.0
 */
-#include "SwInterfaces_Consumer_Class.h"
-#include "_SwConsumedInterfaceContainer_Class.h"
-#include "SwAddress_ToolBox.h"
-#include "SwApplication.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Main/Connexion/_SwConsumedInterfaceContainer_Class.h"
+#include "Tools/SwAddress_ToolBox.h"
+#include "Main/SwApplication.h"
 #include <QDebug>
 
 
@@ -169,7 +169,7 @@ void SwInterfaces_Consumer_Class::DetachProvider(QString cinterface_name)
 		QString msg = QString("In component %2\nFail to detach undefined consumed interface %1 ").arg(cinterface_name).arg(_host_component->GetName());
 		LAUNCH_SWEXCEPTION("SwCore", msg)
 	}
-	//Elle-t-elle connecté
+	//Elle-t-elle connectÃ©
 	if ( it.value()->GetProvider() != NULL )
 	{
 		provider = it.value()->GetProvider();
@@ -539,8 +539,8 @@ bool SwInterfaces_Consumer_Class::Finalize(quint64 historic_index)
 		}
 		if ( container != 0 )
 		{
-			//On a trouve l'interface concerné
-			//Si elle est deja connecté, on la deconnecte (permet appel multiple du load)
+			//On a trouve l'interface concernÃ©
+			//Si elle est deja connectÃ©, on la deconnecte (permet appel multiple du load)
 			if ( container->GetProvider() != NULL )
 			{
 				DetachProvider(container->GetName());

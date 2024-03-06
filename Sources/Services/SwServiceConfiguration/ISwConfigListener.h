@@ -18,15 +18,15 @@ namespace StreamWork
 	{
         /**
 		 @interface : ISwConfigListener 
-		 @brief : Interface que doivent implémenter les composants nécessitant d'être 
-		 		notifié des changements d'une conf
+		 @brief : Interface que doivent implÃ©menter les composants nÃ©cessitant d'Ãªtre 
+		 		notifiÃ© des changements d'une conf
          @ingroup : SwCoreGrp
          @swinterface
 
        
-        2 methodes doivent être définies:
-		- notify() qui permet de savoir à quelle configuration le collector sert.
-		- getListenerName() qui permet de récupérer le nom d'un listener
+        2 methodes doivent Ãªtre dÃ©finies:
+		- notify() qui permet de savoir Ã  quelle configuration le collector sert.
+		- getListenerName() qui permet de rÃ©cupÃ©rer le nom d'un listener
 
 		*/
 		class ISwConfigListener
@@ -34,11 +34,11 @@ namespace StreamWork
 		public:
 
             /** @brief : Notification en cas de changement sur une configuration
-             *	@param : QString : nom de la conf concernée
+             *	@param : QString : nom de la conf concernÃ©e
              */
 			virtual void notifyConfiguration(QString confName, bool profilesNotif) = 0;
 
-			/** @brief : Récupération du nom du Listener pour notifier uniquement ceux concernés
+			/** @brief : RÃ©cupÃ©ration du nom du Listener pour notifier uniquement ceux concernÃ©s
 			 *	@param : QString : nom du Listener
              */
 			virtual QString getListenerName() = 0;

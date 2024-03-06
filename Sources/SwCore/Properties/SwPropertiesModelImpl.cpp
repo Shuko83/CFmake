@@ -8,19 +8,19 @@
 
 #include <QStringList>
 #include <QColor>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <QPainter>
 #include <qdebug>
 
-#include <SwEnum.h>
-#include <SwIntegerEnum.h>
-#include <SwInteger.h>
-#include <SwString.h>
-#include <SwDouble.h>
-#include <SwIpv4Address.h>
-#include <SwUUID.h>
-#include <SwFileDescriptor.h>
+#include "Types/SwEnum.h"
+#include "Types/SwIntegerEnum.h"
+#include "Types/SwInteger.h"
+#include "Types/SwString.h"
+#include "Types/SwDouble.h"
+#include "Types/SwIpV4Address.h"
+#include "Types/SwUUID.h"
+#include "Types/SwFileDescriptor.h"
 
 #include "QDynamicStyledItemDelegate.h"
 
@@ -28,9 +28,9 @@
 /*
 * INCLUDES LOCAUX
 */
-#include "SwPropertiesModelImpl.h"
-#include "SwIconDescriptor.h"
-#include "ISwSnapShotPropertiesService.h"
+#include "Properties/SwPropertiesModelImpl.h"
+#include "Types/SwIconDescriptor.h"
+#include "Component/Services/ISwSnapShotPropertiesService.h"
 
 using namespace StreamWork::SwCore;
 

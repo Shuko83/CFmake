@@ -11,7 +11,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include "SwInteger.h"
+#include "Types/SwInteger.h"
 #include "SwGuiConstantes.h"
 /*
   * INCLUDES GLOBAUX

@@ -8,10 +8,10 @@
 #define _COMPONENTLISTMODEL_H
 
 #include <QtCore>
-#include <SwApplication.h>
-#include <SwMacros.h>
-#include <SwPluginFactory_Class.h>
-#include <SwEditorConstantes.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Main/Plugin/SwPluginFactory_Class.h"
+#include "SwEditorConstantes.h"
 
 
 using namespace StreamWork::SwCore;
@@ -50,7 +50,7 @@ public:
 
 	void clear();
 public slots:
-    /** @brief sur changement du plugin activé */
+    /** @brief sur changement du plugin activÃ© */
     void onSelectedPluginChanged(const QModelIndex & index);
 
 	/**

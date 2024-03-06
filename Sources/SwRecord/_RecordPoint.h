@@ -12,17 +12,17 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwEnum.h>
-#include <SwPins_Manager_Class.h>
-#include <SwUUID.h>
-#include <SwEnum.h>
-#include <SwFileDescriptor.h>
+#include "Types/SwEnum.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Types/SwUUID.h"
+#include "Types/SwEnum.h"
+#include "Types/SwFileDescriptor.h"
 #include "ISwRecordPoint.h"
 #include "ISwRecordDataCodec.h"
-#include "ISwAdminSetup.h"
+#include "Component/Interfaces/ISwAdminSetup.h"
 #include "_SwConfigurationExportedEntity.h"
 #include "SwAssistedComponent.h"
-#include "ISwFinalizer.h"
+#include "Component/Interfaces/ISwFinalizer.h"
 #include "ISwReplayControler.h"
 #include "ISwReplayListener.h"
 
@@ -91,9 +91,9 @@ protected:
 
     /** @brief queue d'encodage */
     QLinkedList<SwData_Class *> _recordQueue;
-    /** @brief queue en attente de données */
+    /** @brief queue en attente de donnÃ©es */
     QLinkedList<SwData_Class *> _waitingQueue;
-    /** @brief queue pour emission de données */
+    /** @brief queue pour emission de donnÃ©es */
     QLinkedList<SwData_Class *> _sendingQueue;
 
 	typedef struct{
@@ -145,9 +145,9 @@ public:
      * @brief    : Calback sur reception d'une data
      * @param	 : SwPin * src - Pointeur sur la pin
      * @param	 : SwData_Class * data - Pointeur sur la data ? (a valider)
-	 * @warning	 : Si vous gardez une reference sur la donnée reçues au dela de la portée de la methode suivante
-	 *			   utiliser un SwRefPtr sur la donnée
-	 *			   Si vous souhaitez modifier une donnée recue il faut d'abord en faire une copy
+	 * @warning	 : Si vous gardez une reference sur la donnÃ©e reÃ§ues au dela de la portÃ©e de la methode suivante
+	 *			   utiliser un SwRefPtr sur la donnÃ©e
+	 *			   Si vous souhaitez modifier une donnÃ©e recue il faut d'abord en faire une copy
      */
     virtual void eventReceiveData(SwPin * src,SwData_Class * data);
  	
@@ -199,27 +199,27 @@ public:
 	
 	/**
 	 * @brief    : Initialisation du composant executable
-	 * @param	 : double start_time - le temps de début
-	 * @param	 : ISwExecution_Service * executor - Pointeur sur le service d'exécution
+	 * @param	 : double start_time - le temps de dÃ©but
+	 * @param	 : ISwExecution_Service * executor - Pointeur sur le service d'exÃ©cution
 	 */
 	virtual void Initialize(double start_time,ISwExecution_Service * executor) throw (SwException);   
 
 	/**
-	 * @brief    : Démarage (Premier pas d'execution)
-	 * @param	 : double current_time - Temps de début
+	 * @brief    : DÃ©marage (Premier pas d'execution)
+	 * @param	 : double current_time - Temps de dÃ©but
 	 */
 	virtual void Start(double current_time) throw (SwException);            
 
 	/**
-	 * @brief    : Boucle d'éxecution
-	 * @param	 : double current_time - Temps d'éxecution
+	 * @brief    : Boucle d'Ã©xecution
+	 * @param	 : double current_time - Temps d'Ã©xecution
 	 * @param	 : bool is_first_call - Si c'est le premier appel
 	 */
 	virtual void Execute(double current_time,bool is_first_call) throw (SwException);  
 
 	/**
-	 * @brief    : Methode appelé au stop
-	 * @param	 : double current_time - Temps d'éxecution
+	 * @brief    : Methode appelÃ© au stop
+	 * @param	 : double current_time - Temps d'Ã©xecution
 	 */
 	virtual void Stop(double current_time);         
 
@@ -229,7 +229,7 @@ public:
 	//---------------------------------------------------------------------            
 	
 	/**
-	 * @brief    : Methode appelé lors du "Setup" dans l'éditor
+	 * @brief    : Methode appelÃ© lors du "Setup" dans l'Ã©ditor
 	 */
 	virtual void AdminSetup();
 
@@ -273,7 +273,7 @@ public:
 	//---------------------------------------------------
 	//				Interface ISwReplayListener
 	//---------------------------------------------------
-	/** @brief definit l'état du rejeu */
+	/** @brief definit l'Ã©tat du rejeu */
 	virtual void setState(QString val);
 	/** @brief definit le temps de debut du rejeu en cours  */
 	virtual void setStartTime(double vtime);
@@ -283,7 +283,7 @@ public:
 	virtual void setCurrentTime(double vtime);
 	/** @brief definit le temps courant du cache du rejeu en cours */
 	virtual void setCacheTime(double vtime);
-	/** @brief definit le répertoire de rejeu*/
+	/** @brief definit le rÃ©pertoire de rejeu*/
 	virtual void setCurrentDirectory(QString dir);
 	/** @brief definit la vitesse de rejeu */
 	virtual void setSpeed(int speed);

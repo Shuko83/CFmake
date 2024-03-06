@@ -4,12 +4,12 @@
 @author Big
  */
 
-#include "SwExtensionHelper.h"
-#include "ISwInterfaces_Provider.h"
-#include "ISwInterfaces_Provider.h"
-#include "SwExtensionImpl.h"
-#include "ISwInterfaces_Consumer.h"
-#include "_SwExtensionPointImpl.h"
+#include "Extensions/SwExtensionHelper.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Extensions/SwExtensionImpl.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Extensions/_SwExtensionPointImpl.h"
 
 using namespace StreamWork::SwCore;
 
@@ -21,7 +21,7 @@ SwExtensionHelper::SwExtensionHelper(SwComponent_Class * component) {
 SwExtensionHelper::~SwExtensionHelper() {
   //TO DO destruction
 }
-/** @brief Renvoie une liste des points d'extension a un instant t, les objects doivent etre liberé apres usages */
+/** @brief Renvoie une liste des points d'extension a un instant t, les objects doivent etre liberÃ© apres usages */
 QList<ISwExtensionPoint *> SwExtensionHelper::getAllExtensionPoints() {
     QList<ISwExtensionPoint *> liste_extensionPoints;
     ISwInterfaces_Consumer *iconsumer=dynamic_cast<ISwInterfaces_Consumer *>(_component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
@@ -35,7 +35,7 @@ QList<ISwExtensionPoint *> SwExtensionHelper::getAllExtensionPoints() {
     }
     return liste_extensionPoints;
 }  
-/** @brief Renvoie un point d'extension donnée */
+/** @brief Renvoie un point d'extension donnÃ©e */
 ISwExtensionPoint * SwExtensionHelper::getExtensionPoint(QString type,QString name) {
     QList<ISwExtensionPoint *> liste_extensionPoints;
     ISwInterfaces_Consumer *iconsumer=dynamic_cast<ISwInterfaces_Consumer *>(_component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
@@ -53,7 +53,7 @@ ISwExtensionPoint * SwExtensionHelper::getExtensionPoint(QString type,QString na
     return 0;
 
 }
-/** @brief Renvoie une liste des extension a un instant t, les objects doivent etre liberé apres usages */
+/** @brief Renvoie une liste des extension a un instant t, les objects doivent etre liberÃ© apres usages */
 QList<ISwExtension *> SwExtensionHelper::getAllExtensions() {
     QList<ISwExtension *> liste_extensions;
     ISwInterfaces_Provider *iprovider=dynamic_cast<ISwInterfaces_Provider *>(_component->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
@@ -67,7 +67,7 @@ QList<ISwExtension *> SwExtensionHelper::getAllExtensions() {
     }
     return liste_extensions;
 }     
-/** @brief Renvoie une extension donnée */
+/** @brief Renvoie une extension donnÃ©e */
 ISwExtension * SwExtensionHelper::getExtension(QString type,QString name) {
     QList<ISwExtension *> liste_extensions;
     ISwInterfaces_Provider *iprovider=dynamic_cast<ISwInterfaces_Provider *>(_component->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));

@@ -5,8 +5,8 @@
  */
 
 #include "QInterestAreaTreeModel.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
  
 using namespace StreamWork::SwCore;
 
@@ -38,15 +38,15 @@ void QInterestAreaTreeModel::setStreamControler(StreamControler * controler) {
 //-------------------------------------------------------------
 // Interface QAbstractItemModel
 //------------------------------------------------------------
-/*! \brief Renvoie les capacites du modèle */
+/*! \brief Renvoie les capacites du modÃ¨le */
 Qt::ItemFlags QInterestAreaTreeModel::flags ( const QModelIndex & index ) const{
     return Qt::ItemFlags(Qt::ItemIsEnabled);
 }
-/*! \brief Renvoie le nombre de colonnes pour les enfants d'un parent donné */
+/*! \brief Renvoie le nombre de colonnes pour les enfants d'un parent donnÃ© */
 int QInterestAreaTreeModel::columnCount ( const QModelIndex & parent  ) const{
     return 1;
 }			
- /*! \brief Renvoie le nombre de ligne pour un parent donné */
+ /*! \brief Renvoie le nombre de ligne pour un parent donnÃ© */
 int QInterestAreaTreeModel::rowCount ( const QModelIndex & parent  ) const{
     if (parent.isValid()) {
         Item * item=(Item *)parent.internalPointer();
@@ -55,7 +55,7 @@ int QInterestAreaTreeModel::rowCount ( const QModelIndex & parent  ) const{
         return _items.count();
     }
 }
-/*! \brief Renvoie les données d'entete */
+/*! \brief Renvoie les donnÃ©es d'entete */
 QVariant QInterestAreaTreeModel::headerData ( int section, 
                                              Qt::Orientation orientation, 
                                              int role  ) const{
@@ -69,7 +69,7 @@ QVariant QInterestAreaTreeModel::headerData ( int section,
     }
     return QVariant();
 }
-/*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
+/*! \brief Renvoie les donnÃ©es stockÃ©es sous un certain role pour un item nommÃ© index */
 QVariant QInterestAreaTreeModel::data (const QModelIndex & index,
                                        int role ) const{
     Item * item=(Item *)index.internalPointer();
@@ -81,7 +81,7 @@ QVariant QInterestAreaTreeModel::data (const QModelIndex & index,
     }
     return QVariant();
 }
-/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donné*/
+/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donnÃ©*/
 QModelIndex QInterestAreaTreeModel::index (int row,
                                            int column,
                                            const QModelIndex & parent  ) const{
@@ -93,7 +93,7 @@ QModelIndex QInterestAreaTreeModel::index (int row,
         return QModelIndex();
     return createIndex(row,column,_items.at(row));
 }
-/*! \brief Renvoie l'item parent d'un item index donné */
+/*! \brief Renvoie l'item parent d'un item index donnÃ© */
 QModelIndex QInterestAreaTreeModel::parent ( const QModelIndex & index ) const{
     if (!index.isValid()) {
         return QModelIndex();

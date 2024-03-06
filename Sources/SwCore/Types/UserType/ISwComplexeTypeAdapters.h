@@ -30,7 +30,7 @@ namespace StreamWork
         public:
 	        /*! \brief Initialisation */
 	        virtual void Initialize(ISwProperty * complexe_property)=0;
-	        /*! \brief Acces aux adapteurs simples (la liste est vide si le complexe adapter n'est pas attaché a une propriété*/
+	        /*! \brief Acces aux adapteurs simples (la liste est vide si le complexe adapter n'est pas attachÃ© a une propriÃ©tÃ©*/
 	        virtual QList<ISwSimpleTypeAdapter *> * GetAdapters()=0;
  	        /*! \brief Liberation de l'adaptateur*/
 	        virtual void Liberate()=0;               

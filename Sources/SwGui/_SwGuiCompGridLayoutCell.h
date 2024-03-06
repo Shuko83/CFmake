@@ -10,7 +10,7 @@
 #include <QtCore>
 #include <QGridLayout>
 #include <QWidget>
-#include <Component.h>
+#include "Component/Base/Component.h"
 
 using namespace StreamWork::SwCore;
 
@@ -49,10 +49,10 @@ public:
     //-------------------------------------------------------------------------
     //Fin Getter setter property
     //-------------------------------------------------------------------------
-    /*! \brief evenement avant changement de la disponibilité de l'interface
+    /*! \brief evenement avant changement de la disponibilitÃ© de l'interface
         \note A Surcharger*/
     virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
-    /*! \brief evenement apres changement de la disponibilité de l'interface
+    /*! \brief evenement apres changement de la disponibilitÃ© de l'interface
         \note A Surcharger*/
     virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
     //Reconstruction

@@ -6,8 +6,8 @@
  \author F.Bighelli
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompToolbar.h"
 
 using namespace StreamWork::SwCore;

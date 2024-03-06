@@ -16,7 +16,7 @@
   * INCLUDES LOCAUX
  */
 //#include "SwCoreConstantes.h"
-#include "ISwAlerter.h"
+#include "Tools/Log/ISwAlerter.h"
 
 namespace StreamWork
 {

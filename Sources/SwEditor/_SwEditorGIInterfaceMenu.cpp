@@ -2,13 +2,13 @@
  \file _SwEditorGIInterfaceMenu.cpp
  \brief menu pour un graphics item interface composant
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
 
 #include "_SwEditorGIInterfaceMenu.h"
-#include <ISwInterfaces_Consumer.h>
+#include "Component/Services/ISwInterfaces_Consumer.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwEditor;

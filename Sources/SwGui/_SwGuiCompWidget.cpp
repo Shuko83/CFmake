@@ -2,13 +2,13 @@
  \file _SwGuiCompWidget.cpp
  \brief Implementation of the Class _SwGuiCompWidget generant un QWidget
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 #include <QDesktopWidget>
 #include <QApplication>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompWidget.h"
 
 using namespace StreamWork::SwCore;

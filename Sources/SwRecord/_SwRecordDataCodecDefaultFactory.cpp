@@ -5,8 +5,8 @@
  */
 
 #include "_SwRecordDataCodecDefaultFactory.h"
-#include "_SwRecordDataCodecDefault.h" 
-#include "SwData_Class.h" 
+#include "_SwRecordDataCodecDefault.h"
+#include "Component/Pin/SwData_Class.h"
 
 using namespace StreamWork::SwCore;
 
@@ -14,11 +14,11 @@ using namespace StreamWork::SwCore;
 _SwRecordDataCodecDefaultFactory::_SwRecordDataCodecDefaultFactory() {
 	//A Completer
 }
-/* @brief nom du type de données generé */
+/* @brief nom du type de donnÃ©es generÃ© */
 QString _SwRecordDataCodecDefaultFactory::generatedDataType() {
     return CG_SW_DEFAULT_TYPE;
 }
-/* @brief nom des types de données pris en charge */
+/* @brief nom des types de donnÃ©es pris en charge */
 QStringList _SwRecordDataCodecDefaultFactory::supportedDataTypes(){
     return QStringList();
 }

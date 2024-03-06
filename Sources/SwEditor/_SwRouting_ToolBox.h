@@ -2,7 +2,7 @@
  \file _SwRouting_ToolBox.h
  \brief outil de line-routing
  \version 1.0
- \date 24-août-2006 12:21:05
+ \date 24-aoÃ»t-2006 12:21:05
  \author F.Bighelli
 */
 

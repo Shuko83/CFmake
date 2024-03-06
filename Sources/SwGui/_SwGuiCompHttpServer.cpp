@@ -2,7 +2,7 @@
  \file _SwGuiCompHttpServer.cpp
  \brief Implementation of the Class _SwGuiCompHttpServer generant une QMenu
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -14,8 +14,8 @@
 //#include <QHttpResponseHeader>
 #include <QFile>
 #include <QByteArray>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompHttpServer.h"
 
 using namespace StreamWork::SwCore;
@@ -49,7 +49,7 @@ _SwGuiCompHttpServer::~_SwGuiCompHttpServer(){
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompHttpServer::InitializeResources() throw(SwException) {
     //Creation des service
     _provider_service=new SwInterfaces_Provider_Class(this) ;
@@ -63,7 +63,7 @@ void _SwGuiCompHttpServer::InitializeResources() throw(SwException) {
     _provider_service->RegisterProvidedInterface<ISwHttpServer>("ISwHttpServer",(ISwHttpServer *)this);
    
 
-    //Enregistrement des propriétés
+    //Enregistrement des propriÃ©tÃ©s
 
     //Gestion du port
     _portServer_property=_properties_service->CreateProperty<uint>("HttpServerPort");
@@ -88,7 +88,7 @@ void _SwGuiCompHttpServer::InitializeResources() throw(SwException) {
     }
 
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwGuiCompHttpServer::OnPropertyChange(ISwProperty * property) {
 
     if (_portServer_property==property) {

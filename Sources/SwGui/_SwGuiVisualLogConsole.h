@@ -12,18 +12,18 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwEnum.h>
-#include <SwComponent_Class.h>
-#include <SwProperties_Class.h>
-#include <SwPins_Manager_Class.h>
-#include <ISwProperty.h>
-#include <ISwPin_Listener.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <ISwLogRecorder.h>
+#include "Types/SwEnum.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Tools/Log/ISwLogRecorder.h"
 #include <QTextEdit>
-#include <ISwHttpServer.h>
-#include <ISwHttpPart.h>
+#include "ISwHttpServer.h"
+#include "ISwHttpPart.h"
 #include <QStringList>
 #include <QMutex>
 #include <QColor>
@@ -51,7 +51,7 @@ protected:
     //--------------------------------------------------------------
     //Services
     //--------------------------------------------------------------
-    /** @brief service de gestion des propriétés */
+    /** @brief service de gestion des propriÃ©tÃ©s */
     SwProperties_Class * _properties_service;
     /** @brief service de fourniture d'interface */
     SwInterfaces_Provider_Class * _provider_service;
@@ -86,10 +86,10 @@ public:
     virtual ~_SwGuiVisualLogConsole();
     /**
      * @brief Initialisation des ressources
-     * @note tous les services du composants doivent être déclarés dans cette methodes
+     * @note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes
      */
     virtual void InitializeResources() throw( SwException );
-    /** @brief Callback sur les changements de propriétés*/
+    /** @brief Callback sur les changements de propriÃ©tÃ©s*/
     void OnPropertyChange( ISwProperty * property );
     
     QColor backgroundColor();
@@ -101,9 +101,9 @@ public:
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-    /** @brief Avant changement de la disponibilité de l'interface */
+    /** @brief Avant changement de la disponibilitÃ© de l'interface */
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    /** @brief Apres changement de la disponibilité de l'interface */
+    /** @brief Apres changement de la disponibilitÃ© de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     //---------------------------------------------------------------------
     // Interface ISwLogRecorder

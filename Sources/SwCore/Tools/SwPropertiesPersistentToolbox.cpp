@@ -1,16 +1,16 @@
 /**
 @file SwPropertiesPersistentToolbox.cpp
-@brief Boite a outils publique pour l'enregistrement des propriétés
+@brief Boite a outils publique pour l'enregistrement des propriÃ©tÃ©s
 @author F.Bighelli
  */
 
-#include "SwPropertiesPersistentToolbox.h"
-#include "SwPropertyPersistentToolbox.h" 
-#include "ISwProperty.h"
+#include "Tools/SwPropertiesPersistentToolbox.h"
+#include "Tools/SwPropertyPersistentToolbox.h"
+#include "Properties/ISwProperty.h"
 
 using namespace StreamWork::SwCore;
 
-/*! \brief methode permettant de charger des donnees de propriétés*/
+/*! \brief methode permettant de charger des donnees de propriÃ©tÃ©s*/
 void SwPropertiesPersistentToolbox::Load(QDomElement & elt,ISwProperties * properties) {
     for(QDomElement elt_property = elt.firstChildElement(); !elt_property.isNull(); elt_property = elt_property.nextSiblingElement())
     {
@@ -19,7 +19,7 @@ void SwPropertiesPersistentToolbox::Load(QDomElement & elt,ISwProperties * prope
 
 }
 
-/*! \brief methode permettant de sauver des donnees de propriétés */
+/*! \brief methode permettant de sauver des donnees de propriÃ©tÃ©s */
 void SwPropertiesPersistentToolbox::Save(QXmlStreamWriter &writer,ISwProperties * properties) {
     for (auto it = properties->GetProperties().constBegin(); it != properties->GetProperties().constEnd(); ++it) {
         SwPropertyPersistentToolbox::SavePropertyExtended(writer, (*it)->GetRealName(), properties, true);

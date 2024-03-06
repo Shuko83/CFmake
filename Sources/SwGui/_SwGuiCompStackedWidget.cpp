@@ -2,12 +2,12 @@
  \file _SwGuiCompStackedWidget.cpp
  \brief Implementation of the Class _SwGuiCompStackedWidget generant un QWidget
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompStackedWidget.h"
 
 using namespace StreamWork::SwCore;

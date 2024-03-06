@@ -1,7 +1,7 @@
 /*!
 \file SwProperties_Class.h
 \date 12/04/2006
-\brief implementation la liste des propriétés
+\brief implementation la liste des propriÃ©tÃ©s
 \author  Big
 \version 1.0
  */
@@ -19,9 +19,9 @@
   * INCLUDES LOCAUX
  */
 #include "SwCoreConstantes.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "ISwProperties.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Component/Services/ISwProperties.h"
 
 namespace StreamWork
 {
@@ -40,90 +40,90 @@ namespace StreamWork
         private:
             /*! \brief composant hote */
             SwComponent_Class * _host_component;
-            /*! \brief QMap des propriétés */
+            /*! \brief QMap des propriÃ©tÃ©s */
             QMap<QString,_SwPropertyImpl_Class *> _map_properties;
-            /*! \brief QList des propriétés */
+            /*! \brief QList des propriÃ©tÃ©s */
             QList<ISwProperty *> _set_properties;
 			bool _isEditable;
 
 			// ------------------------------------------------------------------------
 			//				Gestion des helpers
 			// ------------------------------------------------------------------------							
-			/*! @brief Set des helpers enregistrés */
+			/*! @brief Set des helpers enregistrÃ©s */
 			QSet<SwProperties_ClassHelper *> _helpers;
-			/*! @brief enregistre un helper pour qu'il soit notifié de la destruction du service */
+			/*! @brief enregistre un helper pour qu'il soit notifiÃ© de la destruction du service */
 			void registerHelper(SwProperties_ClassHelper *);
 			/*! @brief desenregistre un helper */
 			void unregisterHelper(SwProperties_ClassHelper *);
 
         protected:
-            /*! \brief signal de changement de la propriété */
+            /*! \brief signal de changement de la propriÃ©tÃ© */
             LibIndeSig::iSignal1<ISwProperties *> _OnBeforeChange;
-            /*! \brief signal de changement de la propriété */
+            /*! \brief signal de changement de la propriÃ©tÃ© */
             LibIndeSig::iSignal1<ISwProperties *> _OnAfterChange;
-            /*! \brief signal de creation d'une propriété */
+            /*! \brief signal de creation d'une propriÃ©tÃ© */
             LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> _OnCreateProperty;
-            /*! \brief signal de destruction d'une propriété */
+            /*! \brief signal de destruction d'une propriÃ©tÃ© */
             LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> _OnDestroyProperty;
-	        /*! \brief Permet de crée les sous propriétés pour un type complexe */
+	        /*! \brief Permet de crÃ©e les sous propriÃ©tÃ©s pour un type complexe */
 	        void CreateSubProperties(_SwPropertyImpl_Class * parent_property);
-	        /*! \brief Permet de detruire les sous propriétés pour un type complexe */
+	        /*! \brief Permet de detruire les sous propriÃ©tÃ©s pour un type complexe */
 	        void DestroySubProperties(_SwPropertyImpl_Class * parent_property);
-	        /*! \brief Permet de propager les caracterisques aux sous propriétés */
+	        /*! \brief Permet de propager les caracterisques aux sous propriÃ©tÃ©s */
 	        void PropagateFeaturesToSubProperties(_SwPropertyImpl_Class * parent_property);
-	        /*! \brief Permet de detruire les controllers et de descativer l'edition des sous propriétés */
+	        /*! \brief Permet de detruire les controllers et de descativer l'edition des sous propriÃ©tÃ©s */
 	        void UnAllowControlSubProperties(_SwPropertyImpl_Class * parent_property);
-	        /*! \brief Permet d'activer l'edition des sous propriétés */
+	        /*! \brief Permet d'activer l'edition des sous propriÃ©tÃ©s */
 	        void AllowControlSubProperties(_SwPropertyImpl_Class * parent_property);
-	        /*! \brief Sur changement de controle d'une propriété */
+	        /*! \brief Sur changement de controle d'une propriÃ©tÃ© */
 	        void OnPropertyControlChange(ISwProperty * property,ISwController *new_controller,ISwController *old_controller);
         public:
 	        /*! \brief Construsteur */
 	        SwProperties_Class(SwComponent_Class * host);
 	        /*! \brief Destrusteur */
 	        virtual ~SwProperties_Class();
-	        /*! \brief Change la visibilite de la propriété */
+	        /*! \brief Change la visibilite de la propriÃ©tÃ© */
 	        void ChangePropertyVisibility(QString name,bool is_visible);
-	        /*! \brief Change l'editabilite de la propriété */
+	        /*! \brief Change l'editabilite de la propriÃ©tÃ© */
 	        void ChangePropertyEdition(QString name,bool is_editable);
-	        /*! \brief Change l'aspect controllable de la propriété */
+	        /*! \brief Change l'aspect controllable de la propriÃ©tÃ© */
 	        void ChangePropertyControllable(QString name,bool is_controllable);
- 	        /*! \brief Permet d'indiquer qu'une property a changé */
+ 	        /*! \brief Permet d'indiquer qu'une property a changÃ© */
 	        void SignalPropertyChange(QString name);
            //---------------------------------------------------------------------
             // Interface ISwProperties
             //---------------------------------------------------------------------
-	        /*! \brief Permet de crée une propriété */
+	        /*! \brief Permet de crÃ©e une propriÃ©tÃ© */
 	        ISwProperty * CreatePropertyWithType(int type_id,QString name);
-	        /*! \brief Permet de crée une propriété issue d'un object Qt*/
+	        /*! \brief Permet de crÃ©e une propriÃ©tÃ© issue d'un object Qt*/
 	        ISwProperty * CreatePropertyForQObject(QObject * obj,QString name,QString prefix=QString());
-	        /*! \brief Permet de crée toutes les propriétés issues d'un object Qt*/
+	        /*! \brief Permet de crÃ©e toutes les propriÃ©tÃ©s issues d'un object Qt*/
 	        void CreatePropertiesForQObject(QObject * obj,QString prefix=QString(),bool disable_objectName=false);
-	        /*! \brief Permet de detruire une propriété*/
+	        /*! \brief Permet de detruire une propriÃ©tÃ©*/
 			void DestroyProperty(QString name);
-			/*! \brief Permet de detruire les propriétés commencant par name */
+			/*! \brief Permet de detruire les propriÃ©tÃ©s commencant par name */
 			virtual void DestroyPropertiesBeginWith(QString name);
-	        /*! \brief Permet d'acceder a une propriété*/
+	        /*! \brief Permet d'acceder a une propriÃ©tÃ©*/
 	        ISwProperty * GetProperty(QString name);
-	        /*! \brief Permet d'acceder a la liste des propriétés*/
+	        /*! \brief Permet d'acceder a la liste des propriÃ©tÃ©s*/
             QList<ISwProperty *> & GetProperties();
 	        /*! \brief methode d'acces au signal avant changement*/
 	        LibIndeSig::iSignal1<ISwProperties *> & GetOnBeforePropertiesChange();
 	        /*! \brief methode d'acces au signal apres changement*/
 	        LibIndeSig::iSignal1<ISwProperties *> & GetOnAfterPropertiesChange();
-	        /*! \brief methode d'acces au signal de creation de propriété*/
+	        /*! \brief methode d'acces au signal de creation de propriÃ©tÃ©*/
 	        LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> & GetOnCreateProperty();
-	        /*! \brief methode d'acces au signal de destruction de propriété*/
+	        /*! \brief methode d'acces au signal de destruction de propriÃ©tÃ©*/
 	        LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> & GetOnDestroyProperty();
-			/*! \brief Override l'editabilité de toutes les proprieté du service /!\ cette proprieté n'est pas sauvé et remise à false au début*/
+			/*! \brief Override l'editabilitÃ© de toutes les proprietÃ© du service /!\ cette proprietÃ© n'est pas sauvÃ© et remise Ã  false au dÃ©but*/
 			virtual void ChangePropertiesEdition(bool isEditable);
-			/*! \brief Renvoi si le service du proprieté autorise l'edition de ses proprietés */
+			/*! \brief Renvoi si le service du proprietÃ© autorise l'edition de ses proprietÃ©s */
 			virtual bool GetPropertiesEdition();
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------
-            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-            lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+            lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
             void Liberate();
             //---------------------------------------------------------------------
             // Interface ISwHost
@@ -144,33 +144,33 @@ namespace StreamWork
 
 		/**
 		*	@class SwProperties_ClassHelper
-		*	@brief Classe de base pour permettre d'etendre les fonctionalités de la SwProperties_Class (Cf PlgPropertiesHelper dans protolg3)
-		*	Les composants instancient le SwProperties_Class, c'est pour ça qu'il n'est pas possible d'heriter de la SwProperties_Class
+		*	@brief Classe de base pour permettre d'etendre les fonctionalitÃ©s de la SwProperties_Class (Cf PlgPropertiesHelper dans protolg3)
+		*	Les composants instancient le SwProperties_Class, c'est pour Ã§a qu'il n'est pas possible d'heriter de la SwProperties_Class
 		*/
 		class BUILD_SWCORE SwProperties_ClassHelper
 		{
 		public :
-			/** @brief Construit l'helper et s'enregistre en tant qu'helper du service passé en parametre */
+			/** @brief Construit l'helper et s'enregistre en tant qu'helper du service passÃ© en parametre */
 			SwProperties_ClassHelper(SwProperties_Class *);
-			/** @brief detruit l'helper et se desenregistre en tant qu'helper du service de proprieté*/
+			/** @brief detruit l'helper et se desenregistre en tant qu'helper du service de proprietÃ©*/
 			virtual ~SwProperties_ClassHelper();
-			/** @brief renvoi true si le service de proprieté est setté */
+			/** @brief renvoi true si le service de proprietÃ© est settÃ© */
 			bool isValid();	
 		protected :
-			/** @brief Notifie le service de proprieté avant un changement*/
+			/** @brief Notifie le service de proprietÃ© avant un changement*/
 			void sendOnBeforeChange();
-			/** @brief Notifie le service de proprieté aprés un changement*/
+			/** @brief Notifie le service de proprietÃ© aprÃ©s un changement*/
 			void sendOnAfterChange();
-			/** @brief Permet d'ajouter une proprieté au service de proprieté
-			*	@param prefix : prefix de la proprieté
-			*	@param name : nom sans le prefix de la proprieté
-			*	@param property : proprieté à ajouter au service		*/
+			/** @brief Permet d'ajouter une proprietÃ© au service de proprietÃ©
+			*	@param prefix : prefix de la proprietÃ©
+			*	@param name : nom sans le prefix de la proprietÃ©
+			*	@param property : proprietÃ© Ã  ajouter au service		*/
 			void addProperty(QString prefix, QString name, _SwPropertyImpl_Class * property);
-			/** @brief Permet d'acceder au service de proprieté 
-			*   @return renvoi un pointeur sur le service de proprieté*/
+			/** @brief Permet d'acceder au service de proprietÃ© 
+			*   @return renvoi un pointeur sur le service de proprietÃ©*/
 			ISwProperties * getHost();
 		private : 
-			/** @brief service de proprieté sur lequel le helper agit */
+			/** @brief service de proprietÃ© sur lequel le helper agit */
 			SwProperties_Class * _propertiesClass;
 
 			void unValidate();

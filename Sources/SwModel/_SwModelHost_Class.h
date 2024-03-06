@@ -2,7 +2,7 @@
  \file _SwModelHost_Class.h
  \brief Implementation d'un hote de model
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -17,17 +17,17 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
-#include <ISwAdminSetup.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
-#include <ISwInterfaces_ConsumerObserver.h>
-#include <ISwPin_Listener.h>
-#include <SwPins_Manager_Class.h>
-#include <ISwService.h>
-#include <ISwPersistent.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Interfaces/ISwAdminSetup.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Interfaces/ISwInterfaces_ConsumerObserver.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Component/Interfaces/ISwPersistent.h"
 #include "_SwModelExportedEntity.h"
 #include "ISwModelHostModifier.h"
 //Nom du service
@@ -57,13 +57,13 @@ protected:
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
     SwInterfaces_Consumer_Class * _consumer_service;
-    /* service de gestion des propriétés */
+    /* service de gestion des propriÃ©tÃ©s */
     SwProperties_Class * _properties_service;
     /* service de gestion des pins */
     SwPins_Manager_Class * _pins_service;     
     /* Liste des entites exportes */
     QList<_SwModelExportedEntity *> _exported_entities;
-    /* Modele lié */
+    /* Modele liÃ© */
     SwComponent_Class * _model;
 
     /* Last Providers */
@@ -76,7 +76,7 @@ public:
     /*! \brief Destructeur */
     virtual ~_SwModelHost_Class();
     /*! \brief Initialisation des ressources
-          \note tous les services du composants doivent être déclarés dans cette methodes*/
+          \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
     virtual void InitializeResources() throw(SwException);
     //----------------------------------------------------
     // Interface ISwAdminSetup
@@ -90,7 +90,7 @@ public:
     void CreateBinding(SwComponent_Class * model);
 	/*! \brief Suppression du pont entre le model et le model host*/
     void DestroyBinding();
-	/*! \brief Creation reelle des entités*/
+	/*! \brief Creation reelle des entitÃ©s*/
     void BuildEntities();
 	/*! \brief Suppression reelle des entites*/
     void DestroyEntities();
@@ -102,10 +102,10 @@ public:
     QString GetServiceName(){return QString(CG_SW_SERVICE_MODELHOST); }
     /*! \brief Renvoie le nom du service reel (le nom de l'interface)
     \return le nom du service reel (le nom de l'interface)
-    \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+    \note au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()*/
     QString GetServiceRealName() {return QString(typeid(*this).name());}    
-    /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-    lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+    /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+    lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
     void Liberate();  
     //---------------------------------------------------------------------
     // Interface ISwPersistence

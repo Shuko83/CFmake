@@ -1,7 +1,7 @@
 /*!
  \file _SwModelsList.cpp
  \brief Liste des modeles
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -12,9 +12,9 @@
 #include <QIcon>
 #include <QDomDocument>
 #include <QDomElement>
-#include <SwApplication.h>
-#include <SwException.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
 
 #include "_SwModelsList.h"
 

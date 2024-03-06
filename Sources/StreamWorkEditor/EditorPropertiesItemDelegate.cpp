@@ -5,8 +5,8 @@
 */
 
 #include "EditorPropertiesItemDelegate.h"
-#include <SwPropertiesModelImpl.h>
-#include <ISwProperty.h>
+#include "Properties/SwPropertiesModelImpl.h"
+#include "Properties/ISwProperty.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;

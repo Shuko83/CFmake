@@ -2,17 +2,17 @@
  \file _SwConfigurationManager.cpp
  \brief Implementation of the Class _SwConfigurationManager 
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author G.BLESSAS
 */
 #include <QSet>
 #include <QApplication>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwConfigurationManager.h"
 #include <QMessageBox>
 #include <QFileInfo>
-#include <SwTime_ToolBox.h>
+#include "Tools/SwTime_ToolBox.h"
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
 
@@ -145,7 +145,7 @@ _SwConfigurationManager::~_SwConfigurationManager()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwConfigurationManager::InitializeResources() throw(SwException) {
     //Creation des service
     _consumer_service=new SwInterfaces_Consumer_Class(this) ;
@@ -197,7 +197,7 @@ void _SwConfigurationManager::InitializeResources() throw(SwException) {
     _provider_service->RegisterProvidedInterface<QAction>("ExportConfiguration", _actionExportConfig->getAction());
     _provider_service->RegisterProvidedInterface<QAction>("LoadConfiguration", _actionLoadConfig->getAction());
     
-    // creation de la propriété de renommage de la configuration
+    // creation de la propriÃ©tÃ© de renommage de la configuration
     _provider_service->RegisterProvidedInterface<ISwConfigurationNameProvider>(
 										"ConfigurationNameProvider",
 										_managedConfigurations);    
@@ -207,7 +207,7 @@ void _SwConfigurationManager::InitializeResources() throw(SwException) {
 
     //Gestion des configurations
     _configurations_count_property=_properties_service->CreateProperty<uint>("ConfigurationCOunt");
-    _configurations_count_property->SetDescription("nombre de configuration gérées par le ConfigurationManager");  
+    _configurations_count_property->SetDescription("nombre de configuration gÃ©rÃ©es par le ConfigurationManager");  
     _configurations_count_property->SetValue(QVariant(_configurationsCount));
     _configurations_count_property->GetOnChangeSignal().iconnect(*this,&_SwConfigurationManager::OnPropertyChange);
 
@@ -237,7 +237,7 @@ int _SwConfigurationManager::StreamExecute()
         bool loaded = Load();
         if (loaded)
         {
-            // si le chargement a fonctionné
+            // si le chargement a fonctionnÃ©
             //if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("Application start properties loaded\n"));
             
             // par defaut on active l interface d edition de la configuration
@@ -314,7 +314,7 @@ void _SwConfigurationManager::SetNormalConfiguration()
         _managedConfigurations->setSelectedConfiguration(0);
     }
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwConfigurationManager::OnPropertyChange(ISwProperty * property) 
 { 
     uint val;
@@ -341,11 +341,11 @@ bool _SwConfigurationManager::LoadConfiguration()
     bool configLoaded = _managedConfigurations->LoadConfiguration(getAbsoluteFilePath(_launchManager->getConfigurationFile().getFileName()));
     if (!configLoaded)
     {
-         // si le chargement n a pas fonctionné
+         // si le chargement n a pas fonctionnÃ©
          if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Configuration properties not found\n"));
          if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Loading default values\n"));
          
-         // si la propriété fichier des propriétés de configuration est ""
+         // si la propriÃ©tÃ© fichier des propriÃ©tÃ©s de configuration est ""
          if (_launchManager->getConfigurationFile().getFileName() == "")
          {
              QString defaultFilePath = SW_APP->GetApplicationDirPath() + "/" +"configuration"+"/";
@@ -394,11 +394,11 @@ bool _SwConfigurationManager::Load()
     bool loaded = _launchManager->LoadValues(getAbsoluteFilePath(_launchPropertiesFile.getFileName()));
     if (!loaded)
     {
-         // si le chargement n a pas fonctionné
+         // si le chargement n a pas fonctionnÃ©
          if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Start up configuration not found\n"));
          if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Loading default values\n"));
          
-         // si la propriété fichier de démarrage est ""
+         // si la propriÃ©tÃ© fichier de dÃ©marrage est ""
          if (_launchPropertiesFile.getFileName() == "")
          {
              QString defaultFilePath = SW_APP->GetApplicationDirPath() + "/" +"configuration"+"/";
@@ -412,7 +412,7 @@ bool _SwConfigurationManager::Load()
         
          if (!infoFile.exists())
          {
-            // on enregistre les parametres de démarrage (creation du fichier)
+            // on enregistre les parametres de dÃ©marrage (creation du fichier)
             bool saved = _launchManager->SaveValues(getAbsoluteFilePath(this->_launchPropertiesFile.getFileName()));
             if (!saved)
             {
@@ -594,8 +594,8 @@ bool _SwConfigurationManager::Stop()
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------            
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwConfigurationManager::Liberate()
 {
 
@@ -666,7 +666,7 @@ void _SwConfigurationManager::onQuit()
         _launchManager->setEditor(0);
 
 }
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwConfigurationManager::BeforeInterfaceAvailabilityChange(
 						QString interface_name,
 						SwComponent_Class * provider_host)
@@ -681,7 +681,7 @@ void _SwConfigurationManager::BeforeInterfaceAvailabilityChange(
     }
 }
 
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwConfigurationManager::AfterInterfaceAvailabilityChange(
 						QString interface_name,
 						SwComponent_Class * provider_host)

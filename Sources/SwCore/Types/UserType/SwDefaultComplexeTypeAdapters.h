@@ -10,9 +10,9 @@
 #define _SwDefaultComplexeTypeAdapters_H
 
 #include "SwCoreConstantes.h"
-#include "ISwComplexeTypeAdapters.h"
-#include "ISwSimpleTypeAdapter.h"
-#include "ISwProperty.h"
+#include "Types/UserType/ISwComplexeTypeAdapters.h"
+#include "Types/UserType/ISwSimpleTypeAdapter.h"
+#include "Properties/ISwProperty.h"
 
 namespace StreamWork
 {
@@ -23,13 +23,13 @@ namespace StreamWork
         \brief complexe types adaptateur par default
         @ingroup SwCoreGrp
 
-        exemple a donné
+        exemple a donnÃ©
         */
 		class BUILD_SWCORE SwDefaultComplexeTypeAdapters : public ISwComplexeTypeAdapters{
 		protected:
-		    /*! \brief propriété hôte */
+		    /*! \brief propriÃ©tÃ© hÃ´te */
 			ISwProperty * _complexe_property;
-		    /*! \brief propriété hôte */
+		    /*! \brief propriÃ©tÃ© hÃ´te */
 		    QList<ISwSimpleTypeAdapter *> _liste;
 		public:
 			/*! \brief Constructeur */
@@ -41,7 +41,7 @@ namespace StreamWork
 			//-----------------------------------------------------------------------
 			/*! \brief Initialisation */
 			void Initialize(ISwProperty * complexe_property);
-			/*! \brief Acces aux adapteurs simples (la liste est vide si le complexe adapter n'est pas attaché a une propriété*/
+			/*! \brief Acces aux adapteurs simples (la liste est vide si le complexe adapter n'est pas attachÃ© a une propriÃ©tÃ©*/
 			QList<ISwSimpleTypeAdapter *> * GetAdapters();
 			/*! \brief Liberation de la fabrique*/
 			void Liberate();

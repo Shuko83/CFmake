@@ -15,7 +15,7 @@
 
 #include <QGlobal.h>
 //Export via les DLL
-#include <SwMacros.h>
+#include "Main/SwMacros.h"
 
 #ifdef Q_CC_MSVC
 #pragma warning(disable:4290)

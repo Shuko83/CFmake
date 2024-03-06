@@ -13,7 +13,6 @@
 			"sourceDir" : "../Component/Interfaces",
 			"destDir" : "${INSTALLDIR}/include",
 			"files" : [
-				"ISwObject.h",
 				"ISwObjectFactory.h",
 				"ISwObservable.h",
 				"ISwObserver.h",
@@ -27,7 +26,6 @@
 				"ISwComponentProvider.h",
 				"ISwCreationPostProcessor.h",				
 				"ISwExecutor.h",
-				"ISwExecutor2.h",
 				"ISwFinalizer.h",
 				"ISwFinalizerManager.h",
 				"ISwHost.h",
@@ -124,7 +122,6 @@
 			"sourceDir" : "../Properties",
 			"destDir" : "${INSTALLDIR}/include",
 			"files" : [
-				"ISwProperty2.h",
 				"SwPropertiesModelImpl.h",
 				"ISwProperty.h"
 			]

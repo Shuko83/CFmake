@@ -9,7 +9,7 @@
 
 #include "ISwServiceCodeTimer.h"
 #include <QMap>
-#include <_SwPerfChrono.h>
+#include "_SwPerfChrono.h"
 
 namespace StreamWork 
 {
@@ -31,13 +31,13 @@ namespace StreamWork
 			// Interface ISwServiceCodeTimer
 			//---------------------------------------------------------------------
 			/**
-             * @brief	: permet de démarrer le timer
+             * @brief	: permet de dÃ©marrer le timer
              * Param	: void * caller - pointeur sur la classe appelante
              */
 			virtual void start (void * caller) ;
 
             /**
-             * @brief	: Permet de récupérer le temps écouler depuis le start 
+             * @brief	: Permet de rÃ©cupÃ©rer le temps Ã©couler depuis le start 
              * Return	: double - en ms
              * Param	: void * caller - pointeur sur la classe appelante
              */

@@ -1,7 +1,7 @@
 /*!
 \file _SwConsumedInterfaceContainer_Class.h
 \date 12/04/2006
-\brief conteneur de stockage des informations relatives a une interface consommée
+\brief conteneur de stockage des informations relatives a une interface consommÃ©e
 \author  Big
 \version 1.0
  */
@@ -17,10 +17,10 @@
   * INCLUDES LOCAUX
  */
 #include "SwCoreConstantes.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "ISwInterfaces_Provider.h"
-#include "SwInterfaces_Consumer_Class.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
 
 namespace StreamWork 
 {
@@ -28,7 +28,7 @@ namespace StreamWork
     {
         /*!
         \class _SwConsumedInterfaceContainer_Class
-        \brief conteneur de stockage des informations relatives a une interface consommée
+        \brief conteneur de stockage des informations relatives a une interface consommÃ©e
         */
         class _SwConsumedInterfaceContainer_Class {
             /*! \brief Nom de l'interface */

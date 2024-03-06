@@ -12,9 +12,9 @@
 #include <QObject>
 #include <QMenu>
 #include <QMap>
-#include <SwComponent_Class.h>
-#include <ISwPins_ManagerListener.h>
-#include "LibIndeSig.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Main/Connexion/ISwPins_ManagerListener.h"
+#include "Tools/Signal/LibIndeSig.h"
 
 namespace StreamWork
 {

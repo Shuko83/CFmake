@@ -18,12 +18,12 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwEditorGraphicItem.h"
 #include "_ISwEditorGraphicItemListener.h"
 #include "_ISwEditorInterfaceGraphicItemListener.h"
 #include "_SwEditorInterfacesLayerManager.h"
-#include "ISwInterfaces_Service.h"
+#include "Main/Connexion/ISwInterfaces_Service.h"
 
 #define CG_SW_EDITOR_INTERFACE_GRAPHIC_ITEM_OFFSET_TYPE 100001
 
@@ -145,7 +145,7 @@ namespace StreamWork
             \return Position linaire (comprise entre 0 et 1)*/
             double GetPortLinearPosition();
             /*! \brief Permet de connaitre la position linaire du port de l'interface s'approchant le plus
-            de la position passé en parametres*/
+            de la position passÃ© en parametres*/
             QPointF GetPortNearestValidPosition(const QPointF & pos,double * reminding_linear_position);
             /*! \brief Permet de definir la position avec recalculation de la position linaire*/
             void SetPortPosition(const QPointF & pos, bool reprocess_linear_position=true);

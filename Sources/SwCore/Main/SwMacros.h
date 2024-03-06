@@ -10,7 +10,7 @@
 #define _SwMacros_H
 
 #include <QtCore/QtGlobal>
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 
 #ifdef __cplusplus
 #  define SW_EXTERN_C    extern "C"

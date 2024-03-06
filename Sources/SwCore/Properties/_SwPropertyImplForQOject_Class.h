@@ -16,9 +16,9 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "_SwPropertyImpl_Class.h"
-#include "LibIndeSig.h"
-#include "SwIconDescriptor.h"
+#include "Properties/_SwPropertyImpl_Class.h"
+#include "Tools/Signal/LibIndeSig.h"
+#include "Types/SwIconDescriptor.h"
 
 namespace StreamWork
 {

@@ -18,10 +18,10 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "ISwService.h"
-#include "ISwHost.h"
-#include "ISwPersistent.h"
-#include "ISwProperties.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Component/Interfaces/ISwHost.h"
+#include "Component/Interfaces/ISwPersistent.h"
+#include "Component/Services/ISwProperties.h"
 
 //Nom du service
 #define CG_SW_SERVICE_CONTROLLER "Controller"
@@ -39,9 +39,9 @@ namespace StreamWork
         */
         class ISwController: public ISwService, public ISwHost, public ISwPersistent {
         public:
-	        /*! \brief Permet de crée une propriété */
+	        /*! \brief Permet de crÃ©e une propriÃ©tÃ© */
 	        virtual void InitializeControl(ISwProperties * properties,QString property_name)=0;		
-	        /*! \brief le controle est supprimer au niveau de la propriété */
+	        /*! \brief le controle est supprimer au niveau de la propriÃ©tÃ© */
 	        virtual void DetachControl()=0;		
             //---------------------------------------------------------------------
             // Interface ISwService
@@ -51,7 +51,7 @@ namespace StreamWork
             QString GetServiceName(){return QString(CG_SW_SERVICE_CONTROLLER); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
             \return le nom du service reel (le nom de l'interface)
-            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+            \note au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()*/
             QString GetServiceRealName() {return QString(typeid(*this).name());}    
         };
     }

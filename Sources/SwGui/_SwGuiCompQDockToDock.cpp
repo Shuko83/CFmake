@@ -64,10 +64,10 @@ void _SwGuiCompQDockToDock::interfaceUnavailable(QString interfaceName)
 //-----------------------------------------------------------------------------
 SwDockWidget_DockWidget & _SwGuiCompQDockToDock::GetDockWidget()
 {
-	//Attention ca risque de crasher si on connect la sortie avant l'entrée
+	//Attention ca risque de crasher si on connect la sortie avant l'entrÃ©e
 	if (_dock)
 		return (*_dock);
 
-	//Pour éviter le warning
+	//Pour Ã©viter le warning
 	return *(new SwDockWidget_DockWidget());
 }

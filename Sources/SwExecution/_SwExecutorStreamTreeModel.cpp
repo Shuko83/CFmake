@@ -2,19 +2,19 @@
  \file _SwExecutorStreamTreeModel.cpp
  \brief Modele pour la selection des composants executables
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 /*
   * INCLUDES LOCAUX
   */
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QMessageBox>
 #include <QMimeData>
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include "_SwExecutorStreamTreeModel.h"
 #include "ISwExecutable_Service.h"
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;

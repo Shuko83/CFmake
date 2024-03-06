@@ -6,8 +6,8 @@
  \author PGA
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompSplitterWidget.h"
 
 using namespace StreamWork::SwCore;
@@ -41,7 +41,7 @@ _SwGuiCompSplitterWidget::~_SwGuiCompSplitterWidget()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompSplitterWidget::InitializeResources() throw( SwException )
 {
     //Creation des service
@@ -96,7 +96,7 @@ void _SwGuiCompSplitterWidget::resetWidgetSizes()
 }
 
 
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwGuiCompSplitterWidget::OnPropertyChange( ISwProperty * property )
 {
     uint val;
@@ -170,7 +170,7 @@ void _SwGuiCompSplitterWidget::OnPropertyChange( ISwProperty * property )
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompSplitterWidget::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     QMap<QString, QWidget *>::iterator widget_it;
@@ -187,7 +187,7 @@ void _SwGuiCompSplitterWidget::BeforeInterfaceAvailabilityChange( QString interf
     }
 }
 
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompSplitterWidget::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     QMap<QString, QWidget *>::iterator widget_it;

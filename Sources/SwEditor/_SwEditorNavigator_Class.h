@@ -14,7 +14,7 @@
 #include <QString>
 #include <QList>
 #include <QSet>
-#include <ISwService.h>
+#include "Main/Services/Management/ISwService.h"
 
 /*
   * INCLUDES LOCAUX
@@ -53,10 +53,10 @@ namespace StreamWork
             QString GetServiceName(){return QString(CG_SW_SERVICE_NAVIGATOR); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
 				\return le nom du service reel (le nom de l'interface)
-				\note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+				\note au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()*/
             QString GetServiceRealName() {return QString(typeid(*this).name());}
-            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-				lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+				lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
             void Liberate();
             //-------------------------------------------------------------
             // Navigation dans l'arbre du stream

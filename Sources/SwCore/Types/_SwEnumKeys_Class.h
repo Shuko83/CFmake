@@ -2,7 +2,7 @@
  \file _SwEnumKeys_Class.h
  \brief Classe pour la gestion des enumeres
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 
 */
@@ -19,7 +19,7 @@
   * INCLUDES LOCAUX
   */
 #include "SwCoreConstantes.h"
-#include "SwRef.h"
+#include "SwRef/SwRef.h"
 
 namespace StreamWork
 {

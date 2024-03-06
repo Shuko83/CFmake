@@ -16,7 +16,7 @@
 * INCLUDES LOCAUX
 */
 #include "SwCoreConstantes.h"
-#include "SwRefPtr.h"
+#include "SwRef/SwRefPtr.h"
 
 namespace StreamWork
 {
@@ -34,10 +34,10 @@ namespace StreamWork
 
 			/** @brief setter sur le pas */
 			void setStep(double step);
-			/** @brief setter sur la currentValue du Double concerné */
+			/** @brief setter sur la currentValue du Double concernÃ© */
 			void setCurrentValue(double currentValue);
 
-			/** @brief méthode surchargée du validateur */
+			/** @brief mÃ©thode surchargÃ©e du validateur */
 			virtual State 	validate ( QString & input, int & pos ) const;
 		private:
 			double _step;				/** @brief valeur du pas */
@@ -73,7 +73,7 @@ namespace StreamWork
 			/** @brief accesseur sur la precision */
 			int getPrecision();
 
-			/** @brief accesseur du QDoubleValidator affecté */
+			/** @brief accesseur du QDoubleValidator affectÃ© */
 			SwDoubleQValidatorDecorator* getValidator();
 
 			/** @brief mutateur sur le pas */
@@ -82,7 +82,7 @@ namespace StreamWork
 			void setMaximum(double);
 			/** @brief mutateur sur la valeur minimum */
 			void setMinimum(double);
-			/** @brief mutateur de la précision */
+			/** @brief mutateur de la prÃ©cision */
 			void setPrecision(int);
 
 		private :

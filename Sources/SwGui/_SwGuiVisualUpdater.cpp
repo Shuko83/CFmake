@@ -5,9 +5,9 @@
  */
 
 #include "_SwGuiVisualUpdater.h"
-#include "ISwPluginsBank.h" 
-#include "SwMacros.h" 
-#include "SwApplication.h" 
+#include "Main/Plugin/ISwPluginsBank.h"
+#include "Main/SwMacros.h"
+#include "Main/SwApplication.h"
 
 #define UPDATE_DIR "_update"
 
@@ -56,7 +56,7 @@ _SwGuiVisualUpdater::~_SwGuiVisualUpdater(){
 }
 /** 
  * @brief Initialisation des ressources
- * @note tous les services du composants doivent être déclarés dans cette methodes
+ * @note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes
  */
 void _SwGuiVisualUpdater::InitializeResources() throw(SwException) {
     //Creation des services
@@ -66,7 +66,7 @@ void _SwGuiVisualUpdater::InitializeResources() throw(SwException) {
     this->RegisterService(_consumer_service);
 
     //--------------------------------------
-    //Definition Interfaces consommés
+    //Definition Interfaces consommÃ©s
     //--------------------------------------
     //Importation de l'interface QWidget
     _consumer_service->RegisterConsumedInterface<ISwHttpServer>("HttpServer",&_handleHttpServer);
@@ -78,13 +78,13 @@ void _SwGuiVisualUpdater::InitializeResources() throw(SwException) {
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/** @brief Avant changement de la disponibilité de l'interface */
+/** @brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiVisualUpdater::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host){
     if (_handleHttpServer!=0) {
         _handleHttpServer->unregisterHttpPart(this);
     }
 }
-/** @brief Apres changement de la disponibilité de l'interface */
+/** @brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiVisualUpdater::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host){
     if (_handleHttpServer!=0) {
         _handleHttpServer->registerHttpPart(this);
@@ -233,7 +233,7 @@ void _SwGuiVisualUpdater::decodePart(QByteArray * data) {
     s+=">>>";
     qDebug("part header:\r\n%s",s.toLatin1().data());
     //Fin pour debug
-    //Extraction données d'entete
+    //Extraction donnÃ©es d'entete
     QMap<QString,QString> headerData;
     extractPartHeader(&headerData,header);
     //Enregistrement d'un fichier si c'est un fichier

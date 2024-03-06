@@ -7,9 +7,9 @@
 */
 
 #include <QApplication>
-#include <SwApplication.h>
-#include <SwMacros.h>
-#include <SwRefPtr.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "SwRef/SwRefPtr.h"
 #include <QList.h>
 #include "_SwGuiCssEditor.h"
 #include "_SwGuiCssDialog.h"

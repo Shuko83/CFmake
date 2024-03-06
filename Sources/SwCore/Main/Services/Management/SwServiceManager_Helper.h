@@ -2,9 +2,9 @@
 
 #include <functional>
 
-#include "SwMacros.h"
-#include "ISwServicesManager_Listener.h"
-#include "SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Main/Services/Management/ISwServicesManager_Listener.h"
+#include "Main/SwApplication.h"
 
 template <typename SERVICE_TYPE>
 class SwServiceManager_Helper : public StreamWork::SwCore::ISwServicesManager_Listener
@@ -25,7 +25,7 @@ private:
 	SERVICE_TYPE * _service;
 	std::function<void(bool)> _callback;
 
-	// Inline pour eviter le warning C4505 remonté par visual incorrectement sur les methodes virtual dans des classes template
+	// Inline pour eviter le warning C4505 remontÃ© par visual incorrectement sur les methodes virtual dans des classes template
 	virtual void OnRegisterService(StreamWork::SwCore::ISwService * service) override
 	{
 		if (service->GetServiceName() == _serviceName)
@@ -37,7 +37,7 @@ private:
 		}
 	}
 
-	// Inline pour eviter le warning C4505 remonté par visual incorrectement sur les methodes virtual dans des classes template
+	// Inline pour eviter le warning C4505 remontÃ© par visual incorrectement sur les methodes virtual dans des classes template
 	virtual void OnUnregisterService(StreamWork::SwCore::ISwService * service) override
 	{
 		if (service->GetServiceName() == _serviceName)

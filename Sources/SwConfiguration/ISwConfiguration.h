@@ -9,9 +9,9 @@
 
 
 #include "ISwConfigurationListener.h"
-#include <ISwProperties.h>
-#include <ISwExecution_Service.h>
-#include <ISwServiceOwnerConfigurable.h>
+#include "Component/Services/ISwProperties.h"
+#include "ISwExecution_Service.h"
+#include "Component/Services/ISwServiceOwnerConfigurable.h"
 
 namespace StreamWork {
 

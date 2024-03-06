@@ -1,14 +1,14 @@
 /*!
  \file _SwTreeItem.cpp
  \brief d'un item d'arbre de base
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
 
 #include <QStringList>
 
-#include "_SwTreeItem.h"
+#include "Component/Base/_SwTreeItem.h"
 
 _SwTreeItem::_SwTreeItem(const QList<QVariant> &data,const QIcon & icon, _SwTreeItem *parent,const QColor & foreground,const QFont & font)
 {

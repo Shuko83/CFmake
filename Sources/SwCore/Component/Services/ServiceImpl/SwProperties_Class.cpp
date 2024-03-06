@@ -1,23 +1,23 @@
 /*!
 \file SwProperties_Class.cpp
 \date 12/04/2006
-\brief implementation la liste des propriétés
+\brief implementation la liste des propriÃ©tÃ©s
 \author  Big
 \version 1.0
  */
 #include <algorithm>
 #include <QMetaObject>
-#include "_SwPropertyImpl_Class.h"
-#include "_SwPropertyImplForQOject_Class.h"
-#include "_SwPropertyImplSimpleTypeAdapter_Class.h"
-#include "SwPropertyPersistentToolbox.h"
-#include "SwProperties_Class.h"
-#include "SwException.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
-#include "ISwComplexeTypeAdaptersFactory.h"
-#include "ISwComplexeTypeAdapters.h"
-#include "ISwController.h"
+#include "Properties/_SwPropertyImpl_Class.h"
+#include "Properties/_SwPropertyImplForQOject_Class.h"
+#include "Properties/_SwPropertyImplSimpleTypeAdapter_Class.h"
+#include "Tools/SwPropertyPersistentToolbox.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Types/UserType/ISwComplexeTypeAdaptersFactory.h"
+#include "Types/UserType/ISwComplexeTypeAdapters.h"
+#include "Component/Services/ISwController.h"
 
 using namespace StreamWork::SwCore;
 
@@ -35,7 +35,7 @@ SwProperties_Class::~SwProperties_Class(){
 //---------------------------------------------------------------------
 // Interface ISwProperties
 //---------------------------------------------------------------------            
-/*! \brief Permet de crée une propriété */
+/*! \brief Permet de crÃ©e une propriÃ©tÃ© */
 ISwProperty * SwProperties_Class::CreatePropertyWithType(int type_id,QString name) {
     _SwPropertyImpl_Class * property;
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
@@ -73,7 +73,7 @@ ISwProperty * SwProperties_Class::CreatePropertyWithType(int type_id,QString nam
     return property;
  
 }
-/*! \brief Permet de crée une propriété issue d'un object Qt*/
+/*! \brief Permet de crÃ©e une propriÃ©tÃ© issue d'un object Qt*/
 ISwProperty * SwProperties_Class::CreatePropertyForQObject(QObject * obj,QString name,QString prefix) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
     _SwPropertyImpl_Class * property;
@@ -104,7 +104,7 @@ ISwProperty * SwProperties_Class::CreatePropertyForQObject(QObject * obj,QString
     _OnAfterChange(this);
     return property;
 }
-/*! \brief Permet de crée toutes les propriétés issues d'un object Qt*/
+/*! \brief Permet de crÃ©e toutes les propriÃ©tÃ©s issues d'un object Qt*/
 void SwProperties_Class::CreatePropertiesForQObject(QObject * obj,QString prefix,bool disable_objectName) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
     _SwPropertyImpl_Class * property;
@@ -114,7 +114,7 @@ void SwProperties_Class::CreatePropertiesForQObject(QObject * obj,QString prefix
     _OnBeforeChange(this);
     while (m_obj!=NULL) {
         for(int i=0;i<m_obj->propertyCount();i++) {
-            //Evaluation de la validite de la propriété
+            //Evaluation de la validite de la propriÃ©tÃ©
             is_valid_property=m_obj->property(i).userType()!=QVariant::Invalid;
             if (is_valid_property && disable_objectName && m_obj->property(i).name()==QString("objectName"))
                 is_valid_property=false;
@@ -142,7 +142,7 @@ void SwProperties_Class::CreatePropertiesForQObject(QObject * obj,QString prefix
     }
     _OnAfterChange(this);
 }
-/*! \brief Permet de detruire une propriété*/
+/*! \brief Permet de detruire une propriÃ©tÃ©*/
 void SwProperties_Class::DestroyProperty(QString name) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
 
@@ -159,7 +159,7 @@ void SwProperties_Class::DestroyProperty(QString name) {
     }    
 }
 
-/*! \brief Permet de detruire les propriétés commencant par name */
+/*! \brief Permet de detruire les propriÃ©tÃ©s commencant par name */
 void SwProperties_Class::DestroyPropertiesBeginWith(QString name){
 	QMap<QString, _SwPropertyImpl_Class *>::iterator it;
 
@@ -181,7 +181,7 @@ void SwProperties_Class::DestroyPropertiesBeginWith(QString name){
 	}
 }
 
-/*! \brief Permet d'acceder a une propriété*/
+/*! \brief Permet d'acceder a une propriÃ©tÃ©*/
 ISwProperty * SwProperties_Class::GetProperty(QString name) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
 
@@ -190,13 +190,13 @@ ISwProperty * SwProperties_Class::GetProperty(QString name) {
         return it.value();
     return NULL;
 }
-/*! \brief Permet d'acceder a la liste des propriétés*/
+/*! \brief Permet d'acceder a la liste des propriÃ©tÃ©s*/
 QList<ISwProperty *> & SwProperties_Class::GetProperties() {
     return _set_properties;
 }
-/*! \brief Change la visibilite de la propriété
-\param[in] name nom de la propriété
-\param[in] nouvelle valeur de visibilité*/
+/*! \brief Change la visibilite de la propriÃ©tÃ©
+\param[in] name nom de la propriÃ©tÃ©
+\param[in] nouvelle valeur de visibilitÃ©*/
 void SwProperties_Class::ChangePropertyVisibility(QString name,bool is_visible) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
 
@@ -209,8 +209,8 @@ void SwProperties_Class::ChangePropertyVisibility(QString name,bool is_visible) 
     }
 
 }
-/*! \brief Change l'editabilite de la propriété
-\param[in] name nom de la propriété
+/*! \brief Change l'editabilite de la propriÃ©tÃ©
+\param[in] name nom de la propriÃ©tÃ©
 \param[in] nouvelle valeur de l'edition*/
 void SwProperties_Class::ChangePropertyEdition(QString name,bool is_editable) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
@@ -224,8 +224,8 @@ void SwProperties_Class::ChangePropertyEdition(QString name,bool is_editable) {
     }
 
 }
-/*! \brief Change l'aspect controllable de la propriété
-\param[in] name nom de la propriété
+/*! \brief Change l'aspect controllable de la propriÃ©tÃ©
+\param[in] name nom de la propriÃ©tÃ©
 \param[in] nouvelle valeur de l'aspect controllable */
 void SwProperties_Class::ChangePropertyControllable(QString name,bool is_controllable) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
@@ -238,7 +238,7 @@ void SwProperties_Class::ChangePropertyControllable(QString name,bool is_control
         _OnAfterChange(this);
     }
 }
-/*! \brief Permet d'indiquer qu'une property a changé */
+/*! \brief Permet d'indiquer qu'une property a changÃ© */
 void SwProperties_Class::SignalPropertyChange(QString name) {
     ISwProperty * p=GetProperty(name);
     if (p!=0) {
@@ -253,19 +253,19 @@ LibIndeSig::iSignal1<ISwProperties *> & SwProperties_Class::GetOnBeforePropertie
 LibIndeSig::iSignal1<ISwProperties *> & SwProperties_Class::GetOnAfterPropertiesChange() {
     return _OnAfterChange;
 }
-/*! \brief methode d'acces au signal de creation de propriété*/
+/*! \brief methode d'acces au signal de creation de propriÃ©tÃ©*/
 LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> & SwProperties_Class::GetOnCreateProperty() {
     return _OnCreateProperty;
 }
-/*! \brief methode d'acces au signal de destruction de propriété*/
+/*! \brief methode d'acces au signal de destruction de propriÃ©tÃ©*/
 LibIndeSig::iSignal2<ISwProperties *,ISwProperty *> & SwProperties_Class::GetOnDestroyProperty() {
     return _OnDestroyProperty;
 }
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------            
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void SwProperties_Class::Liberate(){
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
 
@@ -303,7 +303,7 @@ void SwProperties_Class::Load(QDomElement & elt,ISwFinalizerManager & finalizer_
 }
 
 /*! \brief methode permettant de sauver des donnees
-(dans l'ordre d'enregistrement des données - important si des properties sont crées lors du load) */
+(dans l'ordre d'enregistrement des donnÃ©es - important si des properties sont crÃ©es lors du load) */
 //---------------------------------------------------------------------
 void SwProperties_Class::Save(QXmlStreamWriter& writer)
 {
@@ -313,7 +313,7 @@ void SwProperties_Class::Save(QXmlStreamWriter& writer)
 	}
 }
 
-/*! \brief Permet de crée les sous propriétés pour un type complexe */
+/*! \brief Permet de crÃ©e les sous propriÃ©tÃ©s pour un type complexe */
 void SwProperties_Class::CreateSubProperties(_SwPropertyImpl_Class * parent_property) {
     //Check s'il existe un fabrique d'adapteurs pour ce type
     ISwComplexeTypeAdaptersFactory *factory=SW_CTA_FACTORIES.GetFactoryForUserType(parent_property->GetValue().userType());
@@ -321,7 +321,7 @@ void SwProperties_Class::CreateSubProperties(_SwPropertyImpl_Class * parent_prop
         return;
     ISwComplexeTypeAdapters * adapters=factory->CreateAdapters();
     parent_property->SetComplexeTypeAdapters(adapters);
-    //Pour chaque adaptateur, on cree une sous propriété
+    //Pour chaque adaptateur, on cree une sous propriÃ©tÃ©
     QList<ISwSimpleTypeAdapter *> * adapters_list=adapters->GetAdapters();
     for (int i=0;i<adapters_list->count();i++) {
         QString p_name=parent_property->GetRealName()+"."+(*adapters_list)[i]->Label();
@@ -333,14 +333,14 @@ void SwProperties_Class::CreateSubProperties(_SwPropertyImpl_Class * parent_prop
         property->GetOnControlChangeSignal().iconnect(*this,&SwProperties_Class::OnPropertyControlChange);
    }
 }
-/*! \brief Permet de detruire les sous propriétés pour un type complexe */
+/*! \brief Permet de detruire les sous propriÃ©tÃ©s pour un type complexe */
 void SwProperties_Class::DestroySubProperties(_SwPropertyImpl_Class * parent_property) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
-    //Si la propriété a des adaptateurs
+    //Si la propriÃ©tÃ© a des adaptateurs
     ISwComplexeTypeAdapters * adapters=parent_property->GetComplexeTypeAdapters();
     if (adapters==NULL)
         return; //Non
-    //Pour chaque adaptateur, on detruit la sous propriété associé
+    //Pour chaque adaptateur, on detruit la sous propriÃ©tÃ© associÃ©
     QList<ISwSimpleTypeAdapter *> * adapters_list=adapters->GetAdapters();
     for (int i=0;i<adapters_list->count();i++) {
         QString p_name=parent_property->GetRealName()+"."+(*adapters_list)[i]->Label();
@@ -356,14 +356,14 @@ void SwProperties_Class::DestroySubProperties(_SwPropertyImpl_Class * parent_pro
         }
     }
 }
-/*! \brief Permet de propager les caracterisques aux sous propriétés */
+/*! \brief Permet de propager les caracterisques aux sous propriÃ©tÃ©s */
 void SwProperties_Class::PropagateFeaturesToSubProperties(_SwPropertyImpl_Class * parent_property) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
-    //Si la propriété a des adaptateurs
+    //Si la propriÃ©tÃ© a des adaptateurs
     ISwComplexeTypeAdapters * adapters=parent_property->GetComplexeTypeAdapters();
     if (adapters==NULL)
         return; //Non
-    //Pour chaque adaptateur, on propage les caracteristiques aux sous propriétés
+    //Pour chaque adaptateur, on propage les caracteristiques aux sous propriÃ©tÃ©s
     QList<ISwSimpleTypeAdapter *> * adapters_list=adapters->GetAdapters();
     for (int i=0;i<adapters_list->count();i++) {
         QString p_name=parent_property->GetRealName()+"."+(*adapters_list)[i]->Label();
@@ -377,14 +377,14 @@ void SwProperties_Class::PropagateFeaturesToSubProperties(_SwPropertyImpl_Class 
         }
     }    
 }
-/*! \brief Permet de detruire les controllers et de descativer l'edition des sous propriétés */
+/*! \brief Permet de detruire les controllers et de descativer l'edition des sous propriÃ©tÃ©s */
 void SwProperties_Class::UnAllowControlSubProperties(_SwPropertyImpl_Class * parent_property) {
     QMap<QString,_SwPropertyImpl_Class *>::iterator it;
-    //Si la propriété a des adaptateurs
+    //Si la propriÃ©tÃ© a des adaptateurs
     ISwComplexeTypeAdapters * adapters=parent_property->GetComplexeTypeAdapters();
     if (adapters==NULL)
         return; //Non
-    //Pour chaque adaptateur, on propage les caracteristiques aux sous propriétés
+    //Pour chaque adaptateur, on propage les caracteristiques aux sous propriÃ©tÃ©s
     QList<ISwSimpleTypeAdapter *> * adapters_list=adapters->GetAdapters();
     for (int i=0;i<adapters_list->count();i++) {
         QString p_name=parent_property->GetRealName()+"."+(*adapters_list)[i]->Label();
@@ -399,11 +399,11 @@ void SwProperties_Class::UnAllowControlSubProperties(_SwPropertyImpl_Class * par
     }    
 
 }
-/*! \brief Permet d'activer l'edition des sous propriétés */
+/*! \brief Permet d'activer l'edition des sous propriÃ©tÃ©s */
 void SwProperties_Class::AllowControlSubProperties(_SwPropertyImpl_Class * parent_property){
     PropagateFeaturesToSubProperties(parent_property);
 }
-/*! \brief Sur changement de controle d'une propriété */
+/*! \brief Sur changement de controle d'une propriÃ©tÃ© */
 void SwProperties_Class::OnPropertyControlChange(ISwProperty * property,ISwController *new_controller,ISwController *old_controller){
     if (old_controller!=NULL) {
         AllowControlSubProperties(dynamic_cast<_SwPropertyImpl_Class *>(property));    

@@ -1,4 +1,4 @@
-#include "SwInteger.h"
+#include "Types/SwInteger.h"
 
 #include <limits>
 
@@ -161,7 +161,7 @@ QValidator::State SwIntegerQValidatorDecorator::validate( QString & input, int &
 
 	state =  QIntValidator::validate(input, pos);
 
-	// Si le modulo est nul, le step est ok par rapport à la valeur de départ
+	// Si le modulo est nul, le step est ok par rapport Ã  la valeur de dÃ©part
 	if( (_currentValue - bottom()) % _step != 0 )
 	{
 		state = QValidator::Invalid;

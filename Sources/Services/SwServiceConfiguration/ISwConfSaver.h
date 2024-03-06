@@ -21,10 +21,10 @@ namespace StreamWork
         class ISwConfSaver {
         public:
             
-            /** @brief : sauvegarde dans un fichier des données de la QString */
+            /** @brief : sauvegarde dans un fichier des donnÃ©es de la QString */
             virtual bool saveCallBack(QString file) = 0;         
             
-			/** @brief sauvegarde manuelle dans un fichier des données de la QString */
+			/** @brief sauvegarde manuelle dans un fichier des donnÃ©es de la QString */
 			virtual bool manualSave(QString filedata) = 0;
         };
     }

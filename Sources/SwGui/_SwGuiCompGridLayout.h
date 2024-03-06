@@ -7,7 +7,7 @@
 #ifndef __SWGUICOMPGRIDLAYOUT_H
 #define __SWGUICOMPGRIDLAYOUT_H
 
-#include <Component.h>
+#include "Component/Base/Component.h"
 
 #include "_SwGuiCompGridLayoutCell.h"
 
@@ -37,10 +37,10 @@ public:
     virtual ~_SwGuiCompGridLayout();
     /*! \brief Initialisation du composant */
     virtual void initializeComponent() throw(SwException);
-    /*! \brief evenement avant changement de la disponibilité de l'interface
+    /*! \brief evenement avant changement de la disponibilitÃ© de l'interface
         \note A Surcharger*/
     virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
-    /*! \brief evenement apres changement de la disponibilité de l'interface
+    /*! \brief evenement apres changement de la disponibilitÃ© de l'interface
         \note A Surcharger*/
     virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
     //-------------------------------------------------------------------------

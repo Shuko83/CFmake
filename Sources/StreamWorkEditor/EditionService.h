@@ -7,7 +7,7 @@
 #ifndef _EDITIONSERVICE_H
 #define _EDITIONSERVICE_H
 
-#include "ISwEditionService.h"
+#include "Main/Services/ISwEditionService.h"
 
 
 
@@ -21,8 +21,8 @@ public:
     EditionService();
     /** @brief Destructor */
     virtual ~EditionService();
-    /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-    lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+    /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+    lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
     void Liberate();
     /*! \brief verifie la licence*/
     virtual bool editorSavingInProgress();

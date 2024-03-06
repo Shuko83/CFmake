@@ -1,7 +1,7 @@
 /*!
  \file _SwRouting_ToolBox.cpp
  \brief Implementation of the Class SwAddress_Class
- \date 24-août-2006 12:21:05
+ \date 24-aoÃ»t-2006 12:21:05
  \author F.Bighelli
 */
 /*

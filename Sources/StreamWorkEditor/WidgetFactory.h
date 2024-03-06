@@ -26,7 +26,7 @@ public:
     QWidget * buildPluginsBankView(bool isGraphViewHosted);
     /** @brief Construction widget vue en arbre*/
     QWidget * buildStreamTreeView(QStreamTreeModel * model);
-    /** @brief Construction widget propriétés*/
+    /** @brief Construction widget propriÃ©tÃ©s*/
     PropertiesWidget * buildPropertiesWidget();
 	/** @brief Construction widget Color legend*/
 	QWidget * buildLegendView();
@@ -36,7 +36,7 @@ private:
 	WidgetFactory();
 	/** @brief ~Destructor */
 	~WidgetFactory();
-	/** @brief Modification attribut lorsque le widget est hébergé par un GraphView */
+	/** @brief Modification attribut lorsque le widget est hÃ©bergÃ© par un GraphView */
     void setGraphViewMode(QWidget * w);
 private:
     /** @brief Palette d'affichage pour la vue graph */

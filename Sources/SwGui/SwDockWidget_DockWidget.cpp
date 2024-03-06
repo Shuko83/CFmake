@@ -866,7 +866,7 @@ void SwDockWidget_DockWidget::showShadow(int area)
 		if ((area & Qt::RightDockWidgetArea) && (area & Qt::BottomDockWidgetArea))
 			ui->bottomRight->show();
 
-		//Changement de style si docké
+		//Changement de style si dockÃ©
 		if((area & Qt::TopDockWidgetArea) && (area & Qt::BottomDockWidgetArea) && (area & Qt::RightDockWidgetArea) && (area & Qt::LeftDockWidgetArea))
 			setupShadow(_shadowColor);
 		else

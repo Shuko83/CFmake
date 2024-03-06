@@ -16,11 +16,11 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "ISwProperty.h"
-#include "ISwController.h"
-#include "ISwProperties.h"
-#include "ISwComplexeTypeAdapters.h"
-#include "LibIndeSig.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Services/ISwController.h"
+#include "Component/Services/ISwProperties.h"
+#include "Types/UserType/ISwComplexeTypeAdapters.h"
+#include "Tools/Signal/LibIndeSig.h"
 
 #pragma warning(disable:4250)
 

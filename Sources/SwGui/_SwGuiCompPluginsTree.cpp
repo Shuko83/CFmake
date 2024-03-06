@@ -2,12 +2,12 @@
  \file _SwGuiCompPluginsTree.cpp
  \brief Implementation of the Class _SwGuiCompPluginsTree generant un QTreeView contenant la liste des plugins
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <QMessageBox>
 #include "_SwGuiCompPluginsTree.h"
 #include "_SwGuiPluginsFrontEnd.h"
@@ -36,7 +36,7 @@ _SwGuiCompPluginsTree::~_SwGuiCompPluginsTree(){
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompPluginsTree::InitializeResources() throw(SwException) {
     //Creation des service
     _provider_service=new SwInterfaces_Provider_Class(this) ;
@@ -67,7 +67,7 @@ void _SwGuiCompPluginsTree::InitializeResources() throw(SwException) {
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiPluginsTree done\n"));
 
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwGuiCompPluginsTree::OnPropertyChange(ISwProperty * property) {
 
     if (_window_title_property==property) {

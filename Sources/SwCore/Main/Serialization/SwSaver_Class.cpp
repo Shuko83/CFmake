@@ -2,17 +2,17 @@
  \file SwSaver_Class.cpp
  \brief Implementation of the Class SwSaver_Class
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 #include <QMap>
 
 #include "SwCoreConstantes.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
-#include "SwSaver_Class.h"
-#include "ISwPersistent.h"
-#include "ISwPluginOverview.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Main/Serialization/SwSaver_Class.h"
+#include "Component/Interfaces/ISwPersistent.h"
+#include "Main/Plugin/ISwPluginOverview.h"
 
 using namespace StreamWork::SwCore;
 

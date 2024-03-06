@@ -8,7 +8,7 @@
 #define _STREAMWORK_SWCORE_ISWFILEEDITOR_H
 
 #include <QStringList>
-#include "SwFileDescriptor.h"
+#include "Types/SwFileDescriptor.h"
 
 namespace StreamWork {
 
@@ -34,7 +34,7 @@ namespace StreamWork {
             /** 
             * @brief edition d'un fichier (methode non bloquante)
             * @param descriteur de fichier
-            * @return false si l'edition a échoué
+            * @return false si l'edition a Ã©chouÃ©
             */            
             virtual bool edit(SwFileDescriptor fd)=0;
 

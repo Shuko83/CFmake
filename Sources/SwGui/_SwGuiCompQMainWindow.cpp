@@ -2,21 +2,21 @@
  \file _SwGuiMainWindow.cpp
  \brief Implementation of the Class _SwGuiMainWindow generant une QMainWindow
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QMenuBar>
-#include <SwMacros.h>
+#include "Main/SwMacros.h"
 #include "_SwGuiCompQMainWindow.h"
 #include <QSettings>
 #include <QMessageBox>
 #include <QCloseEvent>
-#include <SwFileDescriptor.h>
+#include "Types/SwFileDescriptor.h"
 
 #include "ISwServiceShortcuts.h"
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QMetaEnum>
 
 using namespace StreamWork::SwCore;
@@ -185,7 +185,7 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
     //Exportation de l'interface QWidget
     getIProviderService().RegisterProvidedInterface<ISwEvent>( "ISwEvent", ( ISwEvent * )this );
     
-    //Enregistrement des propriétés
+    //Enregistrement des propriÃ©tÃ©s
     getPropertiesService().CreatePropertiesForQObject( ( QMainWindow * )this, "QMainWindow" );
     
     //Gestion des menus

@@ -4,8 +4,8 @@
 @author F.Bighelli
 */
 
-#include "SwFileDescriptor.h"
-#include "SwMacros.h"
+#include "Types/SwFileDescriptor.h"
+#include "Main/SwMacros.h"
 #include <QApplication>
 #include <QDir>
 #include <QRegularExpression>
@@ -105,7 +105,7 @@ QString SwFileDescriptor::getDoubleDottedPath(bool useOptionalPath)
 {
 	QString pathAsWritten = getFileName();
 
-	// On commence par remplacer les éventuelles variables d'environnment :
+	// On commence par remplacer les Ã©ventuelles variables d'environnment :
 	QRegularExpression environmentVariableRegExp("^([^%]*)%([^%]+)%(.*)$");
 	QRegularExpressionMatch match;
 	
@@ -133,7 +133,7 @@ QString SwFileDescriptor::getDoubleDottedPath(bool useOptionalPath)
 
 	if (!pathAsWritten.contains("::")) // cas simple
 	{
-		//if (pathAsWritten.contains(optionnalPathExp)) // chemin optionnel uniquement après ::
+		//if (pathAsWritten.contains(optionnalPathExp)) // chemin optionnel uniquement aprÃ¨s ::
 		//	qWarning() << QString("SwFileDescriptor bar formating : %1").arg(pathAsWritten);
 		return pathAsWritten;
 	}
@@ -169,9 +169,9 @@ QString SwFileDescriptor::getDoubleDottedPath(bool useOptionalPath)
 		if (QFileInfo::exists(streamPath))
 			return streamPath;
 
-		// Si le fichier n'existe pas, on teste l'existence du répertoire contenant ce dernier, car si on prend l'exemple des fichiers .sqlite
-		// ils sont recréés automatiquement s'ils n'existent pas, or s'ils n'existent pas, on renvoyait le chemin "pathAsWritten" qui, à cause
-		// de la balise :: n'est pas un chemin valide et empêche donc la potentielle (re)création du fichier demandé.
+		// Si le fichier n'existe pas, on teste l'existence du rÃ©pertoire contenant ce dernier, car si on prend l'exemple des fichiers .sqlite
+		// ils sont recrÃ©Ã©s automatiquement s'ils n'existent pas, or s'ils n'existent pas, on renvoyait le chemin "pathAsWritten" qui, Ã  cause
+		// de la balise :: n'est pas un chemin valide et empÃªche donc la potentielle (re)crÃ©ation du fichier demandÃ©.
 		if (QFileInfo(resourcePath).dir().exists())
 			return resourcePath;
 		if (QFileInfo(executablePath).dir().exists())

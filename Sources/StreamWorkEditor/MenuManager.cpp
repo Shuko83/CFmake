@@ -8,13 +8,13 @@
 #include "MenuManager.h"
 
 #include <QColorDialog>
-#include <SwApplication.h>
-#include <SwMacros.h>
-#include <ISwInterfaces_Consumer.h>
-#include <ISwPins_Manager.h>
-#include <SwTime_ToolBox.h>
-#include "SwProperties_Class.h"
-#include <ISwServiceExtensions.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Services/ISwPins_Manager.h"
+#include "Tools/SwTime_ToolBox.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "ISwServiceExtensions.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -97,7 +97,7 @@ void MenuManager::rebuildMenu() {
 				SwProperties_Class *serv = dynamic_cast<SwProperties_Class *>(cp->QueryService(CG_SW_SERVICE_PROPERTIES));
 				if (NULL != serv)
 				{
-					//parcours les propriétés et cherche si "visible est contenu dans le text"
+					//parcours les propriÃ©tÃ©s et cherche si "visible est contenu dans le text"
 					QList<ISwProperty*>prop = serv->GetProperties();
 					for (ISwProperty *swprop : prop)
 					{
@@ -261,7 +261,7 @@ void MenuManager::onDisconnect() {
 	{
         component=((ComponentGraphicItem *)_lkList[i]->getSource()->parentItem())->getComponent();
 
-		//Bridage de deconnection d'interface sur un composant exécuté
+		//Bridage de deconnection d'interface sur un composant exÃ©cutÃ©
 		StreamWork::SwExecution::ISwExecutable_Service * execServS = dynamic_cast<StreamWork::SwExecution::ISwExecutable_Service*>(component->QueryService(CG_SW_SERVICE_EXECUTABLE));
 		if( execServS && execServS->isRunning() ) 
 		{

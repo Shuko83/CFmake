@@ -10,7 +10,7 @@
 /*
 * INCLUDES LOCAUX
 */
-#include <SwIntegerEnum.h>
+#include "Types/SwIntegerEnum.h"
 #include "SwGuiConstantes.h"
 /*
 * INCLUDES GLOBAUX

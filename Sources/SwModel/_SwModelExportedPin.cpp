@@ -2,7 +2,7 @@
  \file _SwModelExportedPin.cpp
  \brief Class implementant une entite exportable pin
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -80,7 +80,7 @@ void _SwModelExportedPin::OnRemovePin(){
 //-------------------------------------------------------------------------
 //Interface ISwPin_Listener
 //-------------------------------------------------------------------------
-/*! \brief Sur reception d'une donnée*/
+/*! \brief Sur reception d'une donnÃ©e*/
 void _SwModelExportedPin::OnReceiveData(SwPin *p,SwData_Class *data){
     if (p==_internal_pin && _external_pin!=NULL) {
         _external_pin->SendData(data);       

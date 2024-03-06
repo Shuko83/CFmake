@@ -38,7 +38,7 @@ public:
     //--------------------------------------------------------------------------
     // IAnchorableObserver
     //--------------------------------------------------------------------------
-    /*@brief indique que l'entité a changé */
+    /*@brief indique que l'entitÃ© a changÃ© */
     virtual void anchorableAsChanged(QWidget *w);
 
 protected:

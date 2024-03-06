@@ -5,8 +5,8 @@
 \author  HLG
 \version 1.0
  */
-#include <SwAddress_ToolBox.h> 
-#include <SwTime_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
+#include "Tools/SwTime_ToolBox.h"
 #include <QMessageBox>
 
 #include "_SwSwitchExecution_Service.h"
@@ -52,8 +52,8 @@ void _SwSwitchExecution_Service::Edit() {
         ResolveLinks();
     }
 }
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwSwitchExecution_Service::Liberate(){
 
 }  
@@ -71,7 +71,7 @@ void _SwSwitchExecution_Service::Load(QDomElement & elt,ISwFinalizerManager & fi
         if (elt_list.hasAttribute("Name")) {
             // ajout de la liste
             _switchExecutionList->AddListName(index, elt_list.attribute("Name"));
-            // parcours des module appartenant à la liste
+            // parcours des module appartenant Ã  la liste
             QList<QString> exeList;
             QList<_SwExecutionMode> modeList;
             for(QDomElement elt_module = elt_list.firstChildElement("Module"); !elt_module.isNull(); elt_module = elt_module.nextSiblingElement("Module")) {
@@ -98,8 +98,8 @@ void _SwSwitchExecution_Service::Load(QDomElement & elt,ISwFinalizerManager & fi
         index++;
     }
     
-    // mise à jour de l'exe path dans _SwSwitchExecution_Service
-    // ainsi que de la propriété du _SwSwitchExecutor
+    // mise Ã  jour de l'exe path dans _SwSwitchExecution_Service
+    // ainsi que de la propriÃ©tÃ© du _SwSwitchExecutor
     if(_switchExecutionList->_exeListName.size()!=0) {
         _switchExecutionList->_list_name.FromInt(0);
         QVariant _list_name_qvariant;
@@ -164,7 +164,7 @@ SwComponent_Class * _SwSwitchExecution_Service::GetHostComponent() {
     return _host;
 }
 //---------------------------------------------------------------------
-// Gestion de l'execution des composants selectionnés
+// Gestion de l'execution des composants selectionnÃ©s
 //---------------------------------------------------------------------
 /*! \brief Resolution des liens */
 void _SwSwitchExecution_Service::ResolveLinks() {    

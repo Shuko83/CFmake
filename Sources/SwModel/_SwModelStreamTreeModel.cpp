@@ -2,16 +2,16 @@
  \file _SwModelStreamTreeModel.cpp
  \brief Modele pour la selection du model host
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 /*
   * INCLUDES LOCAUX
   */
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QMessageBox>
 #include <QMimeData>
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include "_SwModelStreamTreeModel.h"
 #include "_SwModelHost_Class.h"
 
@@ -31,7 +31,7 @@ void _SwModelStreamTreeModel::SetSelected(_SwModelHost_Class * current_selected)
     _current_selected=current_selected;
     emit layoutChanged();
 }
-/*! \brief Renvoie les capacites du modèle */
+/*! \brief Renvoie les capacites du modÃ¨le */
 Qt::ItemFlags _SwModelStreamTreeModel::flags ( const QModelIndex & index ) const {
     SwComponent_Class * cparent;
 
@@ -44,11 +44,11 @@ Qt::ItemFlags _SwModelStreamTreeModel::flags ( const QModelIndex & index ) const
     }
     return Qt::ItemFlags();
 }
-/*! \brief Renvoie le nombre de colonne pour parent donné */
+/*! \brief Renvoie le nombre de colonne pour parent donnÃ© */
 int _SwModelStreamTreeModel::columnCount ( const QModelIndex & parent ) const{
     return 1;
 }
-/*! \brief Renvoie le nombre de ligne pour un parent donné */
+/*! \brief Renvoie le nombre de ligne pour un parent donnÃ© */
 int _SwModelStreamTreeModel::rowCount ( const QModelIndex & parent ) const {
     SwComponent_Class * cparent;
     if (_root_component==NULL)
@@ -58,7 +58,7 @@ int _SwModelStreamTreeModel::rowCount ( const QModelIndex & parent ) const {
     cparent=(SwComponent_Class *)parent.internalPointer();
     return cparent->GetNbChildren();
 }
-/*! \brief Renvoie les données d'entete */
+/*! \brief Renvoie les donnÃ©es d'entete */
 QVariant _SwModelStreamTreeModel::headerData ( int section, Qt::Orientation orientation, int role) const {
     if (role == Qt::DisplayRole) {
         switch(section) {
@@ -72,7 +72,7 @@ QVariant _SwModelStreamTreeModel::headerData ( int section, Qt::Orientation orie
     }
     return QVariant();
 }
-/*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
+/*! \brief Renvoie les donnÃ©es stockÃ©es sous un certain role pour un item nommÃ© index */
 QVariant _SwModelStreamTreeModel::data ( const QModelIndex & index, int role ) const{
     SwComponent_Class * cparent;
      if (!index.isValid())
@@ -101,7 +101,7 @@ QVariant _SwModelStreamTreeModel::data ( const QModelIndex & index, int role ) c
     }
     return QVariant();
 }
-/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donné*/
+/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donnÃ©*/
 QModelIndex _SwModelStreamTreeModel::index ( int row, int column, const QModelIndex & parent  ) const{
     SwComponent_Class * cparent;
     if (_root_component==NULL)
@@ -112,7 +112,7 @@ QModelIndex _SwModelStreamTreeModel::index ( int row, int column, const QModelIn
     cparent=(SwComponent_Class *)parent.internalPointer();
     return createIndex(row,column,(void *)cparent->GetChild(row));
 }
-/*! \brief Renvoie l'item parent d'un item index donné */
+/*! \brief Renvoie l'item parent d'un item index donnÃ© */
 QModelIndex _SwModelStreamTreeModel::parent ( const QModelIndex & index ) const{
     SwComponent_Class * cindex;
     SwComponent_Class * parent;

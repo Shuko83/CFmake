@@ -18,17 +18,17 @@
   */
 #include "ISwConfigurationListener.h"
 #include "ISwConfiguration.h"
-#include <ISwProperty.h>
-#include <_SwManagedConfiguration.h>
-#include <ISwInterfaces_ConsumerObserver.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwConfigurationEditor.h>
-#include <_ISwManagedConfigurationsList.h>
-#include <ISwConfigurationNameProvider.h>
-#include <ISwConfigurationNameListener.h>
-#include <ISwConfigurationController.h>
+#include "Properties/ISwProperty.h"
+#include "_SwManagedConfiguration.h"
+#include "Component/Interfaces/ISwInterfaces_ConsumerObserver.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "ISwConfigurationEditor.h"
+#include "_ISwManagedConfigurationsList.h"
+#include "ISwConfigurationNameProvider.h"
+#include "ISwConfigurationNameListener.h"
+#include "ISwConfigurationController.h"
 
 class ISwConfigurationEditor;
 class QDomElement;
@@ -81,16 +81,16 @@ public:
 
     void setConfigurationCount(int value);
     
-    /*! \brief Callback sur les changements de propriétés*/
+    /*! \brief Callback sur les changements de propriÃ©tÃ©s*/
     void OnPropertyChange(ISwProperty * property);
     
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-    /*! \brief Avant changement de la disponibilité de l'interface */
+    /*! \brief Avant changement de la disponibilitÃ© de l'interface */
     virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);  
               
-    /*! \brief Apres changement de la disponibilité de l'interface */
+    /*! \brief Apres changement de la disponibilitÃ© de l'interface */
     virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
                       
     virtual void AddConfigurationNameListener (ISwConfigurationNameListener * listener) ;
@@ -109,13 +109,13 @@ protected:
 	  /* noms des configuration */
 	  QMap<int,QString>			                  _configurationsNames;
 	  
-	  /* propriétés de nommage des configuration */
+	  /* propriÃ©tÃ©s de nommage des configuration */
 	  QMap<int,ISwProperty *>		              _configurationsNamesProperties;
 	  
 	  /* activation de l'enregistrement dans une configuration */
 	  QMap<int,bool>			                    _configurationsRecordable;
 	  
-	  /* propriétés d'activation de l'enregistrement dans une configuration */
+	  /* propriÃ©tÃ©s d'activation de l'enregistrement dans une configuration */
 	  QMap<int,ISwProperty *>		              _configurationsRecordableProperties;
 	  
 	  /* liste des configurations */
@@ -126,7 +126,7 @@ protected:
 
 
     uint _configurationsCount;
-    /* propriété nombre de configurations */
+    /* propriÃ©tÃ© nombre de configurations */
     ISwProperty * _configurations_count_property;
     
     /* service de fourniture d'interface */
@@ -135,7 +135,7 @@ protected:
     /* service de consommation d'interface */
     SwInterfaces_Consumer_Class * _consumer_service;
     
-    /* service de gestion des propriétés */
+    /* service de gestion des propriÃ©tÃ©s */
     SwProperties_Class * _properties_service;     
        
 	  void renameConfigurationConsumed( int index, QString NewName);

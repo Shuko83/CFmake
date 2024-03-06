@@ -2,7 +2,7 @@
  \file _SwEditorGIInterfaceMenu.h
  \brief menu pour un graphics item interface composant
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -10,7 +10,7 @@
 #define _SwEditorGIInterfaceMenu_H
 
 #include <QMenu>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwEditorInterfaceGraphicItem.h"
 
 

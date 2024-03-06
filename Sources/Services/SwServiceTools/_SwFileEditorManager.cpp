@@ -69,7 +69,7 @@ void _SwFileEditorManager::unregisterFileEditor(ISwFileEditor * editor){
 /** 
 * @brief edition d'un fichier (methode non bloquante)
 * @param descriteur de fichier
-* @return false si aucun editeur n'a été trouvé
+* @return false si aucun editeur n'a Ã©tÃ© trouvÃ©
 */            
 bool _SwFileEditorManager::edit(SwFileDescriptor fd){
     QStringList liste=fd.getFileName().split(".");

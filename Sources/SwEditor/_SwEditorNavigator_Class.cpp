@@ -5,10 +5,10 @@
 \author  Big
 \version 1.0
  */
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <QMessageBox>
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include "_SwEditorNavigator_Class.h"
 #include "_SwEditorSelection_Class.h"
 
@@ -27,8 +27,8 @@ _SwEditorNavigator_Class::_SwEditorNavigator_Class(SwComponent_Class * host) {
 _SwEditorNavigator_Class::~_SwEditorNavigator_Class(){
     _observers.clear();
 }
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+	lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwEditorNavigator_Class::Liberate() {
 
 }
@@ -41,7 +41,7 @@ void _SwEditorNavigator_Class::GoToParent(){
         _current_selection=_current_selection->GetParent();
         //Check si le parent a un service selection
         if (_current_selection->QueryService(CG_SW_SERVICE_SELECTION)==NULL) {
-            //non, on en crée un
+            //non, on en crÃ©e un
             _current_selection->RegisterService(new _SwEditorSelection_Class(_current_selection));
         }
         //On signale le changement
@@ -59,7 +59,7 @@ void _SwEditorNavigator_Class::GoToChild(QString child_name){
         _current_selection=child;
         //Check si l'enfant a un service selection
         if (_current_selection->QueryService(CG_SW_SERVICE_SELECTION)==NULL) {
-            //non, on en crée un
+            //non, on en crÃ©e un
             _current_selection->RegisterService(new _SwEditorSelection_Class(_current_selection));
         }
         //On signale le changement
@@ -85,7 +85,7 @@ void _SwEditorNavigator_Class::SetCurrentComponent(SwComponent_Class * component
     _current_selection=component;
     //Check si un service selection existe
     if (_current_selection->QueryService(CG_SW_SERVICE_SELECTION)==NULL) {
-        //non, on en crée un
+        //non, on en crÃ©e un
         _current_selection->RegisterService(new _SwEditorSelection_Class(_current_selection));
     }
     //On signale le changement

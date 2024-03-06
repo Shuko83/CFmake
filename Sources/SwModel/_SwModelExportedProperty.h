@@ -2,7 +2,7 @@
  \file _SwModelExportedProperty.h
  \brief Class implementant une entite exportable property
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -10,12 +10,12 @@
 #define __SwModelExportedProperty_H
 
 #include <QString>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwModelExportedEntity.h"
-#include <ISwProperty.h>
-#include <ISwProperties.h>
-#include <LibIndeSig.h>
-#include <SwProperties_Class.h>
+#include "Properties/ISwProperty.h"
+#include "Component/Services/ISwProperties.h"
+#include "Tools/Signal/LibIndeSig.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
 
 using namespace StreamWork::SwCore;
 /*!
@@ -24,11 +24,11 @@ using namespace StreamWork::SwCore;
 */
 class _SwModelExportedProperty : public _SwModelExportedEntity{
 	public:
-		/*! \brief Service de propriété interne*/
+		/*! \brief Service de propriÃ©tÃ© interne*/
 		ISwProperties * _internal_properties;
 		/*! \brief Propriete interne*/
 		ISwProperty * _internal_property;
-		/*! \brief Service de propriété externe*/
+		/*! \brief Service de propriÃ©tÃ© externe*/
 		SwProperties_Class * _external_properties;
 		/*! \brief Propriete  externe*/
 		ISwProperty * _external_property;
@@ -52,9 +52,9 @@ class _SwModelExportedProperty : public _SwModelExportedEntity{
 		void OnInternalEditableChange(ISwProperty * p);
 	    /*! \brief Slot de connexion */
 		void OnExternalChange(ISwProperty * p);
-	    /*! \brief Sur creation d'une propriété */
+	    /*! \brief Sur creation d'une propriÃ©tÃ© */
 		void OnCreateProperty(ISwProperties *ps,ISwProperty *p);
-	    /*! \brief Sur destruction d'une propriété */
+	    /*! \brief Sur destruction d'une propriÃ©tÃ© */
 		void OnDestroyProperty(ISwProperties *ps,ISwProperty *p);
 		
 

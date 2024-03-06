@@ -2,7 +2,7 @@
  \file _SwControllerAction.h
  \brief action sur le controller
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -18,8 +18,8 @@
   * INCLUDES LOCAUX
   */
 
-#include <ISwConfigurationController.h>
-#include <ISwConfigurationControllerListener.h>
+#include "ISwConfigurationController.h"
+#include "ISwConfigurationControllerListener.h"
 
 using namespace StreamWork::SwCore;
     

@@ -5,11 +5,11 @@
  */
 
 #include "ExecutableComponent.h"
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <SwProperties_Class.h>
-#include <SwPins_Manager_Class.h>
-#include <ISwProperty.h>
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Properties/ISwProperty.h"
  
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -167,8 +167,8 @@ void ExecutableComponent::Stop(double current_time){
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------            
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void ExecutableComponent::Liberate() {
     //Nothing to do
 }

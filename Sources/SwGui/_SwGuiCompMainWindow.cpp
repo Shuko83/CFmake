@@ -8,8 +8,8 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QMenuBar>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompMainWindow.h"
 #include <QEvent>
 
@@ -184,7 +184,7 @@ _SwGuiCompMainWindow::~_SwGuiCompMainWindow()
 
 //-----------------------------------------------------------------------------
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
 {
     //Creation de l'interface principale
@@ -204,7 +204,7 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
     //Status bar
     consumeInterface<QWidget>( STATUSBAR_INTERFACE );
     
-    //Enregistrement des propriétés
+    //Enregistrement des propriÃ©tÃ©s
     createPropertiesForThisObject( QString(), true );
     createPropertiesForQObject( _mainWindow, "QWidget" ); //Necessaire pour acceder au "show"
     
@@ -320,7 +320,7 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
 }
 
 //-----------------------------------------------------------------------------
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwGuiCompMainWindow::eventPropertyChange( ISwProperty * property )
 {
     uint val;
@@ -644,7 +644,7 @@ void _SwGuiCompMainWindow::removeDockWidget( SwDockWidget_DockWidget * dock )
 }
 
 //-----------------------------------------------------------------------------
-// Gestion des Propriétés
+// Gestion des PropriÃ©tÃ©s
 //-----------------------------------------------------------------------------
 void _SwGuiCompMainWindow::interfaceAvailable( QString interfaceName )
 {
@@ -861,7 +861,7 @@ QString _SwGuiCompMainWindow::getFilePath()
         retFilePath = _absolutePath;
     }
     
-    // Vérification des répertoires
+    // VÃ©rification des rÃ©pertoires
     checkDirectory( directoryBasePath );
     
     return retFilePath;
@@ -873,14 +873,14 @@ void _SwGuiCompMainWindow::checkDirectory( QString inDirectoryBasePath )
     QString directoryPath = inDirectoryBasePath;
     QStringList directoriesToCheck = _relativePath.split( "\\" );
     
-    // On teste si le(s) répertoire(s) existe(nt)
+    // On teste si le(s) rÃ©pertoire(s) existe(nt)
     for( int i = 0; i < directoriesToCheck.size(); i++ )
     {
         if( !directoriesToCheck[i].contains( "." ) )
         {
             directoryPath += directoriesToCheck[i];
             
-            // Si ce n'est pas le cas, on le créé
+            // Si ce n'est pas le cas, on le crÃ©Ã©
             if( _access( directoryPath.toUtf8().constData(), 0 ) == -1 )
             {
                 qDebug() << "The repertory named " << directoryPath << " doesn't exist, creation!!";

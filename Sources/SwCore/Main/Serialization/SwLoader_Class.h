@@ -2,15 +2,15 @@
  \file SwLoader_Class.h
  \brief Implementation of the Class SwLoader_Class
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 
  \note Principe charge un neoud racine depuis une structure
  \note Implementation
- Verifie neoud header nommé streamlib
- Crée le composant racine avec les attribut name et factory_name
+ Verifie neoud header nommÃ© streamlib
+ CrÃ©e le composant racine avec les attribut name et factory_name
  Si le composant n'existe pas
-    Si le factory_name n'existe pas ou est vide le composant crée une instance de SwComponent_Class
+    Si le factory_name n'existe pas ou est vide le composant crÃ©e une instance de SwComponent_Class
  Charger les services (qui implemente ISwPersistent)
  Charge les composants enfants du neoud (algo identique au neoud racine)
  Effectue les finalisations enregistrer
@@ -26,8 +26,8 @@
 /*
   * INCLUDES LOCAUX
   */
-#include "SwApplication.h"
-#include "ISwFinalizerManager.h"
+#include "Main/SwApplication.h"
+#include "Component/Interfaces/ISwFinalizerManager.h"
 
 namespace StreamWork
 {
@@ -61,7 +61,7 @@ namespace StreamWork
             //-----------------------------------------------------------
             // Interface de ISwFinalizerManager
             //-----------------------------------------------------------
-            /*! \brief enregistre une finalisation pour un index d'historique donnée*/
+            /*! \brief enregistre une finalisation pour un index d'historique donnÃ©e*/
 	        void RegisterFinalization(quint64 historic_index,ISwFinalizer * finalizer) throw(SwException);
 		};
 	}

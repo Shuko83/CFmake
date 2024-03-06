@@ -1,8 +1,8 @@
 /*!
  \file _SwEditorPinsLayerManager.cpp
- \brief  Gestionnaire des pins dessinés
+ \brief  Gestionnaire des pins dessinÃ©s
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 

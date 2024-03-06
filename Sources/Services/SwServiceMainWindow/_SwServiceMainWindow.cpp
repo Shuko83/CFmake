@@ -13,7 +13,7 @@
  */
 #include <QDebug>
 #include <QApplication>
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 #include <QTimer>
 
 using namespace StreamWork::Service;

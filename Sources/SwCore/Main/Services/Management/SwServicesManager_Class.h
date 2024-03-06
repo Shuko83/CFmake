@@ -2,7 +2,7 @@
  \file SwServicesManager_Class.h
  \brief Implementation of the Class SwServicesManager_Class
  \version 1.0
- \date 23-août-2006 16:04:57
+ \date 23-aoÃ»t-2006 16:04:57
  \author F.Bighelli
 */
 
@@ -15,12 +15,13 @@
 #include <QString>
 #include <QList>
 #include <QMap>
+#include <QSet>
 /*
   * INCLUDES LOCAUX
   */
-#include "SwException.h"
-#include "ISwService.h"
-#include "ISwServicesManager_Listener.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Main/Services/Management/ISwServicesManager_Listener.h"
 
 namespace StreamWork
 {
@@ -31,7 +32,7 @@ namespace StreamWork
 		 \brief Manager de service
         @ingroup SwCoreGrp
 
-        Permet d'enregistrer des services auprès de l'entité implémentant cette classe
+        Permet d'enregistrer des services auprÃ¨s de l'entitÃ© implÃ©mentant cette classe
         Cette classe implemente une collection de services.
 
         Les methodes de la classe permettent l'exploitation de la collection
@@ -41,7 +42,7 @@ namespace StreamWork
         try {
             RegisterService(my_service);
         } catch (SwException &e) {
-            //Si on est la c'est qu'un service avec le même nom est deja enregistrer
+            //Si on est la c'est qu'un service avec le mÃªme nom est deja enregistrer
         }
         \endcode
         Pour desenregistrer un service existant:
@@ -49,7 +50,7 @@ namespace StreamWork
         try {
             UnregisterService(my_service_name);
         } catch (SwException &e) {
-            //Si on est la c'est qu'aucun service enregistré a le nom passé en paramètre
+            //Si on est la c'est qu'aucun service enregistrÃ© a le nom passÃ© en paramÃ¨tre
         }
         \endcode
         
@@ -62,7 +63,7 @@ namespace StreamWork
         \code
         ISwService * my_service=QueryService(my_service_name);
         if (my_service==NULL) {
-            //Le service dont le nom est passé en paramètre n'existe pas
+            //Le service dont le nom est passÃ© en paramÃ¨tre n'existe pas
         }
         \endcode
 
@@ -70,7 +71,7 @@ namespace StreamWork
         \code
         LiberateAllServices();
         \endcode
-        Est theoriquement appelé dans le destructeur de l'entité implementant cette classe
+        Est theoriquement appelÃ© dans le destructeur de l'entitÃ© implementant cette classe
 
 		*/
 		class BUILD_SWCORE SwServicesManager_Class
@@ -82,15 +83,15 @@ namespace StreamWork
             QList<QString> _ordered_services;
             /*! \brief liste des observers */
             QList<ISwServicesManager_Listener *> _servicesObservers;
-            /*! \brief Set de set permettant de garder en mémoire les observers delete par la méthode
-            onUnregisterService. Le set de set permet une méthode réentrante.*/
+            /*! \brief Set de set permettant de garder en mÃ©moire les observers delete par la mÃ©thode
+            onUnregisterService. Le set de set permet une mÃ©thode rÃ©entrante.*/
             QSet < QSet<ISwServicesManager_Listener *>* > _deletedObservers;
 		public:
             /*! \brief Constructeur */
             SwServicesManager_Class();
             /*! \brief Destructeur */
             ~SwServicesManager_Class();
-            /*! \brief Renvoie la liste des noms des services enregistrés */
+            /*! \brief Renvoie la liste des noms des services enregistrÃ©s */
 			QList<QString> GetServicesList();
 			/*! \brief Demande un service*/
 			ISwService * QueryService(QString service_name);

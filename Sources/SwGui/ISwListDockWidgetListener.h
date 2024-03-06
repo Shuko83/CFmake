@@ -37,14 +37,14 @@ namespace StreamWork
 
 			/**
 			 * @brief    : Ajout d'un nouveau DockWidget
-			 * @param	 : widget - Pointeur vers le DockWidget ajouté
+			 * @param	 : widget - Pointeur vers le DockWidget ajoutÃ©
 			 * @param	 : menuName - Nom de la liste pour affichage dans un menu
 			 */
 			virtual void addDockWidget(SwDockWidget_DockWidget * widget, QString menuName) = 0;
 
 			/**
 			 * @brief    : Suppression d'un DockWidget
-			 * @param	 : DockWidget * widget - Pointeur vers le DockWidget supprimé
+			 * @param	 : DockWidget * widget - Pointeur vers le DockWidget supprimÃ©
 			 */
 			virtual void removeDockWidget(SwDockWidget_DockWidget *widget) = 0;
 

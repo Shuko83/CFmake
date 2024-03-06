@@ -2,7 +2,7 @@
  \file _SwExecutor.h
  \brief Implementation of the Class _SwExecutor realisant la fonction d'executeur
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 
@@ -16,14 +16,14 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwEnum.h>
-#include <SwComponent_Class.h>
-#include <SwProperties_Class.h>
-#include <SwPins_Manager_Class.h>
-#include <ISwProperty.h>
-#include <ISwPin_Listener.h>
-#include <ISwExecutor.h>
-#include <ISwAdminSetup.h>
+#include "Types/SwEnum.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
+#include "Component/Interfaces/ISwExecutor.h"
+#include "Component/Interfaces/ISwAdminSetup.h"
 #include "_SwExecution_Service.h"
 #include "ISwExecutable_Service.h"
 #include "ISwSupportReplay.h"
@@ -32,7 +32,7 @@
 
 /*!
 	\class _SwExecutor
-	\brief Implementation of the Class _SwExecutor generant un router de données basique
+	\brief Implementation of the Class _SwExecutor generant un router de donnÃ©es basique
 	*/
 class _SwExecutor : public StreamWork::SwCore::SwComponent_Class,
 	public StreamWork::SwCore::ISwExecutor,
@@ -48,9 +48,9 @@ public:
 	/*! \brief Destructeur */
 	virtual ~_SwExecutor();
 	/*! \brief Initialisation des ressources
-		  \note tous les services du composants doivent être déclarés dans cette methodes*/
+		  \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 	virtual void InitializeResources() throw(StreamWork::SwCore::SwException);
-	/*! \brief Callback sur les changements de propriétés*/
+	/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 	void OnPropertyChange(StreamWork::SwCore::ISwProperty * property);
 	//----------------------------------------------------
 	// Interface ISwExecutor
@@ -78,8 +78,8 @@ public:
 	//---------------------------------------------------------------------
 	// Interface ISwService
 	//---------------------------------------------------------------------            
-	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+	lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 	void Liberate();
 	//---------------------------------------------------------------------
 	// Interface ISwHost
@@ -107,29 +107,29 @@ public:
 	void onQuit();
 
 protected:
-	/* service de gestion des propriétés */
+	/* service de gestion des propriÃ©tÃ©s */
 	StreamWork::SwCore::SwProperties_Class * _properties_service;
 	/* Pas temporel en millisecondes */
 	uint _time_step;
-	/* propriété Pas temporel */
+	/* propriÃ©tÃ© Pas temporel */
 	StreamWork::SwCore::ISwProperty * _time_step_property;
 	/* overload */
 	StreamWork::SwCore::SwEnum _overload;
-	/* propriété overload */
+	/* propriÃ©tÃ© overload */
 	StreamWork::SwCore::ISwProperty * _overload_property;
 	/* Priority */
 	StreamWork::SwCore::SwEnum _priority;
-	/* propriété Priority */
+	/* propriÃ©tÃ© Priority */
 	StreamWork::SwCore::ISwProperty * _priority_property;
 	/* est l'entree de l'execution */
 	StreamWork::SwCore::SwEnum _executable_entry;
-	/* propriété est l'entree de l'execution */
+	/* propriÃ©tÃ© est l'entree de l'execution */
 	StreamWork::SwCore::ISwProperty * _executable_entry_property;
 	/* service contenant gerant la liste des composants executables */
 	_SwExecution_Service _exe_service;
 	/* replay mode */
 	bool _replayMode;
-	/* propriété DefaultActivated */
+	/* propriÃ©tÃ© DefaultActivated */
 	StreamWork::SwCore::ISwProperty * _defaultActivated_property;
 	/* default _defaultActivated */
 	bool    _defaultActivated;

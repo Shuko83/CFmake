@@ -20,7 +20,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwPluginFactory_Class.h>
+#include "Main/Plugin/SwPluginFactory_Class.h"
 
 using namespace StreamWork::SwCore;
 

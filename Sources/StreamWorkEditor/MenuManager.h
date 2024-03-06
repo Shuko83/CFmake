@@ -13,7 +13,7 @@
 #include "LinkGraphicItem.h"
 #include "InterestArea.h"
 #include "ISwExecution_Service.h"
-#include "ISwAdminSetup.h"
+#include "Component/Interfaces/ISwAdminSetup.h"
 
 /**
 @class MenuManager
@@ -84,9 +84,9 @@ private:
     QMenu * _contextualMenu;
     /** @brief Menu */
     StreamControler * _streamControler;
-    /** @brief Liste des composants selectionnéés */
+    /** @brief Liste des composants selectionnÃ©Ã©s */
     QList<ComponentGraphicItem *> _gwList;
-    /** @brief Liste des interest area selectionnéés */
+    /** @brief Liste des interest area selectionnÃ©Ã©s */
     QList<InterestArea *> _iaList;
     /** @brief Liste des link selectionnes */
     QList<LinkGraphicItem *> _lkList;

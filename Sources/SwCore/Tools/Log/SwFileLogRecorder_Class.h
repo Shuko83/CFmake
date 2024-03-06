@@ -17,7 +17,7 @@
   * INCLUDES LOCAUX
  */
 #include "SwCoreConstantes.h"
-#include "ISwLogRecorder.h"
+#include "Tools/Log/ISwLogRecorder.h"
 
 namespace StreamWork
 {

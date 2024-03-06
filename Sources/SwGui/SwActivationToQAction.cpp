@@ -1,7 +1,7 @@
 #include "SwActivationToQAction.h"
 
-#include "SwTime_ToolBox.h"
-#include "SwAddress_ToolBox.h"
+#include "Tools/SwTime_ToolBox.h"
+#include "Tools/SwAddress_ToolBox.h"
 
 using namespace StreamWork::SwCore;
 

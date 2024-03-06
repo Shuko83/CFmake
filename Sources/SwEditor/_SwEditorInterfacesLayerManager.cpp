@@ -1,8 +1,8 @@
 /*!
  \file _SwEditorInterfacesLayerManager.cpp
- \brief Gestionnaire des interfaces dessinés
+ \brief Gestionnaire des interfaces dessinÃ©s
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 

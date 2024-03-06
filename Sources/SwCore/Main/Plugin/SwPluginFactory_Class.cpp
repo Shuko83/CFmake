@@ -1,7 +1,7 @@
 /*!
  \file SwPluginFactory_Class.cpp
  \brief Implementation of class SwPluginFactory_Class
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -11,8 +11,8 @@
 /*
   * INCLUDES LOCAUX
   */
-#include "SwPluginFactory_Class.h"
-#include "SwMacros.h"
+#include "Main/Plugin/SwPluginFactory_Class.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwCore;
 
@@ -100,19 +100,19 @@ void SwPluginFactory_Class::RegisterData(const SwUUID & type_id,QString type_nam
 }
 /*! \brief instanciation d'un composant
 \param[in] name nom du composant
-\return l'instance du composant ou NULL si non trouvé*/
+\return l'instance du composant ou NULL si non trouvÃ©*/
 SwComponent_Class * SwPluginFactory_Class::CreateInstanceOf(QString name) {
     return NULL;
 }
 /*! \brief instanciation d'une data
 \param[in] name nom du composant
-\return l'instance du composant ou NULL si non trouvé */
+\return l'instance du composant ou NULL si non trouvÃ© */
 SwData_Class * SwPluginFactory_Class::CreateInstanceOf(const SwUUID & type_id) {
     return NULL;
 }
 /*! \brief acces a l'icone d'un composant
 \param[in] name nom du composant
-\return l'incone ou icone vide si non trouvé*/
+\return l'incone ou icone vide si non trouvÃ©*/
 QIcon SwPluginFactory_Class::CreateIconOf(QString name) const{
     QIcon ico;
     return ico;
@@ -194,7 +194,7 @@ SwComponent_Class * SwPluginFactory_Class::CreateComponent(QString component_nam
     component->RegisterService(&overview); \
     return component;
 }
-/*! \brief Acces au modèle liste */
+/*! \brief Acces au modÃ¨le liste */
 QAbstractListModel * SwPluginFactory_Class::GetModelList() {
     return this;
 }
@@ -212,7 +212,7 @@ QSet<SwUUID> SwPluginFactory_Class::GetDataList() {
 QMultiMap<int,QString> & SwPluginFactory_Class::GetControllersMap() {
     return _controllers;
 }
-/*! \brief Acces au nom du type d'une donnée definie par son id */
+/*! \brief Acces au nom du type d'une donnÃ©e definie par son id */
 QString SwPluginFactory_Class::GetDataTypeNameFromDataTypeId(const SwUUID & id) {
     QMap<SwUUID,QString>::const_iterator it;
 
@@ -285,7 +285,7 @@ QMimeData * SwPluginFactory_Class::mimeData(const QModelIndexList &indexes) cons
 int SwPluginFactory_Class::rowCount(const QModelIndex &parent) const {
     return _component_description.size();   
 }
-/*! \brief Renvoie la donnée correspondante*/
+/*! \brief Renvoie la donnÃ©e correspondante*/
 QVariant SwPluginFactory_Class::data(const QModelIndex &index, int role) const {
     QMap<QString,QString>::const_iterator it;
     int row=index.row();

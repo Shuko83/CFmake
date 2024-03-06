@@ -2,12 +2,12 @@
  \file _SwGuiCompFromQActionToStackedWidget.cpp
  \brief Implementation of the Class _SwGuiCompFromQActionToStackedWidget generant un QWidget
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompFromQActionToStackedWidget.h"
 #include "_SwActionStackedWidget.h"
 #include <QDebug>
@@ -88,7 +88,7 @@ void _SwGuiCompFromQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QSt
 	{
 		_tmp_handle_StackedWidget->unRegisterStackedWidgetObserver(this);
 
-		//On va plus avoir l'interface d'entrée donc on supprimer les actions 
+		//On va plus avoir l'interface d'entrÃ©e donc on supprimer les actions 
 		int t_size = _actions.size();
 		for(int j = 0; j < t_size; j ++)
 		{
@@ -100,7 +100,7 @@ void _SwGuiCompFromQActionToStackedWidget::BeforeInterfaceAvailabilityChange(QSt
 
 	if (_tmp_handle_action!=NULL)
 	{
-		// on parcours la map pour savoir si l'interface_name est contenu dans la clé
+		// on parcours la map pour savoir si l'interface_name est contenu dans la clÃ©
 		// et si c'est le cas on disconnect l'action
 		QMap<QString,QAction*>::iterator it;
 

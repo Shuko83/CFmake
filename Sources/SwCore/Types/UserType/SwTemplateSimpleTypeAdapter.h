@@ -22,19 +22,19 @@ namespace StreamWork
         \brief SwTemplateSimpleTypeAdapter est un template de simple type adaptateur
         @ingroup SwCoreGrp
 
-        exemple a donné
+        exemple a donnÃ©
         */
 
 		template <class MajorT,class FieldT> class SwTemplateSimpleTypeAdapter : public ISwSimpleTypeAdapter{
 		    typedef FieldT & (*AccessorT)(MajorT *);
 		    protected:
-		        /*! \brief propriété parent */
+		        /*! \brief propriÃ©tÃ© parent */
 			    ISwProperty * _parent_property;
-		        /*! \brief propriété hôte */
+		        /*! \brief propriÃ©tÃ© hÃ´te */
 			    ISwProperty * _simple_property;
 		        /*! \brief fonction d'acces au champs */
 		        AccessorT _f;
-		        /*! \brief callback pour le changement de la propriété */
+		        /*! \brief callback pour le changement de la propriÃ©tÃ© */
 		        void OnComplexePropertyChange(ISwProperty * p) {
 		            FieldT new_field;
 		            new_field=_f(&(_parent_property->GetValue().value<MajorT>()));

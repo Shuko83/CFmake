@@ -1,7 +1,7 @@
 /**
 	@file : ISwPropertiesObserver.h
 	@brief : Interface de gestion des properties de la conf 
-	@		 pour la notification des listeners que les properties sont deletées
+	@		 pour la notification des listeners que les properties sont deletÃ©es
 	@author : CGD
 */
 
@@ -9,13 +9,13 @@
 #define SERVICECONF_ISWPROPERTIESOBSERVER_H
 
 #include <QString>
-#include "ISwProperty.h"
+#include "Properties/ISwProperty.h"
 
 using namespace StreamWork::SwCore;
 /**
 *  @class : ISwPropertiesObserver
 *  @brief : Interface de gestion des properties de la conf
-*		     pour la notification des listeners que les properties sont deletées
+*		     pour la notification des listeners que les properties sont deletÃ©es
 */
 class ISwPropertiesObserver  
 {

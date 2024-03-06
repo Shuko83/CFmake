@@ -9,19 +9,19 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "_SwPropertyImpl_Class.h"
-#include "SwException.h"
-#include "SwMacros.h"
+#include "Properties/_SwPropertyImpl_Class.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
 
-#include "SwEnum.h"
-#include "SwIntegerEnum.h"
-#include "SwInteger.h"
-#include "SwDouble.h"
-#include "SwString.h"
-#include "SwFileDescriptor.h"
-#include "SwIconDescriptor.h"
-#include "SwIpV4Address.h"
-#include "SwUUID.h"
+#include "Types/SwEnum.h"
+#include "Types/SwIntegerEnum.h"
+#include "Types/SwInteger.h"
+#include "Types/SwDouble.h"
+#include "Types/SwString.h"
+#include "Types/SwFileDescriptor.h"
+#include "Types/SwIconDescriptor.h"
+#include "Types/SwIpV4Address.h"
+#include "Types/SwUUID.h"
 
 #include <QMetaEnum>
 
@@ -81,14 +81,14 @@ void _SwPropertyImpl_Class::SetValue(const QVariant & val, bool force /*= false*
 	if ( !IsEditable() && !force )
 		return;
 
-	// Ajout CGD : notif et changement que si la valeur de la property est différente
+	// Ajout CGD : notif et changement que si la valeur de la property est diffÃ©rente
 	if ( val != _value || !_hasBeenInitialed )
 	{
-		// on check si le type est UserType et que si la variable a déja été loadée une fois
+		// on check si le type est UserType et que si la variable a dÃ©ja Ã©tÃ© loadÃ©e une fois
 		if ( _hasBeenInitialed && _value.userType() != QVariant::Invalid )
 		{
 			bool ret = checkForUserType(val);
-			if ( !ret ) // si les valeurs des 2 types custom sont différents
+			if ( !ret ) // si les valeurs des 2 types custom sont diffÃ©rents
 			{
 				SetInternalValue(val);
 				if ( _hasBeenInitialed )
@@ -103,7 +103,7 @@ void _SwPropertyImpl_Class::SetValue(const QVariant & val, bool force /*= false*
 				}
 			}
 		}
-		// Première initialisation de la variable
+		// PremiÃ¨re initialisation de la variable
 		else
 		{
 			SetInternalValue(val);

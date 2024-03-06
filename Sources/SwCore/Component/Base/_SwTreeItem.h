@@ -1,7 +1,7 @@
 /*!
  \file _SwTreeItem.h
  \brief d'un item d'arbre de base
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */

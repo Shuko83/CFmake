@@ -4,7 +4,7 @@
 #include "SwAssistedComponent.h"
 #include "qdialog.h"
 #include "qboxlayout.h"
-#include "SwServiceManager_Helper.h"
+#include "Main/Services/Management/SwServiceManager_Helper.h"
 #include "ISwServiceMainWindow.h"
 #include "qevent.h"
 
@@ -72,7 +72,7 @@ private:
 
 /**
 *   @class _SwGuiCompQWidgetToQDialog
-*   @brief Charger de convertir un widget en QDialog parenté
+*   @brief Charger de convertir un widget en QDialog parentÃ©
 */
 class _SwGuiCompQWidgetToQDialog : public StreamWork::SwFoundation::SwAssistedComponent
 {

@@ -4,8 +4,8 @@
 @author Big
  */
 
-#include "SwExtensionImpl.h"
-#include "SwMacros.h"
+#include "Extensions/SwExtensionImpl.h"
+#include "Main/SwMacros.h"
 using namespace StreamWork::SwCore;
 
 /** @brief Constructor */

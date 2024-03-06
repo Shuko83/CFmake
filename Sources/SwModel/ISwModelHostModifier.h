@@ -8,7 +8,7 @@
 #define _STREAMWORK_SWMODEL_ISWMODELHOSTMODIFIER_H
 
 #include <QtCore>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 
 
 namespace StreamWork {

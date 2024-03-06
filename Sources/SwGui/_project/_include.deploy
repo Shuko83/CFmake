@@ -16,7 +16,6 @@
 				"ISwEventObserver.h",
 				"ISwHttpPart.h",
 				"ISwHttpServer.h",
-				"ISwLayout.h",
 				"ISwListDockWidget.h",
 				"ISwListDockWidgetListener.h",
 				"ISwListQDockWidget.h",

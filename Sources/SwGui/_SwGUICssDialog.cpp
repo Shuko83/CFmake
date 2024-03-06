@@ -3,8 +3,8 @@
 
 	TODO
 	
-	Améliorer le principe de recherche et de surlignement
-	Gérer le "dé higlighting"
+	AmÃ©liorer le principe de recherche et de surlignement
+	GÃ©rer le "dÃ© higlighting"
 	Faire en sorte que la fonction recherche soit une qtoolbar
 
 
@@ -93,7 +93,7 @@ void _SwGuiCssDialog::setMyStyleSheet(const QString& styleSheet)
 void _SwGuiCssDialog::documentChangedFromOutside(QString path)
 {
 	QMessageBox msgBox;
-	msgBox.setText(tr("Le fichier a été modifié à l'extérieur."));
+	msgBox.setText(tr("Le fichier a Ã©tÃ© modifiÃ© Ã  l'extÃ©rieur."));
 	msgBox.setInformativeText(tr("Voulez vous le recharger ?"));
 	msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Ignore);
 	msgBox.setDefaultButton(QMessageBox::Ok);
@@ -160,7 +160,7 @@ void _SwGuiCssDialog::closeEvent(QCloseEvent *event)
 	if(_isModified)
 	{
 		QMessageBox msgBox;
-		msgBox.setText(tr("Le fichier a été modifié."));
+		msgBox.setText(tr("Le fichier a Ã©tÃ© modifiÃ©."));
 		msgBox.setInformativeText(tr("Voulez vous sauvegarder vos modifications ?"));
 		msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 		msgBox.setDefaultButton(QMessageBox::Save);

@@ -83,7 +83,7 @@ namespace StreamWork {
             bool _hover;
             /** @brief manager */
             _SwPerspectivesManager *_manager;
-            /** @brief Propriété pour le dessin */
+            /** @brief PropriÃ©tÃ© pour le dessin */
             QRect _textRect;
             QString _textToDraw;
             QRect _iconRect;

@@ -7,8 +7,8 @@
 #include "WidgetFactory.h"
 
 #include "AnchorableContainer.h"
-#include <SwPropertiesModelImpl.h>
-#include <SwGuiDefaultItemDelegate.h>
+#include "Properties/SwPropertiesModelImpl.h"
+#include "SwGuiDefaultItemDelegate.h"
 #include "PluginOverview.h"
 #include "LegendView.h"
 
@@ -48,13 +48,13 @@ QWidget * WidgetFactory::buildStreamTreeView(QStreamTreeModel * model) {
     //setGraphViewMode(w);
     return w;
 }
-/** @brief Construction widget propriétés*/
+/** @brief Construction widget propriÃ©tÃ©s*/
 PropertiesWidget * WidgetFactory::buildPropertiesWidget() {
     PropertiesWidget * w=new PropertiesWidget();
     return w;
 }
 
-/** @brief Modification attribut lorsque le widget est hébergé par un GraphView */
+/** @brief Modification attribut lorsque le widget est hÃ©bergÃ© par un GraphView */
 void WidgetFactory::setGraphViewMode(QWidget * w) {
     w->setPalette(_graphPalette);
     //w->setAutoFillBackground(true);

@@ -18,9 +18,9 @@
   * INCLUDES LOCAUX
   */
 
-#include <_SwControllerAction.h>
-#include <ISwConfigurationController.h>
-#include <_ISwConfigurationLaunchManager.h>
+#include "_SwControllerAction.h"
+#include "ISwConfigurationController.h"
+#include "_ISwConfigurationLaunchManager.h"
 
 
 using namespace StreamWork::SwCore;

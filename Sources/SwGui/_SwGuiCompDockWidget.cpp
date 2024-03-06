@@ -6,8 +6,8 @@
  \author
 */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompDockWidget.h"
 
 using namespace StreamWork::SwCore;
@@ -40,7 +40,7 @@ _SwGuiCompDockWidget::~_SwGuiCompDockWidget()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompDockWidget::InitializeResources() throw( SwException )
 {
     //Creation des service
@@ -64,7 +64,7 @@ void _SwGuiCompDockWidget::InitializeResources() throw( SwException )
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver( this );
     
-    //Enregistrement des propriétés
+    //Enregistrement des propriÃ©tÃ©s
     _properties_service->CreatePropertiesForQObject( _dockwidget, "Widget" );
     _properties_service->CreatePropertiesForQObject( this, "", true );
     
@@ -74,7 +74,7 @@ void _SwGuiCompDockWidget::InitializeResources() throw( SwException )
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompDockWidget::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if(_dockwidget && _handle_widget )
@@ -84,7 +84,7 @@ void _SwGuiCompDockWidget::BeforeInterfaceAvailabilityChange( QString interface_
     }
 }
 
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompDockWidget::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if(_dockwidget && _handle_widget )

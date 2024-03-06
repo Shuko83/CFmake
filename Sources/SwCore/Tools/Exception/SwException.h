@@ -1,8 +1,8 @@
 /*!
  \file SwException.h
- \brief classe SwException est la mère de toutes les exceptions
+ \brief classe SwException est la mÃ¨re de toutes les exceptions
  \version 1.0
- \date 23-août-2006 10:35:13
+ \date 23-aoÃ»t-2006 10:35:13
  \author F.Bighelli
 */
 
@@ -19,15 +19,15 @@ namespace StreamWork
 	{
 		/*!
 		 \class SwException
-		 \brief classe SwException est la mère de toutes les exceptions
+		 \brief classe SwException est la mÃ¨re de toutes les exceptions
         @ingroup SwCoreGrp
 
          Definit une exception specifique StreamWork
 
-         Au vue de ses propriétés, elle permet - outre de connaitre la raison de l'exception -
+         Au vue de ses propriÃ©tÃ©s, elle permet - outre de connaitre la raison de l'exception -
          de connaitre a quel endroit a eu lieu l'exception
 
-         Pour générer une exception de ce type utiliser la macro suivante:
+         Pour gÃ©nÃ©rer une exception de ce type utiliser la macro suivante:
          \code
         LAUNCH_SWEXCEPTION("MyComponent","Raison de l'exception");
          \endcode
@@ -63,7 +63,7 @@ namespace StreamWork
 			virtual int     GetLine();
 			/*! \brief Renvoie la raison de l'erreur */
 			virtual QString GetReason();
-			/*! \brief Renvoie une chaine de caractères C décrivant la cause générale de l'erreur courante */
+			/*! \brief Renvoie une chaine de caractÃ¨res C dÃ©crivant la cause gÃ©nÃ©rale de l'erreur courante */
 			virtual const char * what();
 		};
 	}

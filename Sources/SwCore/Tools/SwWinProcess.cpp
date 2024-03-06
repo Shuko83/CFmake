@@ -6,7 +6,7 @@
 \version 1.0
  */
 
-#include "SwWinProcess.h"
+#include "Tools/SwWinProcess.h"
 #include <Windows.h>
 #ifdef _DEBUG
 #include <QDebug>

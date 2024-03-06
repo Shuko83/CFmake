@@ -18,10 +18,10 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "ISwService.h"
-#include "ISwHost.h"
-#include "ISwPersistent.h"
-#include "LibIndeSig.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Component/Interfaces/ISwHost.h"
+#include "Component/Interfaces/ISwPersistent.h"
+#include "Tools/Signal/LibIndeSig.h"
 
 //Nom du service
 #define CG_SW_SERVICE_PROPERTIES "Properties"

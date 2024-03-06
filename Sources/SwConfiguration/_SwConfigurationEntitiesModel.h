@@ -1,8 +1,8 @@
 /*!
  \file _SwConfigurationEntitiesModel.h
- \brief Modele et conteneur des données a exporter
+ \brief Modele et conteneur des donnÃ©es a exporter
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -22,7 +22,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwConfigurationExportedEntity.h"
 
 
@@ -30,7 +30,7 @@ using namespace StreamWork::SwCore;
 
 /*!
 	\class _SwConfigurationEntitiesModel 
-	\brief Modele et conteneur des données a exporter
+	\brief Modele et conteneur des donnÃ©es a exporter
 */
 class _SwConfigurationEntitiesModel : public QAbstractItemModel{
 	Q_OBJECT
@@ -54,7 +54,7 @@ public:
         QString _host_path;
         /*! \brief Nom */     
         QString _name;
-        /*! \brief Nom exporté*/     
+        /*! \brief Nom exportÃ©*/     
         QString _exported_name;
         /*! \brief Constructeur */
         _Item(_T_ItemType type,QString name,QString exported_name,QString host_path) {
@@ -85,7 +85,7 @@ public:
 	void TransformEntitiesToModel();
     /*! \brief Transformation modele en liste entites */
 	void TransformModelToEntities();
-    /*! \brief Suppression des elements selectionnées */
+    /*! \brief Suppression des elements selectionnÃ©es */
 	void RemoveSelectedItems(QModelIndexList list_to_remove);
 
 	virtual void limitToProperty();
@@ -93,21 +93,21 @@ public:
     //-------------------------------------------------------------
     // Interface QAbstractItemModel
     //------------------------------------------------------------
-    /*! \brief Renvoie les capacites du modèle */
+    /*! \brief Renvoie les capacites du modÃ¨le */
     virtual Qt::ItemFlags flags ( const QModelIndex & index ) const;
-    /*! \brief Renvoie le nombre de colonnes pour les enfants d'un parent donné */
+    /*! \brief Renvoie le nombre de colonnes pour les enfants d'un parent donnÃ© */
     virtual int columnCount ( const QModelIndex & parent = QModelIndex() ) const;			
-        /*! \brief Renvoie le nombre de ligne pour un parent donné */
+        /*! \brief Renvoie le nombre de ligne pour un parent donnÃ© */
     virtual int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
-    /*! \brief Renvoie les données d'entete */
+    /*! \brief Renvoie les donnÃ©es d'entete */
     virtual QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
-    /*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
+    /*! \brief Renvoie les donnÃ©es stockÃ©es sous un certain role pour un item nommÃ© index */
     virtual QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     /*! \brief Edition*/
     virtual bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
-    /*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donné*/
+    /*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donnÃ©*/
     virtual QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const;
-    /*! \brief Renvoie l'item parent d'un item index donné */
+    /*! \brief Renvoie l'item parent d'un item index donnÃ© */
     virtual QModelIndex parent ( const QModelIndex & index ) const;
     /*! \brief Action de drop */
     virtual bool dropMimeData ( const QMimeData * data, Qt::DropAction action, int row, int column, const QModelIndex & parent ); 

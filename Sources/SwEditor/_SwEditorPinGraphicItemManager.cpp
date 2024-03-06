@@ -1,12 +1,12 @@
 /*!
 \file _SwEditorPinGraphicItemManager.cpp
 \date 02/01/2007
-\brief implementation du service de gestion des items graphiques représentant les interfaces
+\brief implementation du service de gestion des items graphiques reprÃ©sentant les interfaces
 \author  Big
 \version 1.0
  */
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <QGraphicsScene>
 #include "_SwEditorPinGraphicItemManager.h"
 #include "ISwEditorGraphicItem.h"
@@ -198,7 +198,7 @@ quint64 _SwEditorPinGraphicItemManager::Load(QDomElement & elt) {
     //Load des items info
     QDomElement subitem_node = item_node.firstChildElement(QString(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NODE));
     while (!subitem_node.isNull()) {
-        //Enregistrement des données
+        //Enregistrement des donnÃ©es
         if (subitem_node.hasAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NAME_NODE) &&
             subitem_node.hasAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NODE_PORT_LIN_POS)) {
             iname=subitem_node.attribute(CL_SW_XML_DRAW_COMP_EDITOR_GPITEM_NAME_NODE);
@@ -259,7 +259,7 @@ void _SwEditorPinGraphicItemManager::Finalize() {
     QMap<QString,_TmpGPData *>::iterator it;
     QMap<QString,_SwEditorPinGraphicItem *>::iterator itr;
     _TmpGPData * p_data;
-    //affectation des données temporaires
+    //affectation des donnÃ©es temporaires
     for (it=_tmp_items.begin();it!=_tmp_items.end();it++) {
         QString s=it.key();
         itr=_pin_gitems.find(it.key());

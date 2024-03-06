@@ -7,7 +7,7 @@
 #ifndef _STREAMWORK_SWRECORD_ISWRECORDMANAGERLISTENER_H
 #define _STREAMWORK_SWRECORD_ISWRECORDMANAGERLISTENER_H
 
-#define SEP_REPLAY "#¤$"
+#define SEP_REPLAY "#Â¤$"
 
 namespace StreamWork {
 
@@ -48,7 +48,7 @@ namespace StreamWork {
 
 			/**
 			 * @brief    : Retourne la liste des records disponible pour le rejeu
-			 * @param	 : QString list - list séparer par SEP_REPLAY
+			 * @param	 : QString list - list sÃ©parer par SEP_REPLAY
 			 */
 			virtual void setRecordList(QString list) = 0;
         };

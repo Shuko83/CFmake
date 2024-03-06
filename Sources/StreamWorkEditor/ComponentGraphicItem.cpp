@@ -1,6 +1,6 @@
 /**
 @file ComponentGraphicItem.cpp
-@brief Item Graphique correspondant à un composant
+@brief Item Graphique correspondant Ã  un composant
 @author F.Bighelli
 */
 
@@ -8,9 +8,9 @@
 #include "GraphicsResources.h"
 #include "StreamControler.h"
 #include "ISwSupportReplay.h"
-#include "ISwAdminSetup.h"
-#include "ISwSubStream.h"
-#include "ISwPluginOverview.h"
+#include "Component/Interfaces/ISwAdminSetup.h"
+#include "Component/Interfaces/ISwSubStream.h"
+#include "Main/Plugin/ISwPluginOverview.h"
 #include "MainWindow.h"
 #include "ManageLinkColor.h"
 
@@ -501,7 +501,7 @@ void ComponentGraphicItem::mouseReleaseEvent(QGraphicsSceneMouseEvent * event)
 			InterestArea *ia = dynamic_cast<InterestArea*>(item);
 			if ( ia )
 			{
-				//Pour rester parenté si sur une interest area
+				//Pour rester parentÃ© si sur une interest area
 				if ( parentItem() != nullptr && parentItem() == item  && item->mapRectToScene(item->boundingRect()).contains(irect) )
 				{
 					found = true;

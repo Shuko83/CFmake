@@ -1,7 +1,7 @@
 /*!
  \file SwDataBasicBuffer_Class.cpp
- \brief classe representant les données echangées sous forme de buffer
- \date 23-août-2006 18:59:26
+ \brief classe representant les donnÃ©es echangÃ©es sous forme de buffer
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -9,7 +9,7 @@
 #include <QDataStream>
 #include <QBuffer>
 #include "SwDataBasicBuffer_Class.h"
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 
 
 using namespace StreamWork::SwCore;
@@ -26,12 +26,12 @@ SwDataBasicBuffer_Class::SwDataBasicBuffer_Class():SwData_Class(){
 //---------------------------------------------------------------------
 // Identification
 //---------------------------------------------------------------------
-/*! \brief Identification de la donnée par chaine de caractere
+/*! \brief Identification de la donnÃ©e par chaine de caractere
 A surcharger*/
 QString SwDataBasicBuffer_Class::GetType(){
 	return CG_SW_DATA_BASIC_BUFFER_NAME;
 }
-/*! \brief Identification de la donnée par valeur
+/*! \brief Identification de la donnÃ©e par valeur
 A surcharger*/
 SwUUID SwDataBasicBuffer_Class::GetTypeId(){
 	return CG_SW_DATA_BASIC_BUFFER_ID;

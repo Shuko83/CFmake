@@ -19,12 +19,12 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwEditorGraphicItem.h"
 #include "_ISwEditorGraphicItemListener.h"
 #include "_ISwEditorPinGraphicItemListener.h"
 #include "_SwEditorInterfacesLayerManager.h"
-#include <ISwPins_Manager.h>
+#include "Component/Services/ISwPins_Manager.h"
 #include "_SwRouting_ToolBox.h"
 
 #define CG_SW_EDITOR_PIN_GRAPHIC_ITEM_OFFSET_TYPE 10002
@@ -153,7 +153,7 @@ namespace StreamWork
             \return Position linaire (comprise entre 0 et 1)*/
             double GetPortLinearPosition();
             /*! \brief Permet de connaitre la position linaire du port de l'interface s'approchant le plus
-            de la position passé en parametres*/
+            de la position passÃ© en parametres*/
             QPointF GetPortNearestValidPosition(const QPointF & pos,double * reminding_linear_position);
             /*! \brief Permet de definir la position avec recalculation de la position linaire*/
             void SetPortPosition(const QPointF & pos, bool reprocess_linear_position=true);
@@ -169,7 +169,7 @@ namespace StreamWork
             void BuildDrawPath(const QPointF & pos,_SwEditorPinGraphicItem * potential_remote_item=NULL);
             /*! \brief Permet de mettre a jour le dessin du chemin de connexion*/
             void UpdateDrawPath(const QPointF & pos);
-            /*! \brief Acces au données de routage*/
+            /*! \brief Acces au donnÃ©es de routage*/
             _SwRouting_ToolBox * GetRouting();
             //---------------------------------------------------------------------
             // Evenement visibilite interface

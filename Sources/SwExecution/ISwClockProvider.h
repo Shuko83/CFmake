@@ -27,7 +27,7 @@ namespace StreamWork {
 	        virtual double queryExecuteTime(bool * isLast)=0;
 		    /*! \brief renvoie du temps pour l'arret */
 	        virtual double queryStopTime()=0;
-		    /*! \brief pause demandé */
+		    /*! \brief pause demandÃ© */
 	        virtual bool queryPause()=0;
         };
 

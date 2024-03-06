@@ -1,6 +1,6 @@
 /*!
 \file SwQActionAdapter.cpp
-\brief Implementation of the Class SwQActionAdapter permettant de générer des QAction
+\brief Implementation of the Class SwQActionAdapter permettant de gÃ©nÃ©rer des QAction
 \version 1.0
 \date 01/09/2013 2:00
 \author AAY

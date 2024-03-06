@@ -8,7 +8,7 @@
 /**
 *  @class : ISwConfigurationManager
 *  @brief : Interface de gestion des properties de la conf
-*		     pour la notification des listeners que les properties sont deletées
+*		     pour la notification des listeners que les properties sont deletÃ©es
 */
 class ISwConfigurationManager
 {
@@ -21,7 +21,7 @@ class ISwConfigurationManager
 	virtual bool registerConfPropertiesObserver(ISwPropertiesObserver * observer) = 0;
 
 	/**
-	* @brief	: Permet désenregistrer un ConfPropertiesObserver
+	* @brief	: Permet dÃ©senregistrer un ConfPropertiesObserver
 	* @Param	: ISwConfPropertiesObserver* observer des properties
 	*/
 	virtual void unregisterConfPropertiesObserver(ISwPropertiesObserver * observer) = 0;

@@ -2,12 +2,12 @@
  \file _SwEditorGIMenu.cpp
  \brief menu pour un graphics item composant
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
-#include <ISwAdminSetup.h>
-#include <SwTime_ToolBox.h>
+#include "Component/Interfaces/ISwAdminSetup.h"
+#include "Tools/SwTime_ToolBox.h"
 #include "_SwEditorGIMenu.h"
 
 using namespace StreamWork::SwCore;
@@ -148,7 +148,7 @@ void _SwEditorGIMenu::AddEmptyChild(){
 //-------------------------------------------------------------
 // AdminSetup
 //-------------------------------------------------------------
-/*! \brief Acces au setup du premier composant selectionné s'il en est capable*/
+/*! \brief Acces au setup du premier composant selectionnÃ© s'il en est capable*/
 void _SwEditorGIMenu::AdminSetup() {
     ISwAdminSetup * admin_setup=dynamic_cast<ISwAdminSetup *>(_op->GetSelectedComponent(0));
 

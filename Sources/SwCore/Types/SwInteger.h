@@ -17,7 +17,7 @@
 * INCLUDES LOCAUX
 */
 #include "SwCoreConstantes.h"
-#include "SwRefPtr.h"
+#include "SwRef/SwRefPtr.h"
 
 namespace StreamWork
 {
@@ -35,10 +35,10 @@ namespace StreamWork
 
 			/** @brief setter sur le pas */
 			void setStep(int step);
-			/** @brief setter sur la currentValue du Int concerné */
+			/** @brief setter sur la currentValue du Int concernÃ© */
 			void setCurrentValue(int currentValue);
 
-			/** @brief méthode surchargée du validateur */
+			/** @brief mÃ©thode surchargÃ©e du validateur */
 			virtual State validate ( QString & input, int & pos ) const;
 		private:
 			int _step;				/** @brief valeur du pas */
@@ -72,7 +72,7 @@ namespace StreamWork
 			/** @brief accesseur sur la valeur minimum */
 			int getMinimum();
 
-			/** @brief accesseur du QIntValidator affecté */
+			/** @brief accesseur du QIntValidator affectÃ© */
 			SwIntegerQValidatorDecorator* getValidator();
 
 			/** @brief mutateur sur le pas */

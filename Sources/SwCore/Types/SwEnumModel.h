@@ -2,7 +2,7 @@
  \file SwEnumModel.h
  \brief Modele QT correspondant a un SwEnum (principal usage -> edition SwEnum par combobox Qt)
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 
 */
@@ -23,7 +23,7 @@
   * INCLUDES LOCAUX
   */
 #include "SwCoreConstantes.h"
-#include "SwEnum.h"
+#include "Types/SwEnum.h"
 
 namespace StreamWork
 {
@@ -53,9 +53,9 @@ namespace StreamWork
 
             /*! \brief Acces valeur interne enumere*/
             SwEnum GetEnum() const;
-            /*! \brief Acces valeur pour un index donné*/
+            /*! \brief Acces valeur pour un index donnÃ©*/
             int GetVal(int index) const;
-            /*! \brief Acces index pour une valeur donné*/
+            /*! \brief Acces index pour une valeur donnÃ©*/
             int GetIndex(int val) const;
             //-----------------------------------------------------------------------------------
             // Implementation QAbstractItemModel

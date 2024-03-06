@@ -1,8 +1,8 @@
 /**
  * @file SwGuiQActionToWidget2.h
  * @brief Composant qui consomme un QAction et une QWidget et qui, sur le triggered de l'action
- *		  ouvre ou ferme le widget associé.
- *		  Le Widget n'est pas encapsulé
+ *		  ouvre ou ferme le widget associÃ©.
+ *		  Le Widget n'est pas encapsulÃ©
  * @version 1.0
  * @date  21/03/2014
  * @author  CGD
@@ -11,7 +11,7 @@
 #ifndef _SwGuiQActionConsumedToWidget_H
 #define _SwGuiQActionConsumedToWidget_H
 
-#include <Component.h>
+#include "Component/Base/Component.h"
 
 class QAction;
 
@@ -34,9 +34,9 @@ public:
     virtual void initializeComponent() throw(SwException);
     /*! \brief evenement de changement de propriete*/
     virtual void eventPropertyChange(ISwProperty * property);
-    /*! \brief evenement avant changement de la disponibilité de l'interface*/
+    /*! \brief evenement avant changement de la disponibilitÃ© de l'interface*/
     virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
-    /*! \brief evenement apres changement de la disponibilité de l'interface*/
+    /*! \brief evenement apres changement de la disponibilitÃ© de l'interface*/
     virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
 
 
@@ -50,7 +50,7 @@ private:
 	bool _isVisible;
 
 	bool isMoved;
-	void MoveCenter();//déplace la widget au centre de l'écran
+	void MoveCenter();//dÃ©place la widget au centre de l'Ã©cran
 
 };
 

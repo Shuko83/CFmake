@@ -6,9 +6,9 @@
 \version 1.0
 */
 
-#include "_SwProvidedInterfaceContainer_Class.h"
-#include "SwInterfaces_Provider_Class.h"
-#include "ISwInterfaces_Consumer.h"
+#include "Main/Connexion/_SwProvidedInterfaceContainer_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
 #include <QMessageBox>
 
 

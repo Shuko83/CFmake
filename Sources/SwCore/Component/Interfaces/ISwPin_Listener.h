@@ -15,7 +15,7 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "SwData_Class.h"
+#include "Component/Pin/SwData_Class.h"
 
 namespace StreamWork 
 {
@@ -30,7 +30,7 @@ namespace StreamWork
         */
         class ISwPin_Listener  {
         public:
-	        /*! \brief Sur reception d'une donnée*/
+	        /*! \brief Sur reception d'une donnÃ©e*/
 	        virtual void OnReceiveData(SwPin *,SwData_Class *)=0;            
         };
     }

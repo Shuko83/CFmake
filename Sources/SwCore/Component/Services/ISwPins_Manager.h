@@ -17,11 +17,11 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "ISwHost.h"
-#include "ISwPersistent.h"
-#include "ISwService.h"
-#include "ISwPins_ManagerListener.h"
-#include "SwPin.h"
+#include "Component/Interfaces/ISwHost.h"
+#include "Component/Interfaces/ISwPersistent.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Main/Connexion/ISwPins_ManagerListener.h"
+#include "Component/Pin/SwPin.h"
 
 //Nom du service
 #define CG_SW_SERVICE_PINS_MANAGER "PinsManager"
@@ -64,7 +64,7 @@ namespace StreamWork
             QString GetServiceName(){return QString(CG_SW_SERVICE_PINS_MANAGER); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
             \return le nom du service reel (le nom de l'interface)
-            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+            \note au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()*/
             QString GetServiceRealName() {return QString(typeid(*this).name());}    
             
         };

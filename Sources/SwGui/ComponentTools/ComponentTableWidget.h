@@ -59,13 +59,13 @@ namespace StreamWork
 		private:
 			/** @brief Ajoute un composant dans la liste _components
 			* @param : QString 1 : hostName
-			* @return bool : succËs ou Èchec de l'ajout (composant dÈj‡ prÈsent)
+			* @return bool : succ√®s ou √©chec de l'ajout (composant d√©j√† pr√©sent)
 			*/
 			bool addComponentToList(QString compo);
 
 			/** @brief Supprime un composant de la liste _components
 			* @param : QString: Component name
-			* @return bool : succËs ou Èchec de la suppresion (composant plus prÈsent)
+			* @return bool : succ√®s ou √©chec de la suppresion (composant plus pr√©sent)
 			*/
 			bool removeComponentToList(QString compo);
 

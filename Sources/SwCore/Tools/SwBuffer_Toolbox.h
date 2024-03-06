@@ -43,7 +43,7 @@ namespace StreamWork
             */
 	        static QByteArray ConvertStringIntoByteArrayInto(const QString & s);
 
-	        /*! \brief methode permettant de convertir une donnée d'une type supportant << et >> avec un QDataStream en String 
+	        /*! \brief methode permettant de convertir une donnÃ©e d'une type supportant << et >> avec un QDataStream en String 
             \param[in] val la valeur
             \return la chaine;
             */

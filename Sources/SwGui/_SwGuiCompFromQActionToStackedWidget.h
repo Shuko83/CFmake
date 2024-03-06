@@ -2,7 +2,7 @@
  \file _SwGuiCompFromQActionToStackedWidget.h
  \brief Implementation of the Class _SwGuiCompFromQActionToStackedWidget generant un QWidget
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -12,15 +12,16 @@
 /*
  * INCLUDES GLOBAUX
  */
+#include <QAction>
 
 /*
  * INCLUDES LOCAUX
  */
-#include <SwComponent_Class.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Properties/ISwProperty.h"
 #include "ISwStackedWidget_Controler.h"
 
 using namespace StreamWork::SwCore;
@@ -55,15 +56,15 @@ public:
     virtual ~_SwGuiCompFromQActionToStackedWidget();
 
     /*! \brief Initialisation des ressources
-    \note tous les services du composants doivent être déclarés dans cette methodes*/
+    \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
     virtual void InitializeResources() throw(SwException);
     
 	//---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-	/*! \brief Avant changement de la disponibilité de l'interface */
+	/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-	/*! \brief Apres changement de la disponibilité de l'interface */
+	/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
     
 	
@@ -84,7 +85,7 @@ protected:
 	SwInterfaces_Provider_Class * _provider_service;
 	/* service de consommation d'interface */
 	SwInterfaces_Consumer_Class * _consumer_service;
-	/* service de gestion des propriétés */
+	/* service de gestion des propriÃ©tÃ©s */
 	SwProperties_Class * _properties_service;
 
 	// --- Widgets ---

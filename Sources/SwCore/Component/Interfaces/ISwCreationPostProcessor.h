@@ -9,7 +9,7 @@
 #ifndef _ISwCreationPostProcessor_H
 #define _ISwCreationPostProcessor_H
 
-#include "SwComponent_Class.h"
+#include "Component/Base/SwComponent_Class.h"
 
 namespace StreamWork
 {

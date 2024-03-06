@@ -1,6 +1,6 @@
 /**
 @file _SwServiceRefProfiler.h
-@brief Implementation du service permettant d'analyser les objets gardé en memoire
+@brief Implementation du service permettant d'analyser les objets gardÃ© en memoire
 @author Quentin Brun
  */
 
@@ -8,7 +8,7 @@
 #define _STREAMWORK_SWCORE__SWSERVICEREFPROFILER_H
 
 #include "ISwServiceRefProfiler.h"
-#include <SwRefPtrTools.h>
+#include "Tools/SwRefPtrTools.h"
 
 namespace StreamWork 
 {

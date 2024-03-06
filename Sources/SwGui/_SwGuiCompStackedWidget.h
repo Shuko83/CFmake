@@ -2,7 +2,7 @@
  \file _SwGuiCompStackedWidget.h
  \brief Implementation of the Class _SwGuiCompStackedWidget generant un QWidget
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -17,11 +17,11 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Properties/ISwProperty.h"
 #include "ISwStackedWidget_Controler.h"
 
 using namespace StreamWork::SwCore;
@@ -40,14 +40,14 @@ protected:
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
     SwInterfaces_Consumer_Class * _consumer_service;
-    /* service de gestion des propriétés */
+    /* service de gestion des propriÃ©tÃ©s */
     SwProperties_Class * _properties_service;
     
     // --- Widgets ---
     
     /* nombre de stackedwidget*/
     uint _stackedWidgets_nb;
-    /* propriété nombre de widgets */
+    /* propriÃ©tÃ© nombre de widgets */
     ISwProperty * _stackedWidgets_nb_property;
     
     uint _stackedWidgets_page_index;
@@ -70,24 +70,24 @@ public:
     virtual ~_SwGuiCompStackedWidget();
     
     /*! \brief Initialisation des ressources
-    \note tous les services du composants doivent être déclarés dans cette methodes*/
+    \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
     virtual void InitializeResources() throw( SwException );
-    /*! \brief Callback sur les changements de propriétés*/
+    /*! \brief Callback sur les changements de propriÃ©tÃ©s*/
     void OnPropertyChange( ISwProperty * property );
     
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-    /*! \brief Avant changement de la disponibilité de l'interface */
+    /*! \brief Avant changement de la disponibilitÃ© de l'interface */
     virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-    /*! \brief Apres changement de la disponibilité de l'interface */
+    /*! \brief Apres changement de la disponibilitÃ© de l'interface */
     virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
     
     //---------------------------------------------------------------------
     // ISwStackedWidget_Controler
     //---------------------------------------------------------------------
     /*! \brief Renvoie le nombre de page disponible
-    /*  \return un int définissant le nombre de page (0 étant la première)*/
+    /*  \return un int dÃ©finissant le nombre de page (0 Ã©tant la premiÃ¨re)*/
     virtual int getNbPage();
     
     /*! \brief Permet de mettre le StackedWidget sur la page de l'index voulu
@@ -98,13 +98,13 @@ public:
     /*  \return l'index courrant du QStackedWidget*/
     virtual int getCurrentIndex();
     
-    /*! \brief Renvoie le nom du widget pour une page donnée
+    /*! \brief Renvoie le nom du widget pour une page donnÃ©e
     /*  \param l'index de la page contenant le widget
     /*  \return le nom du widget
     */
     virtual QString getWidgetName( int pageIndex );
     
-    /*! \brief Renvoie l'icon du widget pour une page donnée
+    /*! \brief Renvoie l'icon du widget pour une page donnÃ©e
     /*  \param l'index de la page contenant le widget
     /*  \return l'icon du widget
     */
@@ -117,7 +117,7 @@ public:
      */
     virtual void registerStackedWidgetObserver( ISwStackedWidget_Observer * o );
     
-    /*! \brief Permet de désenregistrer un observer
+    /*! \brief Permet de dÃ©senregistrer un observer
     *! \param pointeur sur l'observer
      */
     virtual void unRegisterStackedWidgetObserver( ISwStackedWidget_Observer * o );

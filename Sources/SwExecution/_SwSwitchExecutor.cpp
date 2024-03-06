@@ -6,11 +6,11 @@
  \author HLG
 */
 #include <QSet>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwSwitchExecutor.h"
 #include <QMessageBox>
-#include <SwTime_ToolBox.h>
+#include "Tools/SwTime_ToolBox.h"
 
 #define CL_DEFAULT_TIME_STEP 50
 #define CL_EXE_TIMER 0
@@ -66,7 +66,7 @@ _SwSwitchExecutor::~_SwSwitchExecutor(){
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwSwitchExecutor::InitializeResources() throw(SwException) {
     //Creation des service
     _properties_service=new SwProperties_Class(this);
@@ -153,7 +153,7 @@ void _SwSwitchExecutor::InitializeResources() throw(SwException) {
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwSwitchExecutor done\n"));
 
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwSwitchExecutor::OnPropertyChange(ISwProperty * property) {
     if (property==_switchExecutionList._list_name_property) {
         _switchExecutionList._list_name=_switchExecutionList._list_name_property->GetValue().value<SwEnum>();
@@ -280,7 +280,7 @@ void _SwSwitchExecutor::Initialize(double start_time,ISwExecution_Service * exec
     // parcours de tous les executables (independants de l'activation)
     for (int i=0;i<_exe_list->count();i++) 
     {
-        // on vérifie si l'activation de l'executable a changé
+        // on vÃ©rifie si l'activation de l'executable a changÃ©
         ISwExecutable_Service * executable = (*_exe_list)[i];
         if (executable->isActive())
         {
@@ -303,7 +303,7 @@ void _SwSwitchExecutor::Start(double current_time) throw (SwException){
     // parcours de tous les executables (independants de l'activation)
     for (int i=0;i<_exe_list->count();i++) 
     {
-        // on vérifie l'activation de l'executable
+        // on vÃ©rifie l'activation de l'executable
         ISwExecutable_Service * executable = (*_exe_list)[i];
         if (executable->isActive())
         {
@@ -346,7 +346,7 @@ void _SwSwitchExecutor::Execute(double current_time,bool is_first_call) throw (S
     // parcours de tous les executables (independants de l'activation)
     for (int i=0;i<_exe_list->count();i++) 
     {
-        // on vérifie l'activation de l'executable
+        // on vÃ©rifie l'activation de l'executable
         ISwExecutable_Service * executable = (*_exe_list)[i];
         if (executable->isActive())
         {
@@ -415,8 +415,8 @@ void _SwSwitchExecutor::Stop(double current_time){
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------            
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwSwitchExecutor::Liberate(){
 
 }  

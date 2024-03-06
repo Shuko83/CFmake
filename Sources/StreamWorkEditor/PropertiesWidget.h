@@ -1,6 +1,6 @@
 /**
 @file PropertiesWidget.h
-@brief Widget d'edition des propriétés
+@brief Widget d'edition des propriÃ©tÃ©s
 @author F.Bighelli
 */
 
@@ -10,12 +10,12 @@
 #include <QtCore>
 #include <QtWidgets>
 #include "ComponentGraphicItem.h"
-#include <SwPropertiesModelImpl.h>
-#include <EditorPropertiesItemDelegate.h>
+#include "Properties/SwPropertiesModelImpl.h"
+#include "EditorPropertiesItemDelegate.h"
 
 /**
 @class PropertiesWidget
-@brief Widget d'edition des propriétés
+@brief Widget d'edition des propriÃ©tÃ©s
 */
 class PropertiesWidget : public QWidget
 {

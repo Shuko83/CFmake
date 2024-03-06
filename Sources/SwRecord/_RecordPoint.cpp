@@ -7,13 +7,13 @@
  */
 
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_RecordPoint.h"
 #include "ISwServiceRecording.h"
-#include "ISwProperty.h"
+#include "Properties/ISwProperty.h"
 #include <QXmlStreamWriter>
-#include "SwAddress_ToolBox.h"
+#include "Tools/SwAddress_ToolBox.h"
 #include "_SwConfigurationSelector.h"
 
 using namespace StreamWork::SwCore;
@@ -208,18 +208,18 @@ void _RecordPoint::setDataType(const SwEnum & val)
         return;
     }
 
-	//Sur changement du type de données, on supprime les connecteurs
+	//Sur changement du type de donnÃ©es, on supprime les connecteurs
 	unregisterPin(_pinIn);
 	unregisterPin(_pinOut);
 
     //On affecte la valeur
     _dataType=val;
 
-    //on reconstruit les connecteurs (True = Listener, => pinIn Listener = Bidirectionalité)
+    //on reconstruit les connecteurs (True = Listener, => pinIn Listener = BidirectionalitÃ©)
 	_pinIn=registerPin(QString("in"),_dataType.ToString(),true);
 	_pinOut=registerPin(QString("out"),_dataType.ToString(),true);
 
-    //On recupere le codec associé
+    //On recupere le codec associÃ©
     if (_codec!=0) 
 	{
         _codec->destroy();
@@ -349,7 +349,7 @@ void _RecordPoint::Execute(double current_time,bool is_first_call) throw (SwExce
     }
 
 
-    //Si données de rejeu a emettre
+    //Si donnÃ©es de rejeu a emettre
     while (!_sendingQueue.isEmpty()) 
 	{
         SwData_Class * data=_sendingQueue.front();
@@ -362,7 +362,7 @@ void _RecordPoint::Execute(double current_time,bool is_first_call) throw (SwExce
         data->_release();
     }
 
-	//Si données de rejeu a emettre
+	//Si donnÃ©es de rejeu a emettre
 	while (!_propSQueue.isEmpty()) 
 	{
 		MaStruct test = _propSQueue.front();
@@ -523,13 +523,13 @@ void _RecordPoint::registerPropertiesListener()
 		//On cherche le composant par rapport au noeuf root du stream
 		_host=SwAddress_ToolBox::FindTarget(_exported_entities[i]->_host_path,root);
 
-		//On récupère le service de propriétés du composant 
+		//On rÃ©cupÃ¨re le service de propriÃ©tÃ©s du composant 
 		ISwProperties * _internal_properties=dynamic_cast<ISwProperties *>(_host->QueryService(CG_SW_SERVICE_PROPERTIES));  
 		
-		//On récupere la ISwProperty
+		//On rÃ©cupere la ISwProperty
 		ISwProperty* prop =  _internal_properties->GetProperty(_exported_entities[i]->_name);
 
-		//On s'enregistre en tant que listener de la propriété
+		//On s'enregistre en tant que listener de la propriÃ©tÃ©
 		prop->GetOnChangeSignal().iconnect(*this,&_RecordPoint::OnComponentPropertyChange);
 
 		prop->MarkAsChanged();

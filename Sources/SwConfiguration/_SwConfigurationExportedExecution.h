@@ -2,7 +2,7 @@
  \file _SwConfigurationExportedExecution.h
  \brief Class implementant une entite exportable executable
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -10,13 +10,13 @@
 #define __SwConfigurationExportedExecution_H
 
 #include <QString>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwConfigurationExportedEntity.h"
-#include <ISwProperty.h>
-#include <ISwProperties.h>
-#include <LibIndeSig.h>
-#include <SwProperties_Class.h>
-#include <ISwExecution_Service.h>
+#include "Properties/ISwProperty.h"
+#include "Component/Services/ISwProperties.h"
+#include "Tools/Signal/LibIndeSig.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "ISwExecution_Service.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -45,8 +45,8 @@ class _SwConfigurationExportedExecution :
         //---------------------------------------------------------------------
         // Interface ISwService
         //---------------------------------------------------------------------
-        /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-        lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+        /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+        lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
         void Liberate();  
 
         //---------------------------------------------------------------------

@@ -39,7 +39,7 @@ namespace StreamWork
 			virtual void addDockWidgetListener(ISwListDockWidgetListener * observer) = 0;
 
 			/**
-			 * @brief    : Se désenregistrer 
+			 * @brief    : Se dÃ©senregistrer 
 			 * @param	 : ISwListDockWidgetListener * observer - Pointeur sur l'oberserveur
 			 */
 			virtual void removeDockWidgetListener(ISwListDockWidgetListener * observer) = 0;

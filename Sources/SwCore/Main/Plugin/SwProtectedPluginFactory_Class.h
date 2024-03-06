@@ -1,7 +1,7 @@
 #ifndef _SwProtectedPluginFactory_Class_H
 #define _SwProtectedPluginFactory_Class_H
 
-#include "SwPluginFactory_Class.h"
+#include "Main/Plugin/SwPluginFactory_Class.h"
 
 namespace StreamWork
 {

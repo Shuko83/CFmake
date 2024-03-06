@@ -2,7 +2,7 @@
  \file _SwStreamsTabBar.h
  \brief Implementation of the Class _SwStreamsTabBar qui surcharge une tabbar pour la gestion des streams
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -70,7 +70,7 @@ void _SwStreamsTabBar::OnIndexChanged(int index) {
 //---------------------------------------------------------------------
 // Interface ISwObserver
 //---------------------------------------------------------------------
-/*! \brief methode appelée par l'observable*/
+/*! \brief methode appelÃ©e par l'observable*/
 void _SwStreamsTabBar::Update(StreamWork::SwCore::ISwObservable* sender) {
     BuildWidget();    
 }

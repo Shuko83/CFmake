@@ -11,10 +11,10 @@
 /*
   * INCLUDES GLOBAUX
   */
-#include  <SwEnum.h>
-#include  <SwFileDescriptor.h>
+#include "Types/SwEnum.h"
+#include "Types/SwFileDescriptor.h"
 #include  <QString>
-#include  <_ISwConfigurationLaunchEditor.h>
+#include "_ISwConfigurationLaunchEditor.h"
 #include <QObject>
 /*
 * INCLUDES LOCAUX

@@ -2,7 +2,7 @@
  \file _SwExecutorListEditor.h
  \brief Objet pour l'edition de la liste
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 
@@ -19,7 +19,7 @@
 #include <QColor>
 #include <QList>
 
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwExecution_Service.h"
 
 using namespace StreamWork::SwCore;
@@ -95,13 +95,13 @@ protected:
 	/*! \brief keyPressEvent */
 	void keyPressEvent ( QKeyEvent * event );
 
-	/*! \brief Index de l'item pointé*/
+	/*! \brief Index de l'item pointÃ©*/
 	int GetIndex ( const QPoint & p );
 
 signals:
-	/*! \brief signal de reception d'une liste de path de composant ajouté */
+	/*! \brief signal de reception d'une liste de path de composant ajoutÃ© */
 	void OnExeAdded ( const QStringList & comps );
-	/*! \brief signal de reception d'une liste de path de composant supprimé */
+	/*! \brief signal de reception d'une liste de path de composant supprimÃ© */
 	void OnExeRemoved ( const QStringList & comps );
 
 };

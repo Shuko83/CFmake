@@ -11,7 +11,7 @@
   * Includes Locaux
   */
 #include "_SwGuiCompQWidgetToQDialog.h"
-#include <SwMacros.h>
+#include "Main/SwMacros.h"
 
 #define WIDGET_INTERFACE_NAME "Widget"
 #define WIDGETP_INTERFACE_NAME "WidgetP"
@@ -31,7 +31,7 @@ _SwGuiCompQWidgetToQDialog::_SwGuiCompQWidgetToQDialog()
     connect( _action, &QAction::toggled, [ = ]( bool )
     {
         //Close est important car il permet de filtrer l'event en cas
-        // de volonté de ne pas fermer la fenetre dans le widget
+        // de volontÃ© de ne pas fermer la fenetre dans le widget
         if( _container.isVisible() )
             _container.close();
         else

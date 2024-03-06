@@ -7,8 +7,8 @@
  */
 #include <stdarg.h>
 //#include <sys/io>
-#include "SwLogger_Class.h"
-#include "ISwLogRecorder.h"
+#include "Tools/Log/SwLogger_Class.h"
+#include "Tools/Log/ISwLogRecorder.h"
 
 using namespace StreamWork::SwCore;
 

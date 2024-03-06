@@ -4,11 +4,11 @@
 @author F.Bighelli
  */
 #include <Qt>
-#include "_SwCleanLinksVisitor.h"
-#include "SwComponent_Class.h" 
-#include "ISwInterfaces_Consumer.h" 
-#include "ISwInterfaces_Provider.h"
-#include "ISwPins_Manager.h" 
+#include "Main/Connexion/_SwCleanLinksVisitor.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwPins_Manager.h"
 
 using namespace StreamWork::SwCore;
 

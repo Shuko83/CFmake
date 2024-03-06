@@ -2,7 +2,7 @@
  \file _SwEditorCompToolbox.h
  \brief Implementation of the Class _SwEditorCompToolbox generant un boite a outils contenant la liste des composants
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -16,10 +16,10 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Properties/ISwProperty.h"
 
 using namespace StreamWork::SwCore;
 
@@ -36,7 +36,7 @@ namespace StreamWork {
             QSplitter * _toolbox;
             /* \brief service de fourniture d'interface */
             SwInterfaces_Provider_Class * _provider_service;
-            /* \brief service de gestion des propriétés */
+            /* \brief service de gestion des propriÃ©tÃ©s */
             SwProperties_Class * _properties_service;
             /* \brief(Re)Construction du widget */
             void BuildWidget();
@@ -47,7 +47,7 @@ namespace StreamWork {
             virtual ~_SwEditorCompToolbox();
             
             /*! \brief Initialisation des ressources
-                \note tous les services du composants doivent être déclarés dans cette methodes*/
+                \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
             virtual void InitializeResources() throw( SwException );
         };
     }

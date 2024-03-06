@@ -1,7 +1,7 @@
 /**
 * @file _SwSwitchExecutionList.cpp
 * @brief permet de stocker :
-*       la propriété concernant le nom de la liste d'exe
+*       la propriÃ©tÃ© concernant le nom de la liste d'exe
 *       les noms des listes d'execution et leur index
 *       une map avec le nom de la liste et sa liste de composants executables 
 */
@@ -15,7 +15,7 @@ void _SwSwitchExecutionList::AddListName(int index,QString listName) {
     //ajout dans la liste
     _exeListName.insert(index, listName);
 
-    //ajout dans la propriété du composant
+    //ajout dans la propriÃ©tÃ© du composant
     _list_name.RemoveKey(index); // remove si cle deja prise
     _list_name.AddKey(index, listName);
     _list_name.FromInt(index);
@@ -30,20 +30,20 @@ void _SwSwitchExecutionList::AddExeList(QString listName, QList<QString> exeList
 }
 void _SwSwitchExecutionList::DeleteList(int index) {
 
-    //recherche du nom à retirer
+    //recherche du nom Ã  retirer
     ExeListName::iterator it = _exeListName.find(index);
 
     if(it != _exeListName.end()) {
 
-        //suppression de la liste d'executables associés
+        //suppression de la liste d'executables associÃ©s
         DeleteExeList(it.value());
-        //suppression dans la propriété
+        //suppression dans la propriÃ©tÃ©
         _list_name.RemoveKey(it.key());
         //suppression du nom
         _exeListName.remove(it.key());
 
-        //suppression dans la propriété et
-        //reorganisation de la liste de nom afin de garder une cohérence entre 
+        //suppression dans la propriÃ©tÃ© et
+        //reorganisation de la liste de nom afin de garder une cohÃ©rence entre 
         //les index de _exeListName et l'enum _list_name
         it = _exeListName.begin();
         while(it!= _exeListName.end()) {
@@ -51,7 +51,7 @@ void _SwSwitchExecutionList::DeleteList(int index) {
             it++;
         }
 
-        //copie des noms avec des index corrigés dans une liste temporaire
+        //copie des noms avec des index corrigÃ©s dans une liste temporaire
         //modification du SwEnum _list_name
         ExeListName tmpList;
         it = _exeListName.begin();

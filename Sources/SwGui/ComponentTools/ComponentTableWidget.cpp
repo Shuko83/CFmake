@@ -15,7 +15,7 @@
 #include <QMessageBox>
 
 // Includes locaux
-#include "ComponentTableWidget.h"
+#include "ComponentTools/ComponentTableWidget.h"
 
 using namespace StreamWork::SwGui;
 
@@ -102,7 +102,7 @@ void ComponentTableWidget::addComponentInQTable(QString compo)
 {
 	this->setSortingEnabled(false);
 
-	// Insertion d'une nouvelle ligne à la fin de la liste
+	// Insertion d'une nouvelle ligne Ã  la fin de la liste
 	int rowNumber = this->rowCount();
 	this->insertRow(rowNumber);
 
@@ -118,7 +118,7 @@ bool ComponentTableWidget::dropMimeData(int /*row*/, int /*column*/, const QMime
 	this->setSortingEnabled(false);
 	if ( data->hasFormat("application/component") )
 	{
-		//	Déserialisation de la classe 
+		//	DÃ©serialisation de la classe 
 		QString dataCompo = data->data("application/component").data();
 
 		if ( !dataCompo.isEmpty() )

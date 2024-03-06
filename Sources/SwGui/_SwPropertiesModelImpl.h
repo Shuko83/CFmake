@@ -1,6 +1,6 @@
 /*!
  \file _SwPropertiesModelImpl.h
- \brief Definit un modele a partir d'une liste de propriétés d'un composant
+ \brief Definit un modele a partir d'une liste de propriÃ©tÃ©s d'un composant
  \date 02-octobre-2006 16:04:34
  \author F.Bighelli
 */
@@ -17,10 +17,10 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
-#include <ISwProperty.h>
-#include <ISwProperties.h>
-#include <ISwController.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Services/ISwProperties.h"
+#include "Component/Services/ISwController.h"
 #include "ISwQAbstractItemViewSlots.h"
 namespace StreamWork
 {
@@ -28,12 +28,12 @@ namespace StreamWork
 	{
         /*!
 		 \class _SwPropertiesModelImpl 
-		 \brief Definit un modele a partir d'une liste de propriétés d'un composant
+		 \brief Definit un modele a partir d'une liste de propriÃ©tÃ©s d'un composant
 		*/
         class _SwPropertiesModelImpl : public QAbstractItemModel , public ISwQAbstractItemViewSlots{ 
 			Q_OBJECT
         protected:
-            /*! \brief Item representant une propriété */
+            /*! \brief Item representant une propriÃ©tÃ© */
             class PropertyItem {
             public:
                 /*! \brief model hote */
@@ -42,13 +42,13 @@ namespace StreamWork
                 PropertyItem * _parent;
                 /*! \brief enfants */
                 QMap<QString,PropertyItem *> _childrens;
-                /*! \brief interface propriété*/
+                /*! \brief interface propriÃ©tÃ©*/
                 SwCore::ISwProperty * _property;
                 /*! \brief interface controller*/
                 SwCore::ISwController * _controller;
-                /*! \brief interface propriétés du controller*/
+                /*! \brief interface propriÃ©tÃ©s du controller*/
                 SwCore::ISwProperties * _controller_properties;
-                /*! \brief label si la propriété n'est pas définit*/
+                /*! \brief label si la propriÃ©tÃ© n'est pas dÃ©finit*/
                 QString _label;
                 /*! \brief constructeur par interface*/
                 PropertyItem(_SwPropertiesModelImpl * host,QString label,SwCore::ISwProperty * property);
@@ -58,11 +58,11 @@ namespace StreamWork
                 PropertyItem(_SwPropertiesModelImpl * host,QString label);
                 /*! \brief Destructeur */
                 virtual ~PropertyItem();
-                /*! \brief Sur changement de la propriété */
+                /*! \brief Sur changement de la propriÃ©tÃ© */
                 void OnPropertyChange(SwCore::ISwProperty * property);
             };
         protected:
-            /* Handle Propriétés */
+            /* Handle PropriÃ©tÃ©s */
             SwCore::ISwProperties * _properties;
             /*! \brief changement en cours */
             bool _change_in_progress;
@@ -84,7 +84,7 @@ namespace StreamWork
 			_SwPropertiesModelImpl(QObject * parent);
 			/*! \brief destructeur */
 			_SwPropertiesModelImpl();
-			/*! \brief definit les propriétés */
+			/*! \brief definit les propriÃ©tÃ©s */
             void SetProperties(SwCore::ISwProperties * properties);
 			/*! \brief callback sur changement de controle */
             void OnControlChange(SwCore::ISwProperty * property,SwCore::ISwController *new_controller,SwCore::ISwController *old_controller);
@@ -92,28 +92,28 @@ namespace StreamWork
             void OnBeforeChange(SwCore::ISwProperties * properties);
 			/*! \brief callback apres changement */
             void OnAfterChange(SwCore::ISwProperties * properties);
-			/*! \brief callback sur creation de propriétés */
+			/*! \brief callback sur creation de propriÃ©tÃ©s */
             void OnCreateProperty(SwCore::ISwProperties * properties,SwCore::ISwProperty * property);
-			/*! \brief ccallback sur destruction de propriétés*/
+			/*! \brief ccallback sur destruction de propriÃ©tÃ©s*/
             void OnDestroyProperty(SwCore::ISwProperties * properties,SwCore::ISwProperty * property);
             //-------------------------------------------------------------
             // Interface QAbstractItemModel
             //------------------------------------------------------------
-            /*! \brief Renvoie les capacites du modèle */
+            /*! \brief Renvoie les capacites du modÃ¨le */
             virtual Qt::ItemFlags flags ( const QModelIndex & index ) const;
-            /*! \brief Renvoie le nombre de colonnes pour les enfants d'un parent donné */
+            /*! \brief Renvoie le nombre de colonnes pour les enfants d'un parent donnÃ© */
             virtual int columnCount ( const QModelIndex & parent = QModelIndex() ) const;			
-             /*! \brief Renvoie le nombre de ligne pour un parent donné */
+             /*! \brief Renvoie le nombre de ligne pour un parent donnÃ© */
             virtual int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
-            /*! \brief Renvoie les données d'entete */
+            /*! \brief Renvoie les donnÃ©es d'entete */
             virtual QVariant headerData ( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
-            /*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
+            /*! \brief Renvoie les donnÃ©es stockÃ©es sous un certain role pour un item nommÃ© index */
             virtual QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
             /*! \brief Permet de definir la valeur d'un item*/
             virtual bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
-            /*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donné*/
+            /*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donnÃ©*/
             virtual QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const;
-            /*! \brief Renvoie l'item parent d'un item index donné */
+            /*! \brief Renvoie l'item parent d'un item index donnÃ© */
             virtual QModelIndex parent ( const QModelIndex & index ) const;
             //-------------------------------------------------------------
             // Interface ISwQAbstractItemViewSlots

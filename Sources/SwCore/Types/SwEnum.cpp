@@ -2,16 +2,16 @@
  \file SwEnum.cpp
  \brief Classe pour la gestion des enumeres
  \version 1.0
- \date 23-ao�t-2006 18:59:26
+ \date 23-août-2006 18:59:26
  \author F.Bighelli
 
  */
 
-#include "SwEnum.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "_SwEnumKeys_Class.h"
-#include "SwEnumModel.h"
+#include "Types/SwEnum.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Types/_SwEnumKeys_Class.h"
+#include "Types/SwEnumModel.h"
 #include <string>
 
 using namespace StreamWork::SwCore;
@@ -238,7 +238,10 @@ QDataStream &operator>>(QDataStream &in, StreamWork::SwCore::SwEnum &myObj)
 //-----------------------------------------------------------------------
 void StreamWork::SwCore::SwEnum::FromString(const QString val, Qt::CaseSensitivity caseS /*= Qt::CaseSensitive*/)
 {
-	for (auto it = _keys_values_pt->_enum_values.begin(); it != _keys_values_pt->_enum_values.end(); it++)
+	//pas optimisé il faudrait avoir une deusième map pour bien faire 
+	QMap<int, QString>::iterator it = _keys_values_pt->_enum_values.begin();
+
+	for (it; it != _keys_values_pt->_enum_values.end(); it++)
 	{
 		if (QString::compare(it.value(), val, caseS) == 0)
 		{

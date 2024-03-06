@@ -5,7 +5,7 @@
 */
 
 #include "_SwGuiCompGridLayoutCell.h"
-#include "ISwProperty.h"
+#include "Properties/ISwProperty.h"
 
 #define WIDGET_NAME "Widget%1"
 

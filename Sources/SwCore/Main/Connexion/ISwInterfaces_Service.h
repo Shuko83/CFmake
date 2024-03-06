@@ -15,10 +15,10 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "ISwHost.h"
-#include "ISwService.h"
-#include "ISwInterfaces_ServicesListener.h"
-#include "SwComponent_Class.h"
+#include "Component/Interfaces/ISwHost.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Main/Connexion/ISwInterfaces_ServicesListener.h"
+#include "Component/Base/SwComponent_Class.h"
 
 namespace StreamWork 
 {

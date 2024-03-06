@@ -7,7 +7,7 @@
 #ifndef _STREAMWORK_SWCORE_SwExtensionImpl_H
 #define _STREAMWORK_SWCORE_SwExtensionImpl_H
 
-#include "ISwExtension.h"
+#include "Extensions/ISwExtension.h"
 
 namespace StreamWork {
 

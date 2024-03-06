@@ -2,18 +2,18 @@
  \file SwLoader_Class.cpp
  \brief Implementation of the Class SwLoader_Class
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
-#include "SwLoader_Class.h"
+#include "Main/Serialization/SwLoader_Class.h"
 #include "SwCoreConstantes.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
-#include "SwSaver_Class.h"
-#include "ISwPersistent.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Main/Serialization/SwSaver_Class.h"
+#include "Component/Interfaces/ISwPersistent.h"
 #include "QDebug.h"
-#include "ISwServiceOwner.h"
+#include "Component/Services/ISwServiceOwner.h"
 #include <QRegularExpression>
 
 using namespace StreamWork::SwCore;
@@ -85,7 +85,7 @@ SwComponent_ClassPtr SwLoader_Class::Load(QDomDocument & doc) throw(SwException)
     root_component=BuildStream(elt,NULL);
     //Finalization
     FinalizeUnfinalized();
-    //Renvoie la racine du stream crée
+    //Renvoie la racine du stream crÃ©e
     return root_component;
 }
 /*! Chargement d'un groupe
@@ -162,7 +162,7 @@ SwComponent_ClassPtr SwLoader_Class::BuildStream(QDomElement & node,SwComponent_
         } else {
             use_suggested_name=false;    
         }
-        //Non alors on le crée
+        //Non alors on le crÃ©e
         //Recuperation nom d'usine
 		plugin_name = node.attribute(CG_SW_XML_COMPONENT_NODE_ATT_PLUGIN_NAME);
 		factory_name = node.attribute(CG_SW_XML_COMPONENT_NODE_ATT_FACTORY_NAME);
@@ -232,7 +232,7 @@ SwComponent_ClassPtr SwLoader_Class::BuildStream(QDomElement & node,SwComponent_
     return component;
 }
 /*! resolution des finalizations manquantes
-\note est appelé une fois a la fin du load
+\note est appelÃ© une fois a la fin du load
 \note a appeler a nouveau si le neoud racine est inserer dans un contexte*/
 void SwLoader_Class::FinalizeUnfinalized() {
     QMap<quint64,ISwFinalizer *>::iterator it;
@@ -269,9 +269,9 @@ void SwLoader_Class::FinalizeUnfinalized() {
 	_finalizations2.clear();
 
 }
-/*! \brief enregistre une finalisation pour un index d'historique donnée
+/*! \brief enregistre une finalisation pour un index d'historique donnÃ©e
 \param[in] historic_index index d'historique de finalisation
-\param[in] finaliser a appelé
+\param[in] finaliser a appelÃ©
 \exception SwException Historic index already used*/
 void SwLoader_Class::RegisterFinalization(quint64 historic_index,ISwFinalizer * finalizer) throw(SwException) {
 

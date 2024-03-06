@@ -29,7 +29,7 @@ SwDefaultPerspective::~SwDefaultPerspective() {
 
 }
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void SwDefaultPerspective::InitializeResources() throw(SwException) {
     //Creation des service
     _consumer_service=new SwInterfaces_Consumer_Class(this) ;
@@ -52,11 +52,11 @@ void SwDefaultPerspective::InitializeResources() throw(SwException) {
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void SwDefaultPerspective::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
 
 }            
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void SwDefaultPerspective::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
 
 }            

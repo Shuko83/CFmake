@@ -7,7 +7,7 @@
 #ifndef _STREAMWORK_SWCORE_ISWEXTENSIONPOINT_H
 #define _STREAMWORK_SWCORE_ISWEXTENSIONPOINT_H
 
-#include "ISwExtension.h"
+#include "Extensions/ISwExtension.h"
 
 namespace StreamWork {
 
@@ -32,7 +32,7 @@ namespace StreamWork {
             /** @brief renvoie l'extension derriere le point d'extension*/
             virtual ISwExtension * getExtension()=0;
 
-            /** @brief etends avec l'extension passé en parametre*/
+            /** @brief etends avec l'extension passÃ© en parametre*/
             virtual void extends(ISwExtension *)=0;
 
             /** @brief supprimer l'extension*/

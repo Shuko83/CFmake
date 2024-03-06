@@ -13,7 +13,7 @@
   */
 #include <QList>
 #include <QAbstractItemModel>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 
 /*
   * INCLUDES LOCAUX

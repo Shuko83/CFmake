@@ -2,7 +2,7 @@
  \file _SwConfigurationExportedProperty.cpp
  \brief Class implementant une entite exportable property
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -31,7 +31,7 @@ void _SwConfigurationExportedProperty::SpecificBind(){
     //Connection des signaux
     _internal_properties->GetOnCreateProperty().iconnect(*this,&_SwConfigurationExportedProperty::OnCreateProperty);
     _internal_properties->GetOnDestroyProperty().iconnect(*this,&_SwConfigurationExportedProperty::OnDestroyProperty);
-    //Creation de la propriété si elle existe
+    //Creation de la propriÃ©tÃ© si elle existe
     OnCreateProperty(_internal_properties,_internal_properties->GetProperty(_name));
 }
 /*! \brief Defait la liaison */
@@ -39,7 +39,7 @@ void _SwConfigurationExportedProperty::SpecificUnbind(){
     if (_internal_properties==NULL || _external_properties==NULL) {
         return;
     }
-    //Destruction de la propriété
+    //Destruction de la propriÃ©tÃ©
     OnDestroyProperty(_internal_properties,_internal_property);
     //Deconnection des signaux
     _internal_properties->GetOnCreateProperty().idisconnect(*this,&_SwConfigurationExportedProperty::OnCreateProperty);
@@ -72,7 +72,7 @@ void _SwConfigurationExportedProperty::OnExternalChange(ISwProperty * p) {
      _external_property->SetValue(v);
     _propagate_change_on=true;
 }
-/*! \brief Sur creation d'une propriété */
+/*! \brief Sur creation d'une propriÃ©tÃ© */
 void _SwConfigurationExportedProperty::OnCreateProperty(ISwProperties *ps,ISwProperty *p) {
     if (_internal_property==NULL && p!=NULL && p->GetRealName()==_name) {
         _internal_property=p;
@@ -88,10 +88,10 @@ void _SwConfigurationExportedProperty::OnCreateProperty(ISwProperties *ps,ISwPro
         _external_property->GetOnChangeSignal().iconnect(*this,&_SwConfigurationExportedProperty::OnExternalChange);
     }
 }
-/*! \brief Sur destruction d'une propriété */
+/*! \brief Sur destruction d'une propriÃ©tÃ© */
 void _SwConfigurationExportedProperty::OnDestroyProperty(ISwProperties *ps,ISwProperty *p) {
     if (_internal_property!=NULL && p==_internal_property) {
-        //Si la propriété existe on la detruit
+        //Si la propriÃ©tÃ© existe on la detruit
         _internal_property->GetOnChangeSignal().idisconnect(*this,&_SwConfigurationExportedProperty::OnInternalChange);
         _internal_property->GetOnVisibleChangeSignal().idisconnect(*this,&_SwConfigurationExportedProperty::OnInternalVisibleChange);
         _internal_property->GetOnEditableChangeSignal().idisconnect(*this,&_SwConfigurationExportedProperty::OnInternalEditableChange);

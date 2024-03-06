@@ -6,16 +6,16 @@
 #include <QDir>
 #include <QTextStream>
 
-#include <SwApplication.h>
-#include <SwMacros.h>
-#include <SwFileLogRecorder_Class.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Tools/Log/SwFileLogRecorder_Class.h"
 #include "MainWindow.h"
 #include "SwSplash.h"
 #include "LogView.h"
-#include "SwLogger_Class.h"
+#include "Tools/Log/SwLogger_Class.h"
 #include "EditionService.h"
 #include "QsLog.h"
-#include "SwTime_ToolBox.h"
+#include "Tools/SwTime_ToolBox.h"
 #include "ProductLicense.h"
 #include "StreamControler.h"
 
@@ -125,7 +125,7 @@ Parameters readParamaters()
 		// Demarrage retarde
 		else if (liste_arg[i] == "-restart" && i + 1 < nb_args)
 			params.restart = liste_arg[++i].toUInt();
-		// Permet de signer les fichiers contenu dans le dossier fourni en paramètre
+		// Permet de signer les fichiers contenu dans le dossier fourni en paramÃ¨tre
 		else if (liste_arg[i] == "-sign" && i + 1 < nb_args)
 			params.folderToSign = liste_arg[++i];
 	}
@@ -247,7 +247,7 @@ int main(int argc, char *argv[])
 		SW_APP->enableAutoStart();
 	}
 	// Modification de l'application dir path
-	// Doit être fait avant pluginPath et pluginPathFile
+	// Doit Ãªtre fait avant pluginPath et pluginPathFile
 	if (!params.appDirPath.isEmpty())
 	{
 		QDir dir(params.appDirPath);
@@ -317,7 +317,7 @@ int main(int argc, char *argv[])
 	// Destruction du log_recorder
 	delete log_recorder;
 
-	// Destruction du service d'édition
+	// Destruction du service d'Ã©dition
     try
     {
         SW_APP->UnregisterService(editionService->GetServiceName());

@@ -11,7 +11,7 @@
 #include <QLocale>
 #include <QDate>
 
-#include "SwApplication.h"
+#include "Main/SwApplication.h"
 
 #include "_SwFoundationPluginFactory_Class.h"
 

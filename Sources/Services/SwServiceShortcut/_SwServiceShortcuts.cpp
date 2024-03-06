@@ -25,7 +25,7 @@ using namespace StreamWork::SwCore;
 //-------------------------------------------------------------------------
 _SwServiceShortcuts::_SwServiceShortcuts() : _isConfigurationMode(false)
 {
-	// Rien de prévu ...
+	// Rien de prÃ©vu ...
 }
 
 //-------------------------------------------------------------------------
@@ -329,7 +329,7 @@ void _SwServiceShortcuts::unBindDevices( QMap<QString,QList<QString>> devices )
 //-------------------------------------------------------------------------
 void _SwServiceShortcuts::unBindShortcuts( QMap<QString,QList<QString>> shortcuts )
 {
-	// On disconnecte et supprime que les shortcuts de la liste passée en paramètre
+	// On disconnecte et supprime que les shortcuts de la liste passÃ©e en paramÃ¨tre
 	for (QShortcut* tshortcut : _listKeyShortcut )
 	{
 		QString StringSeq = tshortcut->key().toString();
@@ -343,7 +343,7 @@ void _SwServiceShortcuts::unBindShortcuts( QMap<QString,QList<QString>> shortcut
 			{
 				StringSeq2 = StringSeq2+","+sequences.at(i);
 			}
-			// Pour les retrouver, on se base sur leur séquence associée
+			// Pour les retrouver, on se base sur leur sÃ©quence associÃ©e
  			if (StringSeq == StringSeq2)
  			{
 				if(_mapKeyboardAssoc.contains(it.key()))
@@ -366,9 +366,9 @@ void _SwServiceShortcuts::unBindShortcuts( QMap<QString,QList<QString>> shortcut
 //-------------------------------------------------------------------------
 void _SwServiceShortcuts::clearShortcutsService()
 {
-	// Le composant SxShortCutConfiguration lors du bindKeyBoard() créé les QShortCuts linké à son widget
-	// Lorsque le clearShortcut() est appelé, tout ancien composant SxShortCutConfiguration a été deleté
-	// et donc le widget et ses fils (des QShortcuts) aussi... pas besoin donc de les deleter à la mano...	
+	// Le composant SxShortCutConfiguration lors du bindKeyBoard() crÃ©Ã© les QShortCuts linkÃ© Ã  son widget
+	// Lorsque le clearShortcut() est appelÃ©, tout ancien composant SxShortCutConfiguration a Ã©tÃ© deletÃ©
+	// et donc le widget et ses fils (des QShortcuts) aussi... pas besoin donc de les deleter Ã  la mano...	
 	_listKeyShortcut.clear();
 
 	_mapDevicesAssoc.clear();

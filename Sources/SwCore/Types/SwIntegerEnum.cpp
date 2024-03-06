@@ -1,4 +1,4 @@
-#include "SwIntegerEnum.h"
+#include "Types/SwIntegerEnum.h"
 
 #include <limits>
 

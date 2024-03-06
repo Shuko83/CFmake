@@ -18,9 +18,9 @@
 #include <QRegularExpression>
 #include <QFont>
 #include <QFileDialog>
-#include "SwFileDescriptor.h"
-#include "SwIconDescriptor.h"
-#include "SwUUID.h"
+#include "Types/SwFileDescriptor.h"
+#include "Types/SwIconDescriptor.h"
+#include "Types/SwUUID.h"
 
 namespace StreamWork
 {

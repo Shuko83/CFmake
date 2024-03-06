@@ -20,16 +20,16 @@ namespace StreamWork {
 
         public:
             
-            /** @brief sur changement des propriétés*/
+            /** @brief sur changement des propriÃ©tÃ©s*/
             virtual void OnPropertiesChanged(ISwConfiguration *)=0;
 
-            /** @brief sur changement des propriétés*/
+            /** @brief sur changement des propriÃ©tÃ©s*/
             virtual void OnActivate(ISwConfiguration *)=0;
 
-            /** @brief sur changement des propriétés*/
+            /** @brief sur changement des propriÃ©tÃ©s*/
             virtual void OnDisable(ISwConfiguration *)=0;
 
-            /** @brief sur changement des propriétés*/
+            /** @brief sur changement des propriÃ©tÃ©s*/
             //virtual void OnRecordAvailableChanged(ISwConfiguration *)=0;
         };
 

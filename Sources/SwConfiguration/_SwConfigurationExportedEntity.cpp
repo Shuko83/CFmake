@@ -2,11 +2,11 @@
  \file _SwConfigurationExportedEntity.cpp
  \brief Class implementant une entite exportable
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include "_SwConfigurationExportedEntity.h"
 #include "_SwConfigurationExportedProperty.h"
 #include "_SwConfigurationExportedPerspective.h"

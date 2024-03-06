@@ -75,7 +75,7 @@ SwComponent_Class * _SwEditorPluginFactory_Class::CreateInstanceOf(QString name)
 }
 /*! \brief acces a l'icone d'un composant
 \param[in] name nom du composant
-\return l'incone ou icone vide si non trouvé*/
+\return l'incone ou icone vide si non trouvÃ©*/
 QIcon _SwEditorPluginFactory_Class::CreateIconOf(QString name) const{
     QIcon ico;
 
@@ -119,10 +119,10 @@ QString _SwEditorPluginFactory_Class::GetPluginVersion(){
 }
 
 QDateTime _SwEditorPluginFactory_Class::GetPluginCompilationDate(){	
-	//recup de la date à partir de __DATE__
+	//recup de la date Ã  partir de __DATE__
 	QDate date = QLocale(QLocale::C).toDate(QString(__DATE__).simplified(), QLatin1String("MMM d yyyy"));
 
-	//recup de l'heure à partir de __TIME__
+	//recup de l'heure Ã  partir de __TIME__
 	QString strTime = __TIME__;
 	QTime time = time.fromString(strTime,"hh:mm:ss");
 

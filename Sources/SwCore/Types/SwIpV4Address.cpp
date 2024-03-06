@@ -5,7 +5,7 @@
  */
 
 #include <QStringList>
-#include "SwIpV4Address.h"
+#include "Types/SwIpV4Address.h"
  
 using namespace StreamWork::SwCore;
 

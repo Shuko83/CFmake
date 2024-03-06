@@ -8,11 +8,11 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QMessageBox>
 #include <QMimeData>
-#include <SwAddress_ToolBox.h>
-#include "ComponentTreeModel.h"
+#include "Tools/SwAddress_ToolBox.h"
+#include "ComponentTools/ComponentTreeModel.h"
 
 using namespace StreamWork::SwGui;
 using namespace StreamWork::SwCore;

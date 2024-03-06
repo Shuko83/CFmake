@@ -4,7 +4,7 @@
 #include "SwDockWidget_MainDockMenuAction.h"
 #include "SwDockWidget_MainDockConfiguration.h"
 
-#include "SwDockWidget_MainTabBar.h" //DEBUG ONLY
+#include "SwDockWidget_MainTabBar.h"
 
 //Qt
 #include <QtCore/QTime>
@@ -64,7 +64,7 @@ SwDockWidget_MainArea::SwDockWidget_MainArea(QWidget *parent, QMenuBar * menuBar
 	_secondScreenMainDock->hideShadow();
 	_secondScreenMainDock->setCanBePin(false);
 
-	//Correctif maindock indédockable (Test si conforme mais règle le soucis : Ne déparente pas la fenêtre)
+	//Correctif maindock indÃ©dockable (Test si conforme mais rÃ¨gle le soucis : Ne dÃ©parente pas la fenÃªtre)
 	//_secondScreenMainDock->setAlwaysOnTop(false);
 	_quitOnClose = false;
 	//Fichier de configuration par defaut mis lors du load

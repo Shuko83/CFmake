@@ -24,7 +24,7 @@ namespace StreamWork {
         class ISwReplayListener {
 
         public:
-            /** @brief definit l'état du rejeu */
+            /** @brief definit l'Ã©tat du rejeu */
             virtual void setState(QString val)=0;
             /** @brief definit le temps de debut du rejeu en cours  */
             virtual void setStartTime(double vtime)=0;
@@ -34,7 +34,7 @@ namespace StreamWork {
             virtual void setCurrentTime(double vtime)=0;
             /** @brief definit le temps courant du cache du rejeu en cours */
             virtual void setCacheTime(double vtime)=0;
-			/** @brief definit le répertoire de rejeu*/
+			/** @brief definit le rÃ©pertoire de rejeu*/
 			virtual void setCurrentDirectory(QString dir)=0;
 			/** @brief definit la vitesse de rejeu */
 			virtual void setSpeed(int speed)=0;

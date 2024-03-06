@@ -22,7 +22,7 @@ namespace StreamWork
         */
         class ISwObserver  {
         public:
-	        /*! \brief methode appelée par l'observable*/
+	        /*! \brief methode appelÃ©e par l'observable*/
 			virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr) = 0;
         };
     }

@@ -1,4 +1,4 @@
-#include "SwDouble.h"
+#include "Types/SwDouble.h"
 
 #include <limits>
 
@@ -171,7 +171,7 @@ QValidator::State SwDoubleQValidatorDecorator::validate( QString & input, int & 
 
 	state =  QDoubleValidator::validate(input, pos);
 
-	// Si le modulo est nul, le step est ok par rapport à la valeur de départ
+	// Si le modulo est nul, le step est ok par rapport Ã  la valeur de dÃ©part
 	if(fmod( (_currentValue - bottom()), _step) != 0 )
 	{
 		state = QValidator::Invalid;

@@ -7,8 +7,8 @@
  */
 
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <QVBoxLayout>
 #include "_SwGuiVisualLogConsole.h"
 #include <QColor>
@@ -65,7 +65,7 @@ _SwGuiVisualLogConsole::~_SwGuiVisualLogConsole()
 }
 /**
  * @brief Initialisation des ressources
- * @note tous les services du composants doivent être déclarés dans cette methodes
+ * @note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes
  */
 void _SwGuiVisualLogConsole::InitializeResources() throw( SwException )
 {
@@ -88,7 +88,7 @@ void _SwGuiVisualLogConsole::InitializeResources() throw( SwException )
     _provider_service->RegisterProvidedInterface<QWidget>( "logConsole", _mainWidget);
     
     //--------------------------------------
-    //Definition Interfaces consommés
+    //Definition Interfaces consommÃ©s
     //--------------------------------------
     //Importation de l'interface QWidget
     _consumer_service->RegisterConsumedInterface<ISwHttpServer>( "HttpServer", &_handleHttpServer );
@@ -108,7 +108,7 @@ void _SwGuiVisualLogConsole::InitializeResources() throw( SwException )
     SW_APP->Logger().AttachLogRecorder( this );
 }
 
-/** @brief Callback sur les changements de propriétés*/
+/** @brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwGuiVisualLogConsole::OnPropertyChange( ISwProperty * property )
 {
 }
@@ -134,7 +134,7 @@ void _SwGuiVisualLogConsole::setForegroundColor( QColor color )
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/** @brief Avant changement de la disponibilité de l'interface */
+/** @brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiVisualLogConsole::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( _handleHttpServer != 0 )
@@ -143,7 +143,7 @@ void _SwGuiVisualLogConsole::BeforeInterfaceAvailabilityChange( QString interfac
     }
     
 }
-/** @brief Apres changement de la disponibilité de l'interface */
+/** @brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiVisualLogConsole::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( _handleHttpServer != 0 )

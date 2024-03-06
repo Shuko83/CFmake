@@ -11,7 +11,7 @@
 /*
   * INCLUDES LOCAUX
  */
-#include "ISwAlerter.h"
+#include "Tools/Log/ISwAlerter.h"
 
 namespace StreamWork 
 {

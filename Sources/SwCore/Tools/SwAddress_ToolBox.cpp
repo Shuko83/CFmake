@@ -1,7 +1,7 @@
 /*!
  \file SwAddress_ToolBox.cpp
  \brief Implementation of the Class SwAddress_Class
- \date 24-août-2006 12:21:05
+ \date 24-aoÃ»t-2006 12:21:05
  \author F.Bighelli
 */
 /*
@@ -11,9 +11,9 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "SwAddress_ToolBox.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
+#include "Tools/SwAddress_ToolBox.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwCore;
 
@@ -91,7 +91,7 @@ QString SwAddress_ToolBox::BuildRelativePath(SwComponent_Class *source,SwCompone
     return path;
 }
 /*! \brief Construit un chemin universel jusqu'a la cible
-(utile si source et cible ne sont pas dans le même stream)
+(utile si source et cible ne sont pas dans le mÃªme stream)
 \param[in] target la cible
 \return le chemin universal */
 QString SwAddress_ToolBox::BuildUniversalPath(SwComponent_Class *target) {
@@ -168,7 +168,7 @@ SwComponent_Class * SwAddress_ToolBox::FindTarget(QString path,SwComponent_Class
         QString msg=QString("Unable to find target from a NULL source");
         LAUNCH_SWEXCEPTION("SwCore",msg);
     }
-    //Construction du path fragmenté
+    //Construction du path fragmentÃ©
     f_path=path.split(CG_PATH_SEPARATOR);
     //Suppression de la derniere chaine si elle est vide
     if (f_path.size()>1 && f_path[f_path.size()-1].isEmpty()) {

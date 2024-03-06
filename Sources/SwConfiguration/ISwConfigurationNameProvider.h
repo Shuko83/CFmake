@@ -12,7 +12,7 @@
   * INCLUDES GLOBAUX
  */
 #include <QString>
-#include <ISwConfigurationNameListener.h>
+#include "ISwConfigurationNameListener.h"
 
 
 namespace StreamWork 

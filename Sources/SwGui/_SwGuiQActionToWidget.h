@@ -11,10 +11,10 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwEnum.h>
-#include <Component.h>
-#include <SwPin.h>
-#include <ISwProperty.h>
+#include "Types/SwEnum.h"
+#include "Component/Base/Component.h"
+#include "Component/Pin/SwPin.h"
+#include "Properties/ISwProperty.h"
 #include <QAction>
 
 #include "_SwContainerCloseableWidget.h"
@@ -34,7 +34,7 @@ class _SwGuiQActionToWidget : public Component
 public:
     /**
     * @brief Type d'orientation pour les pistes dans la carto :
-    * - NUP : North up : la symbologie restera orientée plein nord
+    * - NUP : North up : la symbologie restera orientÃ©e plein nord
     * - TUP : Track up : la symbologie suivra l'orientation de la piste
     */ 
     Q_ENUMS (WindowFlag);
@@ -108,9 +108,9 @@ public:
     virtual void initializeComponent() throw(SwException);
     /*! \brief evenement de changement de propriete*/
     virtual void eventPropertyChange(ISwProperty * property);
-    /*! \brief evenement avant changement de la disponibilité de l'interface*/
+    /*! \brief evenement avant changement de la disponibilitÃ© de l'interface*/
     virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
-    /*! \brief evenement apres changement de la disponibilité de l'interface*/
+    /*! \brief evenement apres changement de la disponibilitÃ© de l'interface*/
     virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
 
 	/*! \brief Renvoie le Action
@@ -120,14 +120,14 @@ public:
 private:
 	QAction _action;
 	QWidget * _widget;
-	_SwContainerCloseableWidget * _hostWidget;//création d'un conteneur qui encapsule la widget pour capter l'event close widget
+	_SwContainerCloseableWidget * _hostWidget;//crÃ©ation d'un conteneur qui encapsule la widget pour capter l'event close widget
 	QString _showName;
 	QString _hiddenName;
 	bool _isVisible;
 	bool _stayOnTop;
 
 	bool isMoved;
-	void MoveCenter();//déplace la widget au centre de l'écran
+	void MoveCenter();//dÃ©place la widget au centre de l'Ã©cran
 
 };
 

@@ -8,7 +8,7 @@
 #define _GRAPHICSRESOURCES_H
 
 #include <QtWidgets>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 
 class ConnectorGraphItem;
 /**

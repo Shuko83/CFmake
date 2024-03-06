@@ -5,7 +5,7 @@
  */
 
 #include "_SwServiceExtensionsImpl.h"
-#include "SwExtensionImpl.h"
+#include "Extensions/SwExtensionImpl.h"
 
 using namespace StreamWork::SwCore;
 

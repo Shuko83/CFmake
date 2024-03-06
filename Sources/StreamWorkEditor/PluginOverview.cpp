@@ -74,7 +74,7 @@ void PluginOverview::doSearch( const QString&text )
 {
 	_componentModel->clear();
 
-	//Evol quand on efface pour réafficher la list plugin
+	//Evol quand on efface pour rÃ©afficher la list plugin
 	if(text == "")
 	{
 		//Hide plugin view

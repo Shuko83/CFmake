@@ -1,8 +1,8 @@
 /*!
  \file SwData_Class.h
- \brief classe representant les données echangées
+ \brief classe representant les donnÃ©es echangÃ©es
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -13,10 +13,10 @@
   * INCLUDES GLOBAUX
   */
 #include <QDataStream>
-#include "SwException.h"
-#include "SwRef.h"
-#include "SwRefPtr.h"
-#include "SwUUID.h"
+#include "Tools/Exception/SwException.h"
+#include "SwRef/SwRef.h"
+#include "SwRef/SwRefPtr.h"
+#include "Types/SwUUID.h"
 /*
   * CONSTANTES GLOBALES
   */
@@ -27,13 +27,13 @@ namespace StreamWork
 {
 	namespace SwCore
 	{
-        /*! \brief definition du pointeur securisé sur data */
+        /*! \brief definition du pointeur securisÃ© sur data */
         class SwData_Class;
         class SwPluginFactory_Class;
         typedef SwRefPtr<SwData_Class> SwData_ClassPtr;
         /*!
 		 \class SwData_Class 
-		 \brief classe de base de toutes les données echangées
+		 \brief classe de base de toutes les donnÃ©es echangÃ©es
         @ingroup SwCoreGrp
 		*/
         class BUILD_SWCORE SwData_Class: public SwRef
@@ -68,25 +68,25 @@ namespace StreamWork
             //---------------------------------------------------------------------
             // Identification
             //---------------------------------------------------------------------
-            /*! \brief Identification de la donnée par chaine de caractere
+            /*! \brief Identification de la donnÃ©e par chaine de caractere
             A surcharger*/
             virtual QString GetType();
-            /*! \brief Identification de la donnée par valeur
+            /*! \brief Identification de la donnÃ©e par valeur
             A surcharger*/
             virtual SwUUID GetTypeId();
             //---------------------------------------------------------------------
             // Clonage
             //---------------------------------------------------------------------
-            /*! \brief Clonage de la donnée */
+            /*! \brief Clonage de la donnÃ©e */
             SwData_Class * Clone() throw(SwException);
             //---------------------------------------------------------------------
             // Serialisation
             //---------------------------------------------------------------------
             /*! \brief Lecture 
-            \warning si les données ne sont pas complete -> exception*/
+            \warning si les donnÃ©es ne sont pas complete -> exception*/
             void Read(QDataStream * data) throw(SwException);
             /*! \brief Lecture avec resolution 
-            \warning si les données ne sont pas complete -> exception*/
+            \warning si les donnÃ©es ne sont pas complete -> exception*/
             static SwData_Class * ReadResolve(QDataStream * data) throw(SwException);
             /*! \brief Ecriture */
             void Write(QDataStream * data);

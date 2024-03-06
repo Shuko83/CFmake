@@ -1,6 +1,6 @@
 /*!
  \file __SwPropertiesModelImpl.h
- \brief Definit un modele a partir d'une liste de propriétés d'un composant
+ \brief Definit un modele a partir d'une liste de propriÃ©tÃ©s d'un composant
  \date 02-octobre-2006 16:04:34
  \author F.Bighelli
 */
@@ -10,14 +10,14 @@
 #include <QMenu>
 #include <QAction>
 #include <QMessageBox>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <QPainter>
 
 /*
   * INCLUDES LOCAUX
   */
-#include "SwIconDescriptor.h"
+#include "Types/SwIconDescriptor.h"
 #include "_SwPropertiesModelImpl.h"
 
 
@@ -34,7 +34,7 @@ _SwPropertiesModelImpl::_SwPropertiesModelImpl(QObject * parent):QAbstractItemMo
 }
 /*! \brief destructeur */
 _SwPropertiesModelImpl::_SwPropertiesModelImpl() {
-    //Si l'ancienne collection de propriétés est definie
+    //Si l'ancienne collection de propriÃ©tÃ©s est definie
     if (_properties!=NULL) {
         //Desenregistrement des signaux
         _properties->GetOnBeforePropertiesChange().idisconnect(*this,&_SwPropertiesModelImpl::OnBeforeChange);
@@ -156,7 +156,7 @@ void _SwPropertiesModelImpl::DestroyItem(ISwProperty * property) {
         item=c_item;
     }
 }
-/*! \brief definit les propriétés */
+/*! \brief definit les propriÃ©tÃ©s */
 void _SwPropertiesModelImpl::SetProperties(ISwProperties * properties) {
     QList<ISwProperty *> properties_list;
     QMap<SwCore::ISwProperties *,PropertyItem *>::iterator itp;
@@ -165,7 +165,7 @@ void _SwPropertiesModelImpl::SetProperties(ISwProperties * properties) {
         //Signal avant changement
 		beginResetModel();
 
-        //Si l'ancienne collection de propriétés est definie
+        //Si l'ancienne collection de propriÃ©tÃ©s est definie
         if (_properties!=NULL) {
             //Desenregistrement des signaux
             _properties->GetOnBeforePropertiesChange().idisconnect(*this,&_SwPropertiesModelImpl::OnBeforeChange);
@@ -178,7 +178,7 @@ void _SwPropertiesModelImpl::SetProperties(ISwProperties * properties) {
             //Destruction des items
             delete _root_item;
         }
-        //Enregistrement de la nouvelle collection de propriétés
+        //Enregistrement de la nouvelle collection de propriÃ©tÃ©s
         _properties=properties;
         if (_properties!=NULL) {
             //Enregistrement des signaux
@@ -241,7 +241,7 @@ void _SwPropertiesModelImpl::OnControlChange(ISwProperty * property,ISwControlle
         //Ajout de l'item controlleur
         c_item=new PropertyItem(this,property->GetController());
         c_item->_parent=item;
-        //On enregistre la propriété
+        //On enregistre la propriÃ©tÃ©
         //Le nom enregistrer au niveau des enfants garantie que c'ets toujours le premier item
         iti=item->_childrens.insert("!"+c_item->_label,c_item);
         //On enregistre les enfants
@@ -269,18 +269,18 @@ void _SwPropertiesModelImpl::OnAfterChange(ISwProperties * properties) {
     //modelReset();
     _change_in_progress=false;
 }
-/*! \brief callback sur creation de propriétés */
+/*! \brief callback sur creation de propriÃ©tÃ©s */
 void _SwPropertiesModelImpl::OnCreateProperty(ISwProperties * properties,ISwProperty * property) {
     CreateItem(property);    
 }
-/*! \brief ccallback sur destruction de propriétés*/
+/*! \brief ccallback sur destruction de propriÃ©tÃ©s*/
 void _SwPropertiesModelImpl::OnDestroyProperty(ISwProperties * properties,ISwProperty * property) {
     DestroyItem(property);
 }
 //-------------------------------------------------------------
 // Interface QAbstractItemModel
 //------------------------------------------------------------
-/*! \brief Renvoie les capacites du modèle */
+/*! \brief Renvoie les capacites du modÃ¨le */
 Qt::ItemFlags _SwPropertiesModelImpl::flags ( const QModelIndex & index ) const {
     PropertyItem *item;
 
@@ -295,11 +295,11 @@ Qt::ItemFlags _SwPropertiesModelImpl::flags ( const QModelIndex & index ) const 
 
     return Qt::ItemFlags(Qt::ItemIsEnabled);
 }
-/*! \brief Renvoie le nombre de colonnes pour les enfants d'un parent donné */
+/*! \brief Renvoie le nombre de colonnes pour les enfants d'un parent donnÃ© */
 int _SwPropertiesModelImpl::columnCount ( const QModelIndex & parent) const{
     return 2;
 }			
-    /*! \brief Renvoie le nombre de ligne pour un parent donné */
+    /*! \brief Renvoie le nombre de ligne pour un parent donnÃ© */
 int _SwPropertiesModelImpl::rowCount ( const QModelIndex & parent ) const{
     PropertyItem *iparent;
 
@@ -310,7 +310,7 @@ int _SwPropertiesModelImpl::rowCount ( const QModelIndex & parent ) const{
     iparent=(PropertyItem *)parent.internalPointer();
     return iparent->_childrens.count(); 
 }
-/*! \brief Renvoie les données d'entete */
+/*! \brief Renvoie les donnÃ©es d'entete */
 QVariant _SwPropertiesModelImpl::headerData ( int section, Qt::Orientation orientation, int role) const{
     if (role == Qt::DisplayRole) {
         switch(section) {
@@ -324,7 +324,7 @@ QVariant _SwPropertiesModelImpl::headerData ( int section, Qt::Orientation orien
     }
     return QVariant();
 }
-/*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
+/*! \brief Renvoie les donnÃ©es stockÃ©es sous un certain role pour un item nommÃ© index */
 QVariant _SwPropertiesModelImpl::data ( const QModelIndex & index, int role) const {
     PropertyItem *item;
 
@@ -436,7 +436,7 @@ bool _SwPropertiesModelImpl::setData ( const QModelIndex & index, const QVariant
     item->_property->SetValue(tmpvalue);
     return true;
 }
-/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donné*/
+/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donnÃ©*/
 QModelIndex _SwPropertiesModelImpl::index ( int row, int column, const QModelIndex & parent) const{
     PropertyItem * iparent;
     QMap<QString,PropertyItem *>::const_iterator it;
@@ -462,7 +462,7 @@ QModelIndex _SwPropertiesModelImpl::index ( int row, int column, const QModelInd
     }
     return createIndex(row,column,(void *)it.value());
 }
-/*! \brief Renvoie l'item parent d'un item index donné */
+/*! \brief Renvoie l'item parent d'un item index donnÃ© */
 QModelIndex _SwPropertiesModelImpl::parent ( const QModelIndex & index ) const{
     PropertyItem * iindex;
     PropertyItem * iparent;
@@ -555,7 +555,7 @@ _SwPropertiesModelImpl::PropertyItem::~PropertyItem(){
     }
     _childrens.clear();
 }
-/*! \brief Sur changement de la propriété */
+/*! \brief Sur changement de la propriÃ©tÃ© */
 void _SwPropertiesModelImpl::PropertyItem::OnPropertyChange(ISwProperty * property){
     QMap<QString,PropertyItem *>::const_iterator it;
     int index;
@@ -617,16 +617,16 @@ void _SwPropertiesModelImpl::onMenuRequested( const QPoint & globalpos,QModelInd
     if (item->_property==NULL || !item->_property->IsControllable())
         return;
     _action_item=item;
-    //La propriété est controllable
+    //La propriÃ©tÃ© est controllable
     if (item->_property->IsControlled()) {
-        //Si elle est controlé, on propose la suppression du controle
+        //Si elle est controlÃ©, on propose la suppression du controle
         QMenu * menu=new QMenu();
         menu->addAction(QString("Remove Controller"));
         menu->connect(menu,SIGNAL(triggered(QAction *)),this,SLOT(OnDetachController(QAction *)));
         menu->exec(globalpos);
         delete menu;
     } else {
-        //Si elle n'est pas controlé, on propose la liste des controleurs valide pour son type
+        //Si elle n'est pas controlÃ©, on propose la liste des controleurs valide pour son type
         QVariant val=_action_item->_property->GetValue();
         QList< QPair<QString,QString>> liste=SW_FACTORIES.GetControllersListForType(val.userType());
         if (liste.count()==0) {
@@ -661,11 +661,11 @@ void _SwPropertiesModelImpl::OnAttachController(QAction * a) {
     controller=SW_FACTORIES.CreateComponent(pluginName, controllerName);
     if (controller==NULL)
         return;
-    //Ok ajout en tant qu'enfant du host de la propriété
+    //Ok ajout en tant qu'enfant du host de la propriÃ©tÃ©
     host=_action_item->_property->GetHostingService()->GetHostComponent();
     controller->SetName(host->GetSuggestedNameForChild("_controller_"+QString(_action_item->_property->GetRealName()).replace(".","_")));
     host->AddChild(controller);
-    //Liaison a la propriété
+    //Liaison a la propriÃ©tÃ©
     i_controller=dynamic_cast<ISwController *>(controller->QueryService(CG_SW_SERVICE_CONTROLLER));
     i_controller->InitializeControl(_action_item->_property->GetHostingService(),_action_item->_property->GetRealName());
     //Fin

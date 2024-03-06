@@ -1,7 +1,7 @@
 /*!
 \file SwNamed_Class.cpp
 \date 12/04/2006
-\brief Classe dont l'instance est nommée
+\brief Classe dont l'instance est nommÃ©e
 \author  Big
 \version 1.0
 \note
@@ -15,7 +15,7 @@ Company: DIGINEXT
   */
 #include <QRegularExpression>
 #include <QDebug>
-#include "SwNamed_Class.h"
+#include "Component/Base/SwNamed_Class.h"
 
 using namespace StreamWork::SwCore;
 using namespace LibIndeSig;

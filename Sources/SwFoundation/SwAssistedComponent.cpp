@@ -4,15 +4,15 @@
 @author Big
 */
 
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include "SwAssistedComponent.h"
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <SwProperties_Class.h>
-#include <SwPins_Manager_Class.h>
-#include <ISwProperty.h>
-#include "ISwServiceOwnerConfigurable.h"
-#include "ISwServiceOwner.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Services/ISwServiceOwnerConfigurable.h"
+#include "Component/Services/ISwServiceOwner.h"
 #include "QCoreApplication"
 
 #include <QElapsedTimer>
@@ -61,8 +61,8 @@ public:
 	//---------------------------------------------------------------------
 	// Interface ISwService
 	//---------------------------------------------------------------------
-	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+	lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 	void Liberate();
 
 	//---------------------------------------------------------------------
@@ -209,8 +209,8 @@ public:
 	//---------------------------------------------------------------------
 	// Interface ISwService
 	//---------------------------------------------------------------------
-	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+	lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 	void Liberate();
 
 };
@@ -283,7 +283,7 @@ public:
 	virtual void Load(QDomElement & elt,ISwFinalizerManager & finalizer_manager);
 
 	/**
-	 * @brief    : retourne l'index "historique" enregistrer à la fermeture du stream
+	 * @brief    : retourne l'index "historique" enregistrer Ã  la fermeture du stream
 	 * @return   : l'index history
 	 */
 	quint64 getHistoryIndex();
@@ -300,8 +300,8 @@ public:
 	//---------------------------------------------------------------------
 	// Interface ISwService
 	//---------------------------------------------------------------------
-	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+	lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 	void Liberate();
 };
 

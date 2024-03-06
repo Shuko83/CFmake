@@ -7,21 +7,21 @@
 #include <QPrintDialog>
 #include <QFileInfo>
 #include <QSettings>
-#include "MainWindow.h" 
-#include "_SwGuiPluginsFrontEnd.h" 
-#include "GraphicsResources.h" 
-#include "Arranger.h" 
+#include "MainWindow.h"
+#include "_SwGuiPluginsFrontEnd.h"
+#include "GraphicsResources.h"
+#include "Arranger.h"
 #include "WidgetFactory.h"
 #include "ViewNavigator.h"
 #include "LogView.h"
-#include "ISwPluginOverview.h"
-#include "SwApplication.h"
-#include "ISwEditionService.h"
+#include "Main/Plugin/ISwPluginOverview.h"
+#include "Main/SwApplication.h"
+#include "Main/Services/ISwEditionService.h"
 #include "MenuManager.h"
 #include <qDebug>
 #include "ISwServiceConfiguration.h"
 #include "ISwServiceShortcuts.h"
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 #include "GlobalConf.h"
 
 using namespace StreamWork::SwCore;

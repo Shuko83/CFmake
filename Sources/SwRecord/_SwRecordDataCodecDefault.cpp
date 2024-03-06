@@ -6,7 +6,7 @@
 
 #include "_SwRecordDataCodecDefault.h"
  
-#include <SwData_Class.h>
+#include "Component/Pin/SwData_Class.h"
 
 using namespace StreamWork::SwCore;
 
@@ -14,7 +14,7 @@ using namespace StreamWork::SwCore;
 _SwRecordDataCodecDefault::_SwRecordDataCodecDefault():SwRecordDataCodecAdapter(){
 	//A Completer
 }
-/* @brief encodage des données */
+/* @brief encodage des donnÃ©es */
 void _SwRecordDataCodecDefault::encode(QXmlStreamWriter * writer,void * data) {
     SwData_Class * ldata=(SwData_Class *)data;
     writer->writeStartElement("SwData");
@@ -23,7 +23,7 @@ void _SwRecordDataCodecDefault::encode(QXmlStreamWriter * writer,void * data) {
     writer->writeAttribute("time",QString("%1").arg(ldata->Time,20,'f',3));
     writer->writeEndElement();
 }
-/* @brief decodage des données */
+/* @brief decodage des donnÃ©es */
 void * _SwRecordDataCodecDefault::decode(QXmlStreamReader * reader,void * data) {
     SwData_Class * ldata=(SwData_Class *)data;
     if (reader->isStartElement() && reader->name()=="SwData") {

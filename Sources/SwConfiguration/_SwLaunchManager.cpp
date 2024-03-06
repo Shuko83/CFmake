@@ -5,7 +5,7 @@
  \date 
  \author 
 */
-#include <ISwProperty.h>
+#include "Properties/ISwProperty.h"
 #define CL_LAUNCH_CONFIG_XML_MAIN_NODE  "LAUNCH_PROPERTIES"
 #define CL_LAUNCH_CONFIG_XML_PROPERTY_NODE "LAUNCH_PROPERTY"
 #define CL_LAUNCH_CONFIG_XML_PROPERTY_NAME "NAME"
@@ -166,7 +166,7 @@ bool _SwLaunchManager::LoadValues(QString filename)
         return false;
     }
 
-    //A ce stade le doc est chargé
+    //A ce stade le doc est chargÃ©
     QDomElement rootElement = doc.firstChildElement(CL_LAUNCH_CONFIG_XML_MAIN_NODE);
     LoadLaunchProperties(rootElement);
 
@@ -218,7 +218,7 @@ void _SwLaunchManager::LoadLaunchProperties(QDomElement & elt)
     startMode.FromInt(0);
     
     setStartMode(startMode);
-   // setStartMode(0); // force le mode de démarrage a 0
+   // setStartMode(0); // force le mode de dÃ©marrage a 0
 
     for( elt_ent = elt.firstChildElement(); 
         !elt_ent.isNull(); 

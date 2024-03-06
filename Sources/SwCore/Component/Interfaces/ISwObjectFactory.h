@@ -1,7 +1,7 @@
 /*!
  \file ISwObjectFactory.h
  \brief Interface de fabrication d'objet
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -26,7 +26,7 @@ namespace StreamWork
         class ISwObjectFactory 
 		{
 		public:
-            /*! \brief Renvoie une instance de l'objet creé
+            /*! \brief Renvoie une instance de l'objet creÃ©
 			le parametre est a l'usage de l'implementeur
 			*/
             virtual void * CreateObject(void *)=0;

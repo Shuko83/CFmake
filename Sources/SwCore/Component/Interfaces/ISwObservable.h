@@ -11,7 +11,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include "ISwObserver.h"
+#include "Component/Interfaces/ISwObserver.h"
 
 namespace StreamWork 
 {

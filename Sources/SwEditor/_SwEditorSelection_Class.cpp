@@ -6,13 +6,13 @@
 \version 1.0
  */
 #include <QClipboard>
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QApplication>
-#include <SwMacros.h>
+#include "Main/SwMacros.h"
 #include <QMessageBox>
 #include "_SwEditorSelection_Class.h"
-#include <SwSaver_Class.h>
-#include <SwLoader_Class.h>
+#include "Main/Serialization/SwSaver_Class.h"
+#include "Main/Serialization/SwLoader_Class.h"
 #include <QMimeData>
 #include <QBuffer>
 #include "ISwEditorGraphicItem.h"
@@ -41,8 +41,8 @@ _SwEditorSelection_Class::_SwEditorSelection_Class(SwComponent_Class * host) {
 _SwEditorSelection_Class::~_SwEditorSelection_Class(){
     _observers.clear();
 }
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+	lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwEditorSelection_Class::Liberate() {
 
 }
@@ -127,20 +127,20 @@ void _SwEditorSelection_Class::RemoveFromSelection(QString component_name){
 //-------------------------------------------------------------
 // Consultation de la selection
 //-------------------------------------------------------------
-/*! \brief Acces au nombre d'elements selectionnée*/
+/*! \brief Acces au nombre d'elements selectionnÃ©e*/
 int _SwEditorSelection_Class::GetSelectedComponentNumber(){
     return _selecteds.size();
 }
-/*! \brief Acces a un element selectionné*/
+/*! \brief Acces a un element selectionnÃ©*/
 SwComponent_Class * _SwEditorSelection_Class::GetSelectedComponent(int index){
     if (index>=_selecteds.size()) return NULL;
     return _selecteds[index];
 }
-/*! \brief Acces au nombre d'elements non selectionnée*/
+/*! \brief Acces au nombre d'elements non selectionnÃ©e*/
 int _SwEditorSelection_Class::GetUnselectedComponentNumber(){
     return _unselecteds.size();
 }
-/*! \brief Acces a un element non selectionné*/
+/*! \brief Acces a un element non selectionnÃ©*/
 SwComponent_Class * _SwEditorSelection_Class::GetUnselectedComponent(int index){
     if (index>=_unselecteds.size()) return NULL;
     return _unselecteds[index];
@@ -206,7 +206,7 @@ void _SwEditorSelection_Class::PasteSelection(){
     SelectNone();
     //Chargement du stream
     loader.LoadGroup(_host_component,doc);
-    //On selectionne tout composant ne faisant pas partie des non selectionnés
+    //On selectionne tout composant ne faisant pas partie des non selectionnÃ©s
     //Enregistrement de tous les composants dans non selected
     component=_host_component->GetFirstChild();
     while (component!=NULL) {

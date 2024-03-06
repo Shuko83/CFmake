@@ -7,11 +7,11 @@
 #ifndef _STREAMWORK_SWGUI__SWPERSPECTIVESMANAGER_H
 #define _STREAMWORK_SWGUI__SWPERSPECTIVESMANAGER_H
 
-#include <SwComponent_Class.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Properties/ISwProperty.h"
 #include "ISwPerspective.h"
 #include "_SwPerspectiveButton.h"
 
@@ -44,12 +44,12 @@ namespace StreamWork {
             SwInterfaces_Provider_Class * _provider_service;
             /* service de consommation d'interface */
             SwInterfaces_Consumer_Class * _consumer_service;
-            /* service de gestion des propriétés */
+            /* service de gestion des propriÃ©tÃ©s */
             SwProperties_Class * _properties_service;
             // --- perspectives ---
             /* nombre de perspectives */
             uint _perspectives_nb;
-            /* propriété nombre de perspectives */
+            /* propriÃ©tÃ© nombre de perspectives */
             ISwProperty * _perspectives_nb_property;
             /* map des perspectives widgets*/
             QMap<QString, ISwPerspective *> _perspectives;
@@ -57,11 +57,11 @@ namespace StreamWork {
             ISwPerspective * _tmp_handle_perspective;
             /* handle PerspectiveCourante*/
             ISwPerspective * _currentPerspective;
-            /* @brief propriété style sheet des boutons */
+            /* @brief propriÃ©tÃ© style sheet des boutons */
             ISwProperty * _buttons_stylesheet_property;
             /* @brief stylesheet utilise pour les boutons */
             QString _buttons_stylesheet;
-            /* @brief propriété title de la perspective */
+            /* @brief propriÃ©tÃ© title de la perspective */
             ISwProperty * _perspective_title_property;
             /* @brief stylesheet utilise pour les boutons */
             QString _perspective_title;
@@ -73,16 +73,16 @@ namespace StreamWork {
             virtual ~_SwPerspectivesManager();
             
             /*! \brief Initialisation des ressources
-            \note tous les services du composants doivent être déclarés dans cette methodes*/
+            \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
             virtual void InitializeResources() throw( SwException );
-            /*! \brief Callback sur les changements de propriétés*/
+            /*! \brief Callback sur les changements de propriÃ©tÃ©s*/
             void OnPropertyChange( ISwProperty * property );
             //---------------------------------------------------------------------
             // Interface ISwInterfaces_ConsumerObserver
             //---------------------------------------------------------------------
-            /*! \brief Avant changement de la disponibilité de l'interface */
+            /*! \brief Avant changement de la disponibilitÃ© de l'interface */
             virtual void BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
-            /*! \brief Apres changement de la disponibilité de l'interface */
+            /*! \brief Apres changement de la disponibilitÃ© de l'interface */
             virtual void AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host );
             
         private:

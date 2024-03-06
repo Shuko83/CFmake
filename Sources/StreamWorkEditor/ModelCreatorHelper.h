@@ -5,10 +5,10 @@
 */
 
 #include <QtCore>
-#include <SwComponent_Class.h>
-#include <SwPin.h>
-#include <ISwInterfaces_Provider.h>
-#include <ISwInterfaces_Consumer.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Pin/SwPin.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
 
 #ifndef _MODELCREATORHELPER_H
 #define _MODELCREATORHELPER_H

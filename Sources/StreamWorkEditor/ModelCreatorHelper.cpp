@@ -5,7 +5,7 @@
  */
 
 #include "ModelCreatorHelper.h"
-#include "ISwPins_Manager.h" 
+#include "Component/Services/ISwPins_Manager.h"
 
 /** @brief Constructor */
 ModelCreatorHelper::ModelCreatorHelper() {
@@ -57,7 +57,7 @@ void ModelCreatorHelper::connectInternalToModelHost(SwComponent_Class * model_ho
     }
 
     //Pour les providers : connexion au model host
-	//Si même provider avec même interface on le fait qu'une fois
+	//Si mÃªme provider avec mÃªme interface on le fait qu'une fois
 	QMap<ISwInterfaces_Provider *, QStringList> allreadyDone;
 	ISwInterfaces_Consumer *consumer_handle = dynamic_cast<ISwInterfaces_Consumer *>(model_host->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
 	if ( consumer_handle != 0 )

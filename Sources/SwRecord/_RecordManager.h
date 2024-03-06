@@ -14,11 +14,11 @@
   */
 #include <QDomDocument>
 #include <QDomElement>
-#include <SwEnum.h>
+#include "Types/SwEnum.h"
 #include "ISwRecordManager.h"
 #include "SwRecordConstantes.h"
 #include "_SwServiceRecording.h"
-#include <SwFileDescriptor.h>
+#include "Types/SwFileDescriptor.h"
 #include "SwAssistedComponent.h"
 
 using namespace StreamWork::SwRecord;
@@ -97,16 +97,16 @@ public:
     //---------------------------------------------------------------------
     /**
      * @brief    : Definition du repertoire d'enregistrement
-     * @param	 : QString directoryName - Path du répertoire
+     * @param	 : QString directoryName - Path du rÃ©pertoire
      */
     virtual void setRecordDirectory(QString directoryName);
 	/**
 	 * @brief    : Definition du repertoire contenant tout les enregistrements
-	 * @param	 : QString directoryName - Path du répertoire
+	 * @param	 : QString directoryName - Path du rÃ©pertoire
 	 */
 	virtual void setMainDir(QString directoryName);
     /**
-     * @brief    : Démarre l'enregistrement
+     * @brief    : DÃ©marre l'enregistrement
      */
     virtual void startRecording();
 
@@ -117,7 +117,7 @@ public:
 
     /**
      * @brief    : Demande de creation de clef d'enregistrement
-     * @return   : QXmlStreamWriter * - Permet d'écrire dans ce writer
+     * @return   : QXmlStreamWriter * - Permet d'Ã©crire dans ce writer
      * @param	 : ISwRecordPoint * recordPoint - Pointeru vers le recordPoint qui veut la clef
      * @param	 : double currentTime - Le temps courant au moment de la demande
      */
@@ -130,8 +130,8 @@ public:
     virtual void finalizeRecordKey();
 
 	/**
-     * @brief    : Demande de creation de clef d'enregistrement pour les propriétés
-     * @return   : QXmlStreamWriter * - Permet d'écrire dans ce writer
+     * @brief    : Demande de creation de clef d'enregistrement pour les propriÃ©tÃ©s
+     * @return   : QXmlStreamWriter * - Permet d'Ã©crire dans ce writer
      * @param	 : ISwRecordPoint * recordPoint - Pointeur vers le recordPoint qui veut la clef
      * @param	 : double currentTime - Le temps courant au moment de la demande
      */
@@ -156,7 +156,7 @@ public:
     virtual void removeRecordManagerListener(ISwRecordManagerListener * listener);
 
 	/**
-	 * @brief    : Permet de recupérer l'état du recordManager
+	 * @brief    : Permet de recupÃ©rer l'Ã©tat du recordManager
 	 * @return   : bool true si l'enregistrement est en cours
 	 */
 	virtual bool isRecording();
@@ -167,27 +167,27 @@ public:
 	
 	/**
 	 * @brief    : Initialisation du composant executable
-	 * @param	 : double start_time - le temps de début
-	 * @param	 : ISwExecution_Service * executor - Pointeur sur le service d'exécution
+	 * @param	 : double start_time - le temps de dÃ©but
+	 * @param	 : ISwExecution_Service * executor - Pointeur sur le service d'exÃ©cution
 	 */
 	virtual void Initialize(double start_time, StreamWork::SwExecution::ISwExecution_Service * executor) throw (SwException);   
 
 	/**
-	 * @brief    : Démarage (Premier pas d'execution)
-	 * @param	 : double current_time - Temps de début
+	 * @brief    : DÃ©marage (Premier pas d'execution)
+	 * @param	 : double current_time - Temps de dÃ©but
 	 */
 	virtual void Start(double current_time) throw (SwException);            
 
 	/**
-	 * @brief    : Boucle d'éxecution
-	 * @param	 : double current_time - Temps d'éxecution
+	 * @brief    : Boucle d'Ã©xecution
+	 * @param	 : double current_time - Temps d'Ã©xecution
 	 * @param	 : bool is_first_call - Si c'est le premier appel
 	 */
 	virtual void Execute(double current_time,bool is_first_call) throw (SwException);  
 
 	/**
-	 * @brief    : Methode appelé au stop
-	 * @param	 : double current_time - Temps d'éxecution
+	 * @brief    : Methode appelÃ© au stop
+	 * @param	 : double current_time - Temps d'Ã©xecution
 	 */
 	virtual void Stop(double current_time);  
 
@@ -212,9 +212,9 @@ protected:
 
     /** @brief  Construction et enregistrement du mapping des points d'enregistrement */
     void buildRecordPointMapping();
-    /** @brief  creation d'un writer pour les données*/
+    /** @brief  creation d'un writer pour les donnÃ©es*/
     void createWriterData();
-    /** @brief  fermetude du writer pour les données */
+    /** @brief  fermetude du writer pour les donnÃ©es */
     void closeWriterData();
     
 };

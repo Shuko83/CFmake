@@ -2,7 +2,7 @@
  \file SwTime_ToolBox.h
  \brief Implementation of the Class SwTime_ToolBox
  \version 1.0
- \date 24-août-2006 12:21:05
+ \date 24-aoÃ»t-2006 12:21:05
  \author F.Bighelli
 */
 

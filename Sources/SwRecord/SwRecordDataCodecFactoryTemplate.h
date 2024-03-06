@@ -23,9 +23,9 @@ namespace StreamWork {
         public:
 	        /** @brief Constructor */
             SwRecordDataCodecFactoryTemplate(QString name) {_dataTypeName=name;}
-            /* @brief nom du type de données generé */
+            /* @brief nom du type de donnÃ©es generÃ© */
             virtual QString generatedDataType() {return _dataTypeName;}
-            /* @brief nom des types de données pris en charge */
+            /* @brief nom des types de donnÃ©es pris en charge */
             virtual QStringList supportedDataTypes() {return QStringList();}
             /* @brief construction d'un codec */
             virtual ISwRecordDataCodec * buildCodec() {return new DATACODEC_CLASS;}

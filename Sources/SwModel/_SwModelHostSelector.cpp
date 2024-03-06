@@ -6,7 +6,7 @@
 \version 1.0
  */
 
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -14,7 +14,7 @@
 #include <QSplitter>
 #include <QTableView>
 #include <QVBoxLayout>
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include "_SwModelHostSelector.h"
 
 using namespace StreamWork::SwCore;

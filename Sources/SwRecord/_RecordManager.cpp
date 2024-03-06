@@ -7,8 +7,8 @@
 */
 
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_RecordManager.h"
 #include "SwRecordConstantes.h"
 #include <QDirIterator>

@@ -5,7 +5,7 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QDomElement>
-#include <SwEnum.h>
+#include "Types/SwEnum.h"
 #include <QMessageBox>
 
 using namespace StreamWork::SwCore;
@@ -80,7 +80,7 @@ void _SwConfigurationManagerGui::setEdition(bool enabled)
     {
 
         // quand l edition est remise a true les fenetre d edition / selection enregistrement/replay 
-        // doivent etre mise a jour suivant les propriétés du composant
+        // doivent etre mise a jour suivant les propriÃ©tÃ©s du composant
        startModeUpdated();
        recordActivatedUpdated();
 
@@ -170,7 +170,7 @@ void _SwConfigurationManagerGui::onCurrentConfigurationChanged()
 
     if (config != 0)
     {
-        // l enregistrement activé ou non dépend de la conf selectionnée 
+        // l enregistrement activÃ© ou non dÃ©pend de la conf selectionnÃ©e 
         recordActivatedUpdated();
         
         if (ui.treeView->model() != 0)
@@ -319,7 +319,7 @@ void _SwConfigurationManagerGui::recordActivatedUpdated()
             {
                 // on force la valeur dans le cas ou une config n accepte pas l enregistrement.
                 _launchConfiguration->setRecordActivated(false);
-                // return ici car la callback va etre rappelé
+                // return ici car la callback va etre rappelÃ©
                 return;
             }
         } 
@@ -427,8 +427,8 @@ void _SwConfigurationManagerGui::on_toolButtonLoadConfig_clicked()
         /*if (_configurations->LoadConfiguration(fileName))
             _launchConfiguration->setConfigurationFile(desc);  */
         // on ne change pas le fichier courant de configuration 
-        // on dispose d un fichier courant sauvé dans tout les cas au On quit de l app
-        // les fichiers chargés écrasent le fichier courant
+        // on dispose d un fichier courant sauvÃ© dans tout les cas au On quit de l app
+        // les fichiers chargÃ©s Ã©crasent le fichier courant
         _configurations->LoadConfiguration(fileName);
         setConfigurationEdited(true);
     }

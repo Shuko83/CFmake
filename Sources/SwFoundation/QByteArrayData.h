@@ -11,8 +11,8 @@
 # define BUILD_SWFOUNDATION Q_DECL_IMPORT
 #endif
 
-#include "SwData_Class.h"
-#include "SwMacros.h"
+#include "Component/Pin/SwData_Class.h"
+#include "Main/SwMacros.h"
 
 #include <QByteArray>
 #include <QString>
@@ -44,9 +44,9 @@ namespace StreamWork
 			//---------------------------------------------------------------------
             // Identification
             //---------------------------------------------------------------------
-            /*! \brief Identification de la donnée par chaine de caractere */
+            /*! \brief Identification de la donnÃ©e par chaine de caractere */
             virtual QString GetType();
-            /*! \brief Identification de la donnée par valeur */
+            /*! \brief Identification de la donnÃ©e par valeur */
             virtual SwCore::SwUUID GetTypeId();
 
 		protected:

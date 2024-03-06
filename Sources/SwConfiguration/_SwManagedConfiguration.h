@@ -17,11 +17,11 @@
   * INCLUDES LOCAUX
   */
 //#include "ISwConfigurationListener.h"
-#include "ISwObservable.h"
-#include "ISwObserver.h"
+#include "Component/Interfaces/ISwObservable.h"
+#include "Component/Interfaces/ISwObserver.h"
 #include "ISwConfiguration.h"
 #include "ISwConfigurationController.h"
-#include <SwPropertiesModelImpl.h>
+#include "Properties/SwPropertiesModelImpl.h"
 #include <QAbstractItemModel.h>
 
 using namespace StreamWork::SwConfiguration;
@@ -46,16 +46,16 @@ public:
     /*! \brief Destructeur */
     virtual ~_SwManagedConfiguration();
             
-    /** @brief sur changement des propriétés*/
+    /** @brief sur changement des propriÃ©tÃ©s*/
     virtual void OnPropertiesChanged(ISwConfiguration *);
 
-    /** @brief sur changement des propriétés*/
+    /** @brief sur changement des propriÃ©tÃ©s*/
     virtual void OnActivate(ISwConfiguration *);
 
-    /** @brief sur changement des propriétés*/
+    /** @brief sur changement des propriÃ©tÃ©s*/
     virtual void OnDisable(ISwConfiguration *);
 
-    /** @brief sur changement des propriétés*/
+    /** @brief sur changement des propriÃ©tÃ©s*/
     //virtual void OnRecordAvailableChanged(ISwConfiguration *);
 
     /** @brief affectation de la configuration*/
@@ -73,10 +73,10 @@ public:
     /** @brief acces au model*/
     QAbstractItemModel * getModel();
    
-    /*! \brief methode permettant de charger un fichier de propriétés*/
+    /*! \brief methode permettant de charger un fichier de propriÃ©tÃ©s*/
     bool Load(QDomElement & elt, QString * errorMessage = 0);
 
-    /*! \brief methode permettant de charger un fichier de propriétés*/
+    /*! \brief methode permettant de charger un fichier de propriÃ©tÃ©s*/
     bool Save(QXmlStreamWriter &writer, QString * errorMessage = 0 );
 
     bool isEnabled();

@@ -54,7 +54,7 @@ public slots:
 private:
     /** @brief Position d'ancrage */
     TAnchorPosition _aPosition;
-    /** @brief Capacité d'extension */
+    /** @brief CapacitÃ© d'extension */
     bool _isHorizontalExtensible;
     bool _isVerticalExtensible;
     /** @brief Lister des observers */

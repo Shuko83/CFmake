@@ -8,7 +8,7 @@
 #define _STREAMWORK_SWCORE_ISWSNAPSHOTPROPERTIESSERVICE_H
 
 #include <QtCore>
-#include "ISwService.h"
+#include "Main/Services/Management/ISwService.h"
 
 //Nom du service
 #define CG_SW_SNAPSHOPPROPERTY_SERVICE "SwSnapShotProperties"
@@ -40,7 +40,7 @@ namespace StreamWork {
             QString GetServiceName(){return QString(CG_SW_SNAPSHOPPROPERTY_SERVICE); }
             /*! \brief Renvoie le nom du service reel (le nom de l'interface)
             \return le nom du service reel (le nom de l'interface)
-            \note au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()*/
+            \note au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()*/
             QString GetServiceRealName() {return QString(typeid(*this).name());}    
         
         };

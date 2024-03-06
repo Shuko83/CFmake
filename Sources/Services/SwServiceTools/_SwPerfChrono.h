@@ -24,77 +24,77 @@ class _SwPerfChrono
 
 public:
 
-	/*! \brief constructeur qui va rÈcupÈrer la frÈquence de l'horloge */
-	/*! On passe en paramËtre ‡ QueryPerformanceFrequency une structure LARGE_INTEGER qui est composÈe d'un __int64 */
-	/*  Cette structure(iÁi freq) va contenir la frequence de l'horloge */
+	/*! \brief constructeur qui va r√©cup√©rer la fr√©quence de l'horloge */
+	/*! On passe en param√®tre √† QueryPerformanceFrequency une structure LARGE_INTEGER qui est compos√©e d'un __int64 */
+	/*  Cette structure(i√ßi freq) va contenir la frequence de l'horloge */
 	_SwPerfChrono() 
 	{
 		QueryPerformanceFrequency((LARGE_INTEGER*)&freq);
 	}
 
-	/*! \brief DÈmare le timer */
+	/*! \brief D√©mare le timer */
 	/*! On fait pareil qu'au dessus mais cette fois t0 va contenir le temps au debut du chronometrage */
 	void start()
 	{
 		QueryPerformanceCounter((LARGE_INTEGER*)&t0);
 	}
 
-	/*! \brief Retourne le temps ÈcoulÈ depuis le start en Ms */
-	/*! Pour avoir le temps ÈcoulÈ, on retranche le temps au moment de la fonction du temps au debut du chrono,*/
-	/*!	Puis on le multiplie par la prÈcision (1000) et on le divise par la frequence.*/
-	/*! \return le temps ÈcoulÈ en Ms*/
+	/*! \brief Retourne le temps √©coul√© depuis le start en Ms */
+	/*! Pour avoir le temps √©coul√©, on retranche le temps au moment de la fonction du temps au debut du chrono,*/
+	/*!	Puis on le multiplie par la pr√©cision (1000) et on le divise par la frequence.*/
+	/*! \return le temps √©coul√© en Ms*/
 	DWORD getDiffMs()
 	{
 		/*le temps au moment de l'execution de la fonction*/
 		__int64 t1;
-		/*On assigne ‡ t1 le temp au moment de l'execution de la fonction*/
+		/*On assigne √† t1 le temp au moment de l'execution de la fonction*/
 		QueryPerformanceCounter((LARGE_INTEGER*)&t1);
-		/*La forumle qui permet de calculer le temps ÈcoulÈ*/
+		/*La forumle qui permet de calculer le temps √©coul√©*/
 		return (DWORD)(((t1 - t0) * Ms) / freq); 
 
 	}
 
-	/*! \brief Retourne le temps ÈcoulÈ depuis le start en µs */
-	/*! Pour avoir le temps ÈcoulÈ, on retranche le temps au moment de la fonction du temps au debut du chrono,*/
-	/*!	Puis on le multiplie par la prÈcision (1000000) et on le divise par la frequence.*/
-	/*! \return le temps ÈcoulÈ en µs*/
-	DWORD getDiffUs() //Us pour µs
+	/*! \brief Retourne le temps √©coul√© depuis le start en ¬µs */
+	/*! Pour avoir le temps √©coul√©, on retranche le temps au moment de la fonction du temps au debut du chrono,*/
+	/*!	Puis on le multiplie par la pr√©cision (1000000) et on le divise par la frequence.*/
+	/*! \return le temps √©coul√© en ¬µs*/
+	DWORD getDiffUs() //Us pour ¬µs
 	{
 		/*le temps au moment de l'execution de la fonction*/
 		__int64 t1;
-		/*On assigne ‡ t1 le temp au moment de l'execution de la fonction*/
+		/*On assigne √† t1 le temp au moment de l'execution de la fonction*/
 		QueryPerformanceCounter((LARGE_INTEGER*)&t1);
-		/*La forumle qui permet de calculer le temps ÈcoulÈ*/
+		/*La forumle qui permet de calculer le temps √©coul√©*/
 		return (DWORD)(((t1 - t0) * Us) / freq); 
 	}
 
-	/*! \brief Retourne le temps ÈcoulÈ depuis le start en Ns */
-	/*! Pour avoir le temps ÈcoulÈ, on retranche le temps au moment de la fonction du temps au debut du chrono,*/
-	/*!	Puis on le multiplie par la prÈcision (1000000000) et on le divise par la frequence.*/
-	/*! \return le temps ÈcoulÈ en Ns*/
+	/*! \brief Retourne le temps √©coul√© depuis le start en Ns */
+	/*! Pour avoir le temps √©coul√©, on retranche le temps au moment de la fonction du temps au debut du chrono,*/
+	/*!	Puis on le multiplie par la pr√©cision (1000000000) et on le divise par la frequence.*/
+	/*! \return le temps √©coul√© en Ns*/
 	DWORD getDiffNs()
 	{
 		/*le temps au moment de l'execution de la fonction*/
 		__int64 t1;
-		/*On assigne ‡ t1 le temp au moment de l'execution de la fonction*/
+		/*On assigne √† t1 le temp au moment de l'execution de la fonction*/
 		QueryPerformanceCounter((LARGE_INTEGER*)&t1);
-		/*La forumle qui permet de calculer le temps ÈcoulÈ*/
+		/*La forumle qui permet de calculer le temps √©coul√©*/
 		return (DWORD)(((t1 - t0) * Ns) / freq);
 	}
 
 
-	/*! \brief Retourne le temps ÈcoulÈ depuis le start en l'unitÈ voulue */
-	/*! Pour avoir le temps ÈcoulÈ, on retranche le temps au moment de la fonction du temps au debut du chrono,*/
-	/*!	Puis on le multiplie par la prÈcision (Unit) et on le divise par la frequence.*/
-	/*! \param unit : int definissant la prÈcision (1000 -> Ms , 1000000 -> µs, 1000000000 -> Ns)
-	/*! \return le temps ÈcoulÈ en unit*/
+	/*! \brief Retourne le temps √©coul√© depuis le start en l'unit√© voulue */
+	/*! Pour avoir le temps √©coul√©, on retranche le temps au moment de la fonction du temps au debut du chrono,*/
+	/*!	Puis on le multiplie par la pr√©cision (Unit) et on le divise par la frequence.*/
+	/*! \param unit : int definissant la pr√©cision (1000 -> Ms , 1000000 -> ¬µs, 1000000000 -> Ns)
+	/*! \return le temps √©coul√© en unit*/
 	DWORD getDiff(UINT unit)
 	{
 		/*le temps au moment de l'execution de la fonction*/
 		__int64 t1;
-		/*On assigne ‡ t1 le temp au moment de l'execution de la fonction*/
+		/*On assigne √† t1 le temp au moment de l'execution de la fonction*/
 		QueryPerformanceCounter((LARGE_INTEGER*)&t1);
-		/*La forumle qui permet de calculer le temps ÈcoulÈ*/
+		/*La forumle qui permet de calculer le temps √©coul√©*/
 		return (DWORD)(((t1 - t0) * unit) / freq);
 	}
 

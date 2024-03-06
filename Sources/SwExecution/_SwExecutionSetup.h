@@ -18,7 +18,7 @@
   * INCLUDES LOCAUX
   */
 
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "ISwExecutable_Service.h"
 #include "_SwExecution_Service.h"
 #include "ui__SwExecutionSetup.h"

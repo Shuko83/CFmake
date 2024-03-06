@@ -2,16 +2,16 @@
  \file _SwModelHost_Class.cpp
  \brief Implementation d'un hote de model
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 #include <QMessageBox>
-#include <SwApplication.h>
-#include <SwMacros.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Main/SwMacros.h"
 #include <QUuid>
 #include <QRegularExpression>
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include <QMessageBox>
 #include "_SwModelHost_Class.h"
 #include "_SwModel_Class.h"
@@ -147,7 +147,7 @@ void _SwModelHost_Class::DestroyBinding()
 //-----------------------------------------------------------------------
 void _SwModelHost_Class::BuildEntities()
 {
-    //Si un modele est connecté on le deconnecte
+    //Si un modele est connectÃ© on le deconnecte
     if (_model != NULL)
     {
         DestroyBinding();

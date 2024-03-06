@@ -2,7 +2,7 @@
  \file _SwModelExportedOwnerConfigurable.cpp
  \brief Class implementant une entite exportable executable
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -46,8 +46,8 @@ void _SwModelExportedOwnerConfigurable::SpecificUnbind(){
 //---------------------------------------------------------------------
 // Interface ISwService
 //---------------------------------------------------------------------            
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwModelExportedOwnerConfigurable::Liberate() {
 
 }  

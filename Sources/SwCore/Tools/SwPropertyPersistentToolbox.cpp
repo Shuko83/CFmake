@@ -18,28 +18,29 @@
 #include <QDomImplementation>
 #include <QByteArray>
 #include <QSizePolicy>
+#include <QKeySequence>
 #include "QsLog.h"
 
 /*
  * INCLUDES LOCAUX
  */
-#include "SwPropertyPersistentToolbox.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "SwEnum.h"
-#include "SwIntegerEnum.h"
-#include "SwInteger.h"
-#include "SwDouble.h"
-#include "SwString.h"
-#include "SwFileDescriptor.h"
-#include "SwIconDescriptor.h"
-#include "SwIpV4Address.h"
-#include "SwUUID.h"
-#include "ISwProperty.h"
-#include "_SwPropertyImpl_Class.h"
-#include "SwApplication.h"
-#include "SwBuffer_Toolbox.h"
-#include "ISwSnapShotPropertiesService.h"
+#include "Tools/SwPropertyPersistentToolbox.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Types/SwEnum.h"
+#include "Types/SwIntegerEnum.h"
+#include "Types/SwInteger.h"
+#include "Types/SwDouble.h"
+#include "Types/SwString.h"
+#include "Types/SwFileDescriptor.h"
+#include "Types/SwIconDescriptor.h"
+#include "Types/SwIpV4Address.h"
+#include "Types/SwUUID.h"
+#include "Properties/ISwProperty.h"
+#include "Properties/_SwPropertyImpl_Class.h"
+#include "Main/SwApplication.h"
+#include "Tools/SwBuffer_Toolbox.h"
+#include "Component/Services/ISwSnapShotPropertiesService.h"
 using namespace StreamWork::SwCore;
 
 #define CL_XML_NODE "property"

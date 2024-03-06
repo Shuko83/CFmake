@@ -12,12 +12,12 @@
 /*
 * INCLUDES LOCAUX
 */
-#include <SwEnum.h>
+#include "Types/SwEnum.h"
 #include "ISwReplayControler.h"
 #include "_SwServiceRecording.h"
-#include <SwFileDescriptor.h>
+#include "Types/SwFileDescriptor.h"
 #include "_TimeLine.h"
-#include <ISwReplayListener.h>
+#include "ISwReplayListener.h"
 #include "SwAssistedComponent.h"
 //#include "_ReplayWidget.h"
 
@@ -68,7 +68,7 @@ public:
 	//---------------------------------------------------------------------
 	/**
      * @brief    : definition du repertoire d'enregistrement
-     * @param	 : QString directoryName - Chemin complet du répertoire
+     * @param	 : QString directoryName - Chemin complet du rÃ©pertoire
      */
     virtual void loadReplay(QString directoryName);
 
@@ -80,7 +80,7 @@ public:
 
     /**
      * @brief    : Demarrage du rejeu avec l'executeur de pilotage
-     * @param	 : StreamWork::SwExecution::ISwExecution_Service * exeService - Pointeur sur le servide d'éxecution
+     * @param	 : StreamWork::SwExecution::ISwExecution_Service * exeService - Pointeur sur le servide d'Ã©xecution
      */
     virtual void startReplay();
 

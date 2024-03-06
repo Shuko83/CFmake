@@ -2,16 +2,16 @@
 
 #include <QPushButton>
 #include "ISwServiceConfiguration.h"
-#include "SwServiceManager_Helper.h"
+#include "Main/Services/Management/SwServiceManager_Helper.h"
 #include "SwAssistedComponent.h"
 
 // Push Button
 
-//destine a permettre un save sur un conf précise a partir d' nimporte ou
+//destine a permettre un save sur un conf prÃ©cise a partir d' nimporte ou
 
-//On peut l'intégrer dans un widget dans l'application dont on veut sauver la conf
+//On peut l'intÃ©grer dans un widget dans l'application dont on veut sauver la conf
 
-//Du moment qu'on a ajouté un confCollector
+//Du moment qu'on a ajoutÃ© un confCollector
 
 class SwConfPushButton : public StreamWork::SwFoundation::SwAssistedComponent
 {

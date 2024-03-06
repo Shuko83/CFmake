@@ -13,9 +13,9 @@
 #include <QPushButton>
 #include <QtGlobal>
 #include <QTreeView>
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QMessageBox>
-#include <SwMacros.h>
+#include "Main/SwMacros.h"
 #include "_SwGuiPluginsFrontEnd.h"
 
 using namespace StreamWork::SwCore;

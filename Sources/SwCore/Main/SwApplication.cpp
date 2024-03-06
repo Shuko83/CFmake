@@ -12,21 +12,21 @@
 #include <QXmlReader>
 #include <QXmlStreamWriter>
 
-#include "SwApplication.h"
-#include "_SwPluginsBank_Class.h"
-#include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
-#include "SwLoader_Class.h"
-#include "SwEnum.h"
-#include "SwInteger.h"
-#include "SwString.h"
-#include "SwIntegerEnum.h"
-#include "SwDouble.h"
-#include "SwUUID.h"
-#include "SwMacros.h"
-#include "SwFileDescriptor.h"
-#include "SwIconDescriptor.h"
-#include "SwIpV4Address.h"
-#include "ISwCheckService.h"
+#include "Main/SwApplication.h"
+#include "Main/Plugin/_SwPluginsBank_Class.h"
+#include "Types/UserType/_SwComplexeTypeAdaptersFactoriesBankImpl.h"
+#include "Main/Serialization/SwLoader_Class.h"
+#include "Types/SwEnum.h"
+#include "Types/SwInteger.h"
+#include "Types/SwString.h"
+#include "Types/SwIntegerEnum.h"
+#include "Types/SwDouble.h"
+#include "Types/SwUUID.h"
+#include "Main/SwMacros.h"
+#include "Types/SwFileDescriptor.h"
+#include "Types/SwIconDescriptor.h"
+#include "Types/SwIpV4Address.h"
+#include "Main/Services/ISwCheckService.h"
 #include "cryptlib.h"
 #include "rsa.h"
 #include "hex.h"
@@ -177,7 +177,7 @@ int SwApplication::Launch(QString stream_desc) throw(SwException)
 	{
 		LAUNCH_SWEXCEPTION("SwCore", "Signature not valid");
 	}
-	//Lancement effectuée
+	//Lancement effectuÃ©e
 	_is_launch = true;
 	//creation du document xml
 	QDomDocument doc;

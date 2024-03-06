@@ -21,7 +21,7 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "ISwService.h"
+#include "Main/Services/Management/ISwService.h"
 #include "ISwShortcut.h"
 #include "ISwDevice.h"
 

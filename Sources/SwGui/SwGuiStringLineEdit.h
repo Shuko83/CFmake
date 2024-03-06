@@ -17,7 +17,7 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <QValidator>
-#include <SwString.h>
+#include "Types/SwString.h"
 
 namespace StreamWork
 {

@@ -4,9 +4,9 @@
 @author F.Bighelli
 */
 
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include "QStreamTreeModel.h"
-#include "SwMacros.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwCore;
 

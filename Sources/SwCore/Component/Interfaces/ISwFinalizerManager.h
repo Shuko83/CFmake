@@ -14,7 +14,7 @@
 /*
   * INCLUDES LOCAUX
   */
-#include "ISwFinalizer.h" 
+#include "Component/Interfaces/ISwFinalizer.h"
 
 namespace StreamWork 
 {
@@ -30,7 +30,7 @@ namespace StreamWork
 
         class ISwFinalizerManager  {
         public:
-            /*! \brief enregistre une finalisation pour un index d'historique donnée*/
+            /*! \brief enregistre une finalisation pour un index d'historique donnÃ©e*/
 	        virtual void RegisterFinalization(quint64 historic_index,ISwFinalizer * finalizer)=0;
         };
     }

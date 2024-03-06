@@ -14,7 +14,7 @@
 
 #include <QSplashScreen>
 #include <QPixmap>
-#include <ISwLogRecorder.h>
+#include "Tools/Log/ISwLogRecorder.h"
 /*
   * INCLUDES LOCAUX
   */

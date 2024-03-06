@@ -18,9 +18,9 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwComponent_Class.h>
-#include <ISwProperty.h>
-#include <ISwProperties.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Services/ISwProperties.h"
 #include "SwCoreConstantes.h"
 
 

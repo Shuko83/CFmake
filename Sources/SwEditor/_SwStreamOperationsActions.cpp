@@ -2,7 +2,7 @@
  \file _SwStreamOperationsActions.cpp
  \brief Implementations des QActions relatives a un manager de stream
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -126,7 +126,7 @@ void _SwStreamOperationsActions::OnCutSelection(){
 //---------------------------------------------------------------------
 // Interface ISwObserver
 //---------------------------------------------------------------------
-/*! \brief methode appelée par l'observable*/
+/*! \brief methode appelÃ©e par l'observable*/
 void _SwStreamOperationsActions::Update(StreamWork::SwCore::ISwObservable* sender) {
     if (!_selection) {
         _select_all->setEnabled(false);

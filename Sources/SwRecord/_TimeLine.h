@@ -11,7 +11,7 @@
 #include <QXmlStreamReader>
 #include "_ExecutionKey.h"
 #include "_SwServiceRecording.h"
-#include <ISwClockProvider.h>
+#include "ISwClockProvider.h"
 #include "ISwReplayListener.h"
 
 using namespace StreamWork::SwRecord;
@@ -68,7 +68,7 @@ public:
     virtual double queryExecuteTime(bool * isLast);
     /*! \brief renvoie du temps pour l'arret */
     virtual double queryStopTime();
-    /*! \brief pause demandé */
+    /*! \brief pause demandÃ© */
     virtual bool queryPause();
 	/*@brief ajout de listener*/
     virtual void addReplayManagerListener(ISwReplayListener * listener);

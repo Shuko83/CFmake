@@ -1,7 +1,7 @@
 /*!
 \file ISwEditorInterfacesGraphicItemManager.h
 \date 02/01/2007
-\brief service de gestion des items graphiques représentant les interfaces
+\brief service de gestion des items graphiques reprÃ©sentant les interfaces
 \author  Big
 \version 1.0
  */
@@ -24,7 +24,7 @@ namespace StreamWork
         class _SwEditorInterfaceGraphicItem;
         /*!
         \class ISwEditorInterfacesGraphicItemManager
-        \brief service de gestion des items graphiques représentant les interfaces
+        \brief service de gestion des items graphiques reprÃ©sentant les interfaces
         */
         class ISwEditorInterfacesGraphicItemManager  {
         public:

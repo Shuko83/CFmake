@@ -2,7 +2,7 @@
  \file _SwEditorApplicativeCore.cpp
  \brief Coeur de traitement de l'editeur
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 #include <QFileInfo>
@@ -16,12 +16,12 @@
 #include <QFile>
 #include <QByteArray>
 #include <QGraphicsView>
-#include <SwApplication.h>
-#include <SwMacros.h>
-#include <SwLoader_Class.h>
-#include <SwSaver_Class.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "Main/Serialization/SwLoader_Class.h"
+#include "Main/Serialization/SwSaver_Class.h"
 #include <QApplication>
-#include <ISwController.h>
+#include "Component/Services/ISwController.h"
 #include "_SwEditorApplicativeCore.h"
 #include "_SwEditorGraphicItem.h"
 #include "_SwEditorGraphicScene.h"
@@ -59,7 +59,7 @@ _SwEditorApplicativeCore::~_SwEditorApplicativeCore(){
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwEditorApplicativeCore::InitializeResources() throw(SwException) {
     //Creation des service
     _provider_service=new SwInterfaces_Provider_Class(this) ;
@@ -184,7 +184,7 @@ void _SwEditorApplicativeCore::QuitEditor() {
     }
     qApp->exit(0);
 }
-/*! \brief Crée un nouveau stream vide*/
+/*! \brief CrÃ©e un nouveau stream vide*/
 void _SwEditorApplicativeCore::NewStream() {
     QString stream_name;
 	QString root_component_type;
@@ -274,7 +274,7 @@ void _SwEditorApplicativeCore::SaveStream(){
     //On signale le changement aux observers
     SignalChangeToObservers();
 }
-/*! \brief Sauvegarde du stream courant sous un nom donné*/
+/*! \brief Sauvegarde du stream courant sous un nom donnÃ©*/
 void _SwEditorApplicativeCore::SaveStreamAs(){
 
     if (_current_stream_index==-1)
@@ -407,8 +407,8 @@ void _SwEditorApplicativeCore::SignalChangeToObservers() {
 //-------------------------------------------------------------
 // interface ISwCreationPostProcessor
 //-------------------------------------------------------------
-/*! \brief methode appelée après la creation d'un composant
-\param[in] h_comp handle sur le composant qui vient d'etre créé*/
+/*! \brief methode appelÃ©e aprÃ¨s la creation d'un composant
+\param[in] h_comp handle sur le composant qui vient d'etre crÃ©Ã©*/
 void _SwEditorApplicativeCore::AfterCreatePostProcess(SwComponent_Class *h_comp) {
     _SwEditorGraphicItem * item;
     //On n'affichage pas les controllers
@@ -503,22 +503,22 @@ void _SwEditorApplicativeCore::_InternalSelection::RemoveFromSelection(QString c
 //-------------------------------------------------------------
 // Consultation de la selection
 //-------------------------------------------------------------
-/*! \brief Acces au nombre d'elements selectionnée*/
+/*! \brief Acces au nombre d'elements selectionnÃ©e*/
 int _SwEditorApplicativeCore::_InternalSelection::GetSelectedComponentNumber(){
     if (_selection!=NULL) return _selection->GetSelectedComponentNumber();
     return 0;
 }
-/*! \brief Acces a un element selectionné*/
+/*! \brief Acces a un element selectionnÃ©*/
 SwComponent_Class * _SwEditorApplicativeCore::_InternalSelection::GetSelectedComponent(int index){
     if (_selection!=NULL) return _selection->GetSelectedComponent(index);
     return NULL;
 }
-/*! \brief Acces au nombre d'elements non selectionnée*/
+/*! \brief Acces au nombre d'elements non selectionnÃ©e*/
 int _SwEditorApplicativeCore::_InternalSelection::GetUnselectedComponentNumber(){
     if (_selection!=NULL) return _selection->GetUnselectedComponentNumber();
     return 0;
 }
-/*! \brief Acces a un element non selectionné*/
+/*! \brief Acces a un element non selectionnÃ©*/
 SwComponent_Class * _SwEditorApplicativeCore::_InternalSelection::GetUnselectedComponent(int index){
     if (_selection!=NULL) return _selection->GetUnselectedComponent(index);
     return NULL;
@@ -585,7 +585,7 @@ void _SwEditorApplicativeCore::_InternalSelection::SignalChangeToObservers() {
 //-------------------------------------------------------------
 // ISwObserver
 //-------------------------------------------------------------
-/*! \brief methode appelée par l'observable*/
+/*! \brief methode appelÃ©e par l'observable*/
 void _SwEditorApplicativeCore::_InternalSelection::Update(StreamWork::SwCore::ISwObservable* sender){
     SignalChangeToObservers();
 }
@@ -672,7 +672,7 @@ void _SwEditorApplicativeCore::_InternalNavigator::SignalChangeToObservers() {
 //-------------------------------------------------------------
 // ISwObserver
 //-------------------------------------------------------------
-/*! \brief methode appelée par l'observable*/
+/*! \brief methode appelÃ©e par l'observable*/
 void _SwEditorApplicativeCore::_InternalNavigator::Update(StreamWork::SwCore::ISwObservable* sender) {
     if (_navigator!=NULL) _h_selection->DefineSelection(dynamic_cast<ISwEditorStreamOperations *>(_navigator->GetCurrentComponent()->QueryService(CG_SW_SERVICE_SELECTION)));
     else  _h_selection->DefineSelection(NULL);

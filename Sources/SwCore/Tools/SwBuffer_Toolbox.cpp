@@ -12,7 +12,7 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "SwBuffer_Toolbox.h"
+#include "Tools/SwBuffer_Toolbox.h"
 using namespace StreamWork::SwCore;
 
 /*! \brief methode permettant de convertir un byte array en chaine d'hexanumber

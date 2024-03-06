@@ -7,7 +7,7 @@
 #ifndef _STREAMWORK_SWCORE_ISWSERVICECODETIMER_H
 #define _STREAMWORK_SWCORE_ISWSERVICECODETIMER_H
 
-#include "ISwService.h"
+#include "Main/Services/Management/ISwService.h"
 
 //Nom du service
 #define CG_SW_SERVICE_CODE_TIMER "ServiceCodeTimer"
@@ -31,13 +31,13 @@ namespace StreamWork
         {
         public:
             /**
-             * @brief	: permet de démarrer le timer
+             * @brief	: permet de dÃ©marrer le timer
              * Param	: void * caller - pointeur sur la classe appelante
              */
 			virtual void start (void * caller) = 0;
 
             /**
-             * @brief	: Permet de récupérer le temps écouler depuis le start 
+             * @brief	: Permet de rÃ©cupÃ©rer le temps Ã©couler depuis le start 
              * Return	: double - en ms
              * Param	: void * caller - pointeur sur la classe appelante
              */
@@ -48,8 +48,8 @@ namespace StreamWork
             //---------------------------------------------------------------------
 
             /**
-			 * @brief	: Est appele uniquement par le service manager aupres duquel le service est enregistré
-						  lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée
+			 * @brief	: Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+						  lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e
              */
             virtual void Liberate(){/*Rien a faire*/}   
 
@@ -62,7 +62,7 @@ namespace StreamWork
             /**
              * @brief	: Renvoie le nom du service reel (le nom de l'interface)
              * @return	: QString - le nom du service reel (le nom de l'interface)
-             * @note	: au niveau de l'interface (pas d'une de ses classes derivées) renvoyer typeid(*this).name()
+             * @note	: au niveau de l'interface (pas d'une de ses classes derivÃ©es) renvoyer typeid(*this).name()
              */
             QString GetServiceRealName() {return QString(typeid(*this).name());}   
         };

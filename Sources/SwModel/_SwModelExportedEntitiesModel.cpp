@@ -1,20 +1,20 @@
 /*!
  \file _SwModelExportedEntitiesModel.cpp
- \brief Modele et conteneur des données a exporter
+ \brief Modele et conteneur des donnÃ©es a exporter
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 /*
   * INCLUDES LOCAUX
   */
 #include <math.h>
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QMessageBox>
 #include <QMimeData>
 #include <QStringList>
-#include <SwAddress_ToolBox.h>
-#include <SwTime_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
+#include "Tools/SwTime_ToolBox.h"
 #include "_SwModelExportedEntitiesModel.h"
 #include "_SwModelHost_Class.h"
 
@@ -121,7 +121,7 @@ void _SwModelExportedEntitiesModel::TransformModelToEntities() {
         _entities_list->push_back(entity);
     }     
 }
-/*! \brief Suppression des elements selectionnées */
+/*! \brief Suppression des elements selectionnÃ©es */
 void _SwModelExportedEntitiesModel::RemoveSelectedItems(QModelIndexList list_to_remove) {
     _Item * item;
     int index;
@@ -202,7 +202,7 @@ void _SwModelExportedEntitiesModel::RemoveSelectedItems(QModelIndexList list_to_
     }
     //emit layoutChanged();
 }
-/*! \brief Renvoie les capacites du modèle */
+/*! \brief Renvoie les capacites du modÃ¨le */
 Qt::ItemFlags _SwModelExportedEntitiesModel::flags ( const QModelIndex & index ) const {
     _Item * item;
     if (index.internalPointer()!=NULL) {
@@ -215,11 +215,11 @@ Qt::ItemFlags _SwModelExportedEntitiesModel::flags ( const QModelIndex & index )
     }
     return Qt::ItemFlags(Qt::ItemIsEnabled);
 }
-/*! \brief Renvoie le nombre de colonne pour parent donné */
+/*! \brief Renvoie le nombre de colonne pour parent donnÃ© */
 int _SwModelExportedEntitiesModel::columnCount ( const QModelIndex & parent ) const{
     return 4;
 }
-/*! \brief Renvoie le nombre de ligne pour un parent donné */
+/*! \brief Renvoie le nombre de ligne pour un parent donnÃ© */
 int _SwModelExportedEntitiesModel::rowCount ( const QModelIndex & parent ) const {
     if (!parent.isValid())
         return 7;
@@ -245,7 +245,7 @@ int _SwModelExportedEntitiesModel::rowCount ( const QModelIndex & parent ) const
     }
     return 0;
 }
-/*! \brief Renvoie les données d'entete */
+/*! \brief Renvoie les donnÃ©es d'entete */
 QVariant _SwModelExportedEntitiesModel::headerData ( int section, Qt::Orientation orientation, int role) const {
     if (role == Qt::DisplayRole) {
         switch(section) {
@@ -263,7 +263,7 @@ QVariant _SwModelExportedEntitiesModel::headerData ( int section, Qt::Orientatio
     }
     return QVariant();
 }
-/*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
+/*! \brief Renvoie les donnÃ©es stockÃ©es sous un certain role pour un item nommÃ© index */
 QVariant _SwModelExportedEntitiesModel::data ( const QModelIndex & index, int role ) const{
     _Item * item;
 
@@ -412,7 +412,7 @@ bool _SwModelExportedEntitiesModel::setData ( const QModelIndex & index, const Q
     }
     return false;
 }
-/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donné*/
+/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donnÃ©*/
 QModelIndex _SwModelExportedEntitiesModel::index ( int row, int column, const QModelIndex & parent  ) const{
     if (!parent.isValid())
         return createIndex(row,column,(void *)NULL);
@@ -450,7 +450,7 @@ QModelIndex _SwModelExportedEntitiesModel::index ( int row, int column, const QM
     }
     return QModelIndex();
 }
-/*! \brief Renvoie l'item parent d'un item index donné */
+/*! \brief Renvoie l'item parent d'un item index donnÃ© */
 QModelIndex _SwModelExportedEntitiesModel::parent ( const QModelIndex & index ) const{
     _Item * item;
 

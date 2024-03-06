@@ -12,8 +12,8 @@
   * INCLUDES GLOBAUX
   */
 #include <QWidget>
-#include <SwComponent_Class.h>
-#include <ISwObserver.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Interfaces/ISwObserver.h"
 
 namespace StreamWork
 {

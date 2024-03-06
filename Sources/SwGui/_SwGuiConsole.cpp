@@ -7,9 +7,9 @@
 */
 
 #include <QApplication>
-#include <SwApplication.h>
-#include <SwMacros.h>
-#include <SwRefPtr.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include "SwRef/SwRefPtr.h"
 #include "windows.h"
 #include <stdio.h>
 #include <fcntl.h>
@@ -72,7 +72,7 @@ _SwGuiConsole::~_SwGuiConsole()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiConsole::initializeComponent() throw(SwException) 
 {
 
@@ -87,7 +87,7 @@ void _SwGuiConsole::terminateComponent()
 {
 }
 
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwGuiConsole::eventPropertyChange(ISwProperty * property) 
 {
 }
@@ -95,7 +95,7 @@ void _SwGuiConsole::eventPropertyChange(ISwProperty * property)
 //----------------------------------------------------
 // Interface ISwPin_Listener
 //----------------------------------------------------
-/*! \brief Sur reception d'une donnée */
+/*! \brief Sur reception d'une donnÃ©e */
 void _SwGuiConsole::eventReceiveData(SwPin * src,SwData_Class * data) 
 {
 
@@ -104,30 +104,30 @@ void _SwGuiConsole::eventReceiveData(SwPin * src,SwData_Class * data)
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiConsole::eventBeforeInterfaceAvailability(
 	QString interface_name,SwComponent_Class * provider_host) 
 {
 	// sur changement d'une interface, 
 	// si l interface existe
-	// on demande à la widget de retirer l'interface
+	// on demande Ã  la widget de retirer l'interface
 
 }
 
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiConsole::eventAfterInterfaceAvailability(
 	QString interface_name,SwComponent_Class * provider_host) 
 {
 	// sur changement d'une interface, 
 	// si l action existe
-	// on demande à la widget d'ajouter l'action
+	// on demande Ã  la widget d'ajouter l'action
 	// sur changement d'une interface, 
 	// si l action existe
-	// on demande à la widget de retirer l'action
+	// on demande Ã  la widget de retirer l'action
 
 }
 
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiConsole::eventActivationChanged() 
 {
 }

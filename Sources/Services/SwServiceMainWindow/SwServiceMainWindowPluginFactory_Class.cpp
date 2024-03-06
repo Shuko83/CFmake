@@ -1,6 +1,6 @@
 #include "SwServiceMainWindowPluginFactory_Class.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "info_SwServiceMainWindow.h"
 
 #include <QRegularExpression>

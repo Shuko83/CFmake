@@ -14,8 +14,8 @@
 #include <QString>
 #include <QVariant>
 #include <QGraphicsScene>
-#include <ISwObserver.h>
-#include <SwComponent_Class.h>
+#include "Component/Interfaces/ISwObserver.h"
+#include "Component/Base/SwComponent_Class.h"
 #include "ISwEditorGraphicScene.h"
 
 namespace StreamWork
@@ -34,13 +34,13 @@ namespace StreamWork
             //-------------------------------------------------------------
             // Principales operations de gestion de stream
             //-------------------------------------------------------------
-            /*! \brief Crée un nouveau stream vide*/
+            /*! \brief CrÃ©e un nouveau stream vide*/
 			virtual void NewStream()=0;
             /*! \brief Ouvrir un stream existant*/
 			virtual void OpenStream()=0;
             /*! \brief Sauvegarde du stream courant */
 			virtual void SaveStream()=0;
-            /*! \brief Sauvegarde du stream courant sous un nom donné*/
+            /*! \brief Sauvegarde du stream courant sous un nom donnÃ©*/
 			virtual void SaveStreamAs()=0;
             /*! \brief Fermeture du stream courant*/
 			virtual void CloseStream()=0;

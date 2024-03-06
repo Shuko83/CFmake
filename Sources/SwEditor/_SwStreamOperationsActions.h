@@ -2,7 +2,7 @@
  \file _SwStreamOperationsActions.h
  \brief Implementations des QActions relatives a un manager de stream
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -11,8 +11,8 @@
 
 #include <QObject>
 #include <QAction>
-#include <ISwObserver.h>
-#include <SwInterfaces_Provider_Class.h>
+#include "Component/Interfaces/ISwObserver.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
 #include "ISwEditorStreamOperations.h"
 
 using namespace StreamWork::SwCore;
@@ -51,7 +51,7 @@ namespace StreamWork
             //---------------------------------------------------------------------
             // Interface ISwObserver
             //---------------------------------------------------------------------
-	        /*! \brief methode appelée par l'observable*/
+	        /*! \brief methode appelÃ©e par l'observable*/
 			virtual void Update(StreamWork::SwCore::ISwObservable* sender = nullptr);
 		private slots:
 	        /*! \brief callback sur select all*/

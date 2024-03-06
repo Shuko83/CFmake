@@ -6,10 +6,10 @@
 \version 1.0
  */
 #include <stdarg.h>
-#include "SwAlerter_Class.h"
-#include "ISwAlertRecorder.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
+#include "Tools/Log/SwAlerter_Class.h"
+#include "Tools/Log/ISwAlertRecorder.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 
 
 using namespace StreamWork::SwCore;

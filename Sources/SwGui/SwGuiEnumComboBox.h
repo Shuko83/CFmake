@@ -2,7 +2,7 @@
  \file SwGuiEnumComboBox.h
  \brief ComboBox pour l'edition d'un SwEnum
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 
 */
@@ -14,8 +14,8 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwEnum.h>
-#include <SwEnumModel.h>
+#include "Types/SwEnum.h"
+#include "Types/SwEnumModel.h"
 #include "SwGuiConstantes.h"
 /*
   * INCLUDES GLOBAUX

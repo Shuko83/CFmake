@@ -5,8 +5,8 @@
  \date 03/01/07
  \author F.Bighelli
 */
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwEditorStreamView.h"
 #include <QBrush>
 #include <QRectF>
@@ -40,7 +40,7 @@ _SwEditorStreamView::~_SwEditorStreamView()
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwEditorStreamView::InitializeResources() throw( SwException )
 {
     //Creation des service
@@ -66,7 +66,7 @@ void _SwEditorStreamView::InitializeResources() throw( SwException )
     _consumer_service->AttachInterfacesConsumerObserver( this );
     _consumer_service->RegisterConsumedInterface<ISwEditorStreamsManager>( "StreamsManager", &_manager );
     
-    //Enregistrement des propriétés
+    //Enregistrement des propriÃ©tÃ©s
     _properties_service->CreatePropertiesForQObject( _view, "QGraphicsView" );
     
     //Fin
@@ -76,7 +76,7 @@ void _SwEditorStreamView::InitializeResources() throw( SwException )
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwEditorStreamView::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( _manager != NULL )
@@ -86,7 +86,7 @@ void _SwEditorStreamView::BeforeInterfaceAvailabilityChange( QString interface_n
         _manager->DetachStreamManagerObserver( this );
     }
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwEditorStreamView::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( _manager != NULL )
@@ -97,7 +97,7 @@ void _SwEditorStreamView::AfterInterfaceAvailabilityChange( QString interface_na
 //---------------------------------------------------------------------
 // Interface ISwObserver
 //---------------------------------------------------------------------
-/*! \brief methode appelée par l'observable*/
+/*! \brief methode appelÃ©e par l'observable*/
 void _SwEditorStreamView::Update( StreamWork::SwCore::ISwObservable * sender )
 {
     if( _manager->GetCurrentStreamGraphicScene() != NULL )

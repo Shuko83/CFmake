@@ -12,11 +12,11 @@
 #include <QObject>
 #include <QMenu>
 #include <QMap>
-#include <SwComponent_Class.h>
-#include <ISwInterfaces_ServicesListener.h>
-#include <ISwInterfaces_Provider.h>
-#include <ISwInterfaces_Consumer.h>
-#include "LibIndeSig.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Main/Connexion/ISwInterfaces_ServicesListener.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Tools/Signal/LibIndeSig.h"
 
 namespace StreamWork
 {

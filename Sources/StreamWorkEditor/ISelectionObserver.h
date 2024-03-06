@@ -8,7 +8,7 @@
 #define _ISELECTIONOBSERVER_H
 
 #include <QList>
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 
 /**
 @class ISelectionObserver

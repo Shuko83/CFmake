@@ -1,20 +1,20 @@
 /**
 @file ISwRef.h
-@brief Abstraction d'une entité reference compté
+@brief Abstraction d'une entitÃ© reference comptÃ©
 @author F.Bighelli
  */
 
 #ifndef _STREAMWORK_SWCORE_ISWREF_H
 #define _STREAMWORK_SWCORE_ISWREF_H
 
-#include "LibIndeSig.h"
+#include "Tools/Signal/LibIndeSig.h"
 namespace StreamWork {
 
     namespace SwCore {
     
         /**
         @interface ISwRef
-        @brief Abstraction d'une entité reference compté
+        @brief Abstraction d'une entitÃ© reference comptÃ©
         @ingroup SwCoreGrp
         @swinterface
         */

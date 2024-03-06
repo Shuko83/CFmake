@@ -19,9 +19,9 @@ class _SwRecordDataCodecDefault : public SwRecordDataCodecAdapter{
 public:
 	/** @brief Constructor */
 	_SwRecordDataCodecDefault();
-    /* @brief encodage des données */
+    /* @brief encodage des donnÃ©es */
     void encode(QXmlStreamWriter * writer,void * data);
-    /* @brief decodage des données */
+    /* @brief decodage des donnÃ©es */
     void * decode(QXmlStreamReader * reader,void * data);
 
 };

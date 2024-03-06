@@ -1,12 +1,12 @@
 /*!
 \file _SwEditorInterfacesGraphicItemManager.cpp
 \date 02/01/2007
-\brief implementation du service de gestion des items graphiques représentant les interfaces
+\brief implementation du service de gestion des items graphiques reprÃ©sentant les interfaces
 \author  Big
 \version 1.0
  */
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <QGraphicsScene>
 #include "_SwEditorInterfacesGraphicItemManager.h"
 #include "ISwEditorGraphicItem.h"
@@ -234,7 +234,7 @@ quint64 _SwEditorInterfacesGraphicItemManager::Load(QDomElement & elt) {
     //Load des items info provider
     QDomElement subitem_node = item_node.firstChildElement(QString(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_PRO_NODE));
     while (!subitem_node.isNull()) {
-        //Enregistrement des données
+        //Enregistrement des donnÃ©es
         if (subitem_node.hasAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NAME_NODE) &&
             subitem_node.hasAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_PORT_LIN_POS) &&
             subitem_node.hasAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_X) &&
@@ -250,7 +250,7 @@ quint64 _SwEditorInterfacesGraphicItemManager::Load(QDomElement & elt) {
     //Load des items info consumer
     subitem_node = item_node.firstChildElement(QString(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_CON_NODE));
     while (!subitem_node.isNull()) {
-        //Enregistrement des données
+        //Enregistrement des donnÃ©es
         if (subitem_node.hasAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NAME_NODE) &&
             subitem_node.hasAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_PORT_LIN_POS) &&
             subitem_node.hasAttribute(CL_SW_XML_DRAW_COMP_EDITOR_GIITEM_NODE_END_POS_X) &&
@@ -302,7 +302,7 @@ void _SwEditorInterfacesGraphicItemManager::Finalize() {
     QMap<QString,_TmpGIData *>::iterator it;
     QMap<QString,_SwEditorInterfaceGraphicItem *>::iterator itr;
     _TmpGIData * p_data;
-    //affectation des données temporaires
+    //affectation des donnÃ©es temporaires
     for (it=_provided_tmp_items.begin();it!=_provided_tmp_items.end();it++) {
         QString s=it.key();
         itr=_provided_gitems.find(it.key());

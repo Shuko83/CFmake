@@ -15,7 +15,7 @@
 #include <QDataStream>
 #include "SwCoreConstantes.h"
 //#include "SwMacros.h"
-#include "SwUUID_Simplified.h"
+#include "Types/SwUUID_Simplified.h"
 
 
 

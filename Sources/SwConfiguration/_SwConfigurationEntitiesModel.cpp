@@ -1,23 +1,23 @@
 /*!
  \file _SwConfigurationEntitiesModel.cpp
- \brief Modele et conteneur des données a exporter
+ \brief Modele et conteneur des donnÃ©es a exporter
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 /*
   * INCLUDES LOCAUX
   */
 #include <math.h>
-#include <SwApplication.h>
+#include "Main/SwApplication.h"
 #include <QMessageBox>
 #include <QMimeData>
 #include <QStringList>
-#include <SwAddress_ToolBox.h>
-#include <SwTime_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
+#include "Tools/SwTime_ToolBox.h"
 #include "_SwConfigurationEntitiesModel.h"
 #include "_SwConfiguration.h"
-#include <_SwConfigurationExportedEntity.h>
+#include "_SwConfigurationExportedEntity.h"
 using namespace StreamWork::SwCore;
 
 /*! \brief Constructeur */
@@ -89,7 +89,7 @@ void _SwConfigurationEntitiesModel::TransformModelToEntities() {
         _entities_list->push_back(entity);
     }
 }
-/*! \brief Suppression des elements selectionnées */
+/*! \brief Suppression des elements selectionnÃ©es */
 void _SwConfigurationEntitiesModel::RemoveSelectedItems(QModelIndexList list_to_remove) {
     _Item * item;
     int index;
@@ -134,7 +134,7 @@ void _SwConfigurationEntitiesModel::RemoveSelectedItems(QModelIndexList list_to_
     }
     emit layoutChanged();
 }
-/*! \brief Renvoie les capacites du modèle */
+/*! \brief Renvoie les capacites du modÃ¨le */
 Qt::ItemFlags _SwConfigurationEntitiesModel::flags ( const QModelIndex & index ) const {
     _Item * item;
     if (index.internalPointer()!=NULL) {
@@ -147,11 +147,11 @@ Qt::ItemFlags _SwConfigurationEntitiesModel::flags ( const QModelIndex & index )
     }
     return Qt::ItemFlags(Qt::ItemIsEnabled);
 }
-/*! \brief Renvoie le nombre de colonne pour parent donné */
+/*! \brief Renvoie le nombre de colonne pour parent donnÃ© */
 int _SwConfigurationEntitiesModel::columnCount ( const QModelIndex & parent ) const{
     return 3;
 }
-/*! \brief Renvoie le nombre de ligne pour un parent donné */
+/*! \brief Renvoie le nombre de ligne pour un parent donnÃ© */
 int _SwConfigurationEntitiesModel::rowCount ( const QModelIndex & parent ) const {
     if (!parent.isValid())
 	{
@@ -177,7 +177,7 @@ int _SwConfigurationEntitiesModel::rowCount ( const QModelIndex & parent ) const
     }
     return 0;
 }
-/*! \brief Renvoie les données d'entete */
+/*! \brief Renvoie les donnÃ©es d'entete */
 QVariant _SwConfigurationEntitiesModel::headerData ( int section, Qt::Orientation orientation, int role) const {
     if (role == Qt::DisplayRole) {
         switch(section) {
@@ -193,7 +193,7 @@ QVariant _SwConfigurationEntitiesModel::headerData ( int section, Qt::Orientatio
     }
     return QVariant();
 }
-/*! \brief Renvoie les données stockées sous un certain role pour un item nommé index */
+/*! \brief Renvoie les donnÃ©es stockÃ©es sous un certain role pour un item nommÃ© index */
 QVariant _SwConfigurationEntitiesModel::data ( const QModelIndex & index, int role ) const{
     _Item * item;
 
@@ -301,7 +301,7 @@ bool _SwConfigurationEntitiesModel::setData ( const QModelIndex & index, const Q
     }
     return false;
 }
-/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donné*/
+/*! \brief Renvoie l'item index specifie par la ligne et la colonne pour un parent donnÃ©*/
 QModelIndex _SwConfigurationEntitiesModel::index ( int row, int column, const QModelIndex & parent  ) const{
     if (!parent.isValid())
         return createIndex(row,column,(void *)NULL);
@@ -319,7 +319,7 @@ QModelIndex _SwConfigurationEntitiesModel::index ( int row, int column, const QM
     }
     return QModelIndex();
 }
-/*! \brief Renvoie l'item parent d'un item index donné */
+/*! \brief Renvoie l'item parent d'un item index donnÃ© */
 QModelIndex _SwConfigurationEntitiesModel::parent ( const QModelIndex & index ) const{
     _Item * item;
 

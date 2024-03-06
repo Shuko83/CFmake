@@ -18,11 +18,11 @@
   * INCLUDES LOCAUX
  */
 #include "SwCoreConstantes.h"
-#include "SwException.h"
-#include "SwMacros.h"
-#include "ISwInterfaces_Consumer.h"
-#include "ISwInterfaces_ConsumerObserver.h"
-#include "ISwFinalizer.h"
+#include "Tools/Exception/SwException.h"
+#include "Main/SwMacros.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Interfaces/ISwInterfaces_ConsumerObserver.h"
+#include "Component/Interfaces/ISwFinalizer.h"
 
 namespace StreamWork
 {
@@ -38,7 +38,7 @@ namespace StreamWork
         private:
             /*! \brief composant hote */
             SwComponent_Class * _host_component;
-            /*! \brief banque des interfaces consommées */
+            /*! \brief banque des interfaces consommÃ©es */
             QMap<QString,_SwConsumedInterfaceContainer_Class *> _interfaces;
             /*! \brief iterateur courant */
             QMap<QString,_SwConsumedInterfaceContainer_Class *>::iterator _current_interface;
@@ -53,7 +53,7 @@ namespace StreamWork
 	        SwInterfaces_Consumer_Class(SwComponent_Class * host);
 	        /*! \brief Destrusteur */
 	        virtual ~SwInterfaces_Consumer_Class();
-	        /*! \brief Enregistre une interface a fournir (utliser de préférence la methode précédente)*/
+	        /*! \brief Enregistre une interface a fournir (utliser de prÃ©fÃ©rence la methode prÃ©cÃ©dente)*/
             virtual void RegisterConsumedInterfaceWithType(QString cinterface_name,QString cinterface_type,void ** handle_handle_interface);
 	        /*! \brief Desenregistre une interface fournie */
             virtual void UnregisterConsumedInterface(QString cinterface_name);
@@ -66,19 +66,19 @@ namespace StreamWork
             //---------------------------------------------------------------------
             // Interface ISwInterfaces_Consumer
             //---------------------------------------------------------------------
-	        /*! \brief Attache un fournisseur a une interface donnée */
+	        /*! \brief Attache un fournisseur a une interface donnÃ©e */
 	        void AttachProvider(ISwInterfaces_Provider * provider,QString cinterface_name,QString pinterface_name);
-	        /*! \brief Detache un fournisseur d'une interface donnée */
+	        /*! \brief Detache un fournisseur d'une interface donnÃ©e */
 	        void DetachProvider(QString cinterface_name);
-	        /*! \brief Fournit l'interface (est appelé par le fournisseur)*/
+	        /*! \brief Fournit l'interface (est appelÃ© par le fournisseur)*/
 	        void ProvideInterface(QString cinterface_name,void * handle_interface);
-	        /*! \brief Ne fournit plus l'interface (est appelé par le fournisseur)*/
+	        /*! \brief Ne fournit plus l'interface (est appelÃ© par le fournisseur)*/
 	        void UnprovideInterface(QString cinterface_name);
-	        /*! \brief Permet d'acceder a la premier interface consommé
+	        /*! \brief Permet d'acceder a la premier interface consommÃ©
             (renvoie aussi le type, le fournisseur et le nom de l'interface fournie)
             Quand la chaine renvoye Null plus d'interface)*/
 	        QString GetFirstInterface(QString * nametype,ISwInterfaces_Provider ** pt_provider,QString * pt_pinterface_name);
-	        /*! \brief Permet d'acceder a l'interface consommé suivante
+	        /*! \brief Permet d'acceder a l'interface consommÃ© suivante
             (renvoie aussi le type, le fournisseur et le nom de l'interface fournie)
             Quand la chaine renvoye Null plus d'interface)*/
 	        QString GetNextInterface(QString * nametype,ISwInterfaces_Provider ** pt_provider,QString * pt_pinterface_name);
@@ -94,8 +94,8 @@ namespace StreamWork
             //---------------------------------------------------------------------
             // Interface ISwService
             //---------------------------------------------------------------------
-            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-            lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+            /*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+            lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
             void Liberate();
             //---------------------------------------------------------------------
             // Interface ISwHost

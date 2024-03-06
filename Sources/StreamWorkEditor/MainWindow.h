@@ -65,7 +65,7 @@ public slots:
     /** @brief fermeture interne */
     virtual void internalClose();
 
-	/** @brief clear des différents services */
+	/** @brief clear des diffÃ©rents services */
 	virtual void clearServices();
 
 protected:

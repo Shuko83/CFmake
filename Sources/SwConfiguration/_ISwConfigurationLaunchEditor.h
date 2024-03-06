@@ -17,7 +17,7 @@
   * INCLUDES LOCAUX
   */
 
-#include <_ISwConfigurationLaunchManager.h>
+#include "_ISwConfigurationLaunchManager.h"
 
 using namespace StreamWork::SwCore;
 

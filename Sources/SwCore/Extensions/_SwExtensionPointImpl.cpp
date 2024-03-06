@@ -4,10 +4,10 @@
 @author Big
  */
 
-#include "_SwExtensionPointImpl.h"
-#include "ISwInterfaces_Consumer.h" 
-#include "ISwInterfaces_Provider.h" 
-#include "SwExtensionImpl.h"
+#include "Extensions/_SwExtensionPointImpl.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Extensions/SwExtensionImpl.h"
 
 #include "QExceptionManager.h"
 
@@ -60,7 +60,7 @@ ISwExtension * _SwExtensionPointImpl::getExtension() {
     }
     return 0;
 }
-/** @brief etends avec l'extension passé en parametre*/
+/** @brief etends avec l'extension passÃ© en parametre*/
 void _SwExtensionPointImpl::extends(ISwExtension * ext){
     ISwInterfaces_Provider *iprovider=dynamic_cast<ISwInterfaces_Provider *>(ext->getComponent()->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
     ISwInterfaces_Consumer *iconsumer=dynamic_cast<ISwInterfaces_Consumer *>(_component->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));

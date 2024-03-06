@@ -2,13 +2,13 @@
 #define __SWCONFIGURATIONMANAGERGUI_H
 
 #include <QWidget>
-#include <ISwConfigurationEditor.h>
-#include <_ISwConfigurationLaunchEditor.h>
-#include <_SwManagedConfiguration.h>
-#include <_ISwManagedConfigurationsList.h>
-#include <_ISwConfigurationLaunchManager.h>
-#include <ISwConfigurationController.h>
-#include <ISwConfigurationControllerListener.h>
+#include "ISwConfigurationEditor.h"
+#include "_ISwConfigurationLaunchEditor.h"
+#include "_SwManagedConfiguration.h"
+#include "_ISwManagedConfigurationsList.h"
+#include "_ISwConfigurationLaunchManager.h"
+#include "ISwConfigurationController.h"
+#include "ISwConfigurationControllerListener.h"
 #include <QModelIndex>
 #include "ui__SwConfigurationManagerGui.h"
 

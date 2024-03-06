@@ -1,8 +1,8 @@
 /*!
  \file _SwDatasBaseBasicRouter.h
- \brief Implementation of the Class _SwDatasBaseBasicRouter generant un router de données basique
+ \brief Implementation of the Class _SwDatasBaseBasicRouter generant un router de donnÃ©es basique
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -16,34 +16,34 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwEnum.h>
-#include <SwComponent_Class.h>
-#include <SwProperties_Class.h>
-#include <SwPins_Manager_Class.h>
-#include <ISwProperty.h>
-#include <ISwPin_Listener.h>
+#include "Types/SwEnum.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
 using namespace StreamWork::SwCore;
 
 /*!
 	\class _SwDatasBaseBasicRouter 
-	\brief Implementation of the Class _SwDatasBaseBasicRouter generant un router de données basique
+	\brief Implementation of the Class _SwDatasBaseBasicRouter generant un router de donnÃ©es basique
 */
 class _SwDatasBaseBasicRouter : public SwComponent_Class, public ISwPin_Listener
 {
 protected:
     /* service de gestion des pins */
     SwPins_Manager_Class * _pins_service;
-    /* service de gestion des propriétés */
+    /* service de gestion des propriÃ©tÃ©s */
     SwProperties_Class * _properties_service;
     /* nombre pins */
     uint _pins_nb;
-    /* propriété nombre de pins */
+    /* propriÃ©tÃ© nombre de pins */
     ISwProperty * _pins_nb_property;
     /* pin type */
     SwEnum _pin_type;
-    /* propriété type de pins */
+    /* propriÃ©tÃ© type de pins */
     ISwProperty * _pin_type_property;
-    /* propriété Pin liste */
+    /* propriÃ©tÃ© Pin liste */
     QList<SwPin *> _pins_list;
 public:
     /*! \brief Constructeur */
@@ -51,15 +51,15 @@ public:
     /*! \brief Destructeur */
     virtual ~_SwDatasBaseBasicRouter();
     /*! \brief Initialisation des ressources
-          \note tous les services du composants doivent être déclarés dans cette methodes*/
+          \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
     virtual void InitializeResources() throw(SwException);
-    /*! \brief Callback sur les changements de propriétés*/
+    /*! \brief Callback sur les changements de propriÃ©tÃ©s*/
     void OnPropertyChange(ISwProperty * property);
     //----------------------------------------------------
     // Interface ISwPin_Listener
     //----------------------------------------------------
-    /*! \brief Callback sur les changements de propriétés*/
-	/*! \brief Sur reception d'une donnée*/
+    /*! \brief Callback sur les changements de propriÃ©tÃ©s*/
+	/*! \brief Sur reception d'une donnÃ©e*/
 	void OnReceiveData(SwPin * src,SwData_Class * data);            
 
 

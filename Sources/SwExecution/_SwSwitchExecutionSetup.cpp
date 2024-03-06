@@ -8,7 +8,7 @@
 
 //#include <QString>
 
-#include <SwAddress_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
 #include "_SwSwitchExecutionSetup.h"
 
 /*! \brief Constructeur */
@@ -182,7 +182,7 @@ void _SwSwitchExecutionSetup::Clicked_deleteSelectedList(void) {
     if(_switchExecutionList->_exeListName.size() != 0) {
         _exe_paths.clear();
         _exe_modes.clear();
-        // mise à jour de la liste d'exe locale
+        // mise Ã  jour de la liste d'exe locale
         //recherche la liste d'executable correspondant
         QString tmp = _switchExecutionList->_list_name.ToString();
         ExeListMap::iterator it = _switchExecutionList->_exeListMap.find(tmp);
@@ -220,7 +220,7 @@ void _SwSwitchExecutionSetup::CurrentIndexChanged(int index) {
         //clear
         _exe_paths.clear();
         _exe_modes.clear();
-        //changement d'index dans la propriété
+        //changement d'index dans la propriÃ©tÃ©
         _switchExecutionList->_list_name.FromInt(index);    
         QVariant _list_name_qvariant;
         _list_name_qvariant.setValue(_switchExecutionList->_list_name);

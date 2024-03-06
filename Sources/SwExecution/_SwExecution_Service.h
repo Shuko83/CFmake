@@ -19,12 +19,12 @@
  */
 #include <QThread>
 #include <QTimer>
-#include <ISwPersistent.h>
-#include <ISwService.h>
-#include <SwException.h>
+#include "Component/Interfaces/ISwPersistent.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Tools/Exception/SwException.h"
 #include "ISwExecution_Service.h"
 #include "ISwExecutable_Service.h"
-#include "ISwServicesManager_Listener.h"
+#include "Main/Services/Management/ISwServicesManager_Listener.h"
 
 typedef enum {Timer_exe,Thread_exe,External_exe,Slave_exe} _SwExecutionType;
 typedef enum {Normal_mode,Replay_mode,Both_mode} _SwExecutionMode;

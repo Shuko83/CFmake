@@ -1,8 +1,8 @@
-#include "SwGuiComponentTools.h" 
+#include "SwGuiComponentTools.h"
 
 #include "ui_ComponentToolsGui.h"
-#include "SwAddress_ToolBox.h"
-#include "ComponentTreeModel.h"
+#include "Tools/SwAddress_ToolBox.h"
+#include "ComponentTools/ComponentTreeModel.h"
 
 using namespace StreamWork::SwGui;
 using namespace StreamWork::SwCore;
@@ -23,7 +23,7 @@ SwGuiComponentTools::SwGuiComponentTools(QWidget *parent, SwComponent_Class * ro
 	_ui->setupUi(this);
 	setWindowTitle("Starlinx configuration - Select component to save");
 
-	// Création du TableWidget qui contiendra les properties que l'on veut sauvegarder
+	// CrÃ©ation du TableWidget qui contiendra les properties que l'on veut sauvegarder
 	_compoTableWidget = new ComponentTableWidget(this);
 
 	_compoTableWidget->setComponentsSaved(_comp_paths);
@@ -35,7 +35,7 @@ SwGuiComponentTools::SwGuiComponentTools(QWidget *parent, SwComponent_Class * ro
 	_compoTableWidget->setDragDropMode(QAbstractItemView::DropOnly);
 	_ui->verticalLayout_4->addWidget(_compoTableWidget);
 
-	// Ajout du treeView dans la fenêtre de l'AdminSetup
+	// Ajout du treeView dans la fenÃªtre de l'AdminSetup
 	ComponentTreeModel * model = new ComponentTreeModel(_ui->treeView, root_component);
 	_ui->treeView->setModel(model);
 	_ui->treeView->setSelectionMode(QAbstractItemView::ExtendedSelection);

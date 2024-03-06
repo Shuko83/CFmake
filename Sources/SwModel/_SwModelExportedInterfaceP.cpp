@@ -2,14 +2,14 @@
  \file _SwModelExportedInterfaceP.cpp
  \brief  Class implementant une entite exportable interface produite
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 
 #include "_SwModelExportedInterfaceP.h"
 #include "_SwModel_Class.h"
 #include "_SwModelHost_Class.h"
-#include "SwAddress_ToolBox.h"
+#include "Tools/SwAddress_ToolBox.h"
 
 
 //-----------------------------------------------------------------------
@@ -95,7 +95,7 @@ void _SwModelExportedInterfaceP::SpecificUnbind()
 {
 	//if (_host_provider==NULL)
 	//    return;
-	//Si l'interface a été crée on la detruit
+	//Si l'interface a Ã©tÃ© crÃ©e on la detruit
 	//if (_interface_created) {
 	OnRemoveInterface(NULL, _name);
 	//}
@@ -113,7 +113,7 @@ void _SwModelExportedInterfaceP::OnAddInterface(ISwInterfaces_Service * source, 
 {
 	if (/*source==(ISwInterfaces_Service *)_host_provider &&*/ _name == interface_name )
 	{
-		//Sur creation de l'interface a propager on crée les deux interfaces locales
+		//Sur creation de l'interface a propager on crÃ©e les deux interfaces locales
 		//Creation du producteur externe
 		_external_provider->RegisterProvidedInterfaceWithType(_exported_name, _itype, _handle);
 		_external_provider->SetInterfaceUnavailable(_exported_name);

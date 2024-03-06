@@ -14,9 +14,9 @@
 /*
  * INCLUDES LOCAUX
  */
-#include "_SwPropertyImpl_Class.h"
-#include "ISwSimpleTypeAdapter.h"
-#include "LibIndeSig.h"
+#include "Properties/_SwPropertyImpl_Class.h"
+#include "Types/UserType/ISwSimpleTypeAdapter.h"
+#include "Tools/Signal/LibIndeSig.h"
 
 namespace StreamWork
 {

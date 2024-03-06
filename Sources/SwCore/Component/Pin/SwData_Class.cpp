@@ -1,16 +1,16 @@
 /*!
  \file SwData_Class.cpp
- \brief classe representant les données echangées
- \date 23-août-2006 18:59:26
+ \brief classe representant les donnÃ©es echangÃ©es
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
 #include <QtGlobal>
 #include <QDataStream>
 #include <QBuffer>
-#include "SwData_Class.h"
-#include "SwApplication.h"
-#include "SwMacros.h"
+#include "Component/Pin/SwData_Class.h"
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwCore;
 
@@ -47,12 +47,12 @@ SwData_Class * SwData_Class::CreateInstance(){
 //---------------------------------------------------------------------
 // Identification
 //---------------------------------------------------------------------
-/*! \brief Identification de la donnée par chaine de caractere
+/*! \brief Identification de la donnÃ©e par chaine de caractere
 A surcharger*/
 QString SwData_Class::GetType(){
     return CG_SW_DEFAULT_TYPE;
 }
-/*! \brief Identification de la donnée par valeur
+/*! \brief Identification de la donnÃ©e par valeur
 A surcharger*/
 SwUUID SwData_Class::GetTypeId(){
     return SwUUID();
@@ -60,7 +60,7 @@ SwUUID SwData_Class::GetTypeId(){
 //---------------------------------------------------------------------
 // Clonage
 //---------------------------------------------------------------------
-/*! \brief Clonage de la donnée */
+/*! \brief Clonage de la donnÃ©e */
 SwData_Class * SwData_Class::Clone() throw(SwException){
     SwData_Class * target;
     QBuffer buffer;
@@ -75,7 +75,7 @@ SwData_Class * SwData_Class::Clone() throw(SwException){
 // Serialisation
 //---------------------------------------------------------------------
 /*! \brief Lecture
-\warning si les données ne sont pas complete -> exception*/
+\warning si les donnÃ©es ne sont pas complete -> exception*/
 void SwData_Class::Read(QDataStream * data) throw(SwException){
     SwUUID type_id;
     qint64 size_read;
@@ -91,7 +91,7 @@ void SwData_Class::Read(QDataStream * data) throw(SwException){
         QString msg=QString("When read data of type %1, data containt an other data type").arg(GetType());
         LAUNCH_SWEXCEPTION("SwCore",msg);
     }
-    //Lecture des données communes
+    //Lecture des donnÃ©es communes
     (*data)>>Channel;
     (*data)>>Priority;
     (*data)>>Time;
@@ -100,7 +100,7 @@ void SwData_Class::Read(QDataStream * data) throw(SwException){
         QString msg=QString("Fail to read data: Not enough data in data stream");
         LAUNCH_SWEXCEPTION("SwCore",msg);
     }
-    //Lecture des données specifiques
+    //Lecture des donnÃ©es specifiques
     InternalRead(data);
 }
 /*! \brief Lecture avec resolution*/
@@ -116,13 +116,13 @@ SwData_Class * SwData_Class::ReadResolve(QDataStream * data) throw(SwException){
     //Lecture du type
     (*data)>>type_id.mostSigBits;
     (*data)>>type_id.leastSigBits;
-    //Instanciation du type de données correspondant
+    //Instanciation du type de donnÃ©es correspondant
     data_readed=SW_APP->ComponentsBank().CreateData(type_id);
     if (data_readed==NULL) {
         QString msg=QString("Fail to read data: Unknown data type");
         LAUNCH_SWEXCEPTION("SwCore",msg);
     }
-    //Lecture des données communes
+    //Lecture des donnÃ©es communes
     (*data)>>data_readed->Channel;
     (*data)>>data_readed->Priority;
     (*data)>>data_readed->Time;
@@ -131,7 +131,7 @@ SwData_Class * SwData_Class::ReadResolve(QDataStream * data) throw(SwException){
         QString msg=QString("Fail to read data: Not enough data in data stream");
         LAUNCH_SWEXCEPTION("SwCore",msg);
     }
-    //lecture des données specifiques
+    //lecture des donnÃ©es specifiques
     data_readed->InternalRead(data);
     //Fin
     return data_readed;
@@ -154,6 +154,6 @@ void SwData_Class::Write(QDataStream * data){
     (*data)<<Time;
     //Ecriture de la taille
     (*data)<<buff.size();
-    //Ecriture des données propres
+    //Ecriture des donnÃ©es propres
     data->writeRawData(buff.data().constData(),buff.size());
 }

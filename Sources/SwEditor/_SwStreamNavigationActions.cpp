@@ -2,7 +2,7 @@
  \file _SwStreamsNavigationActions.cpp
  \brief Implementations des QActions relatives a un manager de stream
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -61,7 +61,7 @@ void _SwStreamNavigationActions::OnGoToParent()
 //---------------------------------------------------------------------
 // Interface ISwObserver
 //---------------------------------------------------------------------
-/*! \brief methode appelée par l'observable*/
+/*! \brief methode appelÃ©e par l'observable*/
 void _SwStreamNavigationActions::Update( StreamWork::SwCore::ISwObservable * sender )
 {
     if( !_navigator )

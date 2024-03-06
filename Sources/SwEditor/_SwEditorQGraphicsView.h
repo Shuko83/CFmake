@@ -2,7 +2,7 @@
  \file _SwEditorQGraphicsView.h
  \brief implementation QGraphicsView pour l'editeur
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 

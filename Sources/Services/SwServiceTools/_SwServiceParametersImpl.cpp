@@ -53,7 +53,7 @@ void _SwServiceParametersImpl::registerParameter (QString parameter, QString val
 }
 
 
-/*! \brief Permet de savoir si un parametre est enregistre et récupérer sa valeur le cas echeant */
+/*! \brief Permet de savoir si un parametre est enregistre et rÃ©cupÃ©rer sa valeur le cas echeant */
 bool _SwServiceParametersImpl::getParameter (QString parameter, QString & value)
 {
     bool result = false;

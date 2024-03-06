@@ -2,12 +2,12 @@
  \file _SwConfigurationExportedOwnerConfigurable.cpp
  \brief Class implementant une entite exportable executable
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
 #include "_SwConfigurationExportedOwnerConfigurable.h"
-#include "ISwServiceOwnerConfigurable.h" 
+#include "Component/Services/ISwServiceOwnerConfigurable.h"
 
 
 /*! \brief Constructeur */

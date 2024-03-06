@@ -1,15 +1,15 @@
 /*!
  \file _SwModelExportedInterfaceC.cpp
- \brief  Class implementant une entite exportable interface consommée
+ \brief  Class implementant une entite exportable interface consommÃ©e
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 
 #include "_SwModelExportedInterfaceC.h"
 #include "_SwModel_Class.h"
 #include "_SwModelHost_Class.h"
-#include "SwAddress_ToolBox.h"
+#include "Tools/SwAddress_ToolBox.h"
 
 
 //-----------------------------------------------------------------------
@@ -76,7 +76,7 @@ void _SwModelExportedInterfaceC::SpecificUnbind()
 {
 	//if (_host_consumer==NULL)
 	//    return;
-	//Si l'interface a été crée on la detruit
+	//Si l'interface a Ã©tÃ© crÃ©e on la detruit
 	//if (_interface_created) {
 	OnRemoveInterface(_host_consumer, _name);
 	//}
@@ -121,7 +121,7 @@ void _SwModelExportedInterfaceC::OnAddInterface(ISwInterfaces_Service * source, 
 {
 	if ( source == (ISwInterfaces_Service *) _host_consumer && _name == interface_name )
 	{
-		//Sur creation de l'interface a propager on crée les deux interfaces locales
+		//Sur creation de l'interface a propager on crÃ©e les deux interfaces locales
 		//Connexion a l'hote
 		//_host_consumer->AttachProvider(_internal_provider,_name,_exported_name);
 		//Creation du consommateur externe

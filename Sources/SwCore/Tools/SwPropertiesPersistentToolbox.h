@@ -1,14 +1,14 @@
 /**
 @file SwPropertiesPersistentToolbox.h
-@brief Boite a outils publique pour l'enregistrement des propriétés
+@brief Boite a outils publique pour l'enregistrement des propriÃ©tÃ©s
 @author F.Bighelli
  */
 
 #ifndef _STREAMWORK_SWCORE_SWPROPERTIESPERSISTENTTOOLBOX_H
 #define _STREAMWORK_SWCORE_SWPROPERTIESPERSISTENTTOOLBOX_H
 
-#include "SwApplication.h"
-#include "ISwProperties.h"
+#include "Main/SwApplication.h"
+#include "Component/Services/ISwProperties.h"
 
 
 namespace StreamWork {
@@ -17,15 +17,15 @@ namespace StreamWork {
     
         /**
         @class SwPropertiesPersistentToolbox
-        @brief Boite a outils publique pour l'enregistrement des propriétés
+        @brief Boite a outils publique pour l'enregistrement des propriÃ©tÃ©s
         @ingroup SwCoreGrp
         */
         class BUILD_SWCORE SwPropertiesPersistentToolbox {
 
         public:
-	        /*! \brief methode permettant de charger des donnees de propriétés*/
+	        /*! \brief methode permettant de charger des donnees de propriÃ©tÃ©s*/
 	        static void Load(QDomElement & elt,ISwProperties * properties);
-	        /*! \brief methode permettant de sauver des donnees de propriétés */
+	        /*! \brief methode permettant de sauver des donnees de propriÃ©tÃ©s */
 	        static void Save(QXmlStreamWriter & writer,ISwProperties * properties);
 
         };

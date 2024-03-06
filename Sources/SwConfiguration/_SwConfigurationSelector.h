@@ -1,7 +1,7 @@
 /*!
 \file _SwModelHostExportSelector.h
 \date 12/04/2006
-\brief Ihm de selection des entites exportées par le model host
+\brief Ihm de selection des entites exportÃ©es par le model host
 \author  Big
 \version 1.0
  */
@@ -20,7 +20,7 @@
   * INCLUDES LOCAUX
   */
 
-#include <SwComponent_Class.h>
+#include "Component/Base/SwComponent_Class.h"
 #include "_SwConfigurationExportedEntity.h"
 
 
@@ -30,7 +30,7 @@ class _SwConfigurationEntitiesModel;
 
 /*!
 	\class _SwConfigurationExportSelector 
-	\brief  Ihm de selection des entites exportées par la configuration
+	\brief  Ihm de selection des entites exportÃ©es par la configuration
 */
 class SWCONFIGURATION_EXPORT _SwConfigurationSelector : public QDialog
 {
@@ -38,7 +38,7 @@ class SWCONFIGURATION_EXPORT _SwConfigurationSelector : public QDialog
 protected:
     /* composant racine selectionne */
     SwComponent_Class * _root_comp;
-    /* liste des entités */
+    /* liste des entitÃ©s */
     QList<_SwConfigurationExportedEntity *> * _entities_list;
     /* model pour l'edition */
     _SwConfigurationEntitiesModel * _entities_model;

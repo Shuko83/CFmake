@@ -1,16 +1,16 @@
 /*!
  \file SwComponent_Class.cpp
  \brief Implementation of the Class SwComponent_Class
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
  */
 
 #include <QtGlobal>
 #include <QStringList>
 #include <QRegularExpression>
-#include "SwMacros.h"
-#include "SwComponent_Class.h"
-#include "_SwCleanLinksVisitor.h"
+#include "Main/SwMacros.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Main/Connexion/_SwCleanLinksVisitor.h"
 
 #include "QExceptionManager.h"
 
@@ -99,7 +99,7 @@ SwComponent_Class * SwComponent_Class::GetParent() const
 void SwComponent_Class::AddChild(SwComponent_Class * child)  throw(SwException)
 {
 	QMap<QString, SwComponent_ClassPtr>::const_iterator it;
-	//Recherche s'il existe un enfant ayant le même nom
+	//Recherche s'il existe un enfant ayant le mÃªme nom
 	it = _child_components.find(child->GetName());
 	if ( it != _child_components.end() )
 	{
@@ -252,7 +252,7 @@ QString SwComponent_Class::GetSuggestedNameForChild(QString initial_name)
 	QStringList list;
 	QRegularExpression rx("(.*[^0-9])([0-9]+)$");
 
-	//Check si le nom contient des caractères interdis et on remplace par "_"
+	//Check si le nom contient des caractÃ¨res interdis et on remplace par "_"
 	QString newName = initial_name.replace(QRegularExpression(":+"), "_");
 
 	it = _child_components.find(newName);
@@ -309,7 +309,7 @@ void SwComponent_Class::SetName(const QString & new_name) throw(SwException)
 {
 	QMap<QString, SwComponent_ClassPtr>::iterator it;
 
-	//On regarde si un enfant de notre parent a le même nom que le nouveau nom proposé
+	//On regarde si un enfant de notre parent a le mÃªme nom que le nouveau nom proposÃ©
 	if ( _parent != NULL && _parent->GetChild(new_name) != NULL )
 	{
 		//Oui, erreur

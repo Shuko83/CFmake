@@ -2,12 +2,12 @@
  \file SwServicesManager_Class.h
  \brief Implementation of the Class SwServicesManager_Class
  \version 1.0
- \date 23-août-2006 16:04:57
+ \date 23-aoÃ»t-2006 16:04:57
  \author F.Bighelli
  */
 #include <QtGlobal>
-#include "SwMacros.h"
-#include "SwServicesManager_Class.h"
+#include "Main/SwMacros.h"
+#include "Main/Services/Management/SwServicesManager_Class.h"
 #include <QCoreApplication>
 #include "qmessagebox.h"
 
@@ -59,7 +59,7 @@ ISwService * SwServicesManager_Class::QueryService(QString service_name)
         return it.value();
     }
 
-    // le service n'a pas été trouvé!!
+    // le service n'a pas Ã©tÃ© trouvÃ©!!
     raiseQueryError(service_name);
 
     return NULL;
@@ -97,9 +97,9 @@ void SwServicesManager_Class::UnregisterService(QString service_name) throw(SwEx
         LAUNCH_SWEXCEPTION("SwCore", msg);
     }    
 
-    // Copie de la liste des observers au cas ou un observer se désenregistre à l'appel de OnUnregisterService
+    // Copie de la liste des observers au cas ou un observer se dÃ©senregistre Ã  l'appel de OnUnregisterService
     QList<ISwServicesManager_Listener *> observersCopy = _servicesObservers;
-    // On stock la liste des observers détruit suite à l'appel de OnUnregisterService pour ne pas notifier un observer détruit.
+    // On stock la liste des observers dÃ©truit suite Ã  l'appel de OnUnregisterService pour ne pas notifier un observer dÃ©truit.
     QSet<ISwServicesManager_Listener*> currentDeletedObservers;
     _deletedObservers.insert(&currentDeletedObservers);
     for (ISwServicesManager_Listener* observer : observersCopy)
@@ -128,7 +128,7 @@ void SwServicesManager_Class::AddServicesManagerObserver(ISwServicesManager_List
 //---------------------------------------------------------------------------------
 void SwServicesManager_Class::RemoveServicesManagerObserver(ISwServicesManager_Listener * observer)
 {
-    //Ajoute un observerSi cette méthode est appelé pendant la boucle de notification de UnregisterService
+    //Ajoute un observerSi cette mÃ©thode est appelÃ© pendant la boucle de notification de UnregisterService
     for(auto list : _deletedObservers)
         list->insert(observer);
     _servicesObservers.removeAll(observer);

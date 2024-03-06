@@ -1,7 +1,7 @@
 /*!
 \file _SwEditorInterfacesGraphicItemManager.h
 \date 02/01/2007
-\brief implementation du service de gestion des items graphiques représentant les interfaces
+\brief implementation du service de gestion des items graphiques reprÃ©sentant les interfaces
 \author  Big
 \version 1.0
  */
@@ -17,14 +17,14 @@
 /*
   * INCLUDES LOCAUX
  */
-#include <ISwService.h>
-#include <ISwInterfaces_Service.h>
-#include <ISwInterfaces_Provider.h>
-#include <ISwInterfaces_Consumer.h>
-#include <ISwHost.h>
-#include <ISwPersistent.h>
-#include <ISwFinalizer.h>
-#include <ISwInterfaces_ServicesListener.h>
+#include "Main/Services/Management/ISwService.h"
+#include "Main/Connexion/ISwInterfaces_Service.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Interfaces/ISwHost.h"
+#include "Component/Interfaces/ISwPersistent.h"
+#include "Component/Interfaces/ISwFinalizer.h"
+#include "Main/Connexion/ISwInterfaces_ServicesListener.h"
 
 #include "_SwEditorGraphicItem.h"
 #include "_SwEditorInterfaceGraphicItem.h"
@@ -38,7 +38,7 @@ namespace StreamWork
     {
         /*!
         \class _SwEditorInterfacesGraphicItemManager
-        \brief implementation du service de gestion des items graphiques représentant les interfaces
+        \brief implementation du service de gestion des items graphiques reprÃ©sentant les interfaces
         */
         class _SwEditorInterfacesGraphicItemManager : public ISwEditorInterfacesGraphicItemManager, public SwCore::ISwInterfaces_ServicesListener {
         protected:
@@ -62,7 +62,7 @@ namespace StreamWork
             _SwEditorInterfacesLayerManager * _il_manager;
             /*! \brief Definition de l'index d'historique*/
             quint64 _history_index;
-            /*! \brief Structure de stockage des données temporaires des graphics items*/
+            /*! \brief Structure de stockage des donnÃ©es temporaires des graphics items*/
             class _TmpGIData {
             public:
                 double ppos;

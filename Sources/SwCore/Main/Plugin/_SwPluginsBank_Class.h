@@ -1,7 +1,7 @@
 /*!
  \file _SwPluginsBank_Class.h
  \brief Implementation of the class _SwPluginsBank_Class
- \date 23-août-2006 16:04:34
+ \date 23-aoÃ»t-2006 16:04:34
  \version 1.0
  \author F.Bighelli
 */
@@ -21,9 +21,9 @@
   * INCLUDES LOCAUX
   */
 #include "SwCoreConstantes.h"
-#include "ISwPluginsBank.h"
-#include "SwPluginFactory_Class.h"
-#include "_SwTreeItem.h"
+#include "Main/Plugin/ISwPluginsBank.h"
+#include "Main/Plugin/SwPluginFactory_Class.h"
+#include "Component/Base/_SwTreeItem.h"
 
 class ProductLicense;
 
@@ -42,7 +42,7 @@ namespace StreamWork
             /*! \brief type interne liste de plugins*/
             typedef QSet<ISwPluginFactory *> TL_plugins;
             typedef QSet<ISwPluginFactory *>::const_iterator TL_pluginsIt;
-            /*! \brief QMap des paths et s'il doivent être enregistrée*/
+            /*! \brief QMap des paths et s'il doivent Ãªtre enregistrÃ©e*/
             QMap<QString,bool> _paths;    
             /*! \brief Liste plugins par path */
             QMap<QString,TL_plugins> _plugins_paths;    
@@ -101,7 +101,7 @@ namespace StreamWork
             QSet<ISwPluginFactory *> & GetPluginList(QString path)  throw(SwException);
             /*! \brief Acces a liste de tous les plugins */
             QMap<QString,SwPluginFactory_Class *> * GetAllPlugins();
-            /*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donné*/
+            /*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donnÃ©*/
 			QList< QPair<QString, QString> > GetControllersListForType(int type_identifier);
             /*! \brief Acces a la description d'un composant */
             QString GetComponentDescription(QString plugin_name, QString component_name) throw(SwException);
@@ -111,11 +111,11 @@ namespace StreamWork
             SwComponent_Class * CreateComponent(QString plugin_name, QString component_name) throw(SwException);
             /*! \brief Relire le contenu d'un plugin (pour les plugins dont le contenu a changer)*/
             virtual void RereadPluginContent(SwPluginFactory_Class * plugin) throw(SwException);
-            /*! \brief Acces au modèle pour l'affichage*/
+            /*! \brief Acces au modÃ¨le pour l'affichage*/
             virtual QAbstractItemModel * GetModel();
             /*! \brief Acces a la liste des noms de tous les composants */
             QSet<SwUUID> GetDataList();
-            /*! \brief Acces au nom du type d'une donnée definie par son id */
+            /*! \brief Acces au nom du type d'une donnÃ©e definie par son id */
             QString GetDataTypeNameFromDataTypeId(const SwUUID & id);
             /*! \brief Creation d'une data */
             SwData_Class * CreateData(const SwUUID & id) throw(SwException);

@@ -10,7 +10,7 @@
 #define _SwRefParent_H
 
 #include "SwCoreConstantes.h"
-#include "ISwRef.h"
+#include "SwRef/ISwRef.h"
 
 namespace StreamWork
 {

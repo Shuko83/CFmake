@@ -6,8 +6,8 @@
  \author EPO
  */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwGuiCompScrollArea.h"
 #include <QEvent>
 #include <QScrollBar>

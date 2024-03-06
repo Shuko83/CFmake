@@ -7,10 +7,10 @@
 #ifndef __SWGUIVISUALUPDATER_H
 #define __SWGUIVISUALUPDATER_H
 
-#include <SwComponent_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <ISwHttpServer.h>
-#include <ISwHttpPart.h>
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "ISwHttpServer.h"
+#include "ISwHttpPart.h"
 #include <QtCore>
 
 #include <QtWidgets>
@@ -74,15 +74,15 @@ public:
     virtual ~_SwGuiVisualUpdater();
     /** 
      * @brief Initialisation des ressources
-     * @note tous les services du composants doivent être déclarés dans cette methodes
+     * @note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes
      */
     virtual void InitializeResources() throw(SwException);
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-	/** @brief Avant changement de la disponibilité de l'interface */
+	/** @brief Avant changement de la disponibilitÃ© de l'interface */
 	virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);
-	/** @brief Apres changement de la disponibilité de l'interface */
+	/** @brief Apres changement de la disponibilitÃ© de l'interface */
 	virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);
     //---------------------------------------------------------------------
     // Interface ISwHttpPart

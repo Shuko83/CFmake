@@ -2,7 +2,7 @@
  \file SwComponent_Class.h
  \brief Implementation of the Class SwComponent_Class
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -17,18 +17,18 @@
 /*
   * INCLUDES LOCAUX
   */
-#include "SwNamed_Class.h"
-#include "SwRef.h"
-#include "SwRefPtr.h"
-#include "SwServicesManager_Class.h"
-#include "ISwVisitor.h"
-#include "ISwActivable.h"
+#include "Component/Base/SwNamed_Class.h"
+#include "SwRef/SwRef.h"
+#include "SwRef/SwRefPtr.h"
+#include "Main/Services/Management/SwServicesManager_Class.h"
+#include "Component/Interfaces/ISwVisitor.h"
+#include "Component/Interfaces/ISwActivable.h"
 
 namespace StreamWork
 {
 	namespace SwCore
 	{
-        /*! \brief definition du pointeur securisé sur composant */
+        /*! \brief definition du pointeur securisÃ© sur composant */
 		class SwComponent_Class;
         class SwPluginFactory_Class;
         typedef SwRefPtr<SwComponent_Class> SwComponent_ClassPtr;
@@ -51,7 +51,7 @@ namespace StreamWork
             SwComponent_Class * _parent;
             /*! \brief activation */
             bool _active;
-            /*! \brief nom usine du composant (pour retrouver la façon de le fabriquer) */
+            /*! \brief nom usine du composant (pour retrouver la faÃ§on de le fabriquer) */
 			QString _factory_name;
             QString _factory_component_name;
             /*! \brief QMap des enfants */
@@ -78,7 +78,7 @@ namespace StreamWork
 			QString GetFactoryComponentName();
 
             /*! \brief Initialisation des ressources
-            \note tous les services du composants doivent être déclarés dans cette methodes*/
+            \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
             virtual void InitializeResources() throw(SwException);
 
             /*! \brief Acces au parent du composant */
@@ -128,9 +128,9 @@ namespace StreamWork
 			LibIndeSig::iSignal1<SwComponent_Class *> OnChangeComponentName;
         public:
             //------------------------------------------------
-            //Surcharge de la classe mère SwNamed_Class
+            //Surcharge de la classe mÃ¨re SwNamed_Class
             //------------------------------------------------
-            /*! \brief Permet de definir le nom de l'instance nommé (Surcharge)*/
+            /*! \brief Permet de definir le nom de l'instance nommÃ© (Surcharge)*/
 			virtual void SetName(const QString & new_name) throw(SwException);
 		};
 	}

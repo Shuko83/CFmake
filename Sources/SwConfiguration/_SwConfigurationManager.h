@@ -2,7 +2,7 @@
  \file _SwConfigurationManager_H.h
  \brief Implementation of the Class _SwConfigurationManager realisant la fonction d'executeur
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -16,34 +16,34 @@
 /*
   * INCLUDES LOCAUX
   */
-#include <SwEnum.h>
-#include <SwComponent_Class.h>
-#include <SwProperties_Class.h>
-#include <SwPins_Manager_Class.h>
-#include <ISwProperty.h>
-#include <ISwPin_Listener.h>
-#include <ISwAdminSetup.h>
-#include <ISwExecutable_Service.h>
-#include <ISwConfiguration.h>
-#include <ISwInterfaces_ConsumerObserver.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <_SwManagedConfiguration.h>
-#include <_SwManagedConfigurationsList.h>
-#include <_SwConfigurationManagerGui.h>
-#include <_SwLaunchManager.h>
-#include <ISwExecutor.h>
-#include <SwFileDescriptor.h>
-#include <ISwConfigurationController.h>
+#include "Types/SwEnum.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
+#include "Component/Interfaces/ISwAdminSetup.h"
+#include "ISwExecutable_Service.h"
+#include "ISwConfiguration.h"
+#include "Component/Interfaces/ISwInterfaces_ConsumerObserver.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "_SwManagedConfiguration.h"
+#include "_SwManagedConfigurationsList.h"
+#include "_SwConfigurationManagerGui.h"
+#include "_SwLaunchManager.h"
+#include "Component/Interfaces/ISwExecutor.h"
+#include "Types/SwFileDescriptor.h"
+#include "ISwConfigurationController.h"
 //#include <ISwReplayManager.h>
 //#include <ISwRecordManager.h>
-#include <ISwConfigurationControllerListener.h>
-#include <_SwControllerActionStart.h>
-#include <_SwControllerActionStop.h>
-#include <_SwControllerActionRestart.h>
-#include <_SwControllerActionExportConfig.h>
-#include <_SwControllerActionSave.h>
-#include <_SwControllerActionLoad.h>
+#include "ISwConfigurationControllerListener.h"
+#include "_SwControllerActionStart.h"
+#include "_SwControllerActionStop.h"
+#include "_SwControllerActionRestart.h"
+#include "_SwControllerActionExportConfig.h"
+#include "_SwControllerActionSave.h"
+#include "_SwControllerActionLoad.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwExecution;
@@ -69,11 +69,11 @@ public:
     virtual ~_SwConfigurationManager();
 
     /*! \brief Initialisation des ressources
-          \note tous les services du composants doivent être déclarés dans cette methodes*/
+          \note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
     virtual void InitializeResources() throw(SwException);
     
     
-    /*! \brief Callback sur les changements de propriétés*/
+    /*! \brief Callback sur les changements de propriÃ©tÃ©s*/
     void OnPropertyChange(ISwProperty * property);
     void askForSave();
 
@@ -109,8 +109,8 @@ public:
 	//---------------------------------------------------------------------
 	// Interface ISwService
 	//---------------------------------------------------------------------            
-	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-	lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+	/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+	lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 	void Liberate();  
 	
 	//---------------------------------------------------------------------
@@ -122,9 +122,9 @@ public:
     //---------------------------------------------------------------------
     // Interface ISwInterfaces_ConsumerObserver
     //---------------------------------------------------------------------
-    /*! \brief Avant changement de la disponibilité de l'interface */
+    /*! \brief Avant changement de la disponibilitÃ© de l'interface */
     virtual void BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
-    /*! \brief Apres changement de la disponibilité de l'interface */
+    /*! \brief Apres changement de la disponibilitÃ© de l'interface */
     virtual void AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host);            
             
 
@@ -163,7 +163,7 @@ protected:
     SwInterfaces_Provider_Class * _provider_service;
     /* service de consommation d'interface */
     SwInterfaces_Consumer_Class * _consumer_service;
-    /* service de gestion des propriétés */
+    /* service de gestion des propriÃ©tÃ©s */
     SwProperties_Class * _properties_service;
 
 
@@ -172,7 +172,7 @@ protected:
     /* nombre de configurations */
     uint _configurationsCount;
 
-    /* propriété nombre de configurations */
+    /* propriÃ©tÃ© nombre de configurations */
     ISwProperty * _configurations_count_property;
 
     /* gestionnaires de configurations*/
@@ -192,7 +192,7 @@ protected:
     _SwControllerActionExportConfig * _actionExportConfig;
     _SwControllerActionLoad * _actionLoadConfig;
 
-    // --- fichier de propriétés de chargement ---
+    // --- fichier de propriÃ©tÃ©s de chargement ---
     SwFileDescriptor                _launchPropertiesFile;
 
 

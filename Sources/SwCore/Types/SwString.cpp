@@ -1,4 +1,4 @@
-#include "SwString.h"
+#include "Types/SwString.h"
 
 using namespace StreamWork::SwCore;
 

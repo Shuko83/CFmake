@@ -6,8 +6,8 @@
 
 #include "GraphicsResources.h"
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 
 using namespace StreamWork::SwCore;
 

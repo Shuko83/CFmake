@@ -2,7 +2,7 @@
  \file _SwGuiCompMainWindow.h
  \brief Implementation of the Class _SwGuiMainWindow generant une SwDockWidget_MainWindow
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -17,12 +17,12 @@
 
 #include "SwGuiConstantes.h"
 #include "SwAssistedComponent.h"
-#include <Component.h>
-#include <SwInterfaces_Provider_Class.h>
-#include <SwInterfaces_Consumer_Class.h>
-#include <SwProperties_Class.h>
-#include <ISwProperty.h>
-#include <SwEnum.h>
+#include "Component/Base/Component.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Properties/ISwProperty.h"
+#include "Types/SwEnum.h"
 #include "ISwMenu.h"
 #include "ISwToolBar.h"
 #include "ISwListDockWidget.h"
@@ -81,7 +81,7 @@ protected:
     // --- Menus ---
     /* nombre de menus */
     uint _menus_nb;
-    /* propriété nombre de menu */
+    /* propriÃ©tÃ© nombre de menu */
     ISwProperty * _menus_nb_property;
     /* map des interfaces menus*/
     QMap<QString, ISwMenu *> _menus;
@@ -89,7 +89,7 @@ protected:
     // --- Actions ---
     /* nombre d'actions */
     uint _actions_nb;
-    /* propriété nombre d'actions*/
+    /* propriÃ©tÃ© nombre d'actions*/
     ISwProperty * _actions_nb_property;
     /* map des interfaces actions*/
     QMap<QString, QAction *> _actions;
@@ -99,7 +99,7 @@ protected:
     SwEnum _default_toolbar_position;
     /* nombre de toolbars */
     uint _toolbars_nb;
-    /* propriété nombre de toolbars */
+    /* propriÃ©tÃ© nombre de toolbars */
     ISwProperty * _toolbars_nb_property;
     /* map des interfaces toolbars*/
     QMap<QString, ISwToolBar *> _toolbars;
@@ -109,13 +109,13 @@ protected:
     // --- DockWidgets ---
     /* nombre de dockwidgets */
     uint _dockwidgets_nb;
-    /* propriété nombre de dockwidgets */
+    /* propriÃ©tÃ© nombre de dockwidgets */
     ISwProperty * _dockwidgets_nb_property;
     /* map des interfaces dockwidgets*/
     QMap<QString, SwDockWidget_DockWidget *> _dockwidgets;
     /* nombre de listes de dockwidgets */
     uint _listdockwidgets_nb;
-    /* propriété nombre de listes de dockwidgets */
+    /* propriÃ©tÃ© nombre de listes de dockwidgets */
     ISwProperty * _listdockwidgets_nb_property;
     /* map des liste des docks widgets*/
     QMap<QString, ISwListDockWidget *> _listdockwidgets;
@@ -123,7 +123,7 @@ protected:
     // --- Central Widget ---
     /* choix du type d'interface Widget ou MainWindow*/
     bool  _useAsWidget;
-    /* propriété nombre d'actions*/
+    /* propriÃ©tÃ© nombre d'actions*/
     ISwProperty * _use_aswidget_property;
     
     //Propriete
@@ -151,7 +151,7 @@ public:
     
     /*! \brief Initialisation du composant */
     virtual void initializeComponent() throw( SwException );
-    /*! \brief Callback sur les changements de propriétés*/
+    /*! \brief Callback sur les changements de propriÃ©tÃ©s*/
     void eventPropertyChange( ISwProperty * property );
     
     void saveConfiguration();
@@ -183,16 +183,16 @@ public:
     virtual void removeDockWidget( SwDockWidget_DockWidget * widget );
     
     //---------------------------------------------------------------------
-    // Gestion des Propriétés
+    // Gestion des PropriÃ©tÃ©s
     //---------------------------------------------------------------------
     /**
-     * @brief    : Callback appelée lors de la disponibilité de l'interface
+     * @brief    : Callback appelÃ©e lors de la disponibilitÃ© de l'interface
      * @param    : QString interfaceName - Nom de l'interface
      */
     virtual void interfaceAvailable( QString interfaceName );
     
     /**
-     * @brief    : Callback appelée lors de l'indisponibilité de l'interface
+     * @brief    : Callback appelÃ©e lors de l'indisponibilitÃ© de l'interface
      * @param    : QString interfaceName - Nom de l'interface
      */
     virtual void interfaceUnavailable( QString interfaceName );
@@ -222,13 +222,13 @@ private:
     void showChanged();
     
     /**
-     * @brief : getFilePath() récupère le path du fichier de sauvegarde d'une configuration
+     * @brief : getFilePath() rÃ©cupÃ¨re le path du fichier de sauvegarde d'une configuration
      */
     QString getFilePath();
     
     /**
-     * @brief : checkDirectory() vérifie l'existence des répertoires dans le path entré
-     *          pour les fichiers de sauvegarde de la conf. Les créé s'ils n'existent pas
+     * @brief : checkDirectory() vÃ©rifie l'existence des rÃ©pertoires dans le path entrÃ©
+     *          pour les fichiers de sauvegarde de la conf. Les crÃ©Ã© s'ils n'existent pas
      * @param : QString : inDirectoryBasePath, type de path choisi par l'utilisateur (absolu, relatif, fixe)
      */
     void checkDirectory( QString inDirectoryBasePath );

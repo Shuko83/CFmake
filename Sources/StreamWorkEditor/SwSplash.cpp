@@ -7,7 +7,7 @@
  */
 #include <QTimer>
 #include <QBitmap>
-#include <ISwLogRecorder.h>
+#include "Tools/Log/ISwLogRecorder.h"
 #include <QApplication>
 #include "SwSplash.h"
 

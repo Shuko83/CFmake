@@ -20,9 +20,9 @@ class _SwRecordDataCodecDefaultFactory : public ISwRecordDataCodecFactory{
 public:
 	/** @brief Constructor */
 	_SwRecordDataCodecDefaultFactory();
-    /* @brief nom du type de données generé */
+    /* @brief nom du type de donnÃ©es generÃ© */
     virtual QString generatedDataType();
-    /* @brief nom des types de données pris en charge */
+    /* @brief nom des types de donnÃ©es pris en charge */
     virtual QStringList supportedDataTypes();
     /* @brief construction d'un codec */
     virtual ISwRecordDataCodec * buildCodec();

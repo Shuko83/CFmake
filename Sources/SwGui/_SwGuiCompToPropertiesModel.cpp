@@ -1,14 +1,14 @@
 /*!
  \file _SwGuiCompToPropertiesModel.cpp
- \brief Implementation of the Class _SwGuiCompToPropertiesModel generant un model QT a partir des propriétés d'un composant fournit
+ \brief Implementation of the Class _SwGuiCompToPropertiesModel generant un model QT a partir des propriÃ©tÃ©s d'un composant fournit
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
 #include <QObject>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include <QStandardItem>
 #include "_SwGuiCompToPropertiesModel.h"
 
@@ -39,7 +39,7 @@ _SwGuiCompToPropertiesModel::~_SwGuiCompToPropertiesModel(){
 }
 
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwGuiCompToPropertiesModel::InitializeResources() throw(SwException) {
     //Creation des service
     _properties_service=new SwProperties_Class(this);
@@ -62,8 +62,8 @@ void _SwGuiCompToPropertiesModel::InitializeResources() throw(SwException) {
     //S'enregistrer comme observer du consumer
     _consumer_service->AttachInterfacesConsumerObserver(this);
 
-	//Enregistrement des propriétés
-    //PAS de propriétés
+	//Enregistrement des propriÃ©tÃ©s
+    //PAS de propriÃ©tÃ©s
 
     if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("InitializeResources of SwGuiTreeView done\n"));
 
@@ -71,7 +71,7 @@ void _SwGuiCompToPropertiesModel::InitializeResources() throw(SwException) {
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompToPropertiesModel::BeforeInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
     if (_handle!=NULL && interface_name==QString("ComponentProvider")) {
         _handle->OnProvidedComponentChange.idisconnect(*this,&_SwGuiCompToPropertiesModel::OnProvidedComponentChange);
@@ -82,7 +82,7 @@ void _SwGuiCompToPropertiesModel::BeforeInterfaceAvailabilityChange(QString inte
         }
     }
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwGuiCompToPropertiesModel::AfterInterfaceAvailabilityChange(QString interface_name,SwComponent_Class * provider_host) {
 	if (_handle!=NULL && interface_name==QString("ComponentProvider")) {
         _handle->OnProvidedComponentChange.iconnect(*this,&_SwGuiCompToPropertiesModel::OnProvidedComponentChange);

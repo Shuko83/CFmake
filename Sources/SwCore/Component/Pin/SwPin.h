@@ -18,9 +18,9 @@
   * INCLUDES LOCAUX
  */
 #include "SwCoreConstantes.h"
-#include "SwMacros.h"
-#include "SwData_Class.h"
-#include "ISwPin_Listener.h"
+#include "Main/SwMacros.h"
+#include "Component/Pin/SwData_Class.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
  
 namespace StreamWork 
 {
@@ -53,13 +53,13 @@ namespace StreamWork
 			SwPin(ISwPins_Manager * manager,QString name,QString data_type);
 	        /*! \brief Destructeur */
 			virtual ~SwPin();
-	        /*! \brief Acces au type de données pris en charge par le pin */
+	        /*! \brief Acces au type de donnÃ©es pris en charge par le pin */
 	        virtual QString GetType();
 	        /*! \brief Acces au nom du pin */
 	        virtual QString GetName();
-	        /*! \brief Permet au pin de recevoir une donnée */
+	        /*! \brief Permet au pin de recevoir une donnÃ©e */
 	        virtual void PushData(SwData_Class * data);
-	        /*! \brief Permet au pin d'envoyer une donnée */
+	        /*! \brief Permet au pin d'envoyer une donnÃ©e */
 	        void SendData(SwData_Class * data);
 	        /*! \brief Permet d'assigner un pin remote a ce pin */
 	        void AssignRemote(SwPin * remote_pin,quint64 historic_date);

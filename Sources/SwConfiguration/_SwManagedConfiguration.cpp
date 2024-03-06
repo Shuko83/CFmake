@@ -7,7 +7,7 @@
  */
 
 #include "_SwManagedConfiguration.h"
-#include "SwPropertiesPersistentToolbox.h"
+#include "Tools/SwPropertiesPersistentToolbox.h"
 
 using namespace StreamWork::SwConfiguration;
 using namespace StreamWork::SwCore;

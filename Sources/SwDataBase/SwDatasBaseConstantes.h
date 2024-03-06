@@ -11,7 +11,7 @@
 
 #include <QGlobal.h>
 //Export via les DLL
-#include <SwMacros.h>
+#include "Main/SwMacros.h"
 
 #ifdef SWDATABASE_LIB
     #define SWDATASBASE_EXPORT Q_DECL_EXPORT

@@ -4,8 +4,8 @@
 @author F.Bighelli
  */
 
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwBasicPerspective.h"
 
 using namespace StreamWork::SwGui;
@@ -36,7 +36,7 @@ _SwBasicPerspective::~_SwBasicPerspective()
     delete _layout;
 }
 /*! \brief Initialisation des ressources
-\note tous les services du composants doivent être déclarés dans cette methodes*/
+\note tous les services du composants doivent Ãªtre dÃ©clarÃ©s dans cette methodes*/
 void _SwBasicPerspective::InitializeResources() throw( SwException )
 {
     SwDefaultPerspective::InitializeResources();
@@ -61,7 +61,7 @@ void _SwBasicPerspective::InitializeResources() throw( SwException )
     _title_stylesheet_property->SetValue( QVariant( _title_stylesheet ) );
     _title_stylesheet_property->GetOnChangeSignal().iconnect( *this, &_SwBasicPerspective::OnPropertyChange );
 }
-/*! \brief Callback sur les changements de propriétés*/
+/*! \brief Callback sur les changements de propriÃ©tÃ©s*/
 void _SwBasicPerspective::OnPropertyChange( ISwProperty * property )
 {
     if( _title_stylesheet_property == property )
@@ -76,7 +76,7 @@ void _SwBasicPerspective::OnPropertyChange( ISwProperty * property )
 //---------------------------------------------------------------------
 // Interface ISwInterfaces_ConsumerObserver
 //---------------------------------------------------------------------
-/*! \brief Avant changement de la disponibilité de l'interface */
+/*! \brief Avant changement de la disponibilitÃ© de l'interface */
 void _SwBasicPerspective::BeforeInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( _enabledPerspective )
@@ -111,7 +111,7 @@ void _SwBasicPerspective::BeforeInterfaceAvailabilityChange( QString interface_n
         }
     }
 }
-/*! \brief Apres changement de la disponibilité de l'interface */
+/*! \brief Apres changement de la disponibilitÃ© de l'interface */
 void _SwBasicPerspective::AfterInterfaceAvailabilityChange( QString interface_name, SwComponent_Class * provider_host )
 {
     if( !_enabledPerspective & ( _wHighPart || _wLowPart ) )

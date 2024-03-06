@@ -5,8 +5,8 @@
 \author  Big
 \version 1.0
  */
-#include <SwAddress_ToolBox.h> 
-#include <SwTime_ToolBox.h>
+#include "Tools/SwAddress_ToolBox.h"
+#include "Tools/SwTime_ToolBox.h"
 #include <QMessageBox>
 
 #include "_SwExecution_Service.h"
@@ -51,8 +51,8 @@ void _SwExecution_Service::Edit() {
 		ResolveLinks();
     }
 }
-/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistré
-lorsque ce premier se detruit ou une operation de desenregistrement du service est réalisée*/
+/*! \brief Est appele uniquement par le service manager aupres duquel le service est enregistrÃ©
+lorsque ce premier se detruit ou une operation de desenregistrement du service est rÃ©alisÃ©e*/
 void _SwExecution_Service::Liberate(){
 	for (SwComponent_Class * parent : _observedComponents.keys())
 	{
@@ -123,7 +123,7 @@ void _SwExecution_Service::Save(QXmlStreamWriter& writer)
 //---------------------------------------------------------------------
 // Interface ISwFinalizer
 //---------------------------------------------------------------------
-/*@brief appelée à la fin du chargement */
+/*@brief appelÃ©e Ã  la fin du chargement */
 bool _SwExecution_Service::Finalize(quint64)
 {
 	return ResolveLinks();
@@ -136,7 +136,7 @@ SwComponent_Class * _SwExecution_Service::GetHostComponent() {
     return _host;
 }
 //---------------------------------------------------------------------
-// Gestion de l'execution des composants selectionnés n'utilise pas index
+// Gestion de l'execution des composants selectionnÃ©s n'utilise pas index
 //---------------------------------------------------------------------
 /*! \brief Resolution des liens */
 bool _SwExecution_Service::ResolveLinks() {
@@ -192,7 +192,7 @@ bool _SwExecution_Service::ResolveLinks() {
         }
     }
 
-	// Arret des composant supprimés de la liste
+	// Arret des composant supprimÃ©s de la liste
 	double t = _clockProvider != 0 ? _clockProvider->queryStopTime() : SwTime_ToolBox::GetTime();
 	old_exe_servs.subtract(_exe_servs);
 

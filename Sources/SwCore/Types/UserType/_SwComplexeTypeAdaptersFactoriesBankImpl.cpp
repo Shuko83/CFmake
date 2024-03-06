@@ -6,8 +6,8 @@
 \version 1.0
  */
 
-#include "_SwComplexeTypeAdaptersFactoriesBankImpl.h"
-#include "ISwComplexeTypeAdaptersFactory.h"
+#include "Types/UserType/_SwComplexeTypeAdaptersFactoriesBankImpl.h"
+#include "Types/UserType/ISwComplexeTypeAdaptersFactory.h"
 
 using namespace StreamWork::SwCore;
 

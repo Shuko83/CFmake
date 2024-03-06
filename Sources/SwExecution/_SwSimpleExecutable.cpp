@@ -2,12 +2,12 @@
  \file _SwSimpleExecutable.cpp
  \brief Implementation of the Class _SwSimpleExecutable permettant de tester l'executeur
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 #include <QSet>
-#include <SwApplication.h>
-#include <SwMacros.h>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
 #include "_SwSimpleExecutable.h"
 
 

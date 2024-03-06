@@ -2,7 +2,7 @@
  \file _SwEditorGIMenu.h
  \brief menu pour un graphics item composant
  \version 1.0
- \date 23-août-2006 18:59:26
+ \date 23-aoÃ»t-2006 18:59:26
  \author F.Bighelli
 */
 
@@ -72,7 +72,7 @@ namespace StreamWork
             //-------------------------------------------------------------
             // AdminSetup
             //-------------------------------------------------------------
-            /*! \brief Acces au setup du premier composant selectionné s'il en est capable*/
+            /*! \brief Acces au setup du premier composant selectionnÃ© s'il en est capable*/
 			void AdminSetup();
             //-------------------------------------------------------------
             // Execution

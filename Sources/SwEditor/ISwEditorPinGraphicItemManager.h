@@ -1,7 +1,7 @@
 /*!
 \file ISwEditorPinGraphicItemManager.h
 \date 02/01/2007
-\brief service de gestion des items graphiques représentant les pins
+\brief service de gestion des items graphiques reprÃ©sentant les pins
 \author  Big
 \version 1.0
  */
@@ -24,7 +24,7 @@ namespace StreamWork
         class _SwEditorPinGraphicItem;
         /*!
         \class ISwEditorInterfacesGraphicItemManager
-        \brief service de gestion des items graphiques représentant les pins
+        \brief service de gestion des items graphiques reprÃ©sentant les pins
         */
         class ISwEditorPinGraphicItemManager  {
         public:

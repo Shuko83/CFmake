@@ -1,8 +1,8 @@
 /**
 @file SwAssistedComponent.h
-@brief Implementation avance d'un composant par defaut pour les assistÈs
+@brief Implementation avance d'un composant par defaut pour les assist√©s
 	   Ce composant est de base Provider/Consumed d'interface & implemente 
-	   l'utilisation des propriÈtÈs, pour les autres services, il faut utiliser
+	   l'utilisation des propri√©t√©s, pour les autres services, il faut utiliser
 	   les accesseurs.
 @author AAY
  */
@@ -10,24 +10,24 @@
 #ifndef _STREAMWORK_SWFOUNDATION_ASSISTED_COMPONENT_H
 #define _STREAMWORK_SWFOUNDATION_ASSISTED_COMPONENT_H
 
-#include <SwComponent_Class.h>
-#include <ISwInterfaces_Provider.h>
-#include <ISwInterfaces_Consumer.h>
-#include <ISwProperties.h>
-#include <ISwInterfaces_ConsumerObserver.h>
-#include <ISwPin_Listener.h>
-#include <ISwPins_Manager.h>
-#include "SwInterfaces_Provider_Class.h"
-#include "SwInterfaces_Consumer_Class.h"
-#include "SwProperties_Class.h"
-#include "SwPins_Manager_Class.h"
+#include "Component/Base/SwComponent_Class.h"
+#include "Component/Services/ISwInterfaces_Provider.h"
+#include "Component/Services/ISwInterfaces_Consumer.h"
+#include "Component/Services/ISwProperties.h"
+#include "Component/Interfaces/ISwInterfaces_ConsumerObserver.h"
+#include "Component/Interfaces/ISwPin_Listener.h"
+#include "Component/Services/ISwPins_Manager.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Provider_Class.h"
+#include "Component/Services/ServiceImpl/SwInterfaces_Consumer_Class.h"
+#include "Component/Services/ServiceImpl/SwProperties_Class.h"
+#include "Component/Services/ServiceImpl/SwPins_Manager_Class.h"
 #include "ISwShortcut.h"
 #include "ISwServiceShortcuts.h"
 #include "ISwExecutable_Service.h"
-#include "ISwServiceOwnerConfigurable.h"
-#include "ISwPersistentConfigurable.h"
-#include "ISwPersistent.h"
-#include "ISwServiceOwner.h"
+#include "Component/Services/ISwServiceOwnerConfigurable.h"
+#include "Component/Interfaces/ISwPersistentConfigurable.h"
+#include "Component/Interfaces/ISwPersistent.h"
+#include "Component/Services/ISwServiceOwner.h"
 
 #include <functional>
 
@@ -53,7 +53,7 @@ namespace StreamWork {
 
         /**
         @class SwAssistedComponent
-        @brief Implementation avance d'un composant par defaut pour les assistÈs
+        @brief Implementation avance d'un composant par defaut pour les assist√©s
         @ingroup SwCoreGrp
        */
 		class BUILD_SWFOUNDATION SwAssistedComponent :
@@ -92,9 +92,9 @@ namespace StreamWork {
 			void setOwnerServiceAvaibility(bool val);								//_isOwner = false;
 
 			/**
-			 * @brief    : Permet de rÈcuperer un pointerur sur une ISwProperty
-			 * @return   : ISwProperty* - pointeur sur la propriÈtÈ Stremwork
-			 * @param	 : QString name - Nom de la propriÈtÈ
+			 * @brief    : Permet de r√©cuperer un pointerur sur une ISwProperty
+			 * @return   : ISwProperty* - pointeur sur la propri√©t√© Stremwork
+			 * @param	 : QString name - Nom de la propri√©t√©
 			 */
 			StreamWork::SwCore::ISwProperty* getISwProperty(QString name);
 
@@ -112,12 +112,12 @@ namespace StreamWork {
             virtual void setActive(bool active);
 
 			/**
-			 * @brief    : Callback appelÈe lors de l'activation du composant
+			 * @brief    : Callback appel√©e lors de l'activation du composant
 			 */
 			virtual void activation();
 			
 			/**
-			 * @brief    : Callback appelÈe lors de la dÈsactivation du composant
+			 * @brief    : Callback appel√©e lors de la d√©sactivation du composant
 			 */
 			virtual void deactivation();
 
@@ -129,9 +129,9 @@ namespace StreamWork {
              * @brief    : Calback sur reception d'une data
              * @param	 : SwPin * src - Pointeur sur la pin
              * @param	 : SwData_Class * data - Pointeur sur la data ? (a valider)
-			 * @warning	 : Si vous gardez une reference sur la donnÈe reÁues au dela de la portÈe de la methode suivante
-			 *			   utiliser un SwRefPtr sur la donnÈe
-			 *			   Si vous souhaitez modifier une donnÈe recue il faut d'abord en faire une copy
+			 * @warning	 : Si vous gardez une reference sur la donn√©e re√ßues au dela de la port√©e de la methode suivante
+			 *			   utiliser un SwRefPtr sur la donn√©e
+			 *			   Si vous souhaitez modifier une donn√©e recue il faut d'abord en faire une copy
              */
             virtual void eventReceiveData(StreamWork::SwCore::SwPin * src, StreamWork::SwCore::SwData_Class * data);
 			
@@ -158,8 +158,8 @@ namespace StreamWork {
 			//------------------------------------------------------------------		
 
 			/**
-			* @brief    : Callback d'appel avec en parametre le nom associÈ a la commande
-			* @param	 : QString name - nom de la commande appelÈe
+			* @brief    : Callback d'appel avec en parametre le nom associ√© a la commande
+			* @param	 : QString name - nom de la commande appel√©e
 			*/
 			template<typename T> inline void registerShortcut(QString shortcutCategory, QString shortcutName,  void (T::*shortcutCallback)())
 			{
@@ -167,8 +167,8 @@ namespace StreamWork {
 			}
 
 			/**
-			* @brief    : Callback d'appel avec en parametre le nom associÈ a la commande
-			* @param	 : QString name - nom de la commande appelÈe
+			* @brief    : Callback d'appel avec en parametre le nom associ√© a la commande
+			* @param	 : QString name - nom de la commande appel√©e
 			*/
 			template<typename T, typename MEMBER> inline void registerShortcut(QString shortcutCategory, QString shortcutName, T* ptr, MEMBER shortcutCallback)
 			{
@@ -186,27 +186,27 @@ namespace StreamWork {
 			
 			/**
 			 * @brief    : Initialisation du composant executable
-			 * @param	 : double start_time - le temps de dÈbut
-			 * @param	 : ISwExecution_Service * executor - Pointeur sur le service d'exÈcution
+			 * @param	 : double start_time - le temps de d√©but
+			 * @param	 : ISwExecution_Service * executor - Pointeur sur le service d'ex√©cution
 			 */
 			virtual void Initialize(double start_time, StreamWork::SwExecution::ISwExecution_Service * executor) throw (StreamWork::SwCore::SwException);
 
 			/**
-			 * @brief    : DÈmarage (Premier pas d'execution)
-			 * @param	 : double current_time - Temps de dÈbut
+			 * @brief    : D√©marage (Premier pas d'execution)
+			 * @param	 : double current_time - Temps de d√©but
 			 */
 			virtual void Start(double current_time) throw (StreamWork::SwCore::SwException);
 
 			/**
-			 * @brief    : Boucle d'Èxecution
-			 * @param	 : double current_time - Temps d'Èxecution
+			 * @brief    : Boucle d'√©xecution
+			 * @param	 : double current_time - Temps d'√©xecution
 			 * @param	 : bool is_first_call - Si c'est le premier appel
 			 */
 			virtual void Execute(double current_time,bool is_first_call) throw (StreamWork::SwCore::SwException);
 
 			/**
-			 * @brief    : Methode appelÈ au stop
-			 * @param	 : double current_time - Temps d'Èxecution
+			 * @brief    : Methode appel√© au stop
+			 * @param	 : double current_time - Temps d'√©xecution
 			 */
 			virtual void Stop(double current_time);       
 
@@ -232,8 +232,8 @@ namespace StreamWork {
 			//---------------------------------------------------------------------            
 			
 			/**
-			 * @brief    : Est appele uniquement par le service manager aupres duquel le service est enregistrÈ
-			 *	           lorsque ce premier se detruit ou une operation de desenregistrement du service est rÈalisÈe
+			 * @brief    : Est appele uniquement par le service manager aupres duquel le service est enregistr√©
+			 *	           lorsque ce premier se detruit ou une operation de desenregistrement du service est r√©alis√©e
 			 */
 			virtual void Liberate();  
 
@@ -256,7 +256,7 @@ namespace StreamWork {
 
 			@details
 			- set automatique du pointeur
-			- fini les appels ‡ getInterface avec le nom de l'interface
+			- fini les appels √† getInterface avec le nom de l'interface
 			- Pratique quand aucun traitmenent specifique a la dispo/indispo de l'interface
 
 			exemple :
@@ -267,7 +267,7 @@ namespace StreamWork {
 			initializeComponent :
 			consumeInterface("Widget", &_i_widget);
 
-			@param interfaceName : QString  => nom de l'interface (utilisÈ pour le unconsume)
+			@param interfaceName : QString  => nom de l'interface (utilis√© pour le unconsume)
 			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
 			*/
 			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle)
@@ -279,10 +279,10 @@ namespace StreamWork {
 			@brief Methode simplifiant la consomation d'interface
 
 			@details
-					- A chaque interface sa methode de disponibilitÈ
+					- A chaque interface sa methode de disponibilit√©
 					- set automatique du pointeur
-					- notifie avant de changer le pointeur et aprÈs avoir changÈ le pointeur
-					- fini les appels ‡ getInterface avec le nom de l'interface
+					- notifie avant de changer le pointeur et apr√©s avoir chang√© le pointeur
+					- fini les appels √† getInterface avec le nom de l'interface
 
 				exemple : 
 				.h : 
@@ -297,9 +297,9 @@ namespace StreamWork {
 					if(event == AFTER_INTERFACE_AVAILABLE)
 						//do something with new value of _i_widget
 
-			@param interfaceName : QString  => nom de l'interface (utilisÈ pour le unconsume)
+			@param interfaceName : QString  => nom de l'interface (utilis√© pour le unconsume)
 			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
-			@param callback : >  => methode ‡ appeler lors des Èvennements de disponibilitÈ d'interface (‡ utilisÈ de prÈfÈrence avec une lambda expression)
+			@param callback : >  => methode √† appeler lors des √©vennements de disponibilit√© d'interface (√† utilis√© de pr√©f√©rence avec une lambda expression)
 			*/
 			template<typename T> inline void consumeInterface(QString interfaceName, T ** interfaceHandle, std::function<void(INTERFACE_EVENT)> callback)
 			{
@@ -320,10 +320,10 @@ namespace StreamWork {
 
 			/**
 			@brief Methode simplifiant la consomation d'interface
-				- A chaque interface sa methode de disponibilitÈ
+				- A chaque interface sa methode de disponibilit√©
 				- set automatique du pointeur
-				- notifie avant de changer le pointeur et aprÈs avoir changÈ le pointeur
-				- fini les appels ‡ getInterface avec le nom de l'interface
+				- notifie avant de changer le pointeur et apr√©s avoir chang√© le pointeur
+				- fini les appels √† getInterface avec le nom de l'interface
 
 			@details
 			
@@ -342,7 +342,7 @@ namespace StreamWork {
 			if(event == AFTER_INTERFACE_AVAILABLE)
 				//do something with new value of _i_widget
 
-			@param interfaceName : QString  => nom de l'interface (utilisÈ pour le unconsume)
+			@param interfaceName : QString  => nom de l'interface (utilis√© pour le unconsume)
 			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
 			@param thisPointer : U *  => pointeur sur la classe ayant la callback en membre
 			@param callback : void (U::*callback)(INTERFACE_EVENT) => pointeur sur la callback en tant que fonction membre
@@ -366,9 +366,9 @@ namespace StreamWork {
 
 			/**
 			@brief Methode simplifiant la consomation d'interface
-				- A chaque interface sa methode de disponibilitÈ
-				- notifie aprÈs avoir changÈ le pointeur
-				- fini les appels ‡ getInterface avec le nom de l'interface
+				- A chaque interface sa methode de disponibilit√©
+				- notifie apr√©s avoir chang√© le pointeur
+				- fini les appels √† getInterface avec le nom de l'interface
 
 			@details
 			
@@ -384,7 +384,7 @@ namespace StreamWork {
 			onWidgetChange() : // Specifique
 				//do something with new value of _i_widget
 
-			@param interfaceName : QString  => nom de l'interface (utilisÈ pour le unconsume)
+			@param interfaceName : QString  => nom de l'interface (utilis√© pour le unconsume)
 			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
 			@param thisPointer : U *  => pointeur sur la classe ayant la callback en membre
 			@param callback : void (U::*callback)() => pointeur sur la callback en tant que fonction membre
@@ -430,8 +430,8 @@ namespace StreamWork {
 			}
 
 			/**
-			 * @brief    : Permet d'obtenir un pointeur sur l'interface consommÈe
-			 * @return   : T* - Pointeur de type <T> sur l'interface consommÈe
+			 * @brief    : Permet d'obtenir un pointeur sur l'interface consomm√©e
+			 * @return   : T* - Pointeur de type <T> sur l'interface consomm√©e
 			 * @param	 : QString pinterface_name - Nom de l'interface
 			 */
 			template<typename T> inline T* getInterface(QString pinterface_name)
@@ -449,7 +449,7 @@ namespace StreamWork {
 			}
 
 			/**
-			 * @brief    : Permet de supprimer une interface consommÈe
+			 * @brief    : Permet de supprimer une interface consomm√©e
 			 * @param	 : QString pinterface_name - Nom de l'interface
 			 */
 			virtual void unconsumeInterface(QString pinterface_name);
@@ -461,7 +461,7 @@ namespace StreamWork {
 			virtual void unprovideInterface(QString pinterface_name);
 
 			/**
-			 * @brief    : Permet de dÈfinir la disponibilitÈ de l'interface d'une interface produite
+			 * @brief    : Permet de d√©finir la disponibilit√© de l'interface d'une interface produite
 			 * @param	 : QString pinterface_name - Nom de l'interface
 			 * @param	 : bool avaibility - True si interface disponible , False sinon
 			 */
@@ -475,44 +475,44 @@ namespace StreamWork {
 			 * @brief    : Enregistre un nouveau pin et retourne le pointeur sur le pin
 			 * @return   : SwPin* - pointeur sur le pin
 			 * @param	 : QString name - Nom du pin
-			 * @param	 : QString data_type - Type de donnÈe
+			 * @param	 : QString data_type - Type de donn√©e
 			 * @param	 : bool isListener - True si on s'enregistre en listener
 			 */
 			virtual StreamWork::SwCore::SwPin* registerPin(QString name,QString data_type,bool isListener=false);
 			
 			/**
-			 * @brief    : DÈsenregistre un pin dÈj‡ enregistrÈ
+			 * @brief    : D√©senregistre un pin d√©j√† enregistr√©
 			 * @param	 : SwPin * pin - Pointeur sur le pin 
 			 */
 			virtual void unregisterPin(StreamWork::SwCore::SwPin * pin);
 			
 			/********************
-			 * Gestion des PropriÈtÈs
+			 * Gestion des Propri√©t√©s
 			 ********************/
 
 			/**
-			 * @brief    : Exporte la liste des propriÈtÈ de l'object courrant
-			 * @param	 : QString prefix - Prefix ‡ ajouter dans l'arborescence
-			 * @param	 : bool disable_objectName - Permet de dÈsactiver l'objectName comme propriÈtÈ
+			 * @brief    : Exporte la liste des propri√©t√© de l'object courrant
+			 * @param	 : QString prefix - Prefix √† ajouter dans l'arborescence
+			 * @param	 : bool disable_objectName - Permet de d√©sactiver l'objectName comme propri√©t√©
 			 */
 			virtual void createPropertiesForThisObject(QString prefix=QString(),bool disable_objectName=false);
 
 			/**
-			 * @brief    : Exporte la liste des propriÈtÈs pour un object QT
+			 * @brief    : Exporte la liste des propri√©t√©s pour un object QT
 			 * @param	 : QObject * obj - Pointeur sur l'object
-			 * @param	 : QString prefix - Prefix ‡ ajouter dans l'arborescence
-			 * @param	 : bool disable_objectName - Permet de dÈsactiver l'objectName comme propriÈtÈ
+			 * @param	 : QString prefix - Prefix √† ajouter dans l'arborescence
+			 * @param	 : bool disable_objectName - Permet de d√©sactiver l'objectName comme propri√©t√©
 			 */
 			virtual void createPropertiesForQObject(QObject *obj,QString prefix=QString(),bool disable_objectName=false);
 			
 			/**
-			 * @brief    : Callback appelÈe lors de la disponibilitÈ de l'interface
+			 * @brief    : Callback appel√©e lors de la disponibilit√© de l'interface
 			 * @param	 : QString interfaceName - Nom de l'interface
 			 */
 			virtual void interfaceAvailable(QString interfaceName);
 
 			/**
-			 * @brief    : Callback appelÈe lors de l'indisponibilitÈ de l'interface
+			 * @brief    : Callback appel√©e lors de l'indisponibilit√© de l'interface
 			 * @param	 : QString interfaceName - Nom de l'interface
 			 */
 			virtual void interfaceUnavailable(QString interfaceName);
@@ -520,61 +520,61 @@ namespace StreamWork {
 protected:
 			/**
              * @brief    : Initialisation des ressources
-             * @note	 : Tous les services du composants doivent Ítre dÈclarÈs dans cette methodes
+             * @note	 : Tous les services du composants doivent √™tre d√©clar√©s dans cette methodes
              */
             virtual void InitializeResources() throw(StreamWork::SwCore::SwException);
 
 
 			//------------------------------------------------------------------
-			// AccËs aux diffÈrents services (Interne)
+			// Acc√®s aux diff√©rents services (Interne)
 			//------------------------------------------------------------------
 
 			/**
 			 * @brief    : Acces au service fournisseur d'interface
-			 * @return   : ISwInterfaces_Provider & - RÈfÈrence sur le service
+			 * @return   : ISwInterfaces_Provider & - R√©f√©rence sur le service
 			 */
 			StreamWork::SwCore::ISwInterfaces_Provider & getIProviderService();
 
 			/**
 			 * @brief    : Acces au service consommateur d'interface
-			 * @return   : ISwInterfaces_Consumer & - RÈfÈrence sur le service
+			 * @return   : ISwInterfaces_Consumer & - R√©f√©rence sur le service
 			 */
 			StreamWork::SwCore::ISwInterfaces_Consumer & getIConsumerService();
 
 			/**
 			 * @brief    : Acces au service de properties
-			 * @return   : ISwProperties & - RÈfÈrence sur le service
+			 * @return   : ISwProperties & - R√©f√©rence sur le service
 			 */
 			StreamWork::SwCore::ISwProperties & getPropertiesService();
 
 			/**
 			 * @brief    : Acces au service de connexion
-			 * @return   : ISwPins_Manager & - RÈfÈrence sur le service
+			 * @return   : ISwPins_Manager & - R√©f√©rence sur le service
 			 */
 			StreamWork::SwCore::ISwPins_Manager & getPinsService();
 
 			/**
-			 * @brief    :  Acces au service d'ÈxÈcution
-			 * @return   : ISwExecutable_Service& RÈfÈrence sur le service
+			 * @brief    :  Acces au service d'√©x√©cution
+			 * @return   : ISwExecutable_Service& R√©f√©rence sur le service
 			 */
 			StreamWork::SwExecution::ISwExecutable_Service& getExecutableService();
 
 			/**
 			 * @brief    : Acces au service de configuration
-			 * @return   : ISwServiceOwnerConfigurable & - RÈfÈrence sur le service
+			 * @return   : ISwServiceOwnerConfigurable & - R√©f√©rence sur le service
 			 */
 			StreamWork::SwCore::ISwServiceOwnerConfigurable & getOwnerConfigurableService();
 			
 			/**
 			 * @brief    : Acces au service de owner (sauvegarde dans le stream Streamwork)
-			 * @return   : SwOwner_Class & - RÈfÈrence sur le service
+			 * @return   : SwOwner_Class & - R√©f√©rence sur le service
 			 */
 			StreamWork::SwCore::ISwServiceOwner& getOwnerService();
 
 			/**
 			 * @brief    : Retourne le compteur d'historique enregistrer par "l'interface ISwPersitent"
 			 *			   /!\ Le Composant doit etre Owner (setOwnerServiceAvaibility)
-			 * @return   : HistoryIndex ‡ utiliser dans le finalizer
+			 * @return   : HistoryIndex √† utiliser dans le finalizer
 			 */
 			quint64 getHistoryIndex();
 
@@ -584,13 +584,13 @@ protected:
 			//---------------------------------------------------------------------         
 
 			/**
-			* @brief	: Quand un service est ajoutÈ
+			* @brief	: Quand un service est ajout√©
 			*
 			* @param	: ISwService * service - pointeur sur le service
 			*/
 			void OnRegisterService(StreamWork::SwCore::ISwService * service);
 			/**
-			* @brief	: Quand un service est supprimÈ
+			* @brief	: Quand un service est supprim√©
 			*
 			* @param	: ISwService * service - Pointeur sur le service
 			*/
@@ -609,28 +609,28 @@ private:
 			//---------------------------------------------------
 
 			/**
-			 * @brief    : Callback avant changement de la disponibilitÈ de l'interface 
+			 * @brief    : Callback avant changement de la disponibilit√© de l'interface 
 			 * @param	 : QString interface_name - le nom de l'interface
 			 * @param	 : SwComponent_Class * provider_host - pointeur sur un composant_class
 			 */
 			void BeforeInterfaceAvailabilityChange(QString interface_name, StreamWork::SwCore::SwComponent_Class * provider_host);
 			
 			/**
-			 * @brief    : Callback apres changement de la disponibilitÈ de l'interface
+			 * @brief    : Callback apres changement de la disponibilit√© de l'interface
 			 * @param	 : QString interface_name - le nom de l'interface
 			 * @param	 : SwComponent_Class * provider_host - pointeur sur un composant_class
 			 */
 			void AfterInterfaceAvailabilityChange(QString interface_name, StreamWork::SwCore::SwComponent_Class * provider_host);
 
 			 /**
-             * @brief    : Callback avant changement de la disponibilitÈ de l'interface si le service est actif
+             * @brief    : Callback avant changement de la disponibilit√© de l'interface si le service est actif
              * @param	 : QString interface_name - Nom de l'interface
              * @param	 : SwComponent_Class * provider_host - Je sais pas
              * @note	 : Interne
              */
             void eventBeforeInterfaceAvailability(QString interface_name, StreamWork::SwCore::SwComponent_Class * provider_host);
             /**
-			 * @brief    : Callback apres changement de la disponibilitÈ de l'interface si le service est actif
+			 * @brief    : Callback apres changement de la disponibilit√© de l'interface si le service est actif
              * @param	 : QString interface_name - Nom de l'interface
              * @param	 : SwComponent_Class * provider_host - Je sais pas
              * @note	 : Interne
@@ -646,8 +646,8 @@ private:
 			void OnReceiveData(StreamWork::SwCore::SwPin * src, StreamWork::SwCore::SwData_Class * data);
 
 			/**
-             * @brief    : Active l'observabilitÈ d'une propriÈtÈ notifiÈ par "eventPropertyChange"
-             * @param	 : ISwProperty * property - Pointeur sur une propriÈtÈ
+             * @brief    : Active l'observabilit√© d'une propri√©t√© notifi√© par "eventPropertyChange"
+             * @param	 : ISwProperty * property - Pointeur sur une propri√©t√©
              */
             //void enableListeningChangeForProperty(ISwProperty * property);			
 
@@ -657,8 +657,8 @@ private:
 			//------------------------------------------------------------------
 
 			/**
-			 * @brief    : Callback d'appel avec en parametre le nom associÈ a la commande
-			 * @param	 : QString name - nom de la commande appelÈe
+			 * @brief    : Callback d'appel avec en parametre le nom associ√© a la commande
+			 * @param	 : QString name - nom de la commande appel√©e
 			 */
 		    void processCommand(QString name) final;
 			         
@@ -672,9 +672,9 @@ private:
 			};
 
 			/**
-			@param interfaceName : QString  => nom de l'interface (utilisÈ pour le unconsume)
+			@param interfaceName : QString  => nom de l'interface (utilis√© pour le unconsume)
 			@param interfaceHandle : T * *  => pointeur sur le pointeur d'interface
-			@param callback : >  => methode ‡ appeler lors des Èvennements de disponibilitÈ d'interface (‡ utilisÈ de prÈfÈrence avec une lambda expression)
+			@param callback : >  => methode √† appeler lors des √©vennements de disponibilit√© d'interface (√† utilis√© de pr√©f√©rence avec une lambda expression)
 			*/
 			template<typename T> inline void registerInterfaceCallback(QString interfaceName, T ** interfaceHandle, std::function<void(CALLBACK_EVENT)> callback)
 			{
@@ -695,7 +695,7 @@ private:
 				else
 					qCritical() << "Unable to register shortcut, because the service is not available -> Faire le TODO";
 
-				//TODO : S'abonner ‡ la notif de dispo du service && si service pas dispo -> On enregistre en temporaire
+				//TODO : S'abonner √† la notif de dispo du service && si service pas dispo -> On enregistre en temporaire
 				// Quand service dispo on registerCommand sur les temporaire
 			}
 
@@ -722,7 +722,7 @@ private:
             /* service de consommation d'interface */
 			StreamWork::SwCore::SwInterfaces_Consumer_Class * _consumer_service;
 
-            /* service de gestion des propriÈtÈs */
+            /* service de gestion des propri√©t√©s */
 			StreamWork::SwCore::SwProperties_Class * _properties_service;
 
             /* service de gestion des pins */
@@ -746,10 +746,10 @@ private:
 			/* Liste des interfaces produites */
 			QList<QString> _listIProvided;
 
-			/* Map des interfaces consommÈes */
+			/* Map des interfaces consomm√©es */
 			QMap<QString,void **> _mapIConsummed;
 
-			/* hash des interfaces consommÈes vers les methode de disponibilitÈ*/
+			/* hash des interfaces consomm√©es vers les methode de disponibilit√©*/
 			QHash<QString, std::function<void( CALLBACK_EVENT )>> _mapIConsummedWithCallBack;
 
 			QHash<QString, std::function<void(StreamWork::SwCore::ISwService*)>> _mapServiceWithCallBack;
@@ -758,12 +758,12 @@ private:
 			QHash<QString, QString> _mapShortcutNameWithCategory;
 			
 
-			/* Liste des pin enregistrÈe*/
+			/* Liste des pin enregistr√©e*/
 			QList<StreamWork::SwCore::SwPin*> _listPin;
 
 
 			/**
-			 *	BoolÈen d'activation de service
+			 *	Bool√©en d'activation de service
 			 */
 
 			bool _isExecutable;

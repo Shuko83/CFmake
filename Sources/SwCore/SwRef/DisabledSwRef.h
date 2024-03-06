@@ -9,8 +9,8 @@
 #define _DisabledSwRef_H
 
 #include "SwCoreConstantes.h"
-#include "LibIndeSig.h"
-#include "ISwRef.h"
+#include "Tools/Signal/LibIndeSig.h"
+#include "SwRef/ISwRef.h"
 
 namespace StreamWork
 {

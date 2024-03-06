@@ -12,9 +12,9 @@
 /*
 * INCLUDES LOCAUX
 */
-#include <Component.h>
+#include "Component/Base/Component.h"
 #include <QFileSystemWatcher>
-#include <ISwAdminSetup.h>
+#include "Component/Interfaces/ISwAdminSetup.h"
 
 //Check namespace needed
 using namespace StreamWork::SwCore;
@@ -53,10 +53,10 @@ namespace StreamWork
 			/*! \brief evenement de changement de propriete*/
 			virtual void eventPropertyChange(ISwProperty * property);
 
-			/*! \brief evenement avant changement de la disponibilité de l'interface*/
+			/*! \brief evenement avant changement de la disponibilitÃ© de l'interface*/
 			virtual void eventBeforeInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
 
-			/*! \brief evenement apres changement de la disponibilité de l'interface*/
+			/*! \brief evenement apres changement de la disponibilitÃ© de l'interface*/
 			virtual void eventAfterInterfaceAvailability(QString interface_name,SwComponent_Class * provider_host);
 
 			/*! \brief evenement sur reception d'une data*/

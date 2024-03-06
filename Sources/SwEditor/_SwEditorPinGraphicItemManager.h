@@ -1,7 +1,7 @@
 /*!
 \file _SwEditorPinGraphicItemManager.h
 \date 02/01/2007
-\brief implementation du service de gestion des items graphiques représentant les interfaces
+\brief implementation du service de gestion des items graphiques reprÃ©sentant les interfaces
 \author  Big
 \version 1.0
  */
@@ -18,12 +18,12 @@
 /*
   * INCLUDES LOCAUX
  */
-#include <ISwService.h>
-#include <ISwPins_Manager.h>
-#include <ISwHost.h>
-#include <ISwPersistent.h>
-#include <ISwFinalizer.h>
-#include <ISwPins_ManagerListener.h>
+#include "Main/Services/Management/ISwService.h"
+#include "Component/Services/ISwPins_Manager.h"
+#include "Component/Interfaces/ISwHost.h"
+#include "Component/Interfaces/ISwPersistent.h"
+#include "Component/Interfaces/ISwFinalizer.h"
+#include "Main/Connexion/ISwPins_ManagerListener.h"
 
 #include "_SwEditorGraphicItem.h"
 #include "_SwEditorPinGraphicItem.h"
@@ -37,7 +37,7 @@ namespace StreamWork
     {
         /*!
         \class _SwEditorPinGraphicItemManager
-        \brief implementation du service de gestion des items graphiques représentant les interfaces
+        \brief implementation du service de gestion des items graphiques reprÃ©sentant les interfaces
         */
         class _SwEditorPinGraphicItemManager : public ISwEditorPinGraphicItemManager, public SwCore::ISwPins_ManagerListener {
         protected:
@@ -55,7 +55,7 @@ namespace StreamWork
             _SwEditorPinsLayerManager * _pl_manager;
             /*! \brief Definition de l'index d'historique*/
             quint64 _history_index;
-            /*! \brief Structure de stockage des données temporaires des graphics items*/
+            /*! \brief Structure de stockage des donnÃ©es temporaires des graphics items*/
             class _TmpGPData {
             public:
                 double ppos;

@@ -7,7 +7,7 @@
 #ifndef _STREAMWORK_SWCORE_ISWEXTENSION_H
 #define _STREAMWORK_SWCORE_ISWEXTENSION_H
 
-#include "SwComponent_Class.h"
+#include "Component/Base/SwComponent_Class.h"
 
 namespace StreamWork {
 
