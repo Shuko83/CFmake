@@ -89,8 +89,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     # Dossier des projets
 
-    source_group(TREE ${TARGET_PRIVATE_HEADERS_DIR}  PREFIX "Header Files (Private)" FILES ${TARGET_PRIVATE_HEADERS_FILES})
-    source_group(TREE ${TARGET_PUBLIC_HEADERS_BASE_DIR}  PREFIX "Header Files (Public)" FILES ${TARGET_PUBLIC_HEADERS_FILES})
+    get_filename_component(ABSOLUTE_HEADERS_BASE_DIR_PATH ${TARGET_PUBLIC_HEADERS_BASE_DIR} ABSOLUTE)
+    source_group(TREE ${TARGET_PRIVATE_HEADERS_DIR} PREFIX "Header Files (Private)" FILES ${TARGET_PRIVATE_HEADERS_FILES})
+    source_group(TREE ${ABSOLUTE_HEADERS_BASE_DIR_PATH} PREFIX "Header Files (Public)" FILES ${TARGET_PUBLIC_HEADERS_FILES})
     source_group(TREE ${TARGET_SOURCES_DIR} PREFIX "Source Files" FILES ${TARGET_SOURCES_FILES})
     source_group(TREE ${TARGET_UI_DIR} PREFIX "Form Files" FILES ${TARGET_UI_FILES})
     source_group(TREE ${TARGET_RESOURCES_DIR} PREFIX "Resource Files" FILES ${TARGET_RESOURCES_FILES})
@@ -140,15 +141,42 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
     
     # Link Options
+	target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
+    # Get all directories of headers file
+    set(HEADERS_INCLUDE_DIR ${TARGET_PRIVATE_HEADERS_FILES})
+    list(TRANSFORM HEADERS_INCLUDE_DIR REPLACE "(.*)/[^/]+" "\\1") 
+    list(REMOVE_DUPLICATES HEADERS_INCLUDE_DIR)
+    
+    # Get absolute path
+    foreach(interface_dir_path ${TARGET_INTERFACE_INCLUDE_DIRECTORIES})
+        message("${TARGET_NAME} DIR_PATH : ${interface_dir_path}")
+        cmake_path(ABSOLUTE_PATH interface_dir_path BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE absolute_interface_dir_path)
+        list(APPEND ABSOLUTE_INTERFACE_INCLUDE_DIRECTORIES ${absolute_interface_dir_path})
+    endforeach()
+    
+    # Adding generator expression to all directories
+    list(TRANSFORM ABSOLUTE_INTERFACE_INCLUDE_DIRECTORIES PREPEND "$<BUILD_INTERFACE:")
+    list(TRANSFORM ABSOLUTE_INTERFACE_INCLUDE_DIRECTORIES APPEND ">")
 
-    target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
+    if (NOT TARGET_INTERFACE)
+        target_include_directories(${TARGET_NAME} PRIVATE ${HEADERS_INCLUDE_DIR})
+    endif()
 
-    # Dependencies
-
+    target_include_directories(${TARGET_NAME} INTERFACE ${ABSOLUTE_INTERFACE_INCLUDE_DIRECTORIES})
+    
+    
+    target_sources(${TARGET_NAME}
+    PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_BASE_DIR} FILES ${TARGET_PUBLIC_HEADERS_FILES}
+    PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIR} FILES ${TARGET_PRIVATE_HEADERS_FILES}
+    )
+    
+    
     list(APPEND DEPENDENCIES ${TARGET_PUBLIC_LINK_LIBRARIES} ${TARGET_PRIVATE_LINK_LIBRARIES} ${TARGET_RUNTIME_DEPS})
     set_target_properties(${TARGET_NAME} PROPERTIES "DEPENDENCIES" "${DEPENDENCIES}")
 
-    # Generation des fichiers info_${TARGET_NAME}
+    cstoolkit_target_link_libraries(${TARGET_NAME}
+        PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
+        PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
 
     if(TARGET_SHARED OR TARGET_EXECUTABLE)
         cstoolkit_generate_target_info(TARGET ${TARGET_NAME} COPYRIGHT CSGroup COMPANY CSGroup PRODUCT ${TARGET_NAME})
@@ -173,19 +201,44 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Deployement des DLLs
 
     if(TARGET_EXECUTABLE)
+
+
+        # add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+        #    COMMAND ${CMAKE_COMMAND} -E copy_if_different 
+        #    $<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb> 
+        #    $<TARGET_FILE_DIR:${TARGET_NAME}> COMMAND_EXPAND_LISTS
+        # )
+        
+        # Copy of runtime dlls for the target
+
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:${TARGET_NAME}> $<TARGET_RUNTIME_DLLS:${TARGET_NAME}>
-            COMMAND_EXPAND_LISTS
+            COMMAND ${CMAKE_COMMAND} 
+            -E copy -t $<TARGET_FILE_DIR:${TARGET_NAME}> $<TARGET_RUNTIME_DLLS:${TARGET_NAME}> COMMAND_EXPAND_LISTS
         )
+
+        # Copy of pdbs for the target
+        
+        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND}
+                -DFILE_LIST="$<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
+                -DDESTINATION="$<TARGET_FILE_DIR:${TARGET_NAME}>"
+                -P C:/CSToolkit/CopyIfExist.cmake COMMAND_EXPAND_LISTS
+        )
+
     endif()
 
     # Installation
+
+    # Adding include to all path because headers are installed in include directory 
+    set(INCLUDE_DESTINATION_DIRECTORIES ${TARGET_INTERFACE_INCLUDE_DIRECTORIES})
+    list(TRANSFORM INCLUDE_DESTINATION_DIRECTORIES PREPEND "${TARGET_INSTALL_INCLUDE_DIR}/")
 
     if(NOT TARGET_NOINSTALL)
         install(TARGETS ${TARGET_NAME} EXPORT ${PROJECT_NAME}_${TARGET_NAME}Targets DESTINATION ${TARGET_NAME}
             ARCHIVE DESTINATION ${TARGET_INSTALL_LIB_DIR}
             RUNTIME DESTINATION ${TARGET_INSTALL_BIN_DIR}
             FILE_SET HEADERS DESTINATION ${TARGET_INSTALL_INCLUDE_DIR}
+            INCLUDES DESTINATION ${INCLUDE_DESTINATION_DIRECTORIES}
         #      LIBRARY DESTINATION ${TARGET_NAME}/LIBRARY
         #      OBJECTS DESTINATION ${TARGET_NAME}/OBJECTS
         #      FRAMEWORK DESTINATION ${TARGET_NAME}/FRAMEWORK

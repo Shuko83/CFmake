@@ -1,0 +1,16 @@
+message(STATUS "========================= Script CopyIfExist.cmake =========================")
+
+set(LIST_SEPARATED ${FILE_LIST})
+separate_arguments(LIST_SEPARATED)
+
+foreach(file ${LIST_SEPARATED})
+    if (EXISTS ${file})
+        message("Adding files : ${file} for copy")
+        list(APPEND EXISTING_FILES ${file})       
+    else()
+        message("Unable to copy ${file}, the file doesn't exist")
+    endif()
+endforeach()
+message("")
+message(STATUS "Copying files to ${DESTINATION}\n")
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different ${EXISTING_FILES} ${DESTINATION})
