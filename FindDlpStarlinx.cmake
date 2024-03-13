@@ -28,7 +28,7 @@ endforeach()
 set_target_properties(${CMAKE_FIND_PACKAGE_NAME} PROPERTIES
   IMPORTED_IMPLIB_DEBUG ${LIBS_LIST}
   IMPORTED_LOCATION_DEBUG ${DLLS_LIST}
-  INTERFACE_INCLUDE_DIRECTORIES ${DELIVERY_DIR}/include
+  INTERFACE_INCLUDE_DIRECTORIES "${DELIVERY_DIR}/include;${DELIVERY_DIR}/include/Starlinx/Objects;${DELIVERY_DIR}/include/Starlinx/OrderReaders;${DELIVERY_DIR}/include/Starlinx/OrderWriters;${DELIVERY_DIR}/include/Starlinx/ReportReaders;${DELIVERY_DIR}/include/Starlinx/ReportWriters"
 )
  
 set(ALIAS_LIST "")
