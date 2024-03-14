@@ -25,3 +25,4 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 ################################################################################
 
 option(CSTOOLKIT_AUTO_FIND_PACKAGE "Automatically calls find_package on unknown libraries passed to add_target()")
+

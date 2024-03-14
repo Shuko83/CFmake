@@ -4,7 +4,7 @@ function(cstoolkit_post_configure)
     get_all_targets(ALL_TARGETS)
   
     configure_package_config_file(
-        ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/PackageConfig.cmake.in
+        ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
         ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
         INSTALL_DESTINATION ${CMAKE_INSTALL_PREFIX}
     )

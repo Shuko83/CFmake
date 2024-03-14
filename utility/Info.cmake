@@ -78,9 +78,8 @@ function(generate_target_info)
 
         if(template STREQUAL "EXECUTABLE")
                     
-            file(TO_CMAKE_PATH $ENV{QMAKEPATH} qmakepath)
-            configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/info_exe_target.cpp.in ${cmake_target_cpp_info} @ONLY)
-            configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/info_exe_target.h.in ${cmake_target_h_info} @ONLY)
+            configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/info_exe_target.cpp.in ${cmake_target_cpp_info} @ONLY)
+            configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/info_exe_target.h.in ${cmake_target_h_info} @ONLY)
 
             target_sources(${PARAMS_PRODUCT} PRIVATE ${cmake_target_cpp_info} )
             target_sources(${PARAMS_PRODUCT}
@@ -90,11 +89,8 @@ function(generate_target_info)
 
         else()
                     
-            file(TO_CMAKE_PATH $ENV{QMAKEPATH} qmakepath)
-            configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/info_lib_target.cpp.in ${cmake_target_cpp_info} @ONLY)
-            configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/info_lib_target.h.in ${cmake_target_h_info} @ONLY)
-
-
+            configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/info_lib_target.cpp.in ${cmake_target_cpp_info} @ONLY)
+            configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/info_lib_target.h.in ${cmake_target_h_info} @ONLY)
 
             target_sources(${PARAMS_PRODUCT} PRIVATE ${cmake_target_cpp_info} )
             target_sources(${PARAMS_PRODUCT}

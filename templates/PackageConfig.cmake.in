@@ -1,5 +1,3 @@
-@PACKAGE_INIT@
-
 if (NOT @PROJECT_NAME@_FIND_COMPONENTS)
     set(@PROJECT_NAME@_FIND_COMPONENTS @ALL_TARGETS@)
 endif()
@@ -17,7 +15,7 @@ foreach(component ${@PROJECT_NAME@_FIND_COMPONENTS})
   find_package(@PROJECT_NAME@_${component}
     ${_@PROJECT_NAME@_FIND_PARTS_QUIET}
     ${_@PROJECT_NAME@_FIND_PARTS_REQUIRED}
-    PATHS ${CMAKE_CURRENT_LIST_DIR}/${component}/cmake NO_DEFAULT_PATH
+    PATHS ${CMAKE_CURRENT_LIST_DIR}/${component}/cmake CONFIG NO_DEFAULT_PATH
   )
   if (NOT @PROJECT_NAME@_${component}_FOUND)
     if (@PROJECT_NAME@_FIND_REQUIRED_${component})

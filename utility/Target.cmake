@@ -1,9 +1,9 @@
-function(add_target TARGET_TYPE)
+function(add_target TARGET_NAME TARGET_TYPE)
     
     # Parse arguments
 
     set(TARGET_OPTIONS RECURSIVE NOINSTALL)
-    set(TARGET_UNIQUE NAME PATH INSTALLNAME INSTALLDIR)
+    set(TARGET_UNIQUE ALIAS)
     set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS RUNTIME_DEPS)
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
 
@@ -13,7 +13,7 @@ function(add_target TARGET_TYPE)
         message(SEND_ERROR "Unkown arguments : ${TARGET_UNPARSED_ARGUMENTS}")
     endif()
 
-    if(NOT DEFINED TARGET_NAME OR TARGET_NAME STREQUAL "")
+    if(TARGET_NAME STREQUAL "")
         message(SEND_ERROR "No NAME defined for target")
         return()
     endif()
@@ -33,20 +33,26 @@ function(add_target TARGET_TYPE)
 
     # Paths
 
+    if(NOT DEFINED TARGET_PUBLIC_HEADERS_BASE_DIR)
+        string(REPLACE "/_project" "" TARGET_PUBLIC_HEADERS_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    endif()
     string(REPLACE "/_project" "" TARGET_PRIVATE_HEADERS_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
     string(REPLACE "/_project" "" TARGET_SOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
     string(REPLACE "/_project" "" TARGET_UI_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
     string(REPLACE "/_project" "" TARGET_RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
     string(REPLACE "/_project" "" TARGET_TRANSLATION_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-    if(NOT DEFINED TARGET_PUBLIC_HEADERS_BASE_DIR)
-        set(TARGET_PUBLIC_HEADERS_BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    if(CMAKE_PROJECT_NAME STREQUAL TARGET_NAME)
+        set(TARGET_INSTALL_LIB_DIR lib/$<LOWER_CASE:$<CONFIG>>)
+        set(TARGET_INSTALL_BIN_DIR bin/$<LOWER_CASE:$<CONFIG>>)
+        set(TARGET_INSTALL_INCLUDE_DIR include)
+        set(TARGET_INSTALL_CMAKE_DIR cmake)
+    else()
+        set(TARGET_INSTALL_LIB_DIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
+        set(TARGET_INSTALL_BIN_DIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
+        set(TARGET_INSTALL_INCLUDE_DIR ${TARGET_NAME}/include)
+        set(TARGET_INSTALL_CMAKE_DIR ${TARGET_NAME}/cmake)
     endif()
-
-    set(TARGET_INSTALL_LIB_DIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
-    set(TARGET_INSTALL_BIN_DIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
-    set(TARGET_INSTALL_INCLUDE_DIR ${TARGET_NAME}/include)
-    set(TARGET_INSTALL_CMAKE_DIR ${TARGET_NAME}/cmake)
 
     # Sources
 
@@ -61,17 +67,24 @@ function(add_target TARGET_TYPE)
         file(GLOB_RECURSE TARGET_TRANSLATION_FILES ${TARGET_TRANSLATION_DIR}/*.ts)
     endif()
 
+    list(REMOVE_ITEM TARGET_PRIVATE_HEADERS_FILES ${TARGET_PUBLIC_HEADERS_FILES})
+
     # Library
     
     if(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
         add_library(${TARGET_NAME} ${TARGET_TYPE} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
-        add_library(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
+        if(TARGET_ALIAS)
+            add_library(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
+        endif()
     endif()
 
     # Executable
 
     if(TARGET_EXECUTABLE)
         add_executable(${TARGET_NAME} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
+        if(TARGET_ALIAS)
+            add_executable(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
+        endif()
     endif()
 
     # Dossier des projets
@@ -83,15 +96,18 @@ function(add_target TARGET_TYPE)
     source_group(TREE ${TARGET_RESOURCES_DIR} PREFIX "Resource Files" FILES ${TARGET_RESOURCES_FILES})
     source_group(TREE ${TARGET_TRANSLATION_DIR} PREFIX "Translation Files" FILES ${TARGET_TRANSLATION_FILES})
 
-    string(REPLACE "${PROJECT_SOURCE_DIR}" "" FOLDER "${CMAKE_CURRENT_SOURCE_DIR}")
-    string(REPLACE "/${TARGET_NAME}" "" FOLDER "${FOLDER}")
-    string(REPLACE "/Sources" "" FOLDER "${FOLDER}")
-    string(REPLACE "/src" "" FOLDER "${FOLDER}")
-    string(REPLACE "/test" "" FOLDER "${FOLDER}")
-    string(REPLACE "/_project" "" FOLDER "${FOLDER}")
-    set_target_properties(${TARGET_NAME} PROPERTIES FOLDER "${FOLDER}")
+    set( _folder "${CMAKE_CURRENT_SOURCE_DIR}/")
+    cmake_path(RELATIVE_PATH _folder BASE_DIRECTORY ${CMAKE_SOURCE_DIR})
+    string(REPLACE "${TARGET_NAME}/" "" _folder "${_folder}")
+    string(REPLACE "Sources/" "" _folder "${_folder}")
+    string(REPLACE "src/" "" _folder "${_folder}")
+    string(REPLACE "test/" "" _folder "${_folder}")
+    string(REPLACE "_project/" "" _folder "${_folder}")
+    string(REPLACE "../" "" _folder "${_folder}")
+    string(REPLACE "../" "" _folder "${_folder}")
+    string(REGEX REPLACE "/$" "" _folder "${_folder}")
 
-    set_target_properties(${TARGET_NAME} PROPERTIES AUTOGEN_BUILD_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated")
+    set_target_properties(${TARGET_NAME} PROPERTIES FOLDER "${_folder}")
 
     set_target_properties(${TARGET_NAME} PROPERTIES
         ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib"
@@ -99,37 +115,18 @@ function(add_target TARGET_TYPE)
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin"
     )
 
-    # Definitions
+    # Compile Options
 
-    if(TARGET_SHARED OR TARGET_STATIC)
-        string(TOUPPER ${TARGET_NAME} TARGET_EXPORTS)
-        string(REPLACE "." "_" TARGET_EXPORTS ${TARGET_EXPORTS})
-        string(APPEND TARGET_EXPORTS "_LIB")
-        add_compile_definitions(${TARGET_EXPORTS})
+    target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_OPTIONS})
+
+    # Compile Definitions
+
+    if(TARGET_SHARED)
+        target_compile_definitions(${TARGET_NAME} PRIVATE $<LIST:TRANSFORM,${TARGET_NAME},TOUPPER>_LIB)
     endif()
+    target_compile_definitions(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_DEFINITIONS})
 
-    # Dependencies
-
-    list(APPEND DEPENDENCIES ${TARGET_PUBLIC_LINK_LIBRARIES} ${TARGET_PRIVATE_LINK_LIBRARIES} ${TARGET_RUNTIME_DEPS})
-    set_target_properties(${TARGET_NAME} PROPERTIES "DEPENDENCIES" "${DEPENDENCIES}")
-
-    # Qt
-
-    qt5_wrap_ui_custom(UIC_FILES ${TARGET_UI_FILES})
-
-    #message("${TARGET_NAME} uic files : ${UIC_FILES}")
-
-    target_sources(${TARGET_NAME}
-        PRIVATE FILE_SET "uic" TYPE HEADERS BASE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/generated/uic FILES ${UIC_FILES}
-    )
-    source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${UIC_FILES})
-
-    #target_sources(${TARGET_NAME} PRIVATE ${UIC_FILES})
-    #source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${UIC_FILES})
-
-    # Includes
-
-    #target_include_directories(${TARGET_NAME} INTERFACE ${TARGET_INTERFACE_INCLUDE_DIRECTORIES})
+    # Headers
 
     target_sources(${TARGET_NAME}
         PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_BASE_DIR} FILES ${TARGET_PUBLIC_HEADERS_FILES}
@@ -138,21 +135,42 @@ function(add_target TARGET_TYPE)
 
     # Links
 
-    #target_link_libraries_custom(${TARGET_NAME}
-    #    PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
-    #    PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
-
-    # Compile Definitions
-
-    add_compile_definitions(${TARGET_COMPILE_DEFINITIONS})
+    target_link_libraries_custom(${TARGET_NAME}
+        PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
+        PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
     
-    # Compile Options
-
-    add_compile_options(${TARGET_COMPILE_OPTIONS})
-
     # Link Options
 
-    add_link_options(${TARGET_LINK_OPTIONS})
+    target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
+
+    # Dependencies
+
+    list(APPEND DEPENDENCIES ${TARGET_PUBLIC_LINK_LIBRARIES} ${TARGET_PRIVATE_LINK_LIBRARIES} ${TARGET_RUNTIME_DEPS})
+    set_target_properties(${TARGET_NAME} PROPERTIES "DEPENDENCIES" "${DEPENDENCIES}")
+
+    # Generation des fichiers info_${TARGET_NAME}
+
+    if(TARGET_SHARED OR TARGET_EXECUTABLE)
+        generate_target_info(TARGET ${TARGET_NAME} COPYRIGHT CSGroup COMPANY CSGroup PRODUCT ${TARGET_NAME})
+    endif()
+
+    # Qt
+
+    cstoolkit_qt5_wrap_cpp(MOC_FILES TARGET ${TARGET_NAME}
+        ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES}
+    )
+    target_sources(${TARGET_NAME}
+        PRIVATE ${MOC_FILES}
+    )
+    source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${MOC_FILES})
+
+    cstoolkit_qt5_wrap_ui(UIC_FILES ${TARGET_UI_FILES})
+    target_sources(${TARGET_NAME}
+        PRIVATE FILE_SET "uic" TYPE HEADERS BASE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/generated/uic FILES ${UIC_FILES}
+    )
+    source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${UIC_FILES})
+
+    # Deployement des DLLs
 
     if(TARGET_EXECUTABLE)
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
@@ -182,7 +200,7 @@ function(add_target TARGET_TYPE)
             install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)
         endif()
         #if(TARGET_SHARED OR TARGET_EXECUTABLE)
-        # install(FILES $<COMPILE_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)
+        # install(FILES $<PROPERTY:${TARGET_NAME},COMPILE_PDB_NAME> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)
         #endif()
 
         # Config
@@ -191,12 +209,6 @@ function(add_target TARGET_TYPE)
             DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
         )
         generate_target_config()
-    endif()
-
-    # Generation des fichiers infos
-
-    if(TARGET_SHARED OR TARGET_EXECUTABLE)
-        generate_target_info(TARGET ${TARGET_NAME} COPYRIGHT CSGroup COMPANY CSGroup PRODUCT ${TARGET_NAME})
     endif()
 
     # Debug Messages
@@ -237,7 +249,7 @@ macro (generate_target_config)
 
     # Target Config File
     configure_package_config_file(
-        ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/templates/TargetConfig.cmake.in
+        ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/TargetConfig.cmake.in
         ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_${TARGET_NAME}Config.cmake
         INSTALL_DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
     )
@@ -279,9 +291,9 @@ function(target_link_libraries_post_configure target)
         if(IS_PACKAGE)
             set(PACKAGE_NAME ${CMAKE_MATCH_1})
             set(COMPONENT_NAME ${CMAKE_MATCH_2})
-            #message("Namespace: ${PACKAGE_NAME}")
-            #message("LibName: ${COMPONENT_NAME}")
-            #message(${lib} " target not found")
+            message("Namespace: ${PACKAGE_NAME}")
+            message("LibName: ${COMPONENT_NAME}")
+            message(${lib} " target not found")
            
             if(${PACKAGE_NAME} STREQUAL "Qt5") # Cas special Qt
                 # Récupérer ce qui se trouve après "Qt5::"
@@ -363,32 +375,3 @@ endfunction()
 # qt5_wrap_ui(outfiles inputfile ... )
 # partially copied from Qt5WidgetsMacros.cmake
 
-function(qt5_wrap_ui_custom outfiles )
-    set(options)
-    set(oneValueArgs)
-    set(multiValueArgs OPTIONS)
-
-    cmake_parse_arguments(_WRAP_UI "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-
-    set(ui_files ${_WRAP_UI_UNPARSED_ARGUMENTS})
-    set(ui_options ${_WRAP_UI_OPTIONS})
-
-    foreach(it ${ui_files})
-        get_filename_component(outfile ${it} NAME_WE)
-        get_filename_component(infile ${it} ABSOLUTE)
-        cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${TARGET_UI_DIR} OUTPUT_VARIABLE relpath)
-
-        set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/uic/ui_${outfile}.h)
-        add_custom_command(OUTPUT ${outfile}
-            COMMAND ${Qt5Widgets_UIC_EXECUTABLE}
-            ARGS ${ui_options} -o ${outfile} ${infile}
-            MAIN_DEPENDENCY ${infile} VERBATIM
-            COMMENT "UIC ${relpath}")
-        set_source_files_properties(${infile} PROPERTIES SKIP_AUTOUIC ON)
-        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
-        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
-        list(APPEND ${outfiles} ${outfile})
-    endforeach()
-
-    set(${outfiles} ${${outfiles}} PARENT_SCOPE)
-endfunction()

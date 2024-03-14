@@ -1,13 +1,9 @@
 # This is called after the call to project()
-set(PACKAGE_VERSION 0.0.0.0 CACHE STRING "Version of the package, will set CMAKE_PROJECT_VERSION and PROJECT_VERSION")
-
-set(CMAKE_PROJECT_VERSION ${PACKAGE_VERSION} CACHE INTERNAL "...")
-set(PROJECT_VERSION ${PACKAGE_VERSION})
-set(${PROJECT_NAME}_VERSION ${PACKAGE_VERSION})
-
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Project installation path" FORCE)
 endif()
 
+include(${CMAKE_CURRENT_LIST_DIR}/Version.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/Qt.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/Windows.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/CppRules.cmake)
