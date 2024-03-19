@@ -64,7 +64,6 @@ function(cstoolkit_qt5_wrap_cpp outfiles)
         cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
 
         file(STRINGS ${infile} _contains_macro REGEX "Q_OBJECT|Q_GADGET|Q_NAMESPACE|Q_NAMESPACE_EXPORT")
-        message("REGEX parse of ${it}: ${_contains_macro}")
         if(NOT _contains_macro)
             continue()
         endif()

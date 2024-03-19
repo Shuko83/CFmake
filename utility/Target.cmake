@@ -2,12 +2,10 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     # Parse arguments
 
-    set(TARGET_OPTIONS RECURSIVE NOINSTALL)
+    set(TARGET_OPTIONS RECURSIVE NOINSTALL BOOST_HEADERS)
     set(TARGET_UNIQUE ALIAS)
     set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS RUNTIME_DEPS)
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
-
-    #message("\nadd_target(${TARGET_NAME})")
 
     if(DEFINED TARGET_UNPARSED_ARGUMENTS)
         message(SEND_ERROR "CSToolkit: add_target(): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
@@ -155,8 +153,6 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     list(TRANSFORM PUBLIC_HEADER_DIRECTORIES REPLACE "(.*)/[^/]+" "\\1") 
     list(REMOVE_DUPLICATES PUBLIC_HEADER_DIRECTORIES)
 
-    message("\n\nList of all headers directories : ${ALL_HEADER_DIRECTORIES}")
-
     # Adding generator expression to all directories
     set(GENERATOR_PUBLIC_HEADER_DIRECTORIES ${PUBLIC_HEADER_DIRECTORIES})
     list(TRANSFORM GENERATOR_PUBLIC_HEADER_DIRECTORIES PREPEND "$<BUILD_INTERFACE:")
@@ -179,6 +175,12 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     list(APPEND DEPENDENCIES ${TARGET_PUBLIC_LINK_LIBRARIES} ${TARGET_PRIVATE_LINK_LIBRARIES} ${TARGET_RUNTIME_DEPS})
     set_target_properties(${TARGET_NAME} PROPERTIES "DEPENDENCIES" "${DEPENDENCIES}")
+    # Boost
+    if (${TARGET_BOOST_HEADERS})
+        find_package(Boost)
+        target_include_directories(${TARGET_NAME} PRIVATE ${Boost_INCLUDE_DIRS})
+    endif()
+    # Links
 
     cstoolkit_target_link_libraries(${TARGET_NAME}
         PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
@@ -221,7 +223,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             COMMAND ${CMAKE_COMMAND} 
             -E copy -t $<TARGET_FILE_DIR:${TARGET_NAME}> $<TARGET_RUNTIME_DLLS:${TARGET_NAME}> COMMAND_EXPAND_LISTS
         )
-
+        
         # Copy of pdbs for the target
         
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
@@ -344,15 +346,10 @@ endfunction()
 
 function(target_link_libraries_post_configure target)
     cmake_parse_arguments(link_libraries_post "" "" "PRIVATE;PUBLIC;INTERFACE" ${ARGN})
-    #message("target_link_libraries_post_configure " ${target})
-    #message("PRIVATE : " ${link_libraries_post_PRIVATE})
-    #message("PUBLIC : " ${link_libraries_post_PUBLIC})
-    #message("INTERFACE : " ${link_libraries_post_INTERFACE})
     
     get_target_property(DEPENDENCIES ${target} DEPENDENCIES)
 
     foreach(lib ${DEPENDENCIES})
-        #message("Library: ${lib}")
         if(TARGET ${lib})
             continue()
         endif()
@@ -386,11 +383,8 @@ function(target_link_libraries_post_configure target)
             message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}")
 
         else() # NOT A PACKAGE
-            #message("${target}: ${lib} is not a Package")
             find_library(${lib}_LIB ${lib} NO_CACHE PATHS ${_WINDOWS_KITS_LIB_DIR})
-            #message("${target}: ${lib}_LIB = ${${lib}_LIB}")
             if(NOT ${${lib}_LIB} STREQUAL "${lib}_LIB-NOTFOUND")
-                #message("${target}: find_library success for dependency ${lib}")
                 continue()
             endif()
             string(REGEX MATCH "(.+)-(.+)" HAS_SUFFIX ${lib})
@@ -429,15 +423,15 @@ function(target_link_libraries_post_configure target)
 
     # Find package des modules de Qt
     if (QT5_MODULES)
-        #message("find_package(Qt5 ${Qt5_VERSION} COMPONENTS ${QT5_MODULES} REQUIRED)")
         find_package(Qt5 REQUIRED COMPONENTS ${QT5_MODULES})
     endif()
 
+    if (${target} STREQUAL "SwInterfaces")
+    target_link_libraries(${target} INTERFACE ${link_libraries_post_PUBLIC})
+    else()
     target_link_libraries(${target}
-        PRIVATE ${link_libraries_post_PRIVATE} PUBLIC ${link_libraries_post_PUBLIC} INTERFACE ${link_libraries_post_INTERFACE}
-    )
-    #get_target_property(interfaces_deps ${target} INTERFACE_LINK_LIBRARIES)
-    #message("${target} needs ${interfaces_deps}")
+        PRIVATE ${link_libraries_post_PRIVATE} PUBLIC ${link_libraries_post_PUBLIC} INTERFACE ${link_libraries_post_INTERFACE})
+    endif()
     
 endfunction()
 

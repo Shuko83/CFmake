@@ -2,33 +2,32 @@ cmake_minimum_required(VERSION 3.18)
  
 set(DELIVERY_DIR "C:/tt4-cmake/Starlinx/Modules/DLPX/HI/Models/TnpSurv/L22/ED6/Delivery")
  
-message("Endroit : ${DELIVERY_DIR}")
-message("Package name running : ${CMAKE_FIND_PACKAGE_NAME}")
+
  
-add_library(${CMAKE_FIND_PACKAGE_NAME} SHARED IMPORTED)
+#add_library(${CMAKE_FIND_PACKAGE_NAME} SHARED IMPORTED)
  
 file(GLOB_RECURSE LIBS_LIST ${DELIVERY_DIR}/*.lib)
-file(GLOB_RECURSE DLLS_LIST ${DELIVERY_DIR}/*.dll)
+#file(GLOB_RECURSE DLLS_LIST ${DELIVERY_DIR}/*.dll)
  
-foreach(dll ${DLLS_LIST})
-  get_filename_component(fileName ${dll} NAME_WE)
-  message("File Name : ${fileName}")
-  list(APPEND ALIAS_LIST ${fileName})
+foreach(lib ${LIBS_LIST})
+if (${lib} MATCHES ".*.elease.*")
+continue()
+endif()
+	get_filename_component(fileName ${lib} NAME_WE)
+  string(REGEX REPLACE "(.*)d" "\\1" fileName ${fileName})
+
+
+  STRING(REPLACE ".lib" ".dll" dll ${lib})
+
+  if (NOT TARGET ${fileName})
+add_library(${fileName} SHARED IMPORTED)
+  set_property(TARGET ${fileName} APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+  set_target_properties(${fileName} PROPERTIES IMPORTED_IMPLIB_DEBUG "${lib}")
+  set_target_properties(${fileName} PROPERTIES IMPORTED_LOCATION_DEBUG "${dll}")
+  set_target_properties(${fileName} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${DELIVERY_DIR}/include;${DELIVERY_DIR}/include;${DELIVERY_DIR}/include/TnpSurvL22/Objects;${DELIVERY_DIR}/include/TnpSurvL22/OrderReaders;${DELIVERY_DIR}/include/TnpSurvL22/OrderWriters;${DELIVERY_DIR}/include/TnpSurvL22/ReportReaders;${DELIVERY_DIR}/include/TnpSurvL22/ReportWriters")
+endif()
 endforeach()
- 
-list(REMOVE_DUPLICATES ALIAS_LIST)
-list(REMOVE_ITEM ALIAS_LIST ${CMAKE_FIND_PACKAGE_NAME})
- 
-message("List of Alias : ${ALIAS_LIST}")
- 
-foreach(alias ${ALIAS_LIST})
-  add_library(${alias} ALIAS ${CMAKE_FIND_PACKAGE_NAME})
-endforeach()
- 
-set_target_properties(${CMAKE_FIND_PACKAGE_NAME} PROPERTIES
-  IMPORTED_IMPLIB_DEBUG ${LIBS_LIST}
-  IMPORTED_LOCATION_DEBUG ${DLLS_LIST}
-  INTERFACE_INCLUDE_DIRECTORIES "${DELIVERY_DIR}/include;${DELIVERY_DIR}/include;${DELIVERY_DIR}/include/TnpSurvL22/Objects;${DELIVERY_DIR}/include/TnpSurvL22/OrderReaders;${DELIVERY_DIR}/include/TnpSurvL22/OrderWriters;${DELIVERY_DIR}/include/TnpSurvL22/ReportReaders;${DELIVERY_DIR}/include/TnpSurvL22/ReportWriters"
-)
- 
+
 set(ALIAS_LIST "")
+set(LIBS_LIST_STRING "")
+set(DLLS_LIST_STRING "")

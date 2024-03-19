@@ -72,10 +72,7 @@ function(cstoolkit_generate_target_info)
         set(cmake_target_cpp_info ${INFO_DIRECTORY}/info_${PARAMS_TARGET}.cpp)
         set(cmake_target_h_info ${INFO_DIRECTORY}/info_${PARAMS_TARGET}.h)
         string(REPLACE "(C)" "\\251" PARAMS_COPYRIGHT ${PARAMS_COPYRIGHT})         
-
-        #message("Target info path cpp : " ${cmake_target_cpp_info})
-        #message("Target info path h : " ${cmake_target_h_info})
-
+        
         if(template STREQUAL "EXECUTABLE")
                     
             configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/info_exe_target.cpp.in ${cmake_target_cpp_info} @ONLY)
