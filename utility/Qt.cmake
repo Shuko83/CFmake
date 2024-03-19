@@ -10,12 +10,17 @@ set(Qt5_DIR "C:/Qt/Qt${Qt5_VERSION}/${Qt5_VERSION}/${Qt5_ARCH}/lib/cmake/Qt5")
 
 find_package(Qt5 ${Qt5_VERSION} COMPONENTS Widgets)
 
-#qt {
-#  
-#    QMAKE_CXXFLAGS *= -wd4127 -wd4512 -wd4714                               # hushes some known Qt warnings
-#    QMAKE_CXXFLAGS_RELEASE *= -wd4718                                       # hushes some known Qt warnings in release mode
-#    QMAKE_CXXFLAGS_RELEASE_WITH_DEBUGINFO *= -wd4718
-#}
+if(NOT Qt5_FOUND)
+
+function(cstoolkit_qt5_wrap_cpp outfiles)
+    message(SEND_ERROR "Qt was not found : unable to use cstoolkit_qt5_wrap_cpp")
+endfunction()
+function(cstoolkit_qt5_wrap_ui outfiles)
+    message(SEND_ERROR "Qt was not found : unable to use cstoolkit_qt5_wrap_ui")
+endfunction()
+
+else()
+set_target_properties(Qt5::Core PROPERTIES "INTERFACE_COMPILE_OPTIONS" "-wd4127 -wd4512 -wd4714 $<$<NOT:$<CONFIG:Debug>>:-wd4718>") # hushes some known Qt warnings
 
 # qt5_wrap_ui(outfiles inputfile ... )
 # partially copied from Qt5WidgetsMacros.cmake
@@ -71,7 +76,7 @@ function(cstoolkit_qt5_wrap_cpp outfiles)
         cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
 
         file(STRINGS ${infile} _contains_macro REGEX "Q_OBJECT|Q_GADGET|Q_NAMESPACE|Q_NAMESPACE_EXPORT")
-        message("REGEX parse of ${it}: ${_contains_macro}")
+        #message("REGEX parse of ${it}: ${_contains_macro}")
         if(NOT _contains_macro)
             continue()
         endif()
@@ -121,3 +126,5 @@ function(cstoolkit_qt5_wrap_ui outfiles)
 
     set(${outfiles} ${${outfiles}} PARENT_SCOPE)
 endfunction()
+
+endif()

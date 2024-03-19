@@ -110,9 +110,9 @@ function(add_target TARGET_NAME TARGET_TYPE)
     set_target_properties(${TARGET_NAME} PROPERTIES FOLDER "${_folder}")
 
     set_target_properties(${TARGET_NAME} PROPERTIES
-        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib"
-        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib"
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin"
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/$<LOWER_CASE:$<CONFIG>>"
     )
 
     # Compile Options
@@ -121,9 +121,9 @@ function(add_target TARGET_NAME TARGET_TYPE)
 
     # Compile Definitions
 
-    if(TARGET_SHARED)
-        target_compile_definitions(${TARGET_NAME} PRIVATE $<LIST:TRANSFORM,${TARGET_NAME},TOUPPER>_LIB)
-    endif()
+    string(TOUPPER ${TARGET_NAME} TARGET_NAME_UPPER)
+    set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${TARGET_NAME_UPPER}_LIB)
+
     target_compile_definitions(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_DEFINITIONS})
 
     # Headers
@@ -135,7 +135,7 @@ function(add_target TARGET_NAME TARGET_TYPE)
 
     # Links
 
-    target_link_libraries_custom(${TARGET_NAME}
+    target_link_libraries(${TARGET_NAME}
         PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
         PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
     
@@ -260,12 +260,14 @@ macro (generate_target_config)
     )
 endmacro()
 
-function(target_link_libraries_custom target)
+function(cstoolkit_target_link_libraries target)
     cmake_parse_arguments(link_libraries_custom "" "" "PRIVATE;PUBLIC;INTERFACE" ${ARGN})
     #message("target_link_libraries_custom " ${target})
     #message("PRIVATE : " ${link_libraries_custom_PRIVATE})
     #message("PUBLIC : " ${link_libraries_custom_PUBLIC})
     #message("INTERFACE : " ${link_libraries_custom_INTERFACE})
+
+
 
     cmake_language(EVAL CODE
         "cmake_language(DEFER DIRECTORY \${CMAKE_SOURCE_DIR} CALL target_link_libraries_post_configure [[${target}]]
