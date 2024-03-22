@@ -1,4 +1,12 @@
+# FILE_LIST : List of the files to copy
+# DESTINATION : Directory where files will be copy, if the directory doesn't exist it creates it
+
 message(STATUS "========================= Script CopyIfExist.cmake =========================")
+
+if (NOT EXISTS ${DESTINATION})
+    message("Destination directory is not existing.\nCreating ${DESTINATION}")
+    file(MAKE_DIRECTORY ${DESTINATION})
+endif()
 
 set(LIST_SEPARATED ${FILE_LIST})
 separate_arguments(LIST_SEPARATED)

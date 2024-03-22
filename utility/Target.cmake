@@ -4,7 +4,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     set(TARGET_OPTIONS RECURSIVE NOINSTALL BOOST_HEADERS)
     set(TARGET_UNIQUE ALIAS)
-    set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS RUNTIME_DEPS)
+    set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS RUNTIME_DEPS PLUGINS)
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
 
     if(DEFINED TARGET_UNPARSED_ARGUMENTS)
@@ -73,6 +73,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Library
     
     if(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
+        message("add_library ${TARGET_NAME}")
         add_library(${TARGET_NAME} ${TARGET_TYPE} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
         if(TARGET_ALIAS)
             add_library(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
@@ -177,7 +178,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     set_target_properties(${TARGET_NAME} PROPERTIES "DEPENDENCIES" "${DEPENDENCIES}")
     # Boost
     if (${TARGET_BOOST_HEADERS})
-        find_package(Boost)
+        find_package(Boost GLOBAL)
         target_include_directories(${TARGET_NAME} PRIVATE ${Boost_INCLUDE_DIRS})
     endif()
     # Links
@@ -209,14 +210,6 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Deployement des DLLs
 
     if(TARGET_EXECUTABLE)
-
-
-        # add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-        #    COMMAND ${CMAKE_COMMAND} -E copy_if_different 
-        #    $<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb> 
-        #    $<TARGET_FILE_DIR:${TARGET_NAME}> COMMAND_EXPAND_LISTS
-        # )
-        
         # Copy of runtime dlls for the target
 
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
@@ -233,6 +226,26 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 -P C:/CSToolkit/CopyIfExist.cmake COMMAND_EXPAND_LISTS
         )
 
+        
+
+        if (TARGET_PLUGINS_DIR AND TARGET_PLUGINS) 
+            message("Plugins dir : ${TARGET_PLUGINS_DIR}")
+            message("Plugins : ${TARGET_PLUGINS}")
+            set(PLUGIN_TARGET ${TARGET_NAME}_Plugins_Depends)
+            list(GET TARGET_SOURCES_FILES 0 file)
+            message("File pour la target plugins : ${file}")
+            add_executable(${PLUGIN_TARGET} EXCLUDE_FROM_ALL ${file})
+            set_target_properties(${PLUGIN_TARGET} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD True)
+            target_link_libraries(${PLUGIN_TARGET} PUBLIC ${TARGET_PLUGINS})
+            
+            # Copy of the plugin dll and its dependencies
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND}
+                -DFILE_LIST="$<TARGET_RUNTIME_DLLS:${PLUGIN_TARGET}>"
+                -DDESTINATION="$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
+                -P C:/CSToolkit/CopyIfExist.cmake COMMAND_EXPAND_LISTS
+                )
+        endif()
     endif()
 
     # Installation
@@ -367,7 +380,8 @@ function(target_link_libraries_post_configure target)
                 continue()
             endif()
 
-            find_package(${PACKAGE_NAME} QUIET COMPONENTS ${COMPONENT_NAME})
+            message("find_package(${PACKAGE_NAME} QUIET COMPONENTS ${COMPONENT_NAME} GLOBAL)")
+            find_package(${PACKAGE_NAME} QUIET COMPONENTS ${COMPONENT_NAME} GLOBAL)
 
             if(${PACKAGE_NAME}_FOUND)
                 if(NOT TARGET ${lib})
@@ -391,7 +405,7 @@ function(target_link_libraries_post_configure target)
             if(HAS_SUFFIX)
                 set(PACKAGE_NAME ${CMAKE_MATCH_1})
                 set(SUFFIX_NAME ${CMAKE_MATCH_2})
-                find_package(${PACKAGE_NAME} QUIET)
+                find_package(${PACKAGE_NAME} QUIET GLOBAL)
                 if(${PACKAGE_NAME}_FOUND)
                     if(NOT TARGET ${lib})
                         message(WARNING "CSToolkit: ${target}: find_package success for dependency ${lib} but target is missing")
@@ -404,7 +418,7 @@ function(target_link_libraries_post_configure target)
                 endif()
             endif()
 
-            find_package(${lib} QUIET)
+            find_package(${lib} QUIET GLOBAL)
 
             if(${lib}_FOUND)
                 if(NOT TARGET ${lib})
@@ -423,7 +437,7 @@ function(target_link_libraries_post_configure target)
 
     # Find package des modules de Qt
     if (QT5_MODULES)
-        find_package(Qt5 REQUIRED COMPONENTS ${QT5_MODULES})
+        find_package(Qt5 REQUIRED COMPONENTS ${QT5_MODULES} GLOBAL)
     endif()
 
     if (${target} STREQUAL "SwInterfaces")
