@@ -3,8 +3,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Parse arguments
 
     set(TARGET_OPTIONS RECURSIVE NOINSTALL BOOST_HEADERS)
-    set(TARGET_UNIQUE ALIAS)
-    set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS RUNTIME_DEPS PLUGINS)
+    set(TARGET_UNIQUE ALIAS PLUGINS_DIR)
+    set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS RUNTIME_DEPS PLUGINS DEPLOY)
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
 
     if(DEFINED TARGET_UNPARSED_ARGUMENTS)
@@ -78,6 +78,11 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if(TARGET_ALIAS)
             add_library(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
         endif()
+    endif()
+
+    if (TARGET_EXTENSION)
+        message("Modifying extension : ${TARGET_EXTENSION}")
+        set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".${TARGET_EXTENSION}")
     endif()
 
     # Executable
@@ -223,10 +228,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             COMMAND ${CMAKE_COMMAND}
                 -DFILE_LIST="$<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
                 -DDESTINATION="$<TARGET_FILE_DIR:${TARGET_NAME}>"
-                -P C:/CSToolkit/CopyIfExist.cmake COMMAND_EXPAND_LISTS
+                -DNO_ERROR=true
+                -P C:/CSToolkit/Copy.cmake COMMAND_EXPAND_LISTS
         )
-
-        
 
         if (TARGET_PLUGINS_DIR AND TARGET_PLUGINS) 
             message("Plugins dir : ${TARGET_PLUGINS_DIR}")
@@ -243,9 +247,16 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             COMMAND ${CMAKE_COMMAND}
                 -DFILE_LIST="$<TARGET_RUNTIME_DLLS:${PLUGIN_TARGET}>"
                 -DDESTINATION="$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
-                -P C:/CSToolkit/CopyIfExist.cmake COMMAND_EXPAND_LISTS
+                -DNO_ERROR=true
+                -P C:/CSToolkit/Copy.cmake COMMAND_EXPAND_LISTS
                 )
         endif()
+
+        message("deploy(${TARGET_DEPLOY})")
+        foreach(deployFile ${TARGET_DEPLOY})
+            deploy(${deployFile})
+        endforeach()
+
     endif()
 
     # Installation
