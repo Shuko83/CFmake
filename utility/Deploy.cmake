@@ -19,7 +19,7 @@ function(deploy FILE)
                 string(JSON sourceDir ERROR_VARIABLE sourceDirError GET ${deployElement} sourceDir)
                 string(JSON destDir ERROR_VARIABLE destDirError GET ${deployElement} destDir)
                 string(JSON files ERROR_VARIABLE filesError GET ${deployElement} files)
-                set(DESTINATION "${target_binary_dir}/$<CONFIG>/${destDir}")
+                set(DESTINATION "${target_binary_dir}/${destDir}")
 
                 string(JSON filesListSize LENGTH ${files})
                 math(EXPR filesListSize "${filesListSize}-1")
@@ -35,7 +35,7 @@ function(deploy FILE)
                         COMMAND ${CMAKE_COMMAND}
                         -DDIRECTORY_LIST="${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}"
                         -DDESTINATION="${DESTINATION}"
-                        -P C:/CSToolkit/Copy.cmake COMMAND_EXPAND_LISTS)
+                        -P ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Copy.cmake COMMAND_EXPAND_LISTS)
 
                     else()
                         if(IS_REGEX)
@@ -56,7 +56,7 @@ function(deploy FILE)
                                 COMMAND ${CMAKE_COMMAND}
                                 -DFILE_LIST="${splittedList}"
                                 -DDESTINATION=${DESTINATION}
-                                -P C:/CSToolkit/Copy.cmake COMMAND_EXPAND_LISTS
+                                -P ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Copy.cmake COMMAND_EXPAND_LISTS
                             )
                         endforeach()  
                     endif()

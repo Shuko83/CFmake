@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 3.27)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Target.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Info.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/PostConfigure.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Deploy.cmake)
 set(CMAKE_PROJECT_INCLUDE ${CMAKE_CURRENT_LIST_DIR}/utility/PostProject.cmake)
 cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL cstoolkit_post_configure())
 

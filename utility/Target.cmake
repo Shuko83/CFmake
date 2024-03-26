@@ -3,7 +3,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Parse arguments
 
     set(TARGET_OPTIONS RECURSIVE NOINSTALL BOOST_HEADERS)
-    set(TARGET_UNIQUE ALIAS PLUGINS_DIR)
+    set(TARGET_UNIQUE ALIAS EXTENSION PLUGINS_DIR)
     set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS RUNTIME_DEPS PLUGINS DEPLOY)
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
 
@@ -150,6 +150,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     # Link Options
 	target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
+
     # Get all directories of headers file
     list(APPEND ALL_HEADER_DIRECTORIES "${TARGET_PRIVATE_HEADERS_FILES};${TARGET_PUBLIC_HEADERS_FILES}")
     list(TRANSFORM ALL_HEADER_DIRECTORIES REPLACE "(.*)/[^/]+" "\\1") 
@@ -181,17 +182,14 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     list(APPEND DEPENDENCIES ${TARGET_PUBLIC_LINK_LIBRARIES} ${TARGET_PRIVATE_LINK_LIBRARIES} ${TARGET_RUNTIME_DEPS})
     set_target_properties(${TARGET_NAME} PROPERTIES "DEPENDENCIES" "${DEPENDENCIES}")
+
     # Boost
     if (${TARGET_BOOST_HEADERS})
         find_package(Boost GLOBAL)
         target_include_directories(${TARGET_NAME} PRIVATE ${Boost_INCLUDE_DIRS})
     endif()
-    # Links
 
-    cstoolkit_target_link_libraries(${TARGET_NAME}
-        PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
-        PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
-
+     # Generation des fichiers info_${TARGET_NAME}
     if(TARGET_SHARED OR TARGET_EXECUTABLE)
         cstoolkit_generate_target_info(TARGET ${TARGET_NAME} COPYRIGHT CSGroup COMPANY CSGroup PRODUCT ${TARGET_NAME})
     endif()
@@ -229,7 +227,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 -DFILE_LIST="$<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
                 -DDESTINATION="$<TARGET_FILE_DIR:${TARGET_NAME}>"
                 -DNO_ERROR=true
-                -P C:/CSToolkit/Copy.cmake COMMAND_EXPAND_LISTS
+                -P ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Copy.cmake COMMAND_EXPAND_LISTS
         )
 
         if (TARGET_PLUGINS_DIR AND TARGET_PLUGINS) 
@@ -248,7 +246,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 -DFILE_LIST="$<TARGET_RUNTIME_DLLS:${PLUGIN_TARGET}>"
                 -DDESTINATION="$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
                 -DNO_ERROR=true
-                -P C:/CSToolkit/Copy.cmake COMMAND_EXPAND_LISTS
+                -P ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Copy.cmake COMMAND_EXPAND_LISTS
                 )
         endif()
 
@@ -295,13 +293,6 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
         )
         generate_target_config()
-
-        cstoolkit_qt5_wrap_cpp(MOC_FILES TARGET ${TARGET_NAME}
-        ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES})
-        target_sources(${TARGET_NAME}
-            PRIVATE ${MOC_FILES})
-        source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${MOC_FILES})
-
     endif()
 
     # Debug Messages
@@ -373,6 +364,7 @@ function(target_link_libraries_post_configure target)
     
     get_target_property(DEPENDENCIES ${target} DEPENDENCIES)
 
+    message("Target Name: ${target}")
     foreach(lib ${DEPENDENCIES})
         if(TARGET ${lib})
             continue()
