@@ -1,7 +1,9 @@
+include(CMakePackageConfigHelpers)
+
 function(cstoolkit_post_configure)
     #message(STATUS "CSTOOLKIT_POST_CONFIGURE")
 
-    get_all_targets(ALL_TARGETS)
+    cstoolkit_get_all_targets(ALL_TARGETS)
   
     configure_package_config_file(
         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
@@ -43,9 +45,9 @@ function(cstoolkit_post_configure)
             #message("Namespace: ${PACKAGE_NAME}")
             #message("LibName: ${COMPONENT_NAME}")
             if(TARGET ${lib})
-                message(${lib} " is a target")
+                #message(${lib} " is a target")
             else()
-                message(${lib} " target not found")
+                #message(${lib} " target not found")
                 
                 # Vérifier si le motif "Qt5::" existe dans l'élément actuel     
                 string(REGEX MATCH "^Qt5::(.|..|...|....|.....|......|.......|.+[^P]......|.+P[^r].....|.+Pr[^i]....|.+Pri[^v]...|.+Priv[^a]..|.+Priva[^t].|.+Privat[^e])(Private$|$)" IS_QT5 ${lib})
@@ -58,27 +60,27 @@ function(cstoolkit_post_configure)
                 endif()
             endif()
         else()
-        message(${lib} " no namespace")
+        #message(${lib} " no namespace")
         endif()
     endforeach()
 
     # Find package des modules de Qt
     if (QT5_MODULES)
-        message("find_package(Qt5 ${Qt5_VERSION} COMPONENTS ${QT5_MODULES} REQUIRED)")
+        #message("find_package(Qt5 ${Qt5_VERSION} COMPONENTS ${QT5_MODULES} REQUIRED)")
         find_package(Qt5 ${Qt5_VERSION} COMPONENTS ${QT5_MODULES} REQUIRED)
     endif()    
 endfunction()
 
-function(get_all_targets var)
+function(cstoolkit_get_all_targets var)
     set(targets)
-    get_all_targets_recursive(targets ${CMAKE_CURRENT_SOURCE_DIR})
+    cstoolkit_get_all_targets_recursive(targets ${CMAKE_CURRENT_SOURCE_DIR})
     set(${var} ${targets} PARENT_SCOPE)
 endfunction()
 
-macro(get_all_targets_recursive targets dir)
+macro(cstoolkit_get_all_targets_recursive targets dir)
     get_property(subdirectories DIRECTORY ${dir} PROPERTY SUBDIRECTORIES)
     foreach(subdir ${subdirectories})
-        get_all_targets_recursive(${targets} ${subdir})
+        cstoolkit_get_all_targets_recursive(${targets} ${subdir})
     endforeach()
  
     get_property(current_targets DIRECTORY ${dir} PROPERTY BUILDSYSTEM_TARGETS)

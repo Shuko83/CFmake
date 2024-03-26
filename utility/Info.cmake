@@ -1,4 +1,4 @@
-function(generate_target_info)
+function(cstoolkit_generate_target_info)
 
     set(options)
     set(one_value_keywords
@@ -15,7 +15,7 @@ function(generate_target_info)
     #MESSAGE("Valeur Target : " ${PARAMS_TARGET})
 
     if(NOT PARAMS_TARGET OR PARAMS_TARGET STREQUAL "")
-        message(FATAL_ERROR "TARGET argument must be defined")
+        message(FATAL_ERROR "CSToolkit: generate_target_info(): TARGET argument must be defined")
     else()
     
         get_target_property(template ${PARAMS_TARGET} TYPE)
@@ -25,7 +25,7 @@ function(generate_target_info)
         if(NOT template STREQUAL "EXECUTABLE" AND 
            NOT template STREQUAL "SHARED_LIBRARY" AND
            NOT template STREQUAL "MODULE_LIBRARY")
-            message(FATAL_ERROR "generate_target_info : ${template} target not supported")
+            message(FATAL_ERROR "CSToolkit: generate_target_info(): ${template} target not supported")
         endif()
         
     endif()
@@ -109,7 +109,7 @@ function(generate_target_info)
         endif()
                                                           
     else()
-        message(FATAL_ERROR "Target informations generation not supported on ${CMAKE_SYSTEM_NAME} platforms")
+        message(FATAL_ERROR "CSToolkit: generate_target_info(): Target informations generation not supported on ${CMAKE_SYSTEM_NAME} platforms")
     endif()
     
 endfunction()

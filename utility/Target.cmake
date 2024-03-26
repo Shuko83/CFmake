@@ -1,4 +1,4 @@
-function(add_target TARGET_NAME TARGET_TYPE)
+function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     # Parse arguments
 
@@ -10,11 +10,11 @@ function(add_target TARGET_NAME TARGET_TYPE)
     #message("\nadd_target(${TARGET_NAME})")
 
     if(DEFINED TARGET_UNPARSED_ARGUMENTS)
-        message(SEND_ERROR "Unkown arguments : ${TARGET_UNPARSED_ARGUMENTS}")
+        message(SEND_ERROR "CSToolkit: add_target(): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
     endif()
 
     if(TARGET_NAME STREQUAL "")
-        message(SEND_ERROR "No NAME defined for target")
+        message(SEND_ERROR "CSToolkit: add_target(): No NAME defined for target")
         return()
     endif()
 
@@ -27,7 +27,7 @@ function(add_target TARGET_NAME TARGET_TYPE)
     elseif(TARGET_TYPE STREQUAL "INTERFACE")
         set(TARGET_INTERFACE TRUE)
     else()
-        message(SEND_ERROR "Incorrect TARGET_TYPE \"${TARGET_TYPE}\" for target \"${TARGET_NAME}\". Must be either EXECUTABLE, SHARED, STATIC or INTERFACE.")
+        message(SEND_ERROR "CSToolkit: add_target(): Incorrect TARGET_TYPE \"${TARGET_TYPE}\" for target \"${TARGET_NAME}\". Must be either EXECUTABLE, SHARED, STATIC or INTERFACE.")
         return()
     endif()
 
@@ -135,7 +135,7 @@ function(add_target TARGET_NAME TARGET_TYPE)
 
     # Links
 
-    target_link_libraries(${TARGET_NAME}
+    cstoolkit_target_link_libraries(${TARGET_NAME}
         PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
         PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
     
@@ -151,7 +151,7 @@ function(add_target TARGET_NAME TARGET_TYPE)
     # Generation des fichiers info_${TARGET_NAME}
 
     if(TARGET_SHARED OR TARGET_EXECUTABLE)
-        generate_target_info(TARGET ${TARGET_NAME} COPYRIGHT CSGroup COMPANY CSGroup PRODUCT ${TARGET_NAME})
+        cstoolkit_generate_target_info(TARGET ${TARGET_NAME} COPYRIGHT CSGroup COMPANY CSGroup PRODUCT ${TARGET_NAME})
     endif()
 
     # Qt
@@ -227,7 +227,7 @@ function(add_target TARGET_NAME TARGET_TYPE)
     #message(DEBUG  "  - Private link libraries: ${TARGET_PRIVATE_LINK_LIBRARIES}")
     #message(DEBUG  "  - Runtime dependencies: ${TARGET_RUNTIME_DEPS}")
     #if(NOT TARGET_NOINSTALL)
-    #  message(STATUS "  - Installation: Default")
+    #message(STATUS "  - Installation: Default")
     #endif()
 
     #find_package(Qt5 ${Qt5_VERSION} COMPONENTS "Core")
@@ -293,9 +293,9 @@ function(target_link_libraries_post_configure target)
         if(IS_PACKAGE)
             set(PACKAGE_NAME ${CMAKE_MATCH_1})
             set(COMPONENT_NAME ${CMAKE_MATCH_2})
-            message("Namespace: ${PACKAGE_NAME}")
-            message("LibName: ${COMPONENT_NAME}")
-            message(${lib} " target not found")
+            #message("Namespace: ${PACKAGE_NAME}")
+            #message("LibName: ${COMPONENT_NAME}")
+            #message(${lib} " target not found")
            
             if(${PACKAGE_NAME} STREQUAL "Qt5") # Cas special Qt
                 # Récupérer ce qui se trouve après "Qt5::"
@@ -307,16 +307,16 @@ function(target_link_libraries_post_configure target)
 
             if(${PACKAGE_NAME}_FOUND)
                 if(NOT TARGET ${lib})
-                    message(WARNING "${target}: find_package success for dependency ${lib} but target is missing")
+                    message(WARNING "CSToolkit: ${target}: find_package success for dependency ${lib} but target is missing")
                 endif()
                 continue()
             elseif(NOT ${PACKAGE_NAME}_NOT_FOUND_MESSAGE)
-                message(WARNING "${target}: find_package failed for dependency ${lib}\n"
+                message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}\n"
                                 "${${PACKAGE_NAME}_NOT_FOUND_MESSAGE}")
                 continue()
             endif()
 
-            message(WARNING "${target}: find_package failed for dependency ${lib}")
+            message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}")
 
         else() # NOT A PACKAGE
             #message("${target}: ${lib} is not a Package")
@@ -333,11 +333,11 @@ function(target_link_libraries_post_configure target)
                 find_package(${PACKAGE_NAME} QUIET)
                 if(${PACKAGE_NAME}_FOUND)
                     if(NOT TARGET ${lib})
-                        message(WARNING "${target}: find_package success for dependency ${lib} but target is missing")
+                        message(WARNING "CSToolkit: ${target}: find_package success for dependency ${lib} but target is missing")
                     endif()
                     continue()
                 elseif(NOT ${PACKAGE_NAME}_NOT_FOUND_MESSAGE)
-                    message(WARNING "${target}: find_package failed for dependency ${lib}\n"
+                    message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}\n"
                                     "${${PACKAGE_NAME}_NOT_FOUND_MESSAGE}")
                     continue()
                 endif()
@@ -347,16 +347,16 @@ function(target_link_libraries_post_configure target)
 
             if(${lib}_FOUND)
                 if(NOT TARGET ${lib})
-                    message(WARNING "${target}: find_package success for dependency ${lib} but target is missing")
+                    message(WARNING "CSToolkit: ${target}: find_package success for dependency ${lib} but target is missing")
                 endif()
                 continue()
             elseif(NOT ${lib}_NOT_FOUND_MESSAGE)
-                message(WARNING "${target}: find_package failed for dependency ${lib}\n"
+                message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}\n"
                                 "${${lib}_NOT_FOUND_MESSAGE}")
                 continue()
             endif()
 
-            message(WARNING "${target}: unknown dependency ${lib}")
+            message(WARNING "CSToolkit: ${target}: unknown dependency ${lib}")
         endif()
     endforeach()
 

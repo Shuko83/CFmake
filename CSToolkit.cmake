@@ -16,7 +16,7 @@ cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL cstoolkit_post_configure
 
 #set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install") // Done in PostProject.cmake
 
-set(PACKAGE_VERSION 0.0.0.0 CACHE STRING "Version of the package, will set CMAKE_PROJECT_VERSION and PROJECT_VERSION")
+set(CSTOOLKIT_PROJECT_VERSION 3.0.0.0 CACHE STRING "Version of the project, will set CMAKE_PROJECT_VERSION and PROJECT_VERSION")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -25,3 +25,5 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 ################################################################################
 
 option(CSTOOLKIT_AUTO_FIND_PACKAGE "Automatically calls find_package on unknown libraries passed to add_target()")
+
+set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/externals" CACHE PATH "Directories to be searched by find_package()")

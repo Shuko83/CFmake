@@ -8,19 +8,26 @@ set(Qt5_VERSION "5.9.6" CACHE INTERNAL "Qt5 version")
 set(Qt5_ARCH "msvc2015_64" CACHE INTERNAL "Qt5 architecture")
 set(Qt5_DIR "C:/Qt/Qt${Qt5_VERSION}/${Qt5_VERSION}/${Qt5_ARCH}/lib/cmake/Qt5")
 
-find_package(Qt5 ${Qt5_VERSION} COMPONENTS Widgets)
+find_package(Qt5 ${Qt5_VERSION} COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
 
 if(NOT Qt5_FOUND)
 
 function(cstoolkit_qt5_wrap_cpp outfiles)
-    message(SEND_ERROR "Qt was not found : unable to use cstoolkit_qt5_wrap_cpp")
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt5_wrap_cpp")
 endfunction()
+
 function(cstoolkit_qt5_wrap_ui outfiles)
-    message(SEND_ERROR "Qt was not found : unable to use cstoolkit_qt5_wrap_ui")
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt5_wrap_ui")
 endfunction()
 
 else()
-set_target_properties(Qt5::Core PROPERTIES "INTERFACE_COMPILE_OPTIONS" "-wd4127 -wd4512 -wd4714 $<$<NOT:$<CONFIG:Debug>>:-wd4718>") # hushes some known Qt warnings
+set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
+
+#qt {
+#    qtGreaterThan( 5.9.9 ) : BUILD_MKSPEC = $${TOOLKIT.mkspec}-QT$${QT_VERSION_MM}
+#    else : BUILD_MKSPEC = $${TOOLKIT.mkspec}-QT$$[QT_VERSION]
+#}
+set_target_properties(Qt5::Core PROPERTIES "INTERFACE_COMPILE_OPTIONS" "-wd4127;-wd4512;-wd4714;$<$<NOT:$<CONFIG:Debug>>:-wd4718>") # hushes some known Qt warnings
 
 # qt5_wrap_ui(outfiles inputfile ... )
 # partially copied from Qt5WidgetsMacros.cmake

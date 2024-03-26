@@ -22,23 +22,27 @@ if(WIN32)
     add_compile_definitions(UNICODE _UNICODE)        # enables Unicode characters set by default
 
     add_compile_definitions(_WIN32)                  # standard Windows 32/64 bits platform preprocessor macro
-    if (CMAKE_SIZE_OF_VOID_P EQUAL 8)
+    if (CMAKE_SIZEOF_VOID_P EQUAL 8)
         add_compile_definitions(WIN64 _WIN64)        # standard Windows 64 bits platform preprocessor macro
     endif()
 
     add_compile_definitions(_USE_MATH_DEFINES)       # enables mathematical constants defined in C/C++ math headers
     add_compile_definitions(WIN32_LEAN_AND_MEAN)     # excludes APIs such as Cryptography, DDE, RPC, Shell, and Windows Sockets
+    #add_compile_definitions(NOMINMAX)                # This will prevent the definition of the min and max Windows-specific preprocessor macros.
 endif()
 
-#linux: DEFINES *= __linux__                         # standard Linux platform preprocessor macro
-#linux: DEFINES *= _LINUX_PLATEFORM_                 # custom Linux platform preprocessor macro
+if(LINUX)
+    add_compile_definitions(__linux__)       # standard Linux platform preprocessor macro
+
+    add_compile_definitions(_LINUX_PLATEFORM_)        # custom Linux platform preprocessor macro
+endif()
 
 ################################################################################
 # Compiler specific
 ################################################################################
 
 # MSVC configuration
-if(MSVC)        
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     add_compile_options(-MP)              # enables multi-processors compilation
 
     add_compile_options(-W4)              # enables level 4 compiler warnings
@@ -56,13 +60,13 @@ if(MSVC)
 endif()
 
 # GCC configuration
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     add_compile_options(-Wall -Wextra -Wconversion -Wsign-conversion -Wold-style-cast)  # TODO: Add other warnings ?
     add_link_options($<$<CONFIG:RELEASE>:-Wl,-strip-all>)
 endif()
 
 # Clang configuration
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     add_compile_options(-Weverything -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic)
     add_link_options($<$<CONFIG:RELEASE>:-Wl,-strip-all>)
 endif()
