@@ -81,7 +81,6 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     if (TARGET_EXTENSION)
-        message("Modifying extension : ${TARGET_EXTENSION}")
         set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".${TARGET_EXTENSION}")
     endif()
 
@@ -233,12 +232,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if (TARGET_PLUGINS_DIR AND TARGET_PLUGINS) 
             # Adding plusgins as dependencies
             add_dependencies(${TARGET_NAME} ${TARGET_PLUGINS})
-            
-            message("Plugins dir : ${TARGET_PLUGINS_DIR}")
-            message("Plugins : ${TARGET_PLUGINS}")
+
             set(PLUGIN_TARGET ${TARGET_NAME}_Plugins_Depends)
             list(GET TARGET_SOURCES_FILES 0 file)
-            message("File pour la target plugins : ${file}")
             add_executable(${PLUGIN_TARGET} EXCLUDE_FROM_ALL ${file})
             set_target_properties(${PLUGIN_TARGET} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD True)
             target_link_libraries(${PLUGIN_TARGET} PUBLIC ${TARGET_PLUGINS})
@@ -367,7 +363,6 @@ function(target_link_libraries_post_configure target)
     
     get_target_property(DEPENDENCIES ${target} DEPENDENCIES)
 
-    message("Target Name: ${target}")
     foreach(lib ${DEPENDENCIES})
         if(TARGET ${lib})
             continue()

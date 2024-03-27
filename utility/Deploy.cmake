@@ -39,12 +39,9 @@ function(deploy FILE)
 
                     else()
                         if(IS_REGEX)
-                            message("file(GLOB_RECURSE extansionFiles ${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}/*.${CMAKE_MATCH_1})")
                             file(GLOB_RECURSE extansionFiles ${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}/*.${CMAKE_MATCH_1})
-                            message("File research ${extansionFiles}")
                             list(APPEND filesFind ${extansionFiles})
                         else()
-                            message("No extansion mode")
                             list(APPEND filesFind "${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}/${file}")
                         endif()
 
