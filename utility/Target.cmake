@@ -231,6 +231,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         )
 
         if (TARGET_PLUGINS_DIR AND TARGET_PLUGINS) 
+            # Adding plusgins as dependencies
+            add_dependencies(${TARGET_NAME} ${TARGET_PLUGINS})
+            
             message("Plugins dir : ${TARGET_PLUGINS_DIR}")
             message("Plugins : ${TARGET_PLUGINS}")
             set(PLUGIN_TARGET ${TARGET_NAME}_Plugins_Depends)
