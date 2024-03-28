@@ -2,7 +2,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     # Parse arguments
 
-    set(TARGET_OPTIONS RECURSIVE NOINSTALL BOOST_HEADERS)
+    set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE NOINSTALL)
     set(TARGET_UNIQUE ALIAS EXTENSION PLUGINS_DIR)
     set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS RUNTIME_DEPS PLUGINS DEPLOY)
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
@@ -54,9 +54,6 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     # Sources
 
-    set(INCLUDE_PUBLIC_HEADER_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-    get_filename_component(ABSOLUTE_INCLUDE_PUBLIC_HEADER_DIR INCLUDE_PUBLIC_HEADER_DIR ABSOLUTE)
-
     if(TARGET_RECURSIVE)
         if(NOT DEFINED TARGET_PUBLIC_HEADERS_FILES)
             file(GLOB_RECURSE TARGET_PUBLIC_HEADERS_FILES ${TARGET_PUBLIC_HEADERS_BASE_DIR}/*)
@@ -68,20 +65,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         file(GLOB_RECURSE TARGET_TRANSLATION_FILES ${TARGET_TRANSLATION_DIR}/*.ts)
     endif()
 
-    list(REMOVE_ITEM TARGET_PRIVATE_HEADERS_FILES ${TARGET_PUBLIC_HEADERS_FILES})
-
     # Library
     
     if(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
-        message("add_library ${TARGET_NAME}")
         add_library(${TARGET_NAME} ${TARGET_TYPE} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
         if(TARGET_ALIAS)
             add_library(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
         endif()
-    endif()
-
-    if (TARGET_EXTENSION)
-        set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".${TARGET_EXTENSION}")
     endif()
 
     # Executable
@@ -93,12 +83,16 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
     endif()
 
+    # Extension
+
+    if (TARGET_EXTENSION)
+        set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".${TARGET_EXTENSION}")
+    endif()
+
     # Dossier des projets
 
-    # get_filename_component(ABSOLUTE_HEADERS_BASE_DIR_PATH ${TARGET_PUBLIC_HEADERS_BASE_DIR} ABSOLUTE)
-    get_filename_component(ABSOLUTE_HEADERS_BASE_DIR_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include ABSOLUTE)
     source_group(TREE ${TARGET_PRIVATE_HEADERS_DIR} PREFIX "Header Files (Private)" FILES ${TARGET_PRIVATE_HEADERS_FILES})
-    source_group(TREE ${ABSOLUTE_HEADERS_BASE_DIR_PATH} PREFIX "Header Files (Public)" FILES ${TARGET_PUBLIC_HEADERS_FILES})
+    source_group(TREE ${TARGET_PUBLIC_HEADERS_BASE_DIR} PREFIX "Header Files (Public)" FILES ${TARGET_PUBLIC_HEADERS_FILES})
     source_group(TREE ${TARGET_SOURCES_DIR} PREFIX "Source Files" FILES ${TARGET_SOURCES_FILES})
     source_group(TREE ${TARGET_UI_DIR} PREFIX "Form Files" FILES ${TARGET_UI_FILES})
     source_group(TREE ${TARGET_RESOURCES_DIR} PREFIX "Resource Files" FILES ${TARGET_RESOURCES_FILES})
@@ -150,43 +144,45 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Link Options
 	target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
 
-    # Get all directories of headers file
-    list(APPEND ALL_HEADER_DIRECTORIES "${TARGET_PRIVATE_HEADERS_FILES};${TARGET_PUBLIC_HEADERS_FILES}")
-    list(TRANSFORM ALL_HEADER_DIRECTORIES REPLACE "(.*)/[^/]+" "\\1") 
-    list(REMOVE_DUPLICATES ALL_HEADER_DIRECTORIES)
 
-    list(APPEND PUBLIC_HEADER_DIRECTORIES ${TARGET_PUBLIC_HEADERS_FILES})
-    list(TRANSFORM PUBLIC_HEADER_DIRECTORIES REPLACE "(.*)/[^/]+" "\\1") 
-    list(REMOVE_DUPLICATES PUBLIC_HEADER_DIRECTORIES)
+    # Recursive include, this option allows to include without specifying all paths to the header file 
+    # The code bellow fetches all parent directories of header files and adds them to the include directory of the target (PRIVATE and INTERFACE)
 
-    # Adding generator expression to all directories
-    set(GENERATOR_PUBLIC_HEADER_DIRECTORIES ${PUBLIC_HEADER_DIRECTORIES})
-    list(TRANSFORM GENERATOR_PUBLIC_HEADER_DIRECTORIES PREPEND "$<BUILD_INTERFACE:")
-    list(TRANSFORM GENERATOR_PUBLIC_HEADER_DIRECTORIES APPEND ">")
+    if (TARGET_RECURSIVE_INCLUDE)
+        # Get all directories of private headers file
+        list(APPEND ALL_HEADER_DIRECTORIES "${TARGET_PRIVATE_HEADERS_FILES};${TARGET_PUBLIC_HEADERS_FILES}")
+        list(TRANSFORM ALL_HEADER_DIRECTORIES REPLACE "(.*)/[^/]+" "\\1") 
+        list(REMOVE_DUPLICATES ALL_HEADER_DIRECTORIES)
 
-    if (NOT TARGET_INTERFACE)
-        target_include_directories(${TARGET_NAME} PRIVATE ${ALL_HEADER_DIRECTORIES})
+        # Get all directories of public headers file
+        list(APPEND PUBLIC_HEADER_DIRECTORIES ${TARGET_PUBLIC_HEADERS_FILES})
+        list(TRANSFORM PUBLIC_HEADER_DIRECTORIES REPLACE "(.*)/[^/]+" "\\1") 
+        list(REMOVE_DUPLICATES PUBLIC_HEADER_DIRECTORIES)
+
+        # Get relative directory path of PUBLIC_HEADER_DIRECTORIES for the install()
+        foreach(directory ${PUBLIC_HEADER_DIRECTORIES})
+            cmake_path(RELATIVE_PATH directory BASE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR})/.." OUTPUT_VARIABLE relative_dir_path)
+            list(APPEND RELATIVE_PUBLIC_HEADER_DIRECTORIES ${relative_dir_path} )
+        endforeach()
+
+        # Adding generator expression to all directories
+        set(GENERATOR_PUBLIC_HEADER_DIRECTORIES ${PUBLIC_HEADER_DIRECTORIES})
+        list(TRANSFORM GENERATOR_PUBLIC_HEADER_DIRECTORIES PREPEND "$<BUILD_INTERFACE:")
+        list(TRANSFORM GENERATOR_PUBLIC_HEADER_DIRECTORIES APPEND ">")
+
+        if (NOT TARGET_INTERFACE)
+            target_include_directories(${TARGET_NAME} PRIVATE ${ALL_HEADER_DIRECTORIES})
+        endif()
+        target_include_directories(${TARGET_NAME} INTERFACE ${GENERATOR_PUBLIC_HEADER_DIRECTORIES})
     endif()
-    target_include_directories(${TARGET_NAME} INTERFACE ${GENERATOR_PUBLIC_HEADER_DIRECTORIES})
-    
-    # target_sources(${TARGET_NAME}
-    # PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_BASE_DIR} FILES ${TARGET_PUBLIC_HEADERS_FILES}
-    # PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIR} FILES ${TARGET_PRIVATE_HEADERS_FILES}
-    # )
 
     target_sources(${TARGET_NAME}
-    PUBLIC FILE_SET HEADERS BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/include FILES ${TARGET_PUBLIC_HEADERS_FILES}
+    PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_BASE_DIR} FILES ${TARGET_PUBLIC_HEADERS_FILES}
     PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIR} FILES ${TARGET_PRIVATE_HEADERS_FILES}
     )
     
     list(APPEND DEPENDENCIES ${TARGET_PUBLIC_LINK_LIBRARIES} ${TARGET_PRIVATE_LINK_LIBRARIES} ${TARGET_RUNTIME_DEPS})
     set_target_properties(${TARGET_NAME} PROPERTIES "DEPENDENCIES" "${DEPENDENCIES}")
-
-    # Boost
-    if (${TARGET_BOOST_HEADERS})
-        find_package(Boost GLOBAL)
-        target_include_directories(${TARGET_NAME} PRIVATE ${Boost_INCLUDE_DIRS})
-    endif()
 
      # Generation des fichiers info_${TARGET_NAME}
     if(TARGET_SHARED OR TARGET_EXECUTABLE)
@@ -222,14 +218,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         # Copy of pdbs for the target
         
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND}
-                -DFILE_LIST="$<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
-                -DDESTINATION="$<TARGET_FILE_DIR:${TARGET_NAME}>"
-                -DNO_ERROR=true
-                -P ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Copy.cmake COMMAND_EXPAND_LISTS
+            COMMAND ${CSTOOLKIT_COPY} -e 
+                "$<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
+                "$<TARGET_FILE_DIR:${TARGET_NAME}>"
+                COMMAND_EXPAND_LISTS 
         )
 
-        if (TARGET_PLUGINS_DIR AND TARGET_PLUGINS) 
+        if (TARGET_PLUGINS) 
             # Adding plusgins as dependencies
             add_dependencies(${TARGET_NAME} ${TARGET_PLUGINS})
 
@@ -241,27 +236,19 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             
             # Copy of the plugin dll and its dependencies
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND}
-                -DFILE_LIST="$<TARGET_RUNTIME_DLLS:${PLUGIN_TARGET}>"
-                -DDESTINATION="$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
-                -DNO_ERROR=true
-                -P ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Copy.cmake COMMAND_EXPAND_LISTS
+            COMMAND ${CSTOOLKIT_COPY} -e 
+                "$<TARGET_RUNTIME_DLLS:${PLUGIN_TARGET}>"
+                "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}" COMMAND_EXPAND_LISTS
                 )
         endif()
-
-        message("deploy(${TARGET_DEPLOY})")
-        foreach(deployFile ${TARGET_DEPLOY})
-            deploy(${deployFile})
-        endforeach()
-
     endif()
 
-    # Installation
+    # Deploy
+    foreach(deployFile ${TARGET_DEPLOY})
+        deploy(${deployFile})
+    endforeach()
 
-    # Getting relative path of public hearder directories and adding the target name as prefix
-    set(RELATIVE_PUBLIC_HEADER_DIRECTORIES ${PUBLIC_HEADER_DIRECTORIES})
-    list(TRANSFORM RELATIVE_PUBLIC_HEADER_DIRECTORIES REPLACE "(${CMAKE_CURRENT_SOURCE_DIR})/(.*)" "\\2")
-    list(TRANSFORM RELATIVE_PUBLIC_HEADER_DIRECTORIES PREPEND "${TARGET_NAME}/")
+    # Installation
 
     if(NOT TARGET_NOINSTALL)
         install(TARGETS ${TARGET_NAME} EXPORT ${PROJECT_NAME}_${TARGET_NAME}Targets DESTINATION ${TARGET_NAME}
@@ -278,6 +265,10 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         #      RESOURCE DESTINATION ${TARGET_NAME}/RESOURCE
         )
         
+        if (RELATIVE_PUBLIC_HEADER_DIRECTORIES)
+            install(TARGETS ${TARGET_NAME} INCLUDES DESTINATION ${RELATIVE_PUBLIC_HEADER_DIRECTORIES})
+        endif()
+
         # PDBS
         if(TARGET_SHARED OR TARGET_EXECUTABLE)
             install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)
@@ -419,6 +410,7 @@ function(target_link_libraries_post_configure target)
                 endif()
             endif()
 
+            message("find_package(${lib} QUIET GLOBAL)")
             find_package(${lib} QUIET GLOBAL)
 
             if(${lib}_FOUND)
@@ -426,7 +418,7 @@ function(target_link_libraries_post_configure target)
                     message(WARNING "CSToolkit: ${target}: find_package success for dependency ${lib} but target is missing")
                 endif()
                 continue()
-            elseif(NOT ${lib}_NOT_FOUND_MESSAGE)
+            elseif(${lib}_NOT_FOUND_MESSAGE)
                 message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}\n"
                                 "${${lib}_NOT_FOUND_MESSAGE}")
                 continue()
@@ -441,12 +433,8 @@ function(target_link_libraries_post_configure target)
         find_package(Qt5 REQUIRED COMPONENTS ${QT5_MODULES} GLOBAL)
     endif()
 
-    if (${target} STREQUAL "SwInterfaces")
-    target_link_libraries(${target} INTERFACE ${link_libraries_post_PUBLIC})
-    else()
     target_link_libraries(${target}
         PRIVATE ${link_libraries_post_PRIVATE} PUBLIC ${link_libraries_post_PUBLIC} INTERFACE ${link_libraries_post_INTERFACE})
-    endif()
     
 endfunction()
 

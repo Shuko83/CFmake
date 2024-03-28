@@ -1,7 +1,7 @@
-function(deploy FILE)
-    message(STATUS "-------------- Deploying file ${FILE} --------------")
+function(cstoolkit_deploy FILE)
+    message(DEBUG "-------------- Deploying file ${FILE} --------------")
     if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${FILE})
-        message("Unable to open : ${FILE}")
+        message(DEBUG "Unable to open : ${FILE}")
     else()
         get_target_property(target_binary_dir ${TARGET_NAME} RUNTIME_OUTPUT_DIRECTORY)
 
@@ -9,7 +9,7 @@ function(deploy FILE)
         string(JSON deployList ERROR_VARIABLE deployListError GET ${jsonContent} deploy)
           
         if (deployListError)
-            message("Deploy Error : No parameter deploy")
+            message(DEBUG "Deploy Error : No parameter deploy")
         else()
             string(JSON deployListSize LENGTH ${deployList})
             math(EXPR deployListSize "${deployListSize}-1")
@@ -28,18 +28,16 @@ function(deploy FILE)
                 foreach(fileIndex RANGE ${filesListSize})
 
                     string(JSON file GET ${files} ${fileIndex})
-                    string(REGEX MATCH "\\*\\.(.*)" IS_REGEX ${file})
+                    string(FIND ${file} "*." IS_EXTENSION)
                     
                     if(${file} STREQUAL "*")
                         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                        COMMAND ${CMAKE_COMMAND}
-                        -DDIRECTORY_LIST="${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}"
-                        -DDESTINATION="${DESTINATION}"
-                        -P ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Copy.cmake COMMAND_EXPAND_LISTS)
+                        COMMAND ${CSTOOLKIT_COPY} -d 
+                        "${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}" ${DESTINATION} COMMAND_EXPAND_LISTS)
 
                     else()
-                        if(IS_REGEX)
-                            file(GLOB_RECURSE extansionFiles ${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}/*.${CMAKE_MATCH_1})
+                        if(NOT IS_EXTENSION EQUAL -1)
+                            file(GLOB_RECURSE extansionFiles ${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}/${file})
                             list(APPEND filesFind ${extansionFiles})
                         else()
                             list(APPEND filesFind "${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}/${file}")
@@ -50,10 +48,7 @@ function(deploy FILE)
                         foreach(indexSplit RANGE 0 ${sizeFiles} 300)
                             list(SUBLIST filesFind ${indexSplit} 300 splittedList)
                             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                                COMMAND ${CMAKE_COMMAND}
-                                -DFILE_LIST="${splittedList}"
-                                -DDESTINATION=${DESTINATION}
-                                -P ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/Copy.cmake COMMAND_EXPAND_LISTS
+                                COMMAND ${CSTOOLKIT_COPY} ${splittedList} ${DESTINATION} COMMAND_EXPAND_LISTS
                             )
                         endforeach()  
                     endif()
