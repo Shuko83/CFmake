@@ -41,10 +41,7 @@ foreach(indexFile RANGE ${index} ${fileListSize})
     endif()
 endforeach()
 
-# Checking if last argument is a directory
-if (IS_DIRECTORY "${CMAKE_ARGV${argumentsListSize}}")
-    set(DESTINATION "${CMAKE_ARGV${argumentsListSize}}")
-endif()
+set(DESTINATION "${CMAKE_ARGV${argumentsListSize}}")
 
 # Checking if file/directories are specified
 if (NOT FILE_LIST AND NOT DIRECTORY_LIST)

@@ -24,6 +24,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_STATIC TRUE)
     elseif(TARGET_TYPE STREQUAL "INTERFACE")
         set(TARGET_INTERFACE TRUE)
+        message("on set a true ${TARGET_NAME}")
     else()
         message(SEND_ERROR "CSToolkit: add_target(): Incorrect TARGET_TYPE \"${TARGET_TYPE}\" for target \"${TARGET_NAME}\". Must be either EXECUTABLE, SHARED, STATIC or INTERFACE.")
         return()
@@ -245,7 +246,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     # Deploy
     foreach(deployFile ${TARGET_DEPLOY})
-        deploy(${deployFile})
+        cstoolkit_deploy(${deployFile})
     endforeach()
 
     # Installation
@@ -362,17 +363,21 @@ function(target_link_libraries_post_configure target)
         if(IS_PACKAGE)
             set(PACKAGE_NAME ${CMAKE_MATCH_1})
             set(COMPONENT_NAME ${CMAKE_MATCH_2})
-            #message("Namespace: ${PACKAGE_NAME}")
-            #message("LibName: ${COMPONENT_NAME}")
-            #message(${lib} " target not found")
+            # message("Namespace: ${PACKAGE_NAME}")
+            # message("LibName: ${COMPONENT_NAME}")
+            # message(${lib} " target not found")
            
             if(${PACKAGE_NAME} STREQUAL "Qt5") # Cas special Qt
                 # Récupérer ce qui se trouve après "Qt5::"
                 list(APPEND QT5_MODULES ${COMPONENT_NAME})
                 continue()
+            elseif(${PACKAGE_NAME} STREQUAL "Boost" AND ${COMPONENT_NAME} STREQUAL "headers")
+                # Special case, if dependency is Boost::headers we can't use the regular find_package 
+                # with the COMPONENTS option, we just do find_package(Boost)
+                find_package(Boost REQUIRED GLOBAL)
+                continue()
             endif()
 
-            message("find_package(${PACKAGE_NAME} QUIET COMPONENTS ${COMPONENT_NAME} GLOBAL)")
             find_package(${PACKAGE_NAME} QUIET COMPONENTS ${COMPONENT_NAME} GLOBAL)
 
             if(${PACKAGE_NAME}_FOUND)
@@ -433,9 +438,14 @@ function(target_link_libraries_post_configure target)
         find_package(Qt5 REQUIRED COMPONENTS ${QT5_MODULES} GLOBAL)
     endif()
 
-    target_link_libraries(${target}
-        PRIVATE ${link_libraries_post_PRIVATE} PUBLIC ${link_libraries_post_PUBLIC} INTERFACE ${link_libraries_post_INTERFACE})
-    
+    get_target_property(target_type ${target} TYPE)
+    if (${target_type} STREQUAL "INTERFACE_LIBRARY")
+        target_link_libraries(${target} INTERFACE ${link_libraries_post_PUBLIC}${link_libraries_post_INTERFACE})
+    else()  
+        target_link_libraries(${target}
+            PRIVATE ${link_libraries_post_PRIVATE} PUBLIC ${link_libraries_post_PUBLIC} INTERFACE ${link_libraries_post_INTERFACE})
+    endif()
+   
 endfunction()
 
 # qt5_wrap_ui(outfiles inputfile ... )
