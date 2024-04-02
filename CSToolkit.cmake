@@ -28,5 +28,4 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 option(CSTOOLKIT_AUTO_FIND_PACKAGE "Automatically calls find_package on unknown libraries passed to add_target()")
 
-set(CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/externals" CACHE PATH "Directories to be searched by find_package()")
 set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/cstoolkit_copy.cmake" --)

@@ -151,13 +151,19 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     if (TARGET_RECURSIVE_INCLUDE)
         # Get all directories of private headers file
-        list(APPEND ALL_HEADER_DIRECTORIES "${TARGET_PRIVATE_HEADERS_FILES};${TARGET_PUBLIC_HEADERS_FILES}")
-        list(TRANSFORM ALL_HEADER_DIRECTORIES REPLACE "(.*)/[^/]+" "\\1") 
+        list(APPEND ALL_HEADER_FILES "${TARGET_PRIVATE_HEADERS_FILES};${TARGET_PUBLIC_HEADERS_FILES}")
+        foreach(headerFile ${ALL_HEADER_FILES})
+            cmake_path(GET headerFile PARENT_PATH header_dir_path)
+            list(APPEND ALL_HEADER_DIRECTORIES ${header_dir_path})
+        endforeach()
         list(REMOVE_DUPLICATES ALL_HEADER_DIRECTORIES)
 
         # Get all directories of public headers file
-        list(APPEND PUBLIC_HEADER_DIRECTORIES ${TARGET_PUBLIC_HEADERS_FILES})
-        list(TRANSFORM PUBLIC_HEADER_DIRECTORIES REPLACE "(.*)/[^/]+" "\\1") 
+        list(APPEND PUBLIC_HEADER_FILES ${TARGET_PUBLIC_HEADERS_FILES})
+        foreach(publicHeaderFile ${PUBLIC_HEADER_FILES})
+            cmake_path(GET publicHeaderFile PARENT_PATH public_header_dir_path)
+            list(APPEND PUBLIC_HEADER_DIRECTORIES ${public_header_dir_path})
+        endforeach()
         list(REMOVE_DUPLICATES PUBLIC_HEADER_DIRECTORIES)
 
         # Get relative directory path of PUBLIC_HEADER_DIRECTORIES for the install()
@@ -195,6 +201,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     cstoolkit_qt5_wrap_cpp(MOC_FILES TARGET ${TARGET_NAME}
         ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES}
     )
+
+    # Filtering MOC
+    
+    cstoolkit_filter_moc(${TARGET_SOURCES_FILES} ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES})
+
+    target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/moc)
+
     target_sources(${TARGET_NAME}
         PRIVATE ${MOC_FILES}
     )
@@ -252,23 +265,25 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Installation
 
     if(NOT TARGET_NOINSTALL)
+
+        # Only if recursive includes is activated
+        if (RELATIVE_PUBLIC_HEADER_DIRECTORIES)
+            set(INCLUDES_PARAMS INCLUDES DESTINATION ${RELATIVE_PUBLIC_HEADER_DIRECTORIES})
+        endif()
+
         install(TARGETS ${TARGET_NAME} EXPORT ${PROJECT_NAME}_${TARGET_NAME}Targets DESTINATION ${TARGET_NAME}
             ARCHIVE DESTINATION ${TARGET_INSTALL_LIB_DIR}
             RUNTIME DESTINATION ${TARGET_INSTALL_BIN_DIR}
             FILE_SET HEADERS DESTINATION ${TARGET_INSTALL_INCLUDE_DIR}
-            INCLUDES DESTINATION ${RELATIVE_PUBLIC_HEADER_DIRECTORIES}
-        #      LIBRARY DESTINATION ${TARGET_NAME}/LIBRARY
-        #      OBJECTS DESTINATION ${TARGET_NAME}/OBJECTS
-        #      FRAMEWORK DESTINATION ${TARGET_NAME}/FRAMEWORK
-        #      BUNDLE DESTINATION ${TARGET_NAME}/BUNDLE
-        #      PUBLIC_HEADER DESTINATION ${TARGET_NAME}/PUBLIC_HEADER
-        #      PRIVATE_HEADER DESTINATION ${TARGET_NAME}/PRIVATE_HEADER
-        #      RESOURCE DESTINATION ${TARGET_NAME}/RESOURCE
-        )
-        
-        if (RELATIVE_PUBLIC_HEADER_DIRECTORIES)
-            install(TARGETS ${TARGET_NAME} INCLUDES DESTINATION ${RELATIVE_PUBLIC_HEADER_DIRECTORIES})
-        endif()
+            ${INCLUDES_PARAMS}              
+            #      LIBRARY DESTINATION ${TARGET_NAME}/LIBRARY
+            #      OBJECTS DESTINATION ${TARGET_NAME}/OBJECTS
+            #      FRAMEWORK DESTINATION ${TARGET_NAME}/FRAMEWORK
+            #      BUNDLE DESTINATION ${TARGET_NAME}/BUNDLE
+            #      PUBLIC_HEADER DESTINATION ${TARGET_NAME}/PUBLIC_HEADER
+            #      PRIVATE_HEADER DESTINATION ${TARGET_NAME}/PRIVATE_HEADER
+            #      RESOURCE DESTINATION ${TARGET_NAME}/RESOURCE
+            )
 
         # PDBS
         if(TARGET_SHARED OR TARGET_EXECUTABLE)

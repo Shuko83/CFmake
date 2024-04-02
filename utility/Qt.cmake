@@ -20,6 +20,10 @@ function(cstoolkit_qt5_wrap_ui outfiles)
     message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt5_wrap_ui")
 endfunction()
 
+function(cstoolkit_filter_moc)
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_filter_moc")
+endfunction()
+
 else()
 set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
 
@@ -83,7 +87,7 @@ function(cstoolkit_qt5_wrap_cpp outfiles)
         cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
 
         file(STRINGS ${infile} _contains_macro REGEX "Q_OBJECT|Q_GADGET|Q_NAMESPACE|Q_NAMESPACE_EXPORT")
-        #message("REGEX parse of ${it}: ${_contains_macro}")
+
         if(NOT _contains_macro)
             continue()
         endif()
@@ -132,6 +136,48 @@ function(cstoolkit_qt5_wrap_ui outfiles)
     endforeach()
 
     set(${outfiles} ${${outfiles}} PARENT_SCOPE)
+endfunction()
+
+# filter_moc : check all sources files if a moc is included
+# if it's the case, remove this moc from the list
+# This process was made by QMake
+function(cstoolkit_filter_moc)
+
+    set(sourceFiles ${ARGV})
+
+    set(MOC_REGEX "^#include.[<\"](moc_.+)[>\"]$")
+
+    # Parse each line of source file
+    foreach(sourceFile ${sourceFiles})
+        file(READ ${sourceFile} fileContent)
+        string(REPLACE "\n" ";" fileContent ${fileContent})
+        
+        # Check if the line match the regex for the include
+        foreach(line ${fileContent})
+            string(REGEX MATCH ${MOC_REGEX} HAS_MATCHED ${line})
+
+            # If matched, add the moc to the exclude list
+            if (HAS_MATCHED)
+                list(APPEND MOC_TO_EXCLUDE ${CMAKE_MATCH_1})
+            endif()
+        endforeach()           
+    endforeach()
+    
+    unset(HAS_MATCHED)
+
+    set(TEMP_MOC_FILES ${MOC_FILES})
+
+    # Check for each moc files if they match with moc to exclude
+    foreach(moc ${MOC_FILES})
+        foreach(mocToExclude ${MOC_TO_EXCLUDE})
+            string(REGEX MATCH "(.+${mocToExclude})" HAS_MATCHED ${moc})
+            if (HAS_MATCHED)
+                list(REMOVE_ITEM TEMP_MOC_FILES ${CMAKE_MATCH_1})
+            endif()
+        endforeach()
+    endforeach()
+
+    set(MOC_FILES ${TEMP_MOC_FILES} PARENT_SCOPE)
 endfunction()
 
 endif()
