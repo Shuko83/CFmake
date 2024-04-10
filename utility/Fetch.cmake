@@ -29,12 +29,13 @@ function(cstoolkit_fetch_artifactory PACKAGE_NAME)
     FetchContent_Declare(${PACKAGE_NAME}
         URL "${FETCH_URL}"
         SOURCE_DIR "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}"
-        BINARY_DIR "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}"
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
-        FIND_PACKAGE_ARGS 
+        FIND_PACKAGE_ARGS GLOBAL
     )
 
+    FetchContent_Populate(${PACKAGE_NAME})
+    
     FetchContent_MakeAvailable(${PACKAGE_NAME})
 endfunction()
 
@@ -48,5 +49,5 @@ function(cstoolkit_download_url URL)
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
     )
-    FetchContent_MakeAvailable(cstoolkit_download_${_HASH})
+    FetchContent_Populate(cstoolkit_download_${_HASH})
 endfunction()

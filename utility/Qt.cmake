@@ -26,22 +26,22 @@ endif()
 
 find_package(Qt5 COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
 
-if(NOT Qt5_FOUND)
+if(Qt5_FOUND)
 
 function(cstoolkit_qt_wrap_cpp outfiles)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_cpp")
+    #message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_cpp")
 endfunction()
 
 function(cstoolkit_qt_wrap_ui outfiles)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_ui")
+    #message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_ui")
 endfunction()
 
 function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_add_resources")
+    #message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_add_resources")
 endfunction()
 
 function(cstoolkit_filter_moc)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_filter_moc")
+    #message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_filter_moc")
 endfunction()
 
 else()
