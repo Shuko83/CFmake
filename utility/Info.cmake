@@ -60,13 +60,7 @@ function(cstoolkit_generate_target_info)
     endif()
 
     if(WIN32)
-        get_target_property(AUTOGEN_BUILD_DIR ${PARAMS_TARGET} AUTOGEN_BUILD_DIR)
-
-        if(AUTOGEN_BUILD_DIR AND NOT "${AUTOGEN_BUILD_DIR}" STREQUAL "")
-            set(INFO_DIRECTORY ${AUTOGEN_BUILD_DIR}/info)
-        else()
-            set(INFO_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${PARAMS_TARGET}_autogen/info)
-        endif()
+        set(INFO_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/generated/info)
         
         set(PARAMS_VERSION ${PARAMS_MAJOR_VERSION}.${PARAMS_MINOR_VERSION}.${PARAMS_PATCH_VERSION}.${PARAMS_BUILD_VERSION})
         set(cmake_target_cpp_info ${INFO_DIRECTORY}/info_${PARAMS_TARGET}.cpp)

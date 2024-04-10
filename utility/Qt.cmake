@@ -1,23 +1,43 @@
-#set(CMAKE_AUTOMOC ON)
-#set(CMAKE_AUTORCC ON)
-#set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC OFF)
+set(CMAKE_AUTORCC OFF)
+set(CMAKE_AUTOUIC OFF)
 
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "Generated Files")
 
-set(Qt5_VERSION "5.9.6" CACHE INTERNAL "Qt5 version")
-set(Qt5_ARCH "msvc2015_64" CACHE INTERNAL "Qt5 architecture")
-set(Qt5_DIR "C:/Qt/Qt${Qt5_VERSION}/${Qt5_VERSION}/${Qt5_ARCH}/lib/cmake/Qt5")
+# Finding QT_ROOT
+if(NOT Qt5_ROOT AND NOT Qt5_DIR)
+    if(DEFINED ENV{QTDIR})
+        set(Qt5_ROOT $ENV{QTDIR})
+    else()
+        find_program(CSTOOLKIT_QMAKE_EXECUTABLE qmake)
+        if(NOT CSTOOLKIT_QMAKE_EXECUTABLE STREQUAL "CSTOOLKIT_QMAKE_EXECUTABLE-NOTFOUND")
+            execute_process(COMMAND "${CSTOOLKIT_QMAKE_EXECUTABLE}" -query QT_INSTALL_PREFIX
+                RESULT_VARIABLE _return_code
+                OUTPUT_VARIABLE _output
+                OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_STRIP_TRAILING_WHITESPACE)
+            if(NOT return_code)
+                set(Qt5_ROOT "${_output}")
+            endif()
+            unset(_return_code)
+            unset(_output)
+        endif()
+    endif()
+endif()
 
-find_package(Qt5 ${Qt5_VERSION} COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
+find_package(Qt5 COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
 
 if(NOT Qt5_FOUND)
 
-function(cstoolkit_qt5_wrap_cpp outfiles)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt5_wrap_cpp")
+function(cstoolkit_qt_wrap_cpp outfiles)
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_cpp")
 endfunction()
 
-function(cstoolkit_qt5_wrap_ui outfiles)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt5_wrap_ui")
+function(cstoolkit_qt_wrap_ui outfiles)
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_ui")
+endfunction()
+
+function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_add_resources")
 endfunction()
 
 function(cstoolkit_filter_moc)
@@ -33,9 +53,9 @@ set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
 #}
 set_target_properties(Qt5::Core PROPERTIES "INTERFACE_COMPILE_OPTIONS" "-wd4127;-wd4512;-wd4714;$<$<NOT:$<CONFIG:Debug>>:-wd4718>") # hushes some known Qt warnings
 
-# qt5_wrap_ui(outfiles inputfile ... )
-# partially copied from Qt5WidgetsMacros.cmake
-function(cstoolkit_qt5_wrap_cpp outfiles)
+# qt5_wrap_cpp(outfiles inputfile ... )
+# partially copied from Qt5CoreMacros.cmake
+function(cstoolkit_qt_wrap_cpp outfiles)
     
     set(_moc_flags)
     
@@ -108,7 +128,7 @@ endfunction()
 
 # qt5_wrap_ui(outfiles inputfile ... )
 # partially copied from Qt5WidgetsMacros.cmake
-function(cstoolkit_qt5_wrap_ui outfiles)
+function(cstoolkit_qt_wrap_ui outfiles)
     set(options)
     set(oneValueArgs)
     set(multiValueArgs OPTIONS)
@@ -136,6 +156,65 @@ function(cstoolkit_qt5_wrap_ui outfiles)
     endforeach()
 
     set(${outfiles} ${${outfiles}} PARENT_SCOPE)
+endfunction()
+
+# qt5_add_resources(outfiles inputfile ... )
+# partially copied from Qt5CoreMacros.cmake
+function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
+    set(options)
+    set(oneValueArgs)
+    set(multiValueArgs OPTIONS)
+
+    cmake_parse_arguments(_RCC "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+    set(rcc_files ${_RCC_UNPARSED_ARGUMENTS})
+    set(rcc_options ${_RCC_OPTIONS})
+
+    foreach(it ${rcc_files})
+        get_filename_component(outfilename ${it} NAME_WE)
+        get_filename_component(infile ${it} ABSOLUTE)
+        set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}.cpp)
+        cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
+
+        # Parsing qrc
+        #_qt5_parse_qrc_file(${infile} _out_depends _rc_depends)
+        if(EXISTS "${infile}")
+            get_filename_component(rc_path ${infile} PATH)
+            #  parse file for dependencies
+            #  all files are absolute paths or relative to the location of the qrc file
+            file(READ "${infile}" RC_FILE_CONTENTS)
+            string(REGEX MATCHALL "<file[^<]+" RC_FILES "${RC_FILE_CONTENTS}")
+            foreach(RC_FILE ${RC_FILES})
+                string(REGEX REPLACE "^<file[^>]*>" "" RC_FILE "${RC_FILE}")
+                if(NOT IS_ABSOLUTE "${RC_FILE}")
+                    set(RC_FILE "${rc_path}/${RC_FILE}")
+                endif()
+                set(outrscfiles ${outrscfiles} "${RC_FILE}")
+            endforeach()
+            # Since this cmake macro is doing the dependency scanning for these files,
+            # let's make a configured file and add it as a dependency so cmake is run
+            # again when dependencies need to be recomputed.
+            set(out_depends ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/${outfilename}.qrc.depends)
+            configure_file("${infile}" "${out_depends}" COPYONLY)
+        endif()
+
+        #message("out_depends : ${out_depends}")
+        #message("outrscfiles : ${outrscfiles}")
+
+        set_source_files_properties(${infile} PROPERTIES SKIP_AUTORCC ON)
+
+        add_custom_command(OUTPUT ${outfile}
+                        COMMAND ${Qt5Core_RCC_EXECUTABLE}
+                        ARGS ${rcc_options} --name ${outfilename} --output ${outfile} ${infile}
+                        MAIN_DEPENDENCY ${infile}
+                        DEPENDS ${outrscfiles} "${out_depends}" VERBATIM
+                        COMMENT "RCC ${relpath}")
+        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
+        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
+        list(APPEND ${outcppfiles} ${outfile})
+    endforeach()
+    set(${outcppfiles} ${${outcppfiles}} PARENT_SCOPE)
+    set(${outrscfiles} ${${outrscfiles}} PARENT_SCOPE)
 endfunction()
 
 # filter_moc : check all sources files if a moc is included
