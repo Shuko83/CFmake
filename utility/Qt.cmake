@@ -26,7 +26,7 @@ endif()
 
 find_package(Qt5 COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
 
-if(Qt5_FOUND)
+if(NOT Qt5_FOUND)
 
 function(cstoolkit_qt_wrap_cpp outfiles)
     #message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_cpp")
