@@ -6,14 +6,16 @@ set(CMAKE_PREFIX_PATH ${CSTOOLKIT_EXTERNALS} CACHE PATH "Directories to be searc
 
 set(CSTOOLKIT_ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory")
 
-function(cstoolkit_fetch_artifactory PACKAGE_NAME)
+function(cstoolkit_fetch_artifactory FETCH_NAME)
     set(FETCH_OPTIONS)
-    set(FETCH_UNIQUE URL VERSION FOLDER NAME)
+    set(FETCH_UNIQUE URL VERSION FOLDER ALIAS)
     set(FETCH_MULTIPLE)
     cmake_parse_arguments(FETCH "${FETCH_OPTIONS}" "${FETCH_UNIQUE}" "${FETCH_MULTIPLE}" ${ARGN})
 
-    if(NOT FETCH_NAME)
-        set(FETCH_NAME ${PACKAGE_NAME})
+    if(FETCH_ALIAS)
+        set(PACKAGE_NAME ${FETCH_ALIAS})
+    else()
+        set(PACKAGE_NAME ${FETCH_NAME})
     endif()
 
     if(NOT FETCH_URL)
@@ -31,12 +33,35 @@ function(cstoolkit_fetch_artifactory PACKAGE_NAME)
         SOURCE_DIR "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}"
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
-        FIND_PACKAGE_ARGS GLOBAL
     )
 
     FetchContent_Populate(${PACKAGE_NAME})
-    
-    FetchContent_MakeAvailable(${PACKAGE_NAME})
+
+    find_package(${PACKAGE_NAME} QUIET MODULE GLOBAL)
+    if(${${PACKAGE_NAME}_FOUND})
+        return()
+    endif()
+
+    if(FETCH_ALIAS) # If ALIAS is Provided find_package is REQUIRED and no try with lowercase
+        find_package(${PACKAGE_NAME} REQUIRED GLOBAL NO_DEFAULT_PATH PATHS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}")
+    else()
+        find_package(${PACKAGE_NAME} QUIET GLOBAL NO_DEFAULT_PATH PATHS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}")
+        if(${${PACKAGE_NAME}_FOUND})
+            return()
+        endif()
+
+        string(TOLOWER ${PACKAGE_NAME} PACKAGE_NAME_LOWER)
+        if(PACKAGE_NAME STREQUAL PACKAGE_NAME_LOWER)
+            return()
+        endif()
+
+        find_package(${PACKAGE_NAME_LOWER} QUIET MODULE GLOBAL)
+        if(${${PACKAGE_NAME}_FOUND})
+            return()
+        endif()
+        
+        find_package(${PACKAGE_NAME_LOWER} QUIET GLOBAL NO_DEFAULT_PATH PATHS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}")
+    endif()
 endfunction()
 
 function(cstoolkit_download_url URL)
