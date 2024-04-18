@@ -30,4 +30,5 @@ set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/csto
 # Options
 ################################################################################
 
-option(CSTOOLKIT_AUTO_FIND_PACKAGE "Automatically calls find_package on unknown libraries passed to add_target()")
+option(CSTOOLKIT_AUTO_FIND_PACKAGE "Automatically calls find_package on unknown libraries of all targets" ON)
+option(CSTOOLKIT_CHECK_DEPENDENCIES "Raise a warning if a dependency of a target is not defined" ON)

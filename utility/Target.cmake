@@ -4,7 +4,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE NOINSTALL)
     set(TARGET_UNIQUE ALIAS EXTENSION PLUGINS_DIR)
-    set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS RUNTIME_DEPS PLUGINS DEPLOY)
+    set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIR INTERFACE_INCLUDE_DIRECTORIES LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS PLUGINS DEPLOY)
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
 
     if(DEFINED TARGET_UNPARSED_ARGUMENTS)
@@ -138,13 +138,12 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     # Links
 
-    cstoolkit_target_link_libraries(${TARGET_NAME}
+    target_link_libraries(${TARGET_NAME}
         PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
         PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
     
     # Link Options
 	target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
-
 
     # Recursive include, this option allows to include without specifying all paths to the header file 
     # The code bellow fetches all parent directories of header files and adds them to the include directory of the target (PRIVATE and INTERFACE)
@@ -182,11 +181,6 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
         target_include_directories(${TARGET_NAME} INTERFACE ${GENERATOR_PUBLIC_HEADER_DIRECTORIES})
     endif()
-
-    # Dependencies
-    
-    list(APPEND DEPENDENCIES ${TARGET_PUBLIC_LINK_LIBRARIES} ${TARGET_PRIVATE_LINK_LIBRARIES} ${TARGET_RUNTIME_DEPS})
-    set_target_properties(${TARGET_NAME} PROPERTIES "DEPENDENCIES" "${DEPENDENCIES}")
 
     # Generation des fichiers info_${TARGET_NAME}
     if(TARGET_SHARED OR TARGET_EXECUTABLE)
@@ -253,23 +247,28 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if (TARGET_PLUGINS) 
             # Adding plusgins as dependencies
             add_dependencies(${TARGET_NAME} ${TARGET_PLUGINS})
+            set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS ${TARGET_PLUGINS})
 
-            set(PLUGIN_TARGET ${TARGET_NAME}_Plugins_Depends)
-            list(GET TARGET_SOURCES_FILES 0 file)
-            add_executable(${PLUGIN_TARGET} EXCLUDE_FROM_ALL ${file})
-            set_target_properties(${PLUGIN_TARGET} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD True)
-            target_link_libraries(${PLUGIN_TARGET} PUBLIC ${TARGET_PLUGINS})
+            set(PLUGINS_TARGET ${TARGET_NAME}_plugins)
+
+            add_executable(${PLUGINS_TARGET} EXCLUDE_FROM_ALL CMakeLists.txt)
+            set_target_properties(${PLUGINS_TARGET} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD True)
+            set_target_properties(${PLUGINS_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
+            target_link_libraries(${PLUGINS_TARGET} PUBLIC ${TARGET_PLUGINS})
             
             # Copy of the plugin dll and its dependencies
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND ${CSTOOLKIT_COPY} -e 
-                "$<TARGET_RUNTIME_DLLS:${PLUGIN_TARGET}>"
+                "$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>"
                 "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}" COMMAND_EXPAND_LISTS
                 )
         endif()
+    elseif(TARGET_PLUGINS)
+        message(SEND_ERROR "CSToolkit: add_target(): Unsuported argument PLUGINS for non-executable target.")
     endif()
 
-    # Deploy of .dpeloy files
+    # Deploy of .deploy files
+
     foreach(deployFile ${TARGET_DEPLOY})
         cstoolkit_deploy(${deployFile})
     endforeach()
@@ -361,120 +360,3 @@ macro (generate_target_config)
         DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
     )
 endmacro()
-
-function(cstoolkit_target_link_libraries target)
-    cmake_parse_arguments(link_libraries_custom "" "" "PRIVATE;PUBLIC;INTERFACE" ${ARGN})
-    #message("target_link_libraries_custom " ${target})
-    #message("PRIVATE : " ${link_libraries_custom_PRIVATE})
-    #message("PUBLIC : " ${link_libraries_custom_PUBLIC})
-    #message("INTERFACE : " ${link_libraries_custom_INTERFACE})
-
-
-
-    cmake_language(EVAL CODE
-        "cmake_language(DEFER DIRECTORY \${CMAKE_SOURCE_DIR} CALL target_link_libraries_post_configure [[${target}]]
-        PRIVATE [[${link_libraries_custom_PRIVATE}]] PUBLIC [[${link_libraries_custom_PUBLIC}]] INTERFACE [[${link_libraries_custom_INTERFACE}]])"
-    )
-endfunction()
-
-function(target_link_libraries_post_configure target)
-    cmake_parse_arguments(link_libraries_post "" "" "PRIVATE;PUBLIC;INTERFACE" ${ARGN})
-    
-    get_target_property(DEPENDENCIES ${target} DEPENDENCIES)
-
-    foreach(lib ${DEPENDENCIES})
-        if(TARGET ${lib})
-            continue()
-        endif()
-        string(REGEX MATCH "(.+)::(.+)" IS_PACKAGE ${lib})
-        if(IS_PACKAGE)
-            set(PACKAGE_NAME ${CMAKE_MATCH_1})
-            set(COMPONENT_NAME ${CMAKE_MATCH_2})
-            # message("Namespace: ${PACKAGE_NAME}")
-            # message("LibName: ${COMPONENT_NAME}")
-            # message(${lib} " target not found")
-           
-            if(${PACKAGE_NAME} STREQUAL "Qt5") # Cas special Qt
-                # Récupérer ce qui se trouve après "Qt5::"
-                list(APPEND QT5_MODULES ${COMPONENT_NAME})
-                continue()
-            elseif(${PACKAGE_NAME} STREQUAL "Boost" AND ${COMPONENT_NAME} STREQUAL "headers")
-                # Special case, if dependency is Boost::headers we can't use the regular find_package 
-                # with the COMPONENTS option, we just do find_package(Boost)
-                find_package(Boost REQUIRED GLOBAL)
-                continue()
-            endif()
-
-            find_package(${PACKAGE_NAME} QUIET COMPONENTS ${COMPONENT_NAME} GLOBAL)
-
-            if(${PACKAGE_NAME}_FOUND)
-                if(NOT TARGET ${lib})
-                    message(WARNING "CSToolkit: ${target}: find_package success for dependency ${lib} but target is missing")
-                endif()
-                continue()
-            elseif(${PACKAGE_NAME}_NOT_FOUND_MESSAGE)
-                message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}\n"
-                                "${${PACKAGE_NAME}_NOT_FOUND_MESSAGE}")
-                continue()
-            endif()
-
-            message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}")
-
-        else() # NOT A PACKAGE
-            find_library(${lib}_LIB ${lib} NO_CACHE PATHS ${_WINDOWS_KITS_LIB_DIR})
-            if(NOT ${${lib}_LIB} STREQUAL "${lib}_LIB-NOTFOUND")
-                continue()
-            endif()
-            string(REGEX MATCH "(.+)-(.+)" HAS_SUFFIX ${lib})
-            if(HAS_SUFFIX)
-                set(PACKAGE_NAME ${CMAKE_MATCH_1})
-                set(SUFFIX_NAME ${CMAKE_MATCH_2})
-                find_package(${PACKAGE_NAME} QUIET GLOBAL)
-                if(${PACKAGE_NAME}_FOUND)
-                    if(NOT TARGET ${lib})
-                        message(WARNING "CSToolkit: ${target}: find_package success for dependency ${lib} but target is missing")
-                    endif()
-                    continue()
-                elseif(${PACKAGE_NAME}_NOT_FOUND_MESSAGE)
-                    message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}\n"
-                                    "${${PACKAGE_NAME}_NOT_FOUND_MESSAGE}")
-                    continue()
-                endif()
-            endif()
-
-            #message("find_package(${lib} QUIET GLOBAL)")
-            find_package(${lib} QUIET GLOBAL)
-
-            if(${lib}_FOUND)
-                if(NOT TARGET ${lib})
-                    message(WARNING "CSToolkit: ${target}: find_package success for dependency ${lib} but target is missing")
-                endif()
-                continue()
-            elseif(${lib}_NOT_FOUND_MESSAGE)
-                message(WARNING "CSToolkit: ${target}: find_package failed for dependency ${lib}\n"
-                                "${${lib}_NOT_FOUND_MESSAGE}")
-                continue()
-            endif()
-
-            message(WARNING "CSToolkit: ${target}: unknown dependency ${lib}")
-        endif()
-    endforeach()
-
-    # Find package des modules de Qt
-    if (QT5_MODULES)
-        find_package(Qt5 REQUIRED COMPONENTS ${QT5_MODULES} GLOBAL)
-    endif()
-
-    get_target_property(target_type ${target} TYPE)
-    if (${target_type} STREQUAL "INTERFACE_LIBRARY")
-        target_link_libraries(${target} INTERFACE ${link_libraries_post_PUBLIC}${link_libraries_post_INTERFACE})
-    else()  
-        target_link_libraries(${target}
-            PRIVATE ${link_libraries_post_PRIVATE} PUBLIC ${link_libraries_post_PUBLIC} INTERFACE ${link_libraries_post_INTERFACE})
-    endif()
-   
-endfunction()
-
-# qt5_wrap_ui(outfiles inputfile ... )
-# partially copied from Qt5WidgetsMacros.cmake
-
