@@ -1,6 +1,7 @@
 # This is called after the call to project()
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install" CACHE PATH "Project installation path" FORCE)
+  cmake_path(SET _install_path NORMALIZE "${CMAKE_BINARY_DIR}/../install")
+  set(CMAKE_INSTALL_PREFIX "${_install_path}" CACHE PATH "Default install directory used by install()." FORCE)
 endif()
 
 include(${CMAKE_CURRENT_LIST_DIR}/Version.cmake)
