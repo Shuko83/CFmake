@@ -69,9 +69,15 @@ function(cstoolkit_check_dependencies target)
     list(REMOVE_DUPLICATES REMOVE_DUPLICATES)
 
     foreach(dep ${DEPENDENCIES})
+        string(GENEX_STRIP ${dep} dep)
+        if(NOT dep)
+            continue()
+        endif()
+
         if(TARGET ${dep})
             continue()
         endif()
+
         string(REGEX MATCH "(.+)::(.+)" HAS_NAMESPACE ${dep})
         if(HAS_NAMESPACE AND CSTOOLKIT_AUTO_FIND_PACKAGE)
             set(PACKAGE_NAME ${CMAKE_MATCH_1})
