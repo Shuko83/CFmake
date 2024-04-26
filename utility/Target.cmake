@@ -356,7 +356,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 # COMPILE_PDB_NAME does not support generator expression
                 set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME_DEBUG ${TARGET_NAME}${CMAKE_DEBUG_POSTFIX})
                 install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.pdb
-                    DESTINATION ${CMAKE_INSTALL_LIBDIR} CONFIGURATIONS Debug)
+                    DESTINATION ${TARGET_INSTALL_LIB_DIR} CONFIGURATIONS Debug)
             endif()
         endif()
         #if(TARGET_SHARED OR TARGET_EXECUTABLE)
