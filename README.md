@@ -46,6 +46,10 @@ PRIVATE_LINK_LIBRARIES <library>...
     These libraries and targets are linked to, but are not made part of the link interface.
     See https://cmake.org/cmake/help/latest/command/target_link_libraries.html for more information.
 
+COMBINED_LINK_LIBRARIES <library>...
+    For static targets only.
+    Same as PRIVATE_LINK_LIBRARIES but the libraries will be included in the final librarian archive file.
+
 PUBLIC_HEADERS_BASE_DIRS <header_dir>...
     Specify the directory containing public header files. Default to "include" directory.
 

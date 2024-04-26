@@ -4,16 +4,16 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE NOINSTALL)
     set(TARGET_UNIQUE ALIAS EXTENSION PLUGINS_DIR)
-    set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIRS LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS PLUGINS DEPLOY_FILES)
+    set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES COMBINED_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIRS LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS PLUGINS DEPLOY_FILES)
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
-
-    if(DEFINED TARGET_UNPARSED_ARGUMENTS)
-        message(SEND_ERROR "CSToolkit: add_target(): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
-    endif()
 
     if(TARGET_NAME STREQUAL "")
         message(SEND_ERROR "CSToolkit: add_target(): No NAME defined for target")
         return()
+    endif()
+
+    if(DEFINED TARGET_UNPARSED_ARGUMENTS)
+        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
     endif()
 
     if(TARGET_TYPE STREQUAL "EXECUTABLE")
@@ -143,8 +143,57 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
     
     # Link Options
-	target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
+    if(TARGET_EXECUTABLE OR TARGET_SHARED)
+	    target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
+    elseif(TARGET_LINK_OPTIONS)
+        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): LINK_OPTIONS defined for target with no link step.")
+    endif()
 
+    # Specific STATIC
+    # Combined Libraries
+    if(TARGET_STATIC)
+        # Mandatory to be able to include static library inside a shared library
+        set_target_properties(${TARGET_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
+
+        if(TARGET_COMBINED_LINK_LIBRARIES)
+            target_link_libraries(${TARGET_NAME} PRIVATE ${TARGET_COMBINED_LINK_LIBRARIES})
+
+            # If X is a static library or object library, and links Y privately:
+            # "target_link_libraries(X PRIVATE Y)"
+            # then $<LINK_ONLY:Y> is placed in X's INTERFACE_LINK_LIBRARIES.
+            # Because we combined the libs we don't need this
+            # We still use target_link_libraries for the other functionnalities it provides
+            get_target_property(_interface_link_libraries ${TARGET_NAME} INTERFACE_LINK_LIBRARIES)
+            foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
+                list(REMOVE_ITEM _interface_link_libraries "$<LINK_ONLY:${_lib}>")
+            endforeach()
+            set_target_properties(${TARGET_NAME} PROPERTIES INTERFACE_LINK_LIBRARIES "${_interface_link_libraries}")
+
+            if(WIN32)
+                set(_static_options)
+                foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
+                    list(APPEND _static_options "$<TARGET_FILE:${_lib}>")
+                endforeach()
+
+                set_target_properties(${TARGET_NAME} PROPERTIES STATIC_LIBRARY_OPTIONS "${_static_options}")
+            else() #LINUX
+                set(_ar_script "CREATE $<TARGET_FILE:${TARGET_NAME}>")
+                foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
+                    set(_ar_script "${_ar_script}\nADDLIB $<TARGET_FILE:${_lib}>")
+                endforeach()
+                set(_ar_script "${_ar_script}\nSAVE")
+                set(_ar_script "${_ar_script}\nEND")
+                
+                file(GENERATE OUTPUT ${TARGET_NAME}_combine.ar CONTENT "${_ar_script}")
+                
+                add_custom_command(TARGET ${TARGET_NAME} PRE_LINK
+                    COMMAND ${CMAKE_AR} -M < ${TARGET_NAME}_combine.ar
+                )
+            endif()
+        endif()
+    elseif(TARGET_COMBINED_LINK_LIBRARIES)
+        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): TARGET_COMBINED_LINK_LIBRARIES defined for non-static target")
+    endif()
     # Recursive include, this option allows to include without specifying all paths to the header file 
     # The code bellow fetches all parent directories of header files and adds them to the include directory of the target (PRIVATE and INTERFACE)
 
@@ -264,7 +313,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 )
         endif()
     elseif(TARGET_PLUGINS)
-        message(SEND_ERROR "CSToolkit: add_target(): Unsuported argument PLUGINS for non-executable target.")
+        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unsuported argument PLUGINS for non-executable target.")
     endif()
 
     # Deploy of .deploy files
@@ -297,8 +346,18 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             )
 
         # PDBS
-        if(TARGET_SHARED OR TARGET_EXECUTABLE)
-            install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)
+        if(MSVC)
+            if(TARGET_SHARED OR TARGET_EXECUTABLE)
+                install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)
+            elseif(TARGET_STATIC)
+                # Default pdb output is not next to .lib
+                set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:${TARGET_NAME}>)
+                # Necessary to redefine name for msvc 2015
+                # COMPILE_PDB_NAME does not support generator expression
+                set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME_DEBUG ${TARGET_NAME}${CMAKE_DEBUG_POSTFIX})
+                install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.pdb
+                    DESTINATION ${CMAKE_INSTALL_LIBDIR} CONFIGURATIONS Debug)
+            endif()
         endif()
         #if(TARGET_SHARED OR TARGET_EXECUTABLE)
         # install(FILES $<PROPERTY:${TARGET_NAME},COMPILE_PDB_NAME> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)

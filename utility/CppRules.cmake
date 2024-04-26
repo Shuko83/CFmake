@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_DEBUG_POSTFIX d)
+# Allow common behavior between windows and linux
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 #message("flags: ${CMAKE_CXX_FLAGS}")
 #message("flagsD: ${CMAKE_CXX_FLAGS_DEBUG}")
