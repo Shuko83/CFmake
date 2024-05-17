@@ -46,11 +46,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_INSTALL_BIN_DIR bin/$<LOWER_CASE:$<CONFIG>>)
         set(TARGET_INSTALL_INCLUDE_DIR include)
         set(TARGET_INSTALL_CMAKE_DIR cmake)
+        set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME})
     else()
         set(TARGET_INSTALL_LIB_DIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
         set(TARGET_INSTALL_BIN_DIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
         set(TARGET_INSTALL_INCLUDE_DIR ${TARGET_NAME}/include)
         set(TARGET_INSTALL_CMAKE_DIR ${TARGET_NAME}/cmake)
+        set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
     endif()
 
     # Sources
@@ -331,7 +333,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(INCLUDES_PARAMS INCLUDES DESTINATION ${RELATIVE_PUBLIC_HEADER_DIRECTORIES})
         endif()
 
-        install(TARGETS ${TARGET_NAME} EXPORT ${PROJECT_NAME}_${TARGET_NAME}Targets DESTINATION ${TARGET_NAME}
+        install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets DESTINATION ${TARGET_NAME}
             ARCHIVE DESTINATION ${TARGET_INSTALL_LIB_DIR}
             RUNTIME DESTINATION ${TARGET_INSTALL_BIN_DIR}
             FILE_SET HEADERS DESTINATION ${TARGET_INSTALL_INCLUDE_DIR}
@@ -359,12 +361,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                     DESTINATION ${TARGET_INSTALL_LIB_DIR} CONFIGURATIONS Debug)
             endif()
         endif()
-        #if(TARGET_SHARED OR TARGET_EXECUTABLE)
-        # install(FILES $<PROPERTY:${TARGET_NAME},COMPILE_PDB_NAME> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)
-        #endif()
 
         # Config
-        install(EXPORT ${PROJECT_NAME}_${TARGET_NAME}Targets
+        install(EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets
             NAMESPACE ${PROJECT_NAME}::
             DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
         )
@@ -410,12 +409,12 @@ macro (generate_target_config)
     # Target Config File
     configure_package_config_file(
         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/TargetConfig.cmake.in
-        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_${TARGET_NAME}Config.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_INSTALL_CONFIG_NAME}Config.cmake
         INSTALL_DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
     )
-
+        
     install(FILES 
-        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_${TARGET_NAME}Config.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_INSTALL_CONFIG_NAME}Config.cmake
         DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
     )
 endmacro()

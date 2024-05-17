@@ -6,24 +6,43 @@ function(cstoolkit_post_configure)
     # Fichier Config
 
     cstoolkit_get_all_targets(ALL_TARGETS)
-  
-    configure_package_config_file(
-        ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
-        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-        INSTALL_DESTINATION ${CMAKE_INSTALL_PREFIX}
-    )
 
-    write_basic_package_version_file(
-        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-        VERSION ${PROJECT_VERSION}
-        COMPATIBILITY SameMinorVersion
-    )
+    if(CMAKE_PROJECT_NAME IN_LIST ALL_TARGETS) # Single Component Package generated directly by target
+        list(LENGTH ALL_TARGETS _nbtargets)
+        if(_nbtargets GREATER 1)
+            message(WARNING "CSToolkit: Having a target named like the project (${PROJECT_NAME}) result in a single target install.\n"
+            "You have multiples targets (${_nbtargets}) in the build system, this may result in an invalid install scipt.")
+        endif()
 
-    install(FILES
-        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-        ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-        DESTINATION ${CMAKE_INSTALL_PREFIX}
-    )
+        write_basic_package_version_file(
+            ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
+            VERSION ${PROJECT_VERSION}
+            COMPATIBILITY SameMinorVersion
+        )
+    
+        install(FILES
+            ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
+            DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake
+        )
+    else() # Multi Components Config Files
+        configure_package_config_file(
+            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+            INSTALL_DESTINATION ${CMAKE_INSTALL_PREFIX}
+        )
+
+        write_basic_package_version_file(
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+            VERSION ${PROJECT_VERSION}
+            COMPATIBILITY SameMinorVersion
+        )
+    
+        install(FILES
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+            DESTINATION ${CMAKE_INSTALL_PREFIX}
+        )
+    endif()
 
     # Verification des dependances
     if(CSTOOLKIT_AUTO_FIND_PACKAGE OR CSTOOLKIT_CHECK_DEPENDENCIES)
