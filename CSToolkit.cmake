@@ -1,26 +1,32 @@
+# Include guard to avoid double inclusion of cstoolkit
+if(__CSTOOLKIT_GUARD__)
+  return()
+endif()
+set(__CSTOOLKIT_GUARD__ TRUE)
+
 cmake_minimum_required(VERSION 3.27)
 
-################################################################################
-#  Includes
-################################################################################
-
-include(${CMAKE_CURRENT_LIST_DIR}/utility/Target.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/utility/Info.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/utility/PostConfigure.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/utility/Deploy.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/utility/Fetch.cmake)
-set(CMAKE_PROJECT_INCLUDE ${CMAKE_CURRENT_LIST_DIR}/utility/PostProject.cmake)
-cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL cstoolkit_post_configure())
+if(NOT PROJECT_NAME)
+    message(FATAL_ERROR "CSToolkit: CSToolkit should be included after top level project() call.")
+    return()
+endif()
 
 ################################################################################
-# Project definition
+# Project definitions
 ################################################################################
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-#set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/install") // Done in PostProject.cmake
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  cmake_path(SET _install_path NORMALIZE "${CMAKE_BINARY_DIR}/../install")
+  set(CMAKE_INSTALL_PREFIX "${_install_path}" CACHE PATH "Default install directory used by install()." FORCE)
+endif()
 
-#set(CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/externals") // Done in Fetch.cmake
+set(CSTOOLKIT_EXTERNALS "${CMAKE_BINARY_DIR}/externals")
+
+set(CMAKE_PREFIX_PATH ${CSTOOLKIT_EXTERNALS} CACHE PATH "Directories to be searched by find_package()")
+
+set(CSTOOLKIT_ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory")
 
 set(CSTOOLKIT_PROJECT_VERSION 0.0.0.0 CACHE STRING "Version of the project, will set CMAKE_PROJECT_VERSION and PROJECT_VERSION")
 
@@ -32,3 +38,19 @@ set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/csto
 
 option(CSTOOLKIT_AUTO_FIND_PACKAGE "Automatically calls find_package on unknown libraries of all targets" ON)
 option(CSTOOLKIT_CHECK_DEPENDENCIES "Raise a warning if a dependency of a target is not defined" ON)
+
+################################################################################
+#  Includes
+################################################################################
+
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Target.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Info.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/PostConfigure.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Deploy.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Fetch.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Version.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/CppRules.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/mkspecs.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Windows.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Qt.cmake)
+cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL cstoolkit_post_configure())

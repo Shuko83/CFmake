@@ -47,6 +47,8 @@ endfunction()
 else()
 set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
 
+set(Qt5_INSTALL_PREFIX "${_qt5Core_install_prefix}")
+
 #qt {
 #    qtGreaterThan( 5.9.9 ) : BUILD_MKSPEC = $${TOOLKIT.mkspec}-QT$${QT_VERSION_MM}
 #    else : BUILD_MKSPEC = $${TOOLKIT.mkspec}-QT$$[QT_VERSION]

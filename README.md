@@ -1,8 +1,10 @@
 CMake Utility Module du département produits BLSOI CSGROUP
 
 Usage:
-
+All you have to do is add a line like this near the top of your root CMakeLists.txt file (but not before your project() call):
 include(<path-to-cstoolkit>/CSToolkit.cmake)
+
+Options and variables should be set before inclusion of CSToolkit
 
 Variables :
 CSTOOLKIT_PROJECT_VERSION (0.0.0.0) Version of the project, will set CMAKE_PROJECT_VERSION and PROJECT_VERSION

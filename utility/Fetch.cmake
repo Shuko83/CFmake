@@ -1,11 +1,5 @@
 include(FetchContent)
 
-set(CSTOOLKIT_EXTERNALS "${CMAKE_BINARY_DIR}/externals")
-
-set(CMAKE_PREFIX_PATH ${CSTOOLKIT_EXTERNALS} CACHE PATH "Directories to be searched by find_package()")
-
-set(CSTOOLKIT_ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory")
-
 function(cstoolkit_fetch_artifactory FETCH_NAME)
     set(FETCH_OPTIONS)
     set(FETCH_UNIQUE URL VERSION FOLDER ALIAS)

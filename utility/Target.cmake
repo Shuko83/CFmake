@@ -41,7 +41,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     string(REPLACE "/_project" "" TARGET_RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
     string(REPLACE "/_project" "" TARGET_TRANSLATION_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-    if(CMAKE_PROJECT_NAME STREQUAL TARGET_NAME)
+    if(PROJECT_NAME STREQUAL TARGET_NAME)
         set(TARGET_INSTALL_LIB_DIR lib/$<LOWER_CASE:$<CONFIG>>)
         set(TARGET_INSTALL_BIN_DIR bin/$<LOWER_CASE:$<CONFIG>>)
         set(TARGET_INSTALL_INCLUDE_DIR include)
@@ -72,7 +72,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     if(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
         add_library(${TARGET_NAME} ${TARGET_TYPE} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
-        if(TARGET_ALIAS)
+        add_library(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
+        if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${PROJECT_NAME}::${TARGET_NAME})
             add_library(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
         endif()
     endif()
@@ -81,7 +82,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     if(TARGET_EXECUTABLE)
         add_executable(${TARGET_NAME} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
-        if(TARGET_ALIAS)
+        add_executable(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
+        if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${PROJECT_NAME}::${TARGET_NAME})
             add_executable(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
         endif()
     endif()
@@ -139,10 +141,15 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     )
 
     # Links
-
-    target_link_libraries(${TARGET_NAME}
-        PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
-        PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
+    if(TARGET_INTERFACE)
+        target_link_libraries(${TARGET_NAME}
+            INTERFACE ${TARGET_PUBLIC_LINK_LIBRARIES})
+        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): PRIVATE_LINK_LIBRARIES is not available for INTERFACE target.")
+    else()
+        target_link_libraries(${TARGET_NAME}
+            PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
+            PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
+    endif()
     
     # Link Options
     if(TARGET_EXECUTABLE OR TARGET_SHARED)
@@ -196,9 +203,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     elseif(TARGET_COMBINED_LINK_LIBRARIES)
         message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): TARGET_COMBINED_LINK_LIBRARIES defined for non-static target")
     endif()
+
     # Recursive include, this option allows to include without specifying all paths to the header file 
     # The code bellow fetches all parent directories of header files and adds them to the include directory of the target (PRIVATE and INTERFACE)
-
     if (TARGET_RECURSIVE_INCLUDE)
         # Get all directories of private headers file
         list(APPEND ALL_HEADER_FILES "${TARGET_PRIVATE_HEADERS_FILES};${TARGET_PUBLIC_HEADERS_FILES}")
@@ -239,6 +246,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     # Qt
+    if(NOT TARGET_INTERFACE) # Should check if Qt is a dependency
 
     # MOC
     cstoolkit_qt_wrap_cpp(MOC_FILES TARGET ${TARGET_NAME}
@@ -275,25 +283,37 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         PRIVATE ${TARGET_QRC_RESOURCES_FILES}
     )
     source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Resource Files" FILES ${TARGET_QRC_RESOURCES_FILES})
-
+    
+    endif()
     # Deployement des DLLs
 
     if(TARGET_EXECUTABLE)
-        # Copy of runtime dlls for the target
-
-        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CMAKE_COMMAND} 
-            -E copy -t $<TARGET_FILE_DIR:${TARGET_NAME}> $<TARGET_RUNTIME_DLLS:${TARGET_NAME}> COMMAND_EXPAND_LISTS
-        )
-        
-        # Copy of pdbs for the target
-        
-        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CSTOOLKIT_COPY} -e 
-                "$<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
-                "$<TARGET_FILE_DIR:${TARGET_NAME}>"
-                COMMAND_EXPAND_LISTS 
-        )
+        # Copy of runtime dlls and pdbs for the target
+        if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} 
+                -E copy -t "$<TARGET_FILE_DIR:${TARGET_NAME}>" "$<FILTER:$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>" COMMAND_EXPAND_LISTS
+            )
+            
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CSTOOLKIT_COPY} -e 
+                    "$<LIST:TRANSFORM,$<FILTER:$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
+                    "$<TARGET_FILE_DIR:${TARGET_NAME}>"
+                    COMMAND_EXPAND_LISTS 
+            )
+        else()
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} 
+                -E copy -t "$<TARGET_FILE_DIR:${TARGET_NAME}>" "$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>" COMMAND_EXPAND_LISTS
+            )
+            
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CSTOOLKIT_COPY} -e 
+                    "$<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
+                    "$<TARGET_FILE_DIR:${TARGET_NAME}>"
+                    COMMAND_EXPAND_LISTS 
+            )
+        endif()
 
         if (TARGET_PLUGINS) 
             # Adding plusgins as dependencies
@@ -326,7 +346,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     # Installation
 
-    if(NOT TARGET_NOINSTALL)
+    if(NOT TARGET_NOINSTALL AND PROJECT_IS_TOP_LEVEL)
 
         # Only if recursive includes is activated
         if (RELATIVE_PUBLIC_HEADER_DIRECTORIES)
