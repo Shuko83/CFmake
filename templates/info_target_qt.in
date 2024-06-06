@@ -1,0 +1,24 @@
+
+#include <QCoreApplication>
+#include <QLocale>
+#include <QTextCodec>
+
+namespace {
+
+    void startup()
+    {
+        qApp->addLibraryPath( qApp->applicationDirPath() );
+        
+        qApp->setApplicationName( QString::fromUtf8( "@PARAMS_PRODUCT@" ) );
+        qApp->setApplicationVersion( QString::fromUtf8( "@PARAMS_VERSION@" ) );
+        
+        qApp->setOrganizationName( QString::fromUtf8( "@PARAMS_ORGANIZATION@" ) );
+        qApp->setOrganizationDomain( QString::fromUtf8( "@PARAMS_DOMAIN@" ) );
+        
+        QLocale::setDefault( QLocale( QLocale::English, QLocale::UnitedStates ) );
+        QTextCodec::setCodecForLocale( QTextCodec::codecForName( "UTF-8" ) );
+    }
+
+    Q_COREAPP_STARTUP_FUNCTION( startup )
+
+}

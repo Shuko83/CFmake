@@ -1,7 +1,3 @@
-set(CMAKE_AUTOMOC OFF)
-set(CMAKE_AUTORCC OFF)
-set(CMAKE_AUTOUIC OFF)
-
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "Generated Files")
 
 # Finding QT_ROOT
@@ -29,24 +25,26 @@ find_package(Qt5 COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
 if(NOT Qt5_FOUND)
 
 function(cstoolkit_qt_wrap_cpp outfiles)
-    #message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_cpp")
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_cpp")
 endfunction()
 
 function(cstoolkit_qt_wrap_ui outfiles)
-    #message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_ui")
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_ui")
 endfunction()
 
 function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
-    #message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_add_resources")
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_add_resources")
 endfunction()
 
 function(cstoolkit_filter_moc)
-    #message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_filter_moc")
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_filter_moc")
 endfunction()
 
 else()
-set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
+set(QT_VERSION "${Qt5_VERSION}")
+set(QT_VERSION_MM "${Qt5_VERSION_MAJOR}.${Qt5_VERSION_MINOR}")
 
+set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
 set(Qt5_INSTALL_PREFIX "${_qt5Core_install_prefix}")
 
 #qt {
@@ -199,9 +197,6 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
             set(out_depends ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/${outfilename}.qrc.depends)
             configure_file("${infile}" "${out_depends}" COPYONLY)
         endif()
-
-        #message("out_depends : ${out_depends}")
-        #message("outrscfiles : ${outrscfiles}")
 
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTORCC ON)
 

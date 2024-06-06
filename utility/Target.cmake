@@ -2,9 +2,34 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     # Parse arguments
 
-    set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE NOINSTALL)
+    set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE NO_INSTALL PUBLIC_HEADERS_NO_EXTENSION)
     set(TARGET_UNIQUE ALIAS EXTENSION PLUGINS_DIR)
-    set(TARGET_MULTIPLE PUBLIC_LINK_LIBRARIES PRIVATE_LINK_LIBRARIES COMBINED_LINK_LIBRARIES PUBLIC_HEADERS_FILES PUBLIC_HEADERS_BASE_DIRS LINK_OPTIONS COMPILE_DEFINITIONS COMPILE_OPTIONS PLUGINS DEPLOY_FILES)
+    set(TARGET_MULTIPLE
+        # LIBRARIES
+        PUBLIC_LINK_LIBRARIES
+        PRIVATE_LINK_LIBRARIES
+        COMBINED_LINK_LIBRARIES
+        PLUGINS
+        # DIRS
+        PUBLIC_HEADERS_DIRS
+        PRIVATE_HEADERS_DIRS
+        SOURCES_DIRS
+        UI_DIRS
+        RESOURCES_DIRS
+        TRANSLATION_DIRS
+        # FILES
+        PUBLIC_HEADERS_FILES
+        PRIVATE_HEADERS_FILES
+        SOURCES_FILES
+        UI_FILES
+        RESOURCES_FILES
+        TRANSLATION_FILES
+        DEPLOY_FILES
+        # OPTIONS
+        LINK_OPTIONS
+        COMPILE_DEFINITIONS
+        COMPILE_OPTIONS
+    )
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
 
     if(TARGET_NAME STREQUAL "")
@@ -30,48 +55,10 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         return()
     endif()
 
-    # Paths
-
-    if(NOT DEFINED TARGET_PUBLIC_HEADERS_BASE_DIRS)
-        string(REPLACE "/_project" "" TARGET_PUBLIC_HEADERS_BASE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/include")
-    endif()
-    string(REPLACE "/_project" "" TARGET_PRIVATE_HEADERS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
-    string(REPLACE "/_project" "" TARGET_SOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
-    string(REPLACE "/_project" "" TARGET_UI_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-    string(REPLACE "/_project" "" TARGET_RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-    string(REPLACE "/_project" "" TARGET_TRANSLATION_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-
-    if(PROJECT_NAME STREQUAL TARGET_NAME)
-        set(TARGET_INSTALL_LIB_DIR lib/$<LOWER_CASE:$<CONFIG>>)
-        set(TARGET_INSTALL_BIN_DIR bin/$<LOWER_CASE:$<CONFIG>>)
-        set(TARGET_INSTALL_INCLUDE_DIR include)
-        set(TARGET_INSTALL_CMAKE_DIR cmake)
-        set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME})
-    else()
-        set(TARGET_INSTALL_LIB_DIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
-        set(TARGET_INSTALL_BIN_DIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
-        set(TARGET_INSTALL_INCLUDE_DIR ${TARGET_NAME}/include)
-        set(TARGET_INSTALL_CMAKE_DIR ${TARGET_NAME}/cmake)
-        set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
-    endif()
-
-    # Sources
-
-    if(TARGET_RECURSIVE)
-        if(NOT DEFINED TARGET_PUBLIC_HEADERS_FILES)
-            file(GLOB_RECURSE TARGET_PUBLIC_HEADERS_FILES ${TARGET_PUBLIC_HEADERS_BASE_DIRS}/*)
-        endif()
-        file(GLOB_RECURSE TARGET_PRIVATE_HEADERS_FILES ${TARGET_PRIVATE_HEADERS_DIR}/*.h ${TARGET_PRIVATE_HEADERS_DIR}/*.hpp)
-        file(GLOB_RECURSE TARGET_SOURCES_FILES ${TARGET_SOURCES_DIR}/*.c ${TARGET_SOURCES_DIR}/*.cpp)
-        file(GLOB_RECURSE TARGET_UI_FILES ${TARGET_UI_DIR}/*.ui)
-        file(GLOB_RECURSE TARGET_RESOURCES_FILES ${TARGET_RESOURCES_DIR}/*.qrc)
-        file(GLOB_RECURSE TARGET_TRANSLATION_FILES ${TARGET_TRANSLATION_DIR}/*.ts)
-    endif()
-
     # Library
     
     if(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
-        add_library(${TARGET_NAME} ${TARGET_TYPE} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
+        add_library(${TARGET_NAME} ${TARGET_TYPE})
         add_library(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
         if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${PROJECT_NAME}::${TARGET_NAME})
             add_library(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
@@ -81,7 +68,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Executable
 
     if(TARGET_EXECUTABLE)
-        add_executable(${TARGET_NAME} ${TARGET_SOURCES_FILES} ${TARGET_UI_FILES} ${TARGET_RESOURCES_FILES})
+        add_executable(${TARGET_NAME})
         add_executable(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
         if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${PROJECT_NAME}::${TARGET_NAME})
             add_executable(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
@@ -94,16 +81,23 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".${TARGET_EXTENSION}")
     endif()
 
-    # Dossier des projets
+    # Ouput dirs
 
-    source_group(TREE ${TARGET_PRIVATE_HEADERS_DIR} PREFIX "Header Files (Private)" FILES ${TARGET_PRIVATE_HEADERS_FILES})
-    source_group(TREE ${TARGET_PUBLIC_HEADERS_BASE_DIRS} PREFIX "Header Files (Public)" FILES ${TARGET_PUBLIC_HEADERS_FILES})
-    source_group(TREE ${TARGET_SOURCES_DIR} PREFIX "Source Files" FILES ${TARGET_SOURCES_FILES})
-    source_group(TREE ${TARGET_UI_DIR} PREFIX "Form Files" FILES ${TARGET_UI_FILES})
-    source_group(TREE ${TARGET_RESOURCES_DIR} PREFIX "Resource Files" FILES ${TARGET_RESOURCES_FILES})
-    source_group(TREE ${TARGET_TRANSLATION_DIR} PREFIX "Translation Files" FILES ${TARGET_TRANSLATION_FILES})
+    set_target_properties(${TARGET_NAME} PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/$<LOWER_CASE:$<CONFIG>>"
+    )
 
-    set( _folder "${CMAKE_CURRENT_SOURCE_DIR}/")
+    # Version
+
+    if(PROJECT_VERSION AND PROJECT_VERSION_MAJOR)
+        set_target_properties(${TARGET_NAME} PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
+    endif()
+
+    # Folder of the project in visual studio soluction
+
+    set(_folder "${CMAKE_CURRENT_SOURCE_DIR}/")
     cmake_path(RELATIVE_PATH _folder BASE_DIRECTORY ${CMAKE_SOURCE_DIR})
     string(REPLACE "${TARGET_NAME}/" "" _folder "${_folder}")
     string(REPLACE "Sources/" "" _folder "${_folder}")
@@ -111,15 +105,96 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     string(REPLACE "test/" "" _folder "${_folder}")
     string(REPLACE "_project/" "" _folder "${_folder}")
     string(REPLACE "../" "" _folder "${_folder}")
-    string(REPLACE "../" "" _folder "${_folder}")
     string(REGEX REPLACE "/$" "" _folder "${_folder}")
+    string(REGEX REPLACE "^\\.\\.?$" "" _folder "${_folder}")
 
     set_target_properties(${TARGET_NAME} PROPERTIES FOLDER "${_folder}")
 
-    set_target_properties(${TARGET_NAME} PROPERTIES
-        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
-        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/$<LOWER_CASE:$<CONFIG>>"
+    # Sources Paths
+
+    # Trick for later call to REAL_PATH
+    set(TARGET_PREFIX_DIR "./")
+
+    # Adaption for projects converted from old project file architecture
+    if(CMAKE_CURRENT_SOURCE_DIR MATCHES ".*/_project$")
+        set(TARGET_PREFIX_DIR "./../")
+    endif()
+    
+    if(NOT DEFINED TARGET_PUBLIC_HEADERS_DIRS)
+        set(TARGET_PUBLIC_HEADERS_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_PUBLIC_HEADERS_DIRS})
+    endif()
+    if(NOT DEFINED TARGET_PRIVATE_HEADERS_DIRS)
+        set(TARGET_PRIVATE_HEADERS_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_PRIVATE_HEADERS_DIRS})
+    endif()
+    if(NOT DEFINED TARGET_SOURCES_DIRS)
+        set(TARGET_SOURCES_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_SOURCES_DIRS})
+    endif()
+    if(NOT DEFINED TARGET_UI_DIRS)
+        set(TARGET_UI_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_UI_DIRS})
+    endif()
+    if(NOT DEFINED TARGET_RESOURCES_DIRS)
+        set(TARGET_RESOURCES_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_RESOURCES_DIRS})
+    endif()
+    if(NOT DEFINED TARGET_TRANSLATION_DIRS)
+        set(TARGET_TRANSLATION_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_TRANSLATION_DIRS})
+    endif()
+
+    # Conversion to absolute path necessary for later call to source_group
+    file(REAL_PATH ${TARGET_PUBLIC_HEADERS_DIRS} TARGET_PUBLIC_HEADERS_DIRS EXPAND_TILDE)
+    file(REAL_PATH ${TARGET_PRIVATE_HEADERS_DIRS} TARGET_PRIVATE_HEADERS_DIRS EXPAND_TILDE)
+    file(REAL_PATH ${TARGET_SOURCES_DIRS} TARGET_SOURCES_DIRS EXPAND_TILDE)
+    file(REAL_PATH ${TARGET_UI_DIRS} TARGET_UI_DIRS EXPAND_TILDE)
+    file(REAL_PATH ${TARGET_RESOURCES_DIRS} TARGET_RESOURCES_DIRS EXPAND_TILDE)
+    file(REAL_PATH ${TARGET_TRANSLATION_DIRS} TARGET_TRANSLATION_DIRS EXPAND_TILDE)
+    
+    # Sources
+
+    if(TARGET_RECURSIVE)
+        if(NOT DEFINED TARGET_PUBLIC_HEADERS_FILES)
+            if(TARGET_PUBLIC_HEADERS_NO_EXTENSION)
+                file(GLOB_RECURSE TARGET_PUBLIC_HEADERS_FILES ${TARGET_PUBLIC_HEADERS_DIRS}/*)
+            else()
+                file(GLOB_RECURSE TARGET_PUBLIC_HEADERS_FILES ${TARGET_PUBLIC_HEADERS_DIRS}/*.h ${TARGET_PUBLIC_HEADERS_DIRS}/*.hpp)
+            endif()
+        endif()
+        if(NOT DEFINED TARGET_PRIVATE_HEADERS_FILES)
+            file(GLOB_RECURSE TARGET_PRIVATE_HEADERS_FILES ${TARGET_PRIVATE_HEADERS_DIRS}/*.h ${TARGET_PRIVATE_HEADERS_DIRS}/*.hpp)
+        endif()
+        if(NOT DEFINED TARGET_SOURCES_FILES)
+            file(GLOB_RECURSE TARGET_SOURCES_FILES ${TARGET_SOURCES_DIRS}/*.c ${TARGET_SOURCES_DIRS}/*.cpp)
+        endif()
+        if(NOT DEFINED TARGET_UI_FILES)
+            file(GLOB_RECURSE TARGET_UI_FILES ${TARGET_UI_DIRS}/*.ui)
+        endif()
+        if(NOT DEFINED TARGET_RESOURCES_FILES)
+            file(GLOB_RECURSE TARGET_RESOURCES_FILES ${TARGET_RESOURCES_DIRS}/*.qrc)
+        endif()
+        if(NOT DEFINED TARGET_TRANSLATION_FILES)
+            file(GLOB_RECURSE TARGET_TRANSLATION_FILES ${TARGET_TRANSLATION_DIRS}/*.ts)
+        endif()
+    endif()
+
+    # Folders of files in visual studio project
+
+    source_group(TREE ${TARGET_PRIVATE_HEADERS_DIRS} PREFIX "Header Files (Private)" FILES ${TARGET_PRIVATE_HEADERS_FILES})
+    source_group(TREE ${TARGET_PUBLIC_HEADERS_DIRS} PREFIX "Header Files (Public)" FILES ${TARGET_PUBLIC_HEADERS_FILES})
+    source_group(TREE ${TARGET_SOURCES_DIRS} PREFIX "Source Files" FILES ${TARGET_SOURCES_FILES})
+    source_group(TREE ${TARGET_UI_DIRS} PREFIX "Form Files" FILES ${TARGET_UI_FILES})
+    source_group(TREE ${TARGET_RESOURCES_DIRS} PREFIX "Resource Files" FILES ${TARGET_RESOURCES_FILES})
+    source_group(TREE ${TARGET_TRANSLATION_DIRS} PREFIX "Translation Files" FILES ${TARGET_TRANSLATION_FILES})
+
+    # Sources
+
+    target_sources(${TARGET_NAME} PRIVATE
+        ${TARGET_SOURCES_FILES}
+        ${TARGET_UI_FILES}
+        ${TARGET_RESOURCES_FILES}
+        ${TARGET_TRANSLATION_FILES}
+    )
+
+    target_sources(${TARGET_NAME}
+        PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_DIRS} FILES ${TARGET_PUBLIC_HEADERS_FILES}
+        PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIRS} FILES ${TARGET_PRIVATE_HEADERS_FILES}
     )
 
     # Compile Options
@@ -128,34 +203,32 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     # Compile Definitions
 
+    target_compile_definitions(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_DEFINITIONS})
+
+    # Default Definition for Export symbols
     string(TOUPPER ${TARGET_NAME} TARGET_NAME_UPPER)
     set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${TARGET_NAME_UPPER}_LIB)
 
-    target_compile_definitions(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_DEFINITIONS})
-
-    # Headers
-
-    target_sources(${TARGET_NAME}
-        PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_BASE_DIRS} FILES ${TARGET_PUBLIC_HEADERS_FILES}
-        PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIR} FILES ${TARGET_PRIVATE_HEADERS_FILES}
-    )
-
-    # Links
-    if(TARGET_INTERFACE)
-        target_link_libraries(${TARGET_NAME}
-            INTERFACE ${TARGET_PUBLIC_LINK_LIBRARIES})
-        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): PRIVATE_LINK_LIBRARIES is not available for INTERFACE target.")
-    else()
-        target_link_libraries(${TARGET_NAME}
-            PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
-            PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
-    endif()
-    
     # Link Options
+
     if(TARGET_EXECUTABLE OR TARGET_SHARED)
 	    target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
     elseif(TARGET_LINK_OPTIONS)
         message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): LINK_OPTIONS defined for target with no link step.")
+    endif()
+
+    # Links
+
+    if(TARGET_INTERFACE)
+        target_link_libraries(${TARGET_NAME}
+            INTERFACE ${TARGET_PUBLIC_LINK_LIBRARIES})
+        if(TARGET_PRIVATE_LINK_LIBRARIES)
+            message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): PRIVATE_LINK_LIBRARIES is not available for INTERFACE target.")
+        endif()
+    else()
+        target_link_libraries(${TARGET_NAME}
+            PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
+            PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
     endif()
 
     # Specific STATIC
@@ -240,51 +313,75 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         target_include_directories(${TARGET_NAME} INTERFACE ${GENERATOR_PUBLIC_HEADER_DIRECTORIES})
     endif()
 
-    # Generation des fichiers info_${TARGET_NAME}
-    if(TARGET_SHARED OR TARGET_EXECUTABLE)
-        cstoolkit_generate_target_info(TARGET ${TARGET_NAME} COPYRIGHT CSGroup COMPANY CSGroup PRODUCT ${TARGET_NAME})
-    endif()
-
     # Qt
-    if(NOT TARGET_INTERFACE) # Should check if Qt is a dependency
+    set(_qt_modules ${TARGET_PUBLIC_LINK_LIBRARIES})
+    list(APPEND _qt_modules ${TARGET_PRIVATE_LINK_LIBRARIES})
+    list(FILTER _qt_modules INCLUDE REGEX "^Qt5::")
+    if(_qt_modules AND NOT TARGET_INTERFACE )
 
-    # MOC
-    cstoolkit_qt_wrap_cpp(MOC_FILES TARGET ${TARGET_NAME}
-        ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES}
-    )
+        # MOC
+        if(NOT CMAKE_AUTOMOC)
+            cstoolkit_qt_wrap_cpp(MOC_FILES TARGET ${TARGET_NAME}
+                ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES}
+            )
 
-    # Filtering MOC
-    
-    cstoolkit_filter_moc(${TARGET_SOURCES_FILES} ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES})
+            # Filtering MOC
+            
+            cstoolkit_filter_moc(${TARGET_SOURCES_FILES} ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES})
 
-    target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/moc)
+            target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/moc)
 
-    target_sources(${TARGET_NAME}
-        PRIVATE ${MOC_FILES}
-    )
-    source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${MOC_FILES})
+            target_sources(${TARGET_NAME}
+                PRIVATE ${MOC_FILES}
+            )
+            source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${MOC_FILES})
+        endif()
 
-    # UI
-    cstoolkit_qt_wrap_ui(UIC_FILES ${TARGET_UI_FILES})
-    target_sources(${TARGET_NAME}
-        PRIVATE FILE_SET "uic" TYPE HEADERS BASE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/generated/uic FILES ${UIC_FILES}
-    )
-    source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${UIC_FILES})
+        # UI
+        if(NOT CMAKE_AUTOUIC)
+            cstoolkit_qt_wrap_ui(UIC_FILES ${TARGET_UI_FILES})
+            target_sources(${TARGET_NAME}
+                PRIVATE FILE_SET "uic" TYPE HEADERS BASE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/generated/uic FILES ${UIC_FILES}
+            )
+            source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${UIC_FILES})
+        endif()
 
-    # QRC
-    cstoolkit_qt_add_resources(RCC_FILES TARGET_QRC_RESOURCES_FILES ${TARGET_RESOURCES_FILES})
+        # QRC
+        if(NOT CMAKE_AUTORCC)
+            cstoolkit_qt_add_resources(RCC_FILES TARGET_QRC_RESOURCES_FILES ${TARGET_RESOURCES_FILES})
 
-    target_sources(${TARGET_NAME}
-        PRIVATE ${RCC_FILES}
-    )
-    source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${RCC_FILES})
+            target_sources(${TARGET_NAME}
+                PRIVATE ${RCC_FILES}
+            )
+            source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${RCC_FILES})
 
-    target_sources(${TARGET_NAME}
-        PRIVATE ${TARGET_QRC_RESOURCES_FILES}
-    )
-    source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Resource Files" FILES ${TARGET_QRC_RESOURCES_FILES})
+            target_sources(${TARGET_NAME}
+                PRIVATE ${TARGET_QRC_RESOURCES_FILES}
+            )
+            source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Resource Files" FILES ${TARGET_QRC_RESOURCES_FILES})
+        endif()
     
     endif()
+
+    # Generation des fichiers info_${TARGET_NAME}
+    if(NOT TARGET_INTERFACE)
+        string(TIMESTAMP _year "%Y" UTC)
+
+        if(TARGET_EXECUTABLE AND _qt_modules)
+            set(_generate_qt_info "QT_EXECUTABLE")
+        endif()
+
+        cstoolkit_generate_target_info(
+            TARGET "${TARGET_NAME}"
+            VERSION "${PROJECT_VERSION}"
+            PRODUCT "${PROJECT_NAME}"
+            ORGANIZATION "CSGroup"
+            DOMAIN "https://www.csgroup.eu"
+            COPYRIGHT "Copyright \\251 ${_year} CSGroup"
+            ${_generate_qt_info}
+        )
+    endif()
+
     # Deployement des DLLs
 
     if(TARGET_EXECUTABLE)
@@ -327,12 +424,21 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set_target_properties(${PLUGINS_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
             target_link_libraries(${PLUGINS_TARGET} PUBLIC ${TARGET_PLUGINS})
             
-            # Copy of the plugin dll and its dependencies
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CSTOOLKIT_COPY} -e 
-                "$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>"
-                "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}" COMMAND_EXPAND_LISTS
+            if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
+                # Copy of the plugin dll and its dependencies
+                add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CSTOOLKIT_COPY} -e 
+                    "$<FILTER:$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>"
+                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}" COMMAND_EXPAND_LISTS
                 )
+            else()
+                # Copy of the plugin dll and its dependencies
+                add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CSTOOLKIT_COPY} -e 
+                    "$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>"
+                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}" COMMAND_EXPAND_LISTS
+                )
+            endif()
         endif()
     elseif(TARGET_PLUGINS)
         message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unsuported argument PLUGINS for non-executable target.")
@@ -346,7 +452,21 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     # Installation
 
-    if(NOT TARGET_NOINSTALL AND PROJECT_IS_TOP_LEVEL)
+    if(NOT TARGET_NO_INSTALL AND PROJECT_IS_TOP_LEVEL)
+
+        if(PROJECT_NAME STREQUAL TARGET_NAME)
+            set(TARGET_INSTALL_LIB_DIR lib/$<LOWER_CASE:$<CONFIG>>)
+            set(TARGET_INSTALL_BIN_DIR bin/$<LOWER_CASE:$<CONFIG>>)
+            set(TARGET_INSTALL_INCLUDE_DIR include)
+            set(TARGET_INSTALL_CMAKE_DIR cmake)
+            set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME})
+        else()
+            set(TARGET_INSTALL_LIB_DIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
+            set(TARGET_INSTALL_BIN_DIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
+            set(TARGET_INSTALL_INCLUDE_DIR ${TARGET_NAME}/include)
+            set(TARGET_INSTALL_CMAKE_DIR ${TARGET_NAME}/cmake)
+            set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
+        endif()
 
         # Only if recursive includes is activated
         if (RELATIVE_PUBLIC_HEADER_DIRECTORIES)
@@ -391,30 +511,30 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     # Debug Messages
-
-    #message(STATUS "==================================================")
-    #message(STATUS "Component ${TARGET_NAME} is ${TARGET_TYPE}")
-    #message(STATUS "  - Dependencies: ${ALL_DEPS}")
-    #message(STATUS "  - Public headers path: ${TARGET_PUBLIC_HEADERS_BASE_DIRS}")
-    #message(STATUS "  - Private headers path: ${TARGET_PRIVATE_HEADERS_DIR}")
-    #message(STATUS "  - Sources path: ${TARGET_SOURCES_DIR}")
-    #message(STATUS "  - Recursive: ${TARGET_RECURSIVE}")
-    #message(DEBUG  "  - Public headers files: ${TARGET_PUBLIC_HEADERS_FILES}")
-    #message(DEBUG  "  - Private headers files: ${TARGET_PRIVATE_HEADERS_FILES}")
-    #message(DEBUG  "  - Sources files: ${TARGET_SOURCES_FILES}")
-    #message(DEBUG  "  - Public link libraries: ${TARGET_PUBLIC_LINK_LIBRARIES}")
-    #message(DEBUG  "  - Private link libraries: ${TARGET_PRIVATE_LINK_LIBRARIES}")
-    #message(DEBUG  "  - Runtime dependencies: ${TARGET_RUNTIME_DEPS}")
-    #if(NOT TARGET_NOINSTALL)
-    #message(STATUS "  - Installation: Default")
-    #endif()
-
-    #find_package(Qt5 ${Qt5_VERSION} COMPONENTS "Core")
+    message(VERBOSE "==================================================")
+    message(VERBOSE "Component ${TARGET_NAME} is ${TARGET_TYPE}")
+    message(VERBOSE "  - Dependencies: ${ALL_DEPS}")
+    message(VERBOSE "  - Public headers path: ${TARGET_PUBLIC_HEADERS_BASE_DIRS}")
+    message(VERBOSE "  - Private headers path: ${TARGET_PRIVATE_HEADERS_DIR}")
+    message(VERBOSE "  - Sources path: ${TARGET_SOURCES_DIR}")
+    message(VERBOSE "  - Recursive: ${TARGET_RECURSIVE}")
+    message(VERBOSE  "  - Public headers files: ${TARGET_PUBLIC_HEADERS_FILES}")
+    message(VERBOSE  "  - Private headers files: ${TARGET_PRIVATE_HEADERS_FILES}")
+    message(VERBOSE  "  - Sources files: ${TARGET_SOURCES_FILES}")
+    message(VERBOSE  "  - Public link libraries: ${TARGET_PUBLIC_LINK_LIBRARIES}")
+    message(VERBOSE  "  - Private link libraries: ${TARGET_PRIVATE_LINK_LIBRARIES}")
+    message(VERBOSE  "  - Runtime dependencies: ${TARGET_RUNTIME_DEPS}")
+    if(NOT TARGET_NO_INSTALL)
+        message(VERBOSE "  - Installation: Default")
+    endif()
 endfunction()
 
 macro (generate_target_config)
 
     list(APPEND INTERFACE_DEPENDENCIES ${TARGET_PUBLIC_LINK_LIBRARIES})
+    if(TARGET_STATIC)
+        list(APPEND INTERFACE_DEPENDENCIES ${TARGET_PRIVATE_LINK_LIBRARIES})
+    endif()
     foreach(dep ${INTERFACE_DEPENDENCIES})
         string(REGEX MATCH "(.+)::(.+)" IS_PACKAGE ${dep})    
         if(IS_PACKAGE)

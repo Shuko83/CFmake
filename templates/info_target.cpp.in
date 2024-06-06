@@ -3,14 +3,13 @@
 ** WARNING! All changes made in this file will be lost when regenerating project!
 **********************************************************************************/
 
-#include "info_@PARAMS_PRODUCT@.h"
-
-namespace @PARAMS_PRODUCT@ {
-
+#include "@PARAMS_INCLUDE@"
+@PARAMS_QT_SECTION@
+namespace @PARAMS_NAMESPACE@ {
 
     const char * name()
     {
-        return "@PARAMS_PRODUCT@";
+        return "@PARAMS_TARGET@";
     }
     
     const char * version()
@@ -25,14 +24,21 @@ namespace @PARAMS_PRODUCT@ {
     
     const char * organization()
     {
-        return "@PARAMS_COMPANY@";
+        return "@PARAMS_ORGANIZATION@";
     }
     
     const char * copyright()
     {
-        return "Copyright \xC2\xA9 2024 @PARAMS_COMPANY@";
+        return "@PARAMS_COPYRIGHT@";
     }
     
-    
+    const char * about()
+    {
+        return "@PARAMS_PRODUCT@\n"
+               "Built: " __TIME__ ", " __DATE__ "\n"
+               "Version: @PARAMS_VERSION@\n"
+               @PARAMS_ABOUT_QT_VERSION@
+               "Compiler: @CMAKE_GENERATOR@, @CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@"
+        ;
+    }
 }
-

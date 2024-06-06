@@ -11,9 +11,9 @@ set(CMAKE_DEBUG_POSTFIX d)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 
-#message("flags: ${CMAKE_CXX_FLAGS}")
-#message("flagsD: ${CMAKE_CXX_FLAGS_DEBUG}")
-#message("flagsR: ${CMAKE_CXX_FLAGS_RELEASE}")
+message(DEBUG "flags: ${CMAKE_CXX_FLAGS}")
+message(DEBUG "flagsD: ${CMAKE_CXX_FLAGS_DEBUG}")
+message(DEBUG "flagsR: ${CMAKE_CXX_FLAGS_RELEASE}")
 
 ################################################################################
 # System specific

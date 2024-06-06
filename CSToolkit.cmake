@@ -32,12 +32,22 @@ set(CSTOOLKIT_PROJECT_VERSION 0.0.0.0 CACHE STRING "Version of the project, will
 
 set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/cstoolkit_copy.cmake" --)
 
+set(CSTOOLKIT_DEFAULT_PUBLIC_HEADERS_DIRS "include" CACHE STRING "Default folder for public headers of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_PRIVATE_HEADERS_DIRS "src" CACHE STRING "Default folder for private headers of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_SOURCES_DIRS "src" CACHE STRING "Default folder for source files of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_UI_DIRS "src" CACHE STRING "Default folder for Qt ui files of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_RESOURCES_DIRS "" CACHE STRING "Default folder for Qt qrc files of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_TRANSLATION_DIRS "" CACHE STRING "Default folder for Qt ts files of a target created with cstoolkit_add_target")
+
 ################################################################################
 # Options
 ################################################################################
 
 option(CSTOOLKIT_AUTO_FIND_PACKAGE "Automatically calls find_package on unknown libraries of all targets" ON)
 option(CSTOOLKIT_CHECK_DEPENDENCIES "Raise a warning if a dependency of a target is not defined" ON)
+option(CSTOOLKIT_DISABLE_COMMON_CPPRULES "Does not include common DivST Cpp Rules" OFF)
+option(CSTOOLKIT_USE_GIT_TAG_VERSION "Set project version from git tag or branch name if possible" OFF)
+option(CSTOOLKIT_CPACK_RULES "Add CPack configuration to the project" OFF)
 
 ################################################################################
 #  Includes
@@ -49,8 +59,14 @@ include(${CMAKE_CURRENT_LIST_DIR}/utility/PostConfigure.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Deploy.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Fetch.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Version.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/utility/CppRules.cmake)
+if(NOT CSTOOLKIT_DISABLE_COMMON_CPPRULES)
+    include(${CMAKE_CURRENT_LIST_DIR}/utility/CppRules.cmake)
+endif()
 include(${CMAKE_CURRENT_LIST_DIR}/utility/mkspecs.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Windows.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Qt.cmake)
+if(CSTOOLKIT_CPACK_RULES)
+    include(${CMAKE_CURRENT_LIST_DIR}/utility/CPackRules.cmake)
+endif()
+
 cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL cstoolkit_post_configure())

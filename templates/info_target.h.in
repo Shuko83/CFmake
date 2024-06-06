@@ -3,19 +3,17 @@
 ** WARNING! All changes made in this file will be lost when regenerating project!
 **********************************************************************************/
 
-#ifndef INFO_@PARAMS_PRODUCT@_H
-#define INFO_@PARAMS_PRODUCT@_H
+#ifndef INFO_@PARAMS_INCGUARD@_H
+#define INFO_@PARAMS_INCGUARD@_H
 
-namespace @PARAMS_PRODUCT@ {
-
+namespace @PARAMS_NAMESPACE@ {
 
     const char * name();
     const char * version();
     const char * product();
     const char * organization();
     const char * copyright();
-    
-    
+    const char * about();
 }
 
 #endif

@@ -1,7 +1,7 @@
 include(CMakePackageConfigHelpers)
 
 function(cstoolkit_post_configure)
-    #message(STATUS "CSTOOLKIT_POST_CONFIGURE")
+    message(DEBUG "CSTOOLKIT_POST_CONFIGURE")
 
     # Fichier Config
 
@@ -10,8 +10,8 @@ function(cstoolkit_post_configure)
     if(CMAKE_PROJECT_NAME IN_LIST ALL_TARGETS) # Single Component Package generated directly by target
         list(LENGTH ALL_TARGETS _nbtargets)
         if(_nbtargets GREATER 1)
-            message(WARNING "CSToolkit: Having a target named like the project (${PROJECT_NAME}) result in a single target install.\n"
-            "You have multiples targets (${_nbtargets}) in the build system, this may result in an invalid install scipt.")
+            message(NOTICE "CSToolkit: Having a target named like the project (${PROJECT_NAME}) result in a single target install.\n"
+            "You have multiples targets (${_nbtargets}) in the build system, this may result in an invalid install script.")
         endif()
 
         write_basic_package_version_file(
@@ -22,13 +22,13 @@ function(cstoolkit_post_configure)
     
         install(FILES
             ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/cmake
+            DESTINATION cmake
         )
     else() # Multi Components Config Files
         configure_package_config_file(
             ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
             ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-            INSTALL_DESTINATION ${CMAKE_INSTALL_PREFIX}
+            INSTALL_DESTINATION "."
         )
 
         write_basic_package_version_file(
@@ -40,7 +40,7 @@ function(cstoolkit_post_configure)
         install(FILES
             ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
             ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-            DESTINATION ${CMAKE_INSTALL_PREFIX}
+            DESTINATION "."
         )
     endif()
 
@@ -101,9 +101,9 @@ function(cstoolkit_check_dependencies target)
         if(HAS_NAMESPACE AND CSTOOLKIT_AUTO_FIND_PACKAGE)
             set(PACKAGE_NAME ${CMAKE_MATCH_1})
             set(COMPONENT_NAME ${CMAKE_MATCH_2})
-            # message("Namespace: ${PACKAGE_NAME}")
-            # message("LibName: ${COMPONENT_NAME}")
-            # message(${dep} " target not found")
+            message(DEBUG "Namespace: ${PACKAGE_NAME}")
+            message(DEBUG "LibName: ${COMPONENT_NAME}")
+            message(DEBUG ${dep} " target not found")
            
             if(${PACKAGE_NAME} STREQUAL "Boost" AND ${COMPONENT_NAME} STREQUAL "headers")
                 # Special case, if dependency is Boost::headers we can't use the regular find_package 
@@ -131,6 +131,13 @@ function(cstoolkit_check_dependencies target)
             cstoolkit_check_dependencies_message("${target}: find_package failed for dependency ${dep}")
 
         else() # NO NAMESPACE
+            #if("${dep}" IN_LIST CMAKE_C_STANDARD_LIBRARIES)
+            #    continue()
+            #endif()
+            #if("${dep}" IN_LIST CMAKE_CXX_STANDARD_LIBRARIES)
+            #    continue()
+            #endif()
+
             if(CSTOOLKIT_AUTO_FIND_PACKAGE)
                 find_package(${dep} QUIET GLOBAL)
 
@@ -145,7 +152,7 @@ function(cstoolkit_check_dependencies target)
                     continue()
                 endif()
 
-                string(REGEX MATCH "(.*[^-_])[-_]?static$" HAS_STATIC_SUFFIX ${dep})
+                string(REGEX MATCH "(.*[^-_])[-_]?[Ss][Tt][Aa][Tt][Ii][Cc]$" HAS_STATIC_SUFFIX ${dep})
                 if(HAS_STATIC_SUFFIX)
                     set(PACKAGE_NAME ${CMAKE_MATCH_1})
                     find_package(${PACKAGE_NAME} QUIET GLOBAL)
@@ -164,7 +171,7 @@ function(cstoolkit_check_dependencies target)
 
             if(CSTOOLKIT_CHECK_DEPENDENCIES)
                 find_library(${dep}_LIB ${dep} NO_CACHE PATHS "${CSTOOLKIT_WINDOWS_KITS_LIB_DIR}")
-                if(${${dep}_LIB})
+                if(${dep}_LIB)
                     continue()
                 endif()
                 
@@ -176,6 +183,6 @@ endfunction()
 
 macro(cstoolkit_check_dependencies_message message)
     if(CSTOOLKIT_CHECK_DEPENDENCIES)
-        message(WARNING "CSToolkit: " ${message})
+        message(NOTICE "CSToolkit: " ${message})
     endif()
 endmacro()
