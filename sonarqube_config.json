@@ -1,0 +1,13 @@
+{
+	"include":[
+		"./Sources/"
+	],
+	"ignore":[
+		"**.txt"",
+		"**/Libraries/"",
+		"**/_project/"",
+		"**/pch/"",
+		"**/Installer/"",
+		"**/_resources/""
+	]
+}
