@@ -3,9 +3,9 @@
 ** WARNING! All changes made in this file will be lost when regenerating project!
 **********************************************************************************/
 
-#include "@PARAMS_INCLUDE@"
-@PARAMS_QT_SECTION@
-namespace @PARAMS_NAMESPACE@ {
+#include "target_info.h"
+@PARAMS_QAPP_SECTION@
+namespace target_info {
 
     const char * name()
     {
@@ -38,7 +38,7 @@ namespace @PARAMS_NAMESPACE@ {
                "Built: " __TIME__ ", " __DATE__ "\n"
                "Version: @PARAMS_VERSION@\n"
                @PARAMS_ABOUT_QT_VERSION@
-               "Compiler: @CMAKE_GENERATOR@, @CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@"
+               "Compiler: @PARAMS_COMPILER@"
         ;
     }
 }

@@ -3,7 +3,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Parse arguments
 
     set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE NO_INSTALL PUBLIC_HEADERS_NO_EXTENSION)
-    set(TARGET_UNIQUE ALIAS EXTENSION PLUGINS_DIR)
+    set(TARGET_UNIQUE NAMESPACE ALIAS EXTENSION PLUGINS_DIR)
     set(TARGET_MULTIPLE
         # LIBRARIES
         PUBLIC_LINK_LIBRARIES
@@ -55,12 +55,18 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         return()
     endif()
 
+    if(NOT DEFINED TARGET_NAMESPACE)
+        set(TARGET_NAMESPACE ${PROJECT_NAME}::)
+    elseif(NOT TARGET_NAMESPACE MATCHES "^.*::$")
+        set(TARGET_NAMESPACE ${TARGET_NAMESPACE}::)
+    endif()
+
     # Library
     
     if(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
         add_library(${TARGET_NAME} ${TARGET_TYPE})
-        add_library(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
-        if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${PROJECT_NAME}::${TARGET_NAME})
+        add_library(${TARGET_NAMESPACE}${TARGET_NAME} ALIAS ${TARGET_NAME})
+        if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${TARGET_NAMESPACE}${TARGET_NAME})
             add_library(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
         endif()
     endif()
@@ -69,8 +75,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     if(TARGET_EXECUTABLE)
         add_executable(${TARGET_NAME})
-        add_executable(${PROJECT_NAME}::${TARGET_NAME} ALIAS ${TARGET_NAME})
-        if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${PROJECT_NAME}::${TARGET_NAME})
+        add_executable(${TARGET_NAMESPACE}${TARGET_NAME} ALIAS ${TARGET_NAME})
+        if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${TARGET_NAMESPACE}${TARGET_NAME})
             add_executable(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
         endif()
     endif()
@@ -452,32 +458,75 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     # Installation
 
-    if(NOT TARGET_NO_INSTALL AND PROJECT_IS_TOP_LEVEL)
+    if(NOT TARGET_NO_INSTALL)
+        # cette partie complexe est necessaire pour eviter des messages d'erreur cmake sur le fait que des référence d'install ne soit pas exportés
 
-        if(PROJECT_NAME STREQUAL TARGET_NAME)
-            set(TARGET_INSTALL_LIB_DIR lib/$<LOWER_CASE:$<CONFIG>>)
-            set(TARGET_INSTALL_BIN_DIR bin/$<LOWER_CASE:$<CONFIG>>)
-            set(TARGET_INSTALL_INCLUDE_DIR include)
-            set(TARGET_INSTALL_CMAKE_DIR cmake)
-            set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME})
+        # Les targets qui ne sont pas du top level project sont exclu du install all et placé dans un dossier à part
+        if(NOT PROJECT_IS_TOP_LEVEL OR NOT TARGET_NAMESPACE STREQUAL "${PROJECT_NAME}::")
+            string(REGEX REPLACE "::$" "" TARGET_INSTALL_INTER_DIR "${TARGET_NAMESPACE}")
+            set(TARGET_INSTALL_EXCLUDE_FROM_ALL "EXCLUDE_FROM_ALL")
+            set(TARGET_INSTALL_LIB_DIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
+            set(TARGET_INSTALL_BIN_DIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
+            set(TARGET_INSTALL_INCLUDE_DIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/include)
+            set(TARGET_INSTALL_CMAKE_DIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/cmake)
+            set(TARGET_INSTALL_CONFIG_NAME ${TARGET_INSTALL_INTER_DIR}_${TARGET_NAME})
+            set(TARGET_INSTALL_COMPONENT ${TARGET_INSTALL_INTER_DIR}_${TARGET_NAME})
+            set(TARGET_INSTALL_DESTINATION externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME})
         else()
-            set(TARGET_INSTALL_LIB_DIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
-            set(TARGET_INSTALL_BIN_DIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
-            set(TARGET_INSTALL_INCLUDE_DIR ${TARGET_NAME}/include)
-            set(TARGET_INSTALL_CMAKE_DIR ${TARGET_NAME}/cmake)
-            set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
+            if(NOT CSTOOLKIT_INSTALL_TARGETS AND NOT CSTOOLKIT_INSTALL_TARGETS_ALL AND TARGET_NAME STREQUAL PROJECT_NAME)
+                # Si aucune target précisé et que la target a le meme nom que le projet, mode single component
+                set(CSTOOLKIT_INSTALL_TARGETS ${PROJECT_NAME})
+                message(STATUS "CSToolkit: Automatic install mode detection: Single Component")
+            endif()
+        
+            # Detection de la methode d'install
+            list(LENGTH CSTOOLKIT_INSTALL_TARGETS CSTOOLKIT_INSTALL_TARGETS_NB)
+
+            if(CSTOOLKIT_INSTALL_TARGETS_NB EQUAL 1) # mode single component
+                if(TARGET_NAME STREQUAL PROJECT_NAME) # LE component
+                    set(TARGET_INSTALL_LIB_DIR lib/$<LOWER_CASE:$<CONFIG>>)
+                    set(TARGET_INSTALL_BIN_DIR bin/$<LOWER_CASE:$<CONFIG>>)
+                    set(TARGET_INSTALL_INCLUDE_DIR include)
+                    set(TARGET_INSTALL_CMAKE_DIR cmake)
+                    set(TARGET_INSTALL_CONFIG_NAME ${TARGET_NAME})
+                    set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
+                    set(TARGET_INSTALL_DESTINATION ".")
+                    list(APPEND CSTOOLKIT_INSTALL_TARGETS_ALL "${TARGET_NAME}")
+                else() #autres components à exclure
+                    set(TARGET_INSTALL_EXCLUDE_FROM_ALL "EXCLUDE_FROM_ALL")
+                    set(TARGET_INSTALL_LIB_DIR internals/${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
+                    set(TARGET_INSTALL_BIN_DIR internals/${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
+                    set(TARGET_INSTALL_INCLUDE_DIR internals/${TARGET_NAME}/include)
+                    set(TARGET_INSTALL_CMAKE_DIR internals/${TARGET_NAME}/cmake)
+                    set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
+                    set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
+                    set(TARGET_INSTALL_DESTINATION internals/${TARGET_NAME})
+                endif()
+            else() # mode multi component
+                set(TARGET_INSTALL_LIB_DIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_BIN_DIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_INCLUDE_DIR ${TARGET_NAME}/include)
+                set(TARGET_INSTALL_CMAKE_DIR ${TARGET_NAME}/cmake)
+                set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
+                set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
+                set(TARGET_INSTALL_DESTINATION ${TARGET_NAME})
+                list(APPEND CSTOOLKIT_INSTALL_TARGETS_ALL "${TARGET_NAME}")
+            endif()
         endif()
 
         # Only if recursive includes is activated
         if (RELATIVE_PUBLIC_HEADER_DIRECTORIES)
-            set(INCLUDES_PARAMS INCLUDES DESTINATION ${RELATIVE_PUBLIC_HEADER_DIRECTORIES})
+            set(TARGET_INSTALL_INCLUDES_DESTINATION INCLUDES DESTINATION ${RELATIVE_PUBLIC_HEADER_DIRECTORIES})
         endif()
 
-        install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets DESTINATION ${TARGET_NAME}
+        install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets
+            DESTINATION ${TARGET_INSTALL_DESTINATION}
+            COMPONENT ${TARGET_INSTALL_COMPONENT}
+            ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
             ARCHIVE DESTINATION ${TARGET_INSTALL_LIB_DIR}
             RUNTIME DESTINATION ${TARGET_INSTALL_BIN_DIR}
             FILE_SET HEADERS DESTINATION ${TARGET_INSTALL_INCLUDE_DIR}
-            ${INCLUDES_PARAMS}              
+            ${TARGET_INSTALL_INCLUDES_DESTINATION}
             #      LIBRARY DESTINATION ${TARGET_NAME}/LIBRARY
             #      OBJECTS DESTINATION ${TARGET_NAME}/OBJECTS
             #      FRAMEWORK DESTINATION ${TARGET_NAME}/FRAMEWORK
@@ -490,7 +539,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         # PDBS
         if(MSVC)
             if(TARGET_SHARED OR TARGET_EXECUTABLE)
-                install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} OPTIONAL)
+                install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
             elseif(TARGET_STATIC)
                 # Default pdb output is not next to .lib
                 set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:${TARGET_NAME}>)
@@ -498,14 +547,16 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 # COMPILE_PDB_NAME does not support generator expression
                 set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME_DEBUG ${TARGET_NAME}${CMAKE_DEBUG_POSTFIX})
                 install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.pdb
-                    DESTINATION ${TARGET_INSTALL_LIB_DIR} CONFIGURATIONS Debug)
+                    DESTINATION ${TARGET_INSTALL_LIB_DIR} CONFIGURATIONS Debug COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
             endif()
         endif()
 
         # Config
         install(EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets
-            NAMESPACE ${PROJECT_NAME}::
+            NAMESPACE ${TARGET_NAMESPACE}
             DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
+            COMPONENT ${TARGET_INSTALL_COMPONENT}
+            ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
         )
         generate_target_config()
     endif()
@@ -556,5 +607,7 @@ macro (generate_target_config)
     install(FILES 
         ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_INSTALL_CONFIG_NAME}Config.cmake
         DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
+        COMPONENT ${TARGET_INSTALL_COMPONENT}
+        ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
     )
 endmacro()

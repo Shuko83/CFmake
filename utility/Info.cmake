@@ -1,6 +1,6 @@
 function(cstoolkit_generate_target_info)
 
-    set(options QT_EXECUTABLE)
+    set(options QT EXECUTABLE)
     set(one_value_keywords
         TARGET
         VERSION
@@ -15,28 +15,31 @@ function(cstoolkit_generate_target_info)
 
     set(INFO_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/generated/info)
     
-    set(cmake_target_cpp_info ${INFO_DIRECTORY}/info_${PARAMS_TARGET}.cpp)
-    set(cmake_target_h_info ${INFO_DIRECTORY}/info_${PARAMS_TARGET}.h)      
+    set(target_info_cpp_filename ${INFO_DIRECTORY}/target_info.cpp)
+    set(target_info_h_filename ${INFO_DIRECTORY}/target_info.h)
 
-    set(PARAMS_INCLUDE info_${PARAMS_TARGET}.h)
-
-    string(REPLACE "-" "_" PARAMS_NAMESPACE "${PARAMS_TARGET}")
-    string(TOUPPER "${PARAMS_NAMESPACE}" PARAMS_INCGUARD)
-
-    if(QT_EXECUTABLE)
-        file(READ ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/info_target_qt.in _info_target_qt_content)
-        string(CONFIGURE _info_target_qt_content PARAMS_QT_SECTION @ONLY)
-        set(PARAMS_ABOUT_QT_VERSION "\"Qt version: ${QT_VERSION}\\n\"")
+    if (MSVC)
+        set(PARAMS_COMPILER "Visual Studio ${CSTOOLKIT_COMPILER_VERSION}, ${CMAKE_CXX_COMPILER_ID} ${CMAKE_VS_PLATFORM_TOOLSET} (${CMAKE_CXX_COMPILER_VERSION})")
+    else()
+        set(PARAMS_COMPILER "${CSTOOLKIT_COMPILER_NAME} ${CMAKE_CXX_COMPILER_VERSION}")
     endif()
 
-    configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/info_target.cpp.in ${cmake_target_cpp_info} @ONLY)
-    configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/info_target.h.in ${cmake_target_h_info} @ONLY)
+    if(PARAMS_QT)
+        set(PARAMS_ABOUT_QT_VERSION "\"Qt version: ${QT_VERSION}\\n\"")
+        if(PARAMS_EXECUTABLE)
+            file(READ ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/target_info_qapp.in _target_info_qapp_content)
+            string(CONFIGURE _target_info_qapp_content PARAMS_QAPP_SECTION @ONLY)
+        endif()
+    endif()
 
-    target_sources(${PARAMS_TARGET} PRIVATE ${cmake_target_cpp_info} )
+    configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/target_info.cpp.in ${target_info_cpp_filename} @ONLY)
+    configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/target_info.h.in ${target_info_h_filename} @ONLY)
+
+    target_sources(${PARAMS_TARGET} PRIVATE ${target_info_cpp_filename} )
     target_sources(${PARAMS_TARGET}
-        PRIVATE FILE_SET "info" TYPE HEADERS BASE_DIRS ${INFO_DIRECTORY} FILES ${cmake_target_h_info}
+        PRIVATE FILE_SET "target_info" TYPE HEADERS BASE_DIRS ${INFO_DIRECTORY} FILES ${target_info_h_filename}
     )
-    source_group(TREE ${INFO_DIRECTORY}/.. PREFIX "Generated Files" FILES ${cmake_target_cpp_info} ${cmake_target_h_info})
+    source_group(TREE ${INFO_DIRECTORY}/.. PREFIX "Generated Files" FILES ${target_info_cpp_filename} ${target_info_h_filename})
 
     message(DEBUG "Target informations generation success !!")
 

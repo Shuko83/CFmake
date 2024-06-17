@@ -12,25 +12,29 @@ if(NOT PROJECT_NAME)
 endif()
 
 ################################################################################
-# Project definitions
+# GLOBAL MODIFIERS
 ################################################################################
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+################################################################################
+# Cache variables to override if needed
+################################################################################
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   cmake_path(SET _install_path NORMALIZE "${CMAKE_BINARY_DIR}/../install")
   set(CMAKE_INSTALL_PREFIX "${_install_path}" CACHE PATH "Default install directory used by install()." FORCE)
 endif()
 
-set(CSTOOLKIT_EXTERNALS "${CMAKE_BINARY_DIR}/externals")
+set(CSTOOLKIT_EXTERNALS "${CMAKE_BINARY_DIR}/externals" CACHE PATH "Directory where externals project are situated")
 
 set(CMAKE_PREFIX_PATH ${CSTOOLKIT_EXTERNALS} CACHE PATH "Directories to be searched by find_package()")
 
-set(CSTOOLKIT_ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory")
+set(CSTOOLKIT_ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory" CACHE STRING "Url of artifactory")
 
 set(CSTOOLKIT_PROJECT_VERSION 0.0.0.0 CACHE STRING "Version of the project, will set CMAKE_PROJECT_VERSION and PROJECT_VERSION")
 
-set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/cstoolkit_copy.cmake" --)
+set(CSTOOLKIT_INSTALL_TARGETS "" CACHE STRING "List of targets to install, if empty install all targets")
 
 set(CSTOOLKIT_DEFAULT_PUBLIC_HEADERS_DIRS "include" CACHE STRING "Default folder for public headers of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_PRIVATE_HEADERS_DIRS "src" CACHE STRING "Default folder for private headers of a target created with cstoolkit_add_target")
@@ -48,6 +52,13 @@ option(CSTOOLKIT_CHECK_DEPENDENCIES "Raise a warning if a dependency of a target
 option(CSTOOLKIT_DISABLE_COMMON_CPPRULES "Does not include common DivST Cpp Rules" OFF)
 option(CSTOOLKIT_USE_GIT_TAG_VERSION "Set project version from git tag or branch name if possible" OFF)
 option(CSTOOLKIT_CPACK_RULES "Add CPack configuration to the project" OFF)
+
+################################################################################
+#  Internal variables
+################################################################################
+
+set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/cstoolkit_copy.cmake" --)
+set(CSTOOLKIT_INSTALL_TARGETS_ALL)
 
 ################################################################################
 #  Includes

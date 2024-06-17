@@ -20,7 +20,7 @@ cstoolkit_fetch_artifactory("TinyXML2" VERSION "5.0.1-2")
 add_subdirectory(MyExe)
 #add_subdirectory(MyExeWithPlugins)
 add_subdirectory(MyLib)
-#add_subdirectory(MyPlugin)
+add_subdirectory(MyPlugin)
 #add_subdirectory(MyStaticLib)
 #add_subdirectory(MyCombinedStaticLib)
 

@@ -4,48 +4,57 @@ function(cstoolkit_post_configure)
     message(DEBUG "CSTOOLKIT_POST_CONFIGURE")
 
     # Fichier Config
+    set(CSTOOLKIT_INSTALL_TARGETS_MISSING ${CSTOOLKIT_INSTALL_TARGETS})
+    list(REMOVE_ITEM CSTOOLKIT_INSTALL_TARGETS_MISSING ${CSTOOLKIT_INSTALL_TARGETS_ALL})
 
-    cstoolkit_get_all_targets(ALL_TARGETS)
+    if(CSTOOLKIT_INSTALL_TARGETS_MISSING)
+        list(JOIN CSTOOLKIT_INSTALL_TARGETS_MISSING ", " CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING)
+        message(SEND_ERROR "CSToolkit: Could not find specified install targets: ${CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING}")
+    else()
+        # Detection de la methode d'install
+        list(LENGTH CSTOOLKIT_INSTALL_TARGETS CSTOOLKIT_INSTALL_TARGETS_NB)
 
-    if(CMAKE_PROJECT_NAME IN_LIST ALL_TARGETS) # Single Component Package generated directly by target
-        list(LENGTH ALL_TARGETS _nbtargets)
-        if(_nbtargets GREATER 1)
-            message(NOTICE "CSToolkit: Having a target named like the project (${PROJECT_NAME}) result in a single target install.\n"
-            "You have multiples targets (${_nbtargets}) in the build system, this may result in an invalid install script.")
+        if(CSTOOLKIT_INSTALL_TARGETS_NB EQUAL 1) # mode single component
+            # We use the config of the target directly
+            # no need to generate a project level config file
+
+            write_basic_package_version_file(
+                ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
+                VERSION ${PROJECT_VERSION}
+                COMPATIBILITY SameMinorVersion
+            )
+        
+            install(FILES
+                ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
+                DESTINATION cmake
+            )
+        else() # mode multi component
+            if(NOT CSTOOLKIT_INSTALL_TARGETS)
+                message(STATUS "CSToolkit: Automatic install mode detection: Multi Component")
+            endif()
+            configure_package_config_file(
+                ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
+                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+                INSTALL_DESTINATION "."
+            )
+
+            write_basic_package_version_file(
+                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+                VERSION ${PROJECT_VERSION}
+                COMPATIBILITY SameMinorVersion
+            )
+
+            install(FILES
+                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+                DESTINATION "."
+            )
         endif()
-
-        write_basic_package_version_file(
-            ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
-            VERSION ${PROJECT_VERSION}
-            COMPATIBILITY SameMinorVersion
-        )
-    
-        install(FILES
-            ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
-            DESTINATION cmake
-        )
-    else() # Multi Components Config Files
-        configure_package_config_file(
-            ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
-            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-            INSTALL_DESTINATION "."
-        )
-
-        write_basic_package_version_file(
-            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-            VERSION ${PROJECT_VERSION}
-            COMPATIBILITY SameMinorVersion
-        )
-    
-        install(FILES
-            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-            ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-            DESTINATION "."
-        )
     endif()
 
     # Verification des dependances
     if(CSTOOLKIT_AUTO_FIND_PACKAGE OR CSTOOLKIT_CHECK_DEPENDENCIES)
+        cstoolkit_get_all_targets(ALL_TARGETS)
         foreach(target ${ALL_TARGETS})
             cstoolkit_check_dependencies(${target})
         endforeach()
