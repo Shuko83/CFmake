@@ -1,5 +1,9 @@
 function(cstoolkit_get_windowssdk_library_dir _var)
-    string(REGEX MATCH "^([0-9]+\\.[0-9]+)" _winsdk_ver ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION})
+    if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION)
+        string(REGEX MATCH "^([0-9]+\\.[0-9]+)" _winsdk_ver ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION})
+    else() # CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION is only defined for Win10 and up
+        set(_winsdk_ver "8.1")
+    endif()
     
     set(_winsdk_key "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows\\v${_winsdk_ver}")
 
