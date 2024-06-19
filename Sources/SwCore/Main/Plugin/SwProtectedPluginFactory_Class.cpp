@@ -61,13 +61,13 @@ bool StreamWork::SwCore::SwProtectedPluginFactory_Class::unlock(std::string hash
 
 
 	std::string publicKeyBin;
-	CryptoPP::StringSource(publicKey, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(publicKeyBin)));
+	CryptoPP::StringSource stringSourcePublicKey(publicKey, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(publicKeyBin)));
 	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PublicKey pubKey;
 	pubKey.BERDecode(CryptoPP::StringStore(publicKeyBin).Ref());
 	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Verifier verifier(pubKey);
 	
 	byte* hashDecoded = new byte[verifier.MaxSignatureLength()];
-	CryptoPP::StringSource(hash, true, new CryptoPP::HexDecoder(new CryptoPP::ArraySink(hashDecoded, verifier.MaxSignatureLength())));
+	CryptoPP::StringSource stringSourceHash(hash, true, new CryptoPP::HexDecoder(new CryptoPP::ArraySink(hashDecoded, verifier.MaxSignatureLength())));
 
 	return verifier.VerifyMessage(reinterpret_cast<const byte*>(data.toUtf8().constData()), data.toUtf8().size(), hashDecoded, verifier.MaxSignatureLength());
 }

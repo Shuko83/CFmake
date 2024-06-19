@@ -63,7 +63,6 @@ QVariant QInterestAreaTreeModel::headerData ( int section,
         switch(section) {
             case 0:
                 return QVariant(QString("Interest Area"));
-                break;
             default:
                 break;
         }

@@ -214,9 +214,12 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_menus property\n" ) );
     }
-    _menus_nb_property->SetDescription( "Define how many ISwMenu interfaces this component accept" );
-    _menus_nb_property->SetValue( QVariant( _menus_nb ) );
-    _menus_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    else
+    {
+        _menus_nb_property->SetDescription( "Define how many ISwMenu interfaces this component accept" );
+        _menus_nb_property->SetValue( QVariant( _menus_nb ) );
+        _menus_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    }
     
     //Gestion des actions
     _actions_nb_property = getPropertiesService().CreateProperty<uint>( "Connexions_Actions" );
@@ -224,9 +227,12 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_actions property\n" ) );
     }
-    _actions_nb_property->SetDescription( "Define how many QAction interfaces this component accept" );
-    _actions_nb_property->SetValue( QVariant( _actions_nb ) );
-    _actions_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    else
+    {
+        _actions_nb_property->SetDescription( "Define how many QAction interfaces this component accept" );
+        _actions_nb_property->SetValue( QVariant( _actions_nb ) );
+        _actions_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    }
     
     //Gestion des toolbars
     _toolbars_nb_property = getPropertiesService().CreateProperty<uint>( "Connexions_Toolbars" );
@@ -234,9 +240,12 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_toolbars property\n" ) );
     }
-    _toolbars_nb_property->SetDescription( "Define how many ISwToolBar interfaces this component accept" );
-    _toolbars_nb_property->SetValue( QVariant( _toolbars_nb ) );
-    _toolbars_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    else
+    {
+        _toolbars_nb_property->SetDescription( "Define how many ISwToolBar interfaces this component accept" );
+        _toolbars_nb_property->SetValue( QVariant( _toolbars_nb ) );
+        _toolbars_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    }
     
     //Gestion des dockwidgets
     _dockwidgets_nb_property = getPropertiesService().CreateProperty<uint>( "Connexions_Widgets" );
@@ -245,9 +254,12 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
         if( SW_APP->IsVerbose() )
             SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_widgets property\n" ) );
     }
-    _dockwidgets_nb_property->SetDescription( "Define how many QWidget interfaces this component accept" );
-    _dockwidgets_nb_property->SetValue( QVariant( _dockwidgets_nb ) );
-    _dockwidgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    else
+    {
+        _dockwidgets_nb_property->SetDescription( "Define how many QWidget interfaces this component accept" );
+        _dockwidgets_nb_property->SetValue( QVariant( _dockwidgets_nb ) );
+        _dockwidgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    }
     
     //Gestion des listes de dockwidgets
     _listdockwidgets_nb_property = getPropertiesService().CreateProperty<uint>( "Connexions_ListDockWidgets" );
@@ -256,9 +268,12 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
         if( SW_APP->IsVerbose() )
             SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register nb_listdockwidgets property\n" ) );
     }
-    _listdockwidgets_nb_property->SetDescription( "Define how many ISwListDockWidget interfaces this component accept" );
-    _listdockwidgets_nb_property->SetValue( QVariant( _listdockwidgets_nb ) );
-    _listdockwidgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    else
+    {
+        _listdockwidgets_nb_property->SetDescription( "Define how many ISwListDockWidget interfaces this component accept" );
+        _listdockwidgets_nb_property->SetValue( QVariant( _listdockwidgets_nb ) );
+        _listdockwidgets_nb_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    }
     
     // choix de l'interface externe
     _use_aswidget_property = getPropertiesService().CreateProperty<bool>( "Parameters_Use as widget" );
@@ -267,9 +282,12 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
         if( SW_APP->IsVerbose() )
             SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register use as widget property property\n" ) );
     }
-    _use_aswidget_property->SetDescription( "Define kind of widget interface this component produces" );
-    _use_aswidget_property->SetValue( QVariant( _useAsWidget ) );
-    _use_aswidget_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    else
+    {
+        _use_aswidget_property->SetDescription( "Define kind of widget interface this component produces" );
+        _use_aswidget_property->SetValue( QVariant( _useAsWidget ) );
+        _use_aswidget_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    }
     
     //Mode d'affichage
     _show_property = getPropertiesService().CreateProperty<SwEnum>( "Parameters_Show Mode" );
@@ -288,9 +306,12 @@ void _SwGuiCompMainWindow::initializeComponent() throw( SwException )
     {
         if( SW_APP->IsVerbose() ) SW_APP->Logger().Log( LogLvl_Warning, QString( "Fail to register SaveAutoPeriod property\n" ) );
     }
-    _saveAutoPeriod_property->SetDescription( "Define the period for saving the dock configuration" );
-    _saveAutoPeriod_property->SetValue( QVariant( _saveAutoPeriod ) );
-    _saveAutoPeriod_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    else
+    {
+        _saveAutoPeriod_property->SetDescription( "Define the period for saving the dock configuration" );
+        _saveAutoPeriod_property->SetValue( QVariant( _saveAutoPeriod ) );
+        _saveAutoPeriod_property->GetOnChangeSignal().iconnect( *this, &_SwGuiCompMainWindow::eventPropertyChange );
+    }
     
     //Fin
     if( SW_APP->IsVerbose() )

@@ -100,8 +100,6 @@ void _SwGuiCssHighlighter::highlightBlock(const QString& text)
 		}
 	}
 
-
-
 	highlight(text, lastIndex, text.length() - lastIndex, state);
 	setCurrentBlockState(state + (save_state<<16));
 }

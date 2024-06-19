@@ -116,7 +116,7 @@ void _SwPropertiesModelImpl::DestroyItem(ISwProperty * property) {
     if (itp==_map_properties_to_item.end())
         return;
     item=itp.value();
-    for (int i=0;i<liste_size;i++) {
+    for (int i=0;i<liste_size && item;i++) {
         it=item->_childrens.find(liste[i]);
         if (it!=item->_childrens.end()) {
             c_item=it.value();  
@@ -316,10 +316,8 @@ QVariant _SwPropertiesModelImpl::headerData ( int section, Qt::Orientation orien
         switch(section) {
             case 0:
                 return QVariant(QString("property"));
-                break;
             case 1:
                 return QVariant(QString("value"));
-                break;
             default:
                 break;
         }

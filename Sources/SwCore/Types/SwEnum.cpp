@@ -238,10 +238,7 @@ QDataStream &operator>>(QDataStream &in, StreamWork::SwCore::SwEnum &myObj)
 //-----------------------------------------------------------------------
 void StreamWork::SwCore::SwEnum::FromString(const QString val, Qt::CaseSensitivity caseS /*= Qt::CaseSensitive*/)
 {
-	//pas optimisé il faudrait avoir une deusième map pour bien faire 
-	QMap<int, QString>::iterator it = _keys_values_pt->_enum_values.begin();
-
-	for (it; it != _keys_values_pt->_enum_values.end(); it++)
+	for (auto it = _keys_values_pt->_enum_values.begin(); it != _keys_values_pt->_enum_values.end(); it++)
 	{
 		if (QString::compare(it.value(), val, caseS) == 0)
 		{

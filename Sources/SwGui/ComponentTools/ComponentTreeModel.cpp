@@ -95,7 +95,6 @@ QVariant ComponentTreeModel::headerData(int section, Qt::Orientation orientation
 		{
 			case 0:
 				return QVariant(QString("Components"));
-				break;
 			default:
 				break;
 		}

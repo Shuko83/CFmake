@@ -186,10 +186,7 @@ void _SwGuiCompFromQActionToStackedWidget::switchStackedWidget( bool val )
 
 	if(action)
 	{
-		QMap<QString, QAction*>::iterator it = _actions.begin();
-		QMap<QString, QAction*>::iterator itEnd = _actions.end();
-
-		for (it; it != itEnd ; it++)
+		for (auto it = _actions.begin(); it != _actions.end(); it++)
 		{
 			if(it.value() && it.value() == action)
 			{

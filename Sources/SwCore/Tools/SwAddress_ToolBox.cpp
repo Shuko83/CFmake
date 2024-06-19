@@ -181,7 +181,7 @@ SwComponent_Class * SwAddress_ToolBox::FindTarget(QString path,SwComponent_Class
         index=1;
     } else {
         //Si ce n'est pas une adresse universelle
-        if (path[0]!=CG_PATH_STREAM_HEADER) {
+        if (path[0]!=CG_PATH_STREAM_HEADER && source) {
             //on par de la racine et on part de la premier chaine
             c_target=source;
 		    while (c_target->GetParent()!=NULL) c_target=c_target->GetParent();

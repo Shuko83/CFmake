@@ -67,6 +67,9 @@ namespace
 
 	std::tuple<bool, bool, QString, double, double> makeComparableTuple(QGraphicsItem * item)
 	{
+		if (!item)
+			return std::make_tuple(true, true, QString(), 0, 0);
+
 		ComponentGraphicItem * cgitem = dynamic_cast<ComponentGraphicItem *>(item);
 		InterestArea * ia = dynamic_cast<InterestArea *>(item);
 		QString name;
@@ -79,7 +82,7 @@ namespace
 		// Chaque catégorie est trié avec son nom ;
 		// S'il y a des doublons (ce qui a peu de chance d'arriver, les noms des Composants devant êtr euniques),
 		// on se sert de la position et de la taille pour les distinguer.
-		return std::make_tuple(!bool(ia), !bool(cgitem), name, item->x(), item->y());
+		return std::make_tuple(!ia, !cgitem, name, item->x(), item->y());		
 	}
 
 	bool graphicItemComparator(QGraphicsItem * leftItem, QGraphicsItem * rightItem)
@@ -323,7 +326,7 @@ QString StreamControler::getStreamSignature(QString stream)
 	{
 		// Génération du signer a partir de la clef privé
 		std::string privateKeyBin;
-		CryptoPP::StringSource(private_key, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(privateKeyBin)));
+		CryptoPP::StringSource stringSourceKey(private_key, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(privateKeyBin)));
 		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PrivateKey privKey;
 		privKey.BERDecode(CryptoPP::StringStore(privateKeyBin).Ref());
 		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Signer priv(privKey);
@@ -335,7 +338,7 @@ QString StreamControler::getStreamSignature(QString stream)
 
 		// Transformation de la signature de binaire a hexa
 		std::string signatureStringhex;
-		CryptoPP::StringSource(signature, size, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
+		CryptoPP::StringSource stringSourceSignature(signature, size, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
 		return QString::fromStdString(signatureStringhex);
 	}
 	catch (...)
@@ -753,7 +756,7 @@ void StreamControler::OnRemoveInterface(ISwInterfaces_Service * source, QString 
 void StreamControler::OnConnectInterface(ISwInterfaces_Service * source, QString interface_name,
 										 ISwInterfaces_Service * remote_source, QString remote_interface_name)
 {
-	if ( dynamic_cast<ISwInterfaces_Provider *>(source) != 0 )
+	if ( !source || dynamic_cast<ISwInterfaces_Provider *>(source) != 0 )
 		return;
 	QMap<StreamWork::SwCore::SwComponent_Class *, ComponentGraphicItem *>::iterator its;
 	QMap<StreamWork::SwCore::SwComponent_Class *, ComponentGraphicItem *>::iterator itt;

@@ -391,10 +391,8 @@ void _SwServiceShortcuts::shortcutSlot()
 	{
 		//find all shortcut bind on the QShortcut sequenc
 		QString sequenceAsString = lShortcut->key().toString();
-		QMap<QString,QList<QString>>::iterator it = _mapKeyboardAssoc.begin();
-		QMap<QString,QList<QString>>::iterator end = _mapKeyboardAssoc.end();
 
-		for(it ; it != end ; ++it)
+		for(auto it = _mapKeyboardAssoc.begin(); it != _mapKeyboardAssoc.end(); ++it)
 		{
 			if(it.value().contains(sequenceAsString) && _mapShortcuts.contains(it.key()))
 			{

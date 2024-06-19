@@ -929,7 +929,7 @@ QWidget * SwDockWidget_MainArea::pinDockTo(QObject * obj, QWidget * mainWidget, 
 		//Positionnement dans un dock principal
 		if (absolute == true)
 		{
-			if (ui.mainLayout->itemAt(0))
+			if (ui.mainLayout && ui.mainLayout->itemAt(0))
 			{
 				QWidget * widget = ui.mainLayout->itemAt(0)->widget();
 				if (widget)
@@ -1122,7 +1122,7 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 				toReturn = NULL;
 
 			//Affichage si necessaire du dock
-			if (mainDock && toReturn)
+			if (mainDock && toReturn && dock)
 				dock->show();
 		}
 
@@ -2558,7 +2558,8 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 				}
 			}
 			//Affichage ou non du dock principal
-			mainDock->setVisible(visible);
+			if (mainDock)
+				mainDock->setVisible(visible);
 			//Ajout des widgets charges
 			if (!widgetList.isEmpty() && mainDock)
 			{
@@ -2639,10 +2640,6 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 		//Si SwDockWidget_Splitter
 		else if (!name.compare("SwDockWidget_Splitter"))
 		{
-			//Creation du SwDockWidget_Splitter
-			Qt::Orientation o = (Qt::Orientation)e.attribute("orientation").toInt();
-			SwDockWidget_Splitter * splitter = new SwDockWidget_Splitter(o);
-
 			//Lecture des parametres
 			QDomNodeList list = node.childNodes();
 			int numWidget = 0;
@@ -2682,6 +2679,10 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 				//Dimensions
 				QSize size1, size2;
 
+				//Creation du SwDockWidget_Splitter
+				Qt::Orientation o = (Qt::Orientation)e.attribute("orientation").toInt();
+				SwDockWidget_Splitter* splitter = new SwDockWidget_Splitter(o);
+
 				//Premier widget
 				SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(firstWidget);
 				if (dock)
@@ -2713,18 +2714,16 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 				//Taille et position du splitter
 				splitter->move(pos);
 				splitter->resize(size);
+
+				return splitter;
 			}
 			//Sinon on renvoi celui qui existe, s'il en existe un
+			else if (firstWidget)
+				return firstWidget;			
+			else if (secondWidget)
+				return secondWidget;
 			else
-			{
-				if (firstWidget)
-					return firstWidget;
-				else if (secondWidget)
-					return secondWidget;
-				else
-					return NULL;
-			}
-			return splitter;
+				return NULL;			
 		}
 		//Si SwDockWidget_TabWidget
 		else if (!name.compare("SwDockWidget_TabWidget"))
@@ -2781,6 +2780,7 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 			{
 				return widgetList.first();
 			}
+			delete tab;
 			return NULL;
 		}
 		//Si toolbar
@@ -3016,13 +3016,14 @@ void SwDockWidget_MainArea::moveMainTab(int index, Qt::DockWidgetArea area)
 			_secondScreenMainDock->show();
 
 			toReturn = dock;
+			delete size;
 		}
 
 		else
 			toReturn = NULL;
 
 		//Affichage si necessaire du dock
-		if (mainDock && toReturn)
+		if (mainDock && toReturn && dock)
 			dock->show();
 
 		//Suppression de l'onglet contenant precedemment les docks

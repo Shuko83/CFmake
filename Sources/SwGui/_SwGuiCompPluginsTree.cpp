@@ -53,9 +53,12 @@ void _SwGuiCompPluginsTree::InitializeResources() throw(SwException) {
     if (!_window_title_property) {
         if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning,QString("Fail to register WindowTitle property\n"));
     }
-    _window_title_property->SetDescription("Define window title");  
-    _window_title_property->SetValue(QVariant(_window_title));
-    _window_title_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompPluginsTree::OnPropertyChange);
+    else
+    {
+        _window_title_property->SetDescription("Define window title");
+        _window_title_property->SetValue(QVariant(_window_title));
+        _window_title_property->GetOnChangeSignal().iconnect(*this,&_SwGuiCompPluginsTree::OnPropertyChange);
+    }
 	
     //Exportation de l'interface QWidget
 

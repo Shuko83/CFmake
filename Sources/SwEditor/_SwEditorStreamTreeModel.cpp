@@ -91,16 +91,12 @@ QVariant _SwEditorStreamTreeModel::headerData ( int section, Qt::Orientation ori
         switch(section) {
             case 0:
                 return QVariant(QString("Component"));
-                break;
             case 1:
                 return QVariant(QString("Description"));
-                break;
             case 2:
                 return QVariant(QString("Factory"));
-                break;
             case 3:
                 return QVariant(QString("Factory Description"));
-                break;
             default:
                 break;
         }

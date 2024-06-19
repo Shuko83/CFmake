@@ -175,7 +175,8 @@ void SwPropertyPersistentToolbox::SavePropertyExtended(QXmlStreamWriter& writer,
 		}
 	}
 	writer.writeStartElement(CL_XML_NODE);
-	writer.writeAttribute(CL_XML_ATT_NAME, QString(property->GetRealName()));	
+	if (property)
+		writer.writeAttribute(CL_XML_ATT_NAME, QString(property->GetRealName()));	
 	// création de la property et ajout dans le fichier
 	createProperty(writer, property, var);
 	writer.writeEndElement();
@@ -220,7 +221,7 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 			} else 
 			{
 				//Si le save n'a pas reussi alors log
-				if (inProperty->GetHostingService())
+				if (inProperty && inProperty->GetHostingService())
 				SW_APP->Logger().Log(LogLvl_Warning,"Unable to save property %s of type %s of component %s because of invalid characters\n",
 					name,
 					var.typeName(),
@@ -418,7 +419,7 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 	if (!save_done)
 	{
 		//Si le save n'a pas reussi alors log
-		if (inProperty->GetHostingService())
+		if (inProperty && inProperty->GetHostingService())
 		{
 			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
 								 name,
@@ -942,7 +943,7 @@ void SwPropertyPersistentToolbox::createProperty(QXmlStreamWriter& writer, ISwPr
 	if (!save_done)
 	{
 		//Si le save n'a pas reussi alors log
-		if (inProperty->GetHostingService())
+		if (inProperty && inProperty->GetHostingService())
 		{
 			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
 								 name,

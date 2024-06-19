@@ -360,13 +360,13 @@ bool StreamWork::SwCore::SwApplication::developerMode() const
 bool StreamWork::SwCore::SwApplication::isValidSignature(QString message, QString signature) const
 {
 	std::string publicKeyBin;
-	CryptoPP::StringSource(publicKey, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(publicKeyBin)));
+	CryptoPP::StringSource stringSourcePublicKey(publicKey, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(publicKeyBin)));
 	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PublicKey pubKey;
 	pubKey.BERDecode(CryptoPP::StringStore(publicKeyBin).Ref());
 	CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Verifier verifier(pubKey);
 
 	byte *signatureDecoded = new byte[verifier.MaxSignatureLength()];
-	CryptoPP::StringSource(signature.toStdString(), true, new CryptoPP::HexDecoder(new CryptoPP::ArraySink(signatureDecoded, verifier.MaxSignatureLength())));
+	CryptoPP::StringSource stringSource(signature.toStdString(), true, new CryptoPP::HexDecoder(new CryptoPP::ArraySink(signatureDecoded, verifier.MaxSignatureLength())));
 
 	return verifier.VerifyMessage(reinterpret_cast<const byte*>(message.toUtf8().constData()), message.toUtf8().size(), signatureDecoded, verifier.MaxSignatureLength());
 }

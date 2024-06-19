@@ -64,10 +64,8 @@ QVariant _SwModelStreamTreeModel::headerData ( int section, Qt::Orientation orie
         switch(section) {
             case 0:
                 return QVariant(QString("Component"));
-                break;
             case 1:
                 return QVariant(QString("Description"));
-                break;
             default:
                 break;
         }

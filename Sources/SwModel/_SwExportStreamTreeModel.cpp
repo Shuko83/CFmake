@@ -121,7 +121,6 @@ QVariant _SwExportStreamTreeModel::headerData ( int section, Qt::Orientation ori
         switch(section) {
             case 0:
                 return QVariant(QString("Entity"));
-                break;
             default:
                 break;
         }
@@ -226,7 +225,7 @@ void _SwExportStreamTreeModel::BuildItems(SwComponent_Class * comp,_Item * item)
         new _Item(item,comp,IT_Activable,"Activable interface");
     }   
     //Creation du neoud executable si necessaire
-    if (dynamic_cast<ISwExecutable_Service *>(comp->QueryService(CG_SW_SERVICE_EXECUTABLE))!=NULL) {
+    if (comp && (dynamic_cast<ISwExecutable_Service *>(comp->QueryService(CG_SW_SERVICE_EXECUTABLE))!=NULL)) {
         new _Item(item,comp,IT_Executable,"Executable interface");
     }
     //Creation du neoud executable si necessaire

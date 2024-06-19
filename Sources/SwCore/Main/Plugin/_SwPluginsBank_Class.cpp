@@ -465,7 +465,7 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 	{
 		// Génération du signer a partir de la clef privé
 		std::string privateKeyBin;
-		CryptoPP::StringSource(private_key, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(privateKeyBin)));
+		CryptoPP::StringSource stringSourcePrivateKey(private_key, true, new CryptoPP::HexDecoder(new CryptoPP::StringSink(privateKeyBin)));
 		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::PrivateKey privKey;
 		privKey.BERDecode(CryptoPP::StringStore(privateKeyBin).Ref());
 		CryptoPP::RSASS<CryptoPP::PKCS1v15, CryptoPP::SHA>::Signer priv(privKey);
@@ -478,7 +478,7 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 		// Transformation de la signature de binaire a hexa
 		std::string signatureStringBinaire(reinterpret_cast<char const*>(signature), messageSize);
 		std::string signatureStringhex;
-		CryptoPP::StringSource(signatureStringBinaire, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
+		CryptoPP::StringSource stringSourceSignature(signatureStringBinaire, true, new CryptoPP::HexEncoder(new CryptoPP::StringSink(signatureStringhex)));
 		return signatureStringhex;
 	}
 	catch (...)

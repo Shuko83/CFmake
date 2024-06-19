@@ -96,9 +96,12 @@ void _SwExecutor::InitializeResources() throw(SwException)
 	{
 		if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register Execution.TimeStep property\n"));
 	}
-	_time_step_property->SetDescription("Define time step in ms");
-	_time_step_property->SetValue(QVariant(_time_step));
-	_time_step_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
+	else
+	{
+		_time_step_property->SetDescription("Define time step in ms");
+		_time_step_property->SetValue(QVariant(_time_step));
+		_time_step_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
+	}
 
 	//Overload
 	_overload_property = _properties_service->CreateProperty<SwEnum>("Execution.Overload");
@@ -106,11 +109,14 @@ void _SwExecutor::InitializeResources() throw(SwException)
 	{
 		if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register Execution.Overload property\n"));
 	}
-	_overload_property->SetDescription("Enable overload");
-	QVariant _overload_variant;
-	_overload_variant.setValue(_overload);
-	_overload_property->SetValue(_overload_variant);
-	_overload_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
+	else
+	{
+		_overload_property->SetDescription("Enable overload");
+		QVariant _overload_variant;
+		_overload_variant.setValue(_overload);
+		_overload_property->SetValue(_overload_variant);
+		_overload_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
+	}	
 
 	//Thread priority
 	_priority_property = _properties_service->CreateProperty<SwEnum>("Execution.Priority");
@@ -118,12 +124,14 @@ void _SwExecutor::InitializeResources() throw(SwException)
 	{
 		if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register Execution.Priority property\n"));
 	}
-	_priority_property->SetDescription("Define thread priority (cf Doc QThread)");
-	QVariant _priority_variant;
-	_priority_variant.setValue(_priority);
-	_priority_property->SetValue(_priority_variant);
-	_priority_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
-
+	else
+	{
+		_priority_property->SetDescription("Define thread priority (cf Doc QThread)");
+		QVariant _priority_variant;
+		_priority_variant.setValue(_priority);
+		_priority_property->SetValue(_priority_variant);
+		_priority_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
+	}
 
 	//Est l'entree de l'executable
 	_executable_entry_property = _properties_service->CreateProperty<SwEnum>("Execution.Execution Type");
@@ -131,11 +139,14 @@ void _SwExecutor::InitializeResources() throw(SwException)
 	{
 		if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register Execution.Execution Type property\n"));
 	}
-	_executable_entry_property->SetDescription("Main Thread on timer (QTimer), Threaded, Main entry (ISwExecutor),\nFull Slave (time inherit from parent executor),Partial Slave (time is system time)");
-	QVariant _executable_entry_variant;
-	_executable_entry_variant.setValue(_executable_entry);
-	_executable_entry_property->SetValue(_executable_entry_variant);
-	_executable_entry_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
+	else
+	{
+		_executable_entry_property->SetDescription("Main Thread on timer (QTimer), Threaded, Main entry (ISwExecutor),\nFull Slave (time inherit from parent executor),Partial Slave (time is system time)");
+		QVariant _executable_entry_variant;
+		_executable_entry_variant.setValue(_executable_entry);
+		_executable_entry_property->SetValue(_executable_entry_variant);
+		_executable_entry_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
+	}
 
 	//Gestion de l activation par defaut 
 	_defaultActivated_property = _properties_service->CreateProperty<bool>("Activation.Default");
@@ -143,9 +154,12 @@ void _SwExecutor::InitializeResources() throw(SwException)
 	{
 		if ( SW_APP->IsVerbose() ) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register Activation.Default property\n"));
 	}
-	_defaultActivated_property->SetDescription("Component is Activated/Disactivated by default");
-	_defaultActivated_property->SetValue(QVariant(_defaultActivated));
-	_defaultActivated_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
+	else
+	{
+		_defaultActivated_property->SetDescription("Component is Activated/Disactivated by default");
+		_defaultActivated_property->SetValue(QVariant(_defaultActivated));
+		_defaultActivated_property->GetOnChangeSignal().iconnect(*this, &_SwExecutor::OnPropertyChange);
+	}
 
 	//Configuration par defaut
 	_exe_service.Prepare(_time_step, _overload.ToInt() != 0, Timer_exe);

@@ -340,10 +340,8 @@ QVariant SwPropertiesModelImpl::headerData(int section, Qt::Orientation orientat
 		{
 			case 0:
 				return QVariant(QString("property"));
-				break;
 			case 1:
 				return QVariant(QString("value"));
-				break;
 			default:
 				break;
 		}

@@ -108,10 +108,8 @@ QVariant _SwExecutorStreamTreeModel::headerData ( int section, Qt::Orientation o
 		{
 			case 0:
 				return QVariant ( QString ( "Component" ) );
-				break;
 			case 1:
 				return QVariant ( QString ( "Description" ) );
-				break;
 			default:
 				break;
 		}

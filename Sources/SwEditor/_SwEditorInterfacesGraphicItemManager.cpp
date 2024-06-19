@@ -31,7 +31,7 @@ _SwEditorInterfacesGraphicItemManager::~_SwEditorInterfacesGraphicItemManager() 
     _provider_service=dynamic_cast<ISwInterfaces_Service *>(_host_comp->QueryService(CG_SW_SERVICE_INTERFACES_PROVIDER));
     _consumer_service=dynamic_cast<ISwInterfaces_Service *>(_host_comp->QueryService(CG_SW_SERVICE_INTERFACES_CONSUMER));
     if (_provider_service!=NULL) _provider_service->DetachInterfacesServices_Listener(this);
-    if (_consumer_service!=NULL) _provider_service->DetachInterfacesServices_Listener(this);
+    if (_consumer_service!=NULL) _consumer_service->DetachInterfacesServices_Listener(this);
 }
 /*! \brief Initialisation */
 void _SwEditorInterfacesGraphicItemManager::Initialize(SwComponent_Class * host_comp,_SwEditorGraphicItem * host_item,_SwEditorInterfacesLayerManager * il_manager) {
