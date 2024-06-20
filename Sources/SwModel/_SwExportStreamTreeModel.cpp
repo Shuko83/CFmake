@@ -229,7 +229,7 @@ void _SwExportStreamTreeModel::BuildItems(SwComponent_Class * comp,_Item * item)
         new _Item(item,comp,IT_Executable,"Executable interface");
     }
     //Creation du neoud executable si necessaire
-    if (dynamic_cast<ISwServiceOwnerConfigurable *>(comp->QueryService(CG_SW_SERVICE_OWNER_CONFIGURABLE))!=NULL) {
+    if (comp && (dynamic_cast<ISwServiceOwnerConfigurable *>(comp->QueryService(CG_SW_SERVICE_OWNER_CONFIGURABLE))!=NULL)) {
         new _Item(item,comp,IT_OwnerConfigurable,"OwnerConfigurable interface");
     }
  

@@ -2559,24 +2559,26 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 			}
 			//Affichage ou non du dock principal
 			if (mainDock)
+			{
 				mainDock->setVisible(visible);
-			//Ajout des widgets charges
-			if (!widgetList.isEmpty() && mainDock)
-			{
-				int num = 0;
-				for (QWidget * widget : widgetList)
-					mainDock->addWidget(widget, widgetName.at(num++), &size);
+				//Ajout des widgets charges
+				if (!widgetList.isEmpty())
+				{
+					int num = 0;
+					for (QWidget * widget : widgetList)
+						mainDock->addWidget(widget, widgetName.at(num++), &size);
 
-				mainDock->setCurrentWidget(index);
-			}
-			else
-				mainDock->setVisible(false);
+					mainDock->setCurrentWidget(index);
+				}
+				else
+					mainDock->setVisible(false);
 			
-			if (mainDock->getMenuAction())
-			{
-				mainDock->getMenuAction()->setChecked(visible);
-				mainDock->getMenuAction()->setEnabled(!mainDock->empty());
-			}
+				if (mainDock->getMenuAction())
+				{
+					mainDock->getMenuAction()->setChecked(visible);
+					mainDock->getMenuAction()->setEnabled(!mainDock->empty());
+				}
+			}				
 			return mainDock;
 		}
 		//Si SwDockWidget_DockWidget
@@ -2778,6 +2780,7 @@ QWidget * SwDockWidget_MainArea::readWidgetParameters(QDomNode node)
 			//Sinon, on renvoi le widget trouve, ou NULL si aucun
 			else if (!widgetList.isEmpty())
 			{
+				delete tab;
 				return widgetList.first();
 			}
 			delete tab;

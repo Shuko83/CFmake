@@ -218,19 +218,24 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 			if (!cdata_node.isNull()) 
 			{
 				elt.appendChild(cdata_node);
-			} else 
+			} 
+			else if (inProperty)
 			{
 				//Si le save n'a pas reussi alors log
-				if (inProperty && inProperty->GetHostingService())
+				if (inProperty->GetHostingService())
+				{
 				SW_APP->Logger().Log(LogLvl_Warning,"Unable to save property %s of type %s of component %s because of invalid characters\n",
 					name,
 					var.typeName(),
 					inProperty->GetHostingService()->GetHostComponent()->GetName().toLatin1().data());    
+				}
 				else
+				{
 					SW_APP->Logger().Log(LogLvl_Warning, "Unable to save property %s of type %s of component %s because of invalid characters\n",
 					name,
 					var.typeName(),
 					inProperty->GetName());
+				}
 			}
 		}
 		save_done=true;
@@ -416,10 +421,10 @@ void SwPropertyPersistentToolbox::createProperty(QDomElement & parent_property_n
 		}
 	}
 	//Si la propriete n'a pas ete enregistrée
-	if (!save_done)
+	if (!save_done && inProperty)
 	{
 		//Si le save n'a pas reussi alors log
-		if (inProperty && inProperty->GetHostingService())
+		if (inProperty->GetHostingService())
 		{
 			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
 								 name,
@@ -940,10 +945,10 @@ void SwPropertyPersistentToolbox::createProperty(QXmlStreamWriter& writer, ISwPr
 		}
 	}
 	//Si la propriete n'a pas ete enregistrée
-	if (!save_done)
+	if (!save_done && inProperty)
 	{
 		//Si le save n'a pas reussi alors log
-		if (inProperty && inProperty->GetHostingService())
+		if (inProperty->GetHostingService())
 		{
 			SW_APP->Logger().Log(LogLvl_Warning, "Unable to save type %s for property %s of component %s\n",
 								 name,
