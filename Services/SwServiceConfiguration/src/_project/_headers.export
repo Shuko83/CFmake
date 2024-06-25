@@ -1,0 +1,8 @@
+BaseDir=..
+ISwAdminConfiguration.h
+ISwConfCollector.h
+ISwConfSaver.h
+ISwConfigListener.h
+ISwConfigurationManager.h
+ISwPropertiesObserver.h
+ISwServiceConfiguration.h

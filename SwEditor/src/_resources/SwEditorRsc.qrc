@@ -1,0 +1,23 @@
+<RCC>
+ <qresource prefix="/SwEditor">
+     <file alias="comp_toolbox.png">images/comp_toolbox.png</file>
+	 <file alias="brain.png">images/brain.png</file>
+	 <file alias="tabbar.png">images/tabbar.png</file>
+	 <file alias="actions.png">images/actions.png</file>
+	 <file alias="new.png">images/filenew.png</file>
+	 <file alias="open.png">images/fileopen.png</file>
+	 <file alias="save.png">images/filesave.png</file>
+	 <file alias="close.png">images/closetab.png</file>
+	 <file alias="up.png">images/up.png</file>
+	 <file alias="editdelete.png">images/editdelete.png</file>
+	 <file alias="editcopy.png">images/editcopy.png</file>
+	 <file alias="editpaste.png">images/editpaste.png</file>
+	 <file alias="editcut.png">images/editcut.png</file>
+	 <file alias="comp_edit.png">images/comp_edit.png</file>
+	 <file alias="graphicsview.png">images/graphicsview.png</file>
+	 <file alias="b_start.png">images/b_start.png</file>
+	 <file alias="b_stop.png">images/b_stop.png</file>
+	 <file alias="mod_run.png">images/mod_run.png</file>
+	 <file alias="mod_run_disable.png">images/mod_run_disable.png</file>
+ </qresource>
+</RCC>

@@ -1,0 +1,262 @@
+{
+	"deploy" : [
+		{
+			"sourceDir" : "../Component/Base",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwNamed_Class.h",
+				"Component.h",
+				"SwComponent_Class.h"
+			]
+		},
+		{
+			"sourceDir" : "../Component/Interfaces",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwObjectFactory.h",
+				"ISwObservable.h",
+				"ISwObserver.h",
+				"ISwPersistent.h",
+				"ISwPersistentConfigurable.h",
+				"ISwPin_Listener.h",
+				"ISwSubStream.h",
+				"ISwVisitor.h",
+				"ISwActivable.h",
+				"ISwAdminSetup.h",
+				"ISwComponentProvider.h",
+				"ISwCreationPostProcessor.h",				
+				"ISwExecutor.h",
+				"ISwFinalizer.h",
+				"ISwFinalizerManager.h",
+				"ISwHost.h",
+				"ISwInterfaces_ConsumerObserver.h"
+			]
+		},
+		{
+			"sourceDir" : "../Component/Pin",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwPin.h",
+				"SwData_Class.h"
+			]
+		},
+		{
+			"sourceDir" : "../Component/Services",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwPins_Manager.h",
+				"ISwProperties.h",
+				"ISwServiceOwner.h",
+				"ISwServiceOwnerConfigurable.h",
+				"ISwSnapShotPropertiesService.h",
+				"ISwController.h",
+				"ISwInterfaces_Consumer.h",
+				"ISwInterfaces_Provider.h"
+			]
+		},
+		{
+			"sourceDir" : "../Extensions",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwExtensionPoint.h",
+				"SwExtensionHelper.h",
+				"ISwExtension.h"
+			]
+		},
+		{
+			"sourceDir" : "../Main",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwApplication.h"
+			]
+		},
+		{
+			"sourceDir" : "../Main/Connexion",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwPins_ManagerListener.h",
+				"ISwInterfaces_Service.h",
+				"ISwInterfaces_ServicesListener.h"
+			]
+		},
+		{
+			"sourceDir" : "../Main/Plugin",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwPluginOverview.h",
+				"ISwPluginsBank.h",
+				"SwPluginFactory_Class.h",
+				"SwProtectedPluginFactory_Class.h",
+				"ISwPluginFactory.h"
+				
+			]
+		},
+		{
+			"sourceDir" : "../Main/Serialization",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwLoader_Class.h",
+				"SwSaver_Class.h"
+			]
+		},
+		{
+			"sourceDir" : "../Main/Services",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwServiceProductKey.h",
+				"ISwCheckService.h",
+				"ISwEditionService.h"
+			]
+		},
+		{
+			"sourceDir" : "../Main/Services/Management",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwServiceManager_Helper.h",
+				"ISwServicesManager_Listener.h",
+				"SwServicesManager_Class.h",
+				"ISwService.h"
+			]
+		},
+		{
+			"sourceDir" : "../Properties",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwPropertiesModelImpl.h",
+				"ISwProperty.h"
+			]
+		},
+		{
+			"sourceDir" : "../SwRef",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwRef.h",
+				"SwRef.h",
+				"SwRefParent.h",
+				"SwRefPtr.h",
+				"DisabledSwRef.h"
+			]
+		},
+		{
+			"sourceDir" : "../Tools",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwTime_ToolBox.h",
+				"SwWinProcess.h",
+				"SwAddress_ToolBox.h",
+				"SwPropertiesPersistentToolbox.h",
+				"SwRefPtrTools.h"
+			]
+		},
+		{
+			"sourceDir" : "../Tools/Exception",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwException.h"
+			]
+		},
+		{
+			"sourceDir" : "../Tools/Log",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwLogRecorder.h",
+				"ISwAlerter.h",
+				"ISwAlertRecorder.h",
+				"ISwLogger.h"
+			]
+		},
+		{
+			"sourceDir" : "../Tools/Signal",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"LibIndeSig.h"
+			]
+		},
+		{
+			"sourceDir" : "../Types",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"ISwFileEditor.h",
+				"SwDouble.h",
+				"SwEnum.h",
+				"SwEnumModel.h",
+				"SwFileDescriptor.h",
+				"SwIconDescriptor.h",
+				"SwInteger.h",
+				"SwIntegerEnum.h",
+				"SwIpV4Address.h",
+				"SwString.h",
+				"SwUUID.h",
+				"SwUUID_Simplified.h"
+			]
+		},
+		{
+			"sourceDir" : "../Types/UserType",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwTemplateSimpleTypeAdapter.h",
+				"ISwComplexeTypeAdapters.h",
+				"ISwComplexeTypeAdaptersFactoriesBank.h",
+				"ISwComplexeTypeAdaptersFactory.h",
+				"ISwSimpleTypeAdapter.h",
+				"SwDefaultComplexeTypeAdapters.h"
+			]
+		},
+		{
+			"sourceDir" : "..",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwCoreConstantes.h"
+			]
+		},
+		{
+			"sourceDir" : "../Main",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwMacros.h"
+			]
+		},
+		{
+			"sourceDir" : "../Component/Services/ServiceImpl",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwController_Class.h",
+				"SwInterfaces_Consumer_Class.h",
+				"SwInterfaces_Provider_Class.h",
+				"SwPins_Manager_Class.h",
+				"SwProperties_Class.h",
+				"SwSnapShotPropertiesService.h"
+			]
+		},
+		{
+			"sourceDir" : "../Tools/Log",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwAlerter_Class.h",
+				"SwFileLogRecorder_Class.h",
+				"SwLogger_Class.h"
+			]
+		},
+		{
+			"sourceDir" : "../Tools",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwPropertyPersistentToolbox.h"
+			]
+		},
+		{
+			"sourceDir" : "../Extensions",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"SwExtensionImpl.h"
+			]
+		},
+		{
+			"sourceDir" : "../Properties",
+			"destDir" : "${INSTALLDIR}/include",
+			"files" : [
+				"_SwPropertyImpl_Class.h"
+			]
+		}
+	]
+}

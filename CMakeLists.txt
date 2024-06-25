@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.21)
+
+project(tt4-sw-cmake)
+
+if(PROJECT_IS_TOP_LEVEL)
+    include("${CMAKE_SOURCE_DIR}/cstoolkit/CSToolkitStarlinx.cmake")
+
+    add_subdirectory(SwCore)
+    add_subdirectory(SwExecution)
+    add_subdirectory(SwFoundation)
+    add_subdirectory(Services/SwServiceMainWindow)
+    add_subdirectory(SwGui)
+    add_subdirectory(Services/SwServiceConfiguration)
+    add_subdirectory(Services/SwServiceShortcut)
+    add_subdirectory(Services/SwServiceTools)
+    add_subdirectory(SwEditor)
+    add_subdirectory(SwModel)
+    add_subdirectory(StreamWorkEditor)
+    add_subdirectory(SwConfiguration)
+    add_subdirectory(SwDataBase)
+    add_subdirectory(SwLauncher)
+    add_subdirectory(SwRecord)
+endif()
