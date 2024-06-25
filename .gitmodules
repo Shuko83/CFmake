@@ -1,0 +1,3 @@
+[submodule "cstoolkit"]
+	path = cstoolkit
+	url = https://dr-aix-git-01v.sccoa.si.c-s.fr/transverse/utilities/production/cstoolkit.git
