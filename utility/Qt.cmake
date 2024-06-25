@@ -51,7 +51,10 @@ set(Qt5_INSTALL_PREFIX "${_qt5Core_install_prefix}")
 #    qtGreaterThan( 5.9.9 ) : BUILD_MKSPEC = $${TOOLKIT.mkspec}-QT$${QT_VERSION_MM}
 #    else : BUILD_MKSPEC = $${TOOLKIT.mkspec}-QT$$[QT_VERSION]
 #}
-set_target_properties(Qt5::Core PROPERTIES "INTERFACE_COMPILE_OPTIONS" "-wd4127;-wd4512;-wd4714;$<$<NOT:$<CONFIG:Debug>>:-wd4718>") # hushes some known Qt warnings
+if(MSVC)
+    # hushes some known Qt warnings
+    set_target_properties(Qt5::Core PROPERTIES "INTERFACE_COMPILE_OPTIONS" "-wd4127;-wd4512;-wd4714;$<$<NOT:$<CONFIG:Debug>>:-wd4718>")
+endif()
 
 # qt5_wrap_cpp(outfiles inputfile ... )
 # partially copied from Qt5CoreMacros.cmake
