@@ -3,6 +3,11 @@ include(CMakePackageConfigHelpers)
 function(cstoolkit_post_configure)
     message(DEBUG "CSTOOLKIT_POST_CONFIGURE")
 
+    if(NOT CSTOOLKIT_INSTALL_TARGETS)
+        get_property(CSTOOLKIT_INSTALL_TARGETS GLOBAL PROPERTY CSTOOLKIT_INSTALL_TARGETS_AUTO)
+    endif()
+    get_property(CSTOOLKIT_INSTALL_TARGETS_ALL GLOBAL PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL)
+
     # Fichier Config
     set(CSTOOLKIT_INSTALL_TARGETS_MISSING ${CSTOOLKIT_INSTALL_TARGETS})
     list(REMOVE_ITEM CSTOOLKIT_INSTALL_TARGETS_MISSING ${CSTOOLKIT_INSTALL_TARGETS_ALL})
@@ -10,6 +15,8 @@ function(cstoolkit_post_configure)
     if(CSTOOLKIT_INSTALL_TARGETS_MISSING)
         list(JOIN CSTOOLKIT_INSTALL_TARGETS_MISSING ", " CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING)
         message(SEND_ERROR "CSToolkit: Could not find specified install targets: ${CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING}")
+    elseif(NOT CSTOOLKIT_INSTALL_TARGETS)
+        message(STATUS "CSToolkit: Automatic install mode detection: No Install")
     else()
         # Detection de la methode d'install
         list(LENGTH CSTOOLKIT_INSTALL_TARGETS CSTOOLKIT_INSTALL_TARGETS_NB)

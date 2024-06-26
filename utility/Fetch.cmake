@@ -30,7 +30,7 @@ function(cstoolkit_fetch_artifactory FETCH_NAME)
         BUILD_COMMAND ""
     )
 
-    FetchContent_Populate(${PACKAGE_NAME})
+    FetchContent_MakeAvailable(${PACKAGE_NAME})
 
     find_package(${PACKAGE_NAME} QUIET MODULE GLOBAL)
     if(${${PACKAGE_NAME}_FOUND})
