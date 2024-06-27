@@ -6,6 +6,10 @@ set(__CSTOOLKIT_GUARD__ TRUE)
 
 cmake_minimum_required(VERSION 3.27)
 
+if(POLICY CMP0152)
+  cmake_policy(SET CMP0152 NEW)
+endif()
+
 if(NOT PROJECT_NAME)
     message(FATAL_ERROR "CSToolkit: CSToolkit should be included after top level project() call.")
     return()

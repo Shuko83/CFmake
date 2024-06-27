@@ -15,7 +15,7 @@ function(cstoolkit_post_configure)
     if(CSTOOLKIT_INSTALL_TARGETS_MISSING)
         list(JOIN CSTOOLKIT_INSTALL_TARGETS_MISSING ", " CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING)
         message(SEND_ERROR "CSToolkit: Could not find specified install targets: ${CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING}")
-    elseif(NOT CSTOOLKIT_INSTALL_TARGETS)
+    elseif(NOT CSTOOLKIT_INSTALL_TARGETS_ALL)
         message(STATUS "CSToolkit: Automatic install mode detection: No Install")
     else()
         # Detection de la methode d'install
