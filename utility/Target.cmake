@@ -2,7 +2,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     # Parse arguments
 
-    set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE NO_INSTALL PUBLIC_HEADERS_NO_EXTENSION)
+    set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE RECURSIVE_INTERFACE_INCLUDE NO_INSTALL PUBLIC_HEADERS_NO_EXTENSION)
     set(TARGET_UNIQUE NAMESPACE ALIAS EXTENSION PLUGINS_DIR)
     set(TARGET_MULTIPLE
         # LIBRARIES
@@ -83,7 +83,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     # Extension
 
-    if (TARGET_EXTENSION)
+    if(TARGET_EXTENSION)
         set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".${TARGET_EXTENSION}")
     endif()
 
@@ -203,6 +203,39 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIRS} FILES ${TARGET_PRIVATE_HEADERS_FILES}
     )
 
+    # RECURSIVE_INCLUDE options
+    # this option allows to add all include subdirectories to private include directories
+    # RECURSIVE_INTERFACE_INCLUDE also adds to interface include directories
+    if(TARGET_INTERFACE AND TARGET_RECURSIVE_INCLUDE)
+        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): RECURSIVE_INCLUDE is not available for INTERFACE target. Use RECURSIVE_INTERFACE_INCLUDE instead.")
+    elseif(TARGET_RECURSIVE_INCLUDE OR TARGET_RECURSIVE_INTERFACE_INCLUDE)
+
+        foreach(_public_header_file ${TARGET_PUBLIC_HEADERS_FILES})
+            get_filename_component(_public_header_dir "${_public_header_file}" PATH)
+            list(APPEND TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS ${_public_header_dir})
+        endforeach()
+        list(REMOVE_DUPLICATES TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS)
+        list(REMOVE_ITEM TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS ${TARGET_PUBLIC_HEADERS_DIRS})
+
+        foreach(_private_header_file ${TARGET_PRIVATE_HEADERS_FILES})
+            get_filename_component(_private_header_dir "${_private_header_file}" PATH)
+            list(APPEND TARGET_RECURSIVE_PRIVATE_HEADERS_DIRS ${_private_header_dir})
+        endforeach()
+        list(REMOVE_DUPLICATES TARGET_RECURSIVE_PRIVATE_HEADERS_DIRS)
+        list(REMOVE_ITEM TARGET_RECURSIVE_PRIVATE_HEADERS_DIRS ${TARGET_PRIVATE_HEADERS_DIRS})
+
+        if(NOT TARGET_INTERFACE)
+            target_include_directories(${TARGET_NAME} PRIVATE ${TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS} ${TARGET_RECURSIVE_PRIVATE_HEADERS_DIRS})
+        endif()
+
+        if(TARGET_RECURSIVE_INTERFACE_INCLUDE AND TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS)
+            set(TARGET_BUILD_INTERFACE_RECURSIVE_PUBLIC_HEADERS_DIRS ${TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS})
+            list(TRANSFORM TARGET_BUILD_INTERFACE_RECURSIVE_PUBLIC_HEADERS_DIRS PREPEND "$<BUILD_INTERFACE:")
+            list(TRANSFORM TARGET_BUILD_INTERFACE_RECURSIVE_PUBLIC_HEADERS_DIRS APPEND ">")
+            target_include_directories(${TARGET_NAME} INTERFACE ${TARGET_BUILD_INTERFACE_RECURSIVE_PUBLIC_HEADERS_DIRS})
+        endif()
+    endif()
+
     # Compile Options
 
     target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_OPTIONS})
@@ -281,42 +314,6 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
     elseif(TARGET_COMBINED_LINK_LIBRARIES)
         message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): TARGET_COMBINED_LINK_LIBRARIES defined for non-static target")
-    endif()
-
-    # Recursive include, this option allows to include without specifying all paths to the header file 
-    # The code bellow fetches all parent directories of header files and adds them to the include directory of the target (PRIVATE and INTERFACE)
-    if (TARGET_RECURSIVE_INCLUDE)
-        # Get all directories of private headers file
-        list(APPEND ALL_HEADER_FILES "${TARGET_PRIVATE_HEADERS_FILES};${TARGET_PUBLIC_HEADERS_FILES}")
-        foreach(headerFile ${ALL_HEADER_FILES})
-            cmake_path(GET headerFile PARENT_PATH header_dir_path)
-            list(APPEND ALL_HEADER_DIRECTORIES ${header_dir_path})
-        endforeach()
-        list(REMOVE_DUPLICATES ALL_HEADER_DIRECTORIES)
-
-        # Get all directories of public headers file
-        list(APPEND PUBLIC_HEADER_FILES ${TARGET_PUBLIC_HEADERS_FILES})
-        foreach(publicHeaderFile ${PUBLIC_HEADER_FILES})
-            cmake_path(GET publicHeaderFile PARENT_PATH public_header_dir_path)
-            list(APPEND PUBLIC_HEADER_DIRECTORIES ${public_header_dir_path})
-        endforeach()
-        list(REMOVE_DUPLICATES PUBLIC_HEADER_DIRECTORIES)
-
-        # Get relative directory path of PUBLIC_HEADER_DIRECTORIES for the install()
-        foreach(directory ${PUBLIC_HEADER_DIRECTORIES})
-            cmake_path(RELATIVE_PATH directory BASE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR})/.." OUTPUT_VARIABLE relative_dir_path)
-            list(APPEND RELATIVE_PUBLIC_HEADER_DIRECTORIES ${relative_dir_path} )
-        endforeach()
-
-        # Adding generator expression to all directories
-        set(GENERATOR_PUBLIC_HEADER_DIRECTORIES ${PUBLIC_HEADER_DIRECTORIES})
-        list(TRANSFORM GENERATOR_PUBLIC_HEADER_DIRECTORIES PREPEND "$<BUILD_INTERFACE:")
-        list(TRANSFORM GENERATOR_PUBLIC_HEADER_DIRECTORIES APPEND ">")
-
-        if (NOT TARGET_INTERFACE)
-            target_include_directories(${TARGET_NAME} PRIVATE ${ALL_HEADER_DIRECTORIES})
-        endif()
-        target_include_directories(${TARGET_NAME} INTERFACE ${GENERATOR_PUBLIC_HEADER_DIRECTORIES})
     endif()
 
     # Qt
@@ -418,7 +415,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             )
         endif()
 
-        if (TARGET_PLUGINS) 
+        if(TARGET_PLUGINS)
             # Adding plusgins as dependencies
             add_dependencies(${TARGET_NAME} ${TARGET_PLUGINS})
             set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS ${TARGET_PLUGINS})
@@ -520,9 +517,14 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             endif()
         endif()
 
-        # Only if recursive includes is activated
-        if (RELATIVE_PUBLIC_HEADER_DIRECTORIES)
-            set(TARGET_INSTALL_INCLUDES_DESTINATION INCLUDES DESTINATION ${RELATIVE_PUBLIC_HEADER_DIRECTORIES})
+        if(TARGET_RECURSIVE_INTERFACE_INCLUDE AND TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS)
+            foreach(_public_header_dir ${TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS})
+                cmake_path(RELATIVE_PATH _public_header_dir BASE_DIRECTORY ${TARGET_PUBLIC_HEADERS_DIRS} OUTPUT_VARIABLE _relative_public_header_dir)
+                set(_relative_public_header_dir ${TARGET_INSTALL_INCLUDE_DIR}/${_relative_public_header_dir})
+                list(APPEND TARGET_RECURSIVE_RELATIVE_PUBLIC_HEADERS_DIRS ${_relative_public_header_dir})
+            endforeach()
+
+            set(TARGET_INSTALL_INCLUDES_DESTINATION INCLUDES DESTINATION ${TARGET_RECURSIVE_RELATIVE_PUBLIC_HEADERS_DIRS})
         endif()
 
         install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets

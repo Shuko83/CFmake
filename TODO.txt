@@ -1,7 +1,5 @@
-Error : CMake Error: install(EXPORT "JRECommanderSw_CartoSDKUtilsTargets" ...) includes target "CartoSDKUtils" which requires target "CartoSDK" that is not in any export set.
 Use CMAKE_CXX_STANDARD_LIBRARIES in check dependencies
 .rc file generation
 use verpatch
-solve single target install usage, by option parameter ?
-Install package only for target with install (NO_OPTION INSTALL) create global list or project list map
 Improve genex strip in check dependencies
+in add_target Accept  DIRS paramters with list of directories
