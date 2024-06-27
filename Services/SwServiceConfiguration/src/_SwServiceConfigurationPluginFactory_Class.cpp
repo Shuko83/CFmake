@@ -2,7 +2,7 @@
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
 #include "SwConfPushButton.h"
-#include "info_SwServiceConfiguration.h"
+#include "target_info.h"
 
 #include <QRegularExpression>
 
@@ -100,7 +100,7 @@ QDateTime _SwServiceConfigurationPluginFactory_Class::GetPluginCompilationDate()
 //----------------------------------------------------------------------------------------------
 QString _SwServiceConfigurationPluginFactory_Class::GetPluginName() const
 {
-	return SwServiceConfiguration::name();
+	return target_info::name();
 }
 
 //----------------------------------------------------------------------------------------------

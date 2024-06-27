@@ -1,5 +1,5 @@
 #include "_SwServiceShortcutPluginFactory_Class.h"
-#include "info_SwServiceShortcut.h"
+#include "target_info.h"
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
 
@@ -96,7 +96,7 @@ QDateTime _SwServiceShortcutPluginFactory_Class::GetPluginCompilationDate()
 //----------------------------------------------------------------------------------------------
 QString _SwServiceShortcutPluginFactory_Class::GetPluginName() const
 {
-	return SwServiceShortcut::name();
+	return target_info::name();
 }
 
 //----------------------------------------------------------------------------------------------

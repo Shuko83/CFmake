@@ -15,7 +15,7 @@
 #include "_RecordPoint.h"
 #include "_ReplayManager.h"
 #include "_SwRecordDataCodecDefaultFactory.h"
-#include "info_SwRecord.h"
+#include "target_info.h"
 
 /** @brief Constructeur */
 _SwRecordPluginFactory_Class::_SwRecordPluginFactory_Class():SwPluginFactory_Class() {
@@ -128,7 +128,7 @@ QDateTime _SwRecordPluginFactory_Class::GetPluginCompilationDate(){
 //---------------------------------------------------------------------------------
 QString _SwRecordPluginFactory_Class::GetPluginName() const
 {
-    return SwRecord::name();
+    return target_info::name();
 }
 
 //---------------------------------------------------------------------------------

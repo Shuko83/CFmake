@@ -1,7 +1,7 @@
 #include "SwServiceMainWindowPluginFactory_Class.h"
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
-#include "info_SwServiceMainWindow.h"
+#include "target_info.h"
 
 #include <QRegularExpression>
 
@@ -85,7 +85,7 @@ QDateTime SwServiceMainWindowPluginFactory_Class::GetPluginCompilationDate()
 //----------------------------------------------------------------------------------------------
 QString SwServiceMainWindowPluginFactory_Class::GetPluginName() const
 {
-	return SwServiceMainWindow::name();
+	return target_info::name();
 }
 
 //----------------------------------------------------------------------------------------------

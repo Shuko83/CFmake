@@ -3,7 +3,7 @@
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
 
-#include "info_SwServiceTools.h"
+#include "target_info.h"
 
 #include <QDebug>
 #include <QRegularExpression>
@@ -115,7 +115,7 @@ QDateTime _SwServiceToolsPluginFactory_Class::GetPluginCompilationDate()
 //----------------------------------------------------------------------------------------------
 QString _SwServiceToolsPluginFactory_Class::GetPluginName() const
 {
-	return SwServiceTools::name();
+	return target_info::name();
 }
 
 //----------------------------------------------------------------------------------------------

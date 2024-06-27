@@ -16,7 +16,7 @@
 #include "Main/SwMacros.h"
 #include "_SwSimpleDataExecutable.h"
 
-#include "info_SwDataBase.h"
+#include "target_info.h"
 
 using namespace StreamWork::SwCore;
 
@@ -102,7 +102,7 @@ QDateTime _SwDatasBasePluginFactory_Class::GetPluginCompilationDate(){
 
 QString _SwDatasBasePluginFactory_Class::GetPluginName() const
 {
-    return SwDataBase::name(); 
+    return target_info::name();
 }
 
 SwPluginFactory_Class *  GetPluginInterface()

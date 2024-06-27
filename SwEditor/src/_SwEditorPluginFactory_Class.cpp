@@ -18,7 +18,7 @@
 #include "_SwEditorStreamNavigatorActions.h"
 #include "_SwEditorStreamOperationsActions.h"
 #include "_SwEditorStreamView.h"
-#include "info_SwEditor.h"
+#include "target_info.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwEditor;
@@ -137,7 +137,7 @@ QDateTime _SwEditorPluginFactory_Class::GetPluginCompilationDate(){
 
 QString _SwEditorPluginFactory_Class::GetPluginName() const
 {
-	return SwEditor::name();
+	return target_info::name();
 }
 
 SwPluginFactory_Class *  GetPluginInterface()

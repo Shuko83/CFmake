@@ -21,7 +21,7 @@
 #include "Component/Services/ServiceImpl/SwSnapShotPropertiesService.h"
 #include "Main/Services/ISwEditionService.h"
 #include "SwModelsListAccess.h"
-#include "info_SwModel.h"
+#include "target_info.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwModel;
@@ -200,7 +200,7 @@ QDateTime _SwModelPluginFactory_Class::GetPluginCompilationDate()
 //----------------------------------------------------------------------------------------------
 QString _SwModelPluginFactory_Class::GetPluginName() const
 {
-	return SwModel::name();
+	return target_info::name();
 }
 
 //-----------------------------------------------------------------------

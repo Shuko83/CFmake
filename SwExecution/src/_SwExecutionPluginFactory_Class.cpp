@@ -13,7 +13,7 @@
 #include "_SwExecutionPluginFactory_Class.h"
 #include "_SwExecutor.h"
 #include "_SwSwitchExecutor.h"
-#include "info_SwExecution.h"
+#include "target_info.h"
 
 using namespace StreamWork::SwCore;
 
@@ -111,7 +111,7 @@ QDateTime _SwExecutionPluginFactory_Class::GetPluginCompilationDate()
 //-----------------------------------------------------------------------
 QString _SwExecutionPluginFactory_Class::GetPluginName() const
 {
-	return SwExecution::name();
+	return target_info::name();
 }
 
 //-----------------------------------------------------------------------

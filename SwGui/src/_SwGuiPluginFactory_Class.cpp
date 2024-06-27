@@ -55,7 +55,7 @@
 #include "QActionToToolButton.h"
 #include "_SwGuiCompQWidgetToQDialog.h"
 
-#include "info_SwGui.h"
+#include "target_info.h"
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -304,7 +304,7 @@ QDateTime _SwGuiPluginFactory_Class::GetPluginCompilationDate()
 //-------------------------------------------------------------------------
 QString _SwGuiPluginFactory_Class::GetPluginName() const
 {
-	return SwGui::name();
+	return target_info::name();
 }
 
 //-------------------------------------------------------------------------

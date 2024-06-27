@@ -15,7 +15,7 @@
 
 #include "_SwFoundationPluginFactory_Class.h"
 
-#include "info_SwFoundation.h"
+#include "target_info.h"
 
 /*! \brief Constructeur */
 _SwFoundationPluginFactory_Class::_SwFoundationPluginFactory_Class():SwProtectedPluginFactory_Class() {
@@ -87,5 +87,5 @@ SwPluginFactory_Class *  GetPluginInterface()
 //-------------------------------------------------------------------------
 QString _SwFoundationPluginFactory_Class::GetPluginName() const
 {
-	return SwFoundation::name();
+	return target_info::name();
 }

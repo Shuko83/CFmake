@@ -1,31 +1,10 @@
-[
-    {
-        "destination": "3rdParty/Cryptopp/Delivery",
-        "artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/Cryptopp/5.6.5.1/win-msvc2015/x64/Cryptopp_5.6.5.1_win-msvc2015-x64.zip"
-    },
-    {
-        "destination": "3rdParty/Cryptopp/Toolchain",
-        "artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/Cryptopp/5.6.5.1/Cryptopp_5.6.5.1_Toolchain.zip"
+
     },
     {
         "destination": "3rdParty/HASP",
         "artifactory": "http://10.20.1.10:8081/artifactory/thirdParty/HASP/8.4/Delivery_GEMALTO/Delivery_GEMALTO_8.4_20220914.zip"
     },
-    {
-        "destination" : "Libraries/Qst/Base/QsCore",
-        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Base/2.0.0/QsCore/QsCore_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
-    },  
-    {
-        "destination" : "Libraries/Qst/Base/QsGui",
-        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Base/2.0.0/QsGui/QsGui_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
-    },
-    {
-        "destination" : "Libraries/Qst/Modules/QsException",
-        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Modules/2.0.0/QsException/QsException_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
-    },
-    {
-        "destination" : "Libraries/Qst/Modules/QsLog",
-        "artifactory" : "http://10.20.1.10:8081/artifactory/release/Libraries/Qst/Modules/2.0.0/QsLog/QsLog_2.0.0_win-msvc2015_x64_QT5.9.6.zip"
+
     },
     {
         "destination": "Libraries/License",
@@ -44,3 +23,11 @@
         "artifactory": "http://10.20.1.10:8081/artifactory/release/Libraries.Licensing/5.1.0/ApiLicensing_5.1.0_Toolchain.zip"
     }
 ]
+
+http://10.20.1.10:8081/artifactory/snapshot/Libraries/QstBase/beta-cmake/QstBase_beta-cmake_win-msvc2015-x64.7z
+
+http://10.20.1.10:8081/artifactory/snapshot/Libraries/QstModules/beta-cmake/QstModules_beta-cmake_win-msvc2015-x64.7z
+
+http://10.20.1.10:8081/artifactory/thirdParty/Cryptopp/5.6.5-2/Cryptopp_5.6.5-2_win-msvc2015-x64.7z
+
+http://artifactory.divst:8081/artifactory/release/Libraries/ApiLicensing/5.2.0/ApiLicensing_5.2.0_win-msvc2022-x64.7z

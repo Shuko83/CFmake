@@ -13,7 +13,7 @@
 #include "_SwConfiguration.h"
 #include "_SwConfigurationManager.h"
 
-#include "info_SwConfiguration.h"
+#include "target_info.h"
 
 using namespace StreamWork::SwCore;
 
@@ -111,7 +111,7 @@ QDateTime _SwConfigurationPluginFactory_Class::GetPluginCompilationDate()
 //---------------------------------------------------------------------------------
 QString _SwConfigurationPluginFactory_Class::GetPluginName() const
 {
-    return SwConfiguration::name();
+    return target_info::name();
 }
 
 //---------------------------------------------------------------------------------
