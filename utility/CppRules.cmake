@@ -11,10 +11,6 @@ set(CMAKE_DEBUG_POSTFIX d)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 
-message(DEBUG "flags: ${CMAKE_CXX_FLAGS}")
-message(DEBUG "flagsD: ${CMAKE_CXX_FLAGS_DEBUG}")
-message(DEBUG "flagsR: ${CMAKE_CXX_FLAGS_RELEASE}")
-
 ################################################################################
 # System specific
 ################################################################################
@@ -60,6 +56,9 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Zi") # Force debug info
+    set(CMAKE_SHARED_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF") # Force debug info
+    set(CMAKE_MODULE_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF") # Force debug info
+    set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE} /DEBUG /OPT:REF") # Force debug info
 endif()
 
 # GCC configuration

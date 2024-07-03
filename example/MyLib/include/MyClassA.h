@@ -1,13 +1,13 @@
 #ifndef MY_CLASS_A_H
 #define MY_CLASS_A_H
 
-#ifdef MYLIBA_LIB
-#define MyLibA_EXPORT __declspec(dllexport)
+#ifdef MYLIB_LIB
+#define MyLib_EXPORT __declspec(dllexport)
 #else
-#define MyLibA_EXPORT __declspec(dllimport)
+#define MyLib_EXPORT __declspec(dllimport)
 #endif
 
-class MyLibA_EXPORT MyClassA
+class MyLib_EXPORT MyClassA
 {
 public:
 	MyClassA();

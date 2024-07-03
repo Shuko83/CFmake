@@ -1,14 +1,13 @@
 #ifndef MY_CLASS_B_H
 #define MY_CLASS_B_H
 
-#ifdef MYLIBB_LIB
-	#define MyLibB_EXPORT __declspec(dllexport)
+#ifdef MYPLUGIN_LIB
+	#define MyPlugin_EXPORT __declspec(dllexport)
 #else
-	#define MyLibB_EXPORT __declspec(dllimport)
+	#define MyPlugin_EXPORT __declspec(dllimport)
 #endif // MyLibB_LIB
 
-
-class MyLibB_EXPORT MyClassB
+class MyPlugin_EXPORT MyClassB
 {
 public:
 	MyClassB();
