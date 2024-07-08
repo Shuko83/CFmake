@@ -276,6 +276,12 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         # Mandatory to be able to include static library inside a shared library
         set_target_properties(${TARGET_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
+        # Default pdb output is not next to .lib
+        set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:${TARGET_NAME}>)
+        # Necessary to redefine name for msvc 2015
+        # COMPILE_PDB_NAME does not support generator expression
+        set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME_DEBUG ${TARGET_NAME}${CMAKE_DEBUG_POSTFIX})
+
         if(TARGET_COMBINED_LINK_LIBRARIES)
             target_link_libraries(${TARGET_NAME} PRIVATE ${TARGET_COMBINED_LINK_LIBRARIES})
 
@@ -297,6 +303,17 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 endforeach()
 
                 set_target_properties(${TARGET_NAME} PROPERTIES STATIC_LIBRARY_OPTIONS "${_static_options}")
+
+                # PDBs
+                if(MSVC)
+                    set(TARGET_COMBINED_PDBS "$<LIST:TRANSFORM,${_static_options},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
+                    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                        COMMAND ${CSTOOLKIT_COPY}
+                            "${TARGET_COMBINED_PDBS}"
+                            "$<TARGET_FILE_DIR:${TARGET_NAME}>"
+                            COMMAND_EXPAND_LISTS 
+                    )
+                endif()
             else() #LINUX
                 set(_ar_script "CREATE $<TARGET_FILE:${TARGET_NAME}>")
                 foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
@@ -366,8 +383,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     endif()
 
-    # Generation des fichiers info_${TARGET_NAME}
-    if(NOT TARGET_INTERFACE)
+    # Generation des fichiers target_info
+    if(NOT TARGET_INTERFACE AND NOT TARGET_STATIC)
         string(TIMESTAMP _year "%Y" UTC)
 
         if(TARGET_EXECUTABLE AND _qt_modules)
@@ -390,26 +407,23 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     if(TARGET_EXECUTABLE)
         # Copy of runtime dlls and pdbs for the target
         if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} 
-                -E copy -t "$<TARGET_FILE_DIR:${TARGET_NAME}>" "$<FILTER:$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>" COMMAND_EXPAND_LISTS
-            )
-            
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e 
-                    "$<LIST:TRANSFORM,$<FILTER:$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
-                    "$<TARGET_FILE_DIR:${TARGET_NAME}>"
-                    COMMAND_EXPAND_LISTS 
-            )
+            set(TARGET_RUNTIME_DLLS "$<FILTER:$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
         else()
+            set(TARGET_RUNTIME_DLLS "$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>")
+        endif()
+        
+        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CSTOOLKIT_COPY} -e
+                "${TARGET_RUNTIME_DLLS}"
+                "$<TARGET_FILE_DIR:${TARGET_NAME}>"
+                COMMAND_EXPAND_LISTS
+        )
+        
+        if(MSVC)
+            set(TARGET_RUNTIME_PDBS "$<LIST:TRANSFORM,${TARGET_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CMAKE_COMMAND} 
-                -E copy -t "$<TARGET_FILE_DIR:${TARGET_NAME}>" "$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>" COMMAND_EXPAND_LISTS
-            )
-            
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e 
-                    "$<LIST:TRANSFORM,$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,REPLACE,\(.*\)\\.[^.]+,\\1.pdb>"
+                COMMAND ${CSTOOLKIT_COPY}
+                    "${TARGET_RUNTIME_PDBS}"
                     "$<TARGET_FILE_DIR:${TARGET_NAME}>"
                     COMMAND_EXPAND_LISTS 
             )
@@ -428,18 +442,27 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             target_link_libraries(${PLUGINS_TARGET} PUBLIC ${TARGET_PLUGINS})
             
             if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
-                # Copy of the plugin dll and its dependencies
-                add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e 
-                    "$<FILTER:$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>"
-                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}" COMMAND_EXPAND_LISTS
-                )
+                set(PLUGINS_RUNTIME_DLLS "$<FILTER:$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
             else()
+                set(PLUGINS_RUNTIME_DLLS "$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>")
+            endif()
+
+            # Copy of the plugin dll and its dependencies
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+            COMMAND ${CSTOOLKIT_COPY} -e
+            "${PLUGINS_RUNTIME_DLLS}"
+            "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
+            COMMAND_EXPAND_LISTS
+            )
+            
+            if(MSVC)
+                set(PLUGINS_RUNTIME_PDBS "$<LIST:TRANSFORM,${PLUGINS_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
                 # Copy of the plugin dll and its dependencies
                 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e 
-                    "$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>"
-                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}" COMMAND_EXPAND_LISTS
+                COMMAND ${CSTOOLKIT_COPY} -e
+                    "${PLUGINS_RUNTIME_PDBS}"
+                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
+                    COMMAND_EXPAND_LISTS
                 )
             endif()
         endif()
@@ -535,27 +558,32 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             RUNTIME DESTINATION ${TARGET_INSTALL_BIN_DIR}
             FILE_SET HEADERS DESTINATION ${TARGET_INSTALL_INCLUDE_DIR}
             ${TARGET_INSTALL_INCLUDES_DESTINATION}
-            #      LIBRARY DESTINATION ${TARGET_NAME}/LIBRARY
-            #      OBJECTS DESTINATION ${TARGET_NAME}/OBJECTS
-            #      FRAMEWORK DESTINATION ${TARGET_NAME}/FRAMEWORK
-            #      BUNDLE DESTINATION ${TARGET_NAME}/BUNDLE
-            #      PUBLIC_HEADER DESTINATION ${TARGET_NAME}/PUBLIC_HEADER
-            #      PRIVATE_HEADER DESTINATION ${TARGET_NAME}/PRIVATE_HEADER
-            #      RESOURCE DESTINATION ${TARGET_NAME}/RESOURCE
-            )
+        )
+
+        if(TARGET_EXECUTABLE)
+            # Runtime dependencies
+            install(FILES ${TARGET_RUNTIME_DLLS} DESTINATION ${TARGET_INSTALL_BIN_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+            if(TARGET_PLUGINS)
+                install(FILES ${PLUGINS_RUNTIME_DLLS} DESTINATION ${TARGET_INSTALL_BIN_DIR}/${TARGET_PLUGINS_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+            endif()
+        endif()
 
         # PDBS
         if(MSVC)
             if(TARGET_SHARED OR TARGET_EXECUTABLE)
                 install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                if(TARGET_EXECUTABLE)
+                    install(FILES ${TARGET_RUNTIME_PDBS} DESTINATION ${TARGET_INSTALL_BIN_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                    if(TARGET_PLUGINS)
+                        install(FILES ${PLUGINS_RUNTIME_PDBS} DESTINATION ${TARGET_INSTALL_BIN_DIR}/${TARGET_PLUGINS_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                    endif()
+                endif()
             elseif(TARGET_STATIC)
-                # Default pdb output is not next to .lib
-                set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:${TARGET_NAME}>)
-                # Necessary to redefine name for msvc 2015
-                # COMPILE_PDB_NAME does not support generator expression
-                set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME_DEBUG ${TARGET_NAME}${CMAKE_DEBUG_POSTFIX})
                 install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.pdb
-                    DESTINATION ${TARGET_INSTALL_LIB_DIR} CONFIGURATIONS Debug COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                    DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                if(TARGET_COMBINED_LINK_LIBRARIES)
+                    install(FILES ${TARGET_COMBINED_PDBS} DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                endif()
             endif()
         endif()
 
