@@ -1,0 +1,35 @@
+#include <windows.h>
+@IDI_ICONS@
+@RT_MANIFEST@
+VS_VERSION_INFO VERSIONINFO
+    FILEVERSION @PARAMS_VERSION_COMA@
+    PRODUCTVERSION @PARAMS_VERSION_COMA@
+    FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+    FILEFLAGS VS_FF_DEBUG
+#else
+    FILEFLAGS 0x0L
+#endif
+    FILEOS VOS__WINDOWS32
+    @FILETYPE@
+    FILESUBTYPE 0x0L
+    BEGIN
+        BLOCK "StringFileInfo"
+        BEGIN
+            BLOCK "@PARAMS_LANG@@PARAMS_CODEPAGE_HEXA@"
+            BEGIN
+                VALUE "CompanyName", "@PARAMS_COMPANY@\0"
+                VALUE "FileDescription", "@PARAMS_DESCRIPTION@\0"
+                VALUE "FileVersion", "@PARAMS_VERSION@\0"
+                VALUE "LegalCopyright", "@PARAMS_COPYRIGHT@\0"
+                VALUE "OriginalFilename", "@FILENAME@\0"
+                VALUE "ProductName", "@PARAMS_TARGET@\0"
+                VALUE "ProductVersion", "@PARAMS_VERSION@\0"
+            END
+        END
+        BLOCK "VarFileInfo"
+        BEGIN
+            VALUE "Translation", 0x@PARAMS_LANG@, @PARAMS_CODEPAGE@
+        END
+    END
+/* End of Version info */

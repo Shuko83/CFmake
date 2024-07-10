@@ -29,6 +29,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         LINK_OPTIONS
         COMPILE_DEFINITIONS
         COMPILE_OPTIONS
+        #MSVC
+        RC_ICONS
     )
     cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
 
@@ -351,18 +353,17 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
             target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/moc)
 
-            target_sources(${TARGET_NAME}
-                PRIVATE ${MOC_FILES}
-            )
+            target_sources(${TARGET_NAME} PRIVATE ${MOC_FILES})
             source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${MOC_FILES})
         endif()
 
         # UI
         if(NOT CMAKE_AUTOUIC)
-            cstoolkit_qt_wrap_ui(UIC_FILES ${TARGET_UI_FILES})
-            target_sources(${TARGET_NAME}
-                PRIVATE FILE_SET "uic" TYPE HEADERS BASE_DIRS ${CMAKE_CURRENT_BINARY_DIR}/generated/uic FILES ${UIC_FILES}
-            )
+            cstoolkit_qt_wrap_ui(UIC_FILES TARGET ${TARGET_NAME} ${TARGET_UI_FILES})
+
+            target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/uic)
+
+            target_sources(${TARGET_NAME} PRIVATE ${UIC_FILES})
             source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${UIC_FILES})
         endif()
 
@@ -370,14 +371,10 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if(NOT CMAKE_AUTORCC)
             cstoolkit_qt_add_resources(RCC_FILES TARGET_QRC_RESOURCES_FILES ${TARGET_RESOURCES_FILES})
 
-            target_sources(${TARGET_NAME}
-                PRIVATE ${RCC_FILES}
-            )
+            target_sources(${TARGET_NAME} PRIVATE ${RCC_FILES})
             source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${RCC_FILES})
 
-            target_sources(${TARGET_NAME}
-                PRIVATE ${TARGET_QRC_RESOURCES_FILES}
-            )
+            target_sources(${TARGET_NAME} PRIVATE ${TARGET_QRC_RESOURCES_FILES})
             source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Resource Files" FILES ${TARGET_QRC_RESOURCES_FILES})
         endif()
     
@@ -400,6 +397,16 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             COPYRIGHT "Copyright \\251 ${_year} CSGroup"
             ${_generate_qt_info}
         )
+
+        if(MSVC)
+            cstoolkit_generate_rc_file(
+                TARGET "${TARGET_NAME}"
+                VERSION "${PROJECT_VERSION}"
+                COMPANY "CSGroup"
+                COPYRIGHT "Copyright \\251 ${_year} CSGroup"
+                ICONS ${TARGET_RC_ICONS}
+            )
+        endif()
     endif()
 
     # Deployement des DLLs

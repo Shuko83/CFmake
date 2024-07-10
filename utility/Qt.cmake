@@ -95,13 +95,12 @@ function(cstoolkit_qt_wrap_cpp outfiles)
 
         set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/mocinclude$<CONFIG>.tmp)
 
-        file (GENERATE
-            OUTPUT ${_moc_include_file}
-            CONTENT "${targetincludes}${moc_options}\n"
-        )
-    else()
-        file(WRITE ${_moc_include_file} "${moc_options}\n")
     endif()
+
+    file (GENERATE
+        OUTPUT ${_moc_include_file}
+        CONTENT "${targetincludes}${moc_options}\n"
+    )
 
     foreach(it ${moc_files})
         get_filename_component(outfile ${it} NAME_WE)
@@ -133,13 +132,21 @@ endfunction()
 # partially copied from Qt5WidgetsMacros.cmake
 function(cstoolkit_qt_wrap_ui outfiles)
     set(options)
-    set(oneValueArgs)
+    set(oneValueArgs TARGET)
     set(multiValueArgs OPTIONS)
 
     cmake_parse_arguments(_WRAP_UI "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     set(ui_files ${_WRAP_UI_UNPARSED_ARGUMENTS})
     set(ui_options ${_WRAP_UI_OPTIONS})
+    set(ui_target ${_WRAP_CPP_TARGET})
+
+    if(ui_target AND ui_files)
+        add_custom_command(TARGET ${ui_target}
+            PRE_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/uic
+        )
+    endif()
 
     foreach(it ${ui_files})
         get_filename_component(outfile ${it} NAME_WE)
@@ -178,6 +185,8 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
         get_filename_component(infile ${it} ABSOLUTE)
         set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}.cpp)
         cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
+        set(out_depends)
+        set(_rc_depends)
 
         # Parsing qrc
         #_qt5_parse_qrc_file(${infile} _out_depends _rc_depends)
@@ -192,7 +201,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                 if(NOT IS_ABSOLUTE "${RC_FILE}")
                     set(RC_FILE "${rc_path}/${RC_FILE}")
                 endif()
-                set(outrscfiles ${outrscfiles} "${RC_FILE}")
+                list(APPEND _rc_depends ${RC_FILE})
             endforeach()
             # Since this cmake macro is doing the dependency scanning for these files,
             # let's make a configured file and add it as a dependency so cmake is run
@@ -207,11 +216,12 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                         COMMAND ${Qt5Core_RCC_EXECUTABLE}
                         ARGS ${rcc_options} --name ${outfilename} --output ${outfile} ${infile}
                         MAIN_DEPENDENCY ${infile}
-                        DEPENDS ${outrscfiles} "${out_depends}" VERBATIM
+                        DEPENDS ${_rc_depends} "${out_depends}" VERBATIM
                         COMMENT "RCC ${relpath}")
         set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
         set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outcppfiles} ${outfile})
+        list(APPEND ${outrscfiles} ${_rc_depends})
     endforeach()
     set(${outcppfiles} ${${outcppfiles}} PARENT_SCOPE)
     set(${outrscfiles} ${${outrscfiles}} PARENT_SCOPE)

@@ -11,6 +11,15 @@ set(CMAKE_DEBUG_POSTFIX d)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 
+# Parralel compilation whith Makefiles
+if(CMAKE_GENERATOR STREQUAL "Unix Makefiles")
+    include(ProcessorCount)
+    ProcessorCount(_PROCESSOR_COUNT)
+    if(NOT _PROCESSOR_COUNT EQUAL 0)
+        set(CMAKE_BUILD_PARALLEL_LEVEL ${_PROCESSOR_COUNT})
+    endif()
+endif()
+
 ################################################################################
 # System specific
 ################################################################################

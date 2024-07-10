@@ -1,5 +1,6 @@
 Use CMAKE_CXX_STANDARD_LIBRARIES in check dependencies
-.rc file generation
 use verpatch
 Improve genex strip in check dependencies
 in add_target Accept  DIRS paramters with list of directories
+Fix combined pdbs
+windeployqt on install
