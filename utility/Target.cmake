@@ -83,6 +83,17 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
     endif()
 
+    # Postfix, necessaire pour les executables
+    if(CMAKE_CONFIGURATION_TYPES)
+        foreach(_config ${CMAKE_CONFIGURATION_TYPES})
+            string(TOUPPER "${_config}" _config)
+            set_target_properties(${TARGET_NAME} PROPERTIES "${_config}_POSTFIX" "${CMAKE_${_config}_POSTFIX}")
+        endforeach()
+    else()
+        string(TOUPPER "${CMAKE_BUILD_TYPE}" _config)
+        set_target_properties(${TARGET_NAME} PROPERTIES "${_config}_POSTFIX" "${CMAKE_${_config}_POSTFIX}")
+    endif()
+
     # Extension
 
     if(TARGET_EXTENSION)

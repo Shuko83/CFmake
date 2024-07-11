@@ -76,12 +76,9 @@ function(cstoolkit_generate_rc_file)
         foreach(_config ${CMAKE_CONFIGURATION_TYPES})
             string(TOUPPER "${_config}" _config)
             set(FILENAME "${PARAMS_TARGET}${CMAKE_${_config}_POSTFIX}${_suffix}")
-            message("FILENAME ${FILENAME}")
-            message(CMAKE_${_config}_POSTFIX ${CMAKE_${_config}_POSTFIX})
             configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/Target_resource.rc.in
                 ${RC_DIRECTORY}/${PARAMS_TARGET}${CMAKE_${_config}_POSTFIX}_resource.rc
                 @ONLY)
-            message("FILEconfigure_file ${RC_DIRECTORY}/${PARAMS_TARGET}${CMAKE_${_config}_POSTFIX}_resource.rc")
             target_sources(${PARAMS_TARGET} PRIVATE $<$<CONFIG:${_config}>:${PARAMS_TARGET}${CMAKE_${_config}_POSTFIX}_resource.rc>)
             source_group(TREE ${RC_DIRECTORY} PREFIX "Resource Files" FILES ${RC_DIRECTORY}/${PARAMS_TARGET}${CMAKE_${_config}_POSTFIX}_resource.rc)
         endforeach()
