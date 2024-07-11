@@ -132,21 +132,13 @@ endfunction()
 # partially copied from Qt5WidgetsMacros.cmake
 function(cstoolkit_qt_wrap_ui outfiles)
     set(options)
-    set(oneValueArgs TARGET)
+    set(oneValueArgs)
     set(multiValueArgs OPTIONS)
 
     cmake_parse_arguments(_WRAP_UI "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     set(ui_files ${_WRAP_UI_UNPARSED_ARGUMENTS})
     set(ui_options ${_WRAP_UI_OPTIONS})
-    set(ui_target ${_WRAP_CPP_TARGET})
-
-    if(ui_target AND ui_files)
-        add_custom_command(TARGET ${ui_target}
-            PRE_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/uic
-        )
-    endif()
 
     foreach(it ${ui_files})
         get_filename_component(outfile ${it} NAME_WE)
@@ -155,6 +147,7 @@ function(cstoolkit_qt_wrap_ui outfiles)
         cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
 
         add_custom_command(OUTPUT ${outfile}
+            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/uic
             COMMAND ${Qt5Widgets_UIC_EXECUTABLE}
             ARGS ${ui_options} -o ${outfile} ${infile}
             MAIN_DEPENDENCY ${infile} VERBATIM
