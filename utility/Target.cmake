@@ -320,12 +320,6 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 # PDBs
                 if(MSVC)
                     set(TARGET_COMBINED_PDBS "$<LIST:TRANSFORM,${_static_options},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
-                    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                        COMMAND ${CSTOOLKIT_COPY}
-                            "${TARGET_COMBINED_PDBS}"
-                            "$<TARGET_FILE_DIR:${TARGET_NAME}>"
-                            COMMAND_EXPAND_LISTS 
-                    )
                 endif()
             else() #LINUX
                 set(_ar_script "CREATE $<TARGET_FILE:${TARGET_NAME}>")
@@ -395,8 +389,11 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     if(NOT TARGET_INTERFACE AND NOT TARGET_STATIC)
         string(TIMESTAMP _year "%Y" UTC)
 
-        if(TARGET_EXECUTABLE AND _qt_modules)
-            set(_generate_qt_info "QT_EXECUTABLE")
+        if(TARGET_EXECUTABLE)
+            set(_generate_executable_info "EXECUTABLE")
+        endif()
+        if(_qt_modules)
+            set(_generate_qt_info "QT")
         endif()
 
         cstoolkit_generate_target_info(
@@ -406,6 +403,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             ORGANIZATION "CSGroup"
             DOMAIN "https://www.csgroup.eu"
             COPYRIGHT "Copyright \\251 ${_year} CSGroup"
+            ${_generate_executable_info}
             ${_generate_qt_info}
         )
 
@@ -467,20 +465,20 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
             # Copy of the plugin dll and its dependencies
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CSTOOLKIT_COPY} -e
-            "${PLUGINS_RUNTIME_DLLS}"
-            "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
-            COMMAND_EXPAND_LISTS
+                COMMAND ${CSTOOLKIT_COPY} -e
+                    "${PLUGINS_RUNTIME_DLLS}"
+                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
+                    COMMAND_EXPAND_LISTS
             )
             
             if(MSVC)
                 set(PLUGINS_RUNTIME_PDBS "$<LIST:TRANSFORM,${PLUGINS_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
                 # Copy of the plugin dll and its dependencies
                 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e
-                    "${PLUGINS_RUNTIME_PDBS}"
-                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
-                    COMMAND_EXPAND_LISTS
+                    COMMAND ${CSTOOLKIT_COPY} -e
+                        "${PLUGINS_RUNTIME_PDBS}"
+                        "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
+                        COMMAND_EXPAND_LISTS
                 )
             endif()
         endif()
@@ -585,6 +583,18 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             if(TARGET_PLUGINS)
                 install(FILES ${PLUGINS_RUNTIME_DLLS} DESTINATION ${TARGET_INSTALL_BIN_DIR}/${TARGET_PLUGINS_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
             endif()
+
+            # Qt
+            if(_qt_modules)
+                cstoolkit_qt_generate_deploy_app_script(
+                    TARGET ${TARGET_NAME}
+                    INSTALL_DIR ${TARGET_INSTALL_BIN_DIR}
+                    RUNTIME_DEPENDENCIES ${TARGET_RUNTIME_DLLS} ${PLUGINS_RUNTIME_DLLS}
+                    OUTPUT_SCRIPT qt_deploy_script
+                    NO_UNSUPPORTED_PLATFORM_ERROR
+                )
+                install(SCRIPT ${qt_deploy_script} COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+            endif()
         endif()
 
         # PDBS
@@ -601,7 +611,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.pdb
                     DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 if(TARGET_COMBINED_LINK_LIBRARIES)
-                    install(FILES ${TARGET_COMBINED_PDBS} DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                    install(FILES "${TARGET_COMBINED_PDBS}" DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 endif()
             endif()
         endif()

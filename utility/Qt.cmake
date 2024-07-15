@@ -44,13 +44,28 @@ else()
 set(QT_VERSION "${Qt5_VERSION}")
 set(QT_VERSION_MM "${Qt5_VERSION_MAJOR}.${Qt5_VERSION_MINOR}")
 
-set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
-set(Qt5_INSTALL_PREFIX "${_qt5Core_install_prefix}")
-
 #qt {
 #    qtGreaterThan( 5.9.9 ) : BUILD_MKSPEC = $${TOOLKIT.mkspec}-QT$${QT_VERSION_MM}
 #    else : BUILD_MKSPEC = $${TOOLKIT.mkspec}-QT$$[QT_VERSION]
 #}
+set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
+set(Qt5_INSTALL_PREFIX "${_qt5Core_install_prefix}")
+
+if(WIN32)
+    if (NOT TARGET Qt5::windeployqt)
+        add_executable(Qt5::windeployqt IMPORTED)
+
+        set(imported_location "${_qt5Core_install_prefix}/bin/windeployqt.exe")
+        _qt5_Core_check_file_exists(${imported_location})
+
+        set_target_properties(Qt5::windeployqt PROPERTIES
+            IMPORTED_LOCATION ${imported_location}
+        )
+        # For Deploy feature
+        get_target_property(QT_DEPLOY_TOOL Qt5::windeployqt LOCATION)
+    endif()
+endif()
+
 if(MSVC)
     # hushes some known Qt warnings
     set_target_properties(Qt5::Core PROPERTIES "INTERFACE_COMPILE_OPTIONS" "-wd4127;-wd4512;-wd4714;$<$<NOT:$<CONFIG:Debug>>:-wd4718>")
@@ -93,7 +108,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
         set(targetincludes "$<TARGET_PROPERTY:${moc_target},INCLUDE_DIRECTORIES>")
         set(targetincludes "$<$<BOOL:${targetincludes}>:-I$<JOIN:${targetincludes},\n-I>\n>")
 
-        set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/mocinclude$<CONFIG>.tmp)
+        set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/mocinclude-$<LOWER_CASE:$<CONFIG>>.tmp)
 
     endif()
 
@@ -260,6 +275,70 @@ function(cstoolkit_filter_moc)
     endforeach()
 
     set(MOC_FILES ${TEMP_MOC_FILES} PARENT_SCOPE)
+endfunction()
+
+# qt6_generate_deploy_app_script()
+# partially copied from Qt6CoreMacros.cmake
+function(cstoolkit_qt_generate_deploy_app_script)
+    # We use a TARGET keyword option instead of taking the target as the first
+    # positional argument. This is to keep open the possibility of deploying
+    # an app for which we don't have a target (e.g. an application from a
+    # third party project that the caller may want to include in their own
+    # package). We would add an EXECUTABLE keyword for that, which would be
+    # mutually exclusive with the TARGET keyword.
+    set(no_value_options
+        NO_TRANSLATIONS
+        NO_COMPILER_RUNTIME
+        NO_UNSUPPORTED_PLATFORM_ERROR
+    )
+    set(single_value_options
+        TARGET
+        INSTALL_DIR
+        OUTPUT_SCRIPT
+    )
+    set(multi_value_options
+        RUNTIME_DEPENDENCIES
+        DEPLOY_TOOL_OPTIONS
+    )
+    cmake_parse_arguments(PARSE_ARGV 0 arg
+        "${no_value_options}" "${single_value_options}" "${multi_value_options}"
+    )
+    if(arg_UNPARSED_ARGUMENTS)
+        message(FATAL_ERROR "Unexpected arguments: ${arg_UNPARSED_ARGUMENTS}")
+    endif()
+    if(NOT arg_TARGET)
+        message(FATAL_ERROR "TARGET must be specified")
+    endif()
+    if(NOT arg_INSTALL_DIR)
+        message(FATAL_ERROR "INSTALL_DIR must be specified")
+    endif()
+    if(NOT arg_OUTPUT_SCRIPT)
+        message(FATAL_ERROR "OUTPUT_SCRIPT must be specified")
+    endif()
+
+    set(deploy_script "${CMAKE_CURRENT_BINARY_DIR}/${arg_TARGET}_qt_deploy-$<LOWER_CASE:$<CONFIG>>.cmake")
+
+    if(WIN32)
+        file(READ ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/Target_qt_deploy.cmake.in _Target_qt_deploy_content)
+        string(CONFIGURE "${_Target_qt_deploy_content}" _content @ONLY)
+        file(GENERATE OUTPUT ${deploy_script} CONTENT "${_content}")
+    elseif(NOT arg_NO_UNSUPPORTED_PLATFORM_ERROR)
+        # Error out by default unless the project opted out of the error.
+        message(FATAL_ERROR
+            "Support for installing runtime dependencies is not implemented for "
+            "this target platform (${CMAKE_SYSTEM_NAME})."
+        )
+    else()
+        file(GENERATE OUTPUT ${deploy_script}
+            CONTENT "
+message(STATUS
+    \"Skipping Qt runtime deployment steps. \"
+    \"Support for installing runtime dependencies is not implemented for \"
+    \"this target platform (${CMAKE_SYSTEM_NAME}).\"
+)")
+    endif()
+
+    set(${arg_OUTPUT_SCRIPT} "${deploy_script}" PARENT_SCOPE)
 endfunction()
 
 endif()

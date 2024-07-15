@@ -1,0 +1,28 @@
+set(tool_options "")
+
+if("@arg_NO_TRANSLATIONS@") # NO_TRANSLATIONS
+    list(APPEND tool_options --no-translations)
+endif()
+if("@arg_NO_COMPILER_RUNTIME@") # NO_COMPILER_RUNTIME
+    list(APPEND tool_options --no-compiler-runtime)
+endif()
+if("@arg_VERBOSE@") # VERBOSE
+    list(APPEND tool_options --verbose 2)
+endif()
+
+# DEPLOY_TOOL_OPTIONS
+list(APPEND tool_options @arg_DEPLOY_TOOL_OPTIONS@)
+
+message(STATUS "Running Qt deploy tool for @arg_TARGET@")
+
+execute_process(
+    COMMAND "@QT_DEPLOY_TOOL@" "$<TARGET_FILE:@arg_TARGET@>" --dir "@arg_INSTALL_DIR@" --force ${tool_options}
+    $<LIST:JOIN,$<LIST:TRANSFORM,$<LIST:TRANSFORM,@arg_RUNTIME_DEPENDENCIES@,PREPEND,">,APPEND,">,
+    >
+    WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"
+    RESULT_VARIABLE result
+)
+
+if(result)
+    message(FATAL_ERROR "Executing @QT_DEPLOY_TOOL@ failed: ${result}")
+endif()
