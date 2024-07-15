@@ -44,8 +44,8 @@ set(CSTOOLKIT_DEFAULT_PUBLIC_HEADERS_DIRS "include" CACHE STRING "Default folder
 set(CSTOOLKIT_DEFAULT_PRIVATE_HEADERS_DIRS "src" CACHE STRING "Default folder for private headers of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_SOURCES_DIRS "src" CACHE STRING "Default folder for source files of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_UI_DIRS "src" CACHE STRING "Default folder for Qt ui files of a target created with cstoolkit_add_target")
-set(CSTOOLKIT_DEFAULT_RESOURCES_DIRS "" CACHE STRING "Default folder for Qt qrc files of a target created with cstoolkit_add_target")
-set(CSTOOLKIT_DEFAULT_TRANSLATION_DIRS "" CACHE STRING "Default folder for Qt ts files of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_RESOURCES_DIRS "src" CACHE STRING "Default folder for Qt qrc files of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_TRANSLATION_DIRS "src" CACHE STRING "Default folder for Qt ts files of a target created with cstoolkit_add_target")
 
 ################################################################################
 # Options
