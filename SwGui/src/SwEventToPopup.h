@@ -14,8 +14,8 @@
 * INCLUDES LOCAUX
 */
 #include "SwAssistedComponent.h"
-#include <QEvent.h>
-#include <QIcon.h>
+#include <QEvent>
+#include <QIcon>
 #include "ISwEventObserver.h"
 #include "ISwEvent.h"
 #include "ISwQMainWindow.h"

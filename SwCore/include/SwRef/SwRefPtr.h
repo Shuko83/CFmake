@@ -11,6 +11,7 @@
 
 #include "Tools/Signal/LibIndeSig.h"
 #include "Tools/SwRefPtrTools.h"
+#include <cassert>
 
 #include <QHash>
 
@@ -162,9 +163,7 @@ namespace StreamWork
             }
             //Operateur d'indirection
             T* operator->() const {
-				if(_elt == 0){
-					_CrtDbgBreak();
-				}
+				assert(_elt);
 				return _elt;
             }            
             //acces au pointer

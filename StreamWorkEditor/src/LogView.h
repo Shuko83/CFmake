@@ -10,7 +10,7 @@
 #include <QDialog>
 #include <QTimer>
 #include <QMutex>
-#include <QRegexp>
+#include <QRegExp>
 #include "ui_LogView.h"
 #include "Tools/Log/ISwLogRecorder.h"
 /**

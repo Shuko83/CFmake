@@ -91,7 +91,7 @@ public:
   Func0(T* obj_, funcType f)
     : Func0Interface(),obj(obj_),func(f) {}
   virtual ~Func0() {}
-  void call() { if (enabled) (obj->*func)(); }
+  void call() { if (this->enabled) (obj->*func)(); }
 };
 
 /*! \brief SIGNAL No Param:template de signal */
@@ -165,9 +165,8 @@ public:
   T *obj;
   funcType func;
 public:
-  Func1(T* obj_, funcType f)
-    : Func1Interface(),obj(obj_),func(f) {}
-  void call(Arg1 x) { if (enabled) (obj->*func)(x); }
+  Func1(T* obj_, funcType f) : Func1Interface<Arg1>(), obj(obj_), func(f) {}
+  void call(Arg1 x) { if (this->enabled) (obj->*func)(x); }
   
   virtual Func1Interface<Arg1>* MakeNewCopyFunc1() { 
    
@@ -259,8 +258,8 @@ public:
   funcType func;
 public:
   Func2(T* obj_, funcType f)
-    : Func2Interface(),obj(obj_),func(f) {}
-  void call(Arg1 x,Arg2 y) { if (enabled) (obj->*func)(x,y); }
+    : Func2Interface<Arg1,Arg2>(),obj(obj_),func(f) {}
+  void call(Arg1 x,Arg2 y) { if (this->enabled) (obj->*func)(x,y); }
 };
 /*! \brief SIGNAL 2 Param:template de signal */
 template<class arg1, class arg2>
@@ -330,8 +329,8 @@ public:
   funcType func;
 public:
   Func3(T* obj_, funcType f)
-    : Func3Interface(),obj(obj_),func(f) {}
-  void call(Arg1 x,Arg2 y,Arg3 z) { if (enabled) (obj->*func)(x,y,z); }
+    : Func3Interface<Arg1,Arg2,Arg3>(),obj(obj_),func(f) {}
+  void call(Arg1 x,Arg2 y,Arg3 z) { if (this->enabled) (obj->*func)(x,y,z); }
 };
 
 /*! \brief SIGNAL 3 Param:template de signal*/
@@ -402,8 +401,8 @@ public:
   funcType func;
 public:
   Func4(T* obj_, funcType f)
-    : Func4Interface(),obj(obj_),func(f) {}
-  void call(Arg1 x,Arg2 y,Arg3 z,Arg4 t) { if (enabled) (obj->*func)(x,y,z,t); }
+    : Func4Interface<Arg1,Arg2,Arg3,Arg4>(),obj(obj_),func(f) {}
+  void call(Arg1 x,Arg2 y,Arg3 z,Arg4 t) { if (this->enabled) (obj->*func)(x,y,z,t); }
 };
 
 /*! \brief SIGNAL 4 Param:template de signal */
@@ -474,8 +473,8 @@ public:
   funcType func;
 public:
   Func5(T* obj_, funcType f)
-    : Func5Interface(),obj(obj_),func(f) {}
-  void call(Arg1 x,Arg2 y,Arg3 z,Arg4 t,Arg5 u) { if (enabled) (obj->*func)(x,y,z,t,u); }
+    : Func5Interface<Arg1,Arg2,Arg3,Arg4,Arg5>(),obj(obj_),func(f) {}
+  void call(Arg1 x,Arg2 y,Arg3 z,Arg4 t,Arg5 u) { if (this->enabled) (obj->*func)(x,y,z,t,u); }
 };
 
 /*! \brief SIGNAL 5 Param:template de signal */
@@ -546,8 +545,8 @@ public:
   funcType func;
 public:
   Func6(T* obj_, funcType f)
-    : Func6Interface(),obj(obj_),func(f) {}
-  void call(Arg1 x,Arg2 y,Arg3 z,Arg4 t,Arg5 u,Arg6 v) { if (enabled) (obj->*func)(x,y,z,t,u,v); }
+    : Func6Interface<Arg1,Arg2,Arg3,Arg4,Arg5,Arg6>(),obj(obj_),func(f) {}
+  void call(Arg1 x,Arg2 y,Arg3 z,Arg4 t,Arg5 u,Arg6 v) { if (this->enabled) (obj->*func)(x,y,z,t,u,v); }
 };
 
 /*! \brief SIGNAL 6 Param:template de signal */
@@ -618,8 +617,8 @@ public:
   funcType func;
 public:
   Func7(T* obj_, funcType f)
-    : Func7Interface(),obj(obj_),func(f) {}
-  void call(Arg1 x,Arg2 y,Arg3 z,Arg4 t,Arg5 u,Arg6 v,Arg7 w) { if (enabled) (obj->*func)(x,y,z,t,u,v,w); }
+    : Func7Interface<Arg1,Arg2,Arg3,Arg4,Arg5,Arg6,Arg7>(),obj(obj_),func(f) {}
+  void call(Arg1 x,Arg2 y,Arg3 z,Arg4 t,Arg5 u,Arg6 v,Arg7 w) { if (this->enabled) (obj->*func)(x,y,z,t,u,v,w); }
 };
 
 /*! \brief SIGNAL 7 Param:template de signal */

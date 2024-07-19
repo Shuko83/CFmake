@@ -9,7 +9,7 @@
 #ifndef _SwMacros_H
 #define _SwMacros_H
 
-#include <QtCore/QtGlobal>
+#include <QtGlobal>
 #include "Main/SwApplication.h"
 
 #ifdef __cplusplus

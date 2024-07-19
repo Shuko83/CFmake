@@ -12,11 +12,11 @@
 /*
   * INCLUDES GLOBAUX
   */
-#include <QDataStream>
 #include "Tools/Exception/SwException.h"
 #include "SwRef/SwRef.h"
 #include "SwRef/SwRefPtr.h"
 #include "Types/SwUUID.h"
+#include <QDataStream>
 /*
   * CONSTANTES GLOBALES
   */

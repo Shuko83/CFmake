@@ -9,7 +9,7 @@
 #ifndef _SwExecutionConstantes_H
 #define _SwExecutionConstantes_H
 
-#include <QGlobal.h>
+#include <QtGlobal>
 //Export via les DLL
 
 #ifdef SWEXECUTION_LIB

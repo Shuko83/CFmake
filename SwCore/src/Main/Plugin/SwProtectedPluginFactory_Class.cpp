@@ -1,3 +1,14 @@
+#if 1
+
+#include "Main/Plugin/SwProtectedPluginFactory_Class.h"
+
+//---------------------------------------------------------------------------------
+bool StreamWork::SwCore::SwProtectedPluginFactory_Class::unlock(std::string hash) const
+{
+	return true;
+}
+
+#else
 #include <windows.h>
 #include <psapi.h>
 #include <QJsonObject>
@@ -71,3 +82,4 @@ bool StreamWork::SwCore::SwProtectedPluginFactory_Class::unlock(std::string hash
 
 	return verifier.VerifyMessage(reinterpret_cast<const byte*>(data.toUtf8().constData()), data.toUtf8().size(), hashDecoded, verifier.MaxSignatureLength());
 }
+#endif

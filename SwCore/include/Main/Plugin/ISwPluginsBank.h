@@ -10,12 +10,6 @@
 #define _ISwPluginsBank_H
 
 /*
-  * INCLUDES GLOBAUX
-  */
-#include <QString>
-#include <QIcon>
-#include <QAbstractItemModel>
-/*
   * INCLUDES LOCAUX
   */
 #include "SwCoreConstantes.h"
@@ -24,6 +18,13 @@
 #include "Component/Interfaces/ISwCreationPostProcessor.h"
 #include "Types/SwUUID.h"
 #include "Component/Interfaces/ISwObjectFactory.h"
+
+/*
+  * INCLUDES GLOBAUX
+  */
+#include <QString>
+#include <QIcon>
+#include <QAbstractItemModel>
 
 namespace StreamWork
 {

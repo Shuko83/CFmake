@@ -9,7 +9,7 @@
 #ifndef _SwDatasBaseConstantes_H
 #define _SwDatasBaseConstantes_H
 
-#include <QGlobal.h>
+#include <QtGlobal>
 //Export via les DLL
 #include "Main/SwMacros.h"
 

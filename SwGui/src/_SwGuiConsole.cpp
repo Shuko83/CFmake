@@ -10,12 +10,16 @@
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
 #include "SwRef/SwRefPtr.h"
-#include "windows.h"
+
 #include <stdio.h>
 #include <fcntl.h>
-#include <io.h>
 #include <iostream>
 #include "_SwGuiConsole.h"
+
+#ifdef Q_OS_WIN
+#	include "windows.h"
+#	include <io.h>
+#endif
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -24,6 +28,7 @@ using namespace StreamWork::SwGui;
 _SwGuiConsole::_SwGuiConsole():Component() 
 {
 
+#ifdef Q_OS_WIN
 	int hConHandle;
 	void * lStdHandle;
 	CONSOLE_SCREEN_BUFFER_INFO coninfo;
@@ -62,6 +67,7 @@ _SwGuiConsole::_SwGuiConsole():Component()
 	setvbuf( stderr, NULL, _IONBF, 0 );
 
 	std::cout << "Attention les erreurs de signaux Qt ne sont pas affiche dans cette console."<<std::endl;
+#endif
 }
 
 /*! \brief Destructeur */

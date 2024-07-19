@@ -10,6 +10,15 @@
 #define __SwPluginsBank_Class_H
 
 /*
+  * INCLUDES LOCAUX
+  */
+#include "Types/SwUUID.h"
+#include "SwCoreConstantes.h"
+#include "Main/Plugin/ISwPluginsBank.h"
+#include "Main/Plugin/SwPluginFactory_Class.h"
+#include "Component/Base/_SwTreeItem.h"
+
+/*
   * INCLUDES GLOBAUX
   */
 #include <QString>
@@ -17,13 +26,6 @@
 #include <QMultiMap>
 #include <QHash>
 #include <QSystemTrayIcon>
-/*
-  * INCLUDES LOCAUX
-  */
-#include "SwCoreConstantes.h"
-#include "Main/Plugin/ISwPluginsBank.h"
-#include "Main/Plugin/SwPluginFactory_Class.h"
-#include "Component/Base/_SwTreeItem.h"
 
 class ProductLicense;
 

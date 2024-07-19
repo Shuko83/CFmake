@@ -8,7 +8,7 @@
 #include <QTimer>
 #include <QDesktopWidget>
 #include <QPropertyAnimation>
-#include <QtCore/qmath.h>
+#include <QtMath>
 
 #define	MIN_DISTANCE_TO_STUCK	20
 
@@ -863,7 +863,7 @@ void SwDockWidget_ToolBar::updatePosition()
 	//Mise a jour de la position si la toolbar est aimantee
 	if (_stuck)
 	{
-		QPoint pos(pos());
+		QPoint pos(this->pos());
 		switch(_stuck)
 		{
 			//Cotes

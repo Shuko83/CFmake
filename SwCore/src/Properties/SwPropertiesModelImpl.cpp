@@ -6,13 +6,6 @@
  * author : F.Bighelli - modified by CGD (12/09/2013)
  */
 
-#include <QStringList>
-#include <QColor>
-#include "Main/SwApplication.h"
-#include "Main/SwMacros.h"
-#include <QPainter>
-#include <qdebug>
-
 #include "Types/SwEnum.h"
 #include "Types/SwIntegerEnum.h"
 #include "Types/SwInteger.h"
@@ -21,8 +14,14 @@
 #include "Types/SwIpV4Address.h"
 #include "Types/SwUUID.h"
 #include "Types/SwFileDescriptor.h"
-
 #include "QDynamicStyledItemDelegate.h"
+
+#include <QStringList>
+#include <QColor>
+#include "Main/SwApplication.h"
+#include "Main/SwMacros.h"
+#include <QPainter>
+#include <QDebug>
 
 
 /*

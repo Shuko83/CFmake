@@ -1,3 +1,10 @@
+if (WIN32)
+	set(OPENGL_LIB opengl32)
+else()
+	set(OPENGL_LIB OpenGL)
+endif()
+
+
 cstoolkit_add_target(StreamWorkEditor EXECUTABLE NAMESPACE tt4-sw-cmake RECURSIVE RECURSIVE_INCLUDE
     PUBLIC_LINK_LIBRARIES
 		License::License
@@ -21,7 +28,7 @@ cstoolkit_add_target(StreamWorkEditor EXECUTABLE NAMESPACE tt4-sw-cmake RECURSIV
 		Qt5::Widgets
 		Qt5::Xml
 	PRIVATE_LINK_LIBRARIES
-		opengl32
+		${OPENGL_LIB}
 		ApiLicensing::ApiLicensing
 		cryptopp-static
 	LINK_OPTIONS

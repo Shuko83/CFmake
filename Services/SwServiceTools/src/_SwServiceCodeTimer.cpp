@@ -23,7 +23,7 @@ double StreamWork::SwCore::_SwServiceCodeTimer::getTime( void * caller )
 {
 	if(_timers.contains(caller))
 	{
-		return _timers.value(caller)->getDiffMs();
+		return _timers.value(caller)->getDiffMs().count();
 	}
 
 	return 0.;

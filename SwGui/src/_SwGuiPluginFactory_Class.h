@@ -6,8 +6,8 @@
  \author F.Bighelli
  */
 
-#ifndef __SwPluginFactory_Class_H
-#define __SwPluginFactory_Class_H
+#ifndef __SwGuiPluginFactory_Class_H
+#define __SwGuiPluginFactory_Class_H
 
 /*
   * INCLUDES GLOBAUX

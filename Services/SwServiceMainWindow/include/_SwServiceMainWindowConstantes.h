@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QGlobal.h>
+#include <QtGlobal>
 
 #ifdef SWSERVICEMAINWINDOW_LIB
 # define BUILD_SERVICEMAINWINDOW Q_DECL_EXPORT

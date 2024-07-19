@@ -9,7 +9,7 @@
 #ifndef _SwEditorConstantes_H
 #define _SwEditorConstantes_H
 
-#include <QGlobal.h>
+#include <QtGlobal>
 //Export via les DLL
 
 #ifdef SWEDITOR_LIB

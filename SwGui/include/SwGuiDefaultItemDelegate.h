@@ -11,6 +11,10 @@
   * INCLUDES LOCAUX
   */
 #include "SwGuiConstantes.h"
+#include "Types/SwFileDescriptor.h"
+#include "Types/SwIconDescriptor.h"
+#include "Types/SwUUID.h"
+
 /*
   * INCLUDES GLOBAUX
   */
@@ -18,9 +22,6 @@
 #include <QRegularExpression>
 #include <QFont>
 #include <QFileDialog>
-#include "Types/SwFileDescriptor.h"
-#include "Types/SwIconDescriptor.h"
-#include "Types/SwUUID.h"
 
 namespace StreamWork
 {

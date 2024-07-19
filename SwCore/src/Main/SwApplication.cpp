@@ -6,12 +6,6 @@
 \version 1.0
 */
 
-#include <QApplication>
-#include <QDir>
-#include <QTextCodec>
-#include <QXmlReader>
-#include <QXmlStreamWriter>
-
 #include "Main/SwApplication.h"
 #include "Main/Plugin/_SwPluginsBank_Class.h"
 #include "Types/UserType/_SwComplexeTypeAdaptersFactoriesBankImpl.h"
@@ -31,6 +25,13 @@
 #include "rsa.h"
 #include "hex.h"
 #include "ProductLicense.h"
+
+#include <QApplication>
+#include <QDir>
+#include <QTextCodec>
+#include <QXmlReader>
+#include <QXmlStreamWriter>
+
 
 using namespace StreamWork::SwCore;
 using namespace std;

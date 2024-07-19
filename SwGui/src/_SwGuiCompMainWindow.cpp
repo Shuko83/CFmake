@@ -13,8 +13,10 @@
 #include "_SwGuiCompMainWindow.h"
 #include <QEvent>
 
-#include <io.h>
-#include <direct.h>
+#ifdef Q_OS_WIN
+#   include <io.h>
+#   include <direct.h>
+#endif
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -858,12 +860,12 @@ void _SwGuiCompMainWindow::checkDirectory( QString inDirectoryBasePath )
         if( !directoriesToCheck[i].contains( "." ) )
         {
             directoryPath += directoriesToCheck[i];
-            
+            QDir dir(directoryPath.toUtf8().constData());
             // Si ce n'est pas le cas, on le créé
-            if( _access( directoryPath.toUtf8().constData(), 0 ) == -1 )
+            if(!dir.exists())
             {
                 qDebug() << "The repertory named " << directoryPath << " doesn't exist, creation!!";
-                _mkdir( directoryPath.toUtf8().constData());
+                dir.mkpath(QString());
             }
             directoryPath += "\\";
         }

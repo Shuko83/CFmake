@@ -10,6 +10,14 @@
 #define _ISwPluginFactory_H
 
 /*
+  * INCLUDES LOCAUX
+  */
+#include "Component/Base/SwComponent_Class.h"
+#include "Main/Services/Management/ISwService.h"
+#include "Component/Pin/SwData_Class.h"
+#include "Types/SwUUID.h"
+
+/*
   * INCLUDES GLOBAUX
   */
 #include <QString>
@@ -17,13 +25,6 @@
 #include <QSet>
 #include <QAbstractListModel>
 #include <typeinfo>
-/*
-  * INCLUDES LOCAUX
-  */
-#include "Component/Base/SwComponent_Class.h"
-#include "Main/Services/Management/ISwService.h"
-#include "Component/Pin/SwData_Class.h"
-#include "Types/SwUUID.h"
 
 //Nom du service
 #define CG_SW_SERVICE_PLUGIN_FACTORY "PluginFactory"

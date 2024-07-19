@@ -10,11 +10,6 @@
 #define _SwComponent_Class_H
 
 /*
-  * INCLUDES GLOBAUX
-  */
-#include <QMap>
-#include <QObject>
-/*
   * INCLUDES LOCAUX
   */
 #include "Component/Base/SwNamed_Class.h"
@@ -23,6 +18,11 @@
 #include "Main/Services/Management/SwServicesManager_Class.h"
 #include "Component/Interfaces/ISwVisitor.h"
 #include "Component/Interfaces/ISwActivable.h"
+/*
+  * INCLUDES GLOBAUX
+  */
+#include <QMap>
+#include <QObject>
 
 namespace StreamWork
 {

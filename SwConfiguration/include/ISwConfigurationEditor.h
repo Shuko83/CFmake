@@ -17,7 +17,7 @@
   * INCLUDES LOCAUX
   */
 
-#include <QList.h>
+#include <QList>
 #include "_SwManagedConfiguration.h"
 #include "_ISwManagedConfigurationsList.h"
 

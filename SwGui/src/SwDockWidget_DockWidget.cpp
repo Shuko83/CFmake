@@ -5,7 +5,10 @@
 #include <QPicture>
 #include <QPropertyAnimation>
 #include <QDesktopWidget>
-#include "qt_windows.h"
+
+#ifdef Q_OS_WIN
+#	include "qt_windows.h"
+#endif
 
 #include "ui_SwDockWidget_DockWidget.h"
 
@@ -567,8 +570,10 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			bottomRightExtUp.contains(event->pos())))
 		{
 			_isResizing = true;
+			#ifdef Q_OS_WIN
 			ReleaseCapture();
 			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZEBOTTOMRIGHT, 0);
+			#endif
 			return true;
 		}
 
@@ -578,8 +583,10 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			topLeftExtBottom.contains(event->pos())))
 		{
 			_isResizing = true;
+			#ifdef Q_OS_WIN
 			ReleaseCapture();
 			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZETOPLEFT, 0);
+			#endif
 			return true;
 		}
 
@@ -589,8 +596,10 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			topRightExtBottom.contains(event->pos())))
 		{
 			_isResizing = true;
+			#ifdef Q_OS_WIN
 			ReleaseCapture();
 			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZETOPRIGHT, 0);
+			#endif
 			return true;
 		}
 
@@ -600,8 +609,10 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 			bottomLeftExtUp.contains(event->pos())))
 		{
 			_isResizing = true;
+			#ifdef Q_OS_WIN
 			ReleaseCapture();
 			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZEBOTTOMLEFT, 0);
+			#endif
 			return true;
 		}
 
@@ -615,32 +626,40 @@ bool SwDockWidget_DockWidget::manageResize(QMouseEvent * event)
 		if (ui->bottom->isVisible() && bottom.contains(event->pos()))
 		{
 			_isResizing = true;
+			#ifdef Q_OS_WIN
 			ReleaseCapture();
 			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZEBOTTOM, 0);
+			#endif
 			return true;
 		}
 
 		if (ui->left->isVisible() && left.contains(event->pos()))
 		{
 			_isResizing = true;
+			#ifdef Q_OS_WIN
 			ReleaseCapture();
 			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZELEFT, 0);
+			#endif
 			return true;
 		}
 
 		if (ui->right->isVisible() && right.contains(event->pos()))
 		{
 			_isResizing = true;
+			#ifdef Q_OS_WIN
 			ReleaseCapture();
 			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZERIGHT, 0);
+			#endif
 			return true;
 		}
 
 		if (ui->top->isVisible() && top.contains(event->pos()))
 		{
 			_isResizing = true;
+			#ifdef Q_OS_WIN
 			ReleaseCapture();
 			PostMessage((HWND)this->winId(), WM_SYSCOMMAND, SZ_SIZETOP, 0);
+			#endif
 			return true;
 		}
 	}

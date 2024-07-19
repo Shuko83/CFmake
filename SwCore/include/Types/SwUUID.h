@@ -19,7 +19,8 @@
 
 
 
-BUILD_SWCORE uint qHash(const StreamWork::SwCore::SwUUID & uuid);
+BUILD_SWCORE uint qHash(const StreamWork::SwCore::_SwUUID & uuid, uint seed) ;
+BUILD_SWCORE uint qHash(const StreamWork::SwCore::_SwUUID & uuid) ;
 
 Q_DECLARE_METATYPE(StreamWork::SwCore::SwUUID)
 

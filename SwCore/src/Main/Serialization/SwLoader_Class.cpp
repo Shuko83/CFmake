@@ -6,15 +6,16 @@
  \author F.Bighelli
 */
 
+#include <QDebug>
+#include <QRegularExpression>
+
 #include "Main/Serialization/SwLoader_Class.h"
 #include "SwCoreConstantes.h"
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
 #include "Main/Serialization/SwSaver_Class.h"
 #include "Component/Interfaces/ISwPersistent.h"
-#include "QDebug.h"
 #include "Component/Services/ISwServiceOwner.h"
-#include <QRegularExpression>
 
 using namespace StreamWork::SwCore;
 

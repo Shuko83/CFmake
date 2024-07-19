@@ -6,6 +6,10 @@
 \version 1.0
  */
 
+
+
+#ifdef Q_OS_WIN
+
 #include "Tools/SwWinProcess.h"
 #include <Windows.h>
 #ifdef _DEBUG
@@ -156,3 +160,5 @@ void SwWinProcess::kill()
 
 	_isRunning = false;
 }
+
+#endif

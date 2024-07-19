@@ -6,12 +6,6 @@
  */
 
 #include "SwGuiDefaultItemDelegate.h"
-
-#include <QtWidgets>
-
-#include <QLocale>
-#include <QMetaType>
-#include <QFileDialog>
 #include "Types/SwEnum.h"
 #include "Types/SwIntegerEnum.h"
 #include "Types/SwInteger.h"
@@ -27,6 +21,11 @@
 #include "SwGuiStringLineEdit.h"
 #include "_QRcViewer.h"
 #include "Main/SwMacros.h"
+
+#include <QtWidgets>
+#include <QLocale>
+#include <QMetaType>
+#include <QFileDialog>
 
 using namespace StreamWork::SwGui;
 using namespace StreamWork::SwCore;

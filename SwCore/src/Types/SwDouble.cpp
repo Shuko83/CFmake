@@ -1,6 +1,7 @@
 #include "Types/SwDouble.h"
 
 #include <limits>
+#include <cmath>
 
 using namespace StreamWork::SwCore;
 

@@ -9,7 +9,7 @@
 #ifndef _SwCoreConstantes_H
 #define _SwCoreConstantes_H
 
-#include <QGlobal.h>
+#include <QtGlobal>
 //Export via les DLL
 
 #ifdef SWCORE_LIB

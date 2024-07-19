@@ -21,7 +21,7 @@ public:
     SwConfPushButton();
     ~SwConfPushButton();
     
-    void initializeComponent();
+    virtual void initializeComponent() throw(StreamWork::SwCore::SwException) override;
     
     QString getConfName() const { return _confName; }
     void setConfName( QString val ) { _confName = val; }

@@ -18,6 +18,7 @@
 #include "ISwDeviceObserver.h"
 #include <QObject>
 #include <QWidget>
+#include <QShortcut>
 
 
 

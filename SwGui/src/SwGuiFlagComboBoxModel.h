@@ -1,7 +1,7 @@
 #ifndef _SwGuiFlagComboBoxModel_H
 #define _SwGuiFlagComboBoxModel_H
 
-#include <QAbstractListModel >
+#include <QAbstractListModel>
 
 #include <QMetaEnum>
 

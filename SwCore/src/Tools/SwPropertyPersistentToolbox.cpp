@@ -6,20 +6,6 @@
 \version 1.0
  */
 
-/*
- * INCLUDES GLOBAUX
- */
-#include <QPoint>
-#include <QSize>
-#include <QRect>
-#include <QDomText>
-#include <QDomCDATASection>
-#include <QMetaType>
-#include <QDomImplementation>
-#include <QByteArray>
-#include <QSizePolicy>
-#include <QKeySequence>
-#include "QsLog.h"
 
 /*
  * INCLUDES LOCAUX
@@ -41,6 +27,21 @@
 #include "Main/SwApplication.h"
 #include "Tools/SwBuffer_Toolbox.h"
 #include "Component/Services/ISwSnapShotPropertiesService.h"
+
+/*
+ * INCLUDES GLOBAUX
+ */
+#include <QPoint>
+#include <QSize>
+#include <QRect>
+#include <QDomText>
+#include <QDomCDATASection>
+#include <QMetaType>
+#include <QDomImplementation>
+#include <QByteArray>
+#include <QSizePolicy>
+#include <QKeySequence>
+#include "QsLog.h"
 using namespace StreamWork::SwCore;
 
 #define CL_XML_NODE "property"

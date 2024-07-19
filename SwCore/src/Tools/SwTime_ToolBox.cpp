@@ -8,11 +8,12 @@
  * INCLUDES GLOBAUX
  */
 #include <QtGlobal>
-//#include <unistd.h>
 #include <time.h>
+
 //include linux
 #ifdef Q_OS_LINUX
 #include <sys/time.h>
+#include <unistd.h>
 #endif
 
 //include winNt
@@ -29,7 +30,7 @@ using namespace StreamWork::SwCore;
 
 bool _isInitialized=false;
 double _startTime;
-ULONGLONG _startTickCount;
+unsigned long long _startTickCount;
 
 
 /*! \brief Permet de recuperer le nombre de seconde depuis le 1 janvier 1970*/

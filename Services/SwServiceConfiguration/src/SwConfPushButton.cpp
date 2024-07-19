@@ -23,7 +23,7 @@ void SwConfPushButton::onClicked()
     }
 }
 
-void SwConfPushButton::initializeComponent()
+void SwConfPushButton::initializeComponent() throw(StreamWork::SwCore::SwException)
 {
     createPropertiesForThisObject();
     createPropertiesForQObject( _pb, "QPushButton" );

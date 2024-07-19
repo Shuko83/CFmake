@@ -6,13 +6,16 @@
  \author F.Bighelli
 */
 
-#include <QMimeData>
-#include <QTextStream>
 /*
   * INCLUDES LOCAUX
   */
+
+
 #include "Main/Plugin/SwPluginFactory_Class.h"
 #include "Main/SwMacros.h"
+
+#include <QMimeData>
+#include <QTextStream>
 
 using namespace StreamWork::SwCore;
 

@@ -10,7 +10,7 @@
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
 #include "SwRef/SwRefPtr.h"
-#include <QList.h>
+#include <QList>
 #include "_SwGuiCssEditor.h"
 #include "_SwGuiCssDialog.h"
 #include <QDialog>

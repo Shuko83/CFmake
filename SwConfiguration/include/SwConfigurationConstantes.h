@@ -9,7 +9,7 @@
 #ifndef __SwConfigurationConstantes_H
 #define __SwConfigurationConstantes_H
 
-#include <QGlobal.h>
+#include <QtGlobal>
 //Export via les DLL
 
 #ifdef SWCONFIGURATION_LIB

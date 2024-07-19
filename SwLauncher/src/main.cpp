@@ -9,7 +9,7 @@
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
 #include "Tools/Log/SwFileLogRecorder_Class.h"
-//#include <QMainWindow.h>
+//#include <QMainWindow>
 #include "Tools/Exception/SwException.h"
 using namespace StreamWork::SwCore;
 

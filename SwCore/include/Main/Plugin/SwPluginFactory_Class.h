@@ -30,6 +30,14 @@
 #define _SwPluginFactory_Class_H
 
 /*
+  * INCLUDES LOCAUX
+  */
+#include "Types/SwUUID.h"
+#include "Main/Plugin/ISwPluginFactory.h"
+#include "Main/Plugin/ISwPluginOverview.h"
+#include "Main/Services/Management/ISwServicesManager_Listener.h"
+
+/*
   * INCLUDES GLOBAUX
   */
 #include <QString>
@@ -37,12 +45,6 @@
 #include <QMultiMap>
 #include <QDateTime>
 #include <QLocale>
-/*
-  * INCLUDES LOCAUX
-  */
-#include "Main/Plugin/ISwPluginFactory.h"
-#include "Main/Plugin/ISwPluginOverview.h"
-#include "Main/Services/Management/ISwServicesManager_Listener.h"
 
 namespace StreamWork
 {

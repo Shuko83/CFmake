@@ -7,10 +7,11 @@
 #ifndef _STREAMWORK_SWRECORD_ISWRECORDPOINT_H
 #define _STREAMWORK_SWRECORD_ISWRECORDPOINT_H
 
-#include <QtCore>
 #include "Types/SwUUID.h"
 #include "ISwRecordManager.h"
 #include "ISwReplayControler.h"
+
+#include <QtCore>
 #include <QXmlStreamReader>
 
 namespace StreamWork {

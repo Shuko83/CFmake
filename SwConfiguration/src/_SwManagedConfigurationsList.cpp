@@ -224,7 +224,7 @@ bool _SwManagedConfigurationsList::LoadConfiguration(QString filename)
                     QDomElement configProperties = config.firstChildElement("Properties");
                     // remplacement des path de fichiers relatifs en absolus a la lecture
                     
-                    processLoadConfigurationNode(&configProperties,&repository);
+                    processLoadConfigurationNode(configProperties, repository);
                     
                     _selectedConfiguration->Load(configProperties); 
                     if (_editor != 0)
@@ -278,8 +278,10 @@ bool _SwManagedConfigurationsList::SaveConfiguration(QString filename)
 		writer.writeEndDocument();
 
         //Traitement du fichier de configuration
-		doc.setContent(data);
-        processSaveConfigurationNode(&(doc.documentElement()),&d);
+		auto docElement = doc.documentElement();
+        doc.setContent(data);
+
+        processSaveConfigurationNode(docElement, d);
 
 	    //Ecriture du fichier
         file.write(doc.toByteArray(4));
@@ -291,11 +293,11 @@ bool _SwManagedConfigurationsList::SaveConfiguration(QString filename)
 }
 
 /** @brief  traitement de la configuration */
-void _SwManagedConfigurationsList::processSaveConfigurationNode(QDomElement * elt,QDir * targetRepository) {
-    if (elt->hasAttribute("fdesc")) {
-        QFile f(elt->attribute("fdesc"));
-        QFileInfo fi(elt->attribute("fdesc"));
-        QString new_name=targetRepository->absolutePath()+
+void _SwManagedConfigurationsList::processSaveConfigurationNode(QDomElement & elt,const QDir & targetRepository) {
+    if (elt.hasAttribute("fdesc")) {
+        QFile f(elt.attribute("fdesc"));
+        QFileInfo fi(elt.attribute("fdesc"));
+        QString new_name=targetRepository.absolutePath()+
                QDir::separator()+fi.fileName();
         QFileInfo newfi(new_name);
         if (fi.isFile() && f.exists()) {
@@ -306,35 +308,35 @@ void _SwManagedConfigurationsList::processSaveConfigurationNode(QDomElement * el
                 }
                 f.copy(new_name); 
             }
-            elt->setAttribute("fdesc",/*targetRepository->dirName () + QDir::separator() + */fi.fileName());
+            elt.setAttribute(QString("fdesc"),/*targetRepository.dirName () + QDir::separator() + */fi.fileName());
         }
     }
-    QDomElement selt=elt->firstChildElement();
+    QDomElement selt=elt.firstChildElement();
     while (!selt.isNull()) {
-        processSaveConfigurationNode(&selt,targetRepository);
+        processSaveConfigurationNode(selt, targetRepository);
         selt=selt.nextSiblingElement();
     }
 }
 /** @brief  traitement de la configuration */
-void _SwManagedConfigurationsList::processLoadConfigurationNode(QDomElement * elt,QDir * targetRepository) {
-    if (elt->hasAttribute("fdesc")) {
-        QString fileName = elt->attribute("fdesc");
-        QString new_name=targetRepository->absolutePath()+
+void _SwManagedConfigurationsList::processLoadConfigurationNode(QDomElement & elt,const QDir & targetRepository) {
+    if (elt.hasAttribute("fdesc")) {
+        QString fileName = elt.attribute("fdesc");
+        QString new_name=targetRepository.absolutePath()+
                QDir::separator()+fileName;
         
         QFileInfo newfi(new_name);
         if (newfi.exists() && newfi.isFile()) {
             
-            elt->setAttribute("fdesc",new_name);
+            elt.setAttribute("fdesc",new_name);
         }
         else
         {
             SW_ALERT.Alert(AlertLvl_Warning,"Error loading configurations additional file: file %s does not exist",newfi.filePath());
         }
     }
-    QDomElement selt=elt->firstChildElement();
+    QDomElement selt=elt.firstChildElement();
     while (!selt.isNull()) {
-        processLoadConfigurationNode(&selt,targetRepository);
+        processLoadConfigurationNode(selt, targetRepository);
         selt=selt.nextSiblingElement();
     }
 }

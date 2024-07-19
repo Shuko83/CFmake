@@ -7,14 +7,14 @@
 #include "SwDockWidget_MainTabBar.h"
 
 //Qt
-#include <QtCore/QTime>
+#include <QTime>
 #include <QStackedWidget>
 #include <QPainter>
 #include <QtXml/QDomDocument>
-#include <QtCore/QFile>
+#include <QFile>
 #include <QSettings>
 #include <QDir>
-#include <QtCore/QCoreApplication>
+#include <QCoreApplication>
 #include <QKeyEvent>
 #include <QAction>
 #include <QDesktopWidget>

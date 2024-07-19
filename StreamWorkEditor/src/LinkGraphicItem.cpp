@@ -5,7 +5,7 @@
 */
 
 #include "LinkGraphicItem.h"
-#include <Qdebug>
+#include <QDebug>
 #define LINK_WIDTH 2.0
 #define SELECTED_LINK_WIDTH 3.0
 

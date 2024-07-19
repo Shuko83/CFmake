@@ -75,9 +75,9 @@ public:
     virtual bool SaveConfiguration(QString filename);
 
     /** @brief  traitement de la configuration */
-    void processSaveConfigurationNode(QDomElement * elt,QDir * targetRepository);
+    void processSaveConfigurationNode(QDomElement & elt,const QDir & targetRepository);
     /** @brief  traitement de la configuration */
-    void processLoadConfigurationNode(QDomElement * elt,QDir * targetRepository);
+    void processLoadConfigurationNode(QDomElement & elt,const QDir & targetRepository);
 
     void setConfigurationCount(int value);
     

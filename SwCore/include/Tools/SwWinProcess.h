@@ -6,6 +6,8 @@
 \version 1.0
 */
 
+#ifdef Q_OS_WIN
+
 #ifndef _SwWinProcess_H
 #define _SwWinProcess_H
 
@@ -69,4 +71,5 @@ namespace StreamWork
 	}
 }
 
+#endif
 #endif

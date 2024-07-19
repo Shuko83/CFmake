@@ -7,6 +7,8 @@
 #include <QPrintDialog>
 #include <QFileInfo>
 #include <QSettings>
+#include <QDebug>
+
 #include "MainWindow.h"
 #include "_SwGuiPluginsFrontEnd.h"
 #include "GraphicsResources.h"
@@ -18,7 +20,6 @@
 #include "Main/SwApplication.h"
 #include "Main/Services/ISwEditionService.h"
 #include "MenuManager.h"
-#include <qDebug>
 #include "ISwServiceConfiguration.h"
 #include "ISwServiceShortcuts.h"
 #include "Main/SwMacros.h"
@@ -463,7 +464,7 @@ void MainWindow::onRearrange()
 //---------------------------------------------------------------------------------
 void MainWindow::onNewWindow()
 {
-	MainWindow *window = new MainWindow(false);
+	MainWindow *window = new MainWindow();
 	window->onNewStream();
 	window->showMaximized();
 }

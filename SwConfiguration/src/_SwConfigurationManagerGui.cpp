@@ -120,7 +120,7 @@ void _SwConfigurationManagerGui::setConfigurationController (
 
 
     
-void _SwConfigurationManagerGui::setConfigurationsList(QList<_SwManagedConfiguration *> & configList)
+void _SwConfigurationManagerGui::setConfigurationsList(const QList<_SwManagedConfiguration *> & configList)
 {
     _configList = configList;
 

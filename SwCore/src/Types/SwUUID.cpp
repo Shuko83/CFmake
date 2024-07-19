@@ -43,12 +43,13 @@ bool _SwUUID::operator!=(const struct _SwUUID & val) const {
 
 }
 
-struct _SwUUID _SwUUID::generateUUID() {
-	GUID val=(GUID)QUuid::createUuid(); 	
-	struct _SwUUID *  ptr=(struct _SwUUID * )&val;
-	return *ptr;
+struct _SwUUID _SwUUID::generateUUID() 
+{
+	QUuid val = QUuid::createUuid();
+  qint64 mostSigBits = static_cast<qint64>((static_cast<quint64>(val.data3 & 0xFFFF) << 48) ^ (static_cast<quint64>(val.data2& 0xFFFF) << 32) ^ static_cast<quint64>(val.data1& 0xFFFFFFFF));
+  qint64 leastSigBits = reinterpret_cast<qint64&>(val.data4);
+  return _SwUUID(mostSigBits, leastSigBits);
 }
-
 
  /**
 @param value */
@@ -78,8 +79,21 @@ struct _SwUUID _SwUUID::CreateFromQString( const QString & value )
 	return id;
 }
 
+
 //JS Hash Function
-uint qHash(const StreamWork::SwCore::SwUUID & uuid) {
+uint qHash(const StreamWork::SwCore::_SwUUID & uuid)  
+{
+  return qHash(uuid, 0);
+}  
+
+
+
+
+
+
+//JS Hash Function
+uint qHash(const StreamWork::SwCore::_SwUUID & uuid, uint seed) 
+{
    char * tmp=(char *)&uuid;
 
    unsigned int hash = 1315423911;
@@ -90,7 +104,7 @@ uint qHash(const StreamWork::SwCore::SwUUID & uuid) {
       hash ^= ((hash << 5) + (unsigned int)tmp[i] + (hash >> 2));
    }
 
-   return hash;
+   return hash ^ seed;
 
 }      
 

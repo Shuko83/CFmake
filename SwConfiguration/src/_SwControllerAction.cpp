@@ -5,7 +5,7 @@
  \date 
  \author 
 */
-#include "QApplication.h"
+#include <QApplication>
 #include "_SwControllerAction.h"
 
 using namespace StreamWork::SwCore;

@@ -9,7 +9,7 @@
 #ifndef _SwGuiConstantes_H
 #define _SwGuiConstantes_H
 
-#include <QGlobal.h>
+#include <QtGlobal>
 //Export via les DLL
 
 #ifdef SWGUI_LIB

@@ -76,7 +76,7 @@ public:
 
 protected:
 bool askForStop();    
-virtual void setConfigurationsList(QList<_SwManagedConfiguration *> & configList);    
+virtual void setConfigurationsList(const QList<_SwManagedConfiguration *> & configList);    
 void setConfigurationEdited(bool value);
 private:
     Ui::_SwConfigurationManagerGuiClass ui;

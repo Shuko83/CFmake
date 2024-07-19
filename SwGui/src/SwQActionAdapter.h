@@ -10,7 +10,7 @@
 #define __SxQActionAdapter_H
 
 
-#include <QAction.h>
+#include <QAction>
 /**
 *	@class SwQActionAdapter 
 */   

@@ -22,7 +22,7 @@
 #include "ISwConfiguration.h"
 #include "ISwConfigurationController.h"
 #include "Properties/SwPropertiesModelImpl.h"
-#include <QAbstractItemModel.h>
+#include <QAbstractItemModel>
 
 using namespace StreamWork::SwConfiguration;
 using namespace StreamWork::SwCore;

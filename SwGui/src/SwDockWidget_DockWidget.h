@@ -1,7 +1,7 @@
 #ifndef SWDOCKWIDGET_DOCKWIDGET_H
 #define SWDOCKWIDGET_DOCKWIDGET_H
 
-#include <qglobal.h>
+#include <QtGlobal>
 
 #include <QtWidgets>
 

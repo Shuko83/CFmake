@@ -6,23 +6,6 @@
  \author F.Bighelli
 */
 
-#include <QLibrary>
-#include <QProcess>
-#include <QRegularExpression>
-#include <QDir>
-#include <QFile>
-#include <QColor>
-#include <QDomDocument>
-#include <QDomElement>
-#include <QDateTime>
-#include <QApplication>
-#include <QDebug>
-#include <QRegularExpression>
-#include <windows.h>
-#include <psapi.h>
-#include <QJsonObject>
-#include <QJsonDocument>
-
 #include "Main/Plugin/_SwPluginsBank_Class.h"
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
@@ -36,16 +19,41 @@
 #include "files.h"
 #include "ProductLicense.h"
 
+#include <QLibrary>
+#include <QProcess>
+#include <QRegularExpression>
+#include <QDir>
+#include <QFile>
+#include <QColor>
+#include <QDomDocument>
+#include <QDomElement>
+#include <QDateTime>
+#include <QApplication>
+#include <QDebug>
+#include <QRegularExpression>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QProcessEnvironment>
+
+#ifdef Q_OS_WINDOWS
+#include <windows.h>
+#include <psapi.h>
+#endif
+
+#include <cstdlib> 
 #include <stdlib.h> 
 
+#define VARNAME_PATH "PATH"
+
 #ifdef Q_OS_WIN
-	//Enregistrement du path dans le path applicatif
+//Enregistrement du path dans le path applicatif
 #include <windows.h>
 #include "ImageHlp.h"
 #define WIN32_BUFSIZE 30000
 #include <QMessageBox>
-#define VARNAME_PATH "PATH"
 #define VARNAME_USER TEXT("USERNAME")
+#else
+#define VARNAME_USER "USER"
 #endif
 
 using namespace StreamWork::SwCore;
@@ -55,7 +63,7 @@ static QList<QString> _msgBoxAllReadyPopup;
 
 static std::string private_key = "30820274020100300D06092A864886F70D01010105000482025E3082025A02010002818100A8B3838DAE1FC7F9F33C643BBF5A3B5B2D3E1A7C94319BD00353B8538CE6F38503B5AD74EBAF5D6BB80870ECD1D1C79BD1E735E70BD02B76BBB06184D3CA4024D87433C49006E1D9EA568F08468F990E8E9D66D3E875D9711B6A30C7EA311871DF77FD503335EDFDB1CF9B58BB8BE8855BA63162B4EDCC3EDD5CBCA5904B0F470201110281800881858EAC467157E58A9309775CC04DBD70D8762596F03135F302D709416D15C3F3A5C9A8ECE0238C818050C7E3DABC8FF62523503137F91438388C1348958500B2000F86410E31C934803312DAA1288A3869FFC47B5216904CD9DF2A1BBC0821B9C708EBEDB8EACDC67F1DCFACFBA5EB51F1F0443B2EB759696BFA4B932151024100C74A47926015FC6109568C552CCE79B80C7E35DEABAA3ACB960C429E2D5DA52E28CC447F725DDD60005943ECBC9F6814D626FFC605518C6FCF9080166D92AA4F024100D8B4EAFE493BF69D75196968CE7BA307CCC04FF9D93DC290ACBF0D0A4F02B74D19C7229FCEED3D176AEAD39CBD5B016B1FA5F32A1106769AA076B4559D27A5890241008CACE73A25B52A9ED96A44F0D4558318814A07E8792CDE355ADB7A51896F476BE0903059F660600787C68A4CC16176A54BDF4B225E1B7230CEC05A6A2F3A5A1902404C7C16B419D8EDA0FC271624FD950C5D1B16B2D0A706BD2400BBE67C1BE2D748637375A1D08FF771AD43D23751E3E2620B2B82FFC9C60BBE1A843FA5BEFEEF2102400F9F8E497279C4FEDF35939C6C53CAB9F713677A703A56CE3959D876AC260FE0F6D9F8E3FA0B90AF4313926280E6BE31FCD8924C0394D407ACADBA3779E6EA69";
 
-
+#ifdef Q_OS_WINDOWS
 int setenv(const char *name, const char *value, int overwrite)
 {
 	int errcode = 0;
@@ -66,6 +74,7 @@ int setenv(const char *name, const char *value, int overwrite)
 	}
 	return _putenv_s(name, value);
 }
+
 
 //--- DLL access 
 template <class T> PIMAGE_SECTION_HEADER GetEnclosingSectionHeader(DWORD rva, T* pNTHeader) // 'T' == PIMAGE_NT_HEADERS 
@@ -151,7 +160,7 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
 	ImageUnload(image);
 
 }
-
+#endif
 //
 
 /*! \brief Constructeur */
@@ -167,10 +176,10 @@ _SwPluginsBank_Class::_SwPluginsBank_Class(ProductLicense * productLicense)
 	_trayIcon->setIcon(QIcon(":/SwCore/SysTrayUpdate.png"));
 	_trayIcon->setVisible(false);
 	connect(_trayIcon,SIGNAL(messageClicked ()),this,SLOT(hideDisplayUpdate()));
-	DWORD dwRet;
-	WCHAR chNewEnv[WIN32_BUFSIZE];
-	dwRet = GetEnvironmentVariableW(VARNAME_USER, chNewEnv, WIN32_BUFSIZE);
-	_userName = QString::fromWCharArray(chNewEnv);
+
+
+	QProcessEnvironment env;
+	_userName = env.value(VARNAME_USER);
 	_pluginLicence = getPluginLicence();
 }
 /*! \brief Destructeur */
@@ -247,15 +256,8 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 	
 	qstrMessage.prepend(pathDir.canonicalPath()+";");
 
-	/*bool result=*/setenv(VARNAME_PATH, qstrMessage.toUtf8().constData(), true);
+	setenv(VARNAME_PATH, qstrMessage.toUtf8().constData(), true);
    
-	/* Flood pour rien
-	if (!result) 
-		SW_APP->Logger().Log(LogLvl_Warning,QString("Failed to set PATH environment variable (pathSize : %1)\n").arg(qstrMessage.length()));
-	else
-		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("PATH= %1\n").arg(qstrMessage));
-	*/
-
 	//Ajout a la liste des path
 	if (SW_APP->IsVerbose())
 		SW_APP->Logger().Log(LogLvl_Debug,QString("Adding path %1\n").arg(realPath));
@@ -296,7 +298,8 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 #else
 			Tf_getPluginEntry plugin_entry=(Tf_getPluginEntry)lib.resolve("GetPluginInterface");
 #endif
-			if (plugin_entry!=NULL) {
+			if (plugin_entry!=NULL) 
+			{
 				//Si trouvé extraction du plugin
 				SwPluginFactory_Class * plugin=plugin_entry();
 
@@ -360,7 +363,10 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 						//Signaler le pb
 					}
 				}
-			} else {
+			} 
+			else 
+			{
+#ifdef Q_OS_WINDOWS
 				SW_APP->Logger().Log(LogLvl_Critical,QString("Unable to load Lib %1").arg(real_file).toLatin1(),lib.errorString());
 				qDebug(QString("QLoadLibrary failed for %1").arg(real_file).toLatin1().data()); 
 				DumpDllFromPath(real_file.toStdWString().c_str(),5);
@@ -369,7 +375,9 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 					DWORD error=GetLastError();
 					 qDebug(QString("LoadLibrary failed for %1:%2)").arg(real_file).arg(error).toLatin1().data()); 
 				} 
-
+#else
+				qDebug() << "LoadLibrary failed, can't retrieve more infos on Linux OS"; 
+#endif
 			}
 		}
 	}
@@ -421,6 +429,7 @@ QList<QString> _SwPluginsBank_Class::getPathsFromFile(QFile *f) {
 	return pathList;
 }
 
+#ifdef Q_OS_WINDOWS
 /* get the plugin licence */
 std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 {
@@ -492,7 +501,12 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 		return "";
 	}
 }
-
+#else
+std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
+{
+	return std::string(); // TODO for Linux 
+}
+#endif
 
 /*! \brief Ajouter un descripteur de paths */
 void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {

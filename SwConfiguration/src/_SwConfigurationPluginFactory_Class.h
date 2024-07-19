@@ -6,8 +6,8 @@
  \author G.Blessas
 */
 
-#ifndef __SwPluginFactory_Class_H
-#define __SwPluginFactory_Class_H
+#ifndef __SwConfigurationPluginFactory_Class_H
+#define __SwConfigurationPluginFactory_Class_H
 
 /*
   * INCLUDES GLOBAUX
