@@ -2,7 +2,7 @@ if (WIN32)
 	set (WINDOWS_DEPENDENCIES "Psapi imagehlp")
 endif()
 
-cstoolkit_add_target(SwCore SHARED NAMESPACE tt4-sw-cmake RECURSIVE RECURSIVE_INCLUDE
+cstoolkit_add_target(SwCore SHARED NAMESPACE Streamwork RECURSIVE RECURSIVE_INCLUDE
     PUBLIC_LINK_LIBRARIES
 		License::License
 		QstBase::QsCore

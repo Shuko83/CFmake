@@ -49,4 +49,5 @@ public:
 };
 
 extern "C" Q_DECL_EXPORT SwPluginFactory_Class *  GetPluginInterface();
+
 #endif 

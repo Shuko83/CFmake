@@ -11,7 +11,7 @@ class SwDockWidget_MainWindow : public QMainWindow
 
 public:
 	SwDockWidget_MainWindow(QWidget *parent = 0, Qt::WindowFlags flags = 0);
-	~SwDockWidget_MainWindow();
+	~SwDockWidget_MainWindow() = default;
 
 	void saveConfiguration();
 	void restoreConfiguration();

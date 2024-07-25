@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(tt4-sw-cmake)
+project(Streamwork)
 
 if(PROJECT_IS_TOP_LEVEL)
     include("${CMAKE_SOURCE_DIR}/cstoolkit/CSToolkitStarlinx.cmake")
 endif()
-
 
 add_subdirectory(SwCore)
 add_subdirectory(SwExecution)
@@ -22,5 +21,3 @@ add_subdirectory(SwConfiguration)
 add_subdirectory(SwDataBase)
 add_subdirectory(SwLauncher)
 add_subdirectory(SwRecord)
-
-add_compile_options(fPIC)
