@@ -475,7 +475,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 set(PLUGINS_RUNTIME_PDBS "$<LIST:TRANSFORM,${PLUGINS_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
                 # Copy of the plugin dll and its dependencies
                 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                    COMMAND ${CSTOOLKIT_COPY} -e
+                    COMMAND ${CSTOOLKIT_COPY}
                         "${PLUGINS_RUNTIME_PDBS}"
                         "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
                         COMMAND_EXPAND_LISTS
@@ -609,7 +609,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 endif()
             elseif(TARGET_STATIC)
                 install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.pdb
-                    DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                    DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 if(TARGET_COMBINED_LINK_LIBRARIES)
                     install(FILES "${TARGET_COMBINED_PDBS}" DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 endif()
