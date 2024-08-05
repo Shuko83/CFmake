@@ -585,7 +585,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             endif()
 
             # Qt
-            if(_qt_modules)
+            if(_qt_modules AND CSTOOLKIT_AUTO_DEPLOY_QT)
                 cstoolkit_qt_generate_deploy_app_script(
                     TARGET ${TARGET_NAME}
                     INSTALL_DIR ${TARGET_INSTALL_BIN_DIR}

@@ -56,6 +56,7 @@ option(CSTOOLKIT_CHECK_DEPENDENCIES "Raise a warning if a dependency of a target
 option(CSTOOLKIT_DISABLE_COMMON_CPPRULES "Does not include common DivST Cpp Rules" OFF)
 option(CSTOOLKIT_USE_GIT_TAG_VERSION "Set project version from git tag or branch name if possible" OFF)
 option(CSTOOLKIT_CPACK_RULES "Add CPack configuration to the project" OFF)
+option(CSTOOLKIT_AUTO_DEPLOY_QT "Add qt deploy rules to all Qt dependent executables" ON)
 
 ################################################################################
 #  Internal variables
