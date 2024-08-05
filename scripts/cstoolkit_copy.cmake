@@ -32,12 +32,13 @@ endwhile()
 
 math(EXPR DESTINATION_INDEX "${CMAKE_ARGC}-1")
 
-if(ARGI GREATER_EQUAL DESTINATION_INDEX)
-    message("cstoolkit_copy Error: Missing destination")
+if(ARGI GREATER DESTINATION_INDEX)
+    message("cstoolkit_copy Error: Missing arguments")
     message("Usage: ${USAGE}")
     return()
 endif()
 
+set(SOURCE_LIST)
 while(ARGI LESS DESTINATION_INDEX)
     list(APPEND SOURCE_LIST "${CMAKE_ARGV${ARGI}}")
     math(EXPR ARGI "${ARGI}+1")
@@ -51,6 +52,11 @@ if (NOT EXISTS ${DESTINATION})
     file(MAKE_DIRECTORY ${DESTINATION})
 elseif(NOT IS_DIRECTORY ${DESTINATION})
     message("cstoolkit_copy Error: Destination \"${DESTINATION}\" already exists and is not a directory.")
+    return()
+endif()
+
+if(NOT SOURCE_LIST)
+    # Nothing to copy
     return()
 endif()
 
