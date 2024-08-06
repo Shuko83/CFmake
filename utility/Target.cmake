@@ -1,5 +1,5 @@
 function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
-    
+
     # Parse arguments
 
     set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE RECURSIVE_INTERFACE_INCLUDE NO_INSTALL PUBLIC_HEADERS_NO_EXTENSION)
@@ -64,7 +64,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     # Library
-    
+
     if(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
         add_library(${TARGET_NAME} ${TARGET_TYPE})
         add_library(${TARGET_NAMESPACE}${TARGET_NAME} ALIAS ${TARGET_NAME})
@@ -138,7 +138,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     if(CMAKE_CURRENT_SOURCE_DIR MATCHES ".*/_project$")
         set(TARGET_PREFIX_DIR "./../")
     endif()
-    
+
     if(NOT DEFINED TARGET_PUBLIC_HEADERS_DIRS)
         set(TARGET_PUBLIC_HEADERS_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_PUBLIC_HEADERS_DIRS})
     endif()
@@ -165,7 +165,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     file(REAL_PATH ${TARGET_UI_DIRS} TARGET_UI_DIRS EXPAND_TILDE)
     file(REAL_PATH ${TARGET_RESOURCES_DIRS} TARGET_RESOURCES_DIRS EXPAND_TILDE)
     file(REAL_PATH ${TARGET_TRANSLATION_DIRS} TARGET_TRANSLATION_DIRS EXPAND_TILDE)
-    
+
     # Sources
 
     if(TARGET_RECURSIVE)
@@ -328,9 +328,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 endforeach()
                 set(_ar_script "${_ar_script}\nSAVE")
                 set(_ar_script "${_ar_script}\nEND")
-                
+
                 file(GENERATE OUTPUT ${TARGET_NAME}_combine.ar CONTENT "${_ar_script}")
-                
+
                 add_custom_command(TARGET ${TARGET_NAME} PRE_LINK
                     COMMAND ${CMAKE_AR} -M < ${TARGET_NAME}_combine.ar
                 )
@@ -353,7 +353,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             )
 
             # Filtering MOC
-            
+
             cstoolkit_filter_moc(${TARGET_SOURCES_FILES} ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES})
 
             target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/moc)
@@ -382,7 +382,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             target_sources(${TARGET_NAME} PRIVATE ${TARGET_QRC_RESOURCES_FILES})
             source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Resource Files" FILES ${TARGET_QRC_RESOURCES_FILES})
         endif()
-    
+
     endif()
 
     # Generation des fichiers target_info
@@ -427,21 +427,21 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         else()
             set(TARGET_RUNTIME_DLLS "$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>")
         endif()
-        
+
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
             COMMAND ${CSTOOLKIT_COPY} -e
                 "${TARGET_RUNTIME_DLLS}"
                 "$<TARGET_FILE_DIR:${TARGET_NAME}>"
                 COMMAND_EXPAND_LISTS
         )
-        
+
         if(MSVC)
             set(TARGET_RUNTIME_PDBS "$<LIST:TRANSFORM,${TARGET_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                 COMMAND ${CSTOOLKIT_COPY}
                     "${TARGET_RUNTIME_PDBS}"
                     "$<TARGET_FILE_DIR:${TARGET_NAME}>"
-                    COMMAND_EXPAND_LISTS 
+                    COMMAND_EXPAND_LISTS
             )
         endif()
 
@@ -456,7 +456,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set_target_properties(${PLUGINS_TARGET} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD True)
             set_target_properties(${PLUGINS_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
             target_link_libraries(${PLUGINS_TARGET} PUBLIC ${TARGET_PLUGINS})
-            
+
             if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
                 set(PLUGINS_RUNTIME_DLLS "$<FILTER:$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
             else()
@@ -470,7 +470,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                     "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
                     COMMAND_EXPAND_LISTS
             )
-            
+
             if(MSVC)
                 set(PLUGINS_RUNTIME_PDBS "$<LIST:TRANSFORM,${PLUGINS_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
                 # Copy of the plugin dll and its dependencies
@@ -520,7 +520,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 set(CSTOOLKIT_INSTALL_TARGETS "${TARGET_NAME}")
                 message(STATUS "CSToolkit: Automatic install mode detection: Single Component")
             endif()
-        
+
             # Detection de la methode d'install
             list(LENGTH CSTOOLKIT_INSTALL_TARGETS CSTOOLKIT_INSTALL_TARGETS_NB)
 
@@ -630,7 +630,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     message(VERBOSE "==================================================")
     message(VERBOSE "Component ${TARGET_NAME} is ${TARGET_TYPE}")
     message(VERBOSE "  - Dependencies: ${ALL_DEPS}")
-    message(VERBOSE "  - Public headers path: ${TARGET_PUBLIC_HEADERS_BASE_DIRS}")
+    message(VERBOSE "  - Public headers path: ${TARGET_PUBLIC_HEADERS_DIRS}")
     message(VERBOSE "  - Private headers path: ${TARGET_PRIVATE_HEADERS_DIR}")
     message(VERBOSE "  - Sources path: ${TARGET_SOURCES_DIR}")
     message(VERBOSE "  - Recursive: ${TARGET_RECURSIVE}")
@@ -652,7 +652,7 @@ macro (generate_target_config)
         list(APPEND INTERFACE_DEPENDENCIES ${TARGET_PRIVATE_LINK_LIBRARIES})
     endif()
     foreach(dep ${INTERFACE_DEPENDENCIES})
-        string(REGEX MATCH "(.+)::(.+)" IS_PACKAGE ${dep})    
+        string(REGEX MATCH "(.+)::(.+)" IS_PACKAGE ${dep})
         if(IS_PACKAGE)
             set(PACKAGE_NAME ${CMAKE_MATCH_1})
             set(COMPONENT_NAME ${CMAKE_MATCH_2})
@@ -668,8 +668,8 @@ macro (generate_target_config)
         ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_INSTALL_CONFIG_NAME}Config.cmake
         INSTALL_DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
     )
-        
-    install(FILES 
+
+    install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_INSTALL_CONFIG_NAME}Config.cmake
         DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
         COMPONENT ${TARGET_INSTALL_COMPONENT}

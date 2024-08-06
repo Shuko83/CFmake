@@ -1,0 +1,147 @@
+{
+    "version": 8,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 27,
+        "patch": 0
+      },
+    "configurePresets": [
+        {
+            "name": "baseConfig",
+            "displayName": "Basic configuration",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/${presetName}"
+            }
+        },
+        {
+            "name": "VS17_2022_x64",
+            "inherits": "baseConfig",
+            "displayName": "Visual Studio 17 Community 2022 - amd64",
+            "description": "Using compilers for Visual Studio 17 2022 (x64 architecture)",
+            "generator": "Visual Studio 17 2022",
+            "toolset": "host=x64",
+            "architecture": {
+                "value": "x64",
+                "strategy": "set"
+            },
+            "cacheVariables": {
+                "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        },
+        {
+            "name": "VS14_2015_x64",
+            "inherits": "baseConfig",
+            "displayName": "VisualStudio.14.0 - amd64",
+            "description": "Using compilers for Visual Studio 14 2015 (x64 architecture)",
+            "generator": "Visual Studio 14 2015",
+            "architecture": "x64",
+            "cacheVariables": {
+                "CMAKE_CONFIGURATION_TYPES": "Debug;Release",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "VS17_2022_x64_Debug",
+            "displayName": "Visual Studio Community 2022 Debug - amd64",
+            "configurePreset": "VS17_2022_x64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "VS17_2022_x64_Release",
+            "displayName": "Visual Studio Community 2022 Release - amd64",
+            "configurePreset": "VS17_2022_x64",
+            "configuration": "Release"
+        },
+        {
+            "name": "VS14_2015_x64_Debug",
+            "displayName": "VisualStudio.14.0 - amd64 - Debug",
+            "configurePreset": "VS14_2015_x64",
+            "configuration": "Debug"
+        },
+        {
+            "name": "VS14_2015_x64_Release",
+            "displayName": "VisualStudio.14.0 - amd64 - Release",
+            "configurePreset": "VS14_2015_x64",
+            "configuration": "Release"
+        }
+    ],
+    "workflowPresets": [
+        {
+            "name": "workflow_VS17_2022_x64_Release",
+            "description": "[Release] Configure and build for VS17_2022",
+            "displayName": "VS17 workflow Release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "VS17_2022_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "VS17_2022_x64_Release"
+                }
+            ]
+        },
+        {
+            "name": "workflow_VS17_2022_x64_Debug",
+            "description": "[Debug] Configure and build for VS17_2022",
+            "displayName": "VS17 workflow Debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "VS17_2022_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "VS17_2022_x64_Debug"
+                }
+            ]
+        },
+        {
+            "name": "workflow_VS14_2015_x64_Release",
+            "description": "[Release] Configure and build for VS14_2015",
+            "displayName": "VS14 workflow Release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "VS14_2015_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "VS14_2015_x64_Release"
+                }
+            ]
+        },
+        {
+            "name": "workflow_VS14_2015_x64_Debug",
+            "description": "[Debug] Configure and build for VS14_2015",
+            "displayName": "VS14 workflow Debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "VS14_2015_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "VS14_2015_x64_Debug"
+                }
+            ]
+        }
+    ]
+}
