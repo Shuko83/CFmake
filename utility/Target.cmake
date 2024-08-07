@@ -448,35 +448,49 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if(TARGET_PLUGINS)
             # Adding plusgins as dependencies
             add_dependencies(${TARGET_NAME} ${TARGET_PLUGINS})
-            set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS ${TARGET_PLUGINS})
+            set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS "${TARGET_PLUGINS}")
 
-            set(PLUGINS_TARGET ${TARGET_NAME}_plugins)
+            if(WIN32)
+                set(PLUGINS_TARGET ${TARGET_NAME}_plugins)
 
-            add_executable(${PLUGINS_TARGET} EXCLUDE_FROM_ALL CMakeLists.txt)
-            set_target_properties(${PLUGINS_TARGET} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD True)
-            set_target_properties(${PLUGINS_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
-            target_link_libraries(${PLUGINS_TARGET} PUBLIC ${TARGET_PLUGINS})
+                add_executable(${PLUGINS_TARGET} EXCLUDE_FROM_ALL CMakeLists.txt)
+                set_target_properties(${PLUGINS_TARGET} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD True)
+                set_target_properties(${PLUGINS_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
+                target_link_libraries(${PLUGINS_TARGET} PUBLIC ${TARGET_PLUGINS})
 
-            if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
-                set(PLUGINS_RUNTIME_DLLS "$<FILTER:$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
-            else()
-                set(PLUGINS_RUNTIME_DLLS "$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>")
-            endif()
+                if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
+                    set(PLUGINS_RUNTIME_DLLS "$<FILTER:$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
+                else()
+                    set(PLUGINS_RUNTIME_DLLS "$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>")
+                endif()
 
-            # Copy of the plugin dll and its dependencies
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e
-                    "${PLUGINS_RUNTIME_DLLS}"
-                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
-                    COMMAND_EXPAND_LISTS
-            )
-
-            if(MSVC)
-                set(PLUGINS_RUNTIME_PDBS "$<LIST:TRANSFORM,${PLUGINS_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
                 # Copy of the plugin dll and its dependencies
                 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                    COMMAND ${CSTOOLKIT_COPY}
-                        "${PLUGINS_RUNTIME_PDBS}"
+                    COMMAND ${CSTOOLKIT_COPY} -e
+                        "${PLUGINS_RUNTIME_DLLS}"
+                        "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
+                        COMMAND_EXPAND_LISTS
+                )
+
+                if(MSVC)
+                    set(PLUGINS_RUNTIME_PDBS "$<LIST:TRANSFORM,${PLUGINS_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
+                    # Copy of the plugin dll and its dependencies
+                    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                        COMMAND ${CSTOOLKIT_COPY}
+                            "${PLUGINS_RUNTIME_PDBS}"
+                            "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
+                            COMMAND_EXPAND_LISTS
+                    )
+                endif()
+            else()
+                set(PLUGINS_TARGET_FILES ${TARGET_PLUGINS})
+                list(TRANSFORM PLUGINS_TARGET_FILES PREPEND "$<TARGET_FILE:")
+                list(TRANSFORM PLUGINS_TARGET_FILES APPEND ">")
+
+                # Copy of the plugin dll
+                add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                    COMMAND ${CSTOOLKIT_COPY} -e
+                        "${PLUGINS_TARGET_FILES}"
                         "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
                         COMMAND_EXPAND_LISTS
                 )
