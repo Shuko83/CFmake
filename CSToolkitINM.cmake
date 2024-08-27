@@ -1,5 +1,13 @@
 include(${CMAKE_CURRENT_LIST_DIR}/CSToolkit.cmake)
+set(CSTOOLKIT_AUTO_FIND_PACKAGE ON)
+set(CSTOOLKIT_CHECK_DEPENDENCIES ON)
 
 if(WIN32)
     add_compile_definitions(QT_LARGEFILE_SUPPORT _CRT_SECURE_NO_WARNINGS Q_WS_WIN)
+endif()
+
+if(WIN32)
+    set(INM_LIB_TYPE SHARED)
+else()
+    set(INM_LIB_TYPE STATIC)
 endif()

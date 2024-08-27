@@ -1,6 +1,6 @@
 include(FetchContent)
 
-function(cstoolkit_fetch_artifactory FETCH_NAME)
+macro(cstoolkit_fetch_artifactory FETCH_NAME)
     set(FETCH_OPTIONS)
     set(FETCH_UNIQUE URL VERSION FOLDER ALIAS)
     set(FETCH_MULTIPLE)
@@ -12,62 +12,70 @@ function(cstoolkit_fetch_artifactory FETCH_NAME)
         set(PACKAGE_NAME ${FETCH_NAME})
     endif()
 
-    if(NOT FETCH_URL)
-        if(NOT FETCH_VERSION)
-            message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory: VERSION or URL parameter must be defined.")
-            return()
-        endif()
-        if(NOT FETCH_FOLDER)
-            set(FETCH_FOLDER "thirdParty")
-        endif()
-        set(FETCH_URL "${CSTOOLKIT_ARTIFACTORY_URL}/${FETCH_FOLDER}/${FETCH_NAME}/${FETCH_VERSION}/${FETCH_NAME}_${FETCH_VERSION}_${CSTOOLKIT_BUILD_MKSPECS}.7z")
-    endif()
-
-    FetchContent_Declare(${PACKAGE_NAME}
-        URL "${FETCH_URL}"
-        SOURCE_DIR "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}"
-        CONFIGURE_COMMAND ""
-        BUILD_COMMAND ""
-    )
-
-    FetchContent_MakeAvailable(${PACKAGE_NAME})
-
-    find_package(${PACKAGE_NAME} QUIET MODULE GLOBAL)
-    if(${${PACKAGE_NAME}_FOUND})
-        return()
-    endif()
-
-    if(FETCH_ALIAS) # If ALIAS is Provided find_package is REQUIRED and no try with lowercase
-        find_package(${PACKAGE_NAME} REQUIRED GLOBAL NO_DEFAULT_PATH PATHS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}")
+    if(NOT FETCH_URL AND NOT FETCH_VERSION)
+        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory: VERSION or URL parameter must be defined.")
     else()
-        find_package(${PACKAGE_NAME} QUIET GLOBAL NO_DEFAULT_PATH PATHS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}")
-        if(${${PACKAGE_NAME}_FOUND})
-            return()
+        if(NOT FETCH_URL)
+            if(NOT FETCH_FOLDER)
+                set(FETCH_FOLDER "thirdParty")
+            endif()
+            set(FETCH_URL "${CSTOOLKIT_ARTIFACTORY_URL}/${FETCH_FOLDER}/${FETCH_NAME}/${FETCH_VERSION}/${FETCH_NAME}_${FETCH_VERSION}_${CSTOOLKIT_BUILD_MKSPECS}.7z")
         endif()
 
-        string(TOLOWER ${PACKAGE_NAME} PACKAGE_NAME_LOWER)
-        if(PACKAGE_NAME STREQUAL PACKAGE_NAME_LOWER)
-            return()
-        endif()
+        FetchContent_Declare(${PACKAGE_NAME}
+            URL "${FETCH_URL}"
+            SOURCE_DIR "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}"
+            CONFIGURE_COMMAND ""
+            BUILD_COMMAND ""
+        )
 
-        find_package(${PACKAGE_NAME_LOWER} QUIET MODULE GLOBAL)
-        if(${${PACKAGE_NAME}_FOUND})
-            return()
+        FetchContent_MakeAvailable(${PACKAGE_NAME})
+
+        find_package(${PACKAGE_NAME} QUIET MODULE GLOBAL)
+        if(NOT ${${PACKAGE_NAME}_FOUND})
+            if(FETCH_ALIAS) # If ALIAS is Provided find_package is REQUIRED and no try with lowercase
+                find_package(${PACKAGE_NAME} REQUIRED GLOBAL NO_DEFAULT_PATH PATHS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}")
+            else()
+                find_package(${PACKAGE_NAME} QUIET GLOBAL NO_DEFAULT_PATH PATHS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}")
+                if(NOT ${${PACKAGE_NAME}_FOUND})
+                    string(TOLOWER ${PACKAGE_NAME} PACKAGE_NAME_LOWER)
+                    if(NOTPACKAGE_NAME STREQUAL PACKAGE_NAME_LOWER)
+                        find_package(${PACKAGE_NAME_LOWER} QUIET MODULE GLOBAL)
+                        if(NOT ${${PACKAGE_NAME}_FOUND})
+                            find_package(${PACKAGE_NAME_LOWER} QUIET GLOBAL NO_DEFAULT_PATH PATHS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}")
+                        endif()
+                    endif()
+                endif()
+            endif()
         endif()
-        
-        find_package(${PACKAGE_NAME_LOWER} QUIET GLOBAL NO_DEFAULT_PATH PATHS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}")
     endif()
-endfunction()
+endmacro()
 
-function(cstoolkit_download_url URL)
+function(cstoolkit_download_url URL OUTPUT_VAR)
+    set(options NO_EXTRACT)
+    set(one_value_args)
+    set(multi_value_args)
+    cmake_parse_arguments(DOWNLOAD "${options}" "${one_value_args}" "${multi_value_args}" ${ARGN})
+
     cmake_path(GET URL STEM LAST_ONLY _FILENAME)
     string(MD5 _HASH ${URL})
-    FetchContent_Declare(cstoolkit_download_${_HASH}
+    string(SUBSTRING ${_HASH} 0 8 _HASH)
+    FetchContent_Declare(cstoolkit_dl_${_HASH}
         URL "${URL}"
         SOURCE_DIR "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}"
-        BINARY_DIR "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}"
         CONFIGURE_COMMAND ""
         BUILD_COMMAND ""
+        DOWNLOAD_NO_EXTRACT ${DOWNLOAD_NO_EXTRACT}
     )
-    FetchContent_Populate(cstoolkit_download_${_HASH})
+
+    FetchContent_MakeAvailable(cstoolkit_dl_${_HASH})
+
+    if(DOWNLOAD_NO_EXTRACT)
+        cmake_path(GET URL FILENAME _FULLFILENAME)
+        set(${OUTPUT_VAR} "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}/${_FULLFILENAME}")
+    else()
+        set(${OUTPUT_VAR} "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
+    endif()
+
+    set(${OUTPUT_VAR} ${${OUTPUT_VAR}} PARENT_SCOPE)
 endfunction()

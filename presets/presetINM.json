@@ -1,0 +1,147 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 27,
+    "patch": 0
+    },
+
+	"configurePresets": [
+	  {
+		"name": "win_msvc15_x64",
+		"description": "Configure project using Visual Studio 2015 (v140) in x64 for Windows",
+		"binaryDir": "${sourceDir}/build/build_64",
+        "toolset":
+		{
+		  "value": "v140",
+		  "strategy": "set"
+		},
+		"architecture":
+		{
+		  "value": "x64",
+		  "strategy": "set"
+		},
+        "cacheVariables": {
+          "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x64/"
+        }
+	  },
+
+	  {
+		"name": "win_msvc15_x86",
+		"description": "Configure project using Visual Studio 2015 (v140) in x86 for Windows",
+		"binaryDir": "${sourceDir}/build/build_86",
+        "toolset":
+		{
+		  "value": "v140",
+		  "strategy": "set"
+		},
+		"architecture":
+		{
+		  "value": "x86",
+		  "strategy": "set"
+		},
+        "cacheVariables": {
+          "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x86/"
+        }
+	  },
+
+      {
+        "name": "unix",
+        "displayName": "Unix",
+        "description": "Configure project using ninja for unix",
+        "generator": "Ninja Multi-Config",
+        "binaryDir": "build/unix",
+        "cacheVariables": {
+            "CMAKE_CONFIGURATION_TYPES": "debug;release",
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/linux-gcc/"
+        }
+    }
+	],
+
+    "buildPresets" : [
+        {
+            "name": "win_debug_x64",
+            "configurePreset": "win_msvc15_x64",
+            "configuration": "Debug",
+            "targets": "install"
+        },
+        {
+            "name": "win_release_x64",
+            "configurePreset": "win_msvc15_x64",
+            "configuration": "Release",
+            "targets": "install"
+        },
+        {
+            "name": "win_debug_x86",
+            "configurePreset": "win_msvc15_x86",
+            "configuration": "Debug",
+            "targets": "install"
+        },
+        {
+            "name": "win_release_x86",
+            "configurePreset": "win_msvc15_x86",
+            "configuration": "Release",
+            "targets": "install"
+        },
+        {
+            "name": "UnixDebug",
+            "configurePreset": "unix",
+            "configuration": "Debug",
+            "targets": ["all","install"],
+            "jobs": 4
+        },
+        {
+            "name": "UnixRelease",
+            "configurePreset": "unix",
+            "configuration": "Release",
+            "targets": ["all","install"],
+            "jobs": 4
+        }
+    ],
+
+    "workflowPresets":[
+        {
+            "name": "buildWin64",
+            "steps":[
+                { "type":"configure", "name":"win_msvc15_x64" },
+                { "type":"build", "name":"win_debug_x64" },
+                { "type":"build", "name":"win_release_x64" }
+            ]
+        },
+        {
+            "name": "buildWin86",
+            "steps":[
+                { "type":"configure", "name":"win_msvc15_x86" },
+                { "type":"build", "name":"win_debug_x86" },
+                { "type":"build", "name":"win_release_x86" }
+            ]
+        },
+        {
+            "name": "buildUnix",
+            "steps":[
+                { "type":"configure", "name":"unix" },
+                { "type":"build", "name":"UnixDebug" },
+                { "type":"build", "name":"UnixRelease" }
+            ]
+        },
+
+        {
+            "name": "devWin64",
+            "steps":[
+                { "type":"configure", "name":"win_msvc15_x64" }
+            ]
+        },
+        {
+            "name": "devWin86",
+            "steps":[
+                { "type":"configure", "name":"win_msvc15_x86" }
+            ]
+        },
+        {
+            "name": "devUnix",
+            "steps":[
+                { "type":"configure", "name":"unix" }
+            ]
+        }
+    ]
+}
