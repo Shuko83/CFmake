@@ -120,11 +120,24 @@ function(cstoolkit_qt_wrap_cpp outfiles)
 
     foreach(it ${moc_files})
         get_filename_component(outfile ${it} NAME_WE)
-        set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/moc_${outfile}.cpp)
         get_filename_component(infile ${it} ABSOLUTE)
+        get_filename_component(extension ${it} LAST_EXT)
+        if(extension STREQUAL ".cpp" OR extension STREQUAL ".cxx" OR extension STREQUAL ".c")
+            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/${outfile}.moc)
+            set(COMMAND_DEPENDENCIES DEPENDS ${infile} ${moc_depends} ${_moc_include_file})
+        else()
+            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/moc_${outfile}.cpp)
+            set(COMMAND_DEPENDENCIES MAIN_DEPENDENCY ${infile} DEPENDS ${moc_depends} ${_moc_include_file})
+        endif()
         cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
 
         file(STRINGS ${infile} _contains_macro REGEX "Q_OBJECT|Q_GADGET|Q_NAMESPACE|Q_NAMESPACE_EXPORT")
+        file(STRINGS ${infile} _moc_includes REGEX "(^|\n)[ \t]*#[ \t]*include[ \t]+(\"(moc_.+\\.cpp|.+\\.moc)\"|<(moc_.+\\.cpp|.+\\.moc)>)")
+
+        foreach(_moc_include ${_moc_includes})
+            string(REGEX MATCH "\"(.+)\"|<(.+)>" HAS_MATCHED "${_moc_include}")
+            list(APPEND _filtered_mocs "${CMAKE_MATCH_1}")
+        endforeach()
 
         if(NOT _contains_macro)
             continue()
@@ -133,7 +146,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
         add_custom_command(OUTPUT ${outfile}
             COMMAND ${Qt5Core_MOC_EXECUTABLE}
             ARGS ${_moc_flags} @${_moc_include_file} "${infile}" -o "${outfile}"
-            MAIN_DEPENDENCY ${infile} DEPENDS ${moc_depends} ${_moc_include_file}
+            ${COMMAND_DEPENDENCIES}
             COMMENT "MOC ${relpath}"
             COMMAND_EXPAND_LISTS)
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTOUIC ON)
@@ -141,6 +154,15 @@ function(cstoolkit_qt_wrap_cpp outfiles)
         set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outfiles} ${outfile})
     endforeach()
+
+    list(REMOVE_DUPLICATES _filtered_mocs)
+    foreach(_moc ${${outfiles}})
+        get_filename_component(_shortmoc "${_moc}" NAME)
+        if ("${_shortmoc}" IN_LIST _filtered_mocs)
+            set_source_files_properties("${_moc}" PROPERTIES HEADER_FILE_ONLY TRUE)
+        endif()
+    endforeach()
+
     set(${outfiles} ${${outfiles}} PARENT_SCOPE)
 endfunction()
 
@@ -234,48 +256,6 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
     endforeach()
     set(${outcppfiles} ${${outcppfiles}} PARENT_SCOPE)
     set(${outrscfiles} ${${outrscfiles}} PARENT_SCOPE)
-endfunction()
-
-# filter_moc : check all sources files if a moc is included
-# if it's the case, remove this moc from the list
-# This process was made by QMake
-function(cstoolkit_filter_moc)
-
-    set(sourceFiles ${ARGV})
-
-    set(MOC_REGEX "^#include.[<\"](moc_.+)[>\"]$")
-
-    # Parse each line of source file
-    foreach(sourceFile ${sourceFiles})
-        file(READ ${sourceFile} fileContent)
-        string(REPLACE "\n" ";" fileContent ${fileContent})
-        
-        # Check if the line match the regex for the include
-        foreach(line ${fileContent})
-            string(REGEX MATCH ${MOC_REGEX} HAS_MATCHED ${line})
-
-            # If matched, add the moc to the exclude list
-            if (HAS_MATCHED)
-                list(APPEND MOC_TO_EXCLUDE ${CMAKE_MATCH_1})
-            endif()
-        endforeach()           
-    endforeach()
-    
-    unset(HAS_MATCHED)
-
-    set(TEMP_MOC_FILES ${MOC_FILES})
-
-    # Check for each moc files if they match with moc to exclude
-    foreach(moc ${MOC_FILES})
-        foreach(mocToExclude ${MOC_TO_EXCLUDE})
-            string(REGEX MATCH "(.+${mocToExclude})" HAS_MATCHED ${moc})
-            if (HAS_MATCHED)
-                list(REMOVE_ITEM TEMP_MOC_FILES ${CMAKE_MATCH_1})
-            endif()
-        endforeach()
-    endforeach()
-
-    set(MOC_FILES ${TEMP_MOC_FILES} PARENT_SCOPE)
 endfunction()
 
 # qt6_generate_deploy_app_script()
