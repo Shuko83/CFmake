@@ -1,5 +1,8 @@
 if (WIN32)
-	set (WINDOWS_DEPENDENCIES "Psapi imagehlp")
+	set (WINDOWS_DEPENDENCIES 
+			"Psapi"
+			"imagehlp"
+	)
 endif()
 
 cstoolkit_add_target(SwCore SHARED NAMESPACE Streamwork RECURSIVE RECURSIVE_INCLUDE

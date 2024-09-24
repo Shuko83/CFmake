@@ -10,7 +10,7 @@
 
 */
 
-#include "_SwGuiCssDialog.h"
+#include "_SwGUICssDialog.h"
 #include <iostream>
 
 /*****************************************************************************/

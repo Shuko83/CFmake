@@ -43,7 +43,7 @@
   <customwidget>
    <class>_SwExecutorListEditor</class>
    <extends>QListView</extends>
-   <header>_swexecutorlisteditor.h</header>
+   <header>_SwExecutorListEditor.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

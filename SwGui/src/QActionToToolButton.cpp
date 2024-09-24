@@ -1,4 +1,4 @@
-#include "QActiontoToolButton.h"
+#include "QActionToToolButton.h"
 #include <QAction>;
 
 using namespace StreamWork::SwGui;

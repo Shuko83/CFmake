@@ -12,7 +12,7 @@
 #include "SwRef/SwRefPtr.h"
 #include <QList>
 #include "_SwGuiCssEditor.h"
-#include "_SwGuiCssDialog.h"
+#include "_SwGUICssDialog.h"
 #include <QDialog>
 
 using namespace StreamWork::SwCore;
