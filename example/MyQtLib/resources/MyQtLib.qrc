@@ -1,0 +1,10 @@
+<RCC>
+    <qresource>
+        <file alias="Eye.png">Eye.png</file>
+        <file alias="Eye_white.png">Eye_white.png</file>
+		<file alias="EyeOff.png">EyeOff.png</file>
+		<file alias="NoEye.png">NoEye.png</file>
+		<file alias="NoEye_white.png">NoEye_white.png</file>
+		<file alias="NoEyeOff.png">NoEyeOff.png</file>
+    </qresource>
+</RCC>

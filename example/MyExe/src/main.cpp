@@ -8,13 +8,13 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 #include <iostream>
 
-#include <MyClassA.h>
+#include "MyClass.h"
 
 int main()
 {
-    std::cout << "Hello World";
-    MyClassA a;
-#ifdef WIN32
+    std::cout << "Hello World" << std::endl;
+
+    MyClass c;
+
     return 0;
 }
-#endif

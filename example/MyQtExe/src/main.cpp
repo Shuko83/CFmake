@@ -6,11 +6,19 @@ Write your code in this editor and press "Run" button to compile and execute it.
 
 *******************************************************************************/
 
-#include <iostream>
+#include <QApplication>
+#include <QWidget>
 
-int main()
+#include "MyQtClass.h"
+
+int main(int argc, char ** argv)
 {
-    std::cout << "Hello World";
+    QApplication app(argc, argv);
+
+    QWidget w;
+    w.show();
+
+    app.exec();
 
     return 0;
 }
