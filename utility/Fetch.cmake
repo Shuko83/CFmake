@@ -1,7 +1,7 @@
 include(FetchContent)
 
 macro(cstoolkit_fetch_artifactory FETCH_NAME)
-    set(FETCH_OPTIONS)
+    set(FETCH_OPTIONS QT)
     set(FETCH_UNIQUE URL VERSION FOLDER ALIAS)
     set(FETCH_MULTIPLE)
     cmake_parse_arguments(FETCH "${FETCH_OPTIONS}" "${FETCH_UNIQUE}" "${FETCH_MULTIPLE}" ${ARGN})
@@ -19,7 +19,13 @@ macro(cstoolkit_fetch_artifactory FETCH_NAME)
             if(NOT FETCH_FOLDER)
                 set(FETCH_FOLDER "thirdParty")
             endif()
-            set(FETCH_URL "${CSTOOLKIT_ARTIFACTORY_URL}/${FETCH_FOLDER}/${FETCH_NAME}/${FETCH_VERSION}/${FETCH_NAME}_${FETCH_VERSION}_${CSTOOLKIT_BUILD_MKSPECS}.7z")
+            set(FETCH_URL "${CSTOOLKIT_ARTIFACTORY_URL}/${FETCH_FOLDER}/${FETCH_NAME}/${FETCH_VERSION}/${FETCH_NAME}_${FETCH_VERSION}")
+            if(FETCH_QT)
+                set(FETCH_URL "${FETCH_URL}${CSTOOLKIT_BUILD_MKSPECS_QT}")
+            else()
+                set(FETCH_URL "${FETCH_URL}${CSTOOLKIT_BUILD_MKSPECS}")
+            endif()
+            set(FETCH_URL "${FETCH_URL}.7z")
         endif()
 
         FetchContent_Declare(${PACKAGE_NAME}
