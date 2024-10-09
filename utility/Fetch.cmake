@@ -1,7 +1,7 @@
 include(FetchContent)
 
 macro(cstoolkit_fetch_artifactory FETCH_NAME)
-    set(FETCH_OPTIONS QT)
+    set(FETCH_OPTIONS QT LEGACY)
     set(FETCH_UNIQUE URL VERSION FOLDER ALIAS)
     set(FETCH_MULTIPLE)
     cmake_parse_arguments(FETCH "${FETCH_OPTIONS}" "${FETCH_UNIQUE}" "${FETCH_MULTIPLE}" ${ARGN})
@@ -21,21 +21,39 @@ macro(cstoolkit_fetch_artifactory FETCH_NAME)
             endif()
             set(FETCH_URL "${CSTOOLKIT_ARTIFACTORY_URL}/${FETCH_FOLDER}/${FETCH_NAME}/${FETCH_VERSION}/${FETCH_NAME}_${FETCH_VERSION}")
             if(FETCH_QT)
-                set(FETCH_URL "${FETCH_URL}${CSTOOLKIT_BUILD_MKSPECS_QT}")
+                if(FETCH_LEGACY)
+                    set(FETCH_URL "${FETCH_URL}_${CSTOOLKIT_BUILD_MKSPECS}-QT${QT_VERSION}")
+                else()
+                    set(FETCH_URL "${FETCH_URL}_${CSTOOLKIT_BUILD_MKSPECS_QT}")
+                endif()
             else()
-                set(FETCH_URL "${FETCH_URL}${CSTOOLKIT_BUILD_MKSPECS}")
+                set(FETCH_URL "${FETCH_URL}_${CSTOOLKIT_BUILD_MKSPECS}")
             endif()
-            set(FETCH_URL "${FETCH_URL}.7z")
+            if(FETCH_LEGACY)
+                set(FETCH_URL "${FETCH_URL}.zip")
+            else()
+                set(FETCH_URL "${FETCH_URL}.7z")
+            endif()
         endif()
 
         FetchContent_Declare(${PACKAGE_NAME}
             URL "${FETCH_URL}"
             SOURCE_DIR "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}"
-            CONFIGURE_COMMAND ""
-            BUILD_COMMAND ""
         )
 
         FetchContent_MakeAvailable(${PACKAGE_NAME})
+
+        string(TOUPPER "${PACKAGE_NAME}" PACKAGE_NAME_UPPER)
+
+        if(FETCH_LEGACY)
+            if(EXISTS "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}/${PACKAGE_NAME}Config.cmake" AND NOT CSTOOLKIT_FECTH_ARTIFACTORY_LEGACY_${PACKAGE_NAME_UPPER})
+                message(STATUS "CSToolkit: Overwriting ${PACKAGE_NAME}Config.cmake with generated legacy suport Config file.")
+            endif()
+            set(CSTOOLKIT_FECTH_ARTIFACTORY_LEGACY_${PACKAGE_NAME_UPPER} TRUE CACHE INTERNAL "Legacy mode used for ${PACKAGE_NAME}")
+            configure_file(${CSTOOLKIT_ROOT_DIR}/templates/FetchLegacyConfig.in "${CSTOOLKIT_EXTERNALS}/${PACKAGE_NAME}/${PACKAGE_NAME}Config.cmake" @ONLY)
+        else()
+            set(CSTOOLKIT_FECTH_ARTIFACTORY_LEGACY_${PACKAGE_NAME_UPPER} FALSE CACHE INTERNAL "Legacy mode used for ${PACKAGE_NAME}")
+        endif()
 
         find_package(${PACKAGE_NAME} QUIET MODULE GLOBAL)
         if(NOT ${${PACKAGE_NAME}_FOUND})
@@ -69,8 +87,6 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
     FetchContent_Declare(cstoolkit_dl_${_HASH}
         URL "${URL}"
         SOURCE_DIR "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}"
-        CONFIGURE_COMMAND ""
-        BUILD_COMMAND ""
         DOWNLOAD_NO_EXTRACT ${DOWNLOAD_NO_EXTRACT}
     )
 

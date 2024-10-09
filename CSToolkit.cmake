@@ -62,6 +62,7 @@ option(CSTOOLKIT_AUTO_DEPLOY_QT "Add qt deploy rules to all Qt dependent executa
 #  Internal variables
 ################################################################################
 
+set(CSTOOLKIT_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/cstoolkit_copy.cmake" --)
 set(CSTOOLKIT_INSTALL_TARGETS_ALL)
 
