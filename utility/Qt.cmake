@@ -136,7 +136,11 @@ function(cstoolkit_qt_wrap_cpp outfiles)
 
         foreach(_moc_include ${_moc_includes})
             string(REGEX MATCH "\"(.+)\"|<(.+)>" HAS_MATCHED "${_moc_include}")
-            list(APPEND _filtered_mocs "${CMAKE_MATCH_1}")
+            if(CMAKE_MATCH_1)
+                list(APPEND _filtered_mocs "${CMAKE_MATCH_1}")
+            else()
+                list(APPEND _filtered_mocs "${CMAKE_MATCH_2}")
+            endif()
         endforeach()
 
         if(NOT _contains_macro)
