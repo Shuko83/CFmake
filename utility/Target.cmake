@@ -99,6 +99,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".${TARGET_EXTENSION}")
     endif()
 
+    if(CSTOOLKIT_PREFIX_OUTPUT_NAME)
+        set(OUTPUT_NAME ${PROJECT_NAME}${TARGET_NAME})
+        set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${OUTPUT_NAME}")
+    else()
+        set(OUTPUT_NAME ${TARGET_NAME})
+    endif()
+
     # Ouput dirs
 
     set_target_properties(${TARGET_NAME} PROPERTIES
@@ -304,8 +311,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     target_compile_definitions(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_DEFINITIONS})
 
     # Default Definition for Export symbols
-    string(TOUPPER ${TARGET_NAME} TARGET_NAME_UPPER)
-    set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${TARGET_NAME_UPPER}_LIB)
+    string(TOUPPER ${OUTPUT_NAME} OUTPUT_NAME_UPPER)
+    set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_UPPER}_LIB)
 
     # Link Options
 
@@ -339,7 +346,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:${TARGET_NAME}>)
         # Necessary to redefine name for msvc 2015
         # COMPILE_PDB_NAME does not support generator expression
-        set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME_DEBUG ${TARGET_NAME}${CMAKE_DEBUG_POSTFIX})
+        set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME_DEBUG ${OUTPUT_NAME}${CMAKE_DEBUG_POSTFIX})
 
         if(TARGET_COMBINED_LINK_LIBRARIES)
             target_link_libraries(${TARGET_NAME} PRIVATE ${TARGET_COMBINED_LINK_LIBRARIES})

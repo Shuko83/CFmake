@@ -57,6 +57,7 @@ option(CSTOOLKIT_DISABLE_COMMON_CPPRULES "Does not include common DivST Cpp Rule
 option(CSTOOLKIT_USE_GIT_TAG_VERSION "Set project version from git tag or branch name if possible" OFF)
 option(CSTOOLKIT_CPACK_RULES "Add CPack configuration to the project" OFF)
 option(CSTOOLKIT_AUTO_DEPLOY_QT "Add qt deploy rules to all Qt dependent executables" ON)
+option(CSTOOLKIT_PREFIX_OUTPUT_NAME "If ON, all targets ouput file are prefixed by project name" OFF)
 
 ################################################################################
 #  Internal variables

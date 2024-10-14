@@ -17,6 +17,10 @@ function(cstoolkit_generate_rc_file)
     
     get_target_property(_target_type ${PARAMS_TARGET} TYPE)
     get_target_property(_suffix ${PARAMS_TARGET} SUFFIX)
+    get_target_property(_output ${PARAMS_TARGET} OUTPUT_NAME)
+    if(NOT _output)
+        set(_output ${PARAMS_TARGET})
+    endif()
 
     set(RC_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -76,7 +80,7 @@ function(cstoolkit_generate_rc_file)
         foreach(_config ${CMAKE_CONFIGURATION_TYPES})
             string(TOUPPER "${_config}" _config)
             string(TOLOWER "${_config}" _config_lower)
-            set(FILENAME "${PARAMS_TARGET}${CMAKE_${_config}_POSTFIX}${_suffix}")
+            set(FILENAME "${_output}${CMAKE_${_config}_POSTFIX}${_suffix}")
             configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/Target_resource.rc.in
                 ${RC_DIRECTORY}/${PARAMS_TARGET}_resource-${_config_lower}.rc
                 @ONLY)
@@ -86,7 +90,7 @@ function(cstoolkit_generate_rc_file)
     else()
         string(TOUPPER "${CMAKE_BUILD_TYPE}" _config)
         string(TOLOWER "${_config}" _config_lower)
-        set(FILENAME "${PARAMS_TARGET}${CMAKE_${_config}_POSTFIX}${_suffix}")
+        set(FILENAME "${_output}${CMAKE_${_config}_POSTFIX}${_suffix}")
         configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/Target_resource.rc.in
             ${RC_DIRECTORY}/${PARAMS_TARGET}_resource-${_config_lower}.rc
             @ONLY)
