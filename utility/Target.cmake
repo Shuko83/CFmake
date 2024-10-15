@@ -47,6 +47,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_EXECUTABLE TRUE)
     elseif(TARGET_TYPE STREQUAL "SHARED")
         set(TARGET_SHARED TRUE)
+    elseif(TARGET_TYPE STREQUAL "MODULE")
+        set(TARGET_SHARED TRUE)
+        set(TARGET_MODULE TRUE)
     elseif(TARGET_TYPE STREQUAL "STATIC")
         set(TARGET_STATIC TRUE)
     elseif(TARGET_TYPE STREQUAL "INTERFACE")
@@ -113,6 +116,12 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/$<LOWER_CASE:$<CONFIG>>"
     )
+
+    if(TARGET_MODULE) # Module libraries are always treated as library targets by cmake
+        set_target_properties(${TARGET_NAME} PROPERTIES
+            LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/$<LOWER_CASE:$<CONFIG>>"
+        )
+    endif()
 
     # Version
 
@@ -265,10 +274,12 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         ${TARGET_TRANSLATION_FILES}
     )
 
+    if(TARGET_PUBLIC_HEADERS_FILES)
+        target_sources(${TARGET_NAME}
+            PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_DIRS} FILES ${TARGET_PUBLIC_HEADERS_FILES})
+    endif()
     target_sources(${TARGET_NAME}
-        PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_DIRS} FILES ${TARGET_PUBLIC_HEADERS_FILES}
-        PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIRS} FILES ${TARGET_PRIVATE_HEADERS_FILES}
-    )
+        PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIRS} FILES ${TARGET_PRIVATE_HEADERS_FILES})
 
     # RECURSIVE_INCLUDE options
     # this option allows to add all include subdirectories to private include directories
@@ -484,7 +495,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 "$<TARGET_FILE_DIR:${TARGET_NAME}>"
                 COMMAND_EXPAND_LISTS
         )
-
+        
         if(MSVC)
             set(TARGET_RUNTIME_PDBS "$<LIST:TRANSFORM,${TARGET_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
@@ -500,47 +511,25 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             add_dependencies(${TARGET_NAME} ${TARGET_PLUGINS})
             set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS "${TARGET_PLUGINS}")
 
-            if(WIN32)
-                set(PLUGINS_TARGET ${TARGET_NAME}_plugins)
+            set(PLUGINS_TARGET_FILES "$<TARGET_PROPERTY:${TARGET_NAME},PLUGINS>")
+            set(PLUGINS_TARGET_FILES "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},PREPEND,$<1:$><TARGET_FILE:>")
+            set(PLUGINS_TARGET_FILES "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},APPEND,$<ANGLE-R>>")
+            set(PLUGINS_TARGET_FILES "$<GENEX_EVAL:${PLUGINS_TARGET_FILES}>")
 
-                add_executable(${PLUGINS_TARGET} EXCLUDE_FROM_ALL CMakeLists.txt)
-                set_target_properties(${PLUGINS_TARGET} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD True)
-                set_target_properties(${PLUGINS_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
-                target_link_libraries(${PLUGINS_TARGET} PUBLIC ${TARGET_PLUGINS})
+            # Copy of the plugins files
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CSTOOLKIT_COPY} -e
+                    "${PLUGINS_TARGET_FILES}"
+                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
+                    COMMAND_EXPAND_LISTS
+            )
 
-                if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
-                    set(PLUGINS_RUNTIME_DLLS "$<FILTER:$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
-                else()
-                    set(PLUGINS_RUNTIME_DLLS "$<TARGET_RUNTIME_DLLS:${PLUGINS_TARGET}>")
-                endif()
-
-                # Copy of the plugin dll and its dependencies
+            if(MSVC)
+                set(PLUGINS_TARGET_PDBS "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
+                # Copy of the plugins pdbs
                 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                    COMMAND ${CSTOOLKIT_COPY} -e
-                        "${PLUGINS_RUNTIME_DLLS}"
-                        "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
-                        COMMAND_EXPAND_LISTS
-                )
-
-                if(MSVC)
-                    set(PLUGINS_RUNTIME_PDBS "$<LIST:TRANSFORM,${PLUGINS_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
-                    # Copy of the plugin dll and its dependencies
-                    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                        COMMAND ${CSTOOLKIT_COPY}
-                            "${PLUGINS_RUNTIME_PDBS}"
-                            "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
-                            COMMAND_EXPAND_LISTS
-                    )
-                endif()
-            else()
-                set(PLUGINS_TARGET_FILES ${TARGET_PLUGINS})
-                list(TRANSFORM PLUGINS_TARGET_FILES PREPEND "$<TARGET_FILE:")
-                list(TRANSFORM PLUGINS_TARGET_FILES APPEND ">")
-
-                # Copy of the plugin dll
-                add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                    COMMAND ${CSTOOLKIT_COPY} -e
-                        "${PLUGINS_TARGET_FILES}"
+                    COMMAND ${CSTOOLKIT_COPY}
+                        "${PLUGINS_TARGET_PDBS}"
                         "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
                         COMMAND_EXPAND_LISTS
                 )
@@ -565,11 +554,11 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if(NOT PROJECT_IS_TOP_LEVEL OR NOT TARGET_NAMESPACE STREQUAL "${PROJECT_NAME}::")
             string(REGEX REPLACE "::$" "" TARGET_INSTALL_INTER_DIR "${TARGET_NAMESPACE}")
             set(TARGET_INSTALL_EXCLUDE_FROM_ALL "EXCLUDE_FROM_ALL")
-            set(TARGET_INSTALL_LIB_DIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
-            set(TARGET_INSTALL_BIN_DIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
-            set(TARGET_INSTALL_SYMBOLS_DIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/symbols/$<LOWER_CASE:$<CONFIG>>)
-            set(TARGET_INSTALL_INCLUDE_DIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/include)
-            set(TARGET_INSTALL_CMAKE_DIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/cmake)
+            set(TARGET_INSTALL_LIBDIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
+            set(TARGET_INSTALL_BINDIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
+            set(TARGET_INSTALL_SYMBOLSDIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/symbols/$<LOWER_CASE:$<CONFIG>>)
+            set(TARGET_INSTALL_INCLUDEDIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/include)
+            set(TARGET_INSTALL_CMAKEDIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/cmake)
             set(TARGET_INSTALL_CONFIG_NAME ${TARGET_INSTALL_INTER_DIR}_${TARGET_NAME})
             set(TARGET_INSTALL_COMPONENT ${TARGET_INSTALL_INTER_DIR}_${TARGET_NAME})
             set(TARGET_INSTALL_DESTINATION externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME})
@@ -590,72 +579,84 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             list(LENGTH CSTOOLKIT_INSTALL_TARGETS CSTOOLKIT_INSTALL_TARGETS_NB)
 
             if(CSTOOLKIT_INSTALL_TARGETS_NB EQUAL 1 AND TARGET_NAME STREQUAL CSTOOLKIT_INSTALL_TARGETS) # mode single component
-                set(TARGET_INSTALL_LIB_DIR lib/$<LOWER_CASE:$<CONFIG>>)
-                set(TARGET_INSTALL_BIN_DIR bin/$<LOWER_CASE:$<CONFIG>>)
-                set(TARGET_INSTALL_SYMBOLS_DIR symbols/$<LOWER_CASE:$<CONFIG>>)
-                set(TARGET_INSTALL_INCLUDE_DIR include)
-                set(TARGET_INSTALL_CMAKE_DIR cmake)
-                set(TARGET_INSTALL_CONFIG_NAME ${TARGET_NAME})
+                set(TARGET_INSTALL_LIBDIR lib/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_BINDIR bin/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_SYMBOLSDIR symbols/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_INCLUDEDIR include)
+                set(TARGET_INSTALL_CMAKEDIR cmake)
+                set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME})
                 set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
                 set(TARGET_INSTALL_DESTINATION ".")
                 set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL "${TARGET_NAME}")
             elseif((CSTOOLKIT_INSTALL_TARGETS_NB GREATER 1 AND TARGET_NAME IN_LIST CSTOOLKIT_INSTALL_TARGETS)
                     OR CSTOOLKIT_INSTALL_TARGETS_NB EQUAL 0) # mode multi component
-                set(TARGET_INSTALL_LIB_DIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
-                set(TARGET_INSTALL_BIN_DIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
-                set(TARGET_INSTALL_SYMBOLS_DIR ${TARGET_NAME}/symbols/$<LOWER_CASE:$<CONFIG>>)
-                set(TARGET_INSTALL_INCLUDE_DIR ${TARGET_NAME}/include)
-                set(TARGET_INSTALL_CMAKE_DIR ${TARGET_NAME}/cmake)
+                set(TARGET_INSTALL_LIBDIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_BINDIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_SYMBOLSDIR ${TARGET_NAME}/symbols/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_INCLUDEDIR ${TARGET_NAME}/include)
+                set(TARGET_INSTALL_CMAKEDIR ${TARGET_NAME}/cmake)
                 set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
                 set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
                 set(TARGET_INSTALL_DESTINATION ${TARGET_NAME})
                 set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL "${TARGET_NAME}")
             else() #autres components à exclure
                 set(TARGET_INSTALL_EXCLUDE_FROM_ALL "EXCLUDE_FROM_ALL")
-                set(TARGET_INSTALL_LIB_DIR internals/${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
-                set(TARGET_INSTALL_BIN_DIR internals/${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
-                set(TARGET_INSTALL_SYMBOLS_DIR internals/${TARGET_NAME}/symbols/$<LOWER_CASE:$<CONFIG>>)
-                set(TARGET_INSTALL_INCLUDE_DIR internals/${TARGET_NAME}/include)
-                set(TARGET_INSTALL_CMAKE_DIR internals/${TARGET_NAME}/cmake)
+                set(TARGET_INSTALL_LIBDIR internals/${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_BINDIR internals/${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_SYMBOLSDIR internals/${TARGET_NAME}/symbols/$<LOWER_CASE:$<CONFIG>>)
+                set(TARGET_INSTALL_INCLUDEDIR internals/${TARGET_NAME}/include)
+                set(TARGET_INSTALL_CMAKEDIR internals/${TARGET_NAME}/cmake)
                 set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
                 set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
                 set(TARGET_INSTALL_DESTINATION internals/${TARGET_NAME})
             endif()
         endif()
 
+        set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_LIBDIR "${TARGET_INSTALL_LIBDIR}")
+        set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_BINDIR "${TARGET_INSTALL_BINDIR}")
+        set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_SYMBOLSDIR "${TARGET_INSTALL_SYMBOLSDIR}")
+        set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_INCLUDEDIR "${TARGET_INSTALL_INCLUDEDIR}")
+        set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_CMAKEDIR "${TARGET_INSTALL_CMAKEDIR}")
+
         if(TARGET_RECURSIVE_INTERFACE_INCLUDE AND TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS)
             foreach(_public_header_dir ${TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS})
                 cmake_path(RELATIVE_PATH _public_header_dir BASE_DIRECTORY ${TARGET_PUBLIC_HEADERS_DIRS} OUTPUT_VARIABLE _relative_public_header_dir)
-                set(_relative_public_header_dir ${TARGET_INSTALL_INCLUDE_DIR}/${_relative_public_header_dir})
+                set(_relative_public_header_dir ${TARGET_INSTALL_INCLUDEDIR}/${_relative_public_header_dir})
                 list(APPEND TARGET_RECURSIVE_RELATIVE_PUBLIC_HEADERS_DIRS ${_relative_public_header_dir})
             endforeach()
 
             set(TARGET_INSTALL_INCLUDES_DESTINATION INCLUDES DESTINATION ${TARGET_RECURSIVE_RELATIVE_PUBLIC_HEADERS_DIRS})
         endif()
 
+        if(TARGET_MODULE)
+            set(TARGET_INSTALL_LIBRARY_DESTINATION ${TARGET_INSTALL_BINDIR})
+        else()
+            set(TARGET_INSTALL_LIBRARY_DESTINATION ${TARGET_INSTALL_LIBDIR})
+        endif()
+
         install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets
             DESTINATION ${TARGET_INSTALL_DESTINATION}
             COMPONENT ${TARGET_INSTALL_COMPONENT}
             ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
-            ARCHIVE DESTINATION ${TARGET_INSTALL_LIB_DIR}
-            LIBRARY DESTINATION ${TARGET_INSTALL_LIB_DIR}
-            RUNTIME DESTINATION ${TARGET_INSTALL_BIN_DIR}
-            FILE_SET HEADERS DESTINATION ${TARGET_INSTALL_INCLUDE_DIR}
+            ARCHIVE DESTINATION ${TARGET_INSTALL_LIBDIR}
+            LIBRARY DESTINATION ${TARGET_INSTALL_LIBRARY_DESTINATION}
+            RUNTIME DESTINATION ${TARGET_INSTALL_BINDIR}
+            FILE_SET HEADERS DESTINATION ${TARGET_INSTALL_INCLUDEDIR}
             ${TARGET_INSTALL_INCLUDES_DESTINATION}
         )
 
         if(TARGET_EXECUTABLE)
             # Runtime dependencies
-            install(FILES ${TARGET_RUNTIME_DLLS} DESTINATION ${TARGET_INSTALL_BIN_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+            install(FILES ${TARGET_RUNTIME_DLLS} DESTINATION ${TARGET_INSTALL_BINDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
             if(TARGET_PLUGINS)
-                install(FILES ${PLUGINS_RUNTIME_DLLS} DESTINATION ${TARGET_INSTALL_BIN_DIR}/${TARGET_PLUGINS_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                install(FILES ${PLUGINS_TARGET_FILES} DESTINATION ${TARGET_INSTALL_BINDIR}/${TARGET_PLUGINS_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
             endif()
 
             # Qt
             if(_qt_modules AND CSTOOLKIT_AUTO_DEPLOY_QT)
                 cstoolkit_qt_generate_deploy_app_script(
                     TARGET ${TARGET_NAME}
-                    INSTALL_DIR ${TARGET_INSTALL_BIN_DIR}
+                    INSTALL_DIR ${TARGET_INSTALL_BINDIR}
                     RUNTIME_DEPENDENCIES ${TARGET_RUNTIME_DLLS} ${PLUGINS_RUNTIME_DLLS}
                     OUTPUT_SCRIPT qt_deploy_script
                     NO_UNSUPPORTED_PLATFORM_ERROR
@@ -667,18 +668,18 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         # PDBS
         if(MSVC)
             if(TARGET_SHARED)
-                install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BIN_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BINDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
             elseif(TARGET_EXECUTABLE)
-                install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_SYMBOLS_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
-                install(FILES ${TARGET_RUNTIME_PDBS} DESTINATION ${TARGET_INSTALL_SYMBOLS_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_SYMBOLSDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                install(FILES ${TARGET_RUNTIME_PDBS} DESTINATION ${TARGET_INSTALL_SYMBOLSDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 if(TARGET_PLUGINS)
-                    install(FILES ${PLUGINS_RUNTIME_PDBS} DESTINATION ${TARGET_INSTALL_SYMBOLS_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                    install(FILES ${PLUGINS_TARGET_PDBS} DESTINATION ${TARGET_INSTALL_SYMBOLSDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 endif()
             elseif(TARGET_STATIC)
                 install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.pdb
-                    DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                    DESTINATION ${TARGET_INSTALL_LIBDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 if(TARGET_COMBINED_LINK_LIBRARIES)
-                    install(FILES "${TARGET_COMBINED_PDBS}" DESTINATION ${TARGET_INSTALL_LIB_DIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                    install(FILES "${TARGET_COMBINED_PDBS}" DESTINATION ${TARGET_INSTALL_LIBDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 endif()
             endif()
         endif()
@@ -686,7 +687,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         # Config
         install(EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets
             NAMESPACE ${TARGET_NAMESPACE}
-            DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
+            DESTINATION ${TARGET_INSTALL_CMAKEDIR}
             COMPONENT ${TARGET_INSTALL_COMPONENT}
             ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
         )
@@ -733,12 +734,12 @@ macro (generate_target_config)
     configure_package_config_file(
         ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/TargetConfig.cmake.in
         ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_INSTALL_CONFIG_NAME}Config.cmake
-        INSTALL_DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
+        INSTALL_DESTINATION ${TARGET_INSTALL_CMAKEDIR}
     )
 
     install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_INSTALL_CONFIG_NAME}Config.cmake
-        DESTINATION ${TARGET_INSTALL_CMAKE_DIR}
+        DESTINATION ${TARGET_INSTALL_CMAKEDIR}
         COMPONENT ${TARGET_INSTALL_COMPONENT}
         ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
     )

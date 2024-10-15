@@ -40,6 +40,10 @@ function(cstoolkit_filter_moc)
     message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_filter_moc")
 endfunction()
 
+function(cstoolkit_qt_generate_deploy_app_script)
+    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_generate_deploy_app_script")
+endfunction()
+
 else()
 set(QT_VERSION "${Qt5_VERSION}")
 set(QT_VERSION_MM "${Qt5_VERSION_MAJOR}.${Qt5_VERSION_MINOR}")

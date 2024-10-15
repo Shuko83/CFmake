@@ -81,12 +81,6 @@ foreach(_releasedll ${_DLL_LIST})
         continue()
     endif()
 
-    set(_includedir "${_releasedll}/../../../include")
-    cmake_path(NORMAL_PATH _includedir)
-    if(NOT EXISTS ${_includedir})
-        unset(_includedir)
-    endif()
-
     file(GLOB_RECURSE _debugdll "${@FETCH_PACKAGE_NAME@_ROOT_DIR}*/${_libname}d.dll" "${@FETCH_PACKAGE_NAME@_ROOT_DIR}*/${_libname}.dll")
     list(FILTER _debugdll INCLUDE REGEX "/[Dd]ebug/")
     list(POP_FRONT _debugdll _debugdll)
@@ -96,16 +90,13 @@ foreach(_releasedll ${_DLL_LIST})
     endif()
 
     add_library(@FETCH_PACKAGE_NAME@::${_libname} MODULE IMPORTED)
-    if(DEFINED _includedir)
-        set_target_properties(@FETCH_PACKAGE_NAME@::${_libname} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_includedir}")
-    endif()
     set_target_properties(@FETCH_PACKAGE_NAME@::${_libname} PROPERTIES
         IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
         IMPORTED_LOCATION_RELEASE "${_releasedll}"
         IMPORTED_LOCATION_DEBUG "${_debugdll}"
     )
 
-    list(APPEND @FETCH_PACKAGE_NAME@_LIBRARIES "@FETCH_PACKAGE_NAME@::${_libname}")
+    list(APPEND @FETCH_PACKAGE_NAME@_PLUGINS "@FETCH_PACKAGE_NAME@::${_libname}")
 endforeach()
 
 if(NOT @FETCH_PACKAGE_NAME@_LIBRARIES)
