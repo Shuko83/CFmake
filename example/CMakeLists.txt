@@ -4,11 +4,13 @@ cmake_minimum_required(VERSION 3.27)
 
 # call to project is mandatory
 # version can be defined with project(MyProject VERSION 1.2.3)
-# or by defining CSTOOLKIT_PROJECT_VERSION : cmake -DCSTOOLKIT_PROJECT_VERSION="1.2.3"
+# or by defining CSTOOLKIT_PROJECT_VERSION : cmake -DCSTOOLKIT_PROJECT_VERSION="1.2.3-alpha"
 project(MyProject)
 
 # Options and variables should be set before inclusion of CSToolkit
 set(CSTOOLKIT_DEFAULT_RESOURCES_DIRS "resources")
+set(CSTOOLKIT_INSTALL_TARGETS "MyExe")
+set(CSTOOLKIT_CPACK_RULES ON)
 
 # CSToolkit should be included near the top of top level CMakeLists.txt but after call to project()
 include(../CSToolkit.cmake)
