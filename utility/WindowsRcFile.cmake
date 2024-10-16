@@ -24,14 +24,15 @@ function(cstoolkit_generate_rc_file)
 
     set(RC_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
 
-    set(IDI_ICON_IN "\nIDI_ICON@ICON_NUMBER@\tICON\tDISCARDABLE\t@ICON_PATH@")
+    set(IDI_ICON_IN "\nIDI_ICON@ICON_NUMBER@ ICON DISCARDABLE \"@ICON_PATH@\"")
     set(ICON_NUMBER 1)
     foreach(ICON_PATH ${PARAMS_ICONS})
-        string(CONFIGURE IDI_ICON_IN IDI_ICON @ONLY)
-        string(APPEND IDI_ICONS IDI_ICON)
+		file(REAL_PATH "${ICON_PATH}" ICON_PATH EXPAND_TILDE)
+        string(CONFIGURE "${IDI_ICON_IN}" IDI_ICON @ONLY)
+        string(APPEND IDI_ICONS "${IDI_ICON}")
         math(EXPR ICON_NUMBER "${ICON_NUMBER}+1")
     endforeach()
-    
+
     if(PARAMS_MANIFEST)
         if (_target_type STREQUAL "EXECUTABLE")
             set(RT_MANIFEST "CREATEPROCESS_MANIFEST_RESOURCE_ID")
