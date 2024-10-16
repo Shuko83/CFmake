@@ -1,4 +1,70 @@
-function(cstoolkit_deploy FILE)
+# cstoolkit_deploy_with_target(<target> FILES <file>... [DESTINATION <dir>])
+# cstoolkit_deploy_with_target(<target> DIRECTORY <dir>... [DESTINATION <dir>])
+# The last component of each directory name is appended to the destination directory
+# but a trailing slash may be used to avoid this because it leaves the last component empty.
+function(cstoolkit_deploy_with_target target mode)
+    set(DEPLOY_OPTIONS)
+    set(DEPLOY_UNIQUE DESTINATION)
+    set(DEPLOY_MULTIPLE ${mode})
+    cmake_parse_arguments(PARSE_ARGV 1 DEPLOY "${DEPLOY_OPTIONS}" "${DEPLOY_UNIQUE}" "${DEPLOY_MULTIPLE}")
+
+    if(NOT TARGET ${target})
+        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target: \"${target}\" is not a target.")
+        return()
+    endif()
+
+    if(NOT "${mode}" STREQUAL "FILES" AND NOT "${mode}" STREQUAL "DIRECTORY")
+        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target(${target}): Invalid argument \"${mode}\".")
+        return()
+    endif()
+
+    if(DEFINED DEPLOY_UNPARSED_ARGUMENTS)
+        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target(${target}): Unkown arguments \"${DEPLOY_UNPARSED_ARGUMENTS}\"")
+        return()
+    endif()
+
+    get_target_property(INSTALL_BINDIR ${target} INSTALL_BINDIR)
+    if(NOT INSTALL_BINDIR)
+        set(INSTALL_BINDIR ${CMAKE_INSTALL_BINDIR})
+    endif()
+    get_target_property(INSTALL_COMPONENT ${target} INSTALL_COMPONENT)
+    if(INSTALL_COMPONENT)
+        set(INSTALL_COMPONENT COMPONENT ${INSTALL_COMPONENT})
+    else()
+        set(INSTALL_COMPONENT)
+    endif()
+    get_target_property(INSTALL_EXCLUDE_FROM_ALL ${target} INSTALL_EXCLUDE_FROM_ALL)
+    if(NOT INSTALL_EXCLUDE_FROM_ALL)
+        set(INSTALL_EXCLUDE_FROM_ALL)
+    endif()
+
+    foreach(_file ${DEPLOY_DIRECTORY}${DEPLOY_FILES})
+        if(NOT _file MATCHES "^\\$<.*>") # does not start with a genex
+            cmake_path(ABSOLUTE_PATH _file NORMALIZE OUTPUT_VARIABLE _file)
+        endif()
+        list(APPEND DEPLOY_SOURCES "${_file}")
+    endforeach()
+
+    if(DEPLOY_FILES)
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CSTOOLKIT_COPY} -e
+                "${DEPLOY_SOURCES}"
+                "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
+                COMMAND_EXPAND_LISTS
+        )
+        install(FILES ${DEPLOY_SOURCES} DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
+    else()
+        add_custom_command(TARGET ${target} POST_BUILD
+            COMMAND ${CSTOOLKIT_COPY} -e -d
+                "${DEPLOY_SOURCES}"
+                "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
+                COMMAND_EXPAND_LISTS
+        )
+        install(DIRECTORY ${DEPLOY_SOURCES} DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
+    endif()
+endfunction()
+
+function(cstoolkit_add_legacy_deploy FILE)
     message(DEBUG "-------------- Deploying file ${FILE} --------------")
     if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${FILE})
         message(DEBUG "Unable to open : ${FILE}")

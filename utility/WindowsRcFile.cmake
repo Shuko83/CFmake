@@ -11,7 +11,7 @@ function(cstoolkit_generate_rc_file)
         COPYRIGHT)
     set(multi_value_keywords ICONS)
     
-    cmake_parse_arguments(PARAMS "${options}" "${one_value_keywords}" "${multi_value_keywords}" ${ARGN})
+    cmake_parse_arguments(PARSE_ARGV 0 PARAMS "${options}" "${one_value_keywords}" "${multi_value_keywords}")
 
     message(DEBUG "cstoolkit_generate_rc_file: Valeur Target : " ${PARAMS_TARGET})
     

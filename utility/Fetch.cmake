@@ -101,7 +101,7 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
     set(options NO_EXTRACT)
     set(one_value_args)
     set(multi_value_args)
-    cmake_parse_arguments(DOWNLOAD "${options}" "${one_value_args}" "${multi_value_args}" ${ARGN})
+    cmake_parse_arguments(PARSE_ARGV 2 DOWNLOAD "${options}" "${one_value_args}" "${multi_value_args}")
 
     cmake_path(GET URL STEM LAST_ONLY _FILENAME)
     string(MD5 _HASH ${URL})

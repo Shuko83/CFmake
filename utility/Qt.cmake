@@ -95,7 +95,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
     set(oneValueArgs TARGET)
     set(multiValueArgs OPTIONS DEPENDS)
 
-    cmake_parse_arguments(_WRAP_CPP "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    cmake_parse_arguments(PARSE_ARGV 1 _WRAP_CPP "${options}" "${oneValueArgs}" "${multiValueArgs}")
 
     set(moc_files ${_WRAP_CPP_UNPARSED_ARGUMENTS})
     set(moc_options ${_WRAP_CPP_OPTIONS})
@@ -181,7 +181,7 @@ function(cstoolkit_qt_wrap_ui outfiles)
     set(oneValueArgs)
     set(multiValueArgs OPTIONS)
 
-    cmake_parse_arguments(_WRAP_UI "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    cmake_parse_arguments(PARSE_ARGV 1 _WRAP_UI "${options}" "${oneValueArgs}" "${multiValueArgs}")
 
     set(ui_files ${_WRAP_UI_UNPARSED_ARGUMENTS})
     set(ui_options ${_WRAP_UI_OPTIONS})
@@ -214,7 +214,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
     set(oneValueArgs)
     set(multiValueArgs OPTIONS)
 
-    cmake_parse_arguments(_RCC "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    cmake_parse_arguments(PARSE_ARGV 2 _RCC "${options}" "${oneValueArgs}" "${multiValueArgs}")
 
     set(rcc_files ${_RCC_UNPARSED_ARGUMENTS})
     set(rcc_options ${_RCC_OPTIONS})

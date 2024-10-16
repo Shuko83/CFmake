@@ -32,7 +32,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         #MSVC
         RC_ICONS
     )
-    cmake_parse_arguments(TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}" ${ARGN})
+    cmake_parse_arguments(PARSE_ARGV 2 TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}")
 
     if(TARGET_NAME STREQUAL "")
         message(SEND_ERROR "CSToolkit: add_target(): No NAME defined for target")
@@ -41,6 +41,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     if(DEFINED TARGET_UNPARSED_ARGUMENTS)
         message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
+        return()
     endif()
 
     if(TARGET_TYPE STREQUAL "EXECUTABLE")
@@ -617,6 +618,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_SYMBOLSDIR "${TARGET_INSTALL_SYMBOLSDIR}")
         set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_INCLUDEDIR "${TARGET_INSTALL_INCLUDEDIR}")
         set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_CMAKEDIR "${TARGET_INSTALL_CMAKEDIR}")
+        set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_COMPONENT "${TARGET_INSTALL_COMPONENT}")
+        set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_EXCLUDE_FROM_ALL "${TARGET_INSTALL_EXCLUDE_FROM_ALL}")
 
         if(TARGET_RECURSIVE_INTERFACE_INCLUDE AND TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS)
             foreach(_public_header_dir ${TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS})
