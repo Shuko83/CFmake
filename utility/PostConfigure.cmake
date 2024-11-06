@@ -107,10 +107,10 @@ function(cstoolkit_check_dependencies target)
         list(APPEND DEPENDENCIES ${PLUGINS})
     endif()
 
-    list(REMOVE_DUPLICATES REMOVE_DUPLICATES)
+    string(GENEX_STRIP "${DEPENDENCIES}" DEPENDENCIES)
+    list(REMOVE_DUPLICATES DEPENDENCIES)
 
     foreach(dep ${DEPENDENCIES})
-        string(GENEX_STRIP ${dep} dep)
         if(NOT dep)
             continue()
         endif()
