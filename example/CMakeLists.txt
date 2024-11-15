@@ -15,8 +15,12 @@ set(CSTOOLKIT_CPACK_RULES ON)
 # CSToolkit should be included near the top of top level CMakeLists.txt but after call to project()
 include(../CSToolkit.cmake)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 # cstoolkit_fetch_artifactory simplify the downloding of artifactory packages
 cstoolkit_fetch_artifactory("TinyXML2" VERSION "5.0.1-2")
+
+find_package(Boost REQUIRED chrono filesystem log)
 
 # call to add_subdirectory includes the CMakeLists.txt in that directory
 # it's is not mandatory but recomended for a cleaner Directory Structure

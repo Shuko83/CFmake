@@ -68,9 +68,9 @@ function(cstoolkit_post_configure)
         endforeach()
     endif()
 
-    # Deployement des plugins
+    # Deployement des dependances runtime et plugins
     foreach(target ${ALL_TARGETS})
-        cstoolkit_manage_plugins(${target})
+        cstoolkit_compute_runtime_dependencies(${target})
     endforeach()
 endfunction()
 
@@ -209,62 +209,154 @@ macro(cstoolkit_check_dependencies_message message)
     endif()
 endmacro()
 
-function(cstoolkit_manage_plugins target)
-    get_target_property(PLUGINS ${target} PLUGINS)
-    if(NOT PLUGINS)
+function(cstoolkit_compute_runtime_dependencies target)
+    cstoolkit_get_runtime_dependencies(${target} TARGET_RUNTIME_DEPENDENCIES)
+    set_target_properties(${target} PROPERTIES RUNTIME_DEPENDENCIES "${TARGET_RUNTIME_DEPENDENCIES}")
+
+    get_target_property(PLUGINS_DESTINATION_SIZE ${target} PLUGINS_DESTINATION_SIZE)
+    if(NOT PLUGINS_DESTINATION_SIZE)
         return()
     endif()
 
-    foreach(_plugin ${PLUGINS})
-        cstoolkit_manage_subplugins(${_plugin})
-    endforeach()
+    set(PLUGINS_DEPENDENCIES)
 
-    set_target_properties(${target} PROPERTIES PLUGINS "${PLUGINS}")
+    get_target_property(PLUGINS_DESTINATIONS ${target} PLUGINS_DESTINATIONS)
+
+    # Calcul des dependences
+    set(DESTINATION_INDEX 0)
+    while(DESTINATION_INDEX LESS PLUGINS_DESTINATION_SIZE)
+        get_target_property(PLUGINS_LIST ${target} PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST)
+
+        list(APPEND PLUGINS_DEPENDENCIES ${PLUGINS_LIST})
+
+        set(PLUGINS_LIST_DEPENDENCIES)
+
+        foreach(_plugin ${PLUGINS_LIST})
+            if(NOT TARGET ${_plugin})
+                message(NOTICE "CSToolkit: add_target(${target}): Plugin \"${_plugin}\" is not a defined target and will be ignored.")
+                continue()
+            endif()
+            cstoolkit_get_runtime_dependencies(${_plugin} PLUGINS_LIST_DEPENDENCIES)
+        endforeach()
+
+        list(APPEND PLUGINS_DEPENDENCIES ${PLUGINS_LIST_DEPENDENCIES})
+
+        list(APPEND PLUGINS_LIST ${PLUGINS_LIST_DEPENDENCIES})
+        list(REMOVE_DUPLICATES PLUGINS_LIST)
+        list(REMOVE_ITEM PLUGINS_LIST ${TARGET_RUNTIME_DEPENDENCIES})
+
+        set_target_properties(${target} PROPERTIES PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST "${PLUGINS_LIST}")
+
+        math(EXPR DESTINATION_INDEX "${DESTINATION_INDEX}+1")
+    endwhile()
+
+    # Deplacement des dependances communes vers /
+    get_target_property(ROOT_PLUGINS_LIST ${target} PLUGINS_DESTINATION0_LIST)
+    
+    set(DESTINATION_INDEX 1)
+    while(DESTINATION_INDEX LESS PLUGINS_DESTINATION_SIZE)
+        get_target_property(PLUGINS_LIST ${target} PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST)
+        list(REMOVE_ITEM PLUGINS_LIST ${ROOT_PLUGINS_LIST})
+        set_target_properties(${target} PROPERTIES PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST "${PLUGINS_LIST}")
+
+        math(EXPR DESTINATION_INDEX "${DESTINATION_INDEX}+1")
+    endwhile()
+
+    set(MOVE_TO_ROOT_PLUGINS)
+
+    set(DESTINATION_INDEX_A 1)
+    while(DESTINATION_INDEX_A LESS PLUGINS_DESTINATION_SIZE)
+        get_target_property(PLUGINS_LIST_A ${target} PLUGINS_DESTINATION${DESTINATION_INDEX_A}_LIST)
+
+        math(EXPR DESTINATION_INDEX_B "${DESTINATION_INDEX_A}+1")
+        while(DESTINATION_INDEX_B LESS PLUGINS_DESTINATION_SIZE)
+
+            get_target_property(PLUGINS_LIST_B ${target} PLUGINS_DESTINATION${DESTINATION_INDEX_B}_LIST)
+
+            cstoolkit_list_intersection(PLUGINS_LIST_A PLUGINS_LIST_B PLUGINS_LIST_INTER)
+
+            list(APPEND MOVE_TO_ROOT_PLUGINS ${PLUGINS_LIST_INTER})
+            list(REMOVE_ITEM PLUGINS_LIST_A ${PLUGINS_LIST_INTER})
+            list(REMOVE_ITEM PLUGINS_LIST_B ${PLUGINS_LIST_INTER})
+
+            set_target_properties(${target} PROPERTIES PLUGINS_DESTINATION${DESTINATION_INDEX_B}_LIST "${PLUGINS_LIST_B}")
+
+            math(EXPR DESTINATION_INDEX_B "${DESTINATION_INDEX_B}+1")
+        endwhile()
+
+        set_target_properties(${target} PROPERTIES PLUGINS_DESTINATION${DESTINATION_INDEX_A}_LIST "${PLUGINS_LIST_A}")
+
+        math(EXPR DESTINATION_INDEX_A "${DESTINATION_INDEX_A}+1")
+    endwhile()
+
+    if(MOVE_TO_ROOT_PLUGINS)
+        list(APPEND ROOT_PLUGINS_LIST ${MOVE_TO_ROOT_PLUGINS})
+        list(REMOVE_DUPLICATES ROOT_PLUGINS_LIST)
+        set_target_properties(${target} PROPERTIES PLUGINS_DESTINATION0_LIST "${ROOT_PLUGINS_LIST}")
+    endif()
+
+    list(REMOVE_DUPLICATES PLUGINS_DEPENDENCIES)
+    set_target_properties(${target} PROPERTIES PLUGINS_DEPENDENCIES "${PLUGINS_DEPENDENCIES}")
 endfunction()
 
-function(cstoolkit_manage_subplugins plugin)
-    get_target_property(IMPORTED ${plugin} IMPORTED)
-    set(_plugin_dependencies)
+function(cstoolkit_get_runtime_dependencies target runtime_dependencies)
+    get_target_property(IMPORTED ${target} IMPORTED)
+    set(_target_dependencies)
     if(IMPORTED)
         if(CMAKE_CONFIGURATION_TYPES)
             foreach(_config ${CMAKE_CONFIGURATION_TYPES})
                 string(TOUPPER "${_config}" _config)
-                get_target_property(LIBRARIES ${plugin} IMPORTED_LINK_DEPENDENT_LIBRARIES_${_config})
+                get_target_property(LIBRARIES ${target} IMPORTED_LINK_DEPENDENT_LIBRARIES_${_config})
                 if(LIBRARIES)
-                    list(APPEND _plugin_dependencies ${LIBRARIES})
+                    list(APPEND _target_dependencies ${LIBRARIES})
                 endif()
             endforeach()
         else()
             string(TOUPPER "${CMAKE_BUILD_TYPE}" _config)
-            get_target_property(LIBRARIES ${plugin} IMPORTED_LINK_DEPENDENT_LIBRARIES_${_config})
+            get_target_property(LIBRARIES ${target} IMPORTED_LINK_DEPENDENT_LIBRARIES_${_config})
             if(LIBRARIES)
-                list(APPEND _plugin_dependencies ${LIBRARIES})
+                list(APPEND _target_dependencies ${LIBRARIES})
             endif()
         endif()
-        get_target_property(LIBRARIES ${plugin} INTERFACE_LINK_LIBRARIES)
+        get_target_property(LIBRARIES ${target} INTERFACE_LINK_LIBRARIES)
         if(LIBRARIES)
-            list(APPEND _plugin_dependencies ${LIBRARIES})
+            list(APPEND _target_dependencies ${LIBRARIES})
         endif()
     else()
-        get_target_property(LIBRARIES ${plugin} LINK_LIBRARIES)
+        get_target_property(LIBRARIES ${target} LINK_LIBRARIES)
         if(LIBRARIES)
-            list(APPEND _plugin_dependencies ${LIBRARIES})
+            list(APPEND _target_dependencies ${LIBRARIES})
         endif()
-        get_target_property(LIBRARIES ${plugin} INTERFACE_LINK_LIBRARIES)
+        get_target_property(LIBRARIES ${target} INTERFACE_LINK_LIBRARIES)
         if(LIBRARIES)
-            list(APPEND _plugin_dependencies ${LIBRARIES})
+            list(APPEND _target_dependencies ${LIBRARIES})
         endif()
     endif()
 
-    list(REMOVE_DUPLICATES _plugin_dependencies)
-    foreach(_lib ${_plugin_dependencies})
-        if(TARGET ${_lib})
-            get_target_property(_lib_type ${_lib} TYPE)
+    list(REMOVE_DUPLICATES _target_dependencies)
+    foreach(_dep ${_target_dependencies})
+        if(TARGET ${_dep})
+            get_target_property(_lib_type ${_dep} TYPE)
             if(_lib_type STREQUAL SHARED_LIBRARY)
-                list(APPEND PLUGINS "${_lib}")
-                cstoolkit_manage_subplugins(${_lib})
+                list(APPEND ${runtime_dependencies} "${_dep}")
+                cstoolkit_get_runtime_dependencies(${_dep} ${runtime_dependencies})
             endif()
         endif()
     endforeach()
-    set(PLUGINS "${PLUGINS}" PARENT_SCOPE)
+    set(${runtime_dependencies} "${${runtime_dependencies}}" PARENT_SCOPE)
+endfunction()
+
+function(cstoolkit_list_intersection lista listb outputlist)
+    set(aminusb ${${lista}})
+    list(REMOVE_ITEM aminusb ${${listb}})
+
+    set(bminusa ${${listb}})
+    list(REMOVE_ITEM bminusa ${${lista}})
+
+    set(${outputlist} ${${lista}})
+    list(APPEND ${outputlist} ${${listb}})
+    list(REMOVE_DUPLICATES ${outputlist})
+    list(REMOVE_ITEM ${outputlist} ${aminusb} ${bminusa})
+
+    set(${outputlist} "${${outputlist}}" PARENT_SCOPE)
 endfunction()

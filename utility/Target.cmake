@@ -1,5 +1,5 @@
 function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
-
+    
     # Parse arguments
 
     set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE RECURSIVE_INTERFACE_INCLUDE NO_INSTALL PUBLIC_HEADERS_NO_EXTENSION)
@@ -9,7 +9,6 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         PUBLIC_LINK_LIBRARIES
         PRIVATE_LINK_LIBRARIES
         COMBINED_LINK_LIBRARIES
-        PLUGINS
         # DIRS
         PUBLIC_HEADERS_DIRS
         PRIVATE_HEADERS_DIRS
@@ -32,7 +31,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         #MSVC
         RC_ICONS
     )
-    cmake_parse_arguments(PARSE_ARGV 2 TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE}")
+    set(TARGET_REPETITIVE PLUGINS)
+    cmake_parse_arguments(PARSE_ARGV 2 TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE};${TARGET_REPETITIVE}")
 
     if(TARGET_NAME STREQUAL "")
         message(SEND_ERROR "CSToolkit: add_target(): No NAME defined for target")
@@ -43,6 +43,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
         return()
     endif()
+
+    cstoolkit_parse_repetitive_arguments(TARGET "${TARGET_REPETITIVE}" "${TARGET_OPTIONS};${TARGET_UNIQUE};${TARGET_MULTIPLE}" ${ARGN})
 
     if(TARGET_TYPE STREQUAL "EXECUTABLE")
         set(TARGET_EXECUTABLE TRUE)
@@ -484,10 +486,15 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     if(TARGET_EXECUTABLE)
         # Copy of runtime dlls and pdbs for the target
+        set_target_properties(${TARGET_NAME} PROPERTIES RUNTIME_DEPENDENCIES "")
+
+        set(TARGET_RUNTIME_DLLS "$<TARGET_PROPERTY:${TARGET_NAME},RUNTIME_DEPENDENCIES>")
+        set(TARGET_RUNTIME_DLLS "$<LIST:TRANSFORM,${TARGET_RUNTIME_DLLS},PREPEND,$<1:$><TARGET_FILE:>")
+        set(TARGET_RUNTIME_DLLS "$<LIST:TRANSFORM,${TARGET_RUNTIME_DLLS},APPEND,$<ANGLE-R>>")
+        set(TARGET_RUNTIME_DLLS "$<GENEX_EVAL:${TARGET_RUNTIME_DLLS}>")
+
         if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
-            set(TARGET_RUNTIME_DLLS "$<FILTER:$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
-        else()
-            set(TARGET_RUNTIME_DLLS "$<TARGET_RUNTIME_DLLS:${TARGET_NAME}>")
+            set(TARGET_RUNTIME_DLLS "$<FILTER:${TARGET_RUNTIME_DLLS},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
         endif()
 
         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
@@ -508,33 +515,100 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
 
         if(TARGET_PLUGINS)
-            # Adding plusgins as dependencies
-            add_dependencies(${TARGET_NAME} ${TARGET_PLUGINS})
+            if(TARGET_PLUGINS_DIR)
+                message(WARNING "Obsolete parameter PLUGINS_DIR, please use new form PLUGINS <plugins> DESTINATION <plugin_dir>")
+                if(TARGET_PLUGINSC GREATER 1 OR "DESTINATION" IN_LIST TARGET_PLUGINSV0)
+                    message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Mixed usage of obsolete parameter PLUGINS_DIR with new PLUGINS syntax.")
+                    return()
+                endif()
+                list(APPEND TARGET_PLUGINSV0 DESTINATION "${TARGET_PLUGINS_DIR}")
+            endif()
+
+            # We manipulate the list to always have root destination "/" in index 0
+            # necessary for intersection of plugins dependencies later
+
+            set(TARGET_PLUGINS)
+            set(TARGET_PLUGINS_DESTINATIONS "/")
+            set(TARGET_PLUGINS_DESTINATION0 "/")
+            set(TARGET_PLUGINS_DESTINATION0_LIST "")
+            set(DESTINATION_INDEX 1)
+
+            foreach(target_plugins_args ${TARGET_PLUGINSV})
+                cmake_parse_arguments(${target_plugins_args} "" "DESTINATION" "PLUGINS" ${${target_plugins_args}})
+                if(DEFINED ${target_plugins_args}_UNPARSED_ARGUMENTS)
+                    message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unkown arguments \"${${target_plugins_args}_UNPARSED_ARGUMENTS}\"")
+                    return()
+                endif()
+
+                if(NOT ${target_plugins_args}_PLUGINS)
+                    continue()
+                endif()
+
+                if("${${target_plugins_args}_DESTINATION}" STREQUAL "") 
+                    set(${target_plugins_args}_DESTINATION "/")
+                endif()
+                
+                list(APPEND TARGET_PLUGINS ${${target_plugins_args}_PLUGINS})
+                add_dependencies(${TARGET_NAME} ${${target_plugins_args}_PLUGINS})
+                
+                set(current_destination_index ${DESTINATION_INDEX})
+
+                list(FIND TARGET_PLUGINS_DESTINATIONS "${${target_plugins_args}_DESTINATION}" found_destination_index)
+
+                if(found_destination_index EQUAL -1)
+                    list(APPEND TARGET_PLUGINS_DESTINATIONS "${${target_plugins_args}_DESTINATION}")
+                    set(TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX} ${${target_plugins_args}_DESTINATION})
+                    set(TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST)
+                    math(EXPR DESTINATION_INDEX "${DESTINATION_INDEX}+1")
+                else()
+                    set(current_destination_index ${found_destination_index})
+                endif()
+
+                list(APPEND TARGET_PLUGINS_DESTINATION${current_destination_index}_LIST ${${target_plugins_args}_PLUGINS})
+            endforeach()
+
+            set(TARGET_PLUGINS_DESTINATION_SIZE ${DESTINATION_INDEX})
+
             set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS "${TARGET_PLUGINS}")
+            set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS_DESTINATIONS "${TARGET_PLUGINS_DESTINATIONS}")
+            set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS_DESTINATION_SIZE "${TARGET_PLUGINS_DESTINATION_SIZE}")
 
-            set(PLUGINS_TARGET_FILES "$<TARGET_PROPERTY:${TARGET_NAME},PLUGINS>")
-            set(PLUGINS_TARGET_FILES "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},PREPEND,$<1:$><TARGET_FILE:>")
-            set(PLUGINS_TARGET_FILES "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},APPEND,$<ANGLE-R>>")
-            set(PLUGINS_TARGET_FILES "$<GENEX_EVAL:${PLUGINS_TARGET_FILES}>")
+            set(DESTINATION_INDEX 0)
 
-            # Copy of the plugins files
-            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e
-                    "${PLUGINS_TARGET_FILES}"
-                    "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
-                    COMMAND_EXPAND_LISTS
-            )
+            while(DESTINATION_INDEX LESS TARGET_PLUGINS_DESTINATION_SIZE)
+                set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS_DESTINATION${DESTINATION_INDEX} "${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}")
+                set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST "${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST}")
 
-            if(MSVC)
-                set(PLUGINS_TARGET_PDBS "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
-                # Copy of the plugins pdbs
+                set(PLUGINS_TARGET_FILES "$<TARGET_PROPERTY:${TARGET_NAME},PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST>")
+                set(PLUGINS_TARGET_FILES "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},PREPEND,$<1:$><TARGET_FILE:>")
+                set(PLUGINS_TARGET_FILES "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},APPEND,$<ANGLE-R>>")
+                set(PLUGINS_TARGET_FILES "$<GENEX_EVAL:${PLUGINS_TARGET_FILES}>")
+
+                if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
+                    set(PLUGINS_TARGET_FILES "$<FILTER:${PLUGINS_TARGET_FILES},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
+                endif()
+
+                # Copy of the plugins files
                 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                    COMMAND ${CSTOOLKIT_COPY}
-                        "${PLUGINS_TARGET_PDBS}"
-                        "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DIR}"
+                    COMMAND ${CSTOOLKIT_COPY} -e
+                        "${PLUGINS_TARGET_FILES}"
+                        "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}"
                         COMMAND_EXPAND_LISTS
                 )
-            endif()
+
+                if(MSVC)
+                    set(PLUGINS_TARGET_PDBS "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
+                    # Copy of the plugins pdbs
+                    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                        COMMAND ${CSTOOLKIT_COPY}
+                            "${PLUGINS_TARGET_PDBS}"
+                            "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}"
+                            COMMAND_EXPAND_LISTS
+                    )
+                endif()
+
+                math(EXPR DESTINATION_INDEX "${DESTINATION_INDEX}+1")
+            endwhile()
         endif()
     elseif(TARGET_PLUGINS)
         message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unsuported argument PLUGINS for non-executable target.")

@@ -9,6 +9,8 @@ cmake_minimum_required(VERSION 3.27)
 if(POLICY CMP0152)
   cmake_policy(SET CMP0152 NEW)
 endif()
+#cmake_policy(SET CMP0167 OLD)
+
 
 if(NOT PROJECT_NAME)
     message(FATAL_ERROR "CSToolkit: CSToolkit should be included after top level project() call.")
@@ -72,6 +74,7 @@ set(CSTOOLKIT_INSTALL_TARGETS_ALL)
 ################################################################################
 
 include(${CMAKE_CURRENT_LIST_DIR}/utility/BuildType.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Arguments.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Target.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Info.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/PostConfigure.cmake)
@@ -88,5 +91,6 @@ include(${CMAKE_CURRENT_LIST_DIR}/utility/WindowsRcFile.cmake)
 if(CSTOOLKIT_CPACK_RULES)
     include(${CMAKE_CURRENT_LIST_DIR}/utility/CPackRules.cmake)
 endif()
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Streamwork.cmake)
 
 cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL cstoolkit_post_configure())
