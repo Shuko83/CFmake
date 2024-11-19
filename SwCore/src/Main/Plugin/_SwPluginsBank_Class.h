@@ -99,6 +99,8 @@ namespace StreamWork
             void AddPaths(QString pathsdescriptor);
             /*! \brief Acces a liste des paths */
             QMap<QString,bool> GetPathList();
+            /*! \brief Charge tous les plugins contenus dans PathList */
+            void LoadAllPlugins();
             /*! \brief Acces a liste des plugins usine par path */
             QSet<ISwPluginFactory *> & GetPluginList(QString path)  throw(SwException);
             /*! \brief Acces a liste de tous les plugins */

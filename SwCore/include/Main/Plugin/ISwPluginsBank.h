@@ -74,6 +74,8 @@ namespace StreamWork
             virtual QMap<QString,bool> GetPathList()=0;
             /*! \brief Acces a liste des plugins usine par path */
             virtual QSet<ISwPluginFactory *> & GetPluginList(QString path) throw(SwException)=0;
+            /*! \brief Charge tous les plugins contenus dans PathList */
+            virtual void LoadAllPlugins()=0;
             /*! \brief Acces a liste de tous les plugins */
             virtual QMap<QString,SwPluginFactory_Class *> * GetAllPlugins()=0;
             /*! \brief Acces a la liste des noms de tous les composants controllers relatif a un type donné*/

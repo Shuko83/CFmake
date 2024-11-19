@@ -264,6 +264,8 @@ void SwApplication::FinalizeInitialisation()
 	if (_applicationDirPath.isEmpty())
 		SetApplicationDirPath(qApp->applicationDirPath()); // Valeur par defaut
 
+	_bank->LoadAllPlugins();
+
 	QMap<QString, SwPluginFactory_Class *> * plugins = _bank->GetAllPlugins();
 	QMap<QString, SwPluginFactory_Class *>::iterator it = plugins->begin();
 	while (it != plugins->end())

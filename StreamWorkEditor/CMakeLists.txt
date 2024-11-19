@@ -1,7 +1,7 @@
 if (WIN32)
 	set(OPENGL_LIB opengl32)
 else()
-	set(OPENGL_LIB OpenGL)
+	set(OPENGL_LIB OpenGL::OpenGL)
 endif()
 
 cstoolkit_add_target(StreamWorkEditor EXECUTABLE NAMESPACE Streamwork RECURSIVE RECURSIVE_INCLUDE

@@ -43,16 +43,18 @@
 #include <cstdlib> 
 #include <stdlib.h> 
 
-#define VARNAME_PATH "PATH"
-
 #ifdef Q_OS_WIN
 //Enregistrement du path dans le path applicatif
 #include <windows.h>
 #include "ImageHlp.h"
 #define WIN32_BUFSIZE 30000
 #include <QMessageBox>
+#define VARNAME_PATH "PATH"
+#define VARNAME_PATH_SEPARATOR ";"
 #define VARNAME_USER "USERNAME"
 #else
+#define VARNAME_PATH "LD_LIBRARY_PATH"
+#define VARNAME_PATH_SEPARATOR ":"
 #define VARNAME_USER "USER"
 #endif
 
@@ -208,11 +210,8 @@ void _SwPluginsBank_Class::setProductLicense(ProductLicense* productLicence)
 \param[in] path path a ajouter*/
 void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 	QMap<QString,bool>::iterator it;
-	QMap<QString,TL_plugins>::iterator itpp;
 	QSet<QString>::const_iterator itc;
-	QSet<SwUUID>::iterator itd;
 	QSet<QString> set_of_components;
-	QSet<SwUUID> set_of_data;
 	TL_plugins set_of_plugins;
 
 	QString expendedPath = path;
@@ -252,20 +251,18 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 	}
 
 	QDir pathDir(realPath);
-	QString qstrMessage(getenv ("PATH"));
+	QString qstrMessage(getenv (VARNAME_PATH));
 	
-	qstrMessage.prepend(pathDir.canonicalPath()+";");
+	qstrMessage.prepend(pathDir.canonicalPath()+VARNAME_PATH_SEPARATOR);
 
 	setenv(VARNAME_PATH, qstrMessage.toUtf8().constData(), true);
+
+	qDebug() << VARNAME_PATH << ": " << qstrMessage;
    
 	//Ajout a la liste des path
 	if (SW_APP->IsVerbose())
 		SW_APP->Logger().Log(LogLvl_Debug,QString("Adding path %1\n").arg(realPath));
 
-	_paths.insert(realPath,registerable);
-	_plugins_paths.insert(realPath,set_of_plugins);
-	itpp=_plugins_paths.find(realPath);
-	_has_changed=true;
 	//Si le repertoire existe
 	QDir dir(realPath);
 	if (!dir.exists()) 
@@ -274,114 +271,130 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 		qCritical() << __FUNCTION__ << " Directory in devpath, doesn't exist <" + path + ">";
 		return;
 	}
+
+	_paths.insert(realPath,registerable);
+	_plugins_paths.insert(realPath,set_of_plugins);
+
+	_has_changed=true;
+
 	//Operation de mise a jour
 	doUpdate(realPath);
-	//Recuperation de la liste des fichiers de ce repertoire
-	QStringList list_files=dir.entryList(QDir::Files);
-	//Pour chaque fichier
-	for(int j=0;j<list_files.count();j++) {
-		//Si le fichier n'est pas reference
-		if (_plugin_by_name.find(list_files[j])==_plugin_by_name.end() &&
-		list_files[j].endsWith(".swdl")) {
-			QString real_file=realPath;
-			real_file+="/";real_file+=list_files[j];
-			QFileInfo fileInfo(real_file);
-			QString libPath = fileInfo.absoluteFilePath();
-			//On recherche le point d'entrée du plugin
-			QLibrary lib(libPath);
-#ifndef QT_NO_DEBUG
-			Tf_getPluginEntry plugin_entry = (Tf_getPluginEntry)lib.resolve("GetPluginInterfaceD");
-			if (!plugin_entry)
-				plugin_entry = (Tf_getPluginEntry)lib.resolve("GetPluginInterface");
-			else
-				qWarning() << list_files[j] << ": Function GetPluginInterfaceD() will be unused soon!";
-#else
-			Tf_getPluginEntry plugin_entry=(Tf_getPluginEntry)lib.resolve("GetPluginInterface");
-#endif
-			if (plugin_entry!=NULL) 
-			{
-				//Si trouvé extraction du plugin
-				SwPluginFactory_Class * plugin=plugin_entry();
+}
+/*! \brief Chargement de tout les plugins .swdl dans les paths */
+void _SwPluginsBank_Class::LoadAllPlugins()
+{
+	for(auto pathIt = _paths.begin(); pathIt != _paths.end(); ++pathIt)
+	{
+		QString realPath = pathIt.key();
+		QDir dir(realPath);
+		QMap<QString,TL_plugins>::iterator itpp =_plugins_paths.find(realPath);
+		//Recuperation de la liste des fichiers de ce repertoire
+		QStringList list_files=dir.entryList(QDir::Files);
+		//Pour chaque fichier
+		for(int j=0;j<list_files.count();j++) {
+			//Si le fichier n'est pas reference
+			if (_plugin_by_name.find(list_files[j])==_plugin_by_name.end() &&
+			list_files[j].endsWith(".swdl")) {
+				QString real_file=realPath;
+				real_file+="/";real_file+=list_files[j];
+				QFileInfo fileInfo(real_file);
+				QString libPath = fileInfo.absoluteFilePath();
+				//On recherche le point d'entrée du plugin
+				QLibrary lib(libPath);
+	#ifndef QT_NO_DEBUG
+				Tf_getPluginEntry plugin_entry = (Tf_getPluginEntry)lib.resolve("GetPluginInterfaceD");
+				if (!plugin_entry)
+					plugin_entry = (Tf_getPluginEntry)lib.resolve("GetPluginInterface");
+				else
+					qWarning() << list_files[j] << ": Function GetPluginInterfaceD() will be unused soon!";
+	#else
+				Tf_getPluginEntry plugin_entry=(Tf_getPluginEntry)lib.resolve("GetPluginInterface");
+	#endif
+				if (plugin_entry!=NULL) 
+				{
+					//Si trouvé extraction du plugin
+					SwPluginFactory_Class * plugin=plugin_entry();
 
-				// Check if plugin compilation date is older than the licence
-#ifndef NO_LICENSE
- 				if (!_productLicense || !_productLicense->checkBuildDate(plugin->GetPluginCompilationDate()))
-				{
-					 qDebug() << QString("Plugin %1 is too recent").arg(plugin->GetPluginName());
-					delete plugin;
-					continue;
-				}
-#endif
-				// Check if plugin is protected
-				SwProtectedPluginFactory_Class* protectedPlugin = dynamic_cast<SwProtectedPluginFactory_Class*>(plugin);
-				if (protectedPlugin && !protectedPlugin->unlock(_pluginLicence))
-				{
-					qDebug() << QString("Plugin %1 is protected").arg(plugin->GetPluginName());
-					delete plugin;
-					continue;
-				}
+					// Check if plugin compilation date is older than the licence
+	#ifndef NO_LICENSE
+					if (!_productLicense || !_productLicense->checkBuildDate(plugin->GetPluginCompilationDate()))
+					{
+						qDebug() << QString("Plugin %1 is too recent").arg(plugin->GetPluginName());
+						delete plugin;
+						continue;
+					}
+	#endif
+					// Check if plugin is protected
+					SwProtectedPluginFactory_Class* protectedPlugin = dynamic_cast<SwProtectedPluginFactory_Class*>(plugin);
+					if (protectedPlugin && !protectedPlugin->unlock(_pluginLicence))
+					{
+						qDebug() << QString("Plugin %1 is protected").arg(plugin->GetPluginName());
+						delete plugin;
+						continue;
+					}
 
-				//Info
-				if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("\tAdding plugin %1\n").arg(list_files[j]));
-				if (_plugin_by_name.contains(plugin->GetPluginName()))
-				{
-					//Signaler le pb
-					qDebug() << QString("Plugin %1 already registered").arg(plugin->GetPluginName());
-					delete plugin;
-					continue;
-				}
-				//Enregistrement du plugin dans la banque
-				itpp.value().insert(plugin);
-				_plugin_by_name.insert(plugin->GetPluginName(), plugin);
-				//Initialisation du plugin
-				plugin->SetPath(QDir::cleanPath(realPath));
-				plugin->Initialize();
-				SW_APP->AddServicesManagerObserver(plugin);
-				//Enregistrement des data types
-				set_of_data=plugin->GetDataList();
-				for (itd=set_of_data.begin();itd!=set_of_data.end();itd++) {
-					//Si un type de données de même nom n'est pas enregistrer
-					if (_data_to_factory.find(*itd)==_data_to_factory.end()) {
-						//info
-						if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("\t\tRegistering data type id %1\n").arg(itd->toQString()));
-						//Enregistrement du data type
-						_data_to_factory.insert(*itd,plugin);
-					} else {
+					//Info
+					if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Debug,QString("\tAdding plugin %1\n").arg(list_files[j]));
+					if (_plugin_by_name.contains(plugin->GetPluginName()))
+					{
 						//Signaler le pb
+						qDebug() << QString("Plugin %1 already registered").arg(plugin->GetPluginName());
+						delete plugin;
+						continue;
 					}
-				}
-				//Enregistrement des composants controllers
-				QMultiMap<int,QString> map_of_controllers = plugin->GetControllersMap();
-				for (auto itController = map_of_controllers.begin(); itController != map_of_controllers.end(); itController++) {
-					if (_controllers.find(itController.key()) == _controllers.end()) {
-						//info
-						if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("\t\tRegistering controller type id %1\n").arg(itd->toQString()));
-						//Enregistrement du controllers
-						_controllers.insert(itController.key(), qMakePair(plugin->GetPluginName(), itController.value()));
+					//Enregistrement du plugin dans la banque
+					itpp.value().insert(plugin);
+					_plugin_by_name.insert(plugin->GetPluginName(), plugin);
+					//Initialisation du plugin
+					plugin->SetPath(QDir::cleanPath(realPath));
+					plugin->Initialize();
+					SW_APP->AddServicesManagerObserver(plugin);
+					//Enregistrement des data types
+					QSet<SwUUID> set_of_data=plugin->GetDataList();
+					for (auto itd=set_of_data.begin();itd!=set_of_data.end();itd++) {
+						//Si un type de données de même nom n'est pas enregistrer
+						if (_data_to_factory.find(*itd)==_data_to_factory.end()) {
+							//info
+							if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info,QString("\t\tRegistering data type id %1\n").arg(itd->toQString()));
+							//Enregistrement du data type
+							_data_to_factory.insert(*itd,plugin);
+						} else {
+							//Signaler le pb
+						}
 					}
-					else {
-						//Signaler le pb
+					//Enregistrement des composants controllers
+					QMultiMap<int,QString> map_of_controllers = plugin->GetControllersMap();
+					for (auto itController = map_of_controllers.begin(); itController != map_of_controllers.end(); itController++) {
+						if (_controllers.find(itController.key()) == _controllers.end()) {
+							//info
+							if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Info, QString("\t\tRegistering controller type id %1\n").arg(itController.key()));
+							//Enregistrement du controllers
+							_controllers.insert(itController.key(), qMakePair(plugin->GetPluginName(), itController.value()));
+						}
+						else {
+							//Signaler le pb
+						}
 					}
-				}
-			} 
-			else 
-			{
-#ifdef Q_OS_WIN
-				SW_APP->Logger().Log(LogLvl_Critical,QString("Unable to load Lib %1").arg(real_file).toLatin1(),lib.errorString());
-				qDebug(QString("QLoadLibrary failed for %1").arg(real_file).toLatin1().data()); 
-				DumpDllFromPath(real_file.toStdWString().c_str(),5);
-				_dllWithError.append(realPath.toLower());
-				if(0 == LoadLibraryW(real_file.toStdWString().c_str())) {
-					DWORD error=GetLastError();
-					 qDebug(QString("LoadLibrary failed for %1:%2)").arg(real_file).arg(error).toLatin1().data()); 
 				} 
-#else
-				qDebug() << "LoadLibrary failed, can't retrieve more infos on Linux OS"; 
-#endif
+				else 
+				{
+	#ifdef Q_OS_WIN
+					SW_APP->Logger().Log(LogLvl_Critical,QString("Unable to load Lib %1").arg(real_file).toLatin1(),lib.errorString());
+					qDebug(QString("QLoadLibrary failed for %1").arg(real_file).toLatin1().data()); 
+					DumpDllFromPath(real_file.toStdWString().c_str(),5);
+					_dllWithError.append(realPath.toLower());
+					if(0 == LoadLibraryW(real_file.toStdWString().c_str())) {
+						DWORD error=GetLastError();
+						qDebug(QString("LoadLibrary failed for %1:%2)").arg(real_file).arg(error).toLatin1().data()); 
+					} 
+	#else
+					qDebug() << "LoadLibrary failed: " << lib.errorString();
+	#endif
+				}
 			}
 		}
+		addPluginToModel(itpp.key(), itpp.value());
 	}
-	addPluginToModel(itpp.key(), itpp.value());
 }
 /*! \brief recuperatoin d'une liste de path d'un fichier descripteur */
 QList<QString> _SwPluginsBank_Class::getPathsFromFile(QFile *f) {
