@@ -9,7 +9,7 @@ project(MyProject)
 
 # Options and variables should be set before inclusion of CSToolkit
 set(CSTOOLKIT_DEFAULT_RESOURCES_DIRS "resources")
-set(CSTOOLKIT_INSTALL_TARGETS "MyExe")
+#set(CSTOOLKIT_INSTALL_TARGETS "MyExe")
 set(CSTOOLKIT_CPACK_RULES ON)
 
 # CSToolkit should be included near the top of top level CMakeLists.txt but after call to project()
@@ -26,6 +26,7 @@ find_package(Boost REQUIRED chrono filesystem log)
 # it's is not mandatory but recomended for a cleaner Directory Structure
 # order is not important
 add_subdirectory(MyExe)
+add_subdirectory(MySharedAndStaticLib)
 add_subdirectory(MyLib)
 add_subdirectory(MyQtLib)
 add_subdirectory(MyQtExe)

@@ -57,6 +57,10 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_STATIC TRUE)
     elseif(TARGET_TYPE STREQUAL "INTERFACE")
         set(TARGET_INTERFACE TRUE)
+    elseif(TARGET_TYPE STREQUAL "SHARED_AND_STATIC")
+        set(TARGET_SHARED_AND_STATIC TRUE)
+        set(TARGET_SHARED TRUE)
+        set(TARGET_STATIC TRUE)
     else()
         message(SEND_ERROR "CSToolkit: add_target(): Incorrect TARGET_TYPE \"${TARGET_TYPE}\" for target \"${TARGET_NAME}\". Must be either EXECUTABLE, SHARED, STATIC or INTERFACE.")
         return()
@@ -69,8 +73,20 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     # Library
-
-    if(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
+    if(TARGET_SHARED_AND_STATIC)
+        set(TARGET_NAME_STATIC ${TARGET_NAME}_STATIC)
+        add_library(${TARGET_NAME} SHARED)
+        add_library(${TARGET_NAME_STATIC} STATIC)
+        add_library(${TARGET_NAMESPACE}${TARGET_NAME} ALIAS ${TARGET_NAME})
+        add_library(${TARGET_NAMESPACE}${TARGET_NAME_STATIC} ALIAS ${TARGET_NAME_STATIC})
+        if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${TARGET_NAMESPACE}${TARGET_NAME})
+            add_library(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
+            add_library(${TARGET_NAME_STATIC} ALIAS ${TARGET_NAME_STATIC})
+        endif()
+    elseif(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
+        if(TARGET_STATIC)
+            set(TARGET_NAME_STATIC ${TARGET_NAME})
+        endif()
         add_library(${TARGET_NAME} ${TARGET_TYPE})
         add_library(${TARGET_NAMESPACE}${TARGET_NAME} ALIAS ${TARGET_NAME})
         if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${TARGET_NAMESPACE}${TARGET_NAME})
@@ -93,10 +109,16 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         foreach(_config ${CMAKE_CONFIGURATION_TYPES})
             string(TOUPPER "${_config}" _config)
             set_target_properties(${TARGET_NAME} PROPERTIES "${_config}_POSTFIX" "${CMAKE_${_config}_POSTFIX}")
+            if(TARGET_SHARED_AND_STATIC)
+                set_target_properties(${TARGET_NAME_STATIC} PROPERTIES "${_config}_POSTFIX" "${CMAKE_${_config}_POSTFIX}")
+            endif()
         endforeach()
     else()
         string(TOUPPER "${CMAKE_BUILD_TYPE}" _config)
         set_target_properties(${TARGET_NAME} PROPERTIES "${_config}_POSTFIX" "${CMAKE_${_config}_POSTFIX}")
+        if(TARGET_SHARED_AND_STATIC)
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES "${_config}_POSTFIX" "${CMAKE_${_config}_POSTFIX}")
+        endif()
     endif()
 
     # Extension
@@ -108,8 +130,14 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     if(CSTOOLKIT_PREFIX_OUTPUT_NAME)
         set(OUTPUT_NAME ${PROJECT_NAME}${TARGET_NAME})
         set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${OUTPUT_NAME}")
+        if(TARGET_SHARED_AND_STATIC)
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES OUTPUT_NAME "lib${OUTPUT_NAME}")
+        endif()
     else()
         set(OUTPUT_NAME ${TARGET_NAME})
+        if(TARGET_SHARED_AND_STATIC)
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES OUTPUT_NAME "lib${OUTPUT_NAME}")
+        endif()
     endif()
 
     # Ouput dirs
@@ -119,6 +147,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/$<LOWER_CASE:$<CONFIG>>"
     )
+    if(TARGET_SHARED_AND_STATIC)
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES
+            ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
+            LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
+            RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/$<LOWER_CASE:$<CONFIG>>"
+        )
+    endif()
 
     if(TARGET_MODULE) # Module libraries are always treated as library targets by cmake
         set_target_properties(${TARGET_NAME} PROPERTIES
@@ -130,6 +165,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     if(PROJECT_VERSION AND PROJECT_VERSION_MAJOR)
         set_target_properties(${TARGET_NAME} PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
+        if(TARGET_SHARED_AND_STATIC)
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
+        endif()
     endif()
 
     # Folder of the project in visual studio soluction
@@ -146,6 +184,10 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     string(REGEX REPLACE "^\\.\\.?$" "" _folder "${_folder}")
 
     set_target_properties(${TARGET_NAME} PROPERTIES FOLDER "${_folder}")
+    if(TARGET_SHARED_AND_STATIC)
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES FOLDER "${_folder}")
+    endif()
+    
 
     # Sources Paths
 
@@ -276,13 +318,29 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         ${TARGET_RESOURCES_FILES}
         ${TARGET_TRANSLATION_FILES}
     )
+    if(TARGET_SHARED_AND_STATIC)
+        target_sources(${TARGET_NAME_STATIC} PRIVATE
+            ${TARGET_SOURCES_FILES}
+            ${TARGET_UI_FILES}
+            ${TARGET_RESOURCES_FILES}
+            ${TARGET_TRANSLATION_FILES}
+        )
+    endif()
 
     if(TARGET_PUBLIC_HEADERS_FILES)
         target_sources(${TARGET_NAME}
             PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_DIRS} FILES ${TARGET_PUBLIC_HEADERS_FILES})
+        if(TARGET_SHARED_AND_STATIC)
+            target_sources(${TARGET_NAME_STATIC}
+                PUBLIC FILE_SET HEADERS BASE_DIRS ${TARGET_PUBLIC_HEADERS_DIRS} FILES ${TARGET_PUBLIC_HEADERS_FILES})
+        endif()
     endif()
     target_sources(${TARGET_NAME}
         PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIRS} FILES ${TARGET_PRIVATE_HEADERS_FILES})
+    if(TARGET_SHARED_AND_STATIC)
+        target_sources(${TARGET_NAME_STATIC}
+            PRIVATE FILE_SET "private" TYPE HEADERS BASE_DIRS ${TARGET_PRIVATE_HEADERS_DIRS} FILES ${TARGET_PRIVATE_HEADERS_FILES})
+    endif()
 
     # RECURSIVE_INCLUDE options
     # this option allows to add all include subdirectories to private include directories
@@ -306,6 +364,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
         if(NOT TARGET_INTERFACE)
             target_include_directories(${TARGET_NAME} PRIVATE ${TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS} ${TARGET_RECURSIVE_PRIVATE_HEADERS_DIRS})
+            if(TARGET_SHARED_AND_STATIC)
+                target_include_directories(${TARGET_NAME_STATIC} PRIVATE ${TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS} ${TARGET_RECURSIVE_PRIVATE_HEADERS_DIRS})
+            endif()
         endif()
 
         if(TARGET_RECURSIVE_INTERFACE_INCLUDE AND TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS)
@@ -313,20 +374,33 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             list(TRANSFORM TARGET_BUILD_INTERFACE_RECURSIVE_PUBLIC_HEADERS_DIRS PREPEND "$<BUILD_INTERFACE:")
             list(TRANSFORM TARGET_BUILD_INTERFACE_RECURSIVE_PUBLIC_HEADERS_DIRS APPEND ">")
             target_include_directories(${TARGET_NAME} INTERFACE ${TARGET_BUILD_INTERFACE_RECURSIVE_PUBLIC_HEADERS_DIRS})
+            if(TARGET_SHARED_AND_STATIC)
+                target_include_directories(${TARGET_NAME_STATIC} INTERFACE ${TARGET_BUILD_INTERFACE_RECURSIVE_PUBLIC_HEADERS_DIRS})
+            endif()
         endif()
     endif()
 
     # Compile Options
 
     target_compile_options(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_OPTIONS})
+    if(TARGET_SHARED_AND_STATIC)
+        target_compile_options(${TARGET_NAME_STATIC} PRIVATE ${TARGET_COMPILE_OPTIONS})
+    endif()
 
     # Compile Definitions
 
     target_compile_definitions(${TARGET_NAME} PRIVATE ${TARGET_COMPILE_DEFINITIONS})
+    if(TARGET_SHARED_AND_STATIC)
+        target_compile_definitions(${TARGET_NAME_STATIC} PRIVATE ${TARGET_COMPILE_DEFINITIONS})
+    endif()
 
     # Default Definition for Export symbols
     string(TOUPPER ${OUTPUT_NAME} OUTPUT_NAME_UPPER)
     set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_UPPER}_LIB)
+    if(TARGET_SHARED_AND_STATIC)
+        set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_UPPER}_LIB)
+        target_compile_definitions(${TARGET_NAME_STATIC} PUBLIC ${OUTPUT_NAME_UPPER}_STATIC)
+    endif()
 
     # Link Options
 
@@ -348,33 +422,39 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         target_link_libraries(${TARGET_NAME}
             PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
             PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
+        if(TARGET_SHARED_AND_STATIC)
+            target_link_libraries(${TARGET_NAME} PRIVATE ${TARGET_COMBINED_LINK_LIBRARIES})
+            target_link_libraries(${TARGET_NAME_STATIC}
+                PUBLIC ${TARGET_PUBLIC_LINK_LIBRARIES}
+                PRIVATE ${TARGET_PRIVATE_LINK_LIBRARIES})
+        endif()
     endif()
 
     # Specific STATIC
     # Combined Libraries
     if(TARGET_STATIC)
         # Mandatory to be able to include static library inside a shared library
-        set_target_properties(${TARGET_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
         # Default pdb output is not next to .lib
-        set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:${TARGET_NAME}>)
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES COMPILE_PDB_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:${TARGET_NAME_STATIC}>)
         # Necessary to redefine name for msvc 2015
         # COMPILE_PDB_NAME does not support generator expression
-        set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_PDB_NAME_DEBUG ${OUTPUT_NAME}${CMAKE_DEBUG_POSTFIX})
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES COMPILE_PDB_NAME_DEBUG ${OUTPUT_NAME}${CMAKE_DEBUG_POSTFIX})
 
         if(TARGET_COMBINED_LINK_LIBRARIES)
-            target_link_libraries(${TARGET_NAME} PRIVATE ${TARGET_COMBINED_LINK_LIBRARIES})
+            target_link_libraries(${TARGET_NAME_STATIC} PRIVATE ${TARGET_COMBINED_LINK_LIBRARIES})
 
             # If X is a static library or object library, and links Y privately:
             # "target_link_libraries(X PRIVATE Y)"
             # then $<LINK_ONLY:Y> is placed in X's INTERFACE_LINK_LIBRARIES.
             # Because we combined the libs we don't need this
             # We still use target_link_libraries for the other functionnalities it provides
-            get_target_property(_interface_link_libraries ${TARGET_NAME} INTERFACE_LINK_LIBRARIES)
+            get_target_property(_interface_link_libraries ${TARGET_NAME_STATIC} INTERFACE_LINK_LIBRARIES)
             foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
                 list(REMOVE_ITEM _interface_link_libraries "$<LINK_ONLY:${_lib}>")
             endforeach()
-            set_target_properties(${TARGET_NAME} PROPERTIES INTERFACE_LINK_LIBRARIES "${_interface_link_libraries}")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INTERFACE_LINK_LIBRARIES "${_interface_link_libraries}")
 
             if(WIN32)
                 set(_static_options)
@@ -382,14 +462,14 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                     list(APPEND _static_options "$<TARGET_FILE:${_lib}>")
                 endforeach()
 
-                set_target_properties(${TARGET_NAME} PROPERTIES STATIC_LIBRARY_OPTIONS "${_static_options}")
+                set_target_properties(${TARGET_NAME_STATIC} PROPERTIES STATIC_LIBRARY_OPTIONS "${_static_options}")
 
                 # PDBs
                 if(MSVC)
                     set(TARGET_COMBINED_PDBS "$<LIST:TRANSFORM,${_static_options},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
                 endif()
             else() #LINUX
-                set(_ar_script "CREATE $<TARGET_FILE:${TARGET_NAME}>")
+                set(_ar_script "CREATE $<TARGET_FILE:${TARGET_NAME_STATIC}>")
                 foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
                     set(_ar_script "${_ar_script}\nADDLIB $<TARGET_FILE:${_lib}>")
                 endforeach()
@@ -398,20 +478,22 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
                 file(GENERATE OUTPUT ${TARGET_NAME}_combine.ar CONTENT "${_ar_script}")
 
-                add_custom_command(TARGET ${TARGET_NAME} PRE_LINK
+                add_custom_command(TARGET ${TARGET_NAME_STATIC} PRE_LINK
                     COMMAND ${CMAKE_AR} -M < ${TARGET_NAME}_combine.ar
                 )
             endif()
         endif()
     elseif(TARGET_COMBINED_LINK_LIBRARIES)
-        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): TARGET_COMBINED_LINK_LIBRARIES defined for non-static target")
+        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): TARGET_COMBINED_LINK_LIBRARIES defined for non-static target.")
     endif()
 
     # Qt
     set(_qt_modules ${TARGET_PUBLIC_LINK_LIBRARIES})
     list(APPEND _qt_modules ${TARGET_PRIVATE_LINK_LIBRARIES})
     list(FILTER _qt_modules INCLUDE REGEX "^Qt5::")
-    if(_qt_modules AND NOT TARGET_INTERFACE )
+    if(_qt_modules AND TARGET_SHARED_AND_STATIC)
+        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unsuported Qt dependency with SHARED_AND_STATIC option.")
+    elseif(_qt_modules AND NOT TARGET_INTERFACE )
 
         # MOC
         if(NOT CMAKE_AUTOMOC)
@@ -450,7 +532,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     # Generation des fichiers target_info
-    if(NOT TARGET_INTERFACE AND NOT TARGET_STATIC)
+    if(TARGET_SHARED OR TARGET_MODULE OR TARGET_EXECUTABLE)
         string(TIMESTAMP _year "%Y" UTC)
 
         if(TARGET_EXECUTABLE)
@@ -635,6 +717,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(TARGET_INSTALL_INCLUDEDIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/include)
             set(TARGET_INSTALL_CMAKEDIR externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME}/cmake)
             set(TARGET_INSTALL_CONFIG_NAME ${TARGET_INSTALL_INTER_DIR}_${TARGET_NAME})
+            set(TARGET_INSTALL_TARGETS_NAME ${TARGET_INSTALL_CONFIG_NAME}Targets)
             set(TARGET_INSTALL_COMPONENT ${TARGET_INSTALL_INTER_DIR}_${TARGET_NAME})
             set(TARGET_INSTALL_DESTINATION externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME})
         else()
@@ -660,6 +743,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 set(TARGET_INSTALL_INCLUDEDIR include)
                 set(TARGET_INSTALL_CMAKEDIR cmake)
                 set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME})
+                set(TARGET_INSTALL_TARGETS_NAME ${TARGET_INSTALL_CONFIG_NAME}Targets)
                 set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
                 set(TARGET_INSTALL_DESTINATION ".")
                 set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL "${TARGET_NAME}")
@@ -671,6 +755,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 set(TARGET_INSTALL_INCLUDEDIR ${TARGET_NAME}/include)
                 set(TARGET_INSTALL_CMAKEDIR ${TARGET_NAME}/cmake)
                 set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
+                set(TARGET_INSTALL_TARGETS_NAME ${TARGET_INSTALL_CONFIG_NAME}Targets)
                 set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
                 set(TARGET_INSTALL_DESTINATION ${TARGET_NAME})
                 set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL "${TARGET_NAME}")
@@ -682,6 +767,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 set(TARGET_INSTALL_INCLUDEDIR internals/${TARGET_NAME}/include)
                 set(TARGET_INSTALL_CMAKEDIR internals/${TARGET_NAME}/cmake)
                 set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
+                set(TARGET_INSTALL_TARGETS_NAME ${TARGET_INSTALL_CONFIG_NAME}Targets)
                 set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
                 set(TARGET_INSTALL_DESTINATION internals/${TARGET_NAME})
             endif()
@@ -694,6 +780,15 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_CMAKEDIR "${TARGET_INSTALL_CMAKEDIR}")
         set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_COMPONENT "${TARGET_INSTALL_COMPONENT}")
         set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_EXCLUDE_FROM_ALL "${TARGET_INSTALL_EXCLUDE_FROM_ALL}")
+        if(TARGET_SHARED_AND_STATIC)
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_LIBDIR "${TARGET_INSTALL_LIBDIR}")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_BINDIR "${TARGET_INSTALL_BINDIR}")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_SYMBOLSDIR "${TARGET_INSTALL_SYMBOLSDIR}")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_INCLUDEDIR "${TARGET_INSTALL_INCLUDEDIR}")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_CMAKEDIR "${TARGET_INSTALL_CMAKEDIR}")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_COMPONENT "${TARGET_INSTALL_COMPONENT}")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_EXCLUDE_FROM_ALL "${TARGET_INSTALL_EXCLUDE_FROM_ALL}")
+        endif()
 
         if(TARGET_RECURSIVE_INTERFACE_INCLUDE AND TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS)
             foreach(_public_header_dir ${TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS})
@@ -711,7 +806,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(TARGET_INSTALL_LIBRARY_DESTINATION ${TARGET_INSTALL_LIBDIR})
         endif()
 
-        install(TARGETS ${TARGET_NAME} EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets
+        if(TARGET_SHARED_AND_STATIC)
+            set(INSTALLED_TARGETS ${TARGET_NAME} ${TARGET_NAME_STATIC})
+        else()
+            set(INSTALLED_TARGETS ${TARGET_NAME})
+        endif()
+
+        install(TARGETS ${INSTALLED_TARGETS} EXPORT ${TARGET_INSTALL_TARGETS_NAME}
             DESTINATION ${TARGET_INSTALL_DESTINATION}
             COMPONENT ${TARGET_INSTALL_COMPONENT}
             ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
@@ -752,8 +853,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 if(TARGET_PLUGINS)
                     install(FILES ${PLUGINS_TARGET_PDBS} DESTINATION ${TARGET_INSTALL_SYMBOLSDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 endif()
-            elseif(TARGET_STATIC)
-                install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.pdb
+            endif()
+            if(TARGET_STATIC) # Not else because of SHARED_AND_STATIC case
+                install(FILES $<TARGET_FILE_DIR:${TARGET_NAME_STATIC}>/$<TARGET_FILE_BASE_NAME:${TARGET_NAME_STATIC}>.pdb
                     DESTINATION ${TARGET_INSTALL_LIBDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                 if(TARGET_COMBINED_LINK_LIBRARIES)
                     install(FILES "${TARGET_COMBINED_PDBS}" DESTINATION ${TARGET_INSTALL_LIBDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
@@ -762,7 +864,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
 
         # Config
-        install(EXPORT ${TARGET_INSTALL_CONFIG_NAME}Targets
+        install(EXPORT ${TARGET_INSTALL_TARGETS_NAME}
             NAMESPACE ${TARGET_NAMESPACE}
             DESTINATION ${TARGET_INSTALL_CMAKEDIR}
             COMPONENT ${TARGET_INSTALL_COMPONENT}
