@@ -9,8 +9,10 @@
 #include "Main/Connexion/_SwConsumedInterfaceContainer_Class.h"
 #include "Tools/SwAddress_ToolBox.h"
 #include "Main/SwApplication.h"
+
 #include <QDebug>
 
+#include "demangle.h"
 
 using namespace StreamWork::SwCore;
 
@@ -44,6 +46,8 @@ void SwInterfaces_Consumer_Class::RegisterConsumedInterfaceWithType(QString cint
 {
 	QMap<QString, _SwConsumedInterfaceContainer_Class *>::iterator it;
 	_SwConsumedInterfaceContainer_Class * interface_container;
+
+	cinterface_type = demangle(cinterface_type);
 
 	it = _interfaces.find(cinterface_name);
 	if ( it != _interfaces.end() )
@@ -144,7 +148,7 @@ void SwInterfaces_Consumer_Class::AttachProvider(ISwInterfaces_Provider * provid
 	//check du type des deux interfaces
 	if ( it.value()->GetType() != provider->GetInterfaceType(pinterface_name) )
 	{
-		QString msg = QString("In component %2\nFail to attach un consumed interface %1 to an provided interface %3\nbecause they don't have same type %4 and %5").arg(cinterface_name).arg(_host_component->GetName()).arg(pinterface_name).arg(it.value()->GetType()).arg(provider->GetInterfaceType(pinterface_name));
+		QString msg = QString("In component %2\nFail to attach a consumed interface '%1' to an provided interface '%3'\nbecause they don't have same type '%4' and '%5'").arg(cinterface_name).arg(_host_component->GetName()).arg(pinterface_name).arg(it.value()->GetType()).arg(provider->GetInterfaceType(pinterface_name));
 		LAUNCH_SWEXCEPTION("SwCore", msg)
 	}
 	it.value()->RegisterProviderInterface(provider, pinterface_name);

@@ -257,8 +257,6 @@ void _SwPluginsBank_Class::AddPath(QString path,bool registerable){
 
 	setenv(VARNAME_PATH, qstrMessage.toUtf8().constData(), true);
 
-	qDebug() << VARNAME_PATH << ": " << qstrMessage;
-   
 	//Ajout a la liste des path
 	if (SW_APP->IsVerbose())
 		SW_APP->Logger().Log(LogLvl_Debug,QString("Adding path %1\n").arg(realPath));

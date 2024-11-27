@@ -306,6 +306,16 @@ void _SwModelHost_Class::Load(QDomElement & elt, ISwFinalizerManager & finalizer
             entity->_exported_name = elt_ent.attribute(CL_XML_NODE_ATT_EXP_NAME);
             entity->_host_path = elt_ent.attribute(CL_XML_NODE_ATT_PATH);
             entity->_itype = elt_ent.attribute(CL_XML_NODE_ATT_ITYPE);
+            // Fix for old type support
+            if(entity->_itype.startsWith(QLatin1String("class ")))
+            {
+                entity->_itype.remove(0,6);
+                if(entity->_itype.endsWith(QLatin1String(" *")))
+                {
+                    entity->_itype.chop(2);
+                    entity->_itype.append("*");
+                }
+            }
             _exported_entities.push_back(entity);
         }
         else

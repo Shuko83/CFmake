@@ -11,6 +11,7 @@
 #include "Component/Services/ISwInterfaces_Consumer.h"
 #include <QMessageBox>
 
+#include "demangle.h"
 
 using namespace StreamWork::SwCore;
 
@@ -35,6 +36,8 @@ void SwInterfaces_Provider_Class::RegisterProvidedInterfaceWithType(QString pint
 {
 	QMap<QString, _SwProvidedInterfaceContainer_Class *>::const_iterator it;
 	_SwProvidedInterfaceContainer_Class * interface_container;
+
+	pinterface_type = demangle(pinterface_type);
 
 	it = _interfaces.find(pinterface_name);
 	if ( it != _interfaces.end() )
@@ -116,6 +119,8 @@ void SwInterfaces_Provider_Class::SetInterfaceUnavailable(QString pinterface_nam
 void SwInterfaces_Provider_Class::SubstituteInterfaceWithType(QString pinterface_name, QString pinterface_type, void * handle_interface) throw(SwException)
 {
 	QMap<QString, _SwProvidedInterfaceContainer_Class *>::iterator it;
+
+	pinterface_type = demangle(pinterface_type);
 
 	it = _interfaces.find(pinterface_name);
 	if ( it == _interfaces.end() )

@@ -37,7 +37,7 @@ namespace StreamWork
         public:
 	        /*! \brief Enregistre une interface a fournir */
             template<typename T> inline void RegisterConsumedInterface(QString cinterface_name,T ** handle_handle_interface) {
-                RegisterConsumedInterfaceWithType(cinterface_name,QStringLiteral("%1 *").arg(QString(typeid( T ).name())),(void **)handle_handle_interface);
+                RegisterConsumedInterfaceWithType(cinterface_name,QString(typeid( T* ).name()),(void **)handle_handle_interface);
             }
 	        /*! \brief Enregistre une interface a fournir (utliser de préférence la methode précédente)*/
             virtual void RegisterConsumedInterfaceWithType(QString cinterface_name,QString cinterface_type,void ** handle_handle_interface)=0;

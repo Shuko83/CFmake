@@ -37,7 +37,7 @@ namespace StreamWork
         public:
 	        /*! \brief Enregistre une interface a fournir */
             template<typename T> inline void RegisterProvidedInterface(QString pinterface_name,T * handle_interface) {
-                RegisterProvidedInterfaceWithType(pinterface_name, QStringLiteral("%1 *").arg(QString(typeid(T).name())),(void *)handle_interface);
+                RegisterProvidedInterfaceWithType(pinterface_name, QString(typeid(T*).name()),(void *)handle_interface);
             }
 	        /*! \brief Enregistre une interface a fournir préférer le methode precedente*/
             virtual void RegisterProvidedInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface)  throw(SwException)=0;
@@ -49,7 +49,7 @@ namespace StreamWork
             virtual void SetInterfaceUnavailable(QString pinterface_name) throw(SwException)=0;
  	        /*! \brief Remplacer une interface (DP strategie capability)*/
             template<typename T> void SubstituteInterface(QString pinterface_name,T * handle_interface) {
-                SubstituteInterfaceWithType(pinterface_name,QString(typeid(handle_interface).name()),(void *)handle_interface);
+                SubstituteInterfaceWithType(pinterface_name,QString(typeid(T*).name()),(void *)handle_interface);
             }
  	        /*! \brief Remplacer une interface (DP strategie capability) préférer le methode precedente*/
             virtual void SubstituteInterfaceWithType(QString pinterface_name,QString pinterface_type,void * handle_interface) throw(SwException)=0;
