@@ -52,6 +52,8 @@ set(CSTOOLKIT_DEFAULT_UI_DIRS "src" CACHE STRING "Default folder for Qt ui files
 set(CSTOOLKIT_DEFAULT_RESOURCES_DIRS "src" CACHE STRING "Default folder for Qt qrc files of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_TRANSLATION_DIRS "src" CACHE STRING "Default folder for Qt ts files of a target created with cstoolkit_add_target")
 
+set(CSTOOLKIT_QT_BIG_RESOURCES_THRESHOLD 100000000 CACHE STRING "Size threshold for qt big_resources") #100 Mo
+
 ################################################################################
 # Options
 ################################################################################

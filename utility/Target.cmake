@@ -526,7 +526,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${RCC_FILES})
 
             target_sources(${TARGET_NAME} PRIVATE ${TARGET_QRC_RESOURCES_FILES})
-            source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} PREFIX "Resource Files" FILES ${TARGET_QRC_RESOURCES_FILES})
+            source_group("Resource Files" FILES ${TARGET_QRC_RESOURCES_FILES})
         endif()
 
     endif()

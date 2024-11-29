@@ -222,13 +222,12 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
     foreach(it ${rcc_files})
         get_filename_component(outfilename ${it} NAME_WE)
         get_filename_component(infile ${it} ABSOLUTE)
-        set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}.cpp)
         cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
-        set(out_depends)
         set(_rc_depends)
 
         # Parsing qrc
         #_qt5_parse_qrc_file(${infile} _out_depends _rc_depends)
+        set(RC_TOTAL_FILE_SIZE 0) # Total size of all referenced resources file in octet
         if(EXISTS "${infile}")
             get_filename_component(rc_path ${infile} PATH)
             #  parse file for dependencies
@@ -240,23 +239,63 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                 if(NOT IS_ABSOLUTE "${RC_FILE}")
                     set(RC_FILE "${rc_path}/${RC_FILE}")
                 endif()
-                list(APPEND _rc_depends ${RC_FILE})
+                list(APPEND _rc_depends "${RC_FILE}")
+                if(IS_DIRECTORY "${RC_FILE}")
+                    file(GLOB_RECURSE RC_RECURSIVE_FILES "${RC_FILE}/*")
+                    foreach(RC_RECURSIVE_FILE ${RC_RECURSIVE_FILES})
+                        file(SIZE "${RC_RECURSIVE_FILE}" RC_FILE_SIZE)
+                        math(EXPR RC_TOTAL_FILE_SIZE "${RC_TOTAL_FILE_SIZE}+${RC_FILE_SIZE}")
+                    endforeach()
+                elseif(EXISTS "${RC_FILE}")
+                    file(SIZE "${RC_FILE}" RC_FILE_SIZE)
+                    math(EXPR RC_TOTAL_FILE_SIZE "${RC_TOTAL_FILE_SIZE}+${RC_FILE_SIZE}")
+                else()
+                    message("cstoolkit_qt_add_resources(): Warning in '${infile}': Cannot find file '${RC_FILE}'")
+                endif()
             endforeach()
-            # Since this cmake macro is doing the dependency scanning for these files,
-            # let's make a configured file and add it as a dependency so cmake is run
-            # again when dependencies need to be recomputed.
-            set(out_depends ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/${outfilename}.qrc.depends)
-            configure_file("${infile}" "${out_depends}" COPYONLY)
         endif()
 
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTORCC ON)
 
-        add_custom_command(OUTPUT ${outfile}
-                        COMMAND ${Qt5Core_RCC_EXECUTABLE}
-                        ARGS ${rcc_options} --name ${outfilename} --output ${outfile} ${infile}
-                        MAIN_DEPENDENCY ${infile}
-                        DEPENDS ${_rc_depends} "${out_depends}" VERBATIM
-                        COMMENT "RCC ${relpath}")
+        if(RC_TOTAL_FILE_SIZE GREATER CSTOOLKIT_QT_BIG_RESOURCES_THRESHOLD) # big_resources
+            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}-$<LOWER_CASE:$<CONFIG>>${CMAKE_C_OUTPUT_EXTENSION})
+            set(tmpoutfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}.cpp)
+            if(TARGET_NAME)
+                if(TARGET_NAME STREQUAL outfilename)
+                    set(rcctarget ${TARGET_NAME}_rcc)
+                else()
+                    set(rcctarget ${TARGET_NAME}_rcc_${outfilename})
+                endif()
+            else()
+                set(rcctarget rcc_${outfilename})
+            endif()
+            add_custom_command(OUTPUT ${tmpoutfile}
+                            COMMAND ${Qt5Core_RCC_EXECUTABLE}
+                            ARGS ${rcc_options} --name ${outfilename} --pass 1 --output ${tmpoutfile} ${infile}
+                            DEPENDS ${infile} ${_rc_depends} VERBATIM
+                            COMMENT "RCC PASS1 ${relpath}")
+
+            add_library(${rcctarget} OBJECT ${tmpoutfile})
+            set_target_properties(${rcctarget} PROPERTIES AUTOMOC OFF)
+            set_target_properties(${rcctarget} PROPERTIES AUTOUIC OFF)
+            target_link_libraries(${rcctarget} PUBLIC Qt5::Core)
+            set_target_properties(${rcctarget} PROPERTIES FOLDER "QtBigResources")
+
+            add_custom_command(OUTPUT ${outfile}
+                           COMMAND ${Qt5Core_RCC_EXECUTABLE}
+                           ARGS ${rcc_options} --name ${outfilename} --pass 2 --temp $<TARGET_OBJECTS:${rcctarget}> --output ${outfile} ${infile}
+                           DEPENDS ${rcctarget} $<TARGET_OBJECTS:${rcctarget}>
+                           VERBATIM
+                           COMMENT "RCC PASS2 ${relpath}")
+        else()
+            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}.cpp)
+            add_custom_command(OUTPUT ${outfile}
+                            COMMAND ${Qt5Core_RCC_EXECUTABLE}
+                            ARGS ${rcc_options} --name ${outfilename} --output ${outfile} ${infile}
+                            MAIN_DEPENDENCY ${infile}
+                            DEPENDS ${_rc_depends} VERBATIM
+                            COMMENT "RCC ${relpath}")
+        endif()
         set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
         set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outcppfiles} ${outfile})
