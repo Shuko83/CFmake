@@ -204,9 +204,9 @@ function(cstoolkit_check_dependencies target)
     endforeach()
 endfunction()
 
-macro(cstoolkit_check_dependencies_message message)
+macro(cstoolkit_check_dependencies_message)
     if(CSTOOLKIT_CHECK_DEPENDENCIES)
-        message(NOTICE "CSToolkit: " ${message})
+        message(NOTICE "CSToolkit: " ${ARGN})
     endif()
 endmacro()
 

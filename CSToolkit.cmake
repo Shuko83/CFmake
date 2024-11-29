@@ -35,6 +35,7 @@ endif()
 set(CSTOOLKIT_EXTERNALS "${CMAKE_BINARY_DIR}/externals" CACHE PATH "Directory where externals project are situated")
 
 list(APPEND CMAKE_PREFIX_PATH "${CSTOOLKIT_EXTERNALS}")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/modules")
 
 set(CSTOOLKIT_ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory" CACHE STRING "Url of artifactory")
 
