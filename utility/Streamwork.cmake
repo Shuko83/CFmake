@@ -23,9 +23,11 @@ function(cstoolkit_streamwork_generate_devpaths target)
     endif()
 
     set(DEVPATHS_DIRS "$<TARGET_PROPERTY:${target},RUNTIME_DEPENDENCIES>;$<TARGET_PROPERTY:${target},PLUGINS_DEPENDENCIES>")
-    set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},PREPEND,$<1:$><TARGET_FILE_DIR:>")
-    set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},APPEND,$<ANGLE-R>>")
-    set(DEVPATHS_DIRS "$<GENEX_EVAL:${DEVPATHS_DIRS}>")
+    set(DEVPATHS_DIRS "$<TARGET_GENEX_EVAL:${target},${DEVPATHS_DIRS}>")
+    set(DEVPATHS_DIRS "$<JOIN:${DEVPATHS_DIRS},;>")
+    set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},REPLACE,(.+),$<1:$><$<1:$><TARGET_EXISTS:\\0$<ANGLE-R>:$<1:$><TARGET_FILE_DIR:\\0$<ANGLE-R>$<ANGLE-R>>")
+    set(DEVPATHS_DIRS "$<TARGET_GENEX_EVAL:${target},${DEVPATHS_DIRS}>")
+    set(DEVPATHS_DIRS "$<JOIN:${DEVPATHS_DIRS},;>")
     set(DEVPATHS_DIRS "$<LIST:REMOVE_DUPLICATES,${DEVPATHS_DIRS}>")
 
     if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
@@ -36,9 +38,6 @@ function(cstoolkit_streamwork_generate_devpaths target)
     set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},APPEND,$<QUOTE> use=$<QUOTE>$<LOWER_CASE:$<CONFIG>>$<QUOTE>/$<ANGLE-R>>")
     set(DEVPATHS_DIRS "$<LIST:JOIN,${DEVPATHS_DIRS},
     >")
-
-    set(DEVPATHS_DIRS_DEBUG "$<$<CONFIG:Debug>:${DEVPATHS_DIRS}>")
-    set(DEVPATHS_DIRS_RELEASE "$<$<CONFIG:Release>:${DEVPATHS_DIRS}>")
 
     file(GENERATE OUTPUT ${DEVPATHS_OUTPUT}
         CONTENT "<Paths>
