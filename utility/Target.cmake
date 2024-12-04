@@ -72,6 +72,10 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_NAMESPACE ${TARGET_NAMESPACE}::)
     endif()
 
+    if(TARGET_ALIAS)
+        message(WARNING "Obsolete parameter ALIAS, please use NAMESPACE.")
+    endif()
+
     # Library
     if(TARGET_SHARED_AND_STATIC)
         set(TARGET_NAME_STATIC ${TARGET_NAME}_STATIC)
@@ -542,13 +546,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
         set(TARGET_RUNTIME_DLLS "$<TARGET_PROPERTY:${TARGET_NAME},RUNTIME_DEPENDENCIES>")
         set(TARGET_RUNTIME_DLLS "$<TARGET_GENEX_EVAL:${TARGET_NAME},${TARGET_RUNTIME_DLLS}>")
-        set(TARGET_RUNTIME_DLLS "$<JOIN:${TARGET_RUNTIME_DLLS},;>")
+        set(TARGET_RUNTIME_DLLS "$<JOIN:${TARGET_RUNTIME_DLLS},;>") # remove empty elements
         set(TARGET_RUNTIME_DLLS "$<LIST:TRANSFORM,${TARGET_RUNTIME_DLLS},REPLACE,(.+),$<1:$><$<1:$><TARGET_EXISTS:\\0$<ANGLE-R>:$<1:$><TARGET_FILE:\\0$<ANGLE-R>$<ANGLE-R>>")
         set(TARGET_RUNTIME_DLLS "$<TARGET_GENEX_EVAL:${TARGET_NAME},${TARGET_RUNTIME_DLLS}>")
-        set(TARGET_RUNTIME_DLLS "$<JOIN:${TARGET_RUNTIME_DLLS},;>")
         set(TARGET_RUNTIME_DLLS "$<LIST:REMOVE_DUPLICATES,${TARGET_RUNTIME_DLLS}>")
+        set(TARGET_RUNTIME_DLLS "$<JOIN:${TARGET_RUNTIME_DLLS},;>") # remove empty elements
 
-        if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
+        if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls, necessary for development
             set(TARGET_RUNTIME_DLLS "$<FILTER:${TARGET_RUNTIME_DLLS},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
         endif()
 
@@ -572,7 +576,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if(TARGET_PLUGINS)
             if(TARGET_PLUGINS_DIR)
                 message(WARNING "Obsolete parameter PLUGINS_DIR, please use new form PLUGINS <plugins> DESTINATION <plugin_dir>")
-                if(TARGET_PLUGINSC GREATER 1 OR "DESTINATION" IN_LIST TARGET_PLUGINSV0)
+                if(TARGET_PLUGINSC GREATER 1 OR "DESTINATION" IN_LIST TARGET_PLUGINS)
                     message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Mixed usage of obsolete parameter PLUGINS_DIR with new PLUGINS syntax.")
                     return()
                 endif()
@@ -628,38 +632,77 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS_DESTINATIONS "${TARGET_PLUGINS_DESTINATIONS}")
             set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS_DESTINATION_SIZE "${TARGET_PLUGINS_DESTINATION_SIZE}")
 
+            # Création de la genex de base, moins les TARGET_RUNTIME_DLLS 
             set(DESTINATION_INDEX 0)
-
             while(DESTINATION_INDEX LESS TARGET_PLUGINS_DESTINATION_SIZE)
                 set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS_DESTINATION${DESTINATION_INDEX} "${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}")
                 set_target_properties(${TARGET_NAME} PROPERTIES PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST "${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST}")
 
-                set(PLUGINS_TARGET_FILES "$<TARGET_PROPERTY:${TARGET_NAME},PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST>")
-                set(PLUGINS_TARGET_FILES "$<TARGET_GENEX_EVAL:${TARGET_NAME},${PLUGINS_TARGET_FILES}>")
-                set(PLUGINS_TARGET_FILES "$<JOIN:${PLUGINS_TARGET_FILES},;>")
-                set(PLUGINS_TARGET_FILES "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},REPLACE,(.+),$<1:$><$<1:$><TARGET_EXISTS:\\0$<ANGLE-R>:$<1:$><TARGET_FILE:\\0$<ANGLE-R>$<ANGLE-R>>")
-                set(PLUGINS_TARGET_FILES "$<TARGET_GENEX_EVAL:${TARGET_NAME},${PLUGINS_TARGET_FILES}>")
-                set(PLUGINS_TARGET_FILES "$<JOIN:${PLUGINS_TARGET_FILES},;>")
-                set(PLUGINS_TARGET_FILES "$<LIST:REMOVE_DUPLICATES,${PLUGINS_TARGET_FILES}>")
+                set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<TARGET_PROPERTY:${TARGET_NAME},PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST>")
+                set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<TARGET_GENEX_EVAL:${TARGET_NAME},${PLUGINS_TARGET_FILES${DESTINATION_INDEX}}>")
+                set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<JOIN:${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},;>") # remove empty elements
+                set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},REPLACE,(.+),$<1:$><$<1:$><TARGET_EXISTS:\\0$<ANGLE-R>:$<1:$><TARGET_FILE:\\0$<ANGLE-R>$<ANGLE-R>>")
+                set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<TARGET_GENEX_EVAL:${TARGET_NAME},${PLUGINS_TARGET_FILES${DESTINATION_INDEX}}>")
+                set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<LIST:REMOVE_DUPLICATES,${PLUGINS_TARGET_FILES${DESTINATION_INDEX}}>")
+                set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<JOIN:${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},;>") # remove empty elements
 
-                if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
-                    set(PLUGINS_TARGET_FILES "$<FILTER:${PLUGINS_TARGET_FILES},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
+                # Removes TARGET_RUNTIME_DLLS that are already deployed
+                set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<LIST:REMOVE_ITEM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},${TARGET_RUNTIME_DLLS}>")
+
+                if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls, necessary for development
+                    set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<FILTER:${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
                 endif()
 
+                math(EXPR DESTINATION_INDEX "${DESTINATION_INDEX}+1")
+            endwhile()
+
+            # Deplacement des dependances communes vers /
+            
+            set(DESTINATION_INDEX 1)
+            while(DESTINATION_INDEX LESS TARGET_PLUGINS_DESTINATION_SIZE)
+                # Removes PLUGINS_TARGET_FILES0 that are already deployed next to exe
+                set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<LIST:REMOVE_ITEM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},${PLUGINS_TARGET_FILES0}>")
+                math(EXPR DESTINATION_INDEX "${DESTINATION_INDEX}+1")
+            endwhile()
+            
+            # intersects every plugin folder and moves common dependencies next to exe
+            set(MOVE_TO_ROOT_PLUGINS_TARGET_FILES)
+            set(DESTINATION_INDEX_A 1)
+            while(DESTINATION_INDEX_A LESS TARGET_PLUGINS_DESTINATION_SIZE)
+                math(EXPR DESTINATION_INDEX_B "${DESTINATION_INDEX_A}+1")
+                while(DESTINATION_INDEX_B LESS TARGET_PLUGINS_DESTINATION_SIZE)
+                    cstoolkit_genex_list_intersection("${PLUGINS_TARGET_FILES${DESTINATION_INDEX_A}}" "${PLUGINS_TARGET_FILES${DESTINATION_INDEX_B}}" PLUGINS_TARGET_FILES_INTER)
+
+                    set(MOVE_TO_ROOT_PLUGINS "${MOVE_TO_ROOT_PLUGINS};${PLUGINS_TARGET_FILES_INTER}")
+                    set(PLUGINS_TARGET_FILES${DESTINATION_INDEX_A} "$<LIST:REMOVE_ITEM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX_A}},${PLUGINS_TARGET_FILES_INTER}>")
+                    set(PLUGINS_TARGET_FILES${DESTINATION_INDEX_B} "$<LIST:REMOVE_ITEM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX_B}},${PLUGINS_TARGET_FILES_INTER}>")
+        
+                    math(EXPR DESTINATION_INDEX_B "${DESTINATION_INDEX_B}+1")
+                endwhile()
+        
+                math(EXPR DESTINATION_INDEX_A "${DESTINATION_INDEX_A}+1")
+            endwhile()
+
+            set(PLUGINS_TARGET_FILES0 "${PLUGINS_TARGET_FILES0};${MOVE_TO_ROOT_PLUGINS}")
+            set(PLUGINS_TARGET_FILES0 "$<JOIN:${PLUGINS_TARGET_FILES0},;>")
+            
+            #création des commandes de copy
+            set(DESTINATION_INDEX 0)
+            while(DESTINATION_INDEX LESS TARGET_PLUGINS_DESTINATION_SIZE)
                 # Copy of the plugins files
                 add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                     COMMAND ${CSTOOLKIT_COPY} -e
-                        "${PLUGINS_TARGET_FILES}"
+                        "${PLUGINS_TARGET_FILES${DESTINATION_INDEX}}"
                         "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}"
                         COMMAND_EXPAND_LISTS
                 )
 
                 if(MSVC)
-                    set(PLUGINS_TARGET_PDBS "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
+                    set(PLUGINS_TARGET_PDBS${DESTINATION_INDEX} "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
                     # Copy of the plugins pdbs
                     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                         COMMAND ${CSTOOLKIT_COPY}
-                            "${PLUGINS_TARGET_PDBS}"
+                            "${PLUGINS_TARGET_PDBS${DESTINATION_INDEX}}"
                             "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}"
                             COMMAND_EXPAND_LISTS
                     )
@@ -802,26 +845,16 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if(TARGET_EXECUTABLE)
             # Runtime dependencies
             install(FILES "${TARGET_RUNTIME_DLLS}" DESTINATION ${TARGET_INSTALL_BINDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+
+            set(PLUGINS_RUNTIME_DLLS "")
             if(TARGET_PLUGINS)
                 set(DESTINATION_INDEX 0)
                 while(DESTINATION_INDEX LESS TARGET_PLUGINS_DESTINATION_SIZE)
-                    set(PLUGINS_TARGET_FILES "$<TARGET_PROPERTY:${TARGET_NAME},PLUGINS_DESTINATION${DESTINATION_INDEX}_LIST>")
-                    set(PLUGINS_TARGET_FILES "$<TARGET_GENEX_EVAL:${TARGET_NAME},${PLUGINS_TARGET_FILES}>")
-                    set(PLUGINS_TARGET_FILES "$<JOIN:${PLUGINS_TARGET_FILES},;>")
-                    set(PLUGINS_TARGET_FILES "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},REPLACE,(.+),$<1:$><$<1:$><TARGET_EXISTS:\\0$<ANGLE-R>:$<1:$><TARGET_FILE:\\0$<ANGLE-R>$<ANGLE-R>>")
-                    set(PLUGINS_TARGET_FILES "$<TARGET_GENEX_EVAL:${TARGET_NAME},${PLUGINS_TARGET_FILES}>")
-                    set(PLUGINS_TARGET_FILES "$<JOIN:${PLUGINS_TARGET_FILES},;>")
-                    set(PLUGINS_TARGET_FILES "$<LIST:REMOVE_DUPLICATES,${PLUGINS_TARGET_FILES}>")
-
-                    if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
-                        set(PLUGINS_TARGET_FILES "$<FILTER:${PLUGINS_TARGET_FILES},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
-                    endif()
-
-                    install(FILES "${PLUGINS_TARGET_FILES}" DESTINATION ${TARGET_INSTALL_BINDIR}/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                    set(PLUGINS_RUNTIME_DLLS "${PLUGINS_RUNTIME_DLLS};${PLUGINS_TARGET_FILES${DESTINATION_INDEX}}")
+                    install(FILES "${PLUGINS_TARGET_FILES${DESTINATION_INDEX}}" DESTINATION ${TARGET_INSTALL_BINDIR}/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
 
                     if(MSVC)
-                        set(PLUGINS_TARGET_PDBS "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
-                        install(FILES "${PLUGINS_TARGET_PDBS}" DESTINATION ${TARGET_INSTALL_SYMBOLSDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
+                        install(FILES "${PLUGINS_TARGET_PDBS${DESTINATION_INDEX}}" DESTINATION ${TARGET_INSTALL_SYMBOLSDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
                     endif()
 
                     math(EXPR DESTINATION_INDEX "${DESTINATION_INDEX}+1")
@@ -830,10 +863,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
             # Qt
             if(_qt_modules AND CSTOOLKIT_AUTO_DEPLOY_QT)
+                set(ALL_RUNTIME_DLLS "${TARGET_RUNTIME_DLLS};${PLUGINS_RUNTIME_DLLS}")
+                set(ALL_RUNTIME_DLLS "$<LIST:REMOVE_DUPLICATES,${ALL_RUNTIME_DLLS}>")
+                set(ALL_RUNTIME_DLLS "$<JOIN:${ALL_RUNTIME_DLLS},;>") # remove empty elements
                 cstoolkit_qt_generate_deploy_app_script(
                     TARGET ${TARGET_NAME}
                     INSTALL_DIR ${TARGET_INSTALL_BINDIR}
-                    RUNTIME_DEPENDENCIES ${TARGET_RUNTIME_DLLS} ${PLUGINS_RUNTIME_DLLS}
+                    RUNTIME_DEPENDENCIES ${ALL_RUNTIME_DLLS}
                     OUTPUT_SCRIPT qt_deploy_script
                     NO_UNSUPPORTED_PLATFORM_ERROR
                 )

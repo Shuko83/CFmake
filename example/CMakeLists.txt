@@ -19,9 +19,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # cstoolkit_fetch_artifactory simplify the downloding of artifactory packages
 cstoolkit_fetch_artifactory("TinyXML2" VERSION "5.0.1-2")
-cstoolkit_fetch_artifactory("Boost" VERSION "1.78.0")
+#cstoolkit_fetch_artifactory("Boost" VERSION "1.78.0")
 
-find_package(Boost REQUIRED)
 
 # call to add_subdirectory includes the CMakeLists.txt in that directory
 # it's is not mandatory but recomended for a cleaner Directory Structure

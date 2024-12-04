@@ -24,13 +24,14 @@ function(cstoolkit_streamwork_generate_devpaths target)
 
     set(DEVPATHS_DIRS "$<TARGET_PROPERTY:${target},RUNTIME_DEPENDENCIES>;$<TARGET_PROPERTY:${target},PLUGINS_DEPENDENCIES>")
     set(DEVPATHS_DIRS "$<TARGET_GENEX_EVAL:${target},${DEVPATHS_DIRS}>")
-    set(DEVPATHS_DIRS "$<JOIN:${DEVPATHS_DIRS},;>")
+    set(DEVPATHS_DIRS "$<LIST:REMOVE_DUPLICATES,${DEVPATHS_DIRS}>")
+    set(DEVPATHS_DIRS "$<JOIN:${DEVPATHS_DIRS},;>") # remove empty elements
     set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},REPLACE,(.+),$<1:$><$<1:$><TARGET_EXISTS:\\0$<ANGLE-R>:$<1:$><TARGET_FILE_DIR:\\0$<ANGLE-R>$<ANGLE-R>>")
     set(DEVPATHS_DIRS "$<TARGET_GENEX_EVAL:${target},${DEVPATHS_DIRS}>")
-    set(DEVPATHS_DIRS "$<JOIN:${DEVPATHS_DIRS},;>")
     set(DEVPATHS_DIRS "$<LIST:REMOVE_DUPLICATES,${DEVPATHS_DIRS}>")
+    set(DEVPATHS_DIRS "$<JOIN:${DEVPATHS_DIRS},;>") # remove empty elements
 
-    if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls necessary for development
+    if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls, necessary for development
         set(DEVPATHS_DIRS "$<FILTER:${DEVPATHS_DIRS},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
     endif()
 

@@ -1,7 +1,7 @@
 #Simple executable with some dependencies
 cstoolkit_add_target(MyExe EXECUTABLE RECURSIVE
 	PRIVATE_LINK_LIBRARIES MyStaticLib
-	PRIVATE_LINK_LIBRARIES MyLib Boost::atomic
+	PRIVATE_LINK_LIBRARIES MyLib
 )
 
 cstoolkit_deploy_with_target(MyExe DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/deployed/" "src" "$<TARGET_FILE_DIR:MyCombinedStaticLib>" DESTINATION "config")
