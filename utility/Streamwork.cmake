@@ -34,8 +34,8 @@ function(cstoolkit_streamwork_generate_devpaths target)
         set(DEVPATHS_DIRS "$<FILTER:${DEVPATHS_DIRS},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
     endif()
 
-    set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},PREPEND,<Path target=$<QUOTE>>")
-    set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},APPEND,$<QUOTE> use=$<QUOTE>$<LOWER_CASE:$<CONFIG>>$<QUOTE>/$<ANGLE-R>>")
+    set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},PREPEND,<Path target=\">")
+    set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},APPEND,\" use=\"$<LOWER_CASE:$<CONFIG>>\"/$<ANGLE-R>>")
     set(DEVPATHS_DIRS "$<LIST:JOIN,${DEVPATHS_DIRS},
     >")
 
