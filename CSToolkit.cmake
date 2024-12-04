@@ -82,6 +82,7 @@ set(CSTOOLKIT_INSTALL_TARGETS_ALL)
 
 include(${CMAKE_CURRENT_LIST_DIR}/utility/BuildType.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Arguments.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/File.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Target.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Info.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/PostConfigure.cmake)
