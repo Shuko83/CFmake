@@ -236,20 +236,20 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
             string(REGEX MATCHALL "<file[^<]+" RC_FILES "${RC_FILE_CONTENTS}")
             foreach(RC_FILE ${RC_FILES})
                 string(REGEX REPLACE "^<file[^>]*>" "" RC_FILE "${RC_FILE}")
-                if(NOT IS_ABSOLUTE "${RC_FILE}")
-                    set(RC_FILE "${rc_path}/${RC_FILE}")
-                endif()
-                list(APPEND _rc_depends "${RC_FILE}")
+                cmake_path(ABSOLUTE_PATH RC_FILE BASE_DIRECTORY "${rc_path}" NORMALIZE)
                 if(IS_DIRECTORY "${RC_FILE}")
-                    file(GLOB_RECURSE RC_RECURSIVE_FILES "${RC_FILE}/*")
+                    file(GLOB_RECURSE RC_RECURSIVE_FILES CONFIGURE_DEPENDS "${RC_FILE}/*" )
                     foreach(RC_RECURSIVE_FILE ${RC_RECURSIVE_FILES})
                         file(SIZE "${RC_RECURSIVE_FILE}" RC_FILE_SIZE)
                         math(EXPR RC_TOTAL_FILE_SIZE "${RC_TOTAL_FILE_SIZE}+${RC_FILE_SIZE}")
+                        list(APPEND _rc_depends "${RC_RECURSIVE_FILE}")
                     endforeach()
                 elseif(EXISTS "${RC_FILE}")
+                    list(APPEND _rc_depends "${RC_FILE}")
                     file(SIZE "${RC_FILE}" RC_FILE_SIZE)
                     math(EXPR RC_TOTAL_FILE_SIZE "${RC_TOTAL_FILE_SIZE}+${RC_FILE_SIZE}")
                 else()
+                    list(APPEND _rc_depends "${RC_FILE}")
                     message("cstoolkit_qt_add_resources(): Warning in '${infile}': Cannot find file '${RC_FILE}'")
                 endif()
             endforeach()
@@ -270,6 +270,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                 set(rcctarget rcc_${outfilename})
             endif()
             add_custom_command(OUTPUT ${tmpoutfile}
+                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc
                             COMMAND ${Qt5Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --pass 1 --output ${tmpoutfile} ${infile}
                             DEPENDS ${infile} ${_rc_depends} VERBATIM
@@ -282,14 +283,15 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
             set_target_properties(${rcctarget} PROPERTIES FOLDER "QtBigResources")
 
             add_custom_command(OUTPUT ${outfile}
-                           COMMAND ${Qt5Core_RCC_EXECUTABLE}
-                           ARGS ${rcc_options} --name ${outfilename} --pass 2 --temp $<TARGET_OBJECTS:${rcctarget}> --output ${outfile} ${infile}
-                           DEPENDS ${rcctarget} $<TARGET_OBJECTS:${rcctarget}>
-                           VERBATIM
-                           COMMENT "RCC PASS2 ${relpath}")
+                            COMMAND ${Qt5Core_RCC_EXECUTABLE}
+                            ARGS ${rcc_options} --name ${outfilename} --pass 2 --temp $<TARGET_OBJECTS:${rcctarget}> --output ${outfile} ${infile}
+                            DEPENDS ${rcctarget} $<TARGET_OBJECTS:${rcctarget}>
+                            VERBATIM
+                            COMMENT "RCC PASS2 ${relpath}")
         else()
             set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}.cpp)
             add_custom_command(OUTPUT ${outfile}
+                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc
                             COMMAND ${Qt5Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --output ${outfile} ${infile}
                             MAIN_DEPENDENCY ${infile}
