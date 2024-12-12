@@ -102,6 +102,7 @@ SwApplication::~SwApplication()
 {
 	delete _bank;
 	delete _ctadaptersbank;
+	delete _productLicense;
 }
 
 //-----------------------------------------------------------------------
