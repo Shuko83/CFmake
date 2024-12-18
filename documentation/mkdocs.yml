@@ -1,0 +1,78 @@
+site_name: "CSToolkit CMake Utility Documentation"
+theme:
+  name: material
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.indexes
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - navigation.footer
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - Configuration Options:
+      - Variables: variables.md
+      - Options: options.md
+      - Cpp Rules: cpprules.md
+  - Core Functions:
+      - Add Target: add_target.md
+      - Fetch Artifactory: fetch_artifactory.md
+      - Download URL: download_url.md
+      - Deploy with Target: deploy.md
+  - Examples: examples.md
+  - Troubleshooting: troubleshooting.md
+  - Contributing: contributing.md
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - abbr
+  - pymdownx.snippets
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - def_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+plugins:
+  - search
+  - offline
+
+use_directory_urls: false
