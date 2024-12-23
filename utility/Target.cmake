@@ -85,7 +85,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         add_library(${TARGET_NAMESPACE}${TARGET_NAME_STATIC} ALIAS ${TARGET_NAME_STATIC})
         if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${TARGET_NAMESPACE}${TARGET_NAME})
             add_library(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
-            add_library(${TARGET_NAME_STATIC} ALIAS ${TARGET_NAME_STATIC})
+            add_library(${TARGET_ALIAS}_STATIC ALIAS ${TARGET_NAME_STATIC})
         endif()
     elseif(TARGET_SHARED OR TARGET_STATIC OR TARGET_INTERFACE)
         if(TARGET_STATIC)
@@ -135,12 +135,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(OUTPUT_NAME ${PROJECT_NAME}${TARGET_NAME})
         set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${OUTPUT_NAME}")
         if(TARGET_SHARED_AND_STATIC)
-            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES OUTPUT_NAME "lib${OUTPUT_NAME}")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES OUTPUT_NAME "${OUTPUT_NAME}")
         endif()
     else()
         set(OUTPUT_NAME ${TARGET_NAME})
+        set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${OUTPUT_NAME}")
         if(TARGET_SHARED_AND_STATIC)
-            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES OUTPUT_NAME "lib${OUTPUT_NAME}")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES OUTPUT_NAME "${OUTPUT_NAME}")
         endif()
     endif()
 
@@ -372,7 +373,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     string(TOUPPER ${OUTPUT_NAME} OUTPUT_NAME_UPPER)
     set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_UPPER}_LIB)
     if(TARGET_SHARED_AND_STATIC)
-        set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_UPPER}_LIB)
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_UPPER}_LIB)
         target_compile_definitions(${TARGET_NAME_STATIC} PUBLIC ${OUTPUT_NAME_UPPER}_STATIC)
     endif()
 
@@ -407,14 +408,25 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Specific STATIC
     # Combined Libraries
     if(TARGET_STATIC)
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES PREFIX "lib")
+    
         # Mandatory to be able to include static library inside a shared library
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
         # Default pdb output is not next to .lib
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES COMPILE_PDB_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:${TARGET_NAME_STATIC}>)
+        
         # Necessary to redefine name for msvc 2015
         # COMPILE_PDB_NAME does not support generator expression
-        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES COMPILE_PDB_NAME_DEBUG ${OUTPUT_NAME}${CMAKE_DEBUG_POSTFIX})
+        if(CMAKE_CONFIGURATION_TYPES)
+            foreach(_config ${CMAKE_CONFIGURATION_TYPES})
+                string(TOUPPER "${_config}" _config)
+                set_target_properties(${TARGET_NAME_STATIC} PROPERTIES "COMPILE_PDB_NAME_${_config}" "${OUTPUT_NAME}${CMAKE_${_config}_POSTFIX}")
+            endforeach()
+        else()
+            string(TOUPPER "${CMAKE_BUILD_TYPE}" _config)
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES "COMPILE_PDB_NAME_${_config}" "${OUTPUT_NAME}${CMAKE_${_config}_POSTFIX}")
+        endif()
 
         if(TARGET_COMBINED_LINK_LIBRARIES)
             target_link_libraries(${TARGET_NAME_STATIC} PRIVATE ${TARGET_COMBINED_LINK_LIBRARIES})
@@ -436,7 +448,14 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                     list(APPEND _static_options "$<TARGET_FILE:${_lib}>")
                 endforeach()
 
-                set_target_properties(${TARGET_NAME_STATIC} PROPERTIES STATIC_LIBRARY_OPTIONS "${_static_options}")
+                list(REVERSE _static_options)
+
+                add_custom_command(TARGET ${TARGET_NAME_STATIC} PRE_LINK
+                    COMMAND ${CMAKE_COMMAND} -E rm -f $<TARGET_FILE:${TARGET_NAME_STATIC}>
+                )
+                add_custom_command(TARGET ${TARGET_NAME_STATIC} POST_BUILD
+                    COMMAND ${CMAKE_AR} /OUT:$<TARGET_FILE:${TARGET_NAME_STATIC}> $<TARGET_FILE:${TARGET_NAME_STATIC}> ${_static_options}
+                )
 
                 # PDBs
                 if(MSVC)
@@ -449,13 +468,15 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
                     set(_ar_script "${_ar_script}\nADDLIB $<TARGET_FILE:${_lib}>")
                 endforeach()
+                set(_ar_script "${_ar_script}\nADDLIB $<TARGET_FILE:${TARGET_NAME_STATIC}>")
                 set(_ar_script "${_ar_script}\nSAVE")
                 set(_ar_script "${_ar_script}\nEND")
 
-                file(GENERATE OUTPUT ${TARGET_NAME}_combine.ar CONTENT "${_ar_script}")
+                file(GENERATE OUTPUT ${TARGET_NAME}_combine_$<LOWER_CASE:$<CONFIG>>.ar CONTENT "${_ar_script}")
 
-                add_custom_command(TARGET ${TARGET_NAME_STATIC} PRE_LINK
-                    COMMAND ${CMAKE_AR} -M < ${TARGET_NAME}_combine.ar
+                add_custom_command(TARGET ${TARGET_NAME_STATIC} POST_BUILD
+                    COMMAND ${CMAKE_AR} -M < ${TARGET_NAME}_combine_$<LOWER_CASE:$<CONFIG>>.ar
+                    COMMAND ${CMAKE_RANLIB} $<TARGET_FILE:${TARGET_NAME_STATIC}>  # Update index for the archive
                 )
             endif()
         endif()
