@@ -1,2 +1,4 @@
 Use CMAKE_CXX_STANDARD_LIBRARIES in check dependencies
-use verpatch
+use verpatch for Borland
+support generator expression for combined_libs
+factorize symbols definitions

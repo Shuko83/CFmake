@@ -3,7 +3,7 @@
 ################################################################################
 
 # Common configuration
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 11) # 98 for Borland
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_DEBUG_POSTFIX d)
@@ -27,10 +27,8 @@ endif()
 if(WIN32)
     add_compile_definitions(_WIN32_PLATEFORM_)       # custom Windows platform preprocessor macros
 
-    add_compile_definitions(UNICODE _UNICODE)        # enables Unicode characters set by default
-
     add_compile_definitions(_WIN32)                  # standard Windows 32/64 bits platform preprocessor macro
-    if (CMAKE_SIZEOF_VOID_P EQUAL 8)
+    if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         add_compile_definitions(WIN64 _WIN64)        # standard Windows 64 bits platform preprocessor macro
     endif()
 
@@ -51,6 +49,8 @@ endif()
 
 # MSVC configuration
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    add_compile_definitions(UNICODE _UNICODE)        # enables Unicode characters set by default
+
     add_compile_options(-MP)              # enables multi-processors compilation
 
     add_compile_options(-W4)              # enables level 4 compiler warnings
@@ -80,4 +80,9 @@ endif()
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     add_compile_options(-Weverything -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic)
     add_link_options($<$<CONFIG:RELEASE>:-Wl,-strip-all>)
+endif()
+
+# Borland configuration
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Borland")
+    set(CMAKE_CXX_STANDARD 98)
 endif()
