@@ -56,6 +56,10 @@ endif()
 
 set(Qt5_INSTALL_PREFIX "${_qt5Core_install_prefix}")
 
+message(STATUS "CSToolkit: Selecting Qt ${QT_VERSION} in: ${Qt5_INSTALL_PREFIX}")
+
+set(CMAKE_VS_DEBUGGER_ENVIRONMENT "PATH=${Qt5_INSTALL_PREFIX}/bin;%PATH%")
+
 if(WIN32)
     if (NOT TARGET Qt5::windeployqt)
         add_executable(Qt5::windeployqt IMPORTED)
