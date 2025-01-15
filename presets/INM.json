@@ -5,7 +5,7 @@
         "minor": 27,
         "patch": 0
     },
-
+ 
     "configurePresets": [
         {
             "name": "win_msvc15_x64",
@@ -20,10 +20,11 @@
                 "strategy": "set"
             },
             "cacheVariables": {
-            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x64/"
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x64/",
+            "Qt5_ROOT" : "$env{QT5.9.6}/msvc2015_64/"
             }
         },
-
+ 
         {
             "name": "win_msvc15_x86",
             "description": "Configure project using Visual Studio 2015 (v140) in x86 for Windows",
@@ -37,10 +38,31 @@
                 "strategy": "set"
             },
             "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x86/"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x86/",
+                "Qt5_ROOT" : "$env{QT5.9.6}/msvc2015/"
             }
         },
-
+       
+        {
+            "name": "win_msvc22_x64",
+            "description": "Configure project using Visual Studio 2022 (v143) in x64 for Windows",
+            "binaryDir": "${sourceDir}/build/win-msvc2022-x64",
+            "toolset":
+            {
+            "value": "v143",
+            "strategy": "set"
+            },
+            "architecture":
+            {
+            "value": "x64",
+            "strategy": "set"
+            },
+            "cacheVariables": {
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2022-x64/",
+            "Qt5_ROOT" : "$env{QT5.15.14}/msvc2022_64/"
+            }
+        },
+ 
         {
             "name": "unix",
             "displayName": "Unix",
@@ -52,7 +74,7 @@
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/linux-gcc/"
             }
         },
-
+ 
         {
             "name": "win_bl2010_x86",
             "description": "Configure project using Borland 2010 in x86 for Windows",
@@ -66,7 +88,7 @@
             }
         }
     ],
-
+ 
     "buildPresets" : [
         {
             "name": "win_msvc2015_debug_x64",
@@ -93,16 +115,28 @@
             "targets": "install"
         },
         {
+            "name": "win_msvc2022_debug_x64",
+            "configurePreset": "win_msvc22_x64",
+            "configuration": "Debug",
+            "targets": "install"
+        },
+        {
+            "name": "win_msvc2022_release_x64",
+            "configurePreset": "win_msvc22_x64",
+            "configuration": "Release",
+            "targets": "install"
+        },
+        {
             "name": "unix_debug",
             "configurePreset": "unix",
-            "configuration": "Debug",
+            "configuration": "debug",
             "targets": ["all","install"],
             "jobs": 4
         },
         {
             "name": "unix_release",
             "configurePreset": "unix",
-            "configuration": "Release",
+            "configuration": "release",
             "targets": ["all","install"],
             "jobs": 4
         },
@@ -119,7 +153,7 @@
             "targets": ["all","install"]
         }
     ],
-
+ 
     "workflowPresets":[
         {
             "name": "build_win_msvc2015_x64",
@@ -138,6 +172,14 @@
             ]
         },
         {
+            "name": "build_win_msvc2022_x64",
+            "steps":[
+                { "type":"configure", "name":"win_msvc22_x64" },
+                { "type":"build", "name":"win_msvc2022_debug_x64" },
+                { "type":"build", "name":"win_msvc2022_release_x64" }
+            ]
+        },
+        {
             "name": "build_unix",
             "steps":[
                 { "type":"configure", "name":"unix" },
@@ -153,7 +195,7 @@
                 { "type":"build", "name":"win_bl2010_release_x86" }
             ]
         },
-
+ 
         {
             "name": "dev_win_msvc2015_x64",
             "steps":[
@@ -167,6 +209,12 @@
             ]
         },
         {
+            "name": "dev_win_msvc2022_x64",
+            "steps":[
+                { "type":"configure", "name":"win_msvc22_x64" }
+            ]
+        },
+        {
             "name": "dev_unix",
             "steps":[
                 { "type":"configure", "name":"unix" }
@@ -174,3 +222,4 @@
         }
     ]
 }
+ 
