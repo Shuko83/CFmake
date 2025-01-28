@@ -86,6 +86,8 @@ namespace StreamWork
             _SwPluginsBank_Class(ProductLicense * productLicense = nullptr);
             /*! \brief Destructeur */
             ~_SwPluginsBank_Class();
+            /*! \brief Permet de set le product licence */
+            void setProductLicense(ProductLicense* productLicence);
             //------------------------------------------------------------------
             // Interface ISwPluginsBank
             //------------------------------------------------------------------

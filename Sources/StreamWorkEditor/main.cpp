@@ -147,10 +147,12 @@ int main(int argc, char *argv[])
 	Parameters params = readParamaters();
 
 	// Licence
+	SW_APP->setProductId(licenseId::ProductId::Product_STREAMWORK);
 	ProductLicense productLicense(licenseId::ProductId::Product_STREAMWORK);
 	bool licenseLost = false;
 	QObject::connect(&productLicense, &ProductLicense::error, [&licenseLost]() {licenseLost = true; qApp->exit(EXIT_FAILURE); });
-	bool licenseOk = productLicense.takeFeatures({ licenseId::FunctionId::Function_CORE, licenseId::FunctionId::Function_DEVELOPPER });
+	bool licenseOk = productLicense.takeFeatures({ licenseId::FunctionId::Function_CORE });
+
 
 	//Signature des streams
 	if (!params.folderToSign.isEmpty())
@@ -298,8 +300,6 @@ int main(int argc, char *argv[])
 		}
 #endif
 	}
-
-	SW_APP->enableDeveloperMode();
 
 	// Finalisation de l'initialisation
 	SW_APP->FinalizeInitialisation();

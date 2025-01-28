@@ -50,26 +50,6 @@ SwApplication::SwApplication()
 	, _runtimeMode(false)
 	, _productLicense (nullptr)
 {
-#ifndef NO_LICENSE
-	_productLicense = new ProductLicense(licenseId::ProductId::Product_STREAMWORK);
-	if (!_productLicense->takeCore())
-	{
-		LAUNCH_SWEXCEPTION("SwCore", "No licence for StreamWork could be found.");
-	}
-	if (_productLicense->takeFeature(licenseId::FunctionId::Function_DEVELOPPER))
-	{
-		_developerMode = true;
-	}
-	else if (_productLicense->takeFeature(licenseId::FunctionId::Function_RUNTIME))
-	{
-		_runtimeMode = true;
-	}
-	else
-	{
-		LAUNCH_SWEXCEPTION("SwCore", "No feature runtime or developper could be found.");
-	}
-#endif
-
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 	_startPath = QDir::currentPath();
 
@@ -87,7 +67,7 @@ SwApplication::SwApplication()
 	//Finalisation de l'initialisation
 	_initialisationFinalized = false;
 	//Creation de la banque de plugin
-	_bank = new _SwPluginsBank_Class(_productLicense);
+	_bank = new _SwPluginsBank_Class();
 	//Creation de la banque des fabriques des adatpateurs de type complexe
 	_ctadaptersbank = new _SwComplexeTypeAdaptersFactoriesBankImpl;
 	//Pas de stream
@@ -100,9 +80,12 @@ SwApplication::SwApplication()
 //-----------------------------------------------------------------------
 SwApplication::~SwApplication()
 {
+	if (_productLicense)
+		_productLicense->releaseAll();
+
+	delete _productLicense;
 	delete _bank;
 	delete _ctadaptersbank;
-	delete _productLicense;
 }
 
 //-----------------------------------------------------------------------
@@ -346,15 +329,39 @@ bool StreamWork::SwCore::SwApplication::logTime() const
 }
 
 //-----------------------------------------------------------------------
-void SwApplication::enableDeveloperMode()
-{
-	_developerMode = true;
-}
-
-//-----------------------------------------------------------------------
 bool StreamWork::SwCore::SwApplication::developerMode() const
 {
 	return _developerMode;
+}
+
+void StreamWork::SwCore::SwApplication::setProductId(uint32_t productId)
+{
+#ifndef NO_LICENSE
+	if (_productLicense)
+	{
+		_productLicense->releaseAll();
+		delete _productLicense;
+	}
+
+	_productLicense = new ProductLicense(productId);
+
+	if (_productLicense)
+	{
+		if (_productLicense->takeFeature(licenseId::FunctionId::Function_DEVELOPPER))
+		{
+			_developerMode = true;
+		}
+		else if (_productLicense->takeFeature(licenseId::FunctionId::Function_RUNTIME))
+		{
+			_runtimeMode = true;
+		}
+		else
+		{
+			LAUNCH_SWEXCEPTION("SwCore", "No feature runtime or developper could be found.");
+		}
+	}
+	_bank->setProductLicense(_productLicense);
+#endif
 }
 
 //-------------------------------------------------------------------------

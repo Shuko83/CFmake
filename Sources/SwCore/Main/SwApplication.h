@@ -196,10 +196,10 @@ namespace StreamWork
 			bool logTime() const;
 			/*! \brief Activation de l'autoStart*/
 			void enableAutoStart();
-			/*! \brief Activation du mode developpeur*/
-			void enableDeveloperMode();
 			/*! \brief connaitre l'etat du mode developpeur*/
 			bool developerMode() const;
+            /*! \brief Set le product id pour les licences */
+            void setProductId(uint32_t productId);
 
             //------------------------------------------------------------------------
             //Gestion de stream multiples

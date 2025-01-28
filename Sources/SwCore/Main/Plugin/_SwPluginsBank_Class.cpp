@@ -186,6 +186,12 @@ _SwPluginsBank_Class::~_SwPluginsBank_Class(){
 	_controllers.clear();
 	object_factory_map.clear();
 }
+
+void _SwPluginsBank_Class::setProductLicense(ProductLicense* productLicence)
+{
+	_productLicense = productLicence;
+}
+
 //------------------------------------------------------------------
 // Interface ISwPluginsBank
 //------------------------------------------------------------------
@@ -486,6 +492,7 @@ std::string StreamWork::SwCore::_SwPluginsBank_Class::getPluginLicence() const
 		return "";
 	}
 }
+
 
 /*! \brief Ajouter un descripteur de paths */
 void _SwPluginsBank_Class::AddPaths(QString pathsdescriptor) {
