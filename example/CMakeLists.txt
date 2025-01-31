@@ -26,6 +26,7 @@ cstoolkit_fetch_artifactory("TinyXML2" VERSION "5.0.1-2")
 # it's is not mandatory but recomended for a cleaner Directory Structure
 # order is not important
 add_subdirectory(MyExe)
+add_subdirectory(gallery)
 add_subdirectory(MySharedAndStaticLib)
 add_subdirectory(MyLib)
 add_subdirectory(MyQtLib)
