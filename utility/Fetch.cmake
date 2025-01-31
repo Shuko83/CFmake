@@ -14,7 +14,7 @@ macro(cstoolkit_fetch_artifactory FETCH_NAME)
     string(TOUPPER "${FETCH_PACKAGE_NAME}" FETCH_PACKAGE_NAME_UPPER)
 
     string(TIMESTAMP CSTOOLKIT_FETCH_START_TIME "%s%f")
-    message(STATUS "CSToolkit Fetch ${FETCH_PACKAGE_NAME}")
+    message(STATUS "CSToolkit: Fetch ${FETCH_PACKAGE_NAME}")
 
     if(NOT FETCH_URL AND NOT FETCH_VERSION)
         message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory: VERSION or URL parameter must be defined.")
@@ -96,7 +96,7 @@ macro(cstoolkit_fetch_artifactory FETCH_NAME)
     math(EXPR CSTOOLKIT_FETCH_elapsed "${CSTOOLKIT_FETCH_END_TIME}-${CSTOOLKIT_FETCH_START_TIME}")
     math(EXPR CSTOOLKIT_FETCH_second_elapsed "${CSTOOLKIT_FETCH_elapsed}/1000000")
     math(EXPR CSTOOLKIT_FETCH_tenth_elapsed "(${CSTOOLKIT_FETCH_elapsed}-${CSTOOLKIT_FETCH_second_elapsed}*1000000+50000)/100000")
-    message(STATUS "CSToolkit Fetch ${FETCH_PACKAGE_NAME} - done (${CSTOOLKIT_FETCH_second_elapsed}.${CSTOOLKIT_FETCH_tenth_elapsed}s)")
+    message(STATUS "CSToolkit: Fetch ${FETCH_PACKAGE_NAME} - done (${CSTOOLKIT_FETCH_second_elapsed}.${CSTOOLKIT_FETCH_tenth_elapsed}s)")
 
     # unset because this is a macro
     unset(CSTOOLKIT_FETCH_START_TIME)

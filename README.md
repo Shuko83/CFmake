@@ -11,7 +11,8 @@ Options and variables should be set before inclusion of CSToolkit
 Version of the project, will set `CMAKE_PROJECT_VERSION` and `PROJECT_VERSION`
 
 `CSTOOLKIT_INSTALL_TARGETS` *\<empty\>*  
-List of targets to install, if empty install all targets
+List of targets to install, if empty install all targets in Multi-component package mode.
+If only one target is specified, install as a Single-component package.
 
 `CSTOOLKIT_DEFAULT_PUBLIC_HEADERS_DIRS` *include*  
 Default folder for public headers of a target created with cstoolkit_add_target

@@ -771,17 +771,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(TARGET_INSTALL_COMPONENT ${TARGET_INSTALL_INTER_DIR}_${TARGET_NAME})
             set(TARGET_INSTALL_DESTINATION externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME})
         else()
-            if(NOT CSTOOLKIT_INSTALL_TARGETS)
-                get_property(CSTOOLKIT_INSTALL_TARGETS GLOBAL PROPERTY CSTOOLKIT_INSTALL_TARGETS_AUTO)
-            endif()
             get_property(CSTOOLKIT_INSTALL_TARGETS_ALL GLOBAL PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL)
-
-            if(NOT CSTOOLKIT_INSTALL_TARGETS AND NOT CSTOOLKIT_INSTALL_TARGETS_ALL AND TARGET_NAME STREQUAL PROJECT_NAME)
-                # Si aucune target précisé et que la target a le meme nom que le projet, mode single component
-                set_property(GLOBAL PROPERTY CSTOOLKIT_INSTALL_TARGETS_AUTO "${TARGET_NAME}")
-                set(CSTOOLKIT_INSTALL_TARGETS "${TARGET_NAME}")
-                message(STATUS "CSToolkit Automatic install mode detection: Single Component")
-            endif()
 
             # Detection de la methode d'install
             list(LENGTH CSTOOLKIT_INSTALL_TARGETS CSTOOLKIT_INSTALL_TARGETS_NB)
@@ -797,8 +787,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
                 set(TARGET_INSTALL_DESTINATION ".")
                 set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL "${TARGET_NAME}")
-            elseif((CSTOOLKIT_INSTALL_TARGETS_NB GREATER 1 AND TARGET_NAME IN_LIST CSTOOLKIT_INSTALL_TARGETS)
-                    OR CSTOOLKIT_INSTALL_TARGETS_NB EQUAL 0) # mode multi component
+            elseif((CSTOOLKIT_INSTALL_TARGETS_NB GREATER 1 AND TARGET_NAME IN_LIST CSTOOLKIT_INSTALL_TARGETS) # mode multi component
+                    OR CSTOOLKIT_INSTALL_TARGETS_NB EQUAL 0) # all targets
                 set(TARGET_INSTALL_LIBDIR ${TARGET_NAME}/lib/$<LOWER_CASE:$<CONFIG>>)
                 set(TARGET_INSTALL_BINDIR ${TARGET_NAME}/bin/$<LOWER_CASE:$<CONFIG>>)
                 set(TARGET_INSTALL_SYMBOLSDIR ${TARGET_NAME}/symbols/$<LOWER_CASE:$<CONFIG>>)

@@ -5,11 +5,8 @@ function(cstoolkit_post_configure)
     math(EXPR elapsed "${CSTOOLKIT_CONFIGURE_TIME}-${CSTOOLKIT_START_TIME}")
     math(EXPR second_elapsed "${elapsed}/1000000")
     math(EXPR tenth_elapsed "(${elapsed}-${second_elapsed}*1000000+50000)/100000")
-    message(STATUS "CSToolkit Configure done (${second_elapsed}.${tenth_elapsed}s)")
+    message(STATUS "CSToolkit: Configure done (${second_elapsed}.${tenth_elapsed}s)")
 
-    if(NOT CSTOOLKIT_INSTALL_TARGETS)
-        get_property(CSTOOLKIT_INSTALL_TARGETS GLOBAL PROPERTY CSTOOLKIT_INSTALL_TARGETS_AUTO)
-    endif()
     get_property(CSTOOLKIT_INSTALL_TARGETS_ALL GLOBAL PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL)
 
     # Fichier Config
@@ -20,15 +17,16 @@ function(cstoolkit_post_configure)
         list(JOIN CSTOOLKIT_INSTALL_TARGETS_MISSING ", " CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING)
         message(SEND_ERROR "CSToolkit: Could not find specified install targets: ${CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING}")
     elseif(NOT CSTOOLKIT_INSTALL_TARGETS_ALL)
-        message(STATUS "CSToolkit Automatic install mode detection: No Install")
+        message(STATUS "CSToolkit: Install mode: No Install")
     else()
         # Detection de la methode d'install
         list(LENGTH CSTOOLKIT_INSTALL_TARGETS CSTOOLKIT_INSTALL_TARGETS_NB)
 
         if(CSTOOLKIT_INSTALL_TARGETS_NB EQUAL 1) # mode single component
+            message(STATUS "CSToolkit: Install mode: Single Component")
+
             # We use the config of the target directly
             # no need to generate a project level config file
-
             write_basic_package_version_file(
                 ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
                 VERSION ${PROJECT_VERSION}
@@ -40,9 +38,8 @@ function(cstoolkit_post_configure)
                 DESTINATION cmake
             )
         else() # mode multi component
-            if(NOT CSTOOLKIT_INSTALL_TARGETS)
-                message(STATUS "CSToolkit Automatic install mode detection: Multi Component")
-            endif()
+            message(STATUS "CSToolkit: Install mode: Multi Component")
+
             configure_package_config_file(
                 ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
                 ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
@@ -80,7 +77,7 @@ function(cstoolkit_post_configure)
     math(EXPR elapsed "${CSTOOLKIT_POST_CONFIGURE_TIME}-${CSTOOLKIT_CONFIGURE_TIME}")
     math(EXPR second_elapsed "${elapsed}/1000000")
     math(EXPR tenth_elapsed "(${elapsed}-${second_elapsed}*1000000+50000)/100000")
-    message(STATUS "CSToolkit Post-Configure done (${second_elapsed}.${tenth_elapsed}s)")
+    message(STATUS "CSToolkit: Post-Configure done (${second_elapsed}.${tenth_elapsed}s)")
 endfunction()
 
 function(cstoolkit_get_all_targets var)

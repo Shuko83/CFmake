@@ -2,4 +2,3 @@ Use CMAKE_CXX_STANDARD_LIBRARIES in check dependencies
 use verpatch for Borland
 support generator expression for combined_libs
 factorize symbols definitions
-CSTOOLKIT_INSTALL_TARGETS fix documentation, add option to install ALL CSTOOLKIT_INSTALL_TARGETS
