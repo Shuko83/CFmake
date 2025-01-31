@@ -103,7 +103,7 @@
         {
             "name": "win_msvc22_x64_Qt5.15.14",
             "description": "Configure project using Visual Studio 2022 (v143) in x64 for Windows",
-            "binaryDir": "${sourceDir}/build/win-msvc2022-x64-Qt5.15.14",
+            "binaryDir": "${sourceDir}/build/win-msvc2022-x64-Qt5.15",
             "toolset":
             {
             "value": "v143",
@@ -115,7 +115,7 @@
             "strategy": "set"
             },
             "cacheVariables": {
-            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2022-x64-Qt5.15.14/",
+            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2022-x64-Qt5.15/",
             "Qt5_ROOT" : "$env{QT5_15_14}/msvc2022_64/"
             }
         },
