@@ -1,44 +1,29 @@
-cmake_minimum_required(VERSION 3.18)
+if (TARGET CrashRpt)
+    return()
+endif()
 
-set(DELIVERY_DIR "${CMAKE_BINARY_DIR}/externals/${CMAKE_FIND_PACKAGE_NAME}")
+set(CrashRpt_ROOT_DIR "${CSTOOLKIT_EXTERNALS}/CrashRpt")
+set(CrashRpt_LIBRARIES "CrashRpt")
 
-message("--->  Find ${CMAKE_FIND_PACKAGE_NAME} in ${DELIVERY_DIR}")
+add_library(CrashRpt SHARED IMPORTED)
 
-file(GLOB_RECURSE LIBS_LIST ${DELIVERY_DIR}/*.lib)
+set_target_properties(CrashRpt PROPERTIES
+    INTERFACE_INCLUDE_DIRECTORIES "${CrashRpt_ROOT_DIR}/include"
+)
 
+set_target_properties(CrashRpt PROPERTIES
+    IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
+    IMPORTED_IMPLIB "${CrashRpt_ROOT_DIR}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/CrashRpt.lib"
+    IMPORTED_LOCATION "${CrashRpt_ROOT_DIR}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/CrashRpt.dll"
+)
 
-foreach(lib ${LIBS_LIST})
-    get_filename_component(fileName ${lib} NAME_WE)
-
-    #remove debug extension if exist
-    string(REGEX REPLACE "(.+)d$" "\\1" fileName ${fileName})
-    set(dirName ${fileName})
-
-    STRING(REPLACE ".lib" ".dll" dll ${lib})
-    MESSAGE("Lib : ${lib}")
-
-    if (NOT TARGET ${fileName})
-      message("         IMPORT : ${fileName}")
-      add_library(${fileName} SHARED IMPORTED)
-      set_target_properties(${fileName} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES ${DELIVERY_DIR}/include/)
-    endif()
-
-    if(lib MATCHES "debug")
-      set_target_properties(${fileName} PROPERTIES APPEND PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
-      set_target_properties(${fileName} PROPERTIES IMPORTED_IMPLIB_DEBUG "${lib}")
-      set_target_properties(${fileName} PROPERTIES IMPORTED_LOCATION_DEBUG "${dll}")
-    else()
-      set_target_properties(${fileName} PROPERTIES APPEND PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-      set_target_properties(${fileName} PROPERTIES IMPORTED_IMPLIB_RELEASE "${lib}")
-      set_target_properties(${fileName} PROPERTIES IMPORTED_LOCATION_RELEASE "${dll}")
-    endif()
-endforeach()
-
-set(ALIAS_LIST "")
-set(LIBS_LIST_STRING "")
-set(DLLS_LIST_STRING "")
+set(CrashRpt_RUNTIME_DLLS
+    "${CrashRpt_ROOT_DIR}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/dbghelp.dll"
+    "${CrashRpt_ROOT_DIR}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/CrashSaver.exe"
+)
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(${CMAKE_FIND_PACKAGE_NAME} DEFAULT_MSG)
+find_package_handle_standard_args(CrashRpt DEFAULT_MSG
+    CrashRpt_ROOT_DIR CrashRpt_LIBRARIES CrashRpt_RUNTIME_DLLS)
