@@ -1,1 +1,1 @@
-<meta http-equiv="refresh" content="0; url=https://gitlab.divst/transverse/utilities/production/cstoolkit/-/wikis/Home">
+[📖 View Project Wiki](https://gitlab.divst/transverse/utilities/production/cstoolkit/-/wikis/Home)
