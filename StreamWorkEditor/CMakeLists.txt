@@ -41,3 +41,9 @@ cstoolkit_add_target(StreamWorkEditor EXECUTABLE NAMESPACE Streamwork RECURSIVE 
 		Streamwork::SwModel 
 		Streamwork::SwServiceMainWindow
 )
+
+if(NO_LICENSE)
+	add_compile_definitions(NO_LICENSE)
+endif()
+
+cstoolkit_deploy_with_target(StreamWorkEditor FILES "${EULA_PATH}")
