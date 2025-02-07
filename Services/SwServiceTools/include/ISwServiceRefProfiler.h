@@ -8,6 +8,7 @@
 #define _STREAMWORK_SWCORE_ISWSERVICEREFPROFILER_H
 
 #include "Main/Services/Management/ISwService.h"
+#include <typeinfo>
 
 //Nom du service
 #define CG_SW_SERVICE_REF_PROFILER "ServiceRefProfiler"

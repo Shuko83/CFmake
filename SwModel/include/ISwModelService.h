@@ -8,6 +8,7 @@
 #define _STREAMWORK_SWMODEL_ISWMODELSERVICE_H
 
 #include "Main/Services/Management/ISwService.h"
+#include <typeinfo>
 
 //Nom du service
 #define CG_SW_SERVICE_MODEL "ServiceModel"

@@ -8,6 +8,7 @@
 #define _STREAMWORK_SWCORE_ISWEDITIONSERVICE_H
 
 #include "Main/Services/Management/ISwService.h"
+#include <typeinfo>
 
 //Nom du service
 #define CG_SW_EDITION_SERVICE "SwEditionService"
