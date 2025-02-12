@@ -69,8 +69,8 @@ pipeline {
                 stage ('Upload on Nexus and Artifactory') {
                 steps {
                         script {
-                        streamwork.artefactHelper.upload(subDirectory: "Frameworks/StreamWork")
-                        streamworkNoLicense.artefactHelper.upload(subDirectory: "Frameworks/StreamWork")
+                        streamwork.artefactHelper.upload(subDirectory: "Frameworks")
+                        streamworkNoLicense.artefactHelper.upload(subDirectory: "Frameworks")
                         }
                 }
                 }
