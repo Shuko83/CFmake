@@ -1,6 +1,0 @@
-BaseDir=..
-ISwServiceShortcuts.h
-ISwShortcut.h
-ISwShortcutObserver.h
-ISwDevice.h
-ISwDeviceObserver.h
