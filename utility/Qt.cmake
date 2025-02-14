@@ -24,6 +24,11 @@ find_package(Qt5 COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
 
 if(NOT Qt5_FOUND)
 
+set(QT_VERSION "Qt5-NOTFOUND")
+set(QT_VERSION_MM "${QT_VERSION}")
+
+set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-${QT_VERSION}")
+
 function(cstoolkit_qt_wrap_cpp outfiles)
     message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_cpp")
 endfunction()
