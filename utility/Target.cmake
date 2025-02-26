@@ -409,15 +409,20 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Combined Libraries
     if(TARGET_STATIC)
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES PREFIX "lib")
-    
+
+        # Borland FIX when using "-" in target name
+        if(CMAKE_CXX_COMPILER_ID STREQUAL "Borland")
+            set_target_properties(${TARGET_NAME_STATIC} PROPERTIES STATIC_LIBRARY_OPTIONS "/N")
+        endif()
+
         # Mandatory to be able to include static library inside a shared library
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
         # Default pdb output is not next to .lib
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES COMPILE_PDB_OUTPUT_DIRECTORY $<TARGET_FILE_DIR:${TARGET_NAME_STATIC}>)
         
-        # Necessary to redefine name for msvc 2015
-        # COMPILE_PDB_NAME does not support generator expression
+        # Necessary to redefine default name for msvc 2015
+        # and COMPILE_PDB_NAME does not support generator expression
         if(CMAKE_CONFIGURATION_TYPES)
             foreach(_config ${CMAKE_CONFIGURATION_TYPES})
                 string(TOUPPER "${_config}" _config)
