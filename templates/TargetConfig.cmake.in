@@ -1,7 +1,9 @@
 if(TARGET @TARGET_NAMESPACE@@TARGET_NAME@)
   return()
 endif()
-
+$<IF:$<NOT:$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>>,$<$<LIST:LENGTH,find_dependency(Qt5 COMPONENTS Widgets)>:
 include(CMakeFindDependencyMacro)
-@FIND_DEPENDENCY_COMMANDS@
+$<LIST:JOIN,find_dependency(Qt5 COMPONENTS Widgets),
+>
+>,>
 include(${CMAKE_CURRENT_LIST_DIR}/@TARGET_INSTALL_CONFIG_NAME@Targets.cmake)

@@ -958,28 +958,24 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 endfunction()
 
-macro (generate_target_config)
-
-    list(APPEND INTERFACE_DEPENDENCIES ${TARGET_PUBLIC_LINK_LIBRARIES})
-    if(TARGET_STATIC)
-        list(APPEND INTERFACE_DEPENDENCIES ${TARGET_PRIVATE_LINK_LIBRARIES})
-    endif()
-    foreach(dep ${INTERFACE_DEPENDENCIES})
-        string(REGEX MATCH "(.+)::(.+)" IS_PACKAGE ${dep})
-        if(IS_PACKAGE)
-            set(PACKAGE_NAME ${CMAKE_MATCH_1})
-            set(COMPONENT_NAME ${CMAKE_MATCH_2})
-            set(FIND_DEPENDENCY_COMMANDS "${FIND_DEPENDENCY_COMMANDS}find_dependency(${PACKAGE_NAME} COMPONENTS ${COMPONENT_NAME})\n")
-        endif()
-    endforeach()
-
-    include(CMakePackageConfigHelpers)
-
+macro(generate_target_config)
     # Target Config File
-    configure_package_config_file(
-        ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/TargetConfig.cmake.in
-        ${CMAKE_CURRENT_BINARY_DIR}/${TARGET_INSTALL_CONFIG_NAME}Config.cmake
-        INSTALL_DESTINATION ${TARGET_INSTALL_CMAKEDIR}
+    set(FIND_DEPENDENCY_GENEX "$<TARGET_PROPERTY:INTERFACE_LINK_LIBRARIES>")
+    if(TARGET_STATIC)
+        set(FIND_DEPENDENCY_GENEX "${FIND_DEPENDENCY_GENEX};$<TARGET_PROPERTY:LINK_LIBRARIES>")
+    endif()
+    set(FIND_DEPENDENCY_GENEX "$<TARGET_GENEX_EVAL:${TARGET_NAME},${FIND_DEPENDENCY_GENEX}>")
+    set(FIND_DEPENDENCY_GENEX "$<LIST:REMOVE_DUPLICATES,${FIND_DEPENDENCY_GENEX}>")
+    set(FIND_DEPENDENCY_GENEX "$<JOIN:${FIND_DEPENDENCY_GENEX},;>") # remove empty elements
+    set(FIND_DEPENDENCY_GENEX "$<LIST:FILTER,${FIND_DEPENDENCY_GENEX},INCLUDE,.+::.+>")
+    set(FIND_DEPENDENCY_GENEX "$<LIST:TRANSFORM,${FIND_DEPENDENCY_GENEX},REPLACE,(.+)::(.+),find_dependency(\\1 COMPONENTS \\2)>")
+
+    file(READ "${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/TargetConfig.cmake.in" _TARGET_CONFIG_CONTENT)
+    string(CONFIGURE "${_TARGET_CONFIG_CONTENT}" _CONTENT @ONLY)
+    file(GENERATE
+        OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/${TARGET_INSTALL_CONFIG_NAME}Config.cmake"
+        CONTENT "${_CONTENT}"
+        TARGET ${TARGET_NAME}
     )
 
     install(FILES

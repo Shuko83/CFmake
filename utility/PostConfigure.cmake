@@ -28,13 +28,13 @@ function(cstoolkit_post_configure)
             # We use the config of the target directly
             # no need to generate a project level config file
             write_basic_package_version_file(
-                ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
+                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
                 VERSION ${PROJECT_VERSION}
                 COMPATIBILITY SameMinorVersion
             )
         
             install(FILES
-                ${CMAKE_CURRENT_BINARY_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake
+                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
                 DESTINATION cmake
             )
         else() # mode multi component
