@@ -142,7 +142,8 @@
                 "CMAKE_CONFIGURATION_TYPES": "debug;release",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-bl2010-x86/",
                 "CMAKE_C_COMPILER":"bcc32",
-                "CMAKE_CXX_COMPILER":"bcc32"
+                "CMAKE_CXX_COMPILER":"bcc32",
+			    "CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE"
             }
         }
     ],
