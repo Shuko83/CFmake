@@ -317,7 +317,9 @@ function(cstoolkit_get_runtime_dependencies target runtime_dependencies genex_ru
     endforeach()
 
     list(REMOVE_DUPLICATES _target_dependencies)
-    list(APPEND ${genex_runtime_dependencies} "${_target_genex_dependencies}")
+    if(_target_genex_dependencies)
+        list(APPEND ${genex_runtime_dependencies} "${_target_genex_dependencies}")
+    endif()
 
     foreach(_dep ${_target_dependencies})
         if(TARGET ${_dep})
