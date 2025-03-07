@@ -323,11 +323,8 @@ function(cstoolkit_get_runtime_dependencies target runtime_dependencies genex_ru
 
     foreach(_dep ${_target_dependencies})
         if(TARGET ${_dep})
-            get_target_property(_lib_type ${_dep} TYPE)
             if(NOT _dep IN_LIST ${runtime_dependencies})
-                if(_lib_type STREQUAL SHARED_LIBRARY)
-                    list(APPEND ${runtime_dependencies} "${_dep}")
-                endif()
+                list(APPEND ${runtime_dependencies} "${_dep}")
                 cstoolkit_get_runtime_dependencies(${_dep} ${runtime_dependencies} ${genex_runtime_dependencies})
             endif()
         endif()
