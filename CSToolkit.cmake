@@ -31,7 +31,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Cache variables to override if needed
 ################################################################################
 
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   cmake_path(SET _install_path NORMALIZE "${CMAKE_BINARY_DIR}/../install")
   set(CMAKE_INSTALL_PREFIX "${_install_path}" CACHE PATH "Default install directory used by install()." FORCE)
 endif()

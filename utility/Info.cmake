@@ -18,7 +18,7 @@ function(cstoolkit_generate_target_info)
     set(target_info_cpp_filename ${INFO_DIRECTORY}/target_info.cpp)
     set(target_info_h_filename ${INFO_DIRECTORY}/target_info.h)
 
-    if (MSVC)
+    if(MSVC)
         set(PARAMS_COMPILER "Visual Studio ${CSTOOLKIT_COMPILER_VERSION}, ${CMAKE_CXX_COMPILER_ID} ${CMAKE_VS_PLATFORM_TOOLSET} (${CMAKE_CXX_COMPILER_VERSION})")
     else()
         set(PARAMS_COMPILER "${CSTOOLKIT_COMPILER_NAME} ${CMAKE_CXX_COMPILER_VERSION}")

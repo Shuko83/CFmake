@@ -7,7 +7,7 @@ if(GIT_EXECUTABLE)
     execute_process(COMMAND ${GIT_EXECUTABLE} status --short
                     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                     OUTPUT_VARIABLE CSTOOLKIT_GIT_STATUS)
-    if (NOT "${CSTOOLKIT_GIT_STATUS}" STREQUAL "")
+    if(NOT "${CSTOOLKIT_GIT_STATUS}" STREQUAL "")
         set(CSTOOLKIT_GIT_COMMIT "")
     endif()
 
@@ -31,7 +31,7 @@ if(GIT_EXECUTABLE)
 endif()
 
 # Get the version from the git
-if (CSTOOLKIT_USE_GIT_TAG_VERSION)
+if(CSTOOLKIT_USE_GIT_TAG_VERSION)
     if(CSTOOLKIT_GIT_TAG MATCHES "^[0-9]+\\.[0-9]+\\.[0-9]+(\\.[0-9]+)?(-.+)?$")
         set(CSTOOLKIT_PROJECT_VERSION "${CSTOOLKIT_GIT_TAG}")
         message(STATUS "Project version from git tag: ${CSTOOLKIT_GIT_TAG}")

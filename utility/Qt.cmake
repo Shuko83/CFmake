@@ -66,7 +66,7 @@ message(STATUS "CSToolkit: Selecting Qt ${QT_VERSION} in: ${Qt5_INSTALL_PREFIX}"
 set(CMAKE_VS_DEBUGGER_ENVIRONMENT "PATH=${Qt5_INSTALL_PREFIX}/bin;%PATH%")
 
 if(WIN32)
-    if (NOT TARGET Qt5::windeployqt)
+    if(NOT TARGET Qt5::windeployqt)
         add_executable(Qt5::windeployqt IMPORTED)
 
         set(imported_location "${_qt5Core_install_prefix}/bin/windeployqt.exe")
@@ -91,7 +91,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
     
     set(_moc_flags)
     
-    if (WIN32)
+    if(WIN32)
         set(_moc_flags ${_moc_flags} -DWIN32)
         set(_moc_flags ${_moc_flags} -D_WINDOWS)
         set(_moc_flags ${_moc_flags} $<$<NOT:$<CONFIG:Debug>>:-DNDEBUG>)
@@ -126,7 +126,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
 
     endif()
 
-    file (GENERATE
+    file(GENERATE
         OUTPUT ${_moc_include_file}
         CONTENT "${targetincludes}${moc_options}\n"
     )
@@ -175,7 +175,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
     list(REMOVE_DUPLICATES _filtered_mocs)
     foreach(_moc ${${outfiles}})
         get_filename_component(_shortmoc "${_moc}" NAME)
-        if ("${_shortmoc}" IN_LIST _filtered_mocs)
+        if("${_shortmoc}" IN_LIST _filtered_mocs)
             set_source_files_properties("${_moc}" PROPERTIES HEADER_FILE_ONLY TRUE)
         endif()
     endforeach()

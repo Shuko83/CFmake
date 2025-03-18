@@ -1,4 +1,4 @@
-if (TARGET CrashRpt)
+if(TARGET CrashRpt)
     return()
 endif()
 
