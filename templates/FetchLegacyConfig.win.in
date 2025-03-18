@@ -17,8 +17,8 @@ list(FILTER _DLL_LIST INCLUDE REGEX "/[Rr]elease/")
 foreach(_releaselib ${_LIB_LIST})
     get_filename_component(_libname ${_releaselib} NAME_WE)
     
-    if (TARGET @FETCH_PACKAGE_NAME@::${_libname})
-        continue()
+    if(TARGET @FETCH_PACKAGE_NAME@::${_libname})
+        return()
     endif()
 
     set(_includedir "${_releaselib}/../../../include")
@@ -77,8 +77,8 @@ endforeach()
 foreach(_releasedll ${_DLL_LIST})
     get_filename_component(_libname ${_releasedll} NAME_WE)
     
-    if (TARGET @FETCH_PACKAGE_NAME@::${_libname})
-        continue()
+    if(TARGET @FETCH_PACKAGE_NAME@::${_libname})
+        return()
     endif()
 
     file(GLOB_RECURSE _debugdll_list "${@FETCH_PACKAGE_NAME@_ROOT_DIR}*/${_libname}d.dll" "${@FETCH_PACKAGE_NAME@_ROOT_DIR}*/${_libname}.dll")
@@ -110,8 +110,8 @@ if(NOT @FETCH_PACKAGE_NAME@_LIBRARIES)
             string(REGEX REPLACE "/Delivery$" "" _targetdir "${_targetdir}")
             get_filename_component(_libname ${_targetdir} NAME)
 
-            if (TARGET @FETCH_PACKAGE_NAME@::${_libname})
-                continue()
+            if(TARGET @FETCH_PACKAGE_NAME@::${_libname})
+                return()
             endif()
 
             add_library(@FETCH_PACKAGE_NAME@::${_libname} INTERFACE IMPORTED)
