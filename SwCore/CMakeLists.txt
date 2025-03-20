@@ -24,3 +24,7 @@ cstoolkit_add_target(SwCore SHARED NAMESPACE Streamwork RECURSIVE RECURSIVE_INCL
 		UNICODE
 		_CRT_SECURE_NO_WARNINGS
 )
+
+if(NO_LICENSE)
+    add_compile_definitions(NO_LICENSE)
+endif()
