@@ -1,0 +1,6 @@
+if(CMAKE_TOOLCHAIN_FILE)
+    cmake_path(GET CMAKE_TOOLCHAIN_FILE FILENAME _TOOLCHAIN)
+    if(_TOOLCHAIN STREQUAL "conan_toolchain.cmake")
+        set(CONAN 1)
+    endif()
+endif()

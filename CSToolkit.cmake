@@ -80,6 +80,7 @@ set(CSTOOLKIT_INSTALL_TARGETS_ALL)
 #  Includes
 ################################################################################
 
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Conan.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/BuildType.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Arguments.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/File.cmake)
