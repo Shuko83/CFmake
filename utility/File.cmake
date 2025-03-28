@@ -1,10 +1,22 @@
 function(cstoolkit_file_realpath_list filelist)
-    set(_templist "${${filelist}}")
+    cstoolkit_genex_extract("${${filelist}}" _files _files_genex_list)
+
     set(${filelist} "")
-    foreach(_file ${_templist})
+    set(_files_genex "")
+
+    foreach(elem IN LISTS _files_genex_list)
+        list(APPEND _files_genex "${${elem}}")
+    endforeach()
+
+    foreach(_file IN LISTS _files)
         cmake_path(ABSOLUTE_PATH _file NORMALIZE)
         list(APPEND ${filelist} "${_file}")
     endforeach()
+
+    if(_files_genex_list)
+        list(APPEND ${filelist} "${_files_genex}")
+    endif()
+
     set(${filelist} "${${filelist}}" PARENT_SCOPE)
 endfunction()
 

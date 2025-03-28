@@ -113,6 +113,9 @@ function(cstoolkit_qt_wrap_cpp outfiles)
 
     set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/mocinclude.tmp)
 
+    #filter generator expression moc_files
+    cstoolkit_genex_extract("${moc_files}" moc_files _null)
+
     if(moc_target)
         set(targetdefines "$<LIST:TRANSFORM,$<TARGET_PROPERTY:${moc_target},COMPILE_DEFINITIONS>,PREPEND,-D>")
 
