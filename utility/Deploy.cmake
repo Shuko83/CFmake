@@ -38,29 +38,44 @@ function(cstoolkit_deploy_with_target target mode)
         set(INSTALL_EXCLUDE_FROM_ALL)
     endif()
 
-    foreach(_file ${DEPLOY_DIRECTORY}${DEPLOY_FILES})
-        if(NOT _file MATCHES "^\\$<.*>") # does not start with a genex
-            cmake_path(ABSOLUTE_PATH _file NORMALIZE OUTPUT_VARIABLE _file)
-        endif()
-        list(APPEND DEPLOY_SOURCES "${_file}")
+    set(DEPLOY_SOURCES_NORM "")
+    message("Extraction: '${DEPLOY_DIRECTORY}${DEPLOY_FILES}'")
+    cstoolkit_genex_extract("${DEPLOY_DIRECTORY}${DEPLOY_FILES}" DEPLOY_SOURCES DEPLOY_SOURCES_GENEX_LIST)
+    message("Standard:   '${DEPLOY_SOURCES}'")
+    foreach(elem ${DEPLOY_SOURCES_GENEX_LIST})
+        list(APPEND DEPLOY_SOURCES_GENEX "${${elem}}")
     endforeach()
+    message("Genex:      '${DEPLOY_SOURCES_GENEX}'")
+
+    foreach(_file IN LISTS DEPLOY_SOURCES)
+        cmake_path(ABSOLUTE_PATH _file NORMALIZE OUTPUT_VARIABLE _file)
+        list(APPEND DEPLOY_SOURCES_NORM "${_file}")
+    endforeach()
+
+    message("Normalz:    '${DEPLOY_SOURCES_NORM}'")
+
+    if(DEPLOY_SOURCES_GENEX)
+        list(APPEND DEPLOY_SOURCES_NORM "${DEPLOY_SOURCES_GENEX}")
+    endif()
+
+    message("Normalz:    '${DEPLOY_SOURCES_NORM}'")
 
     if(DEPLOY_FILES)
         add_custom_command(TARGET ${target} POST_BUILD
             COMMAND ${CSTOOLKIT_COPY} -e
-                "${DEPLOY_SOURCES}"
+                "${DEPLOY_SOURCES_NORM}"
                 "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
                 COMMAND_EXPAND_LISTS
         )
-        install(FILES ${DEPLOY_SOURCES} DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
+        install(FILES "${DEPLOY_SOURCES_NORM}" DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
     else()
         add_custom_command(TARGET ${target} POST_BUILD
             COMMAND ${CSTOOLKIT_COPY} -e -d
-                "${DEPLOY_SOURCES}"
+                "${DEPLOY_SOURCES_NORM}"
                 "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
                 COMMAND_EXPAND_LISTS
         )
-        install(DIRECTORY ${DEPLOY_SOURCES} DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
+        install(DIRECTORY "${DEPLOY_SOURCES_NORM}" DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
     endif()
 endfunction()
 
