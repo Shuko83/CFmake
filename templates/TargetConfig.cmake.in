@@ -2,7 +2,44 @@ if(TARGET @TARGET_NAMESPACE@@TARGET_NAME@)
   return()
 endif()
 $<$<AND:$<NOT:$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>>,$<BOOL:$<LIST:LENGTH,@FIND_DEPENDENCY_GENEX@>>>:
-include(CMakeFindDependencyMacro)
+macro(@TARGET_INSTALL_CONFIG_NAME@_find_dependency dep)
+    string(SHA256 @TARGET_INSTALL_CONFIG_NAME@_fd_call_hash "${dep};${ARGN}")
+    if(_CSTOOLKIT_${dep}_${@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash}_FOUND)
+        unset(@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash)
+    else()
+        list(APPEND _CSTOOLKIT_${dep}_HASH_STACK ${@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash})
+
+        get_property(@TARGET_INSTALL_CONFIG_NAME@_fd_alreadyTransitive GLOBAL PROPERTY
+            _CSTOOLKIT_${dep}_TRANSITIVE_DEPENDENCY
+        )
+
+        find_package(${dep} ${ARGN} QUIET)
+
+        list(POP_BACK _CSTOOLKIT_${dep}_HASH_STACK @TARGET_INSTALL_CONFIG_NAME@_fd_call_hash)
+        set("_CSTOOLKIT_${dep}_${@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash}_FOUND" "${${dep}_FOUND}")
+
+        if(NOT DEFINED @TARGET_INSTALL_CONFIG_NAME@_fd_alreadyTransitive OR @TARGET_INSTALL_CONFIG_NAME@_fd_alreadyTransitive)
+            set_property(GLOBAL PROPERTY _CSTOOLKIT_${dep}_TRANSITIVE_DEPENDENCY TRUE)
+        endif()
+
+        unset(@TARGET_INSTALL_CONFIG_NAME@_fd_alreadyTransitive)
+        unset(@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash)
+        if (NOT ${dep}_FOUND)
+            if(${ARGC} GREATER 1)
+                set(@TARGET_INSTALL_CONFIG_NAME@_details "${ARGN}")
+                list(JOIN @TARGET_INSTALL_CONFIG_NAME@_details " " @TARGET_INSTALL_CONFIG_NAME@_details)
+                set(@TARGET_INSTALL_CONFIG_NAME@_details " (${@TARGET_INSTALL_CONFIG_NAME@_details})")
+            endif()
+            set(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE "${CMAKE_FIND_PACKAGE_NAME} could not be found because dependency ${dep}${@TARGET_INSTALL_CONFIG_NAME@_details} could not be found.")
+            unset(@TARGET_INSTALL_CONFIG_NAME@_details)
+            if(${dep}_NOT_FOUND_MESSAGE)
+            set(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE "${${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE}\n${${dep}_NOT_FOUND_MESSAGE}")
+        endif()
+            set(${CMAKE_FIND_PACKAGE_NAME}_FOUND False)
+            return()
+        endif()
+    endif()
+endmacro()
 $<LIST:JOIN,@FIND_DEPENDENCY_GENEX@,
 >
 >

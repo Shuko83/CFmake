@@ -40,6 +40,11 @@ function(cstoolkit_post_configure)
         else() # mode multi component
             message(STATUS "CSToolkit: Install mode: Multi Component")
 
+            set(FIND_REQUIRED_COMPONENTS_LIST "${CSTOOLKIT_INSTALL_TARGETS_ALL}")
+            list(TRANSFORM FIND_REQUIRED_COMPONENTS_LIST PREPEND "    set(${PROJECT_NAME}_FIND_REQUIRED_")
+            list(TRANSFORM FIND_REQUIRED_COMPONENTS_LIST APPEND " 1)")
+            list(JOIN FIND_REQUIRED_COMPONENTS_LIST "\n" FIND_REQUIRED_COMPONENTS_LIST)
+
             configure_package_config_file(
                 ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
                 ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
