@@ -53,3 +53,54 @@ function(cstoolkit_streamwork_generate_devpaths target)
 </Paths>
 ")
 endfunction()
+
+function(cstoolkit_streamwork_generate_launchers target)
+    if(NOT TARGET ${target})
+        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_launchers: \"${target}\" is not a target.")
+        return()
+    endif()
+
+    # Parse arguments
+    set(DEVPATHS_OPTIONS)
+    set(DEVPATHS_UNIQUE DEVPATH APP_DIR_PATH MODELS MODELS_DIR_PATH STREAM)
+    set(DEVPATHS_MULTIPLE)
+    cmake_parse_arguments(PARSE_ARGV 1 option "${DEVPATHS_OPTIONS}" "${DEVPATHS_UNIQUE}" "${DEVPATHS_MULTIPLE}")
+  
+    if(NOT option_APP_DIR_PATH)
+        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_launchers: \"APP_DIR_PATH\" is not defined.")
+        return()
+    endif()
+
+    if(NOT option_DEVPATH)
+        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_launchers: \"DEVPATH\" is not defined.")
+        return()
+    endif()
+
+    if(NOT option_STREAM)
+        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_launchers: \"STREAM\" is not defined.")
+        return()
+    endif()
+
+    set(SW_COMMAND "$<TARGET_FILE:Streamwork::StreamWorkEditor>")
+    set(SW_ARGUMENTS_COMMAND "-autoStart -appDirPath ${option_APP_DIR_PATH} -pdesc ${option_DEVPATH}")
+    
+    if(option_MODELS)
+        string(APPEND SW_ARGUMENTS_COMMAND " -models ${option_MODELS}")
+    endif()
+
+    if(option_MODELS_DIR_PATH)
+        string(APPEND SW_ARGUMENTS_COMMAND " -modelsDirPath ${option_MODELS_DIR_PATH}")
+    endif()
+
+    file(GENERATE OUTPUT StreamworkEditorLauncher$<CONFIG>.bat
+        CONTENT "${SW_COMMAND} ${SW_ARGUMENTS_COMMAND}")
+
+    string(APPEND SW_ARGUMENTS_COMMAND " -stream ${option_STREAM}")
+    file(GENERATE OUTPUT ${target}Launcher$<CONFIG>.bat
+        CONTENT "${SW_COMMAND} ${SW_ARGUMENTS_COMMAND}")  
+
+    if(WIN32)
+        set_target_properties(${target} PROPERTIES VS_DEBUGGER_COMMAND ${SW_COMMAND})
+        set_target_properties(${target} PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS "${SW_ARGUMENTS_COMMAND}")
+    endif()
+endfunction()
