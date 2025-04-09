@@ -319,6 +319,50 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
     set(${outrscfiles} ${${outrscfiles}} PARENT_SCOPE)
 endfunction()
 
+# qt5_generate_repc(<VAR> rep_file output_type)
+# partially copied from Qt5RemoteObjectsMacros.cmake
+function(cstoolkit_qt_generate_repc outfiles infile outputtype)
+    # get include dirs and flags
+    get_filename_component(abs_infile ${infile} ABSOLUTE)
+    get_filename_component(infile_name "${infile}" NAME)
+    string(REPLACE ".rep" "" _infile_base ${infile_name})
+    if(${outputtype} STREQUAL "SOURCE")
+        set(_outfile_base "rep_${_infile_base}_source")
+        set(_repc_args -o source)
+    elseif(${outputtype} STREQUAL "MERGED")
+        set(_outfile_base "rep_${_infile_base}_merged")
+        set(_repc_args -o merged)
+    else()
+        set(_outfile_base "rep_${_infile_base}_replica")
+        set(_repc_args -o replica)
+    endif()
+    set(_outfile_header "${CMAKE_CURRENT_BINARY_DIR}/${_outfile_base}.h")
+    add_custom_command(OUTPUT ${_outfile_header}
+        DEPENDS ${abs_infile}
+        COMMAND ${Qt5RemoteObjects_REPC_EXECUTABLE} ${abs_infile} ${_repc_args} ${_outfile_header}
+        VERBATIM)
+    set_source_files_properties(${_outfile_header} PROPERTIES
+                                                GENERATED TRUE
+                                                SKIP_AUTOMOC ON
+                                                SKIP_AUTOUIC ON)
+
+    qt5_get_moc_flags(_moc_flags)
+    # Make sure we get the compiler flags from the Qt5::RemoteObjects target (for includes)
+    # (code adapted from QT5_GET_MOC_FLAGS)
+    foreach(_current ${Qt5RemoteObjects_INCLUDE_DIRS})
+        if("${_current}" MATCHES "\\.framework/?$")
+            string(REGEX REPLACE "/[^/]+\\.framework" "" framework_path "${_current}")
+            set(_moc_flags ${_moc_flags} "-F${framework_path}")
+        else()
+            set(_moc_flags ${_moc_flags} "-I${_current}")
+        endif()
+    endforeach()
+
+    set(_moc_outfile "${CMAKE_CURRENT_BINARY_DIR}/moc_${_outfile_base}.cpp")
+    qt5_create_moc_command(${_outfile_header} ${_moc_outfile} "${_moc_flags}" "" "" "")
+    list(APPEND ${outfiles} "${_outfile_header}" ${_moc_outfile})
+endfunction()
+
 # qt6_generate_deploy_app_script()
 # partially copied from Qt6CoreMacros.cmake
 function(cstoolkit_qt_generate_deploy_app_script)
