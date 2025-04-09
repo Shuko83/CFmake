@@ -30,6 +30,7 @@ cstoolkit_start_timer(CSTOOLKIT_CONFIGURE_TIMER)
 # GLOBAL MODIFIERS
 ################################################################################
 
+set(CMAKE_NETRC "OPTIONAL")
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 ################################################################################
@@ -42,11 +43,14 @@ if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 endif()
 
 set(CSTOOLKIT_EXTERNALS "${CMAKE_BINARY_DIR}/externals" CACHE PATH "Directory where externals project are situated")
+set(CSTOOLKIT_DOWNLOAD_BASE_DIR "${CMAKE_BINARY_DIR}/_cstkdl" CACHE PATH "Directory where files are downloaded before being extracted by CSToolkit")
 
 list(APPEND CMAKE_PREFIX_PATH "${CSTOOLKIT_EXTERNALS}")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/modules")
 
 set(CSTOOLKIT_ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory" CACHE STRING "Url of artifactory")
+set(CSTOOLKIT_NEXUS_DR_URL "https://dr-aix-nexus-01v.sccoa.si.c-s.fr/repository" CACHE STRING "Url of Nexus DR")
+set(CSTOOLKIT_NEXUS_ITAR_URL "https://itar-aix-nexus-01v.sccoa.si.c-s.fr/repository" CACHE STRING "Url of Nexus ITAR")
 
 set(CSTOOLKIT_PROJECT_VERSION 0.0.0.0 CACHE STRING "Version of the project, will set CMAKE_PROJECT_VERSION and PROJECT_VERSION")
 
@@ -72,6 +76,7 @@ option(CSTOOLKIT_USE_GIT_TAG_VERSION "Set project version from git tag or branch
 option(CSTOOLKIT_CPACK_RULES "Add CPack configuration to the project" OFF)
 option(CSTOOLKIT_AUTO_DEPLOY_QT "Add qt deploy rules to all Qt dependent executables" ON)
 option(CSTOOLKIT_PREFIX_OUTPUT_NAME "If ON, all targets ouput file are prefixed by project name" OFF)
+option(CSTOOLKIT_FETCH_PACKAGE_PREFER_MODULE "If ON, cstoolkit_fetch_package will search for Find<package> files before <package>Config files" OFF)
 
 ################################################################################
 #  Internal variables
