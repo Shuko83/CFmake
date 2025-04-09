@@ -3,10 +3,12 @@ find_package(Git QUIET)
 if(GIT_EXECUTABLE)
     execute_process(COMMAND ${GIT_EXECUTABLE} describe --always --abbrev=8
                     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_COMMIT)
+                    OUTPUT_VARIABLE CSTOOLKIT_GIT_COMMIT
+                    ERROR_QUIET)
     execute_process(COMMAND ${GIT_EXECUTABLE} status --short
                     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_STATUS)
+                    OUTPUT_VARIABLE CSTOOLKIT_GIT_STATUS
+                    ERROR_QUIET)
     if(NOT "${CSTOOLKIT_GIT_STATUS}" STREQUAL "")
         set(CSTOOLKIT_GIT_COMMIT "")
     endif()
@@ -18,11 +20,13 @@ if(GIT_EXECUTABLE)
 
     execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --abbrev-ref HEAD
                     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_BRANCH)
+                    OUTPUT_VARIABLE CSTOOLKIT_GIT_BRANCH
+                    ERROR_QUIET)
 
     execute_process(COMMAND ${GIT_EXECUTABLE} log -n 1 --pretty=%cd --pretty=%cI
                     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_DATE)
+                    OUTPUT_VARIABLE CSTOOLKIT_GIT_DATE
+                    ERROR_QUIET)
 
     string(STRIP "${CSTOOLKIT_GIT_COMMIT}" CSTOOLKIT_GIT_COMMIT)
     string(STRIP "${CSTOOLKIT_GIT_TAG}" CSTOOLKIT_GIT_TAG)
