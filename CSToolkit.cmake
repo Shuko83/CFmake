@@ -23,7 +23,8 @@ if(NOT PROJECT_NAME)
     return()
 endif()
 
-string(TIMESTAMP CSTOOLKIT_START_TIME "%s%f")
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Timer.cmake)
+cstoolkit_start_timer(CSTOOLKIT_CONFIGURE_TIMER)
 
 ################################################################################
 # GLOBAL MODIFIERS

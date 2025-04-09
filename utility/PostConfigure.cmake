@@ -1,11 +1,10 @@
 include(CMakePackageConfigHelpers)
 
 function(cstoolkit_post_configure)
-    string(TIMESTAMP CSTOOLKIT_CONFIGURE_TIME "%s%f")
-    math(EXPR elapsed "${CSTOOLKIT_CONFIGURE_TIME}-${CSTOOLKIT_START_TIME}")
-    math(EXPR second_elapsed "${elapsed}/1000000")
-    math(EXPR tenth_elapsed "(${elapsed}-${second_elapsed}*1000000+50000)/100000")
-    message(STATUS "CSToolkit: Configure done (${second_elapsed}.${tenth_elapsed}s)")
+    cstoolkit_end_timer(CSTOOLKIT_CONFIGURE_TIMER CSTOOLKIT_CONFIGURE_ELAPSED)
+    message(STATUS "CSToolkit: Configure done (${CSTOOLKIT_CONFIGURE_ELAPSED}s)")
+
+    cstoolkit_start_timer(CSTOOLKIT_POST_CONFIGURE_TIMER)
 
     get_property(CSTOOLKIT_INSTALL_TARGETS_ALL GLOBAL PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL)
 
@@ -78,11 +77,9 @@ function(cstoolkit_post_configure)
     foreach(target ${ALL_TARGETS})
         cstoolkit_compute_runtime_dependencies(${target})
     endforeach()
-    string(TIMESTAMP CSTOOLKIT_POST_CONFIGURE_TIME "%s%f")
-    math(EXPR elapsed "${CSTOOLKIT_POST_CONFIGURE_TIME}-${CSTOOLKIT_CONFIGURE_TIME}")
-    math(EXPR second_elapsed "${elapsed}/1000000")
-    math(EXPR tenth_elapsed "(${elapsed}-${second_elapsed}*1000000+50000)/100000")
-    message(STATUS "CSToolkit: Post-Configure done (${second_elapsed}.${tenth_elapsed}s)")
+
+    cstoolkit_end_timer(CSTOOLKIT_POST_CONFIGURE_TIMER CSTOOLKIT_POST_CONFIGURE_ELAPSED)
+    message(STATUS "CSToolkit: Post-Configure done (${CSTOOLKIT_POST_CONFIGURE_ELAPSED}s)")
 endfunction()
 
 function(cstoolkit_get_all_targets var)
