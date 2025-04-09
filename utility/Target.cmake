@@ -616,7 +616,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
         if(TARGET_PLUGINS)
             if(TARGET_PLUGINS_DIR)
-                message(AUTHOR_WARNING "Obsolete parameter PLUGINS_DIR, please use new form PLUGINS <plugins> DESTINATION <plugin_dir>")
+                message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_add_target: Obsolete parameter PLUGINS_DIR, please use new form PLUGINS <plugins> DESTINATION <plugin_dir>" ${COLOR_RESET})
                 if(TARGET_PLUGINSC GREATER 1 OR "DESTINATION" IN_LIST TARGET_PLUGINS)
                     message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Mixed usage of obsolete parameter PLUGINS_DIR with new PLUGINS syntax.")
                     return()
