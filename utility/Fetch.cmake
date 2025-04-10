@@ -5,13 +5,13 @@ macro(cstoolkit_fetch_artifactory fetch_artifactory_name)
     cmake_parse_arguments(_fetch_artifactory "${fetch_artifactory_OPTIONS}" "${fetch_artifactory_UNIQUE}" "${fetch_artifactory_MULTIPLE}" ${ARGN})
 
     if(_fetch_artifactory_URL)
-        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_artifactory: URL parameter deprecated, use cstoolkit_fetch_package(<package_name> <url> <options>)" ${COLOR_RESET})
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): URL parameter deprecated, use cstoolkit_fetch_package(<package_name> <url> <options>)" ${COLOR_RESET})
     endif()
 
     if(NOT _fetch_artifactory_URL AND NOT _fetch_artifactory_VERSION)
-        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory: VERSION or URL parameter must be defined.")
-    elseif((NOT _fetch_artifactory_URL) AND _fetch_artifactory_QT AND (NOT QT_VERSION))
-        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory: Qt was not found, unable to use option 'QT'")
+        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): VERSION or URL parameter must be defined.")
+    elseif(_fetch_artifactory_QT AND (NOT QT_VERSION))
+        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): Qt was not found, unable to use option 'QT'")
     else()
         if(NOT _fetch_artifactory_URL)
             _cstoolkit_internal_compute_url(_fetch_artifactory_URL ${CSTOOLKIT_ARTIFACTORY_URL} ${fetch_artifactory_name} ${ARGN})
@@ -44,9 +44,9 @@ macro(cstoolkit_fetch_nexus fetch_nexus_name)
     cmake_parse_arguments(_fetch_nexus "${fetch_nexus_OPTIONS}" "${fetch_nexus_UNIQUE}" "${fetch_nexus_MULTIPLE}" ${ARGN})
 
     if(NOT _fetch_nexus_VERSION)
-        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_nexus: VERSION parameter must be defined.")
+        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_nexus(${fetch_artifactory_name}): VERSION parameter must be defined.")
     elseif(_fetch_nexus_QT AND (NOT QT_VERSION))
-        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_nexus: Qt was not found, unable to use option 'QT'")
+        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_nexus(${fetch_artifactory_name}): Qt was not found, unable to use option 'QT'")
     else()
         # Calculating URL
         if(NOT _fetch_nexus_FOLDER)
@@ -84,7 +84,7 @@ endmacro()
 macro(cstoolkit_fetch_package fetch_package_name fetch_package_url)
     if(CSTOOLKIT_FETCH_${fetch_package_name}_URL)
         if(NOT CSTOOLKIT_FETCH_${fetch_package_name}_URL STREQUAL "${fetch_package_url}")
-            message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_package_name} url ignored in favor of Project ${CSTOOLKIT_FETCH_${fetch_package_name}_PROJECT} in file ${CSTOOLKIT_FETCH_${fetch_package_name}_SOURCE_DIR}." ${COLOR_RESET})
+            message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_package_name} url in project ${PROJECT_NAME} ignored in favor of project ${CSTOOLKIT_FETCH_${fetch_package_name}_PROJECT} in file ${CSTOOLKIT_FETCH_${fetch_package_name}_SOURCE_DIR}." ${COLOR_RESET})
         endif()
     else()
         set(CSTOOLKIT_FETCH_${fetch_package_name}_URL "${fetch_package_url}")
@@ -132,7 +132,7 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
 
         if(fetch_package_LEGACY)
             if(EXISTS "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake")
-                message(STATUS "CSToolkit: Overwriting ${fetch_package_name}Config.cmake with generated legacy suport Config file.")
+                message(STATUS "CSToolkit: Overwriting ${fetch_package_name}Config.cmake with generated legacy support Config file.")
             endif()
             configure_file(${CSTOOLKIT_ROOT_DIR}/templates/FetchLegacyConfig.${CSTOOLKIT_HOST_PLATFORM}.in "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake" @ONLY)
         endif()
@@ -211,6 +211,8 @@ function(_cstoolkit_internal_download _internal_download_url _internal_download_
             set(_internal_download_header "HTTPHEADER \"Authorization: Basic $ENV{NEXUS_ITAR_AUTH}\"")
         endif()
     endif()
+
+    # Add prompt to get credential if Autentication failed.
 
     # In part copied from FetchContect download-<name>-populate.cmake
     file(DOWNLOAD "${_internal_download_url}" "${_internal_download_dir}/${_internal_download_filename}"
