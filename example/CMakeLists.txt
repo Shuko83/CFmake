@@ -1,5 +1,5 @@
 # cmake_minimum_required is mandatory
-# CSToolkit curently require 3.27 minimum
+# CSToolkit currently require 3.27 minimum
 cmake_minimum_required(VERSION 3.27)
 
 # call to project is mandatory

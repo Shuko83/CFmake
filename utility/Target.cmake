@@ -145,7 +145,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
     endif()
 
-    # Ouput dirs
+    # Output dirs
 
     set_target_properties(${TARGET_NAME} PROPERTIES
         ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
@@ -496,7 +496,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     list(APPEND _qt_modules ${TARGET_PRIVATE_LINK_LIBRARIES})
     list(FILTER _qt_modules INCLUDE REGEX "^Qt5::")
     if(_qt_modules AND TARGET_SHARED_AND_STATIC)
-        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Unsuported Qt dependency with SHARED_AND_STATIC target")
+        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Unsupported Qt dependency with SHARED_AND_STATIC target")
     elseif(_qt_modules AND NOT TARGET_INTERFACE )
 
         # MOC

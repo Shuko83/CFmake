@@ -75,7 +75,7 @@ option(CSTOOLKIT_COMMON_CPPRULES "Include common DivST Cpp Rules" ON)
 option(CSTOOLKIT_USE_GIT_TAG_VERSION "Set project version from git tag or branch name if possible" OFF)
 option(CSTOOLKIT_CPACK_RULES "Add CPack configuration to the project" OFF)
 option(CSTOOLKIT_AUTO_DEPLOY_QT "Add qt deploy rules to all Qt dependent executables" ON)
-option(CSTOOLKIT_PREFIX_OUTPUT_NAME "If ON, all targets ouput file are prefixed by project name" OFF)
+option(CSTOOLKIT_PREFIX_OUTPUT_NAME "If ON, all targets output file are prefixed by project name" OFF)
 option(CSTOOLKIT_FETCH_PACKAGE_PREFER_MODULE "If ON, cstoolkit_fetch_package will search for Find<package> files before <package>Config files" OFF)
 
 ################################################################################
