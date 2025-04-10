@@ -35,12 +35,12 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     cmake_parse_arguments(PARSE_ARGV 2 TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE};${TARGET_REPETITIVE}")
 
     if(TARGET_NAME STREQUAL "")
-        message(SEND_ERROR "CSToolkit: add_target(): No NAME defined for target")
+        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(): No NAME defined for target")
         return()
     endif()
 
     if(DEFINED TARGET_UNPARSED_ARGUMENTS)
-        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
+        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
         return()
     endif()
 
@@ -62,7 +62,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_SHARED TRUE)
         set(TARGET_STATIC TRUE)
     else()
-        message(SEND_ERROR "CSToolkit: add_target(): Incorrect TARGET_TYPE \"${TARGET_TYPE}\" for target \"${TARGET_NAME}\". Must be either EXECUTABLE, SHARED, STATIC or INTERFACE.")
+        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid TARGET_TYPE \"${TARGET_TYPE}\"")
         return()
     endif()
 
@@ -73,7 +73,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     if(TARGET_ALIAS)
-        message(WARNING "Obsolete parameter ALIAS, please use NAMESPACE.")
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): ALIAS parameter deprecated, use NAMESPACE" ${COLOR_RESET})
     endif()
 
     # Library
@@ -321,8 +321,10 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # this option allows to add all include subdirectories to private include directories
     # RECURSIVE_INTERFACE_INCLUDE also adds to interface include directories
     if(TARGET_INTERFACE AND TARGET_RECURSIVE_INCLUDE)
-        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): RECURSIVE_INCLUDE is not available for INTERFACE target. Use RECURSIVE_INTERFACE_INCLUDE instead.")
-    elseif(TARGET_RECURSIVE_INCLUDE OR TARGET_RECURSIVE_INTERFACE_INCLUDE)
+        set(TARGET_RECURSIVE_INTERFACE_INCLUDE 1)
+        unset(TARGET_RECURSIVE_INCLUDE)
+    endif()
+    if(TARGET_RECURSIVE_INCLUDE OR TARGET_RECURSIVE_INTERFACE_INCLUDE)
         foreach(_public_header_file ${TARGET_PUBLIC_HEADERS_FILES})
             get_filename_component(_public_header_dir "${_public_header_file}" PATH)
             list(APPEND TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS ${_public_header_dir})
@@ -382,7 +384,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     if(TARGET_EXECUTABLE OR TARGET_SHARED)
 	    target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
     elseif(TARGET_LINK_OPTIONS)
-        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): LINK_OPTIONS defined for target with no link step.")
+        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter LINK_OPTIONS for ${TARGET_TYPE} target")
     endif()
 
     # Links
@@ -391,7 +393,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         target_link_libraries(${TARGET_NAME}
             INTERFACE ${TARGET_PUBLIC_LINK_LIBRARIES})
         if(TARGET_PRIVATE_LINK_LIBRARIES)
-            message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): PRIVATE_LINK_LIBRARIES is not available for INTERFACE target.")
+            message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter PRIVATE_LINK_LIBRARIES for ${TARGET_TYPE} target")
         endif()
     else()
         target_link_libraries(${TARGET_NAME}
@@ -486,7 +488,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             endif()
         endif()
     elseif(TARGET_COMBINED_LINK_LIBRARIES)
-        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): TARGET_COMBINED_LINK_LIBRARIES defined for non-static target.")
+        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter COMBINED_LINK_LIBRARIES for ${TARGET_TYPE} target")
     endif()
 
     # Qt
@@ -494,7 +496,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     list(APPEND _qt_modules ${TARGET_PRIVATE_LINK_LIBRARIES})
     list(FILTER _qt_modules INCLUDE REGEX "^Qt5::")
     if(_qt_modules AND TARGET_SHARED_AND_STATIC)
-        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unsuported Qt dependency with SHARED_AND_STATIC option.")
+        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Unsuported Qt dependency with SHARED_AND_STATIC target")
     elseif(_qt_modules AND NOT TARGET_INTERFACE )
 
         # MOC
@@ -616,12 +618,12 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
         if(TARGET_PLUGINS)
             if(TARGET_PLUGINS_DIR)
-                message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_add_target: Obsolete parameter PLUGINS_DIR, please use new form PLUGINS <plugins> DESTINATION <plugin_dir>" ${COLOR_RESET})
                 if(TARGET_PLUGINSC GREATER 1 OR "DESTINATION" IN_LIST TARGET_PLUGINS)
-                    message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Mixed usage of obsolete parameter PLUGINS_DIR with new PLUGINS syntax.")
-                    return()
+                    message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter PLUGINS_DIR")
+                else()
+                    message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): PLUGINS_DIR parameter deprecated, use PLUGINS <plugins> DESTINATION <plugin_dir>" ${COLOR_RESET})
+                    list(APPEND TARGET_PLUGINSV0 DESTINATION "${TARGET_PLUGINS_DIR}")
                 endif()
-                list(APPEND TARGET_PLUGINSV0 DESTINATION "${TARGET_PLUGINS_DIR}")
             endif()
 
             # We manipulate the list to always have root destination "/" in index 0
@@ -636,8 +638,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             foreach(target_plugins_args ${TARGET_PLUGINSV})
                 cmake_parse_arguments(${target_plugins_args} "" "DESTINATION" "PLUGINS" ${${target_plugins_args}})
                 if(DEFINED ${target_plugins_args}_UNPARSED_ARGUMENTS)
-                    message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unkown arguments \"${${target_plugins_args}_UNPARSED_ARGUMENTS}\"")
-                    return()
+                    message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Unkown arguments \"${${target_plugins_args}_UNPARSED_ARGUMENTS}\"")
+                    continue()
                 endif()
 
                 if(NOT ${target_plugins_args}_PLUGINS)
@@ -757,7 +759,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             endwhile()
         endif()
     elseif(TARGET_PLUGINS)
-        message(SEND_ERROR "CSToolkit: add_target(${TARGET_NAME}): Unsuported argument PLUGINS for non-executable target.")
+        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter PLUGINS for ${TARGET_TYPE} target")
     endif()
 
     # Deploy of .deploy files

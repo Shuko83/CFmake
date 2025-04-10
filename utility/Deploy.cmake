@@ -9,12 +9,12 @@ function(cstoolkit_deploy_with_target target mode)
     cmake_parse_arguments(PARSE_ARGV 1 DEPLOY "${DEPLOY_OPTIONS}" "${DEPLOY_UNIQUE}" "${DEPLOY_MULTIPLE}")
 
     if(NOT TARGET ${target})
-        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target: \"${target}\" is not a target.")
+        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target(${target}): \"${target}\" is not a target")
         return()
     endif()
 
     if(NOT "${mode}" STREQUAL "FILES" AND NOT "${mode}" STREQUAL "DIRECTORY")
-        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target(${target}): Invalid argument \"${mode}\".")
+        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target(${target}): Invalid sub-command \"${mode}\"")
         return()
     endif()
 

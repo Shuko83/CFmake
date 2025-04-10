@@ -19,7 +19,7 @@ if(POLICY CMP0174)
 endif()
 
 if(NOT PROJECT_NAME)
-    message(FATAL_ERROR "CSToolkit: CSToolkit should be included after top level project() call.")
+    message(FATAL_ERROR "CSToolkit: CSToolkit.cmake included before top level project() call")
     return()
 endif()
 

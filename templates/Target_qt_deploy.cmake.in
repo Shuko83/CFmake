@@ -24,5 +24,5 @@ execute_process(
 )
 
 if(result)
-    message(FATAL_ERROR "Executing @QT_DEPLOY_TOOL@ failed: ${result}")
+    message(FATAL_ERROR "Executing @QT_DEPLOY_TOOL@ failed")
 endif()
