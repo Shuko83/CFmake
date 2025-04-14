@@ -236,26 +236,28 @@ ${log}        --- LOG END ---
 endfunction()
 
 function(_cstoolkit_internal_extract _internal_extract_file _internal_extract_dir)
-    file(REMOVE_RECURSE "${_internal_extract_dir}")
-    file(MAKE_DIRECTORY "${_internal_extract_dir}")
+    cmake_path(GET _internal_extract_file PARENT_PATH _internal_extract_temp_dir)
+    set(_internal_extract_temp_dir "${_internal_extract_temp_dir}/tmp")
+    file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
+    file(MAKE_DIRECTORY "${_internal_extract_temp_dir}")
     execute_process(COMMAND ${CMAKE_COMMAND} -E tar x "${_internal_extract_file}" --touch
-        WORKING_DIRECTORY "${_internal_extract_dir}"
+        WORKING_DIRECTORY "${_internal_extract_temp_dir}"
         RESULT_VARIABLE _fetch_package_extract_rv
         OUTPUT_VARIABLE _fetch_package_extract_output
         ERROR_VARIABLE  _fetch_package_extract_output
     )
 
     if(NOT _fetch_package_extract_rv EQUAL 0)
-        file(REMOVE_RECURSE "${_internal_extract_dir}")
+        file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
         message(FATAL_ERROR "CSToolkit: Extracting of '${_internal_extract_file}' failed
 ${_fetch_package_extract_output}")
         return()
     endif()
 
     # Analyze what came out of the tar file:
-    file(GLOB contents "${_internal_extract_dir}/*")
+    file(GLOB contents "${_internal_extract_temp_dir}/*")
     if(contents STREQUAL "")
-        file(REMOVE_RECURSE "${_internal_extract_dir}")
+        file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
         file(SIZE "_internal_extract_file}" file_size)
         _cstoolkit_internal_format_size(file_size)
         message(FATAL_ERROR "CSToolkit: Extracting of '${_internal_extract_file}' failed
@@ -264,15 +266,22 @@ File size: ${file_size}")
         return()
     endif()
 
-    # FetchContent extract in another directory and remove top level directory if exists
-    #list(LENGTH contents n)
-    #if(NOT n EQUAL 1 OR NOT IS_DIRECTORY "${contents}")
-    #    set(contents "${ut_dir}")
-    #endif()
-    #file(REMOVE_RECURSE ${directory})
-    #get_filename_component(contents ${contents} ABSOLUTE)
-    #file(RENAME ${contents} ${directory})
-    #file(REMOVE_RECURSE "${ut_dir}")
+    file(MAKE_DIRECTORY "${_internal_extract_dir}")
+    file(REMOVE_RECURSE "${_internal_extract_dir}")
+
+    # Remove top level directory if exists
+    list(LENGTH contents n)
+    if(NOT n EQUAL 1 OR NOT IS_DIRECTORY "${contents}")
+        set(contents "${_internal_extract_temp_dir}")
+    endif()
+    file(RENAME "${contents}" "${_internal_extract_dir}" RESULT _fetch_package_extract_rv)
+    file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
+    if(NOT _fetch_package_extract_rv EQUAL 0)
+        file(REMOVE_RECURSE "${_internal_extract_dir}")
+        message(FATAL_ERROR "CSToolkit: Extracting of '${_internal_extract_file}' failed
+${_fetch_package_extract_rv}")
+        return()
+    endif()
 endfunction()
 
 function(cstoolkit_download_url URL OUTPUT_VAR)
