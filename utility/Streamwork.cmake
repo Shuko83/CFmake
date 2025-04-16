@@ -14,7 +14,7 @@ function(cstoolkit_streamwork_generate_devpaths target)
     # Parse arguments
     set(DEVPATHS_OPTIONS)
     set(DEVPATHS_UNIQUE OUTPUT)
-    set(DEVPATHS_MULTIPLE)
+    set(DEVPATHS_MULTIPLE ADDITIONAL_DIRS)
     cmake_parse_arguments(PARSE_ARGV 1 DEVPATHS "${DEVPATHS_OPTIONS}" "${DEVPATHS_UNIQUE}" "${DEVPATHS_MULTIPLE}")
 
     if(NOT DEVPATHS_OUTPUT)
@@ -34,7 +34,7 @@ function(cstoolkit_streamwork_generate_devpaths target)
     set(DEVPATHS_DIRS "$<LIST:REMOVE_DUPLICATES,${DEVPATHS_DIRS}>")
     set(DEVPATHS_DIRS "$<JOIN:${DEVPATHS_DIRS},;>") # remove empty elements
     set(DEVPATHS_DIRS "$<LIST:TRANSFORM,${DEVPATHS_DIRS},REPLACE,(.+),${DOLLAR}<${GENEX_TARGET_EXISTS}:${DOLLAR}<${GENEX_TARGET_PLUGIN}:${DOLLAR}<TARGET_FILE_DIR:\\0$<ANGLE-R>$<ANGLE-R>$<ANGLE-R>>")
-    set(DEVPATHS_DIRS "$<TARGET_GENEX_EVAL:${target},${DEVPATHS_DIRS}>")
+    set(DEVPATHS_DIRS "$<TARGET_GENEX_EVAL:${target},${DEVPATHS_ADDITIONAL_DIRS};${DEVPATHS_DIRS}>")
     set(DEVPATHS_DIRS "$<LIST:REMOVE_DUPLICATES,${DEVPATHS_DIRS}>")
     set(DEVPATHS_DIRS "$<JOIN:${DEVPATHS_DIRS},;>") # remove empty elements
 
@@ -99,7 +99,7 @@ function(cstoolkit_streamwork_generate_launchers target)
     file(GENERATE OUTPUT ${target}Launcher$<CONFIG>.bat
         CONTENT "${SW_COMMAND} ${SW_ARGUMENTS_COMMAND}")  
 
-    if(WIN32)
+    if(MSVC)
         set_target_properties(${target} PROPERTIES VS_DEBUGGER_COMMAND ${SW_COMMAND})
         set_target_properties(${target} PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS "${SW_ARGUMENTS_COMMAND}")
     endif()
