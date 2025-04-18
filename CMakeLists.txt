@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.21)
 
 project(Streamwork)
 
+set(CSTOOLKIT_AUTO_DEPLOY_QT OFF)
+
 if(PROJECT_IS_TOP_LEVEL)
     include("${CMAKE_SOURCE_DIR}/cstoolkit/CSToolkitStarlinx.cmake")
     cstoolkit_fetch_artifactory("QstBase" VERSION "2.1.3" FOLDER "release/Libraries/Qst" QT)
