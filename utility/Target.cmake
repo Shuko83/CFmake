@@ -506,7 +506,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 ${TARGET_SOURCES_FILES}
             )
 
-            target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/moc)
+            target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/$<LOWER_CASE:$<CONFIG>>)
 
             target_sources(${TARGET_NAME} PRIVATE ${MOC_FILES})
             cstoolkit_source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${MOC_FILES})
@@ -516,7 +516,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if(NOT CMAKE_AUTOUIC)
             cstoolkit_qt_wrap_ui(UIC_FILES ${TARGET_UI_FILES})
 
-            target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/uic)
+            target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/uic/$<LOWER_CASE:$<CONFIG>>)
 
             target_sources(${TARGET_NAME} PRIVATE ${UIC_FILES})
             cstoolkit_source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${UIC_FILES})

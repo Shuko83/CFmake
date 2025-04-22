@@ -58,6 +58,10 @@ function(cstoolkit_source_group)
 
     cmake_parse_arguments(PARSE_ARGV 0 PARAM "${PARAM_OPTIONS}" "${PARAM_UNIQUE}" "${PARAM_MULTIPLE}")
 
+    if(PARAM_FILES MATCHES "\\$<")
+        cstoolkit_genex_eval(PARAM_FILES)
+    endif()
+
     foreach(_tree ${PARAM_TREE})
         set(_files "${PARAM_FILES}")
         list(FILTER _files INCLUDE REGEX "^${_tree}/")

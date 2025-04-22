@@ -115,7 +115,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
     set(moc_target ${_WRAP_CPP_TARGET})
     set(moc_depends ${_WRAP_CPP_DEPENDS})
 
-    set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/mocinclude.tmp)
+    set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/$<LOWER_CASE:$<CONFIG>>/mocinclude.tmp)
 
     #filter generator expression moc_files
     cstoolkit_genex_extract("${moc_files}" moc_files _null)
@@ -128,9 +128,6 @@ function(cstoolkit_qt_wrap_cpp outfiles)
         # get include dirs
         set(targetincludes "$<TARGET_PROPERTY:${moc_target},INCLUDE_DIRECTORIES>")
         set(targetincludes "$<$<BOOL:${targetincludes}>:-I$<JOIN:${targetincludes},\n-I>\n>")
-
-        set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/mocinclude-$<LOWER_CASE:$<CONFIG>>.tmp)
-
     endif()
 
     file(GENERATE
@@ -143,10 +140,10 @@ function(cstoolkit_qt_wrap_cpp outfiles)
         get_filename_component(infile ${it} ABSOLUTE)
         get_filename_component(extension ${it} LAST_EXT)
         if(extension STREQUAL ".cpp" OR extension STREQUAL ".cxx" OR extension STREQUAL ".c")
-            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/${outfile}.moc)
+            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/$<LOWER_CASE:$<CONFIG>>/${outfile}.moc)
             set(COMMAND_DEPENDENCIES DEPENDS ${infile} ${moc_depends} ${_moc_include_file})
         else()
-            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/moc_${outfile}.cpp)
+            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/$<LOWER_CASE:$<CONFIG>>/moc_${outfile}.cpp)
             set(COMMAND_DEPENDENCIES MAIN_DEPENDENCY ${infile} DEPENDS ${moc_depends} ${_moc_include_file})
         endif()
         cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
@@ -174,8 +171,8 @@ function(cstoolkit_qt_wrap_cpp outfiles)
             COMMENT "MOC ${relpath}"
             COMMAND_EXPAND_LISTS)
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTOUIC ON)
-        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
-        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
+        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
+        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outfiles} ${outfile})
     endforeach()
 
@@ -183,7 +180,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
     foreach(_moc ${${outfiles}})
         get_filename_component(_shortmoc "${_moc}" NAME)
         if("${_shortmoc}" IN_LIST _filtered_mocs)
-            set_source_files_properties("${_moc}" PROPERTIES HEADER_FILE_ONLY TRUE)
+            cstoolkit_set_genex_source_file_properties("${_moc}" PROPERTIES HEADER_FILE_ONLY TRUE)
         endif()
     endforeach()
 
@@ -204,19 +201,19 @@ function(cstoolkit_qt_wrap_ui outfiles)
 
     foreach(it ${ui_files})
         get_filename_component(outfile ${it} NAME_WE)
-        set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/uic/ui_${outfile}.h)
+        set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/uic/$<LOWER_CASE:$<CONFIG>>/ui_${outfile}.h)
         get_filename_component(infile ${it} ABSOLUTE)
         cmake_path(RELATIVE_PATH infile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE relpath)
 
         add_custom_command(OUTPUT ${outfile}
-            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/uic
+            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/uic/$<LOWER_CASE:$<CONFIG>>
             COMMAND ${Qt5Widgets_UIC_EXECUTABLE}
             ARGS ${ui_options} -o ${outfile} ${infile}
             MAIN_DEPENDENCY ${infile} VERBATIM
             COMMENT "UIC ${relpath}")
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTOUIC ON)
-        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
-        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
+        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
+        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outfiles} ${outfile})
     endforeach()
 
@@ -274,8 +271,8 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTORCC ON)
 
         if(RC_TOTAL_FILE_SIZE GREATER CSTOOLKIT_QT_BIG_RESOURCES_THRESHOLD) # big_resources
-            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}-$<LOWER_CASE:$<CONFIG>>${CMAKE_C_OUTPUT_EXTENSION})
-            set(tmpoutfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}.cpp)
+            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>/qrc_${outfilename}${CMAKE_C_OUTPUT_EXTENSION})
+            set(tmpoutfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>/qrc_${outfilename}.cpp)
             if(TARGET_NAME)
                 if(TARGET_NAME STREQUAL outfilename)
                     set(rcctarget ${TARGET_NAME}_rcc)
@@ -286,7 +283,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                 set(rcctarget rcc_${outfilename})
             endif()
             add_custom_command(OUTPUT ${tmpoutfile}
-                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc
+                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>
                             COMMAND ${Qt5Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --pass 1 --output ${tmpoutfile} ${infile}
                             DEPENDS ${infile} ${_rc_depends} VERBATIM
@@ -305,17 +302,17 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                             VERBATIM
                             COMMENT "RCC PASS2 ${relpath}")
         else()
-            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/qrc_${outfilename}.cpp)
+            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>/qrc_${outfilename}.cpp)
             add_custom_command(OUTPUT ${outfile}
-                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc
+                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>
                             COMMAND ${Qt5Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --output ${outfile} ${infile}
                             MAIN_DEPENDENCY ${infile}
                             DEPENDS ${_rc_depends} VERBATIM
                             COMMENT "RCC ${relpath}")
         endif()
-        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
-        set_source_files_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
+        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
+        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outcppfiles} ${outfile})
         list(APPEND ${outrscfiles} ${_rc_depends})
     endforeach()
