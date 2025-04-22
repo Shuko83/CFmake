@@ -7,6 +7,9 @@ macro(cstoolkit_fetch_artifactory fetch_artifactory_name)
     if(_fetch_artifactory_URL)
         message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): URL parameter deprecated, use cstoolkit_fetch_package(<package_name> <url> <options>)" ${COLOR_RESET})
     endif()
+    if(_fetch_artifactory_ALIAS)
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): ALIAS parameter deprecated, use cstoolkit_fetch_package(<package_name> <url> <options>)" ${COLOR_RESET})
+    endif()
 
     if(NOT _fetch_artifactory_URL AND NOT _fetch_artifactory_VERSION)
         message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): Missing mandatory parameter VERSION")
@@ -42,6 +45,10 @@ macro(cstoolkit_fetch_nexus fetch_nexus_name)
     set(fetch_nexus_UNIQUE VERSION FOLDER ALIAS)
     set(fetch_nexus_MULTIPLE)
     cmake_parse_arguments(_fetch_nexus "${fetch_nexus_OPTIONS}" "${fetch_nexus_UNIQUE}" "${fetch_nexus_MULTIPLE}" ${ARGN})
+
+    if(_fetch_artifactory_ALIAS)
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_nexus(${fetch_artifactory_name}): ALIAS parameter deprecated, use cstoolkit_fetch_package(<package_name> <url> <options>)" ${COLOR_RESET})
+    endif()
 
     if(NOT _fetch_nexus_VERSION)
         message(SEND_ERROR "CSToolkit: cstoolkit_fetch_nexus(${fetch_artifactory_name}): Missing mandatory parameter VERSION")
@@ -104,6 +111,9 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
     set(_fetch_package_download_dir "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/${fetch_package_name}")
     set(_fetch_package_extract_dir "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}")
     cmake_path(GET fetch_package_url FILENAME _fetch_package_filename)
+
+    # Reconfigure if file modified
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${_fetch_package_download_dir}/download.stamp")
 
     # Get previous URL
     if(EXISTS "${_fetch_package_download_dir}/download.stamp")
