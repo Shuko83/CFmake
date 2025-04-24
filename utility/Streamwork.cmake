@@ -82,7 +82,7 @@ function(cstoolkit_streamwork_generate_launchers target)
     endif()
 
     set(SW_COMMAND "$<TARGET_FILE:Streamwork::StreamWorkEditor>")
-    set(SW_ARGUMENTS_COMMAND "-autoStart -appDirPath ${option_APP_DIR_PATH} -pdesc ${option_DEVPATH}")
+    set(SW_ARGUMENTS_COMMAND "-autostart -appDirPath ${option_APP_DIR_PATH} -pdesc ${option_DEVPATH}")
     
     if(option_MODELS)
         string(APPEND SW_ARGUMENTS_COMMAND " -models ${option_MODELS}")
