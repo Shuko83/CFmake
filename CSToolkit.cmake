@@ -1,21 +1,19 @@
 # Include guard to avoid double inclusion of cstoolkit
 if(__CSTOOLKIT_GUARD__)
-  return()
+    return()
 endif()
-set(__CSTOOLKIT_GUARD__ TRUE)
+set(__CSTOOLKIT_GUARD__ 1)
 
 cmake_minimum_required(VERSION 3.27)
 
 if(POLICY CMP0144)
-  cmake_policy(SET CMP0144 NEW)
+    cmake_policy(SET CMP0144 NEW)
 endif()
-
 if(POLICY CMP0152)
-  cmake_policy(SET CMP0152 NEW)
+    cmake_policy(SET CMP0152 NEW)
 endif()
-
 if(POLICY CMP0174)
-  cmake_policy(SET CMP0174 NEW)
+    cmake_policy(SET CMP0174 NEW)
 endif()
 
 if(NOT PROJECT_NAME)
@@ -23,7 +21,13 @@ if(NOT PROJECT_NAME)
     return()
 endif()
 
+################################################################################
+#  Early Includes
+################################################################################
+
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Timer.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Conan.cmake)
+
 cstoolkit_start_timer(CSTOOLKIT_CONFIGURE_TIMER)
 
 ################################################################################
@@ -77,6 +81,13 @@ option(CSTOOLKIT_CPACK_RULES "Add CPack configuration to the project" OFF)
 option(CSTOOLKIT_AUTO_DEPLOY_QT "Add qt deploy rules to all Qt dependent executables" ON)
 option(CSTOOLKIT_PREFIX_OUTPUT_NAME "If ON, all targets output file are prefixed by project name" OFF)
 option(CSTOOLKIT_FETCH_PACKAGE_PREFER_MODULE "If ON, cstoolkit_fetch_package will search for Find<package> files before <package>Config files" OFF)
+if(CONAN)
+    option(CSTOOLKIT_GENERATE_FETCH_DEPENDENCY "If ON, calls to cstoolkit_fetch_dependency will be generated in Config files" OFF)
+    option(CSTOOLKIT_FETCH_DEPENDENCY "If OFF, calls to cstoolkit_fetch_dependency will do nothing" OFF)
+else()
+    option(CSTOOLKIT_GENERATE_FETCH_DEPENDENCY "If ON, calls to cstoolkit_fetch_dependency will be generated in Config files" ON)
+    option(CSTOOLKIT_FETCH_DEPENDENCY "If OFF, calls to cstoolkit_fetch_dependency will do nothing" ON)
+endif()
 
 ################################################################################
 #  Internal variables
@@ -85,6 +96,12 @@ option(CSTOOLKIT_FETCH_PACKAGE_PREFER_MODULE "If ON, cstoolkit_fetch_package wil
 set(CSTOOLKIT_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/cstoolkit_copy.cmake" --)
 set(CSTOOLKIT_INSTALL_TARGETS_ALL)
+add_custom_target(CSTOOLKIT)
+if(PREDEFINED_TARGETS_FOLDER)
+    set_target_properties(CSTOOLKIT PROPERTIES FOLDER ${PREDEFINED_TARGETS_FOLDER})
+else()
+    set_target_properties(CSTOOLKIT PROPERTIES FOLDER "CMakePredefinedTargets")
+endif()
 
 ################################################################################
 # Legacy Support
@@ -100,7 +117,6 @@ endif()
 ################################################################################
 
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Color.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/utility/Conan.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/BuildType.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Arguments.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/File.cmake)
