@@ -270,9 +270,13 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
 
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTORCC ON)
 
+        set(outdir ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>)
+
         if(RC_TOTAL_FILE_SIZE GREATER CSTOOLKIT_QT_BIG_RESOURCES_THRESHOLD) # big_resources
-            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>/qrc_${outfilename}${CMAKE_C_OUTPUT_EXTENSION})
-            set(tmpoutfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>/qrc_${outfilename}.cpp)
+            # File name must be different between configuration because of CMake bug regarding $<TARGET_OBJECTS:${rcctarget}>
+            # https://gitlab.kitware.com/cmake/cmake/-/issues/26601
+            set(outfile ${outdir}/qrc_${outfilename}-$<LOWER_CASE:$<CONFIG>>${CMAKE_C_OUTPUT_EXTENSION})
+            set(tmpoutfile ${outdir}/qrc_${outfilename}-$<LOWER_CASE:$<CONFIG>>.cpp)
             if(TARGET_NAME)
                 if(TARGET_NAME STREQUAL outfilename)
                     set(rcctarget ${TARGET_NAME}_rcc)
@@ -283,7 +287,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                 set(rcctarget rcc_${outfilename})
             endif()
             add_custom_command(OUTPUT ${tmpoutfile}
-                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>
+                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${outdir}
                             COMMAND ${Qt5Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --pass 1 --output ${tmpoutfile} ${infile}
                             DEPENDS ${infile} ${_rc_depends} VERBATIM
@@ -302,9 +306,9 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                             VERBATIM
                             COMMENT "RCC PASS2 ${relpath}")
         else()
-            set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>/qrc_${outfilename}.cpp)
+            set(outfile ${outdir}/qrc_${outfilename}.cpp)
             add_custom_command(OUTPUT ${outfile}
-                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>
+                            COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${outdir}
                             COMMAND ${Qt5Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --output ${outfile} ${infile}
                             MAIN_DEPENDENCY ${infile}
