@@ -45,6 +45,7 @@ const char * VL_Version = "%1\n\
 						  Description\n\
 						  StreamWorkEditor\n\
 						  Build on %2 at %3\n";
+#define EXIT_NO_LICENSE 2
 
 namespace
 {
@@ -147,7 +148,16 @@ int main(int argc, char *argv[])
 	Parameters params = readParamaters();
 
 	// Licence
-	SW_APP->setProductId(licenseId::ProductId::Product_STREAMWORK);
+	try 
+    {
+        SW_APP->setProductId(licenseId::ProductId::Product_SX);
+    }
+    catch (StreamWork::SwCore::SwException&)
+    {
+        QMessageBox::information(nullptr, QStringLiteral("No license"), QStringLiteral("No licence runtime for product Starlinx3 could be found."), QMessageBox::Ok);
+        return EXIT_NO_LICENSE;
+    }
+	
 	ProductLicense productLicense(licenseId::ProductId::Product_STREAMWORK);
 	bool licenseLost = false;
 	QObject::connect(&productLicense, &ProductLicense::error, [&licenseLost]() {licenseLost = true; qApp->exit(EXIT_FAILURE); });

@@ -198,7 +198,8 @@ namespace StreamWork
 			void enableAutoStart();
 			/*! \brief connaitre l'etat du mode developpeur*/
 			bool developerMode() const;
-            /*! \brief Set le product id pour les licences */
+            /*! \brief Set le product id pour les licences 
+            Cette méthode throw une exception si la licence n'est pas disponible pour le produit spécifié*/
             void setProductId(uint32_t productId);
 
             //------------------------------------------------------------------------
