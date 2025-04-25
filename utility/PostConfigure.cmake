@@ -2,67 +2,84 @@ include(CMakePackageConfigHelpers)
 
 function(cstoolkit_post_configure)
     cstoolkit_end_timer(CSTOOLKIT_CONFIGURE_TIMER CSTOOLKIT_CONFIGURE_ELAPSED)
-    message(STATUS "CSToolkit: Configure done (${CSTOOLKIT_CONFIGURE_ELAPSED}s)")
+    message(STATUS "CSToolkit: Pre-Configure done (${CSTOOLKIT_CONFIGURE_ELAPSED}s)")
 
     cstoolkit_start_timer(CSTOOLKIT_POST_CONFIGURE_TIMER)
 
-    get_property(CSTOOLKIT_INSTALL_TARGETS_ALL GLOBAL PROPERTY CSTOOLKIT_INSTALL_TARGETS_ALL)
+    get_property(CSTOOLKIT_INSTALLED_TARGETS GLOBAL PROPERTY CSTOOLKIT_INSTALLED_TARGETS)
 
     # Fichier Config
     set(CSTOOLKIT_INSTALL_TARGETS_MISSING ${CSTOOLKIT_INSTALL_TARGETS})
-    list(REMOVE_ITEM CSTOOLKIT_INSTALL_TARGETS_MISSING ${CSTOOLKIT_INSTALL_TARGETS_ALL})
+    list(REMOVE_ITEM CSTOOLKIT_INSTALL_TARGETS_MISSING ${CSTOOLKIT_INSTALLED_TARGETS})
 
     if(CSTOOLKIT_INSTALL_TARGETS_MISSING)
         list(JOIN CSTOOLKIT_INSTALL_TARGETS_MISSING ", " CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING)
         message(SEND_ERROR "CSToolkit: Could not find specified targets in CSTOOLKIT_INSTALL_TARGETS: ${CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING}")
-    elseif(NOT CSTOOLKIT_INSTALL_TARGETS_ALL)
+    elseif(NOT CSTOOLKIT_INSTALLED_TARGETS)
         message(STATUS "CSToolkit: Install mode: No Install")
     else()
         # Detection de la methode d'install
-        list(LENGTH CSTOOLKIT_INSTALL_TARGETS CSTOOLKIT_INSTALL_TARGETS_NB)
+        list(LENGTH CSTOOLKIT_INSTALLED_TARGETS CSTOOLKIT_INSTALLED_TARGETS_NB)
 
-        if(CSTOOLKIT_INSTALL_TARGETS_NB EQUAL 1) # mode single component
+        if(CSTOOLKIT_INSTALLED_TARGETS_NB EQUAL 1) # mode single component
             message(STATUS "CSToolkit: Install mode: Single Component")
+            set(CSTOOLKIT_CMAKEDIR "cmake")
+
+            get_target_property(TARGET_INSTALL_DESTINATION_DEFAULT ${CSTOOLKIT_INSTALLED_TARGETS} INSTALL_DESTINATION_DEFAULT) # READONLY
+            get_target_property(TARGET_INSTALL_DESTINATION ${CSTOOLKIT_INSTALLED_TARGETS} INSTALL_DESTINATION)
+            
+            if(INSTALL_DESTINATION_DEFAULT STREQUAL TARGET_INSTALL_DESTINATION_DEFAULT)
+                set_target_properties(${CSTOOLKIT_INSTALLED_TARGETS} PROPERTIES INSTALL_DESTINATION ".")
+            endif()
+
+            set_target_properties(${CSTOOLKIT_INSTALLED_TARGETS} PROPERTIES INSTALL_CONFIG_NAME "${PROJECT_NAME}")
+
+            set_target_properties(${CSTOOLKIT_INSTALLED_TARGETS} PROPERTIES INSTALL_CMAKEDIR "${CSTOOLKIT_CMAKEDIR}")
 
             # We use the config of the target directly
             # no need to generate a project level config file
             write_basic_package_version_file(
-                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+                ${CMAKE_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
                 VERSION ${PROJECT_VERSION}
                 COMPATIBILITY SameMinorVersion
             )
-        
+
             install(FILES
-                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-                DESTINATION cmake
+                ${CMAKE_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+                DESTINATION "${CSTOOLKIT_CMAKEDIR}"
             )
         else() # mode multi component
             message(STATUS "CSToolkit: Install mode: Multi Component")
 
-            set(FIND_REQUIRED_COMPONENTS_LIST "${CSTOOLKIT_INSTALL_TARGETS_ALL}")
-            list(TRANSFORM FIND_REQUIRED_COMPONENTS_LIST PREPEND "    set(${PROJECT_NAME}_FIND_REQUIRED_")
-            list(TRANSFORM FIND_REQUIRED_COMPONENTS_LIST APPEND " 1)")
-            list(JOIN FIND_REQUIRED_COMPONENTS_LIST "\n" FIND_REQUIRED_COMPONENTS_LIST)
+            set(FIND_REQUIRED_COMPONENTS "${CSTOOLKIT_INSTALLED_TARGETS}")
+            list(TRANSFORM FIND_REQUIRED_COMPONENTS PREPEND "    set(${PROJECT_NAME}_FIND_REQUIRED_")
+            list(TRANSFORM FIND_REQUIRED_COMPONENTS APPEND " 1)")
+            list(JOIN FIND_REQUIRED_COMPONENTS "\n" FIND_REQUIRED_COMPONENTS)
 
             configure_package_config_file(
                 ${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/PackageConfig.cmake.in
-                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+                ${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake
                 INSTALL_DESTINATION "."
             )
 
             write_basic_package_version_file(
-                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+                ${CMAKE_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
                 VERSION ${PROJECT_VERSION}
                 COMPATIBILITY SameMinorVersion
             )
 
             install(FILES
-                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
-                ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+                ${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+                ${CMAKE_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
                 DESTINATION "."
             )
         endif()
     endif()
+
+    get_property(CSTOOLKIT_INSTALLED_TARGETS_ALL GLOBAL PROPERTY CSTOOLKIT_INSTALLED_TARGETS_ALL)
+    foreach(target ${CSTOOLKIT_INSTALLED_TARGETS_ALL})
+        cstoolkit_install_export(${target})
+    endforeach()
 
     cstoolkit_get_all_targets(ALL_TARGETS)
 
@@ -97,6 +114,26 @@ macro(cstoolkit_get_all_targets_recursive targets dir)
     get_property(current_targets DIRECTORY ${dir} PROPERTY BUILDSYSTEM_TARGETS)
     list(APPEND ${targets} ${current_targets})
 endmacro()
+
+function(cstoolkit_install_export target)
+    get_target_property(TARGET_INSTALL_EXCLUDE_FROM_ALL ${target} INSTALL_EXCLUDE_FROM_ALL) # READONLY
+    get_target_property(TARGET_INSTALL_CMAKEDIR ${target} INSTALL_CMAKEDIR)
+    get_target_property(TARGET_INSTALL_CONFIG_NAME ${target} INSTALL_CONFIG_NAME)
+    get_target_property(TARGET_INSTALL_TARGETS_NAME ${target} INSTALL_TARGETS_NAME) # READONLY
+    get_target_property(TARGET_INSTALL_COMPONENT ${target} INSTALL_COMPONENT) # READONLY
+    get_target_property(TARGET_NAMESPACE ${target} NAMESPACE) # READONLY
+
+    cstoolkit_target_genex_eval(${target} TARGET_INSTALL_CMAKEDIR)
+    cstoolkit_target_genex_eval(${target} TARGET_INSTALL_CONFIG_NAME)
+
+    install(EXPORT ${TARGET_INSTALL_TARGETS_NAME}
+        NAMESPACE ${TARGET_NAMESPACE}
+        FILE ${TARGET_INSTALL_CONFIG_NAME}Targets.cmake
+        DESTINATION ${TARGET_INSTALL_CMAKEDIR}
+        COMPONENT ${TARGET_INSTALL_COMPONENT}
+        ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
+    )
+endfunction()
 
 function(cstoolkit_check_dependencies target)
     set(DEPENDENCIES)

@@ -69,6 +69,12 @@ set(CSTOOLKIT_DEFAULT_TRANSLATION_DIRS "src" CACHE STRING "Default folder for Qt
 
 set(CSTOOLKIT_QT_BIG_RESOURCES_THRESHOLD 100000000 CACHE STRING "Size threshold for qt big_resources") #100 Mo
 
+set(CSTOOLKIT_DEFAULT_INSTALL_LIBDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/lib/$<LOWER_CASE:$<CONFIG>>" CACHE STRING "Default install folder for library files of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_INSTALL_BINDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/bin/$<LOWER_CASE:$<CONFIG>>" CACHE STRING "Default install folder for binary files of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_INSTALL_SYMBOLSDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/symbols/$<LOWER_CASE:$<CONFIG>>" CACHE STRING "Default install folder for symbol files of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_INSTALL_INCLUDEDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/include" CACHE STRING "Default install folder for header files of a target created with cstoolkit_add_target")
+set(CSTOOLKIT_DEFAULT_INSTALL_CMAKEDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/cmake" CACHE STRING "Default install folder for cmake files of a target created with cstoolkit_add_target")
+
 ################################################################################
 # Options
 ################################################################################
@@ -95,7 +101,8 @@ endif()
 
 set(CSTOOLKIT_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/cstoolkit_copy.cmake" --)
-set(CSTOOLKIT_INSTALL_TARGETS_ALL)
+set_property(GLOBAL PROPERTY CSTOOLKIT_INSTALLED_TARGETS "")
+set_property(GLOBAL PROPERTY CSTOOLKIT_INSTALLED_TARGETS_ALL "")
 add_custom_target(CSTOOLKIT)
 if(PREDEFINED_TARGETS_FOLDER)
     set_target_properties(CSTOOLKIT PROPERTIES FOLDER ${PREDEFINED_TARGETS_FOLDER})
