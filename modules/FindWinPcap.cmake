@@ -38,7 +38,12 @@ set(ALIAS_LIST "")
 set(LIBS_LIST_STRING "")
 set(DLLS_LIST_STRING "")
 
+set(WinPcap_RUNTIME_DLLS
+    "${WinPcap_ROOT}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/npptools.dll"
+    "${WinPcap_ROOT}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/Packet.dll"
+)
+
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
 # all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(${CMAKE_FIND_PACKAGE_NAME} DEFAULT_MSG)
+find_package_handle_standard_args(${CMAKE_FIND_PACKAGE_NAME} DEFAULT_MSG WinPcap_RUNTIME_DLLS)
