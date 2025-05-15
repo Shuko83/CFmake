@@ -2,3 +2,11 @@ Use CMAKE_CXX_STANDARD_LIBRARIES in check dependencies
 use verpatch for Borland
 support generator expression for combined_libs
 factorize symbols definitions
+In Config File print Generation Date, git repository, etc ...
+Find a way to get git repository from package
+Ideas: Add .gitinfo with git informations in archive
+Issue: if package is in externals / packagename maybe conflict
+       if another package makes find_dependency it will find the downloaded package and not the git repo
+if git mode, externals / package must be replaced by the git repository
+Add mode source only, download sources for read but no build
+Add prompt to get identification for nexus

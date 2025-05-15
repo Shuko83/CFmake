@@ -22,13 +22,20 @@ if(NOT PROJECT_NAME)
 endif()
 
 ################################################################################
-#  Early Includes
+#  Timer
 ################################################################################
 
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Timer.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/utility/Conan.cmake)
 
 cstoolkit_start_timer(CSTOOLKIT_CONFIGURE_TIMER)
+
+string(TIMESTAMP CSTOOLKIT_CONFIGURATION_DATE "%a, %d %b %Y %H:%M:%S %z")
+
+################################################################################
+#  Early Includes
+################################################################################
+
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Conan.cmake)
 
 ################################################################################
 # GLOBAL MODIFIERS
@@ -133,6 +140,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/utility/Info.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/PostConfigure.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Deploy.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Fetch.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Git.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Version.cmake)
 if(CSTOOLKIT_COMMON_CPPRULES)
     include(${CMAKE_CURRENT_LIST_DIR}/utility/CppRules.cmake)

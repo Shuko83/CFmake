@@ -76,6 +76,13 @@ function(cstoolkit_post_configure)
         endif()
     endif()
 
+    configure_file(${CMAKE_CURRENT_FUNCTION_LIST_DIR}/../templates/gitinfo.in ${CMAKE_BINARY_DIR}/.gitinfo @ONLY)
+
+    install(FILES
+        ${CMAKE_BINARY_DIR}/.gitinfo
+        DESTINATION "."
+    )
+
     get_property(CSTOOLKIT_INSTALLED_TARGETS_ALL GLOBAL PROPERTY CSTOOLKIT_INSTALLED_TARGETS_ALL)
     foreach(target ${CSTOOLKIT_INSTALLED_TARGETS_ALL})
         cstoolkit_install_export(${target})
