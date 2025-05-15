@@ -18,6 +18,9 @@ remote_origin: @CSTOOLKIT_GIT_URL@
 # Tag (if any) this commit corresponds to
 tag: @CSTOOLKIT_GIT_TAG@
 
+# Relative path to the top level of the source tree
+source_dir: @CSTOOLKIT_GIT_RELATIVE_TOP_LEVEL@
+
 # Timestamp this file was generated
 timestamp: @CSTOOLKIT_CONFIGURATION_DATE@
 
