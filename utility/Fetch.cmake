@@ -212,13 +212,17 @@ function(_cstoolkit_internal_download _internal_download_url _internal_download_
     cmake_path(GET _internal_download_url FILENAME _internal_download_filename)
 
     # Autentication method
-    if(_internal_download_url MATCHES "^${CSTOOLKIT_NEXUS_DR_URL}")
-        if(ENV{NEXUS_DR_AUTH})
-            set(_internal_download_header "HTTPHEADER \"Authorization: Basic $ENV{NEXUS_DR_AUTH}\"")
+    # Use FIND instead of MATCHES because URL contains "."
+    string(FIND "${_internal_download_url}" "${CSTOOLKIT_NEXUS_DR_URL}" NEXUS_DR_INDEX)
+    string(FIND "${_internal_download_url}" "${CSTOOLKIT_NEXUS_ITAR_URL}" NEXUS_ITAR_INDEX)
+    
+    if(NEXUS_DR_INDEX EQUAL 0)
+        if(DEFINED ENV{NEXUS_DR_AUTH})
+            set(_internal_download_header "HTTPHEADER;Authorization: Basic $ENV{NEXUS_DR_AUTH}")
         endif()
-    elseif(_internal_download_url MATCHES "^${CSTOOLKIT_NEXUS_ITAR_URL}")
-        if(ENV{NEXUS_ITAR_AUTH})
-            set(_internal_download_header "HTTPHEADER \"Authorization: Basic $ENV{NEXUS_ITAR_AUTH}\"")
+    elseif(NEXUS_ITAR_INDEX EQUAL 0)
+        if(DEFINED ENV{NEXUS_ITAR_AUTH})
+            set(_internal_download_header "HTTPHEADER;Authorization: Basic $ENV{NEXUS_ITAR_AUTH}")
         endif()
     endif()
 
