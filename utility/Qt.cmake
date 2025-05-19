@@ -10,7 +10,8 @@ if(NOT Qt5_ROOT AND NOT Qt5_DIR)
             execute_process(COMMAND "${CSTOOLKIT_QMAKE_EXECUTABLE}" -query QT_INSTALL_PREFIX
                 RESULT_VARIABLE _return_code
                 OUTPUT_VARIABLE _output
-                OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_STRIP_TRAILING_WHITESPACE)
+                ERROR_QUIET
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
             if(NOT return_code)
                 set(Qt5_ROOT "${_output}")
             endif()
