@@ -131,6 +131,7 @@ endif()
 ################################################################################
 
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Color.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/Debug.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/BuildType.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Arguments.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/File.cmake)

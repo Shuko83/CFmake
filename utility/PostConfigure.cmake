@@ -102,6 +102,8 @@ function(cstoolkit_post_configure)
         cstoolkit_compute_runtime_dependencies(${target})
     endforeach()
 
+    cstoolkit_internal_print_genex_post_configure()
+
     cstoolkit_end_timer(CSTOOLKIT_POST_CONFIGURE_TIMER CSTOOLKIT_POST_CONFIGURE_ELAPSED)
     message(STATUS "CSToolkit: Post-Configure done (${CSTOOLKIT_POST_CONFIGURE_ELAPSED}s)")
 endfunction()
