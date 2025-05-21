@@ -53,7 +53,7 @@ macro(cstoolkit_fetch_nexus fetch_nexus_name)
         message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_nexus(${fetch_nexus_name}): ALIAS parameter deprecated, normalize your package" ${COLOR_RESET})
     endif()
 
-    if(NOT _fetch_nexus_VERSION)
+    if(NOT _fetch_nexus_URL AND NOT _fetch_nexus_VERSION)
         message(SEND_ERROR "CSToolkit: cstoolkit_fetch_nexus(${fetch_nexus_name}): Missing mandatory parameter VERSION")
     elseif(_fetch_nexus_QT AND (NOT QT_VERSION))
         message(SEND_ERROR "CSToolkit: cstoolkit_fetch_nexus(${fetch_nexus_name}): Qt was not found, unable to use option QT")
