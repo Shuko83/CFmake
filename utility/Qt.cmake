@@ -171,7 +171,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
             ${COMMAND_DEPENDENCIES}
             COMMENT "MOC ${relpath}"
             COMMAND_EXPAND_LISTS)
-        set_source_files_properties(${infile} PROPERTIES SKIP_AUTOUIC ON)
+        set_source_files_properties(${infile} PROPERTIES SKIP_AUTOMOC ON)
         cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
         cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outfiles} ${outfile})
