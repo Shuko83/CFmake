@@ -38,6 +38,25 @@ if(WIN32)
         unset(CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
     endif()
 
+    if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION)
+        if(MSVC_VERSION EQUAL 1900) # 2015
+            if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION VERSION_GREATER "10.0.14393.795")
+                message(WARNING "CSToolkit: Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio 2015 (MSVC v140 toolset)
+The latest officially compatible version is 10.0.14393.795, set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM to 10.0.14393.795 before call to project")
+            endif()
+        elseif(MSVC_VERSION GREATER_EQUAL 1910 AND MSVC_VERSION LESS 1920) # 2017
+            if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION VERSION_GREATER "10.0.17763.132")
+                message(WARNING "CSToolkit: Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio 2017 (MSVC v141 toolset)
+The latest officially compatible version is 10.0.17763.132, set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM to 10.0.17763.132 before call to project")
+            endif()
+        elseif(MSVC_VERSION GREATER_EQUAL 1920 AND MSVC_VERSION LESS 1930) # 2019
+            if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION VERSION_GREATER "10.0.19041.685")
+                message(WARNING "CSToolkit: Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio 2019 (MSVC v142 toolset)
+The latest officially compatible version is 10.0.19041.685, set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM to 10.0.19041.685 before call to project")
+            endif()
+        endif()
+    endif()
+
     # Find VCRedist Installer
     if(MSVC)
         if(CMAKE_GENERATOR_INSTANCE)
