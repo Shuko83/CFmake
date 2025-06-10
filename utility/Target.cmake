@@ -454,25 +454,39 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INTERFACE_LINK_LIBRARIES "${_interface_link_libraries}")
 
             if(WIN32)
-                set(_static_options)
-                foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
-                    list(APPEND _static_options "$<TARGET_FILE:${_lib}>")
-                endforeach()
-
-                list(REVERSE _static_options)
-
                 add_custom_command(TARGET ${TARGET_NAME_STATIC} PRE_LINK
                     COMMAND ${CMAKE_COMMAND} -E rm -f $<TARGET_FILE:${TARGET_NAME_STATIC}>
                 )
-                add_custom_command(TARGET ${TARGET_NAME_STATIC} POST_BUILD
-                    COMMAND ${CMAKE_AR} /OUT:$<TARGET_FILE:${TARGET_NAME_STATIC}> $<TARGET_FILE:${TARGET_NAME_STATIC}> ${_static_options}
-                )
 
-                # PDBs
                 if(MSVC)
-                    set(TARGET_COMBINED_SYMBOLS "$<LIST:TRANSFORM,${_static_options},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
+                    set(_static_options)
+                    foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
+                        list(APPEND _static_options "$<TARGET_FILE:${_lib}>")
+                    endforeach()
+                    list(REVERSE _static_options)
+					
+					set(TARGET_COMBINED_SYMBOLS "$<LIST:TRANSFORM,${_static_options},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
+
+                    add_custom_command(TARGET ${TARGET_NAME_STATIC} POST_BUILD
+                        COMMAND ${CMAKE_AR} /OUT:$<TARGET_FILE:${TARGET_NAME_STATIC}> $<TARGET_FILE:${TARGET_NAME_STATIC}> ${_static_options}
+                    )
                 elseif(BORLAND)
-                    set(TARGET_COMBINED_SYMBOLS "$<LIST:TRANSFORM,${_static_options},REPLACE,\(.*\)\\.[^.]+,\\1.tds>")
+                    set(_static_options)
+                    foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
+						list(APPEND _static_options "\"$<LIST:TRANSFORM,$<TARGET_FILE:${_lib}>,REPLACE,/,\\\\>\"")
+                    endforeach()
+                    list(REVERSE _static_options)
+
+                    add_custom_command(TARGET ${TARGET_NAME_STATIC} POST_BUILD
+                        COMMAND tlib /p512 /N /a "\"$<LIST:TRANSFORM,$<TARGET_FILE:${TARGET_NAME_STATIC}>,REPLACE,/,\\\\>\"" ${_static_options}
+                    )
+					
+					set(TARGET_COMBINED_SYMBOLS)
+                    foreach(_lib ${TARGET_COMBINED_LINK_LIBRARIES})
+                        list(APPEND TARGET_COMBINED_SYMBOLS "$<TARGET_FILE:${_lib}>")
+                    endforeach()
+                    list(REVERSE TARGET_COMBINED_SYMBOLS)
+					set(TARGET_COMBINED_SYMBOLS "$<LIST:TRANSFORM,${TARGET_COMBINED_SYMBOLS},REPLACE,\(.*\)\\.[^.]+,\\1.tds>")
                 endif()
             else() #LINUX
                 set(_ar_script "CREATE $<TARGET_FILE:${TARGET_NAME_STATIC}>")
