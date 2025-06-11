@@ -85,5 +85,6 @@ endif()
 # Borland configuration
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Borland")
     set(CMAKE_CXX_STANDARD 98)
+    set(CMAKE_DEBUG_POSTFIX)
     add_link_options(/N)
 endif()
