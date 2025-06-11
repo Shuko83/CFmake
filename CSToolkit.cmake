@@ -101,6 +101,7 @@ else()
     option(CSTOOLKIT_GENERATE_FETCH_DEPENDENCY "If ON, calls to cstoolkit_fetch_dependency will be generated in Config files" ON)
     option(CSTOOLKIT_FETCH_DEPENDENCY "If OFF, calls to cstoolkit_fetch_dependency will do nothing" ON)
 endif()
+option(CSTOOLKIT_WINDOWS_SDK_WARNING "If ON, cstoolkit will raise a CMake warning if the Windows SDK is missing or incompatible with the MSVC version" ON)
 
 ################################################################################
 #  Internal variables
