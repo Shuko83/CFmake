@@ -48,11 +48,11 @@ protected slots:
 
 	void closeToolBar();
 	virtual void setLock(bool state);
+	SwDockWidget_ToolBarItem* addInToolBar(QWidget * widget, QWidget * toolbar);
 
 private:
 	//Gestion des toolbar
 	QWidget * getToolBarUnderCursor(QWidget * activeToolBar);
-	void addInToolBar(QWidget * widget, QWidget * toolbar);
 	void connectSignals(QWidget * toolbar);
 
 private:

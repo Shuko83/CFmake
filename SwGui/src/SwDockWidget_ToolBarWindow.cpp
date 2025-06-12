@@ -47,7 +47,7 @@ void SwDockWidget_ToolBarWindow::reduceInToolBar()
 }
 
 //-----------------------------------------------------------------------------
-void SwDockWidget_ToolBarWindow::addInToolBar(QWidget * widget, QWidget * toolbar)
+SwDockWidget_ToolBarItem* SwDockWidget_ToolBarWindow::addInToolBar(QWidget * widget, QWidget * toolbar)
 {
 	SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(widget);
 	SwDockWidget_ToolBar * tb = qobject_cast<SwDockWidget_ToolBar*>(toolbar);
@@ -63,7 +63,9 @@ void SwDockWidget_ToolBarWindow::addInToolBar(QWidget * widget, QWidget * toolba
 		//Ecoute des evenements
 		connect(tbi, SIGNAL(isMoving(QPoint)), this, SLOT(moveToolBarItem(QPoint)));
 		connect(tbi, SIGNAL(stopMoving()), this, SLOT(stopMovingToolBarItem()));
+		return tbi;
 	}
+	return nullptr;
 }
 
 //-----------------------------------------------------------------------------

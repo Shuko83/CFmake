@@ -3,6 +3,7 @@
 #include "SwDockWidget_TabWidget.h"
 #include "SwDockWidget_MainDockMenuAction.h"
 #include "SwDockWidget_MainDockConfiguration.h"
+#include "SwDockWidget_ToolBar.h"
 
 #include "SwDockWidget_MainTabBar.h"
 
@@ -1118,6 +1119,24 @@ QWidget * SwDockWidget_MainArea::managePinDock(QObject * obj, QWidget * mainWidg
 				if (_bottomMainDock->count() == 1)
 					toReturn = pinDockTo(_bottomMainDock, mainWidget, Qt::BottomDockWidgetArea, true);
 			}
+			else if (_tabBtn->isVisible() && QRect(_tabBtn->pos(), QSize(BTN_SIZE, BTN_SIZE)).contains(pos))
+			{
+				SwDockWidget_DockWidget * dock = qobject_cast<SwDockWidget_DockWidget*>(obj);
+				if (dock)
+				{
+					// Create new ToolBar
+					SwDockWidget_ToolBar * tb = new SwDockWidget_ToolBar(_mainWidget);
+					addInToolBar(dock, tb);
+					if (tb)
+					{
+						// Move item at the center of main widget
+						QPoint coordinates = _mainWidget->mapToGlobal(QPoint(0, 0));
+						tb->move(QPoint(coordinates.x() + _mainWidget->width() / 2 - tb->width() / 2, coordinates.y() + _mainWidget->height() / 2));
+					}
+					toReturn = NULL;
+				}
+			}
+
 			else
 				toReturn = NULL;
 
@@ -1580,12 +1599,14 @@ void SwDockWidget_MainArea::showArrows(QWidget * widget)
 			if (_leftMainDock->empty())
 				_leftCentralBtn->show();
 
+			_tabBtn->move(QPoint(centerX - BTN_SIZE / 2, centerY - BTN_SIZE / 2));
+			_tabBtn->show();
+
 			//_centerWidgetBtn->hide();
 			_topWidgetBtn->hide();
 			_rightWidgetBtn->hide();
 			_bottomWidgetBtn->hide();
 			_leftWidgetBtn->hide();
-			_tabBtn->hide();
 		}
 
 		_centerDockBtn->hide();
