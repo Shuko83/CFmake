@@ -678,11 +678,11 @@ bool SwDockWidget_MainArea::eventFilter( QObject *obj , QEvent * event )
 					_isMovingDock = false;
 					_movingDock = "";
 
-					//Masquage des fleches de positionnement
-					hideArrows();
-
 					//Ajout du dock si necessaire
 					managePinDock(obj, getDockableWidget(/*obj*/));
+					
+					//Masquage des fleches de positionnement
+					hideArrows();
 
 					//Mise a jour des docks principaux
 					updateMainDock();
