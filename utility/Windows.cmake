@@ -32,32 +32,45 @@ function(cstoolkit_get_windowssdk_library_dir _var)
     set(${_var} ${_winsdk_lib_dir} PARENT_SCOPE)
 endfunction()
 
+macro(cstoolkit_windows_sdk_raise_warning)
+message(WARNING "CSToolkit: Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio ${CSTOOLKIT_COMPILER_VERSION} (MSVC v${MSVC_TOOLSET_VERSION} toolset)
+The latest officially compatible version is ${OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION}
+Install Windows SDK and set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM before call to project or set CSTOOLKIT_WINDOWS_SDK_WARNING=OFF to remove this warning")
+endmacro()
+
 if(WIN32)
     cstoolkit_get_windowssdk_library_dir(CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
     if(NOT CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
         unset(CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
     endif()
 
+    if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION)
+        if(MSVC_VERSION EQUAL 1900) # 2015
+            set(OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION "10.0.14393.795")
+        elseif(MSVC_VERSION GREATER_EQUAL 1910 AND MSVC_VERSION LESS 1920) # 2017
+            set(OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION "10.0.17763.132")
+        elseif(MSVC_VERSION GREATER_EQUAL 1920 AND MSVC_VERSION LESS 1930) # 2019
+            set(OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION "10.0.19041.685")
+        else()
+            set(OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION "${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}")
+        endif()
+    endif()
     if(CSTOOLKIT_WINDOWS_SDK_WARNING)
         if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION)
-            if(MSVC_VERSION EQUAL 1900) # 2015
-                if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION VERSION_GREATER "10.0.14393.795")
-                    message(WARNING "CSToolkit: Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio 2015 (MSVC v140 toolset)
-    The latest officially compatible version is 10.0.14393.795, set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM to 10.0.14393.795 before call to project")
-                endif()
-            elseif(MSVC_VERSION GREATER_EQUAL 1910 AND MSVC_VERSION LESS 1920) # 2017
-                if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION VERSION_GREATER "10.0.17763.132")
-                    message(WARNING "CSToolkit: Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio 2017 (MSVC v141 toolset)
-    The latest officially compatible version is 10.0.17763.132, set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM to 10.0.17763.132 before call to project")
-                endif()
-            elseif(MSVC_VERSION GREATER_EQUAL 1920 AND MSVC_VERSION LESS 1930) # 2019
-                if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION VERSION_GREATER "10.0.19041.685")
-                    message(WARNING "CSToolkit: Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio 2019 (MSVC v142 toolset)
-    The latest officially compatible version is 10.0.19041.685, set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM to 10.0.19041.685 before call to project")
-                endif()
+            if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION VERSION_GREATER OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION)
+message(WARNING "CSToolkit: Detected Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio ${CSTOOLKIT_COMPILER_VERSION} (MSVC toolset v${MSVC_TOOLSET_VERSION})
+The latest officially compatible version is: ${OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION}
+  To resolve this warning:
+    - Install compatible Windows SDK, and
+    - Set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM to ${OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION} before the 'project()' call
+      or
+    - Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
+")
             endif()
         else()
-            message(WARNING "CSToolkit: No Windows SDK found")
+            message(WARNING "CSToolkit: No Windows SDK found
+Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
+")
         endif()
     endif()
 
