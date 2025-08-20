@@ -39,8 +39,8 @@ set(LIBS_LIST_STRING "")
 set(DLLS_LIST_STRING "")
 
 set(WinPcap_RUNTIME_DLLS
-    "${WinPcap_ROOT}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/npptools.dll"
-    "${WinPcap_ROOT}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/Packet.dll"
+    "${WinPcap_ROOT}/${CSTOOLKIT_BUILD_MKSPECS}/npptools.dll"
+    "${WinPcap_ROOT}/${CSTOOLKIT_BUILD_MKSPECS}/Packet.dll"
 )
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if
