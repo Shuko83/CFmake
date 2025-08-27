@@ -89,7 +89,7 @@ macro(cstoolkit_fetch_nexus fetch_nexus_name)
 endmacro()
 
 macro(cstoolkit_fetch_package fetch_package_name fetch_package_url)
-    set(fetch_package_OPTIONS LEGACY MODULE CONFIG NO_MODULE CODX)
+    set(fetch_package_OPTIONS LEGACY MODULE CONFIG NO_MODULE GIT_SRC GIT_BUILD CODX)
     set(fetch_package_UNIQUE URL)
     set(fetch_package_MULTIPLE)
     cmake_parse_arguments(_fetch_params "${fetch_package_OPTIONS}" "${fetch_package_UNIQUE}" "${fetch_package_MULTIPLE}" ${fetch_package_url};${ARGN})
@@ -109,6 +109,14 @@ macro(cstoolkit_fetch_package fetch_package_name fetch_package_url)
     if(_fetch_params_CODX)
         list(APPEND download_and_extract_params CODX)
         string(APPEND fetch_dependencies_params " CODX")
+    endif()
+
+    if(_fetch_params_GIT_SRC OR _fetch_params_GIT_BUILD)
+        list(APPEND download_and_extract_params "GIT_SRC")
+    endif()
+
+    if(_fetch_params_GIT_BUILD)
+        list(APPEND download_and_extract_params "GIT_BUILD")
     endif()
 
     set(find_package_params)
@@ -132,8 +140,23 @@ macro(cstoolkit_fetch_package fetch_package_name fetch_package_url)
         set(CSTOOLKIT_FETCH_${fetch_package_name}_URL "${_fetch_params_URL}")
         set(CSTOOLKIT_FETCH_${fetch_package_name}_LIST_FILE "${CMAKE_CURRENT_LIST_FILE}")
         cstoolkit_download_and_extract_package("${fetch_package_name}" "${_fetch_params_URL}" ${download_and_extract_params})
-        _cstoolkit_internal_find_package("${fetch_package_name}" "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}" ${find_package_params})
+        if(NOT _fetch_params_GIT_BUILD)
+            _cstoolkit_internal_find_package("${fetch_package_name}" "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}" ${find_package_params})
+        endif()
     endif()
+
+    unset(fetch_package_OPTIONS)
+    unset(fetch_package_UNIQUE)
+    unset(fetch_package_MULTIPLE)
+    unset(_fetch_params_LEGACY)
+    unset(_fetch_params_CODX)
+    unset(_fetch_params_MODULE)
+    unset(_fetch_params_CONFIG)
+    unset(_fetch_params_NO_MODULE)
+    unset(_fetch_params_URL)
+    unset(fetch_dependencies_params)
+    unset(download_and_extract_params)
+    unset(find_package_params)
 endmacro()
 
 function(cstoolkit_download_and_extract_package fetch_package_name fetch_package_url)
@@ -144,6 +167,8 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
 
     set(_fetch_package_download_dir "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/${fetch_package_name}")
     set(_fetch_package_extract_dir "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}")
+    set(_fetch_package_src_dir "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}-src")
+    set(_fetch_package_binary_dir "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}-build")
     cmake_path(GET fetch_package_url FILENAME _fetch_package_filename)
 
     # Reconfigure if file modified
@@ -154,10 +179,15 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
         file(READ "${_fetch_package_download_dir}/download.stamp" _fetch_package_previous_url)
     endif()
 
+    # if a step is redone, all next steps redone
+    set(_fetch_package_rebuild 0)
+
     # Download if previous url different
     if((NOT _fetch_package_previous_url STREQUAL "${fetch_package_url}") OR (NOT EXISTS "${_fetch_package_download_dir}/${_fetch_package_filename}"))
         cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
         message(STATUS "CSToolkit: Download package ${fetch_package_name}")
+
+        set(_fetch_package_rebuild 1)
 
         _cstoolkit_internal_download("${fetch_package_url}" "${_fetch_package_download_dir}")
 
@@ -167,22 +197,83 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
         message(STATUS "CSToolkit: Download package ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
     endif()
 
+    set(_missing_gitinfo 0)
+    if(fetch_package_GIT_SRC AND NOT EXISTS "${_fetch_package_src_dir}")
+        if(EXISTS "${_fetch_package_extract_dir}/.gitinfo")
+            _cstoolkit_internal_read_gitinfo("${_fetch_package_extract_dir}/.gitinfo")
+            if(NOT _cstoolkit_internal_gitinfo_remote_origin)
+                set(_missing_gitinfo 1)
+            endif()
+        else()
+            set(_missing_gitinfo 1)
+        endif()
+    endif()
+
     # Extract if previous url different or if extract dir doesn't exists
-    if((NOT _fetch_package_previous_url STREQUAL "${fetch_package_url}") OR (NOT EXISTS "${_fetch_package_extract_dir}"))
+    if(_fetch_package_rebuild OR _missing_gitinfo OR (NOT fetch_package_GIT_BUILD AND NOT EXISTS "${_fetch_package_extract_dir}"))
         cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
         message(STATUS "CSToolkit: Extract package ${fetch_package_name}")
 
-        _cstoolkit_internal_extract("${_fetch_package_download_dir}/${_fetch_package_filename}" "${_fetch_package_extract_dir}")
+        set(_internal_extract_params)
+        if(fetch_package_GIT_BUILD)
+            set(_internal_extract_params "GITINFO_ONLY")
+        endif()
 
-        if(fetch_package_LEGACY)
+        _cstoolkit_internal_extract("${_fetch_package_download_dir}/${_fetch_package_filename}" "${_fetch_package_extract_dir}" ${_internal_extract_params})
+
+        if(fetch_package_LEGACY AND NOT fetch_package_GIT_BUILD)
             if(EXISTS "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake")
                 message(STATUS "CSToolkit: Overwriting ${fetch_package_name}Config.cmake with generated legacy support Config file.")
             endif()
             configure_file(${CSTOOLKIT_ROOT_DIR}/templates/FetchLegacyConfig.${CSTOOLKIT_HOST_PLATFORM}.in "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake" @ONLY)
+        elseif(fetch_package_CODX AND NOT fetch_package_GIT_BUILD)
+            if(EXISTS "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake")
+                message(STATUS "CSToolkit: Overwriting ${fetch_package_name}Config.cmake with generated CODX support Config file.")
+            endif()
+            configure_file(${CSTOOLKIT_ROOT_DIR}/templates/FetchCODXConfig.${CSTOOLKIT_HOST_PLATFORM}.in "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake" @ONLY)
         endif()
 
         cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
         message(STATUS "CSToolkit: Extract package ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+    endif()
+
+    if(fetch_package_GIT_SRC AND (_fetch_package_rebuild OR NOT EXISTS "${_fetch_package_src_dir}"))
+        cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
+        message(STATUS "CSToolkit: Clone git repository ${fetch_package_name}")
+
+        if(NOT _cstoolkit_internal_gitinfo_remote_origin)
+            message(FATAL_ERROR "CSToolkit: Missing git informations for ${fetch_package_name}")
+        endif()
+
+        set(_internal_git_clone_params "SHALLOW")
+        if(fetch_package_GIT_BUILD)
+            set(_internal_git_clone_params)
+        endif()
+
+        _cstoolkit_internal_git_clone(${fetch_package_name} "${_cstoolkit_internal_gitinfo_remote_origin}" "${_cstoolkit_internal_gitinfo_last_commit}" "${_fetch_package_src_dir}" ${_internal_git_clone_params})
+
+        cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
+        message(STATUS "CSToolkit: Clone git repository ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+    endif()
+
+    if(NOT fetch_package_GIT_SRC)
+        cstoolkit_git_safe_delete("${_fetch_package_src_dir}")
+    endif()
+
+    if(fetch_package_GIT_BUILD)
+        _cstoolkit_internal_git_unshallow(${fetch_package_name} "${_fetch_package_src_dir}")
+
+        file(REMOVE_RECURSE "${_fetch_package_extract_dir}")
+
+        cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
+        message(STATUS "CSToolkit: Configure ${fetch_package_name}")
+
+        add_subdirectory("${_fetch_package_src_dir}" "${_fetch_package_binary_dir}")
+
+        cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
+        message(STATUS "CSToolkit: Configure ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+    else()
+        file(REMOVE_RECURSE "${_fetch_package_binary_dir}")
     endif()
 endfunction()
 
@@ -284,29 +375,20 @@ ${log}        --- LOG END ---
 endfunction()
 
 function(_cstoolkit_internal_extract _internal_extract_file _internal_extract_dir)
+    cmake_parse_arguments(PARSE_ARGV 2 _internal_extract "GITINFO_ONLY" "" "PATTERNS")
+
     cmake_path(GET _internal_extract_file PARENT_PATH _internal_extract_temp_dir)
     set(_internal_extract_temp_dir "${_internal_extract_temp_dir}/tmp")
     file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
     file(MAKE_DIRECTORY "${_internal_extract_temp_dir}")
-    execute_process(COMMAND ${CMAKE_COMMAND} -E tar x "${_internal_extract_file}" --touch
-        WORKING_DIRECTORY "${_internal_extract_temp_dir}"
-        RESULT_VARIABLE _fetch_package_extract_rv
-        OUTPUT_VARIABLE _fetch_package_extract_output
-        ERROR_VARIABLE  _fetch_package_extract_output
-    )
 
-    if(NOT _fetch_package_extract_rv EQUAL 0)
-        file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
-        message(FATAL_ERROR "CSToolkit: Extracting of '${_internal_extract_file}' failed
-${_fetch_package_extract_output}")
-        return()
-    endif()
+    file(ARCHIVE_EXTRACT INPUT "${_internal_extract_file}" DESTINATION "${_internal_extract_temp_dir}" PATTERNS ${_internal_extract_PATTERNS} TOUCH)
 
     # Analyze what came out of the tar file:
     file(GLOB contents "${_internal_extract_temp_dir}/*")
     if(contents STREQUAL "")
         file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
-        file(SIZE "_internal_extract_file}" file_size)
+        file(SIZE "${_internal_extract_file}" file_size)
         _cstoolkit_internal_format_size(file_size)
         message(FATAL_ERROR "CSToolkit: Extracting of '${_internal_extract_file}' failed
 Output directory empty
@@ -322,7 +404,16 @@ File size: ${file_size}")
     if(NOT n EQUAL 1 OR NOT IS_DIRECTORY "${contents}")
         set(contents "${_internal_extract_temp_dir}")
     endif()
-    file(RENAME "${contents}" "${_internal_extract_dir}" RESULT _fetch_package_extract_rv)
+
+    #extract gitinfo
+    _cstoolkit_internal_read_gitinfo("${contents}/.gitinfo" PARENT_SCOPE)
+
+    if(_internal_extract_GITINFO_ONLY)
+        set(_fetch_package_extract_rv 0)
+    else()
+        file(RENAME "${contents}" "${_internal_extract_dir}" RESULT _fetch_package_extract_rv)
+    endif()
+
     file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
     if(NOT _fetch_package_extract_rv EQUAL 0)
         file(REMOVE_RECURSE "${_internal_extract_dir}")
@@ -332,45 +423,190 @@ ${_fetch_package_extract_rv}")
     endif()
 endfunction()
 
+function(_cstoolkit_internal_git_clone git_package git_url git_commit git_src_dir)
+    cmake_parse_arguments(PARSE_ARGV 3 git_clone "SHALLOW" "" "")
+
+    cstoolkit_git_safe_delete("${git_src_dir}")
+
+    file(MAKE_DIRECTORY "${git_src_dir}")
+    if(git_clone_SHALLOW)
+        execute_process(COMMAND "${GIT_EXECUTABLE}" init "."
+            WORKING_DIRECTORY "${git_src_dir}"
+            RESULT_VARIABLE _git_clone_rv
+            OUTPUT_VARIABLE _git_clone_output
+            ERROR_VARIABLE  _git_clone_output
+        )
+        if(NOT _git_clone_rv EQUAL 0)
+            file(REMOVE_RECURSE "${git_src_dir}")
+            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+${_git_clone_output}")
+            return()
+        endif()
+        execute_process(COMMAND "${GIT_EXECUTABLE}" remote add origin ${git_url}
+            WORKING_DIRECTORY "${git_src_dir}"
+            RESULT_VARIABLE _git_clone_rv
+            OUTPUT_VARIABLE _git_clone_output
+            ERROR_VARIABLE  _git_clone_output
+        )
+        if(NOT _git_clone_rv EQUAL 0)
+            file(REMOVE_RECURSE "${git_src_dir}")
+            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+${_git_clone_output}")
+            return()
+        endif()
+        execute_process(COMMAND "${GIT_EXECUTABLE}" fetch --depth 1 origin ${git_commit}
+            WORKING_DIRECTORY "${git_src_dir}"
+            RESULT_VARIABLE _git_clone_rv
+            OUTPUT_VARIABLE _git_clone_output
+            ERROR_VARIABLE  _git_clone_output
+        )
+        if(NOT _git_clone_rv EQUAL 0)
+            file(REMOVE_RECURSE "${git_src_dir}")
+            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+${_git_clone_output}")
+            return()
+        endif()
+        execute_process(COMMAND "${GIT_EXECUTABLE}" checkout FETCH_HEAD
+            WORKING_DIRECTORY "${git_src_dir}"
+            RESULT_VARIABLE _git_clone_rv
+            OUTPUT_VARIABLE _git_clone_output
+            ERROR_VARIABLE  _git_clone_output
+        )
+        if(NOT _git_clone_rv EQUAL 0)
+            file(REMOVE_RECURSE "${git_src_dir}")
+            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+${_git_clone_output}")
+            return()
+        endif()
+
+        file(WRITE "${git_src_dir}/.git/hooks/pre-commit"
+"#!/bin/sh
+echo \"This repository is set as READ ONLY by CSToolkit.\"
+exit 1")
+        file(CHMOD "${git_src_dir}/.git/hooks/pre-commit" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE)
+    else()
+        execute_process(COMMAND "${GIT_EXECUTABLE}" clone ${git_url} .
+            WORKING_DIRECTORY "${git_src_dir}"
+            RESULT_VARIABLE _git_clone_rv
+            OUTPUT_VARIABLE _git_clone_output
+            ERROR_VARIABLE  _git_clone_output
+        )
+        if(NOT _git_clone_rv EQUAL 0)
+            file(REMOVE_RECURSE "${git_src_dir}")
+            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+${_git_clone_output}")
+            return()
+        endif()
+        execute_process(COMMAND "${GIT_EXECUTABLE}" checkout ${git_commit}
+            WORKING_DIRECTORY "${git_src_dir}"
+            RESULT_VARIABLE _git_clone_rv
+            OUTPUT_VARIABLE _git_clone_output
+            ERROR_VARIABLE  _git_clone_output
+        )
+        if(NOT _git_clone_rv EQUAL 0)
+            file(REMOVE_RECURSE "${git_src_dir}")
+            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+${_git_clone_output}")
+            return()
+        endif()
+    endif()
+endfunction()
+
+function(_cstoolkit_internal_git_unshallow git_package git_src_dir)
+    execute_process(COMMAND "${GIT_EXECUTABLE}" rev-parse --is-shallow-repository
+        WORKING_DIRECTORY "${git_src_dir}"
+        OUTPUT_VARIABLE _git_unshallow_is_shallow
+        ERROR_QUIET
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    if(_git_unshallow_is_shallow STREQUAL "false") # not a shallow repository
+        return()
+    endif()
+
+    cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
+    message(STATUS "CSToolkit: Unshallow git repository ${fetch_package_name}")
+
+    execute_process(COMMAND "${GIT_EXECUTABLE}" fetch --unshallow
+        WORKING_DIRECTORY "${git_src_dir}"
+        RESULT_VARIABLE _git_unshallow_rv
+        OUTPUT_VARIABLE _git_unshallow_output
+        ERROR_VARIABLE  _git_unshallow_output
+    )
+    if(NOT _git_unshallow_rv EQUAL 0)
+        file(REMOVE_RECURSE "${git_src_dir}")
+        message(FATAL_ERROR "CSToolkit: Unshallow of ${git_package} failed
+${_git_unshallow_output}")
+        return()
+    endif()
+    file(REMOVE "${git_src_dir}/.git/hooks/pre-commit")
+
+    cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
+    message(STATUS "CSToolkit: Unshallow git repository ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+endfunction()
+
 function(cstoolkit_download_url URL OUTPUT_VAR)
     set(options NO_EXTRACT)
     set(one_value_args)
-    set(multi_value_args)
-    cmake_parse_arguments(PARSE_ARGV 2 DOWNLOAD "${options}" "${one_value_args}" "${multi_value_args}")
+    if(OUTPUT_VAR STREQUAL "DESTINATION")
+        set(one_value_args ${OUTPUT_VAR})
+    endif()
+    set(multi_value_args PATTERNS)
+    cmake_parse_arguments(PARSE_ARGV 1 DOWNLOAD "${options}" "${one_value_args}" "${multi_value_args}")
+
+    #cstoolkit_print(OUTPUT_VAR)
+    #cstoolkit_print(DOWNLOAD_DESTINATION)
+
+    if(OUTPUT_VAR STREQUAL "DESTINATION" AND NOT DOWNLOAD_DESTINATION)
+        message(SEND_ERROR "CSToolkit: cstoolkit_download_url(${URL}): Empty DESTINATION")
+        return()
+    endif()
 
     cmake_path(GET URL STEM LAST_ONLY _FILENAME)
     cmake_path(GET URL FILENAME _FULLFILENAME)
     string(MD5 _HASH ${URL})
     string(SUBSTRING ${_HASH} 0 8 _HASH)
 
-    if(DOWNLOAD_NO_EXTRACT)
-        set(download_dir "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
-        set(${OUTPUT_VAR} "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}/${_FULLFILENAME}")
+    if(OUTPUT_VAR STREQUAL "DESTINATION")
+        if(DOWNLOAD_NO_EXTRACT)
+            set(download_dir "${DOWNLOAD_DESTINATION}")
+            set(DOWNLOAD_DESTINATION "${DOWNLOAD_DESTINATION}/${_FULLFILENAME}")
+        else()
+            set(download_dir "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/${_FILENAME}_${_HASH}")
+        endif()
     else()
-        set(download_dir "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/${_FILENAME}_${_HASH}")
-        set(${OUTPUT_VAR} "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
+        if(DOWNLOAD_NO_EXTRACT)
+            set(download_dir "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
+            set(${OUTPUT_VAR} "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}/${_FULLFILENAME}")
+        else()
+            set(download_dir "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/${_FILENAME}_${_HASH}")
+            set(${OUTPUT_VAR} "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
+        endif()
+    
+        set(${OUTPUT_VAR} ${${OUTPUT_VAR}} PARENT_SCOPE)
+        set(DOWNLOAD_DESTINATION "${${OUTPUT_VAR}}")
     endif()
 
-    set(${OUTPUT_VAR} ${${OUTPUT_VAR}} PARENT_SCOPE)
+    set(_fresh_download FALSE)
 
     if(NOT EXISTS "${download_dir}/${_FULLFILENAME}")
         cstoolkit_start_timer(CSTOOLKIT_DOWNLOAD_TIMER)
         message(STATUS "CSToolkit: Download ${URL}")
 
         _cstoolkit_internal_download("${URL}" "${download_dir}")
+        set(_fresh_download TRUE)
 
         cstoolkit_end_timer(CSTOOLKIT_DOWNLOAD_TIMER CSTOOLKIT_DOWNLOAD_ELAPSED)
-        message(STATUS "CSToolkit: Download ${URL} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+        message(STATUS "CSToolkit: Download ${URL} done (${CSTOOLKIT_DOWNLOAD_ELAPSED}s)")
     endif()
 
-    if((NOT DOWNLOAD_NO_EXTRACT) AND (NOT EXISTS "${${OUTPUT_VAR}}"))
+    if((NOT DOWNLOAD_NO_EXTRACT) AND (_fresh_download OR NOT EXISTS "${DOWNLOAD_DESTINATION}"))
         cstoolkit_start_timer(CSTOOLKIT_DOWNLOAD_TIMER)
         message(STATUS "CSToolkit: Extract ${URL}")
 
-        _cstoolkit_internal_extract("${download_dir}/${_FULLFILENAME}" "${${OUTPUT_VAR}}")
+        _cstoolkit_internal_extract("${download_dir}/${_FULLFILENAME}" "${DOWNLOAD_DESTINATION}" PATTERNS ${DOWNLOAD_PATTERNS})
 
         cstoolkit_end_timer(CSTOOLKIT_DOWNLOAD_TIMER CSTOOLKIT_DOWNLOAD_ELAPSED)
-        message(STATUS "CSToolkit: Extract ${URL} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+        message(STATUS "CSToolkit: Extract ${URL} done (${CSTOOLKIT_DOWNLOAD_ELAPSED}s)")
     endif()
 endfunction()
 
@@ -394,6 +630,44 @@ function(_cstoolkit_internal_format_size _internal_size)
         set(${file_size} "${${file_size}} bytes" PARENT_SCOPE)
     endif()
 endfunction()
+
+macro(_cstoolkit_internal_read_gitinfo gitinfo_file)
+    foreach(key current_tree;last_commit;last_commit_date;branch;remote_origin;tag;source_dir;timestamp)
+        set(_cstoolkit_internal_gitinfo_${key})
+    endforeach()
+
+    if(EXISTS "${gitinfo_file}")
+        file(READ "${gitinfo_file}" _gitinfo_contents)
+
+        # Split content into lines
+        string(REPLACE "\n" ";" GITINFO_LINES "${_gitinfo_contents}")
+
+        foreach(line ${GITINFO_LINES})
+            # Skip empty lines or comments
+            if(line MATCHES "^[ \t\r\n]*$" OR line MATCHES "^#")
+                continue()
+            endif()
+
+            # Match key: value pattern
+            if(line MATCHES "^([a-zA-Z0-9_]+): (.+)$")
+                set(_cstoolkit_internal_gitinfo_key "${CMAKE_MATCH_1}")
+                set(_cstoolkit_internal_gitinfo_value "${CMAKE_MATCH_2}")
+                string(STRIP "${_cstoolkit_internal_gitinfo_value}" _cstoolkit_internal_gitinfo_value)
+
+                set(_cstoolkit_internal_gitinfo_${_cstoolkit_internal_gitinfo_key} "${_cstoolkit_internal_gitinfo_value}")
+            endif()
+        endforeach()
+    endif()
+
+    set(gitinfo_parent_scope)
+    if(${ARGC} GREATER 1)
+        list(APPEND gitinfo_parent_scope "${ARGV1}")
+    endif()
+
+    foreach(key current_tree;last_commit;last_commit_date;branch;remote_origin;tag;source_dir;timestamp)
+        set(_cstoolkit_internal_gitinfo_${key} "${_cstoolkit_internal_gitinfo_${key}}" ${gitinfo_parent_scope})
+    endforeach()
+endmacro()
 
 macro(cstoolkit_fetch_dependency fetch_dependency_name fetch_dependency_url)
     if(CSTOOLKIT_FETCH_DEPENDENCY)
