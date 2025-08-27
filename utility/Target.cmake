@@ -568,9 +568,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             TARGET "${TARGET_NAME}"
             VERSION "${PROJECT_VERSION}"
             PRODUCT "${PROJECT_NAME}"
-            ORGANIZATION "CSGroup"
-            DOMAIN "https://www.csgroup.eu"
-            COPYRIGHT "Copyright \\251 ${_year} CSGroup"
+            ORGANIZATION "CSGROUP"
+            DOMAIN "https://www.cs-soprasteria.com"
+            COPYRIGHT "Copyright \\251 CS GROUP ${_year}"
             ${_generate_executable_info}
             ${_generate_qt_info}
         )
