@@ -531,7 +531,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
 
         # UI
-        if(NOT CMAKE_AUTOUIC)
+        if(NOT CMAKE_AUTOUIC AND TARGET_UI_FILES)
             cstoolkit_qt_wrap_ui(UIC_FILES ${TARGET_UI_FILES})
 
             target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/uic/$<LOWER_CASE:$<CONFIG>>)

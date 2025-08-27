@@ -21,9 +21,12 @@ if(NOT Qt5_ROOT AND NOT Qt5_DIR)
     endif()
 endif()
 
-find_package(Qt5 COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
-
+find_package(Qt5 COMPONENTS Core OPTIONAL_COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
 if(NOT Qt5_FOUND)
+    find_package(Qt5Core QUIET)
+endif()
+
+if(NOT Qt5_FOUND AND NOT Qt5Core_FOUND)
 
 set(QT_VERSION "Qt5-NOTFOUND")
 set(QT_VERSION_MM "${QT_VERSION}")
@@ -87,7 +90,7 @@ endif()
 
 if(MSVC)
     # hushes some known Qt warnings
-    set_target_properties(Qt5::Core PROPERTIES "INTERFACE_COMPILE_OPTIONS" "-wd4127;-wd4512;-wd4714;$<$<NOT:$<CONFIG:Debug>>:-wd4718>")
+    set_property(TARGET Qt5::Core APPEND PROPERTY INTERFACE_COMPILE_OPTIONS -wd4127 -wd4512 -wd4714 $<$<NOT:$<CONFIG:Debug>>:-wd4718>)
 endif()
 
 # qt5_wrap_cpp(outfiles inputfile ... )
@@ -188,6 +191,11 @@ function(cstoolkit_qt_wrap_cpp outfiles)
     set(${outfiles} ${${outfiles}} PARENT_SCOPE)
 endfunction()
 
+if(NOT Qt5Widgets_UIC_EXECUTABLE)
+function(cstoolkit_qt_wrap_ui outfiles)
+    message(SEND_ERROR "CSToolkit: Qt5::uic was not found, unable to use cstoolkit_qt_wrap_ui()")
+endfunction()
+else()
 # qt5_wrap_ui(outfiles inputfile ... )
 # partially copied from Qt5WidgetsMacros.cmake
 function(cstoolkit_qt_wrap_ui outfiles)
@@ -220,6 +228,7 @@ function(cstoolkit_qt_wrap_ui outfiles)
 
     set(${outfiles} ${${outfiles}} PARENT_SCOPE)
 endfunction()
+endif()
 
 # qt5_add_resources(outfiles inputfile ... )
 # partially copied from Qt5CoreMacros.cmake
