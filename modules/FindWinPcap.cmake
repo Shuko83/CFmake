@@ -1,5 +1,3 @@
-cmake_minimum_required(VERSION 3.18)
-
 set(DELIVERY_DIR "${CMAKE_BINARY_DIR}/externals/${CMAKE_FIND_PACKAGE_NAME}")
 
 message("--->  Find ${CMAKE_FIND_PACKAGE_NAME} in ${DELIVERY_DIR}")

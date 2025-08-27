@@ -4,7 +4,9 @@ if(__CSTOOLKIT_GUARD__)
 endif()
 set(__CSTOOLKIT_GUARD__ 1)
 
-cmake_minimum_required(VERSION 3.27)
+if(CMAKE_MINIMUM_REQUIRED_VERSION VERSION_LESS "3.27")
+    cmake_minimum_required(VERSION 3.27)
+endif()
 
 if(POLICY CMP0144)
     cmake_policy(SET CMP0144 NEW)
