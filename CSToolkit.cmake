@@ -157,5 +157,6 @@ if(CSTOOLKIT_CPACK_RULES)
     include(${CMAKE_CURRENT_LIST_DIR}/utility/CPackRules.cmake)
 endif()
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Streamwork.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/CODX.cmake)
 
 cmake_language(DEFER DIRECTORY ${CMAKE_SOURCE_DIR} CALL cstoolkit_post_configure())
