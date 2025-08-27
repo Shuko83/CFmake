@@ -3,10 +3,10 @@
 cstoolkit_add_target(MyExeWithPlugins EXECUTABLE RECURSIVE
 	PRIVATE_LINK_LIBRARIES MyStaticLib
 	PLUGINS MyPlugin DESTINATION "a"
-	PLUGINS MyQtLib DESTINATION "dest"
-	#PLUGINS Boost::chrono DESTINATION "dest/dest2"
-	#PLUGINS Boost::filesystem DESTINATION "files"
-	#PLUGINS Boost::atomic DESTINATION "c"
+	PLUGINS MyQtLib DESTINATION "b"
+	PLUGINS Boost::timer DESTINATION "x"
+	PLUGINS Boost::thread DESTINATION "y"
+	PLUGINS Boost::log DESTINATION "z"
 )
 
 cstoolkit_streamwork_generate_devpaths(MyExeWithPlugins OUTPUT $<CONFIG>DevPaths.xml)
@@ -19,6 +19,7 @@ add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/deploy.stamp"
 	DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/deploy.stamp.depend"
 	COMMENT "Force Post-build event"
 	COMMAND_EXPAND_LISTS
+	USES_TERMINAL
 )
 
 target_sources(MyExeWithPlugins PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/deploy.stamp")
