@@ -65,6 +65,14 @@ set(CSTOOLKIT_ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory" CACHE 
 set(CSTOOLKIT_NEXUS_DR_URL "https://dr-aix-nexus-01v.sccoa.si.c-s.fr/repository" CACHE STRING "Url of Nexus DR")
 set(CSTOOLKIT_NEXUS_ITAR_URL "https://itar-aix-nexus-01v.sccoa.si.c-s.fr/repository" CACHE STRING "Url of Nexus ITAR")
 
+if(NOT $ENV{ADLINK_LICENSE} STREQUAL "")
+    set(CSTOOLKIT_ADLINK_LICENSE $ENV{ADLINK_LICENSE} CACHE STRING "Path to license file or license server for OpenSplice")
+elseif(NOT $ENV{prismtech_LICENSE} STREQUAL "")
+    set(CSTOOLKIT_ADLINK_LICENSE $ENV{prismtech_LICENSE} CACHE STRING "Path to license file or license server for OpenSplice")
+else()
+    set(CSTOOLKIT_ADLINK_LICENSE "7201@fraixems1.diginext.local" CACHE STRING "Path to license file or license server for OpenSplice")
+endif()
+
 set(CSTOOLKIT_PROJECT_VERSION 0.0.0.0 CACHE STRING "Version of the project, will set CMAKE_PROJECT_VERSION and PROJECT_VERSION")
 
 set(CSTOOLKIT_INSTALL_TARGETS "" CACHE STRING "List of targets to install, if empty install all targets")
@@ -111,6 +119,7 @@ option(CSTOOLKIT_WINDOWS_SDK_WARNING "If ON, cstoolkit will raise a CMake warnin
 
 set(CSTOOLKIT_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 set(CSTOOLKIT_COPY "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/cstoolkit_copy.cmake" --)
+set(CSTOOLKIT_LOCK "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_LIST_DIR}/scripts/cstoolkit_lock.cmake" --)
 set_property(GLOBAL PROPERTY CSTOOLKIT_INSTALLED_TARGETS "")
 set_property(GLOBAL PROPERTY CSTOOLKIT_INSTALLED_TARGETS_ALL "")
 add_custom_target(CSTOOLKIT)
@@ -152,6 +161,7 @@ endif()
 include(${CMAKE_CURRENT_LIST_DIR}/utility/mkspecs.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Windows.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/Qt.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/utility/VortexOpenSplice.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/utility/WindowsRcFile.cmake)
 if(CSTOOLKIT_CPACK_RULES)
     include(${CMAKE_CURRENT_LIST_DIR}/utility/CPackRules.cmake)
