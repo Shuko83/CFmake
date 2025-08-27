@@ -74,13 +74,13 @@ endif()
 # GCC configuration
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     add_compile_options(-Wall -Wextra -Wconversion -Wsign-conversion -Wold-style-cast)  # TODO: Add other warnings ?
-    add_link_options($<$<CONFIG:RELEASE>:-Wl,-strip-all>)
+    add_link_options($<$<CONFIG:Release>:-Wl,-strip-all>)
 endif()
 
 # Clang configuration
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     add_compile_options(-Weverything -Wno-padded -Wno-c++98-compat -Wno-c++98-compat-pedantic)
-    add_link_options($<$<CONFIG:RELEASE>:-Wl,-strip-all>)
+    add_link_options($<$<CONFIG:Release>:-Wl,-strip-all>)
 endif()
 
 # Borland configuration
