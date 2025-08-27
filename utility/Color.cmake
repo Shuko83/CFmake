@@ -1,3 +1,7 @@
+if("$ENV{NO_COLOR}" STREQUAL "")
+
+set(CMAKE_COLOR_DIAGNOSTICS ON)
+
 # Define ESC character
 string(ASCII 27 COLOR_ESC)
 
@@ -25,3 +29,9 @@ set(COLOR_MAGENTA_BOLD "${COLOR_ESC}[1;35m")
 set(COLOR_CYAN_BOLD "${COLOR_ESC}[1;36m")
 set(COLOR_WHITE_BOLD "${COLOR_ESC}[1;37m")
 set(COLOR_GREY_BOLD "${COLOR_ESC}[1;90m")
+
+else()
+
+set(CMAKE_COLOR_DIAGNOSTICS OFF)
+
+endif()
