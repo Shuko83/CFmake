@@ -364,7 +364,7 @@ function(cstoolkit_get_runtime_dependencies target runtime_dependencies genex_ru
     endif()
 
     foreach(_dep ${_target_dependencies})
-        if(TARGET ${_dep})
+        if(TARGET "${_dep}")
             if(NOT _dep IN_LIST ${runtime_dependencies})
                 list(APPEND ${runtime_dependencies} "${_dep}")
                 cstoolkit_get_runtime_dependencies(${_dep} ${runtime_dependencies} ${genex_runtime_dependencies})
