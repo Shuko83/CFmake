@@ -1,4 +1,4 @@
-# Modfied file from FindZLIB Official CMake module from cmake 3.30.5
+# Modfied file from FindZLIB Official CMake module from cmake 3.27.9
 # Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
 # file Copyright.txt or https://cmake.org/licensing for details.
 
@@ -84,6 +84,7 @@ module where to look.
   Default is ``OFF``.
 
 #]=======================================================================]
+
 cmake_policy(PUSH)
 if(POLICY CMP0159)
   cmake_policy(SET CMP0159 NEW) # file(STRINGS) with REGEX updates CMAKE_MATCH_<n>
@@ -126,46 +127,6 @@ endif()
 foreach(search ${_ZLIB_SEARCHES})
   find_path(ZLIB_INCLUDE_DIR NAMES zlib.h ${${search}} PATH_SUFFIXES include)
 endforeach()
-
-macro(select_library_configurations basename)
-    if(NOT ${basename}_LIBRARY_RELEASE)
-        set(${basename}_LIBRARY_RELEASE "${basename}_LIBRARY_RELEASE-NOTFOUND" CACHE FILEPATH "Path to a library.")
-    endif()
-    if(NOT ${basename}_LIBRARY_DEBUG)
-        set(${basename}_LIBRARY_DEBUG "${basename}_LIBRARY_DEBUG-NOTFOUND" CACHE FILEPATH "Path to a library.")
-    endif()
-
-    get_property(_isMultiConfig GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
-    if( ${basename}_LIBRARY_DEBUG AND ${basename}_LIBRARY_RELEASE AND
-           NOT ${basename}_LIBRARY_DEBUG STREQUAL ${basename}_LIBRARY_RELEASE AND
-           ( _isMultiConfig OR CMAKE_BUILD_TYPE ) )
-        # if the generator is multi-config or if CMAKE_BUILD_TYPE is set for
-        # single-config generators, set optimized and debug libraries
-        set( ${basename}_LIBRARY "" )
-        foreach( _libname IN LISTS ${basename}_LIBRARY_RELEASE )
-            list( APPEND ${basename}_LIBRARY optimized "${_libname}" )
-        endforeach()
-        foreach( _libname IN LISTS ${basename}_LIBRARY_DEBUG )
-            list( APPEND ${basename}_LIBRARY debug "${_libname}" )
-        endforeach()
-    elseif( ${basename}_LIBRARY_RELEASE )
-        set( ${basename}_LIBRARY ${${basename}_LIBRARY_RELEASE} )
-    elseif( ${basename}_LIBRARY_DEBUG )
-        set( ${basename}_LIBRARY ${${basename}_LIBRARY_DEBUG} )
-    else()
-        set( ${basename}_LIBRARY "${basename}_LIBRARY-NOTFOUND")
-    endif()
-
-    set( ${basename}_LIBRARIES "${${basename}_LIBRARY}" )
-
-    if( ${basename}_LIBRARY )
-        set( ${basename}_FOUND TRUE )
-    endif()
-
-    mark_as_advanced( ${basename}_LIBRARY_RELEASE
-        ${basename}_LIBRARY_DEBUG
-    )
-endmacro()
 
 # Allow ZLIB_LIBRARY to be set manually, as the location of the zlib library
 if(NOT ZLIB_LIBRARY)
@@ -210,6 +171,7 @@ if(NOT ZLIB_LIBRARY)
     set(CMAKE_FIND_LIBRARY_PREFIXES)
   endif()
 
+  include(SelectLibraryConfigurations)
   select_library_configurations(ZLIB)
 endif()
 
@@ -245,15 +207,14 @@ FIND_PACKAGE_HANDLE_STANDARD_ARGS(ZLIB REQUIRED_VARS ZLIB_LIBRARY ZLIB_INCLUDE_D
                                        HANDLE_COMPONENTS)
 
 if(ZLIB_FOUND)
-
     set(ZLIB_INCLUDE_DIRS ${ZLIB_INCLUDE_DIR})
 
     if(NOT ZLIB_LIBRARIES)
       set(ZLIB_LIBRARIES ${ZLIB_LIBRARY})
-    endif()  
+    endif()
 
     if(NOT TARGET ZLIB::ZLIB)
-      if (ZLIB_USE_STATIC_LIBS)
+      if(ZLIB_USE_STATIC_LIBS)
         add_library(ZLIB::ZLIB STATIC IMPORTED)
       else()
         if(WIN32)
@@ -261,48 +222,60 @@ if(ZLIB_FOUND)
         else()
           add_library(ZLIB::ZLIB UNKNOWN IMPORTED)
         endif()
-      endif()  
+      endif()
+
       set_target_properties(ZLIB::ZLIB PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${ZLIB_INCLUDE_DIRS}")
 
       if(ZLIB_LIBRARY_RELEASE)
         set_property(TARGET ZLIB::ZLIB APPEND PROPERTY
           IMPORTED_CONFIGURATIONS RELEASE)
-          if(WIN32 AND NOT ZLIB_USE_STATIC_LIBS)
-            string(REPLACE "zlib.lib" "../bin/zlib1.dll" ZLIB_LIBRARY_RELEASE_RUNTIME "${ZLIB_LIBRARY_RELEASE}")
-            set_target_properties(ZLIB::ZLIB PROPERTIES
-              IMPORTED_IMPLIB_RELEASE "${ZLIB_LIBRARY_RELEASE}"
-              IMPORTED_LOCATION_RELEASE "${ZLIB_LIBRARY_RELEASE_RUNTIME}")
-          else()
-            set_target_properties(ZLIB::ZLIB PROPERTIES
+
+        if(WIN32 AND NOT ZLIB_USE_STATIC_LIBS)
+          cmake_path(GET ZLIB_LIBRARY_RELEASE PARENT_PATH ZLIB_LIBRARY_RELEASE_RUNTIME)
+          cmake_path(GET ZLIB_LIBRARY_RELEASE_RUNTIME PARENT_PATH ZLIB_LIBRARY_RELEASE_RUNTIME)
+          set(ZLIB_LIBRARY_RELEASE_RUNTIME "${ZLIB_LIBRARY_RELEASE_RUNTIME}/bin/zlib1.dll")
+
+          set_target_properties(ZLIB::ZLIB PROPERTIES
+            IMPORTED_IMPLIB_RELEASE "${ZLIB_LIBRARY_RELEASE}"
+            IMPORTED_LOCATION_RELEASE "${ZLIB_LIBRARY_RELEASE_RUNTIME}")
+        else()
+          set_target_properties(ZLIB::ZLIB PROPERTIES
             IMPORTED_LOCATION_RELEASE "${ZLIB_LIBRARY_RELEASE}")
-          endif()        
+        endif()        
       endif()
 
       if(ZLIB_LIBRARY_DEBUG)
         set_property(TARGET ZLIB::ZLIB APPEND PROPERTY
           IMPORTED_CONFIGURATIONS DEBUG)
+
         if(WIN32 AND NOT ZLIB_USE_STATIC_LIBS)
-        string(REPLACE "zlib.lib" "../bin/zlib1.dll" ZLIB_LIBRARY_DEBUG_RUNTIME "${ZLIB_LIBRARY_DEBUG}")
+          cmake_path(GET ZLIB_LIBRARY_DEBUG PARENT_PATH ZLIB_LIBRARY_DEBUG_RUNTIME)
+          cmake_path(GET ZLIB_LIBRARY_DEBUG_RUNTIME PARENT_PATH ZLIB_LIBRARY_DEBUG_RUNTIME)
+          set(ZLIB_LIBRARY_DEBUG_RUNTIME "${ZLIB_LIBRARY_DEBUG_RUNTIME}/bin/zlib1.dll")
+
           set_target_properties(ZLIB::ZLIB PROPERTIES
             IMPORTED_IMPLIB_DEBUG "${ZLIB_LIBRARY_DEBUG}"
             IMPORTED_LOCATION_DEBUG "${ZLIB_LIBRARY_DEBUG_RUNTIME}")
         else()
           set_target_properties(ZLIB::ZLIB PROPERTIES
-          IMPORTED_LOCATION_DEBUG "${ZLIB_LIBRARY_DEBUG}")
-        endif()  
+            IMPORTED_LOCATION_DEBUG "${ZLIB_LIBRARY_DEBUG}")
+        endif()
       endif()
 
       if(NOT ZLIB_LIBRARY_RELEASE AND NOT ZLIB_LIBRARY_DEBUG)
         if(WIN32 AND NOT ZLIB_USE_STATIC_LIBS)
-        string(REPLACE "zlib.lib" "../bin/zlib1.dll" ZLIB_LIBRARY_RUNTIME "${ZLIB_LIBRARY}")
-            set_target_properties(ZLIB::ZLIB PROPERTIES
-              IMPORTED_IMPLIB "${ZLIB_LIBRARY}"
-              IMPORTED_LOCATION "${ZLIB_LIBRARY_RUNTIME}")
-          else()
-            set_property(TARGET ZLIB::ZLIB APPEND PROPERTY
+          cmake_path(GET ZLIB_LIBRARY PARENT_PATH ZLIB_LIBRARY_RUNTIME)
+          cmake_path(GET ZLIB_LIBRARY_RUNTIME PARENT_PATH ZLIB_LIBRARY_RUNTIME)
+          set(ZLIB_LIBRARY_RUNTIME "${ZLIB_LIBRARY_RUNTIME}/bin/zlib1.dll")
+
+          set_target_properties(ZLIB::ZLIB PROPERTIES
+            IMPORTED_IMPLIB "${ZLIB_LIBRARY}"
+            IMPORTED_LOCATION "${ZLIB_LIBRARY_RUNTIME}")
+        else()
+          set_property(TARGET ZLIB::ZLIB APPEND PROPERTY
             IMPORTED_LOCATION "${ZLIB_LIBRARY}")
-          endif()  
+        endif()
       endif()
     endif()
 endif()
