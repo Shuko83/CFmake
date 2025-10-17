@@ -1,1 +1,1 @@
-[📖 View Project Wiki](https://gitlab.divst/transverse/utilities/production/cstoolkit/-/wikis/Home)
+[📖 View Project Wiki](https://dr-aix-git-02v.sccoa.si.c-s.fr/transverse/utilities/production/cstoolkit/-/wikis/home)
