@@ -9,14 +9,12 @@ Customize extensions
 Conservation des zip
 disable Build folder deploy
 Temps de build Jenkins DLPX-HI
-Add APPEND option to download url that doesn't clean folder
 global GIT_SRC
 override MKSPECS
 Check SHAONE on config
 Qt skip automoc for cutom moced file
 CMAKE_INSTALL_PREFIX generator expression support
 deploy_files empty SetErrorMode
-WIN32 console APP
 post configure install_export
     multi config cmake
 Allow additionnal SOURCES_FILES

@@ -334,7 +334,11 @@ macro(_cstoolkit_internal_find_package _internal_find_package_name _internal_fin
 endmacro()
 
 function(_cstoolkit_internal_download _internal_download_url _internal_download_dir)
-    file(REMOVE_RECURSE "${_internal_download_dir}/${_internal_download_filename}")
+    cmake_parse_arguments(PARSE_ARGV 2 _internal_download "APPEND" "" "")
+
+    if(NOT _internal_download_APPEND)
+        file(REMOVE_RECURSE "${_internal_download_dir}/${_internal_download_filename}")
+    endif()
     file(MAKE_DIRECTORY "${_internal_download_dir}")
     cmake_path(GET _internal_download_url FILENAME _internal_download_filename)
 
@@ -367,7 +371,11 @@ function(_cstoolkit_internal_download _internal_download_url _internal_download_
     list(GET status 1 status_string)
 
     if(NOT status_code EQUAL 0)
-        file(REMOVE_RECURSE "${_internal_download_dir}")
+        if(_internal_download_APPEND)
+            file(REMOVE "${_internal_download_dir}/${_internal_download_filename}")
+        else()
+            file(REMOVE_RECURSE "${_internal_download_dir}")
+        endif()
         message(FATAL_ERROR "CSToolkit: Downloading '${_internal_download_url}' failed
 STATUS: ${status_code} ${status_string}
         --- LOG BEGIN ---
@@ -377,7 +385,7 @@ ${log}        --- LOG END ---
 endfunction()
 
 function(_cstoolkit_internal_extract _internal_extract_file _internal_extract_dir)
-    cmake_parse_arguments(PARSE_ARGV 2 _internal_extract "GITINFO_ONLY" "" "PATTERNS")
+    cmake_parse_arguments(PARSE_ARGV 2 _internal_extract "GITINFO_ONLY;APPEND" "" "PATTERNS")
 
     cmake_path(GET _internal_extract_file PARENT_PATH _internal_extract_temp_dir)
     set(_internal_extract_temp_dir "${_internal_extract_temp_dir}/tmp")
@@ -399,7 +407,9 @@ File size: ${file_size}")
     endif()
 
     file(MAKE_DIRECTORY "${_internal_extract_dir}")
-    file(REMOVE_RECURSE "${_internal_extract_dir}")
+    if(NOT _internal_extract_APPEND)
+        file(REMOVE_RECURSE "${_internal_extract_dir}")
+    endif()
 
     # Remove top level directory if exists
     list(LENGTH contents n)
@@ -412,6 +422,10 @@ File size: ${file_size}")
 
     if(_internal_extract_GITINFO_ONLY)
         set(_fetch_package_extract_rv 0)
+    elseif(_internal_extract_APPEND)
+        set(_fetch_package_extract_rv 0)
+        cmake_path(ABSOLUTE_PATH _internal_extract_dir BASE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+        file(COPY "${contents}/" DESTINATION "${_internal_extract_dir}")
     else()
         file(RENAME "${contents}" "${_internal_extract_dir}" RESULT _fetch_package_extract_rv)
     endif()
@@ -547,7 +561,7 @@ ${_git_unshallow_output}")
 endfunction()
 
 function(cstoolkit_download_url URL OUTPUT_VAR)
-    set(options NO_EXTRACT)
+    set(options NO_EXTRACT APPEND)
     set(one_value_args)
     if(OUTPUT_VAR STREQUAL "DESTINATION")
         set(one_value_args ${OUTPUT_VAR})
@@ -560,6 +574,16 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
 
     if(OUTPUT_VAR STREQUAL "DESTINATION" AND NOT DOWNLOAD_DESTINATION)
         message(SEND_ERROR "CSToolkit: cstoolkit_download_url(${URL}): Empty DESTINATION")
+        return()
+    endif()
+
+    if(DOWNLOAD_APPEND AND DOWNLOAD_NO_EXTRACT)
+        message(SEND_ERROR "CSToolkit: cstoolkit_download_url(${URL}): APPEND cannot be used with NO_EXTRACT")
+        return()
+    endif()
+
+    if(DOWNLOAD_APPEND AND NOT OUTPUT_VAR STREQUAL "DESTINATION")
+        message(SEND_ERROR "CSToolkit: cstoolkit_download_url(${URL}): APPEND requires DESTINATION")
         return()
     endif()
 
@@ -594,7 +618,15 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
         cstoolkit_start_timer(CSTOOLKIT_DOWNLOAD_TIMER)
         message(STATUS "CSToolkit: Download ${URL}")
 
-        _cstoolkit_internal_download("${URL}" "${download_dir}")
+        if(_download_NO_EXTRACT)
+            set(_download_params)
+            if(_download_APPEND)
+                list(APPEND _download_params APPEND)
+            endif()
+            _cstoolkit_internal_download("${URL}" "${_download_DESTINATION}" ${_download_params})
+        else()
+            _cstoolkit_internal_download("${URL}" "${download_dir}")
+        endif()
         set(_fresh_download TRUE)
 
         cstoolkit_end_timer(CSTOOLKIT_DOWNLOAD_TIMER CSTOOLKIT_DOWNLOAD_ELAPSED)
@@ -605,7 +637,11 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
         cstoolkit_start_timer(CSTOOLKIT_DOWNLOAD_TIMER)
         message(STATUS "CSToolkit: Extract ${URL}")
 
-        _cstoolkit_internal_extract("${download_dir}/${_FULLFILENAME}" "${DOWNLOAD_DESTINATION}" PATTERNS ${DOWNLOAD_PATTERNS})
+        set(_extract_params PATTERNS ${DOWNLOAD_PATTERNS})
+        if(DOWNLOAD_APPEND)
+            list(APPEND _extract_params APPEND)
+        endif()
+        _cstoolkit_internal_extract("${download_dir}/${_FULLFILENAME}" "${DOWNLOAD_DESTINATION}" ${_extract_params})
 
         cstoolkit_end_timer(CSTOOLKIT_DOWNLOAD_TIMER CSTOOLKIT_DOWNLOAD_ELAPSED)
         message(STATUS "CSToolkit: Extract ${URL} done (${CSTOOLKIT_DOWNLOAD_ELAPSED}s)")
