@@ -2,7 +2,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     
     # Parse arguments
 
-    set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE RECURSIVE_INTERFACE_INCLUDE NO_INSTALL PUBLIC_HEADERS_NO_EXTENSION)
+    set(TARGET_OPTIONS RECURSIVE RECURSIVE_INCLUDE RECURSIVE_INTERFACE_INCLUDE NO_INSTALL PUBLIC_HEADERS_NO_EXTENSION WIN32)
     set(TARGET_UNIQUE NAMESPACE ALIAS EXTENSION PLUGINS_DIR)
     set(TARGET_MULTIPLE
         # LIBRARIES
@@ -104,12 +104,18 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Executable
 
     if(TARGET_EXECUTABLE)
-        add_executable(${TARGET_NAME})
+        if(TARGET_WIN32)
+            add_executable(${TARGET_NAME} WIN32)
+        else()
+            add_executable(${TARGET_NAME})
+        endif()
         set_target_properties(${TARGET_NAME} PROPERTIES NAMESPACE "${TARGET_NAMESPACE}") # READONLY
         add_executable(${TARGET_NAMESPACE}${TARGET_NAME} ALIAS ${TARGET_NAME})
         if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${TARGET_NAMESPACE}${TARGET_NAME})
             add_executable(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
         endif()
+    elseif(TARGET_WIN32)
+        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid option WIN32 option for ${TARGET_TYPE} target")
     endif()
 
     # Postfix, necessaire pour les executables
