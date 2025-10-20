@@ -135,13 +135,20 @@ function(cstoolkit_install_export target)
     cstoolkit_target_genex_eval(${target} TARGET_INSTALL_CMAKEDIR)
     cstoolkit_target_genex_eval(${target} TARGET_INSTALL_CONFIG_NAME)
 
-    install(EXPORT ${TARGET_INSTALL_TARGETS_NAME}
-        NAMESPACE ${TARGET_NAMESPACE}
-        FILE ${TARGET_INSTALL_CONFIG_NAME}Targets.cmake
-        DESTINATION ${TARGET_INSTALL_CMAKEDIR}
-        COMPONENT ${TARGET_INSTALL_COMPONENT}
-        ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
-    )
+    cstoolkit_print(TARGET_INSTALL_CMAKEDIR)
+    cstoolkit_print(TARGET_INSTALL_CONFIG_NAME)
+
+    foreach(CMAKEDIR ${TARGET_INSTALL_CMAKEDIR})
+        foreach(CONFIG_NAME ${TARGET_INSTALL_CONFIG_NAME})
+            install(EXPORT ${TARGET_INSTALL_TARGETS_NAME}
+                NAMESPACE ${TARGET_NAMESPACE}
+                FILE ${CONFIG_NAME}Targets.cmake
+                DESTINATION ${CMAKEDIR}
+                COMPONENT ${TARGET_INSTALL_COMPONENT}
+                ${TARGET_INSTALL_EXCLUDE_FROM_ALL}
+            )
+        endforeach()
+    endforeach()
 endfunction()
 
 function(cstoolkit_check_dependencies target)
