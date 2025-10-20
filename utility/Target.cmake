@@ -619,19 +619,21 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(TARGET_RUNTIME_DLLS "$<FILTER:${TARGET_RUNTIME_DLLS},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
         endif()
 
-        add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-            COMMAND ${CSTOOLKIT_COPY} -e
-                "${TARGET_RUNTIME_DLLS}"
-                "$<TARGET_FILE_DIR:${TARGET_NAME}>"
-                COMMAND_EXPAND_LISTS
-        )
+        if(CSTOOLKIT_BUILD_DEPLOY)
+            add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                COMMAND ${CSTOOLKIT_COPY} -e
+                    "${TARGET_RUNTIME_DLLS}"
+                    "$<TARGET_FILE_DIR:${TARGET_NAME}>"
+                    COMMAND_EXPAND_LISTS
+            )
+        endif()
         
         if(MSVC)
             set(TARGET_RUNTIME_SYMBOLS "$<LIST:TRANSFORM,${TARGET_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
         elseif(BORLAND)
             set(TARGET_RUNTIME_SYMBOLS "$<LIST:TRANSFORM,${TARGET_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.tds>")
         endif()
-        if(TARGET_RUNTIME_SYMBOLS)
+        if(TARGET_RUNTIME_SYMBOLS AND CSTOOLKIT_BUILD_DEPLOY)
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                 COMMAND ${CSTOOLKIT_COPY}
                     "${TARGET_RUNTIME_SYMBOLS}"
@@ -757,19 +759,21 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(DESTINATION_INDEX 0)
             while(DESTINATION_INDEX LESS TARGET_PLUGINS_DESTINATION_SIZE)
                 # Copy of the plugins files
-                add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                    COMMAND ${CSTOOLKIT_COPY} -e
-                        "${PLUGINS_TARGET_FILES${DESTINATION_INDEX}}"
-                        "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}"
-                        COMMAND_EXPAND_LISTS
-                )
+                if(CSTOOLKIT_BUILD_DEPLOY)
+                    add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
+                        COMMAND ${CSTOOLKIT_COPY} -e
+                            "${PLUGINS_TARGET_FILES${DESTINATION_INDEX}}"
+                            "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}"
+                            COMMAND_EXPAND_LISTS
+                    )
+                endif()
 
                 if(MSVC)
                     set(PLUGINS_TARGET_SYMBOLS${DESTINATION_INDEX} "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},REPLACE,\(.*\)\\.[^.]+,\\1.pdb>")
                 elseif(BORLAND)
                     set(PLUGINS_TARGET_SYMBOLS${DESTINATION_INDEX} "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},REPLACE,\(.*\)\\.[^.]+,\\1.tds>")
                 endif()
-                if(TARGET_RUNTIME_SYMBOLS)
+                if(TARGET_RUNTIME_SYMBOLS AND CSTOOLKIT_BUILD_DEPLOY)
                     # Copy of the plugins pdbs
                     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
                         COMMAND ${CSTOOLKIT_COPY}

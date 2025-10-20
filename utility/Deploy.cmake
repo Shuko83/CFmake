@@ -54,20 +54,24 @@ function(cstoolkit_deploy_with_target target mode)
     endif()
 
     if(DEPLOY_FILES)
-        add_custom_command(TARGET ${target} POST_BUILD
-            COMMAND ${CSTOOLKIT_COPY} -e
-                "${DEPLOY_SOURCES_NORM}"
-                "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
-                COMMAND_EXPAND_LISTS
-        )
+        if(CSTOOLKIT_BUILD_DEPLOY)
+            add_custom_command(TARGET ${target} POST_BUILD
+                COMMAND ${CSTOOLKIT_COPY} -e
+                    "${DEPLOY_SOURCES_NORM}"
+                    "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
+                    COMMAND_EXPAND_LISTS
+            )
+        endif()
         install(FILES "${DEPLOY_SOURCES_NORM}" DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
     else()
-        add_custom_command(TARGET ${target} POST_BUILD
-            COMMAND ${CSTOOLKIT_COPY} -e -d
-                "${DEPLOY_SOURCES_NORM}"
-                "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
-                COMMAND_EXPAND_LISTS
-        )
+        if(CSTOOLKIT_BUILD_DEPLOY)
+            add_custom_command(TARGET ${target} POST_BUILD
+                COMMAND ${CSTOOLKIT_COPY} -e -d
+                    "${DEPLOY_SOURCES_NORM}"
+                    "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
+                    COMMAND_EXPAND_LISTS
+            )
+        endif()
         install(DIRECTORY "${DEPLOY_SOURCES_NORM}" DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
     endif()
 endfunction()

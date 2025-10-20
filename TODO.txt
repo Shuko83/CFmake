@@ -7,10 +7,9 @@
 tinyxml2 not detected like unknown library
 Customize extensions
 Conservation des zip
-disable Build folder deploy
 Temps de build Jenkins DLPX-HI
 Check SHAONE on config
-Qt skip automoc for cutom moced file
+Finish remoteObject qt macro + integrate to cstoolkit_add_target
 CMAKE_INSTALL_PREFIX generator expression support
 deploy_files empty SetErrorMode
 post configure install_export
