@@ -200,7 +200,7 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
     endif()
 
     set(_missing_gitinfo 0)
-    if(fetch_package_GIT_SRC AND NOT EXISTS "${_fetch_package_src_dir}")
+    if((fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC) AND NOT EXISTS "${_fetch_package_src_dir}")
         if(EXISTS "${_fetch_package_extract_dir}/.gitinfo")
             _cstoolkit_internal_read_gitinfo("${_fetch_package_extract_dir}/.gitinfo")
             if(NOT _cstoolkit_internal_gitinfo_remote_origin)
@@ -239,26 +239,28 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
         message(STATUS "CSToolkit: Extract package ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
     endif()
 
-    if(fetch_package_GIT_SRC AND (_fetch_package_rebuild OR NOT EXISTS "${_fetch_package_src_dir}"))
-        cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
-        message(STATUS "CSToolkit: Clone git repository ${fetch_package_name}")
-
+    if((fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC) AND (_fetch_package_rebuild OR NOT EXISTS "${_fetch_package_src_dir}"))
         if(NOT _cstoolkit_internal_gitinfo_remote_origin)
-            message(FATAL_ERROR "CSToolkit: Missing git informations for ${fetch_package_name}")
+            if(fetch_package_GIT_SRC)
+                message(FATAL_ERROR "CSToolkit: Missing git informations for ${fetch_package_name}")
+            endif()
+        else()
+            cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
+            message(STATUS "CSToolkit: Clone git repository ${fetch_package_name}")
+
+            set(_internal_git_clone_params "SHALLOW")
+            if(fetch_package_GIT_BUILD)
+                set(_internal_git_clone_params)
+            endif()
+
+            _cstoolkit_internal_git_clone(${fetch_package_name} "${_cstoolkit_internal_gitinfo_remote_origin}" "${_cstoolkit_internal_gitinfo_last_commit}" "${_fetch_package_src_dir}" ${_internal_git_clone_params})
+
+            cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
+            message(STATUS "CSToolkit: Clone git repository ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
         endif()
-
-        set(_internal_git_clone_params "SHALLOW")
-        if(fetch_package_GIT_BUILD)
-            set(_internal_git_clone_params)
-        endif()
-
-        _cstoolkit_internal_git_clone(${fetch_package_name} "${_cstoolkit_internal_gitinfo_remote_origin}" "${_cstoolkit_internal_gitinfo_last_commit}" "${_fetch_package_src_dir}" ${_internal_git_clone_params})
-
-        cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
-        message(STATUS "CSToolkit: Clone git repository ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
     endif()
 
-    if(NOT fetch_package_GIT_SRC)
+    if(NOT (fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC))
         cstoolkit_git_safe_delete("${_fetch_package_src_dir}")
     endif()
 
