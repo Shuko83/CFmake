@@ -173,15 +173,15 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
     set(_fetch_package_binary_dir "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}-build")
     cmake_path(GET fetch_package_url FILENAME _fetch_package_filename)
 
-    # Reconfigure if file modified
+    # Reconfigure if download.stamp modified
     set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${_fetch_package_download_dir}/download.stamp")
 
-    # Get previous URL
+    # Get previous URL from download.stamp
     if(EXISTS "${_fetch_package_download_dir}/download.stamp")
         file(READ "${_fetch_package_download_dir}/download.stamp" _fetch_package_previous_url)
     endif()
 
-    # if a step is redone, all next steps redone
+    # if a step is redone, all next steps need to be redone
     set(_fetch_package_rebuild 0)
 
     # Download if previous url different
@@ -199,8 +199,9 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
         message(STATUS "CSToolkit: Download package ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
     endif()
 
+    # Determine if we need to extract git info
     set(_missing_gitinfo 0)
-    if((fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC) AND NOT EXISTS "${_fetch_package_src_dir}")
+    if((fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC OR CSTOOLKIT_FETCH_GIT_BUILD) AND NOT EXISTS "${_fetch_package_src_dir}")
         if(EXISTS "${_fetch_package_extract_dir}/.gitinfo")
             _cstoolkit_internal_read_gitinfo("${_fetch_package_extract_dir}/.gitinfo")
             if(NOT _cstoolkit_internal_gitinfo_remote_origin)
@@ -212,23 +213,28 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
     endif()
 
     # Extract if previous url different or if extract dir doesn't exists
-    if(_fetch_package_rebuild OR _missing_gitinfo OR (NOT fetch_package_GIT_BUILD AND NOT EXISTS "${_fetch_package_extract_dir}"))
+    # GIT_BUILD only needs gitinfo, no need to extract if we already have gitinfo
+    if(_fetch_package_rebuild OR _missing_gitinfo OR (NOT (fetch_package_GIT_BUILD OR CSTOOLKIT_FETCH_GIT_BUILD) AND NOT EXISTS "${_fetch_package_extract_dir}"))
         cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
         message(STATUS "CSToolkit: Extract package ${fetch_package_name}")
 
         set(_internal_extract_params)
         if(fetch_package_GIT_BUILD)
             set(_internal_extract_params "GITINFO_ONLY")
+        elseif(CSTOOLKIT_FETCH_GIT_BUILD)
+            set(_internal_extract_params "GITINFO_BEST_EFFORT")
         endif()
 
         _cstoolkit_internal_extract("${_fetch_package_download_dir}/${_fetch_package_filename}" "${_fetch_package_extract_dir}" ${_internal_extract_params})
 
-        if(fetch_package_LEGACY AND NOT fetch_package_GIT_BUILD)
+        # Overwrite Config file for LEGACY and CODX packages
+        # No Config generation with GIT_BUILD option
+        if(fetch_package_LEGACY AND NOT fetch_package_GIT_BUILD AND NOT (CSTOOLKIT_FETCH_GIT_BUILD AND _cstoolkit_internal_gitinfo_remote_origin))
             if(EXISTS "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake")
                 message(STATUS "CSToolkit: Overwriting ${fetch_package_name}Config.cmake with generated legacy support Config file.")
             endif()
             configure_file(${CSTOOLKIT_ROOT_DIR}/templates/FetchLegacyConfig.${CSTOOLKIT_HOST_PLATFORM}.in "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake" @ONLY)
-        elseif(fetch_package_CODX AND NOT fetch_package_GIT_BUILD)
+        elseif(fetch_package_CODX AND NOT fetch_package_GIT_BUILD AND NOT (CSTOOLKIT_FETCH_GIT_BUILD AND _cstoolkit_internal_gitinfo_remote_origin))
             if(EXISTS "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake")
                 message(STATUS "CSToolkit: Overwriting ${fetch_package_name}Config.cmake with generated CODX support Config file.")
             endif()
@@ -239,8 +245,12 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
         message(STATUS "CSToolkit: Extract package ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
     endif()
 
-    if((fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC) AND (_fetch_package_rebuild OR NOT EXISTS "${_fetch_package_src_dir}"))
+    # Clone git repository for sources if requested
+    # Shallow clone if only GIT_SRC specified
+    if((fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC OR CSTOOLKIT_FETCH_GIT_BUILD) AND (_fetch_package_rebuild OR NOT EXISTS "${_fetch_package_src_dir}"))
+        # Missing gitinfo
         if(NOT _cstoolkit_internal_gitinfo_remote_origin)
+            # CSTOOLKIT_FETCH_GIT_SRC and CSTOOLKIT_FETCH_GIT_BUILD work as best effort
             if(fetch_package_GIT_SRC)
                 message(FATAL_ERROR "CSToolkit: Missing git informations for ${fetch_package_name}")
             endif()
@@ -249,7 +259,7 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
             message(STATUS "CSToolkit: Clone git repository ${fetch_package_name}")
 
             set(_internal_git_clone_params "SHALLOW")
-            if(fetch_package_GIT_BUILD)
+            if(fetch_package_GIT_BUILD OR CSTOOLKIT_FETCH_GIT_BUILD)
                 set(_internal_git_clone_params)
             endif()
 
@@ -260,11 +270,13 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
         endif()
     endif()
 
-    if(NOT (fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC))
+    # Clean up source directory if no more requested
+    if(NOT (fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC OR CSTOOLKIT_FETCH_GIT_BUILD))
         cstoolkit_git_safe_delete("${_fetch_package_src_dir}")
     endif()
 
-    if(fetch_package_GIT_BUILD)
+    # Full clone + add_subdirectory
+    if(fetch_package_GIT_BUILD OR (CSTOOLKIT_FETCH_GIT_BUILD AND _cstoolkit_internal_gitinfo_remote_origin))
         _cstoolkit_internal_git_unshallow(${fetch_package_name} "${_fetch_package_src_dir}")
 
         file(REMOVE_RECURSE "${_fetch_package_extract_dir}")
@@ -387,7 +399,7 @@ ${log}        --- LOG END ---
 endfunction()
 
 function(_cstoolkit_internal_extract _internal_extract_file _internal_extract_dir)
-    cmake_parse_arguments(PARSE_ARGV 2 _internal_extract "GITINFO_ONLY;APPEND" "" "PATTERNS")
+    cmake_parse_arguments(PARSE_ARGV 2 _internal_extract "GITINFO_ONLY;APPEND;GITINFO_BEST_EFFORT" "" "PATTERNS")
 
     cmake_path(GET _internal_extract_file PARENT_PATH _internal_extract_temp_dir)
     set(_internal_extract_temp_dir "${_internal_extract_temp_dir}/tmp")
@@ -422,12 +434,13 @@ File size: ${file_size}")
     #extract gitinfo
     _cstoolkit_internal_read_gitinfo("${contents}/.gitinfo" PARENT_SCOPE)
 
-    if(_internal_extract_GITINFO_ONLY)
+    if(_internal_extract_GITINFO_ONLY OR (_internal_extract_GITINFO_BEST_EFFORT AND _cstoolkit_internal_gitinfo_remote_origin))
         set(_fetch_package_extract_rv 0)
     elseif(_internal_extract_APPEND)
         set(_fetch_package_extract_rv 0)
         cmake_path(ABSOLUTE_PATH _internal_extract_dir BASE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
         file(COPY "${contents}/" DESTINATION "${_internal_extract_dir}")
+        file(REMOVE_RECURSE "${contents}")
     else()
         file(RENAME "${contents}" "${_internal_extract_dir}" RESULT _fetch_package_extract_rv)
     endif()

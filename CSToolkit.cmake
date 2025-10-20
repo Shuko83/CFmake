@@ -105,6 +105,7 @@ option(CSTOOLKIT_AUTO_DEPLOY_QT "Add qt deploy rules to all Qt dependent executa
 option(CSTOOLKIT_PREFIX_OUTPUT_NAME "If ON, all targets output file are prefixed by project name" OFF)
 option(CSTOOLKIT_FETCH_PACKAGE_PREFER_MODULE "If ON, cstoolkit_fetch_package will search for Find<package> files before <package>Config files" OFF)
 option(CSTOOLKIT_FETCH_GIT_SRC "If ON, automatically adds GIT_SRC option to all cstoolkit_fetch_package calls" OFF)
+option(CSTOOLKIT_FETCH_GIT_BUILD "If ON, automatically adds GIT_BUILD option to all cstoolkit_fetch_package calls" OFF)
 if(CONAN)
     option(CSTOOLKIT_GENERATE_FETCH_DEPENDENCY "If ON, calls to cstoolkit_fetch_dependency will be generated in Config files" OFF)
     option(CSTOOLKIT_FETCH_DEPENDENCY "If OFF, calls to cstoolkit_fetch_dependency will do nothing" OFF)
