@@ -1,2 +1,3 @@
 .vscode/settings.json
-documentation/site
+example/build/
+example/install/

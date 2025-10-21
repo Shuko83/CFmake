@@ -179,6 +179,7 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
     set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${_fetch_package_download_dir}/download.stamp")
 
     # Get previous URL from download.stamp
+    set(_fetch_package_previous_url)
     if(EXISTS "${_fetch_package_download_dir}/download.stamp")
         file(READ "${_fetch_package_download_dir}/download.stamp" _fetch_package_previous_url)
     endif()
@@ -465,6 +466,11 @@ File size: ${file_size}")
 ${_fetch_package_extract_rv}")
         return()
     endif()
+
+    # Delete archive after successful extraction if CSTOOLKIT_KEEP_ARCHIVE is OFF
+    if(NOT CSTOOLKIT_KEEP_ARCHIVE)
+        file(REMOVE "${_internal_extract_file}")
+    endif()
 endfunction()
 
 function(_cstoolkit_internal_git_clone git_package git_url git_commit git_src_dir)
@@ -595,22 +601,14 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
         set(one_value_args ${OUTPUT_VAR})
     endif()
     set(multi_value_args PATTERNS)
-    cmake_parse_arguments(PARSE_ARGV 1 DOWNLOAD "${options}" "${one_value_args}" "${multi_value_args}")
+    cmake_parse_arguments(PARSE_ARGV 1 _download "${options}" "${one_value_args}" "${multi_value_args}")
 
-    #cstoolkit_print(OUTPUT_VAR)
-    #cstoolkit_print(DOWNLOAD_DESTINATION)
-
-    if(OUTPUT_VAR STREQUAL "DESTINATION" AND NOT DOWNLOAD_DESTINATION)
+    if(OUTPUT_VAR STREQUAL "DESTINATION" AND NOT _download_DESTINATION)
         message(SEND_ERROR "CSToolkit: cstoolkit_download_url(${URL}): Empty DESTINATION")
         return()
     endif()
 
-    if(DOWNLOAD_APPEND AND DOWNLOAD_NO_EXTRACT)
-        message(SEND_ERROR "CSToolkit: cstoolkit_download_url(${URL}): APPEND cannot be used with NO_EXTRACT")
-        return()
-    endif()
-
-    if(DOWNLOAD_APPEND AND NOT OUTPUT_VAR STREQUAL "DESTINATION")
+    if(_download_APPEND AND NOT OUTPUT_VAR STREQUAL "DESTINATION")
         message(SEND_ERROR "CSToolkit: cstoolkit_download_url(${URL}): APPEND requires DESTINATION")
         return()
     endif()
@@ -620,29 +618,34 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
     string(MD5 _HASH ${URL})
     string(SUBSTRING ${_HASH} 0 8 _HASH)
 
-    if(OUTPUT_VAR STREQUAL "DESTINATION")
-        if(DOWNLOAD_NO_EXTRACT)
-            set(download_dir "${DOWNLOAD_DESTINATION}")
-            set(DOWNLOAD_DESTINATION "${DOWNLOAD_DESTINATION}/${_FULLFILENAME}")
-        else()
             set(download_dir "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/${_FILENAME}_${_HASH}")
-        endif()
+
+    if(NOT OUTPUT_VAR STREQUAL "DESTINATION")
+        if(_download_NO_EXTRACT)
+            set(_download_DESTINATION "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
+            set(${OUTPUT_VAR} "${_download_DESTINATION}/${_FULLFILENAME}")
     else()
-        if(DOWNLOAD_NO_EXTRACT)
-            set(download_dir "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
-            set(${OUTPUT_VAR} "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}/${_FULLFILENAME}")
-        else()
-            set(download_dir "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/${_FILENAME}_${_HASH}")
-            set(${OUTPUT_VAR} "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
+            set(_download_DESTINATION "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
+            set(${OUTPUT_VAR} "${_download_DESTINATION}")
         endif()
     
         set(${OUTPUT_VAR} ${${OUTPUT_VAR}} PARENT_SCOPE)
-        set(DOWNLOAD_DESTINATION "${${OUTPUT_VAR}}")
+    endif()
+
+    # Reconfigure if download.stamp modified
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${download_dir}/download.stamp")
+
+    # Get previous URL from download.stamp
+    set(_download_previous_url)
+    if(EXISTS "${download_dir}/download.stamp")
+        file(READ "${download_dir}/download.stamp" _download_previous_url)
     endif()
 
     set(_fresh_download FALSE)
 
-    if(NOT EXISTS "${download_dir}/${_FULLFILENAME}")
+    if( (NOT _download_previous_url STREQUAL "${URL}") # URL Changed
+     OR (_download_NO_EXTRACT AND NOT EXISTS "${_download_DESTINATION}/${_FULLFILENAME}") # File missing (NO_EXTRACT)
+     OR (NOT _download_NO_EXTRACT AND NOT EXISTS "${_download_DESTINATION}" AND NOT EXISTS "${download_dir}/${_FULLFILENAME}")) # Extracted directory and original archive missing
         cstoolkit_start_timer(CSTOOLKIT_DOWNLOAD_TIMER)
         message(STATUS "CSToolkit: Download ${URL}")
 
@@ -661,15 +664,15 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
         message(STATUS "CSToolkit: Download ${URL} done (${CSTOOLKIT_DOWNLOAD_ELAPSED}s)")
     endif()
 
-    if((NOT DOWNLOAD_NO_EXTRACT) AND (_fresh_download OR NOT EXISTS "${DOWNLOAD_DESTINATION}"))
+    if((NOT _download_NO_EXTRACT) AND (_fresh_download OR NOT EXISTS "${_download_DESTINATION}"))
         cstoolkit_start_timer(CSTOOLKIT_DOWNLOAD_TIMER)
         message(STATUS "CSToolkit: Extract ${URL}")
 
-        set(_extract_params PATTERNS ${DOWNLOAD_PATTERNS})
-        if(DOWNLOAD_APPEND)
+        set(_extract_params PATTERNS ${_download_PATTERNS})
+        if(_download_APPEND)
             list(APPEND _extract_params APPEND)
         endif()
-        _cstoolkit_internal_extract("${download_dir}/${_FULLFILENAME}" "${DOWNLOAD_DESTINATION}" ${_extract_params})
+        _cstoolkit_internal_extract("${download_dir}/${_FULLFILENAME}" "${_download_DESTINATION}" ${_extract_params})
 
         cstoolkit_end_timer(CSTOOLKIT_DOWNLOAD_TIMER CSTOOLKIT_DOWNLOAD_ELAPSED)
         message(STATUS "CSToolkit: Extract ${URL} done (${CSTOOLKIT_DOWNLOAD_ELAPSED}s)")
