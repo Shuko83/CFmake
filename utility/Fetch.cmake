@@ -307,9 +307,15 @@ function(_cstoolkit_internal_compute_url url_var url_root url_package_name)
     endif()
 
     if(NOT _compute_url_MKSPECS)
-        set(_compute_url_MKSPECS "${CSTOOLKIT_BUILD_MKSPECS}")
-        set(_compute_url_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS_QT}")
-    elseif(_compute_url_QT)
+        # Use CSTOOLKIT_EXTERNAL_MKSPECS if set, otherwise use CSTOOLKIT_BUILD_MKSPECS
+        if(CSTOOLKIT_EXTERNAL_MKSPECS)
+            set(_compute_url_MKSPECS "${CSTOOLKIT_EXTERNAL_MKSPECS}")
+        else()
+            set(_compute_url_MKSPECS "${CSTOOLKIT_BUILD_MKSPECS}")
+        endif()
+    endif()
+
+    if(_compute_url_QT)
         if(Qt5_VERSION_MAJOR LESS_EQUAL 5 AND Qt5_VERSION_MINOR LESS_EQUAL 9)
             set(_compute_url_MKSPECS_QT "${_compute_url_MKSPECS}-Qt${QT_VERSION}")
         else()

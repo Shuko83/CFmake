@@ -64,6 +64,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/modules")
 set(CSTOOLKIT_ARTIFACTORY_URL "http://artifactory.divst:8081/artifactory" CACHE STRING "Url of artifactory")
 set(CSTOOLKIT_NEXUS_DR_URL "https://dr-aix-nexus-01v.sccoa.si.c-s.fr/repository" CACHE STRING "Url of Nexus DR")
 set(CSTOOLKIT_NEXUS_ITAR_URL "https://itar-aix-nexus-01v.sccoa.si.c-s.fr/repository" CACHE STRING "Url of Nexus ITAR")
+set(CSTOOLKIT_EXTERNAL_MKSPECS "" CACHE STRING "Default MKSPECS value for all cstoolkit_fetch_artifactory and cstoolkit_fetch_nexus calls if not empty")
 
 if(NOT $ENV{ADLINK_LICENSE} STREQUAL "")
     set(CSTOOLKIT_ADLINK_LICENSE $ENV{ADLINK_LICENSE} CACHE STRING "Path to license file or license server for OpenSplice")
