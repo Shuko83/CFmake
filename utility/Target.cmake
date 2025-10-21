@@ -395,11 +395,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     # Default Definition for Export symbols
-    string(TOUPPER ${OUTPUT_NAME} OUTPUT_NAME_UPPER)
-    set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_UPPER}_LIB)
+    string(REGEX REPLACE "[^a-zA-Z0-9]" "_" OUTPUT_NAME_DEFINE "${OUTPUT_NAME}")
+    string(REGEX REPLACE "^([0-9])" "_\\1" OUTPUT_NAME_DEFINE "${OUTPUT_NAME_DEFINE}")
+    string(TOUPPER ${OUTPUT_NAME_DEFINE} OUTPUT_NAME_DEFINE)
+    set_target_properties(${TARGET_NAME} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_DEFINE}_LIB)
     if(TARGET_SHARED_AND_STATIC)
-        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_UPPER}_LIB)
-        target_compile_definitions(${TARGET_NAME_STATIC} PUBLIC ${OUTPUT_NAME_UPPER}_STATIC)
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES DEFINE_SYMBOL ${OUTPUT_NAME_DEFINE}_LIB)
+        target_compile_definitions(${TARGET_NAME_STATIC} PUBLIC ${OUTPUT_NAME_DEFINE}_STATIC)
     endif()
 
     # Link Options
