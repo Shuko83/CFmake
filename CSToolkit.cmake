@@ -44,7 +44,9 @@ include(${CMAKE_CURRENT_LIST_DIR}/utility/Conan.cmake)
 ################################################################################
 
 set(CMAKE_NETRC "OPTIONAL")
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set_property(GLOBAL PROPERTY USE_FOLDERS 1)
+set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS  1)
+set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB32_PATHS  1)
 
 ################################################################################
 # Cache variables to override if needed
