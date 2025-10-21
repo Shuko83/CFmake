@@ -78,6 +78,7 @@ set(CSTOOLKIT_PROJECT_VERSION 0.0.0.0 CACHE STRING "Version of the project, will
 
 set(CSTOOLKIT_INSTALL_TARGETS "" CACHE STRING "List of targets to install, if empty install all targets")
 
+set(CSTOOLKIT_DEFAULT_FILES_MODE "EXPLICIT" CACHE STRING "Default mode for file discovery in cstoolkit_add_target (EXPLICIT, AUTO, APPEND)")
 set(CSTOOLKIT_DEFAULT_PUBLIC_HEADERS_DIRS "include" CACHE STRING "Default folder for public headers of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_PRIVATE_HEADERS_DIRS "src" CACHE STRING "Default folder for private headers of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_SOURCES_DIRS "src" CACHE STRING "Default folder for source files of a target created with cstoolkit_add_target")
