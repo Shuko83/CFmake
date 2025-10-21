@@ -11,8 +11,4 @@ Check SHAONE on config
 Finish remoteObject qt macro + integrate to cstoolkit_add_target
 CMAKE_INSTALL_PREFIX generator expression support
 deploy_files empty SetErrorMode
-Allow additionnal SOURCES_FILES
-_LIB DEFINE with "-"
-TARGETEXISTS genex with paths
-property lib paths
-Reconfigure on glob change 
+Reconfigure on glob change

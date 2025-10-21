@@ -135,9 +135,6 @@ function(cstoolkit_install_export target)
     cstoolkit_target_genex_eval(${target} TARGET_INSTALL_CMAKEDIR)
     cstoolkit_target_genex_eval(${target} TARGET_INSTALL_CONFIG_NAME)
 
-    cstoolkit_print(TARGET_INSTALL_CMAKEDIR)
-    cstoolkit_print(TARGET_INSTALL_CONFIG_NAME)
-
     foreach(CMAKEDIR ${TARGET_INSTALL_CMAKEDIR})
         foreach(CONFIG_NAME ${TARGET_INSTALL_CONFIG_NAME})
             install(EXPORT ${TARGET_INSTALL_TARGETS_NAME}
