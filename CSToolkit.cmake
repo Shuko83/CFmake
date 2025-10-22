@@ -112,6 +112,7 @@ option(CSTOOLKIT_FETCH_PACKAGE_PREFER_MODULE "If ON, cstoolkit_fetch_package wil
 option(CSTOOLKIT_FETCH_GIT_SRC "If ON, automatically adds GIT_SRC option to all cstoolkit_fetch_package calls" OFF)
 option(CSTOOLKIT_FETCH_GIT_BUILD "If ON, automatically adds GIT_BUILD option to all cstoolkit_fetch_package calls" OFF)
 option(CSTOOLKIT_KEEP_ARCHIVE "If OFF, deletes the archive file after successful extraction to save disk space" ON)
+option(CSTOOLKIT_AUTO_REFRESH_TARGET_FILES "If ON, automatically reconfigure when target files are added, removed, or renamed" OFF)
 if(CONAN)
     option(CSTOOLKIT_GENERATE_FETCH_DEPENDENCY "If ON, calls to cstoolkit_fetch_dependency will be generated in Config files" OFF)
     option(CSTOOLKIT_FETCH_DEPENDENCY "If OFF, calls to cstoolkit_fetch_dependency will do nothing" OFF)
