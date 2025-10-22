@@ -102,6 +102,8 @@ function(cstoolkit_post_configure)
         cstoolkit_compute_runtime_dependencies(${target})
     endforeach()
 
+    cstoolkit_internal_install_prefix_injection()
+
     cstoolkit_internal_print_genex_post_configure()
 
     cstoolkit_end_timer(CSTOOLKIT_POST_CONFIGURE_TIMER CSTOOLKIT_POST_CONFIGURE_ELAPSED)
@@ -392,4 +394,96 @@ function(cstoolkit_list_intersection lista listb outputlist)
     list(REMOVE_ITEM ${outputlist} ${aminusb} ${bminusa})
 
     set(${outputlist} "${${outputlist}}" PARENT_SCOPE)
+endfunction()
+
+macro(cstoolkit_internal_install_prefix_injection)
+    set(CMAKE_INSTALL_PREFIX_GENEX "${CMAKE_INSTALL_PREFIX}")
+    cstoolkit_genex_eval(CMAKE_INSTALL_PREFIX_GENEX)
+    if(NOT CMAKE_INSTALL_PREFIX_GENEX STREQUAL CMAKE_INSTALL_PREFIX)
+        list(LENGTH CMAKE_INSTALL_PREFIX_GENEX CMAKE_INSTALL_PREFIX_GENEX_LENGTH)
+        if(CMAKE_INSTALL_PREFIX_GENEX_LENGTH GREATER 1)
+            cstoolkit_internal_get_priority_install_config_index(index)
+            list(GET CMAKE_INSTALL_PREFIX_GENEX ${index} install_prefix)
+            list(GET CMAKE_CONFIGURATION_TYPES ${index} config)
+
+            set(CMAKE_INSTALL_PREFIX "${install_prefix}\")") # Injection
+
+            string(APPEND CMAKE_INSTALL_PREFIX "
+  # CSToolkit injected install prefix per configuration
+  if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME AND BUILD_TYPE)
+    string(REGEX REPLACE \"^[^A-Za-z0-9_]+\" \"\"
+           CSTOOLKIT_INSTALL_CONFIG_NAME \"\${BUILD_TYPE}\")
+  else()
+    set(CSTOOLKIT_INSTALL_CONFIG_NAME \"\${CMAKE_INSTALL_CONFIG_NAME}\")
+  endif()")
+
+            math(EXPR last_index "${CMAKE_INSTALL_PREFIX_GENEX_LENGTH} - 1")
+            foreach(index RANGE ${last_index})
+                list(GET CMAKE_INSTALL_PREFIX_GENEX ${index} install_prefix)
+                list(GET CMAKE_CONFIGURATION_TYPES ${index} config)
+    
+                cstoolkit_internal_install_config_regex(config)
+                string(APPEND CMAKE_INSTALL_PREFIX "
+  if(CSTOOLKIT_INSTALL_CONFIG_NAME MATCHES \"${config}\")
+    set(CMAKE_INSTALL_PREFIX \"${install_prefix}\")
+  endif()")
+            endforeach()
+            string(APPEND CMAKE_INSTALL_PREFIX "
+  #")
+            set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" PARENT_SCOPE)
+        else()
+            set(CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX_GENEX}" PARENT_SCOPE)
+        endif()
+    endif()
+endmacro()
+
+function(cstoolkit_internal_install_config_regex install_config)
+    set(_install_config_regex "^(")
+
+    string(TOLOWER ${${install_config}} _lower_config)
+    string(TOUPPER ${${install_config}} _upper_config)
+    string(LENGTH "${_lower_config}" _length)
+    math(EXPR _length "${_length} - 1")  # Adjust for 0-based indexing
+
+    foreach(index RANGE ${_length})
+        string(SUBSTRING "${_lower_config}" ${index} 1 lower_char)
+        string(SUBSTRING "${_upper_config}" ${index} 1 upper_char)
+        
+        string(APPEND _install_config_regex "[${upper_char}${lower_char}]")
+    endforeach()
+    
+    string(APPEND _install_config_regex ")$")
+    set(${install_config} "${_install_config_regex}" PARENT_SCOPE)
+endfunction()
+
+function(cstoolkit_internal_get_priority_install_config_index output)
+    string(TOLOWER "${CMAKE_CONFIGURATION_TYPES}" _lower_configs)
+    
+    # Check priority order: Release > MinSizeRel > RelWithDebInfo > Debug
+    list(FIND _lower_configs "release" _index)
+    if(NOT _index EQUAL -1)
+        set(${output} "${_index}" PARENT_SCOPE)
+        return()
+    endif()
+    
+    list(FIND _lower_configs "minsizerel" _index)
+    if(NOT _index EQUAL -1)
+        set(${output} "${_index}" PARENT_SCOPE)
+        return()
+    endif()
+    
+    list(FIND _lower_configs "relwithdebinfo" _index)
+    if(NOT _index EQUAL -1)
+        set(${output} "${_index}" PARENT_SCOPE)
+        return()
+    endif()
+    
+    list(FIND _lower_configs "debug" _index)
+    if(NOT _index EQUAL -1)
+        set(${output} "${_index}" PARENT_SCOPE)
+        return()
+    endif()
+    
+    # Default to first config if none of the priority configs found
+    set(${output} "0" PARENT_SCOPE)
 endfunction()

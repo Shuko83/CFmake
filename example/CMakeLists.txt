@@ -15,6 +15,8 @@ set(CSTOOLKIT_CPACK_RULES ON)
 # CSToolkit should be included near the top of top level CMakeLists.txt but after call to project()
 include(../CSToolkit.cmake)
 
+set(CMAKE_INSTALL_PREFIX "install/$<CONFIG>")
+
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # cstoolkit_fetch_artifactory simplify the downloding of artifactory packages
