@@ -9,4 +9,3 @@ Customize extensions for source_files
 Temps de build Jenkins DLPX-HI
 Check SHAONE on config
 Finish remoteObject qt macro + integrate to cstoolkit_add_target
-deploy_files empty SetErrorMode

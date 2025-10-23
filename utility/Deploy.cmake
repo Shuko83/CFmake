@@ -38,20 +38,8 @@ function(cstoolkit_deploy_with_target target mode)
         set(INSTALL_EXCLUDE_FROM_ALL)
     endif()
 
-    set(DEPLOY_SOURCES_NORM "")
-    cstoolkit_genex_extract("${DEPLOY_DIRECTORY}${DEPLOY_FILES}" DEPLOY_SOURCES DEPLOY_SOURCES_GENEX_LIST)
-    foreach(elem ${DEPLOY_SOURCES_GENEX_LIST})
-        list(APPEND DEPLOY_SOURCES_GENEX "${${elem}}")
-    endforeach()
-
-    foreach(_file IN LISTS DEPLOY_SOURCES)
-        cmake_path(ABSOLUTE_PATH _file NORMALIZE OUTPUT_VARIABLE _file)
-        list(APPEND DEPLOY_SOURCES_NORM "${_file}")
-    endforeach()
-
-    if(DEPLOY_SOURCES_GENEX)
-        list(APPEND DEPLOY_SOURCES_NORM "${DEPLOY_SOURCES_GENEX}")
-    endif()
+    set(DEPLOY_SOURCES_NORM "${DEPLOY_DIRECTORY}${DEPLOY_FILES}")
+    cstoolkit_file_realpath_list(DEPLOY_SOURCES_NORM)
 
     if(DEPLOY_FILES)
         if(CSTOOLKIT_BUILD_DEPLOY)
@@ -63,7 +51,7 @@ function(cstoolkit_deploy_with_target target mode)
             )
         endif()
         install(FILES "${DEPLOY_SOURCES_NORM}" DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
-    else()
+    elseif(DEPLOY_DIRECTORY)
         if(CSTOOLKIT_BUILD_DEPLOY)
             add_custom_command(TARGET ${target} POST_BUILD
                 COMMAND ${CSTOOLKIT_COPY} -e -d
