@@ -88,13 +88,17 @@ set(CSTOOLKIT_DEFAULT_UI_DIRS "src" CACHE STRING "Default folder for Qt ui files
 set(CSTOOLKIT_DEFAULT_RESOURCES_DIRS "src" CACHE STRING "Default folder for Qt qrc files of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_TRANSLATION_DIRS "src" CACHE STRING "Default folder for Qt ts files of a target created with cstoolkit_add_target")
 
-set(CSTOOLKIT_QT_BIG_RESOURCES_THRESHOLD 100000000 CACHE STRING "Size threshold for qt big_resources") #100 Mo
-
 set(CSTOOLKIT_DEFAULT_INSTALL_LIBDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/lib/$<LOWER_CASE:$<CONFIG>>" CACHE STRING "Default install folder for library files of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_INSTALL_BINDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/bin/$<LOWER_CASE:$<CONFIG>>" CACHE STRING "Default install folder for binary files of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_INSTALL_SYMBOLSDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/symbols/$<LOWER_CASE:$<CONFIG>>" CACHE STRING "Default install folder for symbol files of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_INSTALL_INCLUDEDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/include" CACHE STRING "Default install folder for header files of a target created with cstoolkit_add_target")
 set(CSTOOLKIT_DEFAULT_INSTALL_CMAKEDIR "$<TARGET_PROPERTY:INSTALL_DESTINATION>/cmake" CACHE STRING "Default install folder for cmake files of a target created with cstoolkit_add_target")
+
+set(CSTOOLKIT_CXX_SOURCE_FILE_EXTENSIONS "c;C;c++;cc;cpp;cxx;CPP" CACHE STRING "File extensions for C++ source files")
+set(CSTOOLKIT_CXX_HEADER_FILE_EXTENSIONS "h;H;h++;hh;hpp;hxx;HPP;inl" CACHE STRING "File extensions for C++ header files")
+set(CSTOOLKIT_CSharp_SOURCE_FILE_EXTENSIONS "cs" CACHE STRING "File extensions for CSharp source files")
+
+set(CSTOOLKIT_QT_BIG_RESOURCES_THRESHOLD 100000000 CACHE STRING "Size threshold for qt big_resources") #100 Mo
 
 ################################################################################
 # Options

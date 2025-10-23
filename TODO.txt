@@ -5,7 +5,8 @@
 * Add prompt to get identification for nexus
 * Detect if output supports color mode
 tinyxml2 not detected like unknown library
-Customize extensions for source_files
 Temps de build Jenkins DLPX-HI
 Check SHAONE on config
 Finish remoteObject qt macro + integrate to cstoolkit_add_target
+Integrate .idl files wame as Qt files
+Add C# support
