@@ -180,26 +180,16 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
 
     # Get previous URL from download.stamp
     set(_fetch_package_previous_url)
+    set(_fetch_package_previous_sha)
     if(EXISTS "${_fetch_package_download_dir}/download.stamp")
-        file(READ "${_fetch_package_download_dir}/download.stamp" _fetch_package_previous_url)
+        file(STRINGS "${_fetch_package_download_dir}/download.stamp" _fetch_package_stamp_lines)
+        list(LENGTH _fetch_package_stamp_lines _fetch_package_stamp_count)
+        if(_fetch_package_stamp_count GREATER 0)
+            list(GET _fetch_package_stamp_lines 0 _fetch_package_previous_url)
     endif()
-
-    # if a step is redone, all next steps need to be redone
-    set(_fetch_package_rebuild 0)
-
-    # Download if previous url different
-    if((NOT _fetch_package_previous_url STREQUAL "${fetch_package_url}") OR (NOT EXISTS "${_fetch_package_download_dir}/${_fetch_package_filename}"))
-        cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
-        message(STATUS "CSToolkit: Download package ${fetch_package_name}")
-
-        set(_fetch_package_rebuild 1)
-
-        _cstoolkit_internal_download("${fetch_package_url}" "${_fetch_package_download_dir}")
-
-        file(WRITE "${_fetch_package_download_dir}/download.stamp" "${fetch_package_url}")
-
-        cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
-        message(STATUS "CSToolkit: Download package ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+        if(_fetch_package_stamp_count GREATER 1)
+            list(GET _fetch_package_stamp_lines 1 _fetch_package_previous_sha)
+        endif()
     endif()
 
     # Determine if we need to extract git info
@@ -215,9 +205,61 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
         endif()
     endif()
 
-    # Extract if previous url different or if extract dir doesn't exists
-    # GIT_BUILD only needs gitinfo, no need to extract if we already have gitinfo
-    if(_fetch_package_rebuild OR _missing_gitinfo OR (NOT (fetch_package_GIT_BUILD OR CSTOOLKIT_FETCH_GIT_BUILD) AND NOT EXISTS "${_fetch_package_extract_dir}"))
+    # if a step is redone, all next steps need to be redone
+    set(_fetch_package_rebuild 0)
+
+    # Check if URL changed
+    if(NOT _fetch_package_previous_url STREQUAL "${fetch_package_url}")
+        set(_fetch_package_rebuild 1)
+    endif()
+
+    # In GIT_BUILD we cannot rely on EXISTS "${_fetch_package_extract_dir}"
+    if(fetch_package_GIT_BUILD OR CSTOOLKIT_FETCH_GIT_BUILD)
+        # Check src dir, if missing need git info in extract dir, if missing need archive, if missing need download
+        if(NOT EXISTS "${_fetch_package_src_dir}" AND NOT EXISTS "${_fetch_package_extract_dir}" AND NOT EXISTS "${_fetch_package_download_dir}/${_fetch_package_filename}")
+            set(_fetch_package_rebuild 1)
+        endif()
+    # Check extract dir, if missing need archive, if missing need download
+    elseif(NOT EXISTS "${_fetch_package_extract_dir}" AND NOT EXISTS "${_fetch_package_download_dir}/${_fetch_package_filename}")
+        set(_fetch_package_rebuild 1)
+    endif()
+
+    # Check SHA if enabled (and not already marked for rebuild)
+    if(NOT _fetch_package_rebuild AND CSTOOLKIT_FETCH_CHECK_SHA)
+        _cstoolkit_internal_fetch_sha("${fetch_package_url}")
+        if(NOT _cstoolkit_internal_sha_value)
+            message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_dependency_name}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
+        elseif(NOT _cstoolkit_internal_sha_value STREQUAL _fetch_package_previous_sha)
+            set(_fetch_package_rebuild 1)
+        endif()
+    endif()
+
+    # Download if needed
+    if(_fetch_package_rebuild)
+        cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
+        message(STATUS "CSToolkit: Download package ${fetch_package_name}")
+
+        _cstoolkit_internal_download("${fetch_package_url}" "${_fetch_package_download_dir}")
+
+        file(WRITE "${_fetch_package_download_dir}/download.stamp" "${fetch_package_url}\n${_cstoolkit_internal_sha_value}")
+
+        cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
+        message(STATUS "CSToolkit: Download package ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+    endif()
+
+    # In GIT_BUILD we cannot rely on EXISTS "${_fetch_package_extract_dir}"
+    if(fetch_package_GIT_BUILD OR CSTOOLKIT_FETCH_GIT_BUILD)
+        # Check src dir, if missing need git info in extract dir
+        if(NOT EXISTS "${_fetch_package_src_dir}" AND NOT EXISTS "${_fetch_package_extract_dir}")
+            set(_fetch_package_rebuild 1)
+            endif()
+    # Check extract dir
+    elseif(NOT EXISTS "${_fetch_package_extract_dir}")
+        set(_fetch_package_rebuild 1)
+        endif()
+
+    # Extract if needed
+    if(_fetch_package_rebuild)
         cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
         message(STATUS "CSToolkit: Extract package ${fetch_package_name}")
 
@@ -415,6 +457,13 @@ STATUS: ${status_code} ${status_string}
         --- LOG BEGIN ---
 ${log}        --- LOG END ---
 ")
+    else()
+        set(_cstoolkit_internal_sha_value "")
+        string(REGEX MATCH "X-Checksum-Sha256:[ \t]*([0-9A-Fa-f]+)" _sha_line "${log}")
+        if(_sha_line)
+            set(_cstoolkit_internal_sha_value "${CMAKE_MATCH_1}")
+    endif()
+        set(_cstoolkit_internal_sha_value "${_cstoolkit_internal_sha_value}" PARENT_SCOPE)
     endif()
 endfunction()
 
@@ -643,15 +692,49 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
 
     # Get previous URL from download.stamp
     set(_download_previous_url)
+    set(_download_previous_sha)
     if(EXISTS "${download_dir}/download.stamp")
-        file(READ "${download_dir}/download.stamp" _download_previous_url)
+        file(STRINGS "${download_dir}/download.stamp" _download_stamp_lines)
+        list(LENGTH _download_stamp_lines _download_stamp_count)
+        if(_download_stamp_count GREATER 0)
+            list(GET _download_stamp_lines 0 _download_previous_url)
+    endif()
+        if(_download_stamp_count GREATER 1)
+            list(GET _download_stamp_lines 1 _download_previous_sha)
+        endif()
     endif()
 
-    set(_fresh_download FALSE)
+    set(_fresh_download 0)
 
-    if( (NOT _download_previous_url STREQUAL "${URL}") # URL Changed
-     OR (_download_NO_EXTRACT AND NOT EXISTS "${_download_DESTINATION}/${_FULLFILENAME}") # File missing (NO_EXTRACT)
-     OR (NOT _download_NO_EXTRACT AND NOT EXISTS "${_download_DESTINATION}" AND NOT EXISTS "${download_dir}/${_FULLFILENAME}")) # Extracted directory and original archive missing
+    # Check if URL changed
+    if(NOT _download_previous_url STREQUAL "${URL}")
+        set(_fresh_download 1)
+    endif()
+
+    if(_download_NO_EXTRACT)
+        # File missing
+        if(NOT EXISTS "${_download_DESTINATION}/${_FULLFILENAME}")
+            set(_fresh_download 1)
+        endif()
+    else()
+        # Extracted directory and original archive missing
+        if(NOT EXISTS "${_download_DESTINATION}" AND NOT EXISTS "${download_dir}/${_FULLFILENAME}")
+            set(_fresh_download 1)
+        endif()
+    endif()
+
+    # Check SHA if enabled (and not already marked for rebuild)
+    if(NOT _fresh_download AND CSTOOLKIT_FETCH_CHECK_SHA)
+        _cstoolkit_internal_fetch_sha("${fetch_package_url}")
+        if(NOT _cstoolkit_internal_sha_value)
+            message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_dependency_name}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
+        elseif(NOT _cstoolkit_internal_sha_value STREQUAL _fetch_package_previous_sha)
+            set(_fresh_download 1)
+        endif()
+    endif()
+
+    # Download if needed
+    if(_fresh_download)
         cstoolkit_start_timer(CSTOOLKIT_DOWNLOAD_TIMER)
         message(STATUS "CSToolkit: Download ${URL}")
 
@@ -664,7 +747,8 @@ function(cstoolkit_download_url URL OUTPUT_VAR)
         else()
             _cstoolkit_internal_download("${URL}" "${download_dir}")
         endif()
-        set(_fresh_download TRUE)
+
+        file(WRITE "${download_dir}/download.stamp" "${URL}\n${_cstoolkit_internal_sha_value}")
 
         cstoolkit_end_timer(CSTOOLKIT_DOWNLOAD_TIMER CSTOOLKIT_DOWNLOAD_ELAPSED)
         message(STATUS "CSToolkit: Download ${URL} done (${CSTOOLKIT_DOWNLOAD_ELAPSED}s)")
@@ -743,6 +827,27 @@ macro(_cstoolkit_internal_read_gitinfo gitinfo_file)
         set(_cstoolkit_internal_gitinfo_${key} "${_cstoolkit_internal_gitinfo_${key}}" ${gitinfo_parent_scope})
     endforeach()
 endmacro()
+
+function(_cstoolkit_internal_fetch_sha url)
+    # RANGE_START 0 and RANGE_END 0 make it so we don't download the whole file
+    file(DOWNLOAD
+        "${url}"
+        RANGE_START 0 RANGE_END 0 # only the first byte
+        STATUS status
+        LOG log
+    )
+    list(GET status 0 status_code)
+
+    set(_cstoolkit_internal_sha_value "")
+    if(status_code EQUAL 0)
+        string(REGEX MATCH "X-Checksum-Sha256:[ \t]*([0-9A-Fa-f]+)" _sha_line "${log}")
+        if(_sha_line)
+            set(_cstoolkit_internal_sha_value "${CMAKE_MATCH_1}")
+        endif()
+    endif()
+
+    set(_cstoolkit_internal_sha_value "${_cstoolkit_internal_sha_value}" PARENT_SCOPE)
+endfunction()
 
 macro(cstoolkit_fetch_dependency fetch_dependency_name fetch_dependency_url)
     if(CSTOOLKIT_FETCH_DEPENDENCY)

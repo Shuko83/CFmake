@@ -115,6 +115,7 @@ option(CSTOOLKIT_PREFIX_OUTPUT_NAME "If ON, all targets output file are prefixed
 option(CSTOOLKIT_FETCH_PACKAGE_PREFER_MODULE "If ON, cstoolkit_fetch_package will search for Find<package> files before <package>Config files" OFF)
 option(CSTOOLKIT_FETCH_GIT_SRC "If ON, automatically adds GIT_SRC option to all cstoolkit_fetch_package calls" OFF)
 option(CSTOOLKIT_FETCH_GIT_BUILD "If ON, automatically adds GIT_BUILD option to all cstoolkit_fetch_package calls" OFF)
+option(CSTOOLKIT_FETCH_CHECK_SHA "If ON, redownload file or package if distant SHA has changed" OFF)
 option(CSTOOLKIT_KEEP_ARCHIVE "If OFF, deletes the archive file after successful extraction to save disk space" ON)
 option(CSTOOLKIT_AUTO_REFRESH_TARGET_FILES "If ON, automatically reconfigure when target files are added, removed, or renamed" OFF)
 if(CONAN)
