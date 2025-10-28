@@ -1007,14 +1007,23 @@ macro(generate_target_config)
     set(DEPENDENCY_GENEX "$<JOIN:${DEPENDENCY_GENEX},;>") # remove empty elements
     set(DEPENDENCY_GENEX "$<LIST:FILTER,${DEPENDENCY_GENEX},INCLUDE,.+::.+>")
 
+    # Select only the package names (remove target part)
     set(FETCH_DEPENDENCY_GENEX "$<LIST:TRANSFORM,${DEPENDENCY_GENEX},REPLACE,(.+)::.+,\\1>")
     set(FETCH_DEPENDENCY_GENEX "$<LIST:REMOVE_DUPLICATES,${FETCH_DEPENDENCY_GENEX}>")
     set(FETCH_DEPENDENCY_GENEX "$<LIST:FILTER,${FETCH_DEPENDENCY_GENEX},EXCLUDE,^${PROJECT_NAME}$>")
 
+    # CMake property names with non alphanumerical characters cannot be used in generator expressions
+    # Strategy: Transform package name to "original_name|sanitized_name" format
+    set(FETCH_DEPENDENCY_GENEX "$<LIST:TRANSFORM,${FETCH_DEPENDENCY_GENEX},REPLACE,(.+),\\1|\\1>")
+    set(FETCH_DEPENDENCY_GENEX "$<LIST:TRANSFORM,${FETCH_DEPENDENCY_GENEX},REPLACE,\\|(.*)$,|$<1:$><LIST:TRANSFORM$<COMMA>\\1$<COMMA>REPLACE$<COMMA>[^A-Za-z0-9_]$<COMMA>_$<ANGLE-R>>")
+    set(FETCH_DEPENDENCY_GENEX "$<GENEX_EVAL:${FETCH_DEPENDENCY_GENEX}>")
+
+    # Now FETCH_DEPENDENCY_GENEX contains "original_name|sanitized_name" pairs
+    # \\1 = original name (for function call), \\2 = sanitized name (for property lookup)
     set(FETCH_DEPENDENCY_GENEX_BLOCK
-"$<1:$><$<1:$><BOOL:$<1:$><TARGET_PROPERTY:CSTOOLKIT$<COMMA>FETCH_\\1_URL$<ANGLE-R>$<ANGLE-R>:   cstoolkit_fetch_dependency(\\1 \"$<1:$><TARGET_PROPERTY:CSTOOLKIT$<COMMA>FETCH_\\1_URL$<ANGLE-R>\"$<1:$><TARGET_PROPERTY:CSTOOLKIT$<COMMA>FETCH_\\1_PARAMS$<ANGLE-R>)
+"$<1:$><$<1:$><BOOL:$<1:$><TARGET_PROPERTY:CSTOOLKIT$<COMMA>FETCH_\\2_URL$<ANGLE-R>$<ANGLE-R>:   cstoolkit_fetch_dependency(\\1 \"$<1:$><TARGET_PROPERTY:CSTOOLKIT$<COMMA>FETCH_\\2_URL$<ANGLE-R>\"$<1:$><TARGET_PROPERTY:CSTOOLKIT$<COMMA>FETCH_\\2_PARAMS$<ANGLE-R>)
 $<ANGLE-R>")
-    set(FETCH_DEPENDENCY_GENEX "$<LIST:TRANSFORM,${FETCH_DEPENDENCY_GENEX},REPLACE,(.+),${FETCH_DEPENDENCY_GENEX_BLOCK}>")
+    set(FETCH_DEPENDENCY_GENEX "$<LIST:TRANSFORM,${FETCH_DEPENDENCY_GENEX},REPLACE,([^|]+)\\|(.+),${FETCH_DEPENDENCY_GENEX_BLOCK}>")
     set(FETCH_DEPENDENCY_GENEX "$<GENEX_EVAL:${FETCH_DEPENDENCY_GENEX}>")
     set(DEPENDENCY_GENEX "$<JOIN:${DEPENDENCY_GENEX},;>") # remove empty elements
 
