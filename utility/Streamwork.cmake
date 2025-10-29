@@ -23,7 +23,7 @@ function(cstoolkit_streamwork_generate_devpaths target)
     endif()
 
     set(DOLLAR "$<1:$>")
-    set(REGEX_VALID_TARGET_NAME "^[a-zA-Z0-9_.\\-]+${DOLLAR}")
+    set(REGEX_VALID_TARGET_NAME "^[a-zA-Z0-9:_.\\-]+${DOLLAR}")
 
     set(GENEX_TARGET_EXISTS "${DOLLAR}<TARGET_EXISTS:\\0$<ANGLE-R>")
     set(GENEX_TARGET_SHARED "${DOLLAR}<STREQUAL:${DOLLAR}<TARGET_PROPERTY:\\0$<COMMA>TYPE$<ANGLE-R>$<COMMA>SHARED_LIBRARY$<ANGLE-R>")
