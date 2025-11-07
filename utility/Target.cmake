@@ -200,24 +200,29 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     # Folder of the project in visual studio soluction
-
-    set(_folder "${CMAKE_CURRENT_SOURCE_DIR}/")
+    set(_folder "${CMAKE_CURRENT_SOURCE_DIR}")
     cmake_path(RELATIVE_PATH _folder BASE_DIRECTORY ${CMAKE_SOURCE_DIR})
-    string(REPLACE "${TARGET_NAME}/" "" _folder "${_folder}")
-    string(REPLACE "Sources/" "" _folder "${_folder}")
-    string(REPLACE "src/" "" _folder "${_folder}")
-    string(REPLACE "test/" "" _folder "${_folder}")
-    string(REPLACE "_project/" "" _folder "${_folder}")
-    string(REPLACE "../" "" _folder "${_folder}")
+    string(PREPEND _folder "/")
+    string(APPEND _folder "/")
+    string(REPLACE "-src/" "/" _folder "${_folder}")
+    # Remove last occurrence of TARGET_NAME (case-insensitive)
+    cstoolkit_regex_make_case_insensitive("${TARGET_NAME}" _target_pattern)
+    string(REGEX REPLACE "(.*)/${_target_pattern}/" "\\1/" _folder "${_folder}")
+    string(REGEX REPLACE "/[Ss][Oo][Uu][Rr][Cc][Ee][Ss]/" "/" _folder "${_folder}")
+    string(REGEX REPLACE "/[Ss][Rr][Cc]/" "/" _folder "${_folder}")
+    string(REGEX REPLACE "/[Tt][Ee][Ss][Tt]/" "/" _folder "${_folder}")
+    string(REPLACE "/_project/" "/" _folder "${_folder}")
+    string(REPLACE "/../" "/" _folder "${_folder}")
+    string(REPLACE "/./" "/" _folder "${_folder}")
+    string(REGEX REPLACE "/+" "/" _folder "${_folder}")
     string(REGEX REPLACE "/$" "" _folder "${_folder}")
-    string(REGEX REPLACE "^\\.\\.?$" "" _folder "${_folder}")
+    string(REGEX REPLACE "^/" "" _folder "${_folder}")
 
     set_target_properties(${TARGET_NAME} PROPERTIES FOLDER "${_folder}")
     if(TARGET_SHARED_AND_STATIC)
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES FOLDER "${_folder}")
     endif()
     
-
     # Sources Paths
 
     # Trick for later call to cmake_path
