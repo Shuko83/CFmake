@@ -298,6 +298,8 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
             # CSTOOLKIT_FETCH_GIT_SRC and CSTOOLKIT_FETCH_GIT_BUILD work as best effort
             if(fetch_package_GIT_SRC)
                 message(FATAL_ERROR "CSToolkit: Missing git informations for ${fetch_package_name}")
+            else() # If previous package had gitinfo but this one doesn't we delete old src dir
+                cstoolkit_git_safe_delete("${_fetch_package_src_dir}")
             endif()
         else()
             cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
@@ -321,7 +323,7 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
     endif()
 
     # Full clone + add_subdirectory
-    if(fetch_package_GIT_BUILD OR (CSTOOLKIT_FETCH_GIT_BUILD AND _cstoolkit_internal_gitinfo_remote_origin))
+    if(fetch_package_GIT_BUILD OR (CSTOOLKIT_FETCH_GIT_BUILD AND EXISTS "${_fetch_package_src_dir}"))
         _cstoolkit_internal_git_unshallow(${fetch_package_name} "${_fetch_package_src_dir}")
 
         file(REMOVE_RECURSE "${_fetch_package_extract_dir}")
