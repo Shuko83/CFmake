@@ -190,9 +190,12 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
         list(LENGTH _fetch_package_stamp_lines _fetch_package_stamp_count)
         if(_fetch_package_stamp_count GREATER 0)
             list(GET _fetch_package_stamp_lines 0 _fetch_package_previous_url)
-    endif()
+        endif()
         if(_fetch_package_stamp_count GREATER 1)
             list(GET _fetch_package_stamp_lines 1 _fetch_package_previous_sha)
+        elseif(CSTOOLKIT_FETCH_CHECK_SHA AND EXISTS "${_fetch_package_download_dir}/${_fetch_package_filename}")
+            file(SHA256 "${_fetch_package_download_dir}/${_fetch_package_filename}" _fetch_package_previous_sha)
+            file(WRITE "${_fetch_package_download_dir}/download.stamp" "${fetch_package_url}\n${_fetch_package_previous_sha}")
         endif()
     endif()
 
@@ -232,7 +235,7 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
     if(NOT _fetch_package_rebuild AND CSTOOLKIT_FETCH_CHECK_SHA)
         _cstoolkit_internal_fetch_sha("${fetch_package_url}")
         if(NOT _cstoolkit_internal_sha_value)
-            message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_dependency_name}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
+            message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_package_name}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
         elseif(NOT _cstoolkit_internal_sha_value STREQUAL _fetch_package_previous_sha)
             set(_fetch_package_rebuild 1)
         endif()
@@ -434,12 +437,14 @@ function(_cstoolkit_internal_download _internal_download_url _internal_download_
     string(FIND "${_internal_download_url}" "${CSTOOLKIT_NEXUS_ITAR_URL}" NEXUS_ITAR_INDEX)
     
     if(NEXUS_DR_INDEX EQUAL 0)
+        set(_internal_download_header "TLS_VERIFY;OFF")
         if(DEFINED ENV{NEXUS_DR_AUTH})
-            set(_internal_download_header "HTTPHEADER;Authorization: Basic $ENV{NEXUS_DR_AUTH}")
+            set(_internal_download_header "${_internal_download_header};HTTPHEADER;Authorization: Basic $ENV{NEXUS_DR_AUTH}")
         endif()
     elseif(NEXUS_ITAR_INDEX EQUAL 0)
+        set(_internal_download_header "TLS_VERIFY;OFF")
         if(DEFINED ENV{NEXUS_ITAR_AUTH})
-            set(_internal_download_header "HTTPHEADER;Authorization: Basic $ENV{NEXUS_ITAR_AUTH}")
+            set(_internal_download_header "${_internal_download_header};HTTPHEADER;Authorization: Basic $ENV{NEXUS_ITAR_AUTH}")
         endif()
     endif()
 
@@ -469,9 +474,9 @@ ${log}        --- LOG END ---
 ")
     else()
         set(_cstoolkit_internal_sha_value "")
-        string(REGEX MATCH "X-Checksum-Sha256:[ \t]*([0-9A-Fa-f]+)" _sha_line "${log}")
-        if(_sha_line)
-            set(_cstoolkit_internal_sha_value "${CMAKE_MATCH_1}")
+        # Skipping SHA calculation if not needed for faster configure
+        if(CSTOOLKIT_FETCH_CHECK_SHA)
+            file(SHA256 "${_internal_download_dir}/${_internal_download_filename}" _cstoolkit_internal_sha_value)
         endif()
         set(_cstoolkit_internal_sha_value "${_cstoolkit_internal_sha_value}" PARENT_SCOPE)
     endif()
@@ -714,9 +719,19 @@ function(cstoolkit_download URL OUTPUT_VAR)
         list(LENGTH _download_stamp_lines _download_stamp_count)
         if(_download_stamp_count GREATER 0)
             list(GET _download_stamp_lines 0 _download_previous_url)
-    endif()
+        endif()
         if(_download_stamp_count GREATER 1)
             list(GET _download_stamp_lines 1 _download_previous_sha)
+        elseif(CSTOOLKIT_FETCH_CHECK_SHA)
+            # Compute SHA256 from existing file if not in stamp
+            # File location depends on NO_EXTRACT parameter
+            if(_download_NO_EXTRACT AND EXISTS "${_download_DESTINATION}/${_FULLFILENAME}")
+                file(SHA256 "${_download_DESTINATION}/${_FULLFILENAME}" _download_previous_sha)
+                file(WRITE "${download_dir}/download.stamp" "${URL}\n${_download_previous_sha}")
+            elseif(NOT _download_NO_EXTRACT AND EXISTS "${download_dir}/${_FULLFILENAME}")
+                file(SHA256 "${download_dir}/${_FULLFILENAME}" _download_previous_sha)
+                file(WRITE "${download_dir}/download.stamp" "${URL}\n${_download_previous_sha}")
+            endif()
         endif()
     endif()
 
@@ -743,7 +758,7 @@ function(cstoolkit_download URL OUTPUT_VAR)
     if(NOT _fresh_download AND CSTOOLKIT_FETCH_CHECK_SHA)
         _cstoolkit_internal_fetch_sha("${fetch_package_url}")
         if(NOT _cstoolkit_internal_sha_value)
-            message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_dependency_name}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
+            message(NOTICE ${COLOR_GREY} "CSToolkit: File ${_FULLFILENAME}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
         elseif(NOT _cstoolkit_internal_sha_value STREQUAL _fetch_package_previous_sha)
             set(_fresh_download 1)
         endif()
@@ -845,20 +860,81 @@ macro(_cstoolkit_internal_read_gitinfo gitinfo_file)
 endmacro()
 
 function(_cstoolkit_internal_fetch_sha url)
-    # RANGE_START 0 and RANGE_END 0 make it so we don't download the whole file
-    file(DOWNLOAD
-        "${url}"
-        RANGE_START 0 RANGE_END 0 # only the first byte
-        STATUS status
-        LOG log
-    )
-    list(GET status 0 status_code)
-
     set(_cstoolkit_internal_sha_value "")
-    if(status_code EQUAL 0)
-        string(REGEX MATCH "X-Checksum-Sha256:[ \t]*([0-9A-Fa-f]+)" _sha_line "${log}")
-        if(_sha_line)
-            set(_cstoolkit_internal_sha_value "${CMAKE_MATCH_1}")
+    
+    # Check if URL is a Nexus URL
+    string(FIND "${url}" "${CSTOOLKIT_NEXUS_DR_URL}" NEXUS_DR_INDEX)
+    string(FIND "${url}" "${CSTOOLKIT_NEXUS_ITAR_URL}" NEXUS_ITAR_INDEX)
+    
+    if(NEXUS_DR_INDEX EQUAL 0 OR NEXUS_ITAR_INDEX EQUAL 0)
+        # Determine which Nexus server and build REST API URL
+        if(NEXUS_DR_INDEX EQUAL 0)
+            string(REPLACE "/repository" "/service/rest/v1/search/assets" _nexus_rest_base "${CSTOOLKIT_NEXUS_DR_URL}")
+            set(_nexus_auth_header "TLS_VERIFY;OFF")
+            if(DEFINED ENV{NEXUS_DR_AUTH})
+                set(_nexus_auth_header "${_nexus_auth_header};HTTPHEADER;Authorization: Basic $ENV{NEXUS_DR_AUTH}")
+            endif()
+            # Extract path after repository URL
+            string(LENGTH "${CSTOOLKIT_NEXUS_DR_URL}" _base_url_length)
+        else()
+            string(REPLACE "/repository" "/service/rest/v1/search/assets" _nexus_rest_base "${CSTOOLKIT_NEXUS_ITAR_URL}")
+            set(_nexus_auth_header "TLS_VERIFY;OFF")
+            if(DEFINED ENV{NEXUS_ITAR_AUTH})
+                set(_nexus_auth_header "${_nexus_auth_header};HTTPHEADER;Authorization: Basic $ENV{NEXUS_ITAR_AUTH}")
+            endif()
+            # Extract path after repository URL
+            string(LENGTH "${CSTOOLKIT_NEXUS_ITAR_URL}" _base_url_length)
+        endif()
+        
+        # Extract repository name and asset path from URL
+        # URL format: https://host/repository/REPO_NAME/path/to/file.7z
+        string(SUBSTRING "${url}" ${_base_url_length} -1 _remaining_path)
+        string(REGEX MATCH "^/([^/]+)(/.+)$" _match "${_remaining_path}")
+        if(_match)
+            set(_repository_name "${CMAKE_MATCH_1}")
+            set(_asset_path "${CMAKE_MATCH_2}")
+            
+            # Build REST API URL with query parameters
+            string(REPLACE "/" "%2F" _asset_path_encoded "${_asset_path}")
+            set(_rest_url "${_nexus_rest_base}?repository=${_repository_name}&name=${_asset_path_encoded}")
+            
+            # Make REST API request
+            file(DOWNLOAD
+                "${_rest_url}"
+                "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/nexus_sha.json"
+                ${_nexus_auth_header}
+                STATUS status
+                LOG log
+            )
+            list(GET status 0 status_code)
+            
+            if(status_code EQUAL 0 AND EXISTS "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/nexus_sha.json")
+                file(READ "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/nexus_sha.json" _json_content)
+                file(REMOVE "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/nexus_sha.json")
+                
+                # Extract SHA256 from JSON response
+                # Looking for "checksum": { "sha256": "..." }
+                string(REGEX MATCH "\"sha256\"[ \t]*:[ \t]*\"([0-9A-Fa-f]+)\"" _sha_match "${_json_content}")
+                if(_sha_match)
+                    set(_cstoolkit_internal_sha_value "${CMAKE_MATCH_1}")
+                endif()
+            endif()
+        endif()
+    else()
+        # RANGE_START 0 and RANGE_END 0 make it so we don't download the whole file
+        file(DOWNLOAD
+            "${url}"
+            RANGE_START 0 RANGE_END 0 # only the first byte
+            STATUS status
+            LOG log
+        )
+        list(GET status 0 status_code)
+
+        if(status_code EQUAL 0)
+            string(REGEX MATCH "X-Checksum-Sha256:[ \t]*([0-9A-Fa-f]+)" _sha_line "${log}")
+            if(_sha_line)
+                set(_cstoolkit_internal_sha_value "${CMAKE_MATCH_1}")
+            endif()
         endif()
     endif()
 
