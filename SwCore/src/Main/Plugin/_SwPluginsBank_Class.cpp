@@ -174,7 +174,8 @@ _SwPluginsBank_Class::_SwPluginsBank_Class(ProductLicense * productLicense)
 {
 	RebuildModel();
 	_data_to_factory.insert(SwUUID(),NULL);
-	_trayIcon=new QSystemTrayIcon(this);
+	//Le destructeur de QSystemTrayIcon crash, c'est pourquoi il n'est ni delete, ni parente
+	_trayIcon=new QSystemTrayIcon();
 	_trayIcon->setIcon(QIcon(":/SwCore/SysTrayUpdate.png"));
 	_trayIcon->setVisible(false);
 	connect(_trayIcon,SIGNAL(messageClicked ()),this,SLOT(hideDisplayUpdate()));
