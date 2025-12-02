@@ -38,7 +38,7 @@ The latest officially compatible version is ${OFFICIAL_VS_WINDOWS_TARGET_PLATFOR
 Install Windows SDK and set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM before call to project or set CSTOOLKIT_WINDOWS_SDK_WARNING=OFF to remove this warning")
 endmacro()
 
-if(WIN32)
+if(MSVC)
     cstoolkit_get_windowssdk_library_dir(CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
     if(NOT CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
         unset(CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
