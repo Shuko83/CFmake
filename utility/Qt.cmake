@@ -174,6 +174,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
             ARGS ${_moc_flags} @${_moc_include_file} "${infile}" -o "${outfile}"
             ${COMMAND_DEPENDENCIES}
             COMMENT "MOC ${relpath}"
+            VERBATIM
             COMMAND_EXPAND_LISTS)
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTOMOC ON)
         cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
@@ -219,7 +220,8 @@ function(cstoolkit_qt_wrap_ui outfiles)
             COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/uic/$<LOWER_CASE:$<CONFIG>>
             COMMAND ${Qt5Widgets_UIC_EXECUTABLE}
             ARGS ${ui_options} -o ${outfile} ${infile}
-            MAIN_DEPENDENCY ${infile} VERBATIM
+            MAIN_DEPENDENCY ${infile}
+            VERBATIM
             COMMENT "UIC ${relpath}")
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTOUIC ON)
         cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
@@ -301,7 +303,8 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                             COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${outdir}
                             COMMAND ${Qt5Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --pass 1 --output ${tmpoutfile} ${infile}
-                            DEPENDS ${infile} ${_rc_depends} VERBATIM
+                            DEPENDS ${infile} ${_rc_depends}
+                            VERBATIM
                             COMMENT "RCC PASS1 ${relpath}")
 
             add_library(${rcctarget} OBJECT ${tmpoutfile})
@@ -323,7 +326,8 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                             COMMAND ${Qt5Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --output ${outfile} ${infile}
                             MAIN_DEPENDENCY ${infile}
-                            DEPENDS ${_rc_depends} VERBATIM
+                            DEPENDS ${_rc_depends}
+                            VERBATIM
                             COMMENT "RCC ${relpath}")
         endif()
         cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
