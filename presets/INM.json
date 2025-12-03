@@ -123,29 +123,14 @@
             "Qt5_ROOT" : "$env{QT5_15_14}/msvc2022_64/"
             }
         },
- 
         {
-            "name": "linux_gcc7.5_x64",
-            "displayName": "linux_gcc7.5_x64",
+            "name": "linux_x64",
+            "displayName": "linux_x64",
             "description": "Configure project using ninja for unix",
             "generator": "Ninja Multi-Config",
             "binaryDir": "build/unix",
             "cacheVariables": {
                 "CMAKE_CONFIGURATION_TYPES": "debug;release",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/linux-gcc7.5-x64/",
-                "Qt5_ROOT" : "$env{QT_ROOT}/gcc_64/"
-            }
-        },
-
-        {
-            "name": "linux_gcc11.4_x64",
-            "displayName": "linux_gcc11.4_x64",
-            "description": "Configure project using ninja for unix",
-            "generator": "Ninja Multi-Config",
-            "binaryDir": "build/unix",
-            "cacheVariables": {
-                "CMAKE_CONFIGURATION_TYPES": "debug;release",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/linux-gcc11.4-x64/",
                 "Qt5_ROOT" : "$env{QT_ROOT}/gcc_64/"
             }
         },
@@ -239,29 +224,15 @@
             "targets": "install"
         },
         {
-            "name": "linux_gcc7.5_debug_x64",
-            "configurePreset": "linux_gcc7.5_x64",
+            "name": "linux_debug_x64",
+            "configurePreset": "linux_x64",
             "configuration": "debug",
             "targets": ["all","install"],
             "jobs": 4
         },
         {
-            "name": "linux_gcc7.5_release_x64",
-            "configurePreset": "linux_gcc7.5_x64",
-            "configuration": "release",
-            "targets": ["all","install"],
-            "jobs": 4
-        },
-        {
-            "name": "linux_gcc11.4_debug_x64",
-            "configurePreset": "linux_gcc11.4_x64",
-            "configuration": "debug",
-            "targets": ["all","install"],
-            "jobs": 4
-        },
-        {
-            "name": "linux_gcc11.4_release_x64",
-            "configurePreset": "linux_gcc11.4_x64",
+            "name": "linux_release_x64",
+            "configurePreset": "linux_x64",
             "configuration": "release",
             "targets": ["all","install"],
             "jobs": 4
@@ -330,19 +301,11 @@
             ]
         },
         {
-            "name": "build_linux_gcc7.5_x64",
+            "name": "build_linux_x64",
             "steps":[
-                { "type":"configure", "name":"linux_gcc7.5_x64" },
-                { "type":"build", "name":"linux_gcc7.5_debug_x64" },
-                { "type":"build", "name":"linux_gcc7.5_release_x64" }
-            ]
-        },
-        {
-            "name": "build_linux_gcc11.4_x64",
-            "steps":[
-                { "type":"configure", "name":"linux_gcc11.4_x64" },
-                { "type":"build", "name":"linux_gcc11.4_debug_x64" },
-                { "type":"build", "name":"linux_gcc11.4_release_x64" }
+                { "type":"configure", "name":"linux_x64" },
+                { "type":"build", "name":"linux_debug_x64" },
+                { "type":"build", "name":"linux_release_x64" }
             ]
         },
         {
@@ -391,15 +354,9 @@
             ]
         },
         {
-            "name": "dev_linux_gcc7.5_x64",
+            "name": "dev_linux_x64",
             "steps":[
-                { "type":"configure", "name":"linux_gcc7.5_x64" }
-            ]
-        },
-        {
-            "name": "dev_linux_gcc11.4_x64",
-            "steps":[
-                { "type":"configure", "name":"linux_gcc11.4_x64" }
+                { "type":"configure", "name":"linux_x64" }
             ]
         }
     ]
