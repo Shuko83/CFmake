@@ -26,6 +26,7 @@ set_target_properties(OpenFlightAPI::fltdata PROPERTIES
     IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
     IMPORTED_IMPLIB_DEBUG "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_LIB_DIR}/debug/fltdata.lib"
     IMPORTED_LOCATION_DEBUG "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_BIN_DIR}/debug/fltdata.dll"
+    COMPILE_PDB_NAME_DEBUG "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_BIN_DIR}/debug/fltdata.pdb"
     IMPORTED_IMPLIB_RELEASE "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_LIB_DIR}/release/fltdata.lib"
     IMPORTED_LOCATION_RELEASE "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_BIN_DIR}/release/fltdata.dll"
 )
@@ -35,6 +36,7 @@ set_target_properties(OpenFlightAPI::mgapilib PROPERTIES
     IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
     IMPORTED_IMPLIB_DEBUG "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_LIB_DIR}/debug/mgapilib.lib"
     IMPORTED_LOCATION_DEBUG "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_BIN_DIR}/debug/mgapilib.dll"
+    COMPILE_PDB_NAME_DEBUG "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_BIN_DIR}/debug/mgapilib.pdb"
     IMPORTED_IMPLIB_RELEASE "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_LIB_DIR}/release/mgapilib.lib"
     IMPORTED_LOCATION_RELEASE "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_BIN_DIR}/release/mgapilib.dll"
 )
@@ -44,6 +46,7 @@ set_target_properties(OpenFlightAPI::mgdd PROPERTIES
     IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
     IMPORTED_IMPLIB_DEBUG "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_LIB_DIR}/debug/mgdd.lib"
     IMPORTED_LOCATION_DEBUG "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_BIN_DIR}/debug/mgdd.dll"
+    COMPILE_PDB_NAME_DEBUG "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_BIN_DIR}/debug/mgdd.pdb"
     IMPORTED_IMPLIB_RELEASE "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_LIB_DIR}/release/mgdd.lib"
     IMPORTED_LOCATION_RELEASE "${OpenFlightAPI_ROOT_DIR}/${OpenFlightAPI_BIN_DIR}/release/mgdd.dll"
 )
