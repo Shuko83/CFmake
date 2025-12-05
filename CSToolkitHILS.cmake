@@ -1,6 +1,5 @@
 set(CSTOOLKIT_USE_GIT_TAG_VERSION ON)
 set(CSTOOLKIT_CPACK_RULES ON)
-set(CSTOOLKIT_AUTO_DEPLOY_QT OFF)
 
 set(CSTOOLKIT_DEFAULT_PUBLIC_HEADERS_DIRS "inc")
 set(CSTOOLKIT_DEFAULT_PRIVATE_HEADERS_DIRS "inc")
@@ -31,9 +30,14 @@ macro(hils_find_package PACKAGE_NAME FETCH_MODE)
 
     # If the option to search package in artifactory is set
     if (NOT _externals_installed)
-        if (NOT ${FETCH_MODE} STREQUAL "FETCH_ARTIFACTORY" AND NOT ${FETCH_MODE} STREQUAL "FETCH_PACKAGE" AND NOT ${FETCH_MODE} STREQUAL "FETCH_NEXUS")
-            message(SEND_ERROR "CSToolkit: find_package(${PACKAGE_NAME}): invalid param FETCH_MODE: ${FETCH_MODE}")
-            return()
+        set(VALID_FETCH_MODES
+            FETCH_ARTIFACTORY
+            FETCH_PACKAGE
+            FETCH_NEXUS
+        )
+
+        if (NOT ${FETCH_MODE} IN_LIST VALID_FETCH_MODES)
+            message(FATAL_ERROR "CSToolkit: find_package(${PACKAGE_NAME}): invalid param FETCH_MODE: ${FETCH_MODE}")
         endif()
 
         if (${FETCH_MODE} STREQUAL "FETCH_ARTIFACTORY")
