@@ -16,6 +16,7 @@ endif()
 
 if (_externals_installed)
     set(CSTOOLKIT_EXTERNALS "${CMAKE_SOURCE_DIR}/externals")
+    set(CSTOOLKIT_FETCH_DEPENDENCY OFF)
 endif()
 
 ### CMake variables
