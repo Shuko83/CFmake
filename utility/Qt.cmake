@@ -26,7 +26,7 @@ if(NOT Qt5_FOUND)
     find_package(Qt5Core QUIET)
 endif()
 
-if(NOT Qt5_FOUND AND NOT Qt5Core_FOUND)
+if(NOT Qt5_FOUND OR NOT Qt5Core_FOUND)
 
 set(QT_VERSION "Qt5-NOTFOUND")
 set(QT_VERSION_MM "${QT_VERSION}")
