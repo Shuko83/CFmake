@@ -20,8 +20,9 @@
                 "strategy": "set"
             },
             "cacheVariables": {
-            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x64/",
-            "CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x64/",
+                "CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE",
+                "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.14393.795"
             }
         },
         
@@ -38,8 +39,9 @@
                 "strategy": "set"
             },
             "cacheVariables": {
-            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x64-Qt5.9.6/",
-            "Qt5_ROOT" : "$env{QT5_9_6}/msvc2015_64/"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x64-Qt5.9.6/",
+                "Qt5_ROOT" : "$env{QT5_9_6}/msvc2015_64/",
+                "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.14393.795"
             }
         },
  
@@ -57,7 +59,8 @@
             },
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x86/",
-				"CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE"
+				"CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE",
+                "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.14393.795"
             }
         },
        
@@ -76,7 +79,8 @@
             },
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x86-Qt5.9.6/",
-                "Qt5_ROOT" : "$env{QT5_9_6}/msvc2015/"
+                "Qt5_ROOT" : "$env{QT5_9_6}/msvc2015/",
+                "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.14393.795"
             }
         },
        
