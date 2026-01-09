@@ -26,7 +26,7 @@ if(NOT Qt5_FOUND)
     find_package(Qt5Core QUIET)
 endif()
 
-if(NOT Qt5_FOUND OR NOT Qt5Core_FOUND)
+if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
 
 set(QT_VERSION "Qt5-NOTFOUND")
 set(QT_VERSION_MM "${QT_VERSION}")
@@ -57,7 +57,8 @@ function(cstoolkit_qt_generate_deploy_app_script)
     message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_generate_deploy_app_script()")
 endfunction()
 
-else()
+else() # Qt5 Found
+
 set(QT_VERSION "${Qt5_VERSION}")
 set(QT_VERSION_MM "${Qt5_VERSION_MAJOR}.${Qt5_VERSION_MINOR}")
 
