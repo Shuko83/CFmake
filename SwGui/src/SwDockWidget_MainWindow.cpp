@@ -1,6 +1,7 @@
 #include "SwDockWidget_MainWindow.h"
 #include "SwDockWidget_DockWidget.h"
 #include "SwDockWidget_MainArea.h"
+#include "target_info.h"
 
 #include <QSettings>
 #include <QMenuBar>
@@ -93,18 +94,18 @@ void SwDockWidget_MainWindow::setSaveAutoPeriod(unsigned int value)
 		_mainDock->setSaveAutoPeriod(value);
 	}
 }
-
+   
 //-----------------------------------------------------------------------------
 void SwDockWidget_MainWindow::saveConfiguration()
 {
-	QSettings settings("Diginext", "MainWindow");
+	QSettings settings(target_info::organization(), "MainWindow");
 	settings.setValue("mainWindowGeometry", saveGeometry());
 }
 
 //-----------------------------------------------------------------------------
 void SwDockWidget_MainWindow::restoreConfiguration()
 {
-	QSettings settings("Diginext", "MainWindow");
+	QSettings settings(target_info::organization(), "MainWindow");
 	restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
 }
 

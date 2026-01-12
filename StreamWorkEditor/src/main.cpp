@@ -18,6 +18,7 @@
 #include "Tools/SwTime_ToolBox.h"
 #include "ProductLicense.h"
 #include "StreamControler.h"
+#include "target_info.h"
 
 #ifdef Q_OS_WIN
 #include <psapi.h>
@@ -139,9 +140,9 @@ int main(int argc, char *argv[])
 	QsLogger->start();
 
 	// Qt Core Application
-	QCoreApplication::setApplicationName("StreamWorkEditor");
-	QCoreApplication::setOrganizationName("Diginext");
-	QCoreApplication::setOrganizationDomain("diginext.fr");
+	QCoreApplication::setApplicationName(QStringLiteral("StreamWorkEditor"));
+	QCoreApplication::setOrganizationName(target_info::organization());
+	QCoreApplication::setOrganizationDomain(QString(target_info::organization()) + QStringLiteral(".fr"));
 	QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	QApplication app(argc, argv);
 
