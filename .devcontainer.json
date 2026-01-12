@@ -1,0 +1,17 @@
+{
+    "name": "Streamwork",
+    "image": "harbor.sccoa.si.c-s.fr/starlinx/rhubi-devel:9.1.0-7",
+    "containerUser": "root",
+    "remoteEnv": {
+        "USE_CONAN_VERSION": "2"
+    },
+    "mounts": [
+        {
+            "source": "conan_cache",
+            "target": "/root/.conan2",
+            "type": "volume"
+        }
+    ],
+    "onCreateCommand": "conan remote add -f devsecops_conan https://git.sccoa.si.c-s.fr/api/packages/DevSecOps/conan",
+    "postCreateCommand": "echo '10.19.74.23 update.code.visualstudio.com' >> /etc/hosts"
+}
