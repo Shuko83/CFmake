@@ -1,4 +1,5 @@
-@Library('cs-shared-lib@0.6.2')
+@Library('cs-shared-lib@1.7.3')
+@Library('sx-library-pipeline@4.4.2')
 
 import org.utils.CSSharedLib
 import org.utils.Target
@@ -9,7 +10,8 @@ def streamwork = new CSSharedLib(
         context: this, 
         projectName: "StreamWork", 
         teamName: "Starlinx", 
-        targets: ["starlinx" : [Target.WIN_MSVC2015_X64_QT5_9_6, Target.WIN_MSVC2022_X64_QT5_15]],
+        targets: ["starlinx" : [Target.WIN_MSVC2015_X64_QT5_9_6, Target.WIN_MSVC2022_X64_QT5_15],
+                "STARLINX-LINUX" : [SxTarget.LINUX_GCC12_2_X64_QT5_15, SxTarget.LINUX_GCC11_5_X64_QT5_15]],
         exportControl: "c",
         verbose : true)
 
@@ -17,7 +19,8 @@ def streamworkNoLicense = new CSSharedLib(
         context: this, 
         projectName: "StreamWorkNoLicense", 
         teamName: "Starlinx", 
-        targets: ["starlinx" : [Target.WIN_MSVC2015_X64_QT5_9_6, Target.WIN_MSVC2022_X64_QT5_15]],
+        targets: ["starlinx" : [Target.WIN_MSVC2015_X64_QT5_9_6, Target.WIN_MSVC2022_X64_QT5_15],
+                "STARLINX-LINUX" : [SxTarget.LINUX_GCC12_2_X64_QT5_15, SxTarget.LINUX_GCC11_5_X64_QT5_15]],
         exportControl: "c",
         verbose : true)
 
@@ -35,8 +38,8 @@ pipeline {
                 stage ('CMake configure') {
                 steps {
                         script {
-                        streamwork.cmakeHelper.configure()
-                        streamworkNoLicense.cmakeHelper.configure(options: "-DNO_LICENSE=ON")
+                        streamwork.cmakeHelper.configure(optionsDebug:'-DCMAKE_TOOLCHAIN_FILE=${DEBUG_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Debug' ,optionsRelease:'-DCMAKE_TOOLCHAIN_FILE=${RELEASE_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release')
+                        streamworkNoLicense.cmakeHelper.configure(options: "-DNO_LICENSE=ON", optionsDebug:'-DCMAKE_TOOLCHAIN_FILE=${DEBUG_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Debug' ,optionsRelease:'-DCMAKE_TOOLCHAIN_FILE=${RELEASE_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release')
                         }
                 }
                 }
