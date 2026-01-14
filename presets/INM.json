@@ -128,7 +128,7 @@
             "displayName": "linux_x64",
             "description": "Configure project using ninja for unix",
             "generator": "Ninja Multi-Config",
-            "binaryDir": "build/unix",
+            "binaryDir": "build/unix/$env{TARGET_MKSPECS}",
             "cacheVariables": {
                 "CMAKE_CONFIGURATION_TYPES": "debug;release",
                 "Qt5_ROOT" : "$env{QT_ROOT}/gcc_64/"
