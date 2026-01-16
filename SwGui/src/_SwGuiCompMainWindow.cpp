@@ -82,10 +82,10 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow()
     APP_PATH = SwApplication::GetInstance()->GetApplicationDirPath() + QDir::separator();
     
     QString relativePartialPath;
-    #if defined(_WIN32)
+    #if defined(Q_OS_WIN)
         relativePartialPath = QStringLiteral("ProgramData") + QDir::separator() + target_info::organization();    
     #else
-        relativePartialPath = QStringLiteral("var") + QDir::separator() + QStringLiteral("opt");
+        relativePartialPath = QStringLiteral("etc") + QDir::separator() + QStringLiteral("opt");
     #endif 
 
     _relativePath = relativePartialPath + QDir::separator() + "Starlinx" + QDir::separator() + "Configuration" + QDir::separator() + "dockParameters.xml";
