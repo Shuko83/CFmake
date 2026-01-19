@@ -148,6 +148,7 @@ int main(int argc, char *argv[])
 
 	Parameters params = readParamaters();
 
+	#ifndef NO_LICENSE
 	// Licence
 	try 
     {
@@ -163,7 +164,9 @@ int main(int argc, char *argv[])
 	bool licenseLost = false;
 	QObject::connect(&productLicense, &ProductLicense::error, [&licenseLost]() {licenseLost = true; qApp->exit(EXIT_FAILURE); });
 	bool licenseOk = productLicense.takeFeatures({ licenseId::FunctionId::Function_CORE });
-
+#else
+	bool licenseOk = true;
+#endif
 
 	//Signature des streams
 	if (!params.folderToSign.isEmpty())
