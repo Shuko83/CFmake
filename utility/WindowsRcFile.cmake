@@ -8,7 +8,8 @@ function(cstoolkit_generate_rc_file)
         LANG
         CODEPAGE
         COMPANY
-        COPYRIGHT)
+        COPYRIGHT
+        DESCRIPTION)
     set(multi_value_keywords ICONS)
     
     cmake_parse_arguments(PARSE_ARGV 0 PARAMS "${options}" "${one_value_keywords}" "${multi_value_keywords}")
