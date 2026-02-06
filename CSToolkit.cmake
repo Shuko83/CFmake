@@ -116,6 +116,7 @@ else()
     option(CSTOOLKIT_FETCH_DEPENDENCY "If OFF, calls to cstoolkit_fetch_dependency will do nothing" ON)
 endif()
 option(CSTOOLKIT_WINDOWS_SDK_WARNING "If ON, cstoolkit will raise a CMake warning if the Windows SDK is missing or incompatible with the MSVC version" ON)
+option(CSTOOLKIT_INSTALL_SYMBOLS_TO_SYMBOLSDIR "If ON, all debug files are installed in the CSTOOLKIT_DEFAULT_INSTALL_SYMBOLSDIR directory instead of alongside binaries" OFF)
 
 ################################################################################
 #  Internal variables
