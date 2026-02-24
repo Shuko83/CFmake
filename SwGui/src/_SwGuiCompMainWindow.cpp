@@ -13,6 +13,7 @@
 #include "_SwGuiCompMainWindow.h"
 #include <QEvent>
 #include "target_info.h"
+#include "default_paths.h"
 
 #ifdef Q_OS_WIN
 #   include <io.h>
@@ -81,14 +82,9 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow()
     HOME_PATH = QDir::rootPath() + QDir::separator();
     APP_PATH = SwApplication::GetInstance()->GetApplicationDirPath() + QDir::separator();
     
-    QString relativePartialPath;
-    #if defined(Q_OS_WIN)
-        relativePartialPath = QStringLiteral("ProgramData") + QDir::separator() + target_info::organization();    
-    #else
-        relativePartialPath = QStringLiteral("etc") + QDir::separator() + QStringLiteral("opt");
-    #endif 
+    QString relativePartialPath = QString::fromStdString(default_paths::configPath("Starlinx"));
 
-    _relativePath = relativePartialPath + QDir::separator() + "Starlinx" + QDir::separator() + "Configuration" + QDir::separator() + "dockParameters.xml";
+    _relativePath = relativePartialPath + QStringLiteral("Configuration") + QDir::separator() + QStringLiteral("dockParameters.xml");
 }
 
 //-----------------------------------------------------------------------------
