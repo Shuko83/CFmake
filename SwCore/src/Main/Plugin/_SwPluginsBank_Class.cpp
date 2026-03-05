@@ -17,8 +17,9 @@
 #include "hex.h"
 #include "osrng.h"
 #include "files.h"
-#include "ProductLicense.h"
-
+#ifndef SW_NO_LICENSE
+#include "SentinelLicenseManager.h"
+#endif //SW_NO_LICENSE
 #include <QLibrary>
 #include <QProcess>
 #include <QRegularExpression>
@@ -35,17 +36,13 @@
 #include <QJsonDocument>
 #include <QProcessEnvironment>
 
-#ifdef Q_OS_WIN
-#include <windows.h>
-#include <psapi.h>
-#endif
-
 #include <cstdlib> 
 #include <stdlib.h> 
 
-#ifdef Q_OS_WIN
+#ifdef _WIN32
 //Enregistrement du path dans le path applicatif
 #include <windows.h>
+#include <psapi.h>
 #include "ImageHlp.h"
 #define WIN32_BUFSIZE 30000
 #include <QMessageBox>
@@ -166,11 +163,11 @@ void DumpDllFromPath(const wchar_t* path,int depth) {
 //
 
 /*! \brief Constructeur */
-_SwPluginsBank_Class::_SwPluginsBank_Class(ProductLicense * productLicense)
+_SwPluginsBank_Class::_SwPluginsBank_Class(licensing::SentinelLicenseManager * manager)
 	: QAbstractItemModel()
 	, _tree_items(nullptr)
 	, _has_changed(false)
-	, _productLicense(productLicense)
+	, _licenseManager(manager)
 {
 	RebuildModel();
 	_data_to_factory.insert(SwUUID(),NULL);
@@ -199,9 +196,11 @@ _SwPluginsBank_Class::~_SwPluginsBank_Class(){
 	object_factory_map.clear();
 }
 
-void _SwPluginsBank_Class::setProductLicense(ProductLicense* productLicence)
+//------------------------------------------------------------------
+void _SwPluginsBank_Class::setSentinelLicenseManagerAndProductId(licensing::SentinelLicenseManager* manager, int productId)
 {
-	_productLicense = productLicence;
+	_licenseManager = manager;
+	_productId = productId;
 }
 
 //------------------------------------------------------------------
@@ -315,14 +314,14 @@ void _SwPluginsBank_Class::LoadAllPlugins()
 					SwPluginFactory_Class * plugin=plugin_entry();
 
 					// Check if plugin compilation date is older than the licence
-	#ifndef NO_LICENSE
-					if (!_productLicense || !_productLicense->checkBuildDate(plugin->GetPluginCompilationDate()))
+	#ifndef SW_NO_LICENSE
+					if (!_licenseManager || !_licenseManager->checkMaintenance(_productId, plugin->GetPluginCompilationDate().toTime_t()))
 					{
 						qDebug() << QString("Plugin %1 is too recent").arg(plugin->GetPluginName());
 						delete plugin;
 						continue;
 					}
-	#endif
+	#endif // SW_NO_LICENSE
 					// Check if plugin is protected
 					SwProtectedPluginFactory_Class* protectedPlugin = dynamic_cast<SwProtectedPluginFactory_Class*>(plugin);
 					if (protectedPlugin && !protectedPlugin->unlock(_pluginLicence))

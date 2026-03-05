@@ -16,7 +16,9 @@
 #include "EditionService.h"
 #include "QsLog.h"
 #include "Tools/SwTime_ToolBox.h"
-#include "ProductLicense.h"
+#ifndef SW_NO_LICENSE
+#include "SentinelLicenseManager.h"
+#endif //SW_NO_LICENSE
 #include "StreamControler.h"
 #include "target_info.h"
 
@@ -140,64 +142,41 @@ int main(int argc, char *argv[])
 	QsLogger->start();
 
 	// Qt Core Application
-	QCoreApplication::setApplicationName(QStringLiteral("StreamWorkEditor"));
-	QCoreApplication::setOrganizationName(target_info::organization());
-	QCoreApplication::setOrganizationDomain(QString(target_info::organization()) + QStringLiteral(".fr"));
 	QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 	QApplication app(argc, argv);
 
 	Parameters params = readParamaters();
 
-	#ifndef NO_LICENSE
+#ifndef NO_LICENSE
 	// Licence
 	try 
     {
-        SW_APP->setProductId(licenseId::ProductId::Product_SX);
+        SW_APP->setProductId(104);
     }
     catch (StreamWork::SwCore::SwException&)
     {
-        QMessageBox::information(nullptr, QStringLiteral("No license"), QStringLiteral("No licence runtime for product Starlinx3 could be found."), QMessageBox::Ok);
+        QMessageBox::information(nullptr, QStringLiteral("No license"), QStringLiteral("No license runtime for product Starlinx3 could be found."), QMessageBox::Ok);
         return EXIT_NO_LICENSE;
     }
-	
-	ProductLicense productLicense(licenseId::ProductId::Product_STREAMWORK);
-	bool licenseLost = false;
-	QObject::connect(&productLicense, &ProductLicense::error, [&licenseLost]() {licenseLost = true; qApp->exit(EXIT_FAILURE); });
-	bool licenseOk = productLicense.takeFeatures({ licenseId::FunctionId::Function_CORE });
-#else
-	bool licenseOk = true;
+
 #endif
 
 	//Signature des streams
 	if (!params.folderToSign.isEmpty())
 	{
-		if (licenseOk)
+		QFileInfoList xmlInfoList;
+		QDirIterator it(params.folderToSign, { QString("*.xml") }, QDir::Files | QDir::Readable, QDirIterator::Subdirectories);
+		while (it.hasNext())
 		{
-			QFileInfoList xmlInfoList;
-			QDirIterator it(params.folderToSign, { QString("*.xml") }, QDir::Files | QDir::Readable, QDirIterator::Subdirectories);
-			while (it.hasNext())
-			{
-				xmlInfoList.append(it.fileInfo());
-				it.next();
-			}
-			for (QFileInfo fileInfo : xmlInfoList)
-			{
-				QFile file(fileInfo.absoluteFilePath());
-				StreamControler::SaveStream(file);
-			}
-			return EXIT_SUCCESS;
+			xmlInfoList.append(it.fileInfo());
+			it.next();
 		}
-		else
+		for (QFileInfo fileInfo : xmlInfoList)
 		{
-			qInfo() << "No license for StreamWorkEditor could be find.";
-			return EXIT_FAILURE;
+			QFile file(fileInfo.absoluteFilePath());
+			StreamControler::SaveStream(file);
 		}
-	}
-
-	if (!licenseOk)
-	{
-		QMessageBox::information(0, QStringLiteral("No license"), QStringLiteral("No licence for StreamWork could be found."), QMessageBox::Ok);
-		return EXIT_FAILURE;
+		return EXIT_SUCCESS;
 	}
 
 	// SplashScreedn

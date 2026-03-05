@@ -7,7 +7,6 @@ endif()
 
 cstoolkit_add_target(SwCore SHARED NAMESPACE Streamwork RECURSIVE RECURSIVE_INCLUDE
     PUBLIC_LINK_LIBRARIES
-		License::License
 		QstBase::QsCore
 		QstModules::QsException
 		QstBase::QsGui
@@ -16,15 +15,15 @@ cstoolkit_add_target(SwCore SHARED NAMESPACE Streamwork RECURSIVE RECURSIVE_INCL
 		Qt5::Gui
 		Qt5::Widgets
 		Qt5::Xml
+		${TARGET_LICENSE}
 	PRIVATE_LINK_LIBRARIES
 		${WINDOWS_DEPENDENCIES}
-		ApiLicensing::ApiLicensing
 		cryptopp-static
 	COMPILE_DEFINITIONS
 		UNICODE
 		_CRT_SECURE_NO_WARNINGS
 )
 
-if(NO_LICENSE)
-    add_compile_definitions(NO_LICENSE)
+if(NOT LICENSE)
+	target_compile_definitions(SwCore PUBLIC SW_NO_LICENSE)
 endif()

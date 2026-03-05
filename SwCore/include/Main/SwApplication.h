@@ -20,7 +20,11 @@
 #include "Tools/Log/SwLogger_Class.h"
 #include "Tools/Log/SwAlerter_Class.h"
 
-class ProductLicense;
+#ifndef SW_NO_LICENSE
+#include "SentinelLicenseManager.h"
+#endif //SW_NO_LICENSE
+
+
 namespace StreamWork 
 {
 	namespace SwCore
@@ -113,7 +117,12 @@ namespace StreamWork
 		-appDirPath 			change l'application dir path (recuperable via GetApplicationDirPath)
 
 		*/
-        class BUILD_SWCORE SwApplication : public SwServicesManager_Class {
+        class BUILD_SWCORE SwApplication : public SwServicesManager_Class
+
+#ifndef SW_NO_LICENSE
+        , public licensing::IErrorObserver 
+#endif //SW_NO_LICENSE
+        {
         private:
 			_SwPluginsBank_Class *_bank;
 			_SwComplexeTypeAdaptersFactoriesBankImpl *_ctadaptersbank;
@@ -161,7 +170,9 @@ namespace StreamWork
             /*! \brief Destructeur*/
             ~SwApplication();
 
-			ProductLicense *_productLicense;
+#ifndef SW_NO_LICENSE
+            licensing::SentinelLicenseManager *_licenseManager;
+#endif //SW_NO_LICENSE
         public:
             /*! \brief Acces a l'instance unique*/
             static SwApplication * GetInstance();
@@ -236,8 +247,11 @@ namespace StreamWork
 			void SetHistoricCpt(quint64 value);
 
 		protected :
-			virtual void raiseQueryError(QString serviceName);
-			
+			void raiseQueryError(QString serviceName);
+
+#ifndef SW_NO_LICENSE
+            void onError(licensing::Error error, const char* message) override;
+#endif //SW_NO_LICENSE
 		};
 	}
 }

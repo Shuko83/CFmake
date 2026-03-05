@@ -6,7 +6,6 @@ endif()
 
 cstoolkit_add_target(StreamWorkEditor EXECUTABLE NAMESPACE Streamwork RECURSIVE RECURSIVE_INCLUDE
     PUBLIC_LINK_LIBRARIES
-        License::License
         QstBase::QsCore
         QstModules::QsException
         QstBase::QsGui
@@ -26,9 +25,9 @@ cstoolkit_add_target(StreamWorkEditor EXECUTABLE NAMESPACE Streamwork RECURSIVE 
         Qt5::PrintSupport
         Qt5::Widgets
         Qt5::Xml
+        ${TARGET_LICENSE}
     PRIVATE_LINK_LIBRARIES
         ${OPENGL_LIB}
-        ApiLicensing::ApiLicensing
         cryptopp-static
     LINK_OPTIONS
         -LARGEADDRESSAWARE
@@ -41,8 +40,8 @@ cstoolkit_add_target(StreamWorkEditor EXECUTABLE NAMESPACE Streamwork RECURSIVE 
         Streamwork::SwServiceMainWindow
 )
 
-if(NO_LICENSE)
-    add_compile_definitions(NO_LICENSE)
+if(NOT LICENSE)
+    target_compile_definitions(StreamWorkEditor PRIVATE SW_NO_LICENSE)
 endif()
 
 cstoolkit_deploy_with_target(StreamWorkEditor FILES "${EULA_PATH}")

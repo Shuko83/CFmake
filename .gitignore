@@ -12,5 +12,5 @@ Delivery/*
 Libraries/*
 .vs/*
 .racine
-build/
+build*/
 install/

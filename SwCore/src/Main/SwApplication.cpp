@@ -24,8 +24,9 @@
 #include "cryptlib.h"
 #include "rsa.h"
 #include "hex.h"
-#include "ProductLicense.h"
 
+#include <QDebug>
+#include <QMessageBox>
 #include <QApplication>
 #include <QDir>
 #include <QTextCodec>
@@ -49,7 +50,9 @@ SwApplication::SwApplication()
 	, _autoStart(false)
 	, _developerMode(false)
 	, _runtimeMode(false)
-	, _productLicense (nullptr)
+#ifndef SW_NO_LICENSE
+	, _licenseManager (nullptr)
+#endif //SW_NO_LICENSE
 {
 	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
 	_startPath = QDir::currentPath();
@@ -81,10 +84,10 @@ SwApplication::SwApplication()
 //-----------------------------------------------------------------------
 SwApplication::~SwApplication()
 {
-	if (_productLicense)
-		_productLicense->releaseAll();
 
-	delete _productLicense;
+#ifndef SW_NO_LICENSE
+	delete _licenseManager;
+#endif //SW_NO_LICENSE
 	delete _bank;
 	delete _ctadaptersbank;
 }
@@ -339,33 +342,37 @@ bool StreamWork::SwCore::SwApplication::developerMode() const
 
 void StreamWork::SwCore::SwApplication::setProductId(uint32_t productId)
 {
-#ifndef NO_LICENSE
-	if (_productLicense)
+#ifndef SW_NO_LICENSE
+	if (_licenseManager)
 	{
-		_productLicense->releaseAll();
-		delete _productLicense;
+		qDebug() << "Product Id is already set, you can't set another one.";
+		return;
 	}
-
-	_productLicense = new ProductLicense(productId);
-
-	if (_productLicense)
+	_licenseManager = new licensing::SentinelLicenseManager();
+	if (_licenseManager->takeFeature(productId, 117))
 	{
-		if (_productLicense->takeFeature(licenseId::FunctionId::Function_DEVELOPPER))
-		{
-			_developerMode = true;
-		}
-		else if (_productLicense->takeFeature(licenseId::FunctionId::Function_RUNTIME))
-		{
-			_runtimeMode = true;
-		}
-		else
-		{
-			LAUNCH_SWEXCEPTION("SwCore", "No feature runtime or developper could be found.");
-		}
+		_developerMode = true;
 	}
-	_bank->setProductLicense(_productLicense);
+	else if (_licenseManager->takeFeature(productId, 76))
+	{
+		_runtimeMode = true;
+	}
+	else
+	{
+		LAUNCH_SWEXCEPTION("SwCore", "No feature runtime or developper could be found.");
+	}
+	_bank->setSentinelLicenseManagerAndProductId(_licenseManager, productId);
 #endif
 }
+
+#ifndef SW_NO_LICENSE
+//-------------------------------------------------------------------------
+void SwApplication::onError(licensing::Error error, const char* message)
+{
+	QMessageBox::information(nullptr, QStringLiteral("Licence error"), message);
+	exit(0);
+}
+#endif //SW_NO_LICENSE
 
 //-------------------------------------------------------------------------
 bool StreamWork::SwCore::SwApplication::isValidSignature(QString message, QString signature) const

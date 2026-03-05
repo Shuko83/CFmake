@@ -27,7 +27,10 @@
 #include <QHash>
 #include <QSystemTrayIcon>
 
-class ProductLicense;
+namespace licensing
+{
+    class SentinelLicenseManager;
+}
 
 namespace StreamWork
 {
@@ -82,14 +85,15 @@ namespace StreamWork
 
 			QList<QString> _dllWithError;
 
-			ProductLicense * _productLicense;
+			licensing::SentinelLicenseManager * _licenseManager;
+            int _productId;
 		public:
             /*! \brief Constructeur */
-            _SwPluginsBank_Class(ProductLicense * productLicense = nullptr);
+            _SwPluginsBank_Class(licensing::SentinelLicenseManager* licenseManager = nullptr);
             /*! \brief Destructeur */
             ~_SwPluginsBank_Class();
             /*! \brief Permet de set le product licence */
-            void setProductLicense(ProductLicense* productLicence);
+            void setSentinelLicenseManagerAndProductId(licensing::SentinelLicenseManager* manager, int productId);
             //------------------------------------------------------------------
             // Interface ISwPluginsBank
             //------------------------------------------------------------------
