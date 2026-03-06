@@ -62,7 +62,7 @@ pipeline {
                         }
                         stage ('Upload on Nexus and Artifactory') {
                             script {
-                                csSharedLib.artefactHelper.upload(subDirectory: "Modules/StreamWork")
+                                csSharedLib.artefactHelper.upload(subDirectory: "Frameworks")
                             }
                         }
                     }
