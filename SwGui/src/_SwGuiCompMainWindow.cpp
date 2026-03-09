@@ -8,12 +8,14 @@
 #include <QDesktopWidget>
 #include <QApplication>
 #include <QMenuBar>
+#include <QEvent>
+#include <QDefaultPaths>
+
 #include "Main/SwApplication.h"
 #include "Main/SwMacros.h"
 #include "_SwGuiCompMainWindow.h"
-#include <QEvent>
+
 #include "target_info.h"
-#include "default_paths.h"
 
 #ifdef Q_OS_WIN
 #   include <io.h>
@@ -82,7 +84,7 @@ _SwGuiCompMainWindow::_SwGuiCompMainWindow()
     HOME_PATH = QDir::rootPath() + QDir::separator();
     APP_PATH = SwApplication::GetInstance()->GetApplicationDirPath() + QDir::separator();
     
-    QString relativePartialPath = QString::fromStdString(default_paths::configPath("Starlinx"));
+    QString relativePartialPath = QDefaultPaths::configPath();
 
     _relativePath = relativePartialPath + QStringLiteral("Configuration") + QDir::separator() + QStringLiteral("dockParameters.xml");
 }
