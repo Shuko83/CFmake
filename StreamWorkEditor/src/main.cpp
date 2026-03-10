@@ -67,6 +67,7 @@ namespace
 		bool autostart;
 		unsigned int restart;
 		QString folderToSign;
+		QString appName;
 
 		Parameters()
 			: help(false)
@@ -82,6 +83,7 @@ namespace
 			, autostart(false)
 			, restart(0)
 			, folderToSign()
+			, appName()
 		{}
 	};
 }
@@ -132,6 +134,10 @@ Parameters readParamaters()
 		// Permet de signer les fichiers contenu dans le dossier fourni en paramètre
 		else if (liste_arg[i] == "-sign" && i + 1 < nb_args)
 			params.folderToSign = liste_arg[++i];
+		// Permet de changer le nom de l'application pour ne pas avoir StreamWorkEditor
+		else if (liste_arg[i] == "-name" && i + 1 < nb_args)
+			params.appName = liste_arg[++i];
+
 	}
 	return params;
 }
@@ -292,6 +298,12 @@ int main(int argc, char *argv[])
 			}
 		}
 #endif
+	}
+
+	if (!params.appName.isEmpty())
+	{
+		qInfo() << QString("Rename the application on %1.").arg(params.appName);
+		QCoreApplication::setApplicationName(params.appName);
 	}
 
 	// Finalisation de l'initialisation
