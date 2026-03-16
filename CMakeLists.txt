@@ -8,7 +8,7 @@ set(CSTOOLKIT_AUTO_DEPLOY_QT OFF)
 
 if(PROJECT_IS_TOP_LEVEL)
     include("${CMAKE_SOURCE_DIR}/cstoolkit/CSToolkitStarlinx.cmake")
-    cstoolkit_fetch_artifactory("QstBase" VERSION "2.1.8" FOLDER "release/Libraries/Qst" QT)
+    cstoolkit_fetch_artifactory("QstBase" VERSION "2.1.9" FOLDER "release/Libraries/Qst" QT)
     cstoolkit_fetch_artifactory("QstModules" VERSION "2.1.12" FOLDER "release/Libraries/Qst" QT)
     if(WIN32)
         if(LICENSE)
