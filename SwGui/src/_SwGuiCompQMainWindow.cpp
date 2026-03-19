@@ -18,6 +18,7 @@
 #include "ISwServiceShortcuts.h"
 #include "Main/SwApplication.h"
 #include <QMetaEnum>
+#include <QDefaultPaths>
 
 using namespace StreamWork::SwCore;
 using namespace StreamWork::SwGui;
@@ -57,6 +58,7 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow()
 	, _useAsWidget(false)
 	, _protectClosing(false)
 	, _save_geometry_ini_file (false)
+    , _geometryPath(QDefaultPaths::configPath() + QDir::separator() + QStringLiteral("geometry.ini"))
 {
     _default_toolbar_position.AddKey( Qt::LeftToolBarArea, "Left" );
     _default_toolbar_position.AddKey( Qt::RightToolBarArea, "Right" );
@@ -97,6 +99,7 @@ _SwGuiCompQMainWindow::_SwGuiCompQMainWindow()
     ISwServiceShortcuts * serviceShortcuts = dynamic_cast <ISwServiceShortcuts *>( SW_APP->QueryService( CG_SW_SERVICE_SHORTCUTS ) );
     if( serviceShortcuts )
         serviceShortcuts->registerCommand( DISPLAY_COMMAND, TOGGLE_FULLSCREEN, this );
+
 }
 
 //-----------------------------------------------------------------------
@@ -266,15 +269,6 @@ void _SwGuiCompQMainWindow::initializeComponent() throw( SwException )
 	_save_geometry_ini_file_property->SetDescription("Define if the QMainWindow geometry is saving in ini file");
 	_save_geometry_ini_file_property->SetValue(QVariant(_save_geometry_ini_file));
 	enableListeningChangeForProperty(_save_geometry_ini_file_property);
-
-	_config_path_property = getPropertiesService().CreateProperty<QString>("configPath");
-	if (!_config_path_property)
-	{
-		if (SW_APP->IsVerbose()) SW_APP->Logger().Log(LogLvl_Warning, QString("Fail to register _config_path_property property\n"));
-	}	
-	_config_path_property->SetDescription("Define if the QMainWindow path geometry ini file");
-	_config_path_property->SetValue(QVariant(_configPath));
-	enableListeningChangeForProperty(_config_path_property);
 
 	_close_property = getPropertiesService().CreateProperty<SwEnum>("Close or Hide");
 	if (_close_property != nullptr)
@@ -465,14 +459,6 @@ void _SwGuiCompQMainWindow::eventPropertyChange( ISwProperty * property )
 	if (_save_geometry_ini_file_property == property)
 	{
 		_save_geometry_ini_file = property->GetValue().toBool();
-		if (_save_geometry_ini_file && !_geometryPath.isEmpty())
-			restoreStateGeometry();
-	}
-
-	if (_config_path_property == property)
-	{
-		_configPath = property->GetValue().toString();
-		_geometryPath = _configPath + QDir::separator() + QStringLiteral("geometry.ini");
 		if (_save_geometry_ini_file && !_geometryPath.isEmpty())
 			restoreStateGeometry();
 	}

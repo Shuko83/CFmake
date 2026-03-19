@@ -112,8 +112,6 @@ protected:
 	bool _save_geometry_ini_file;	
 	ISwProperty * _save_geometry_ini_file_property;
 	/* propriété du path de la sauvegarde de la géométrie dans un fichier ini */
-	QString _configPath;
-	ISwProperty * _config_path_property;
 	QString _geometryPath;
 	/* Lors d'une fermeture: fermer ou caché */
 	SwEnum _close_mode;
