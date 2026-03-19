@@ -1,4 +1,4 @@
-@Library('cs-shared-lib@1.11.2')
+@Library('cs-shared-lib@1.12.1')
 @Library('sx-library-pipeline@4.4.2')
 
 import org.utils.CSSharedLib
