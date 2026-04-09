@@ -9,10 +9,10 @@
 set(@fetch_package_name@_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 
 file(GLOB_RECURSE _LIB_LIST "${@fetch_package_name@_ROOT_DIR}/*.lib")
-list(FILTER _LIB_LIST INCLUDE REGEX "/[Rr]elease/")
+list(FILTER _LIB_LIST INCLUDE REGEX "${@fetch_package_name@_ROOT_DIR}/.*/[Rr]elease/")
 
 file(GLOB_RECURSE _DLL_LIST "${@fetch_package_name@_ROOT_DIR}/*.dll")
-list(FILTER _DLL_LIST INCLUDE REGEX "/[Rr]elease/")
+list(FILTER _DLL_LIST INCLUDE REGEX "${@fetch_package_name@_ROOT_DIR}/.*/[Rr]elease/")
 
 foreach(_releaselib ${_LIB_LIST})
     get_filename_component(_libname ${_releaselib} NAME_WE)

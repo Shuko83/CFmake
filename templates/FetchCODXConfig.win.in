@@ -9,7 +9,7 @@ endif()
 set(@fetch_package_name@_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}")
 
 file(GLOB_RECURSE _DLL_LIST "${@fetch_package_name@_ROOT_DIR}/*.dll")
-list(FILTER _DLL_LIST INCLUDE REGEX "/release/")
+list(FILTER _DLL_LIST INCLUDE REGEX "${@fetch_package_name@_ROOT_DIR}/.*/release/")
 
 set(@fetch_package_name@_MULTI_ELEMENTS 0)
 foreach(_releasedll ${_DLL_LIST})
