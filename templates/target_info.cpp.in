@@ -34,7 +34,7 @@ namespace target_info {
     
     const char * about()
     {
-        return "@PARAMS_PRODUCT@\n"
+        return "@PARAMS_TARGET@\n"
                "Built: " __TIME__ ", " __DATE__ "\n"
                "Version: @PARAMS_VERSION@\n"
                @PARAMS_ABOUT_QT_VERSION@
