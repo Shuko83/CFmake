@@ -76,19 +76,25 @@ Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
 
     # Find VCRedist Installer
     if(MSVC)
+        unset(CSTOOLKIT_LOCAL_VCREDIST)
+        unset(CSTOOLKIT_LOCAL_VCREDIST_VERSION)
         if(CMAKE_GENERATOR_INSTANCE)
             if(IS_DIRECTORY "${CMAKE_GENERATOR_INSTANCE}/VC")
                 set(VCINSTALLDIR "${CMAKE_GENERATOR_INSTANCE}/VC")
-                file(GLOB _VCToolsRedistDir_subdirs RELATIVE "${VCINSTALLDIR}/Redist/MSVC" "${VCINSTALLDIR}/Redist/MSVC/*")
+                unset(VCToolsRedistDir)
+                file(GLOB _VCToolsRedistDir_subdirs RELATIVE "${VCINSTALLDIR}/Redist/MSVC" "${VCINSTALLDIR}/Redist/MSVC/14.*")
                 foreach(_redist_subdir ${_VCToolsRedistDir_subdirs})
                     if(IS_DIRECTORY "${VCINSTALLDIR}/Redist/MSVC/${_redist_subdir}/debug_nonredist")
                         set(VCToolsRedistDir "${VCINSTALLDIR}/Redist/MSVC/${_redist_subdir}")
+                        set(CSTOOLKIT_LOCAL_VCREDIST_VERSION "${_redist_subdir}")
                     endif()
                 endforeach()
                 unset(_VCToolsRedistDir_subdirs)
                 if(VCToolsRedistDir)
                     if(EXISTS "${VCToolsRedistDir}/vc_redist.${CSTOOLKIT_HOST_ARCH}.exe")
-                        set(CSTOOLKIT_VCREDIST "${VCToolsRedistDir}/vc_redist.${CSTOOLKIT_HOST_ARCH}.exe")
+                        set(CSTOOLKIT_LOCAL_VCREDIST "${VCToolsRedistDir}/vc_redist.${CSTOOLKIT_HOST_ARCH}.exe")
+                    else()
+                        unset(CSTOOLKIT_LOCAL_VCREDIST_VERSION)
                     endif()
                 endif()
             endif()
@@ -99,9 +105,80 @@ Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
             if(IS_DIRECTORY "${VCINSTALLDIR}/redist")
                 set(VCToolsRedistDir "${VCINSTALLDIR}/redist")
                 if(EXISTS "${VCToolsRedistDir}/1033/vcredist_${CSTOOLKIT_HOST_ARCH}.exe")
-                    set(CSTOOLKIT_VCREDIST "${VCToolsRedistDir}/1033/vcredist_${CSTOOLKIT_HOST_ARCH}.exe")
+                    set(CSTOOLKIT_LOCAL_VCREDIST "${VCToolsRedistDir}/1033/vcredist_${CSTOOLKIT_HOST_ARCH}.exe")
+                    set(CSTOOLKIT_LOCAL_VCREDIST_VERSION "14.0")
                 endif()
             endif()
+        endif()
+
+        if(NOT CSTOOLKIT_ARTIFACTORY_URL)
+            set(CSTOOLKIT_VCREDIST "${CSTOOLKIT_LOCAL_VCREDIST}")
+            set(CSTOOLKIT_VCREDIST_VERSION "${CSTOOLKIT_LOCAL_VCREDIST_VERSION}")
+        else()
+            set(CSTOOLKIT_VCREDIST "")
+            set(CSTOOLKIT_VCREDIST_VERSION "")
+            
+            # vcredist_watch: lazily download latest VCRedist from Artifactory when the variable is first read
+            function(_cstoolkit_vcredist_watch variable access value current_list_file stack)
+                if(access STREQUAL "MODIFIED_ACCESS" OR access STREQUAL "UNKNOWN_MODIFIED_ACCESS" OR access STREQUAL "REMOVED_ACCESS")
+                    if(NOT _cstoolkit_vcredist_watch_guard)
+                        message(WARNING "Attempt to change readonly variable '${variable}'!")
+                    endif()
+                    return()
+                endif()
+
+                set(_cstoolkit_vcredist_watch_guard 1)
+
+                # Check if already downloaded via global properties
+                get_property(_set GLOBAL PROPERTY CSTOOLKIT_VCREDIST SET)
+                if(_set)
+                    get_property(_cached_exe GLOBAL PROPERTY CSTOOLKIT_VCREDIST)
+                    if(_cached_exe)
+                        get_property(_cached_version GLOBAL PROPERTY CSTOOLKIT_VCREDIST_VERSION)
+                        set(CSTOOLKIT_VCREDIST "${_cached_exe}" PARENT_SCOPE)
+                        set(CSTOOLKIT_VCREDIST_VERSION "${_cached_version}" PARENT_SCOPE)
+                    endif()
+                    set(_cstoolkit_vcredist_watch_guard 0)
+                    return()
+                endif()
+
+                cstoolkit_download(
+                    "${CSTOOLKIT_ARTIFACTORY_URL}/thirdParty/VCRedist/v14/latest/vcredist_latest_${CSTOOLKIT_HOST_ARCH}.7z"
+                    _vcredist_dir
+                )
+
+                # Locate the executable
+                file(GLOB _vcredist_files "${_vcredist_dir}/*.exe")
+                list(GET _vcredist_files 0 _vcredist_exe)
+                if(_vcredist_exe AND EXISTS "${_vcredist_dir}/version.txt")
+                    file(STRINGS "${_vcredist_dir}/version.txt" _vcredist_version LIMIT_COUNT 1)
+                    string(STRIP "${_vcredist_version}" _vcredist_version)
+
+                    set(CSTOOLKIT_VCREDIST "${_vcredist_exe}" PARENT_SCOPE)
+                    set(CSTOOLKIT_VCREDIST_VERSION "${_vcredist_version}" PARENT_SCOPE)
+
+                    set_property(GLOBAL PROPERTY CSTOOLKIT_VCREDIST "${_vcredist_exe}")
+                    set_property(GLOBAL PROPERTY CSTOOLKIT_VCREDIST_VERSION "${_vcredist_version}")
+                else()
+                    # Mark as attempted so we don't retry or re-warn
+                    set_property(GLOBAL PROPERTY CSTOOLKIT_VCREDIST "")
+                    set_property(GLOBAL PROPERTY CSTOOLKIT_VCREDIST_VERSION "")
+
+                    set(_reason "")
+                    if(NOT _vcredist_files)
+                        string(APPEND _reason "\n  - No .exe found in ${_vcredist_dir}")
+                    endif()
+                    if(NOT EXISTS "${_vcredist_dir}/version.txt")
+                        string(APPEND _reason "\n  - Missing version.txt in ${_vcredist_dir}")
+                    endif()
+                    message(WARNING "CSToolkit: Downloaded latest VCRedist archive appears corrupted:${_reason}")
+                endif()
+
+                set(_cstoolkit_vcredist_watch_guard 0)
+            endfunction()
+
+            variable_watch(CSTOOLKIT_VCREDIST _cstoolkit_vcredist_watch)
+            variable_watch(CSTOOLKIT_VCREDIST_VERSION _cstoolkit_vcredist_watch)
         endif()
     endif()
 endif()
