@@ -1,9 +1,10 @@
-# cstoolkit_deploy_with_target(<target> FILES <file>... [DESTINATION <dir>])
-# cstoolkit_deploy_with_target(<target> DIRECTORY <dir>... [DESTINATION <dir>])
+# cstoolkit_deploy_with_target(<target> FILES <file>... [DESTINATION <dir>] [INSTALL_ONLY])
+# cstoolkit_deploy_with_target(<target> DIRECTORY <dir>... [DESTINATION <dir>] [INSTALL_ONLY])
 # The last component of each directory name is appended to the destination directory
 # but a trailing slash may be used to avoid this because it leaves the last component empty.
+# INSTALL_ONLY: Only generate install rules, skip the post-build copy step.
 function(cstoolkit_deploy_with_target target mode)
-    set(DEPLOY_OPTIONS)
+    set(DEPLOY_OPTIONS INSTALL_ONLY)
     set(DEPLOY_UNIQUE DESTINATION)
     set(DEPLOY_MULTIPLE ${mode})
     cmake_parse_arguments(PARSE_ARGV 1 DEPLOY "${DEPLOY_OPTIONS}" "${DEPLOY_UNIQUE}" "${DEPLOY_MULTIPLE}")
@@ -42,7 +43,7 @@ function(cstoolkit_deploy_with_target target mode)
     cstoolkit_file_realpath_list(DEPLOY_SOURCES_NORM)
 
     if(DEPLOY_FILES)
-        if(CSTOOLKIT_BUILD_DEPLOY)
+        if(CSTOOLKIT_BUILD_DEPLOY AND NOT DEPLOY_INSTALL_ONLY)
             add_custom_command(TARGET ${target} POST_BUILD
                 COMMAND ${CSTOOLKIT_COPY} -e
                     "${DEPLOY_SOURCES_NORM}"
@@ -52,7 +53,7 @@ function(cstoolkit_deploy_with_target target mode)
         endif()
         install(FILES "${DEPLOY_SOURCES_NORM}" DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
     elseif(DEPLOY_DIRECTORY)
-        if(CSTOOLKIT_BUILD_DEPLOY)
+        if(CSTOOLKIT_BUILD_DEPLOY AND NOT DEPLOY_INSTALL_ONLY)
             add_custom_command(TARGET ${target} POST_BUILD
                 COMMAND ${CSTOOLKIT_COPY} -e -d
                     "${DEPLOY_SOURCES_NORM}"
