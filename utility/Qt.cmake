@@ -1,29 +1,36 @@
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "Generated Files")
 
-# Finding QT_ROOT
-if(NOT Qt5_ROOT AND NOT Qt5_DIR)
-    if(DEFINED ENV{QTDIR})
-        set(Qt5_ROOT $ENV{QTDIR})
-    else()
-        find_program(CSTOOLKIT_QMAKE_EXECUTABLE qmake)
-        if(NOT CSTOOLKIT_QMAKE_EXECUTABLE STREQUAL "CSTOOLKIT_QMAKE_EXECUTABLE-NOTFOUND")
-            execute_process(COMMAND "${CSTOOLKIT_QMAKE_EXECUTABLE}" -query QT_INSTALL_PREFIX
-                RESULT_VARIABLE _return_code
-                OUTPUT_VARIABLE _output
-                ERROR_QUIET
-                OUTPUT_STRIP_TRAILING_WHITESPACE)
-            if(NOT return_code)
-                set(Qt5_ROOT "${_output}")
-            endif()
-            unset(_return_code)
-            unset(_output)
-        endif()
-    endif()
+find_package(Qt5 COMPONENTS Core OPTIONAL_COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
+if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
+    find_package(Qt5Core QUIET)
 endif()
 
-find_package(Qt5 COMPONENTS Core OPTIONAL_COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
-if(NOT Qt5_FOUND)
-    find_package(Qt5Core QUIET)
+if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
+    # Finding QT_ROOT
+    if(NOT Qt5_ROOT AND NOT Qt5_DIR)
+        if(DEFINED ENV{QTDIR})
+            set(Qt5_ROOT $ENV{QTDIR})
+        else()
+            find_program(CSTOOLKIT_QMAKE_EXECUTABLE qmake)
+            if(NOT CSTOOLKIT_QMAKE_EXECUTABLE STREQUAL "CSTOOLKIT_QMAKE_EXECUTABLE-NOTFOUND")
+                execute_process(COMMAND "${CSTOOLKIT_QMAKE_EXECUTABLE}" -query QT_INSTALL_PREFIX
+                    RESULT_VARIABLE _return_code
+                    OUTPUT_VARIABLE _output
+                    ERROR_QUIET
+                    OUTPUT_STRIP_TRAILING_WHITESPACE)
+                if(NOT return_code)
+                    set(Qt5_ROOT "${_output}")
+                endif()
+                unset(_return_code)
+                unset(_output)
+            endif()
+        endif()
+    endif()
+
+    find_package(Qt5 COMPONENTS Core OPTIONAL_COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
+    if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
+        find_package(Qt5Core QUIET)
+    endif()
 endif()
 
 if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
