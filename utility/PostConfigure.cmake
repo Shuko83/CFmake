@@ -88,7 +88,10 @@ function(cstoolkit_post_configure)
         cstoolkit_install_export(${target})
     endforeach()
 
+    get_property(CSTOOLKIT_ALL_TARGETS GLOBAL PROPERTY CSTOOLKIT_ALL_TARGETS)
     cstoolkit_get_all_targets(ALL_TARGETS)
+    list(APPEND ALL_TARGETS ${CSTOOLKIT_ALL_TARGETS})
+    list(REMOVE_DUPLICATES ALL_TARGETS)
 
     # Verification des dependances
     if(CSTOOLKIT_AUTO_FIND_PACKAGE OR CSTOOLKIT_CHECK_DEPENDENCIES)
