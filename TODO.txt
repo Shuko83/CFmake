@@ -11,3 +11,9 @@ Finish remoteObject qt macro + integrate to cstoolkit_add_target
 Integrate .idl files wame as Qt files
 Add C# support
 customize pdb folder
+CODX :
+    Add option to download the symbols,
+    Add option to download the sources
+    Add option to download the documentation
+    Add filter patern on sources
+    Add filter patern on documentation
