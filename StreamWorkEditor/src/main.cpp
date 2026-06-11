@@ -174,8 +174,8 @@ int main(int argc, char *argv[])
 		QDirIterator it(params.folderToSign, { QString("*.xml") }, QDir::Files | QDir::Readable, QDirIterator::Subdirectories);
 		while (it.hasNext())
 		{
-			xmlInfoList.append(it.fileInfo());
 			it.next();
+			xmlInfoList.append(it.fileInfo());
 		}
 		for (QFileInfo fileInfo : xmlInfoList)
 		{

@@ -371,37 +371,42 @@ void StreamControler::writeToken(const QString & streamDesc, QXmlStreamWriter& w
 //-------------------------------------------------------------------------
 void StreamControler::SaveStream(QFile& file)
 {
+	QString streamDesc;
+
 	if (file.open(QIODevice::ReadWrite))
 	{
-		QString streamDesc(file.readAll());
-		if (isStream(streamDesc))
-		{
-			file.reset();
-			QXmlStreamWriter fileWriter(&file);
-			fileWriter.setCodec("UTF-8");
-			fileWriter.setAutoFormatting(true);
+		streamDesc = file.readAll();
+		file.close();
+	}
 
-			//serialisation du stream
-			fileWriter.writeStartDocument();
+	if (isStream(streamDesc) && file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+	{
+		file.reset();
+		QXmlStreamWriter fileWriter(&file);
+		fileWriter.setCodec("UTF-8");
+		fileWriter.setAutoFormatting(true);
 
-			fileWriter.writeStartElement(CG_SW_XML_DOCUMENT_NODE);
-			fileWriter.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION, CG_STREAMWORK_VERSION);
+		//serialisation du stream
+		fileWriter.writeStartDocument();
 
-			// Generate stream
-			writeToken(streamDesc, fileWriter, CG_SW_XML_STREAM_NODE);
+		fileWriter.writeStartElement(CG_SW_XML_DOCUMENT_NODE);
+		fileWriter.writeAttribute(CG_SW_XML_DOCUMENT_NODE_ATT_VERSION, CG_STREAMWORK_VERSION);
 
-			//Ajout donnees visuelles
-			writeToken(streamDesc, fileWriter,CL_SCENE_NODE);
+		// Generate stream
+		writeToken(streamDesc, fileWriter, CG_SW_XML_STREAM_NODE);
 
-			QString stream;
-			QXmlStreamWriter signatureWriter(&stream);
-			writeToken(streamDesc, signatureWriter,CG_SW_XML_STREAM_NODE, true);
-			QString signature = getStreamSignature(stream);
-			fileWriter.writeTextElement(CG_SW_XML_STREAMSIGNATURE_NODE, signature);
+		//Ajout donnees visuelles
+		writeToken(streamDesc, fileWriter,CL_SCENE_NODE);
 
-			fileWriter.writeEndDocument();
-			file.close();
-		}
+		QString stream;
+		QXmlStreamWriter signatureWriter(&stream);
+		writeToken(streamDesc, signatureWriter,CG_SW_XML_STREAM_NODE, true);
+		QString signature = getStreamSignature(stream);
+		fileWriter.writeTextElement(CG_SW_XML_STREAMSIGNATURE_NODE, signature);
+
+		//Close all remaining opened startElement
+		fileWriter.writeEndDocument();
+		file.close();
 	}
 }
 
