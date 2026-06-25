@@ -1,6 +1,6 @@
-function(cstoolkit_parse_repetitive_arguments prefix repetitive_keyword ignore_keywords)
+function(cfmake_parse_repetitive_arguments prefix repetitive_keyword ignore_keywords)
     if(repetitive_keyword IN_LIST ignore_keywords)
-        message(SEND_ERROR "CSToolkit: cstoolkit_parse_repetitive_arguments(): <ignore_keywords> contains <repetitive_keyword>")
+        message(SEND_ERROR "CFMake: cfmake_parse_repetitive_arguments(): <ignore_keywords> contains <repetitive_keyword>")
         return()
     endif()
     

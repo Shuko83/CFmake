@@ -1,9 +1,9 @@
-function(cstoolkit_start_timer timer_var)
+function(cfmake_start_timer timer_var)
     string(TIMESTAMP ${timer_var} "%s%f")
     set(${timer_var} ${${timer_var}} PARENT_SCOPE)
 endfunction()
 
-function(cstoolkit_end_timer timer_var elapsed_time_var)
+function(cfmake_end_timer timer_var elapsed_time_var)
     string(TIMESTAMP _end_time "%s%f")
     math(EXPR _elapsed "${_end_time}-${${timer_var}}")
     math(EXPR _second_elapsed "${_elapsed}/1000000")

@@ -1,4 +1,4 @@
-set(USAGE "${CMAKE_COMMAND} -P cstoolkit_lock.cmake -- <lockfile> <command> [args...]")
+set(USAGE "${CMAKE_COMMAND} -P cfmake_lock.cmake -- <lockfile> <command> [args...]")
 
 set(ARGI 0)
 while(NOT "${CMAKE_ARGV${ARGI}}" STREQUAL "--" AND ${ARGI} LESS ${CMAKE_ARGC})
@@ -10,7 +10,7 @@ math(EXPR COMMAND_INDEX "${ARGI}+2")
 math(EXPR ARGC "${CMAKE_ARGC}-1")
 
 if(ARGC LESS COMMAND_INDEX)
-    message(FATAL_ERROR "cstoolkit_copy Error: Missing arguments\n"
+    message(FATAL_ERROR "cfmake_copy Error: Missing arguments\n"
                         "Usage: ${USAGE}")
     return()
 endif()

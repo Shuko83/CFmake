@@ -11,9 +11,9 @@ if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
         if(DEFINED ENV{QTDIR})
             set(Qt5_ROOT $ENV{QTDIR})
         else()
-            find_program(CSTOOLKIT_QMAKE_EXECUTABLE qmake)
-            if(NOT CSTOOLKIT_QMAKE_EXECUTABLE STREQUAL "CSTOOLKIT_QMAKE_EXECUTABLE-NOTFOUND")
-                execute_process(COMMAND "${CSTOOLKIT_QMAKE_EXECUTABLE}" -query QT_INSTALL_PREFIX
+            find_program(CFMAKE_QMAKE_EXECUTABLE qmake)
+            if(NOT CFMAKE_QMAKE_EXECUTABLE STREQUAL "CFMAKE_QMAKE_EXECUTABLE-NOTFOUND")
+                execute_process(COMMAND "${CFMAKE_QMAKE_EXECUTABLE}" -query QT_INSTALL_PREFIX
                     RESULT_VARIABLE _return_code
                     OUTPUT_VARIABLE _output
                     ERROR_QUIET
@@ -38,30 +38,30 @@ if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
 set(QT_VERSION "Qt5-NOTFOUND")
 set(QT_VERSION_MM "${QT_VERSION}")
 
-set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-${QT_VERSION}")
+set(CFMAKE_BUILD_MKSPECS_QT "${CFMAKE_BUILD_MKSPECS}-${QT_VERSION}")
 
-function(cstoolkit_qt_wrap_cpp outfiles)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_cpp()")
+function(cfmake_qt_wrap_cpp outfiles)
+    message(SEND_ERROR "CFMake: Qt was not found, unable to use cfmake_qt_wrap_cpp()")
 endfunction()
 
-function(cstoolkit_qt_wrap_ui outfiles)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_wrap_ui()")
+function(cfmake_qt_wrap_ui outfiles)
+    message(SEND_ERROR "CFMake: Qt was not found, unable to use cfmake_qt_wrap_ui()")
 endfunction()
 
-function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_add_resources()")
+function(cfmake_qt_add_resources outcppfiles outrscfiles)
+    message(SEND_ERROR "CFMake: Qt was not found, unable to use cfmake_qt_add_resources()")
 endfunction()
 
-function(cstoolkit_qt_generate_repc outfiles infile outputtype)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_generate_repc()")
+function(cfmake_qt_generate_repc outfiles infile outputtype)
+    message(SEND_ERROR "CFMake: Qt was not found, unable to use cfmake_qt_generate_repc()")
 endfunction()
 
-function(cstoolkit_filter_moc)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_filter_moc()")
+function(cfmake_filter_moc)
+    message(SEND_ERROR "CFMake: Qt was not found, unable to use cfmake_filter_moc()")
 endfunction()
 
-function(cstoolkit_qt_generate_deploy_app_script)
-    message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_generate_deploy_app_script()")
+function(cfmake_qt_generate_deploy_app_script)
+    message(SEND_ERROR "CFMake: Qt was not found, unable to use cfmake_qt_generate_deploy_app_script()")
 endfunction()
 
 else() # Qt5 Found
@@ -70,14 +70,14 @@ set(QT_VERSION "${Qt5_VERSION}")
 set(QT_VERSION_MM "${Qt5_VERSION_MAJOR}.${Qt5_VERSION_MINOR}")
 
 if(Qt5_VERSION_MAJOR LESS_EQUAL 5 AND Qt5_VERSION_MINOR LESS_EQUAL 9)
-    set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION}")
+    set(CFMAKE_BUILD_MKSPECS_QT "${CFMAKE_BUILD_MKSPECS}-Qt${QT_VERSION}")
 else()
-    set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
+    set(CFMAKE_BUILD_MKSPECS_QT "${CFMAKE_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
 endif()
 
 set(Qt5_INSTALL_PREFIX "${_qt5Core_install_prefix}")
 
-message(STATUS "CSToolkit: Selecting Qt ${QT_VERSION} in: ${Qt5_INSTALL_PREFIX}")
+message(STATUS "CFMake: Selecting Qt ${QT_VERSION} in: ${Qt5_INSTALL_PREFIX}")
 
 set(CMAKE_VS_DEBUGGER_ENVIRONMENT "PATH=${Qt5_INSTALL_PREFIX}/bin;%PATH%")
 
@@ -103,7 +103,7 @@ endif()
 
 # qt5_wrap_cpp(outfiles inputfile ... )
 # partially copied from Qt5CoreMacros.cmake
-function(cstoolkit_qt_wrap_cpp outfiles)
+function(cfmake_qt_wrap_cpp outfiles)
     
     set(_moc_flags)
     
@@ -130,7 +130,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
     set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/$<LOWER_CASE:$<CONFIG>>/mocinclude.tmp)
 
     #filter generator expression moc_files
-    cstoolkit_genex_extract("${moc_files}" moc_files _null)
+    cfmake_genex_extract("${moc_files}" moc_files _null)
 
     if(moc_target)
         set(targetdefines "$<LIST:TRANSFORM,$<TARGET_PROPERTY:${moc_target},COMPILE_DEFINITIONS>,PREPEND,-D>")
@@ -151,7 +151,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
         get_filename_component(outfile ${it} NAME_WE)
         get_filename_component(infile ${it} ABSOLUTE)
         get_filename_component(extension ${it} LAST_EXT)
-        list(TRANSFORM CSTOOLKIT_CXX_SOURCE_FILE_EXTENSIONS PREPEND "." OUTPUT_VARIABLE CXX_SOURCES_EXTENSIONS)
+        list(TRANSFORM CFMAKE_CXX_SOURCE_FILE_EXTENSIONS PREPEND "." OUTPUT_VARIABLE CXX_SOURCES_EXTENSIONS)
         if(extension IN_LIST CXX_SOURCES_EXTENSIONS)
             set(outfile ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/$<LOWER_CASE:$<CONFIG>>/${outfile}.moc)
             set(COMMAND_DEPENDENCIES DEPENDS ${infile} ${moc_depends} ${_moc_include_file})
@@ -185,8 +185,8 @@ function(cstoolkit_qt_wrap_cpp outfiles)
             VERBATIM
             COMMAND_EXPAND_LISTS)
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTOMOC ON)
-        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
-        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
+        cfmake_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
+        cfmake_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outfiles} ${outfile})
     endforeach()
 
@@ -194,7 +194,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
     foreach(_moc ${${outfiles}})
         get_filename_component(_shortmoc "${_moc}" NAME)
         if("${_shortmoc}" IN_LIST _filtered_mocs)
-            cstoolkit_set_genex_source_file_properties("${_moc}" PROPERTIES HEADER_FILE_ONLY TRUE)
+            cfmake_set_genex_source_file_properties("${_moc}" PROPERTIES HEADER_FILE_ONLY TRUE)
         endif()
     endforeach()
 
@@ -202,13 +202,13 @@ function(cstoolkit_qt_wrap_cpp outfiles)
 endfunction()
 
 if(NOT Qt5Widgets_UIC_EXECUTABLE)
-function(cstoolkit_qt_wrap_ui outfiles)
-    message(SEND_ERROR "CSToolkit: Qt5::uic was not found, unable to use cstoolkit_qt_wrap_ui()")
+function(cfmake_qt_wrap_ui outfiles)
+    message(SEND_ERROR "CFMake: Qt5::uic was not found, unable to use cfmake_qt_wrap_ui()")
 endfunction()
 else()
 # qt5_wrap_ui(outfiles inputfile ... )
 # partially copied from Qt5WidgetsMacros.cmake
-function(cstoolkit_qt_wrap_ui outfiles)
+function(cfmake_qt_wrap_ui outfiles)
     set(options)
     set(oneValueArgs)
     set(multiValueArgs OPTIONS)
@@ -232,8 +232,8 @@ function(cstoolkit_qt_wrap_ui outfiles)
             VERBATIM
             COMMENT "UIC ${relpath}")
         set_source_files_properties(${infile} PROPERTIES SKIP_AUTOUIC ON)
-        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
-        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
+        cfmake_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
+        cfmake_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outfiles} ${outfile})
     endforeach()
 
@@ -243,7 +243,7 @@ endif()
 
 # qt5_add_resources(outfiles inputfile ... )
 # partially copied from Qt5CoreMacros.cmake
-function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
+function(cfmake_qt_add_resources outcppfiles outrscfiles)
     set(options)
     set(oneValueArgs)
     set(multiValueArgs OPTIONS)
@@ -284,7 +284,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                     math(EXPR RC_TOTAL_FILE_SIZE "${RC_TOTAL_FILE_SIZE}+${RC_FILE_SIZE}")
                 else()
                     list(APPEND _rc_depends "${RC_FILE}")
-                    message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_qt_add_resources: Warning in '${infile}': Cannot find file '${RC_FILE}'" ${COLOR_RESET})
+                    message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: cfmake_qt_add_resources: Warning in '${infile}': Cannot find file '${RC_FILE}'" ${COLOR_RESET})
                 endif()
             endforeach()
         endif()
@@ -293,7 +293,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
 
         set(outdir ${CMAKE_CURRENT_BINARY_DIR}/generated/rcc/$<LOWER_CASE:$<CONFIG>>)
 
-        if(RC_TOTAL_FILE_SIZE GREATER CSTOOLKIT_QT_BIG_RESOURCES_THRESHOLD) # big_resources
+        if(RC_TOTAL_FILE_SIZE GREATER CFMAKE_QT_BIG_RESOURCES_THRESHOLD) # big_resources
             # File name must be different between configuration because of CMake bug regarding $<TARGET_OBJECTS:${rcctarget}>
             # https://gitlab.kitware.com/cmake/cmake/-/issues/26601
             set(outfile ${outdir}/qrc_${outfilename}-$<LOWER_CASE:$<CONFIG>>${CMAKE_C_OUTPUT_EXTENSION})
@@ -338,8 +338,8 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
                             VERBATIM
                             COMMENT "RCC ${relpath}")
         endif()
-        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
-        cstoolkit_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
+        cfmake_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOMOC ON)
+        cfmake_set_genex_source_file_properties(${outfile} PROPERTIES SKIP_AUTOUIC ON)
         list(APPEND ${outcppfiles} ${outfile})
         list(APPEND ${outrscfiles} ${_rc_depends})
     endforeach()
@@ -349,7 +349,7 @@ endfunction()
 
 # qt5_generate_repc(<VAR> rep_file output_type)
 # partially copied from Qt5RemoteObjectsMacros.cmake
-function(cstoolkit_qt_generate_repc outfiles infile outputtype)
+function(cfmake_qt_generate_repc outfiles infile outputtype)
     # get include dirs and flags
     get_filename_component(abs_infile ${infile} ABSOLUTE)
     get_filename_component(infile_name "${infile}" NAME)
@@ -393,7 +393,7 @@ endfunction()
 
 # qt6_generate_deploy_app_script()
 # partially copied from Qt6CoreMacros.cmake
-function(cstoolkit_qt_generate_deploy_app_script)
+function(cfmake_qt_generate_deploy_app_script)
     # We use a TARGET keyword option instead of taking the target as the first
     # positional argument. This is to keep open the possibility of deploying
     # an app for which we don't have a target (e.g. an application from a
@@ -418,19 +418,19 @@ function(cstoolkit_qt_generate_deploy_app_script)
         "${no_value_options}" "${single_value_options}" "${multi_value_options}"
     )
     if(arg_UNPARSED_ARGUMENTS)
-        message(SEND_ERROR "CSToolkit: cstoolkit_qt_generate_deploy_app_script(): Unkown arguments \"${arg_UNPARSED_ARGUMENTS}\"")
+        message(SEND_ERROR "CFMake: cfmake_qt_generate_deploy_app_script(): Unkown arguments \"${arg_UNPARSED_ARGUMENTS}\"")
         return()
     endif()
     if(NOT arg_TARGET)
-        message(SEND_ERROR "CSToolkit: cstoolkit_qt_generate_deploy_app_script(): Missing mandatory parameter TARGET")
+        message(SEND_ERROR "CFMake: cfmake_qt_generate_deploy_app_script(): Missing mandatory parameter TARGET")
         return()
     endif()
     if(NOT arg_INSTALL_DIR)
-        message(SEND_ERROR "CSToolkit: cstoolkit_qt_generate_deploy_app_script(): Missing mandatory parameter INSTALL_DIR")
+        message(SEND_ERROR "CFMake: cfmake_qt_generate_deploy_app_script(): Missing mandatory parameter INSTALL_DIR")
         return()
     endif()
     if(NOT arg_OUTPUT_SCRIPT)
-        message(SEND_ERROR "CSToolkit: cstoolkit_qt_generate_deploy_app_script(): Missing mandatory parameter OUTPUT_SCRIPT")
+        message(SEND_ERROR "CFMake: cfmake_qt_generate_deploy_app_script(): Missing mandatory parameter OUTPUT_SCRIPT")
         return()
     endif()
 

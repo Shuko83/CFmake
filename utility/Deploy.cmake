@@ -1,26 +1,26 @@
-# cstoolkit_deploy_with_target(<target> FILES <file>... [DESTINATION <dir>] [INSTALL_ONLY])
-# cstoolkit_deploy_with_target(<target> DIRECTORY <dir>... [DESTINATION <dir>] [INSTALL_ONLY])
+# cfmake_deploy_with_target(<target> FILES <file>... [DESTINATION <dir>] [INSTALL_ONLY])
+# cfmake_deploy_with_target(<target> DIRECTORY <dir>... [DESTINATION <dir>] [INSTALL_ONLY])
 # The last component of each directory name is appended to the destination directory
 # but a trailing slash may be used to avoid this because it leaves the last component empty.
 # INSTALL_ONLY: Only generate install rules, skip the post-build copy step.
-function(cstoolkit_deploy_with_target target mode)
+function(cfmake_deploy_with_target target mode)
     set(DEPLOY_OPTIONS INSTALL_ONLY)
     set(DEPLOY_UNIQUE DESTINATION)
     set(DEPLOY_MULTIPLE ${mode})
     cmake_parse_arguments(PARSE_ARGV 1 DEPLOY "${DEPLOY_OPTIONS}" "${DEPLOY_UNIQUE}" "${DEPLOY_MULTIPLE}")
 
     if(NOT TARGET ${target})
-        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target(${target}): \"${target}\" is not a target")
+        message(SEND_ERROR "CFMake: cfmake_deploy_with_target(${target}): \"${target}\" is not a target")
         return()
     endif()
 
     if(NOT "${mode}" STREQUAL "FILES" AND NOT "${mode}" STREQUAL "DIRECTORY")
-        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target(${target}): Invalid sub-command \"${mode}\"")
+        message(SEND_ERROR "CFMake: cfmake_deploy_with_target(${target}): Invalid sub-command \"${mode}\"")
         return()
     endif()
 
     if(DEFINED DEPLOY_UNPARSED_ARGUMENTS)
-        message(SEND_ERROR "CSToolkit: cstoolkit_deploy_with_target(${target}): Unkown arguments \"${DEPLOY_UNPARSED_ARGUMENTS}\"")
+        message(SEND_ERROR "CFMake: cfmake_deploy_with_target(${target}): Unkown arguments \"${DEPLOY_UNPARSED_ARGUMENTS}\"")
         return()
     endif()
 
@@ -40,12 +40,12 @@ function(cstoolkit_deploy_with_target target mode)
     endif()
 
     set(DEPLOY_SOURCES_NORM "${DEPLOY_DIRECTORY}${DEPLOY_FILES}")
-    cstoolkit_file_realpath_list(DEPLOY_SOURCES_NORM)
+    cfmake_file_realpath_list(DEPLOY_SOURCES_NORM)
 
     if(DEPLOY_FILES)
-        if(CSTOOLKIT_BUILD_DEPLOY AND NOT DEPLOY_INSTALL_ONLY)
+        if(CFMAKE_BUILD_DEPLOY AND NOT DEPLOY_INSTALL_ONLY)
             add_custom_command(TARGET ${target} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e
+                COMMAND ${CFMAKE_COPY} -e
                     "${DEPLOY_SOURCES_NORM}"
                     "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
                     COMMAND_EXPAND_LISTS
@@ -53,9 +53,9 @@ function(cstoolkit_deploy_with_target target mode)
         endif()
         install(FILES "${DEPLOY_SOURCES_NORM}" DESTINATION ${INSTALL_BINDIR}/${DEPLOY_DESTINATION} ${INSTALL_COMPONENT} ${INSTALL_EXCLUDE_FROM_ALL})
     elseif(DEPLOY_DIRECTORY)
-        if(CSTOOLKIT_BUILD_DEPLOY AND NOT DEPLOY_INSTALL_ONLY)
+        if(CFMAKE_BUILD_DEPLOY AND NOT DEPLOY_INSTALL_ONLY)
             add_custom_command(TARGET ${target} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e -d
+                COMMAND ${CFMAKE_COPY} -e -d
                     "${DEPLOY_SOURCES_NORM}"
                     "$<TARGET_FILE_DIR:${target}>/${DEPLOY_DESTINATION}"
                     COMMAND_EXPAND_LISTS
@@ -65,7 +65,7 @@ function(cstoolkit_deploy_with_target target mode)
     endif()
 endfunction()
 
-function(cstoolkit_add_legacy_deploy FILE)
+function(cfmake_add_legacy_deploy FILE)
     message(DEBUG "-------------- Deploying file ${FILE} --------------")
     if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${FILE})
         message(DEBUG "Unable to open : ${FILE}")
@@ -99,7 +99,7 @@ function(cstoolkit_add_legacy_deploy FILE)
                     
                     if(${file} STREQUAL "*")
                         add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                        COMMAND ${CSTOOLKIT_COPY} -d 
+                        COMMAND ${CFMAKE_COPY} -d 
                         "${CMAKE_CURRENT_SOURCE_DIR}/${sourceDir}" ${DESTINATION} COMMAND_EXPAND_LISTS)
 
                     else()
@@ -115,7 +115,7 @@ function(cstoolkit_add_legacy_deploy FILE)
                         foreach(indexSplit RANGE 0 ${sizeFiles} 300)
                             list(SUBLIST filesFind ${indexSplit} 300 splittedList)
                             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                                COMMAND ${CSTOOLKIT_COPY} ${splittedList} ${DESTINATION} COMMAND_EXPAND_LISTS
+                                COMMAND ${CFMAKE_COPY} ${splittedList} ${DESTINATION} COMMAND_EXPAND_LISTS
                             )
                         endforeach()  
                     endif()

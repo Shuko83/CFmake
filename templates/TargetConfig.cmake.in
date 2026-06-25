@@ -4,22 +4,22 @@ endif()
 $<$<AND:$<NOT:$<STREQUAL:$<TARGET_PROPERTY:@TARGET_NAME@,TYPE>,EXECUTABLE>>,$<BOOL:$<LIST:LENGTH,@FIND_DEPENDENCY_GENEX@>>>:
 macro(@TARGET_INSTALL_CONFIG_NAME@_find_dependency dep)
     string(SHA256 @TARGET_INSTALL_CONFIG_NAME@_fd_call_hash "${dep};${ARGN}")
-    if(_CSTOOLKIT_${dep}_${@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash}_FOUND)
+    if(_CFMAKE_${dep}_${@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash}_FOUND)
         unset(@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash)
     else()
-        list(APPEND _CSTOOLKIT_${dep}_HASH_STACK ${@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash})
+        list(APPEND _CFMAKE_${dep}_HASH_STACK ${@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash})
 
         get_property(@TARGET_INSTALL_CONFIG_NAME@_fd_alreadyTransitive GLOBAL PROPERTY
-            _CSTOOLKIT_${dep}_TRANSITIVE_DEPENDENCY
+            _CFMAKE_${dep}_TRANSITIVE_DEPENDENCY
         )
 
         find_package(${dep} ${ARGN} QUIET)
 
-        list(POP_BACK _CSTOOLKIT_${dep}_HASH_STACK @TARGET_INSTALL_CONFIG_NAME@_fd_call_hash)
-        set("_CSTOOLKIT_${dep}_${@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash}_FOUND" "${${dep}_FOUND}")
+        list(POP_BACK _CFMAKE_${dep}_HASH_STACK @TARGET_INSTALL_CONFIG_NAME@_fd_call_hash)
+        set("_CFMAKE_${dep}_${@TARGET_INSTALL_CONFIG_NAME@_fd_call_hash}_FOUND" "${${dep}_FOUND}")
 
         if(NOT DEFINED @TARGET_INSTALL_CONFIG_NAME@_fd_alreadyTransitive OR @TARGET_INSTALL_CONFIG_NAME@_fd_alreadyTransitive)
-            set_property(GLOBAL PROPERTY _CSTOOLKIT_${dep}_TRANSITIVE_DEPENDENCY TRUE)
+            set_property(GLOBAL PROPERTY _CFMAKE_${dep}_TRANSITIVE_DEPENDENCY TRUE)
         endif()
 
         unset(@TARGET_INSTALL_CONFIG_NAME@_fd_alreadyTransitive)
@@ -40,7 +40,7 @@ macro(@TARGET_INSTALL_CONFIG_NAME@_find_dependency dep)
         endif()
     endif()
 endmacro()
-if(COMMAND cstoolkit_fetch_dependency)
+if(COMMAND cfmake_fetch_dependency)
 $<LIST:JOIN,@FETCH_DEPENDENCY_GENEX@,>endif()
 $<LIST:JOIN,@FIND_DEPENDENCY_GENEX@,
 >

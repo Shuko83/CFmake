@@ -1,40 +1,40 @@
 include(CMakePackageConfigHelpers)
 
-function(cstoolkit_post_configure)
-    cstoolkit_end_timer(CSTOOLKIT_CONFIGURE_TIMER CSTOOLKIT_CONFIGURE_ELAPSED)
-    message(STATUS "CSToolkit: Pre-Configure done (${CSTOOLKIT_CONFIGURE_ELAPSED}s)")
+function(cfmake_post_configure)
+    cfmake_end_timer(CFMAKE_CONFIGURE_TIMER CFMAKE_CONFIGURE_ELAPSED)
+    message(STATUS "CFMake: Pre-Configure done (${CFMAKE_CONFIGURE_ELAPSED}s)")
 
-    cstoolkit_start_timer(CSTOOLKIT_POST_CONFIGURE_TIMER)
+    cfmake_start_timer(CFMAKE_POST_CONFIGURE_TIMER)
 
-    get_property(CSTOOLKIT_INSTALLED_TARGETS GLOBAL PROPERTY CSTOOLKIT_INSTALLED_TARGETS)
+    get_property(CFMAKE_INSTALLED_TARGETS GLOBAL PROPERTY CFMAKE_INSTALLED_TARGETS)
 
     # Fichier Config
-    set(CSTOOLKIT_INSTALL_TARGETS_MISSING ${CSTOOLKIT_INSTALL_TARGETS})
-    list(REMOVE_ITEM CSTOOLKIT_INSTALL_TARGETS_MISSING ${CSTOOLKIT_INSTALLED_TARGETS})
+    set(CFMAKE_INSTALL_TARGETS_MISSING ${CFMAKE_INSTALL_TARGETS})
+    list(REMOVE_ITEM CFMAKE_INSTALL_TARGETS_MISSING ${CFMAKE_INSTALLED_TARGETS})
 
-    if(CSTOOLKIT_INSTALL_TARGETS_MISSING)
-        list(JOIN CSTOOLKIT_INSTALL_TARGETS_MISSING ", " CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING)
-        message(SEND_ERROR "CSToolkit: Could not find specified targets in CSTOOLKIT_INSTALL_TARGETS: ${CSTOOLKIT_INSTALL_TARGETS_MISSING_STRING}")
-    elseif(NOT CSTOOLKIT_INSTALLED_TARGETS)
-        message(STATUS "CSToolkit: Install mode: No Install")
+    if(CFMAKE_INSTALL_TARGETS_MISSING)
+        list(JOIN CFMAKE_INSTALL_TARGETS_MISSING ", " CFMAKE_INSTALL_TARGETS_MISSING_STRING)
+        message(SEND_ERROR "CFMake: Could not find specified targets in CFMAKE_INSTALL_TARGETS: ${CFMAKE_INSTALL_TARGETS_MISSING_STRING}")
+    elseif(NOT CFMAKE_INSTALLED_TARGETS)
+        message(STATUS "CFMake: Install mode: No Install")
     else()
         # Detection de la methode d'install
-        list(LENGTH CSTOOLKIT_INSTALLED_TARGETS CSTOOLKIT_INSTALLED_TARGETS_NB)
+        list(LENGTH CFMAKE_INSTALLED_TARGETS CFMAKE_INSTALLED_TARGETS_NB)
 
-        if(CSTOOLKIT_INSTALLED_TARGETS_NB EQUAL 1) # mode single component
-            message(STATUS "CSToolkit: Install mode: Single Component")
-            set(CSTOOLKIT_CMAKEDIR "cmake")
+        if(CFMAKE_INSTALLED_TARGETS_NB EQUAL 1) # mode single component
+            message(STATUS "CFMake: Install mode: Single Component")
+            set(CFMAKE_CMAKEDIR "cmake")
 
-            get_target_property(TARGET_INSTALL_DESTINATION_DEFAULT ${CSTOOLKIT_INSTALLED_TARGETS} INSTALL_DESTINATION_DEFAULT) # READONLY
-            get_target_property(TARGET_INSTALL_DESTINATION ${CSTOOLKIT_INSTALLED_TARGETS} INSTALL_DESTINATION)
+            get_target_property(TARGET_INSTALL_DESTINATION_DEFAULT ${CFMAKE_INSTALLED_TARGETS} INSTALL_DESTINATION_DEFAULT) # READONLY
+            get_target_property(TARGET_INSTALL_DESTINATION ${CFMAKE_INSTALLED_TARGETS} INSTALL_DESTINATION)
             
             if(TARGET_INSTALL_DESTINATION STREQUAL TARGET_INSTALL_DESTINATION_DEFAULT)
-                set_target_properties(${CSTOOLKIT_INSTALLED_TARGETS} PROPERTIES INSTALL_DESTINATION ".")
+                set_target_properties(${CFMAKE_INSTALLED_TARGETS} PROPERTIES INSTALL_DESTINATION ".")
             endif()
 
-            set_target_properties(${CSTOOLKIT_INSTALLED_TARGETS} PROPERTIES INSTALL_CONFIG_NAME "${PROJECT_NAME}")
+            set_target_properties(${CFMAKE_INSTALLED_TARGETS} PROPERTIES INSTALL_CONFIG_NAME "${PROJECT_NAME}")
 
-            set_target_properties(${CSTOOLKIT_INSTALLED_TARGETS} PROPERTIES INSTALL_CMAKEDIR "${CSTOOLKIT_CMAKEDIR}")
+            set_target_properties(${CFMAKE_INSTALLED_TARGETS} PROPERTIES INSTALL_CMAKEDIR "${CFMAKE_CMAKEDIR}")
 
             # We use the config of the target directly
             # no need to generate a project level config file
@@ -46,12 +46,12 @@ function(cstoolkit_post_configure)
 
             install(FILES
                 ${CMAKE_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
-                DESTINATION "${CSTOOLKIT_CMAKEDIR}"
+                DESTINATION "${CFMAKE_CMAKEDIR}"
             )
         else() # mode multi component
-            message(STATUS "CSToolkit: Install mode: Multi Component")
+            message(STATUS "CFMake: Install mode: Multi Component")
 
-            set(FIND_REQUIRED_COMPONENTS "${CSTOOLKIT_INSTALLED_TARGETS}")
+            set(FIND_REQUIRED_COMPONENTS "${CFMAKE_INSTALLED_TARGETS}")
             list(TRANSFORM FIND_REQUIRED_COMPONENTS PREPEND "    set(${PROJECT_NAME}_FIND_REQUIRED_")
             list(TRANSFORM FIND_REQUIRED_COMPONENTS APPEND " 1)")
             list(JOIN FIND_REQUIRED_COMPONENTS "\n" FIND_REQUIRED_COMPONENTS)
@@ -83,53 +83,53 @@ function(cstoolkit_post_configure)
         DESTINATION "."
     )
 
-    get_property(CSTOOLKIT_INSTALLED_TARGETS_ALL GLOBAL PROPERTY CSTOOLKIT_INSTALLED_TARGETS_ALL)
-    foreach(target ${CSTOOLKIT_INSTALLED_TARGETS_ALL})
-        cstoolkit_install_export(${target})
+    get_property(CFMAKE_INSTALLED_TARGETS_ALL GLOBAL PROPERTY CFMAKE_INSTALLED_TARGETS_ALL)
+    foreach(target ${CFMAKE_INSTALLED_TARGETS_ALL})
+        cfmake_install_export(${target})
     endforeach()
 
-    get_property(CSTOOLKIT_ALL_TARGETS GLOBAL PROPERTY CSTOOLKIT_ALL_TARGETS)
-    cstoolkit_get_all_targets(ALL_TARGETS)
-    list(APPEND ALL_TARGETS ${CSTOOLKIT_ALL_TARGETS})
+    get_property(CFMAKE_ALL_TARGETS GLOBAL PROPERTY CFMAKE_ALL_TARGETS)
+    cfmake_get_all_targets(ALL_TARGETS)
+    list(APPEND ALL_TARGETS ${CFMAKE_ALL_TARGETS})
     list(REMOVE_DUPLICATES ALL_TARGETS)
 
     # Verification des dependances
-    if(CSTOOLKIT_AUTO_FIND_PACKAGE OR CSTOOLKIT_CHECK_DEPENDENCIES)
+    if(CFMAKE_AUTO_FIND_PACKAGE OR CFMAKE_CHECK_DEPENDENCIES)
         foreach(target ${ALL_TARGETS})
-            cstoolkit_check_dependencies(${target})
+            cfmake_check_dependencies(${target})
         endforeach()
     endif()
 
     # Deployement des dependances runtime et plugins
     foreach(target ${ALL_TARGETS})
-        cstoolkit_compute_runtime_dependencies(${target})
+        cfmake_compute_runtime_dependencies(${target})
     endforeach()
 
-    cstoolkit_internal_install_prefix_injection()
+    cfmake_internal_install_prefix_injection()
 
-    cstoolkit_internal_print_genex_post_configure()
+    cfmake_internal_print_genex_post_configure()
 
-    cstoolkit_end_timer(CSTOOLKIT_POST_CONFIGURE_TIMER CSTOOLKIT_POST_CONFIGURE_ELAPSED)
-    message(STATUS "CSToolkit: Post-Configure done (${CSTOOLKIT_POST_CONFIGURE_ELAPSED}s)")
+    cfmake_end_timer(CFMAKE_POST_CONFIGURE_TIMER CFMAKE_POST_CONFIGURE_ELAPSED)
+    message(STATUS "CFMake: Post-Configure done (${CFMAKE_POST_CONFIGURE_ELAPSED}s)")
 endfunction()
 
-function(cstoolkit_get_all_targets var)
+function(cfmake_get_all_targets var)
     set(targets)
-    cstoolkit_get_all_targets_recursive(targets ${CMAKE_CURRENT_SOURCE_DIR})
+    cfmake_get_all_targets_recursive(targets ${CMAKE_CURRENT_SOURCE_DIR})
     set(${var} ${targets} PARENT_SCOPE)
 endfunction()
 
-macro(cstoolkit_get_all_targets_recursive targets dir)
+macro(cfmake_get_all_targets_recursive targets dir)
     get_property(subdirectories DIRECTORY ${dir} PROPERTY SUBDIRECTORIES)
     foreach(subdir ${subdirectories})
-        cstoolkit_get_all_targets_recursive(${targets} ${subdir})
+        cfmake_get_all_targets_recursive(${targets} ${subdir})
     endforeach()
  
     get_property(current_targets DIRECTORY ${dir} PROPERTY BUILDSYSTEM_TARGETS)
     list(APPEND ${targets} ${current_targets})
 endmacro()
 
-function(cstoolkit_install_export target)
+function(cfmake_install_export target)
     get_target_property(TARGET_INSTALL_EXCLUDE_FROM_ALL ${target} INSTALL_EXCLUDE_FROM_ALL) # READONLY
     get_target_property(TARGET_INSTALL_CMAKEDIR ${target} INSTALL_CMAKEDIR)
     get_target_property(TARGET_INSTALL_CONFIG_NAME ${target} INSTALL_CONFIG_NAME)
@@ -137,8 +137,8 @@ function(cstoolkit_install_export target)
     get_target_property(TARGET_INSTALL_COMPONENT ${target} INSTALL_COMPONENT) # READONLY
     get_target_property(TARGET_NAMESPACE ${target} NAMESPACE) # READONLY
 
-    cstoolkit_target_genex_eval(${target} TARGET_INSTALL_CMAKEDIR)
-    cstoolkit_target_genex_eval(${target} TARGET_INSTALL_CONFIG_NAME)
+    cfmake_target_genex_eval(${target} TARGET_INSTALL_CMAKEDIR)
+    cfmake_target_genex_eval(${target} TARGET_INSTALL_CONFIG_NAME)
 
     foreach(CMAKEDIR ${TARGET_INSTALL_CMAKEDIR})
         foreach(CONFIG_NAME ${TARGET_INSTALL_CONFIG_NAME})
@@ -153,7 +153,7 @@ function(cstoolkit_install_export target)
     endforeach()
 endfunction()
 
-function(cstoolkit_check_dependencies target)
+function(cfmake_check_dependencies target)
     set(DEPENDENCIES)
 
     get_target_property(LINK_LIBRARIES ${target} LINK_LIBRARIES)
@@ -170,7 +170,7 @@ function(cstoolkit_check_dependencies target)
         list(APPEND DEPENDENCIES ${PLUGINS})
     endif()
 
-    cstoolkit_genex_extract("${DEPENDENCIES}" DEPENDENCIES GENEX_DEPENDENCIES_LIST)
+    cfmake_genex_extract("${DEPENDENCIES}" DEPENDENCIES GENEX_DEPENDENCIES_LIST)
     
     list(REMOVE_DUPLICATES DEPENDENCIES)
 
@@ -184,7 +184,7 @@ function(cstoolkit_check_dependencies target)
         endif()
 
         string(REGEX MATCH "(.+)::(.+)" HAS_NAMESPACE ${dep})
-        if(HAS_NAMESPACE AND CSTOOLKIT_AUTO_FIND_PACKAGE)
+        if(HAS_NAMESPACE AND CFMAKE_AUTO_FIND_PACKAGE)
             set(PACKAGE_NAME ${CMAKE_MATCH_1})
             set(COMPONENT_NAME ${CMAKE_MATCH_2})
             message(DEBUG "Namespace: ${PACKAGE_NAME}")
@@ -196,7 +196,7 @@ function(cstoolkit_check_dependencies target)
                 # with the COMPONENTS option, we just do find_package(Boost)
                 find_package(Boost REQUIRED QUIET GLOBAL)
                 if(NOT ${PACKAGE_NAME}_FOUND)
-                    cstoolkit_check_dependencies_error("${target}: find_package failed for dependency ${dep}")
+                    cfmake_check_dependencies_error("${target}: find_package failed for dependency ${dep}")
                 endif()
                 continue()
             endif()
@@ -205,16 +205,16 @@ function(cstoolkit_check_dependencies target)
 
             if(${PACKAGE_NAME}_FOUND)
                 if(NOT TARGET ${dep})
-                    cstoolkit_check_dependencies_error("${target}: find_package success for dependency ${dep} but target is still missing")
+                    cfmake_check_dependencies_error("${target}: find_package success for dependency ${dep} but target is still missing")
                 endif()
                 continue()
             elseif(${PACKAGE_NAME}_NOT_FOUND_MESSAGE)
-                cstoolkit_check_dependencies_error("${target}: find_package failed for dependency ${dep}\n"
+                cfmake_check_dependencies_error("${target}: find_package failed for dependency ${dep}\n"
                                 "${${PACKAGE_NAME}_NOT_FOUND_MESSAGE}")
                 continue()
             endif()
 
-            cstoolkit_check_dependencies_error("${target}: find_package failed for dependency ${dep}")
+            cfmake_check_dependencies_error("${target}: find_package failed for dependency ${dep}")
 
         else() # NO NAMESPACE
             #if("${dep}" IN_LIST CMAKE_C_STANDARD_LIBRARIES)
@@ -224,16 +224,16 @@ function(cstoolkit_check_dependencies target)
             #    continue()
             #endif()
 
-            if(CSTOOLKIT_AUTO_FIND_PACKAGE)
+            if(CFMAKE_AUTO_FIND_PACKAGE)
                 find_package(${dep} QUIET GLOBAL)
 
                 if(${dep}_FOUND)
                     if(NOT TARGET ${dep})
-                        cstoolkit_check_dependencies_error("${target}: find_package success for dependency ${dep} but target is still missing")
+                        cfmake_check_dependencies_error("${target}: find_package success for dependency ${dep} but target is still missing")
                     endif()
                     continue()
                 elseif(${dep}_NOT_FOUND_MESSAGE)
-                    cstoolkit_check_dependencies_error("${target}: find_package failed for dependency ${dep}\n"
+                    cfmake_check_dependencies_error("${target}: find_package failed for dependency ${dep}\n"
                                     "${${dep}_NOT_FOUND_MESSAGE}")
                     continue()
                 endif()
@@ -244,19 +244,19 @@ function(cstoolkit_check_dependencies target)
                     find_package(${PACKAGE_NAME} QUIET GLOBAL)
                     if(${PACKAGE_NAME}_FOUND)
                         if(NOT TARGET ${dep})
-                            cstoolkit_check_dependencies_error("${target}: find_package success for dependency ${dep} but target is still missing")
+                            cfmake_check_dependencies_error("${target}: find_package success for dependency ${dep} but target is still missing")
                         endif()
                         continue()
                     elseif(${PACKAGE_NAME}_NOT_FOUND_MESSAGE)
-                        cstoolkit_check_dependencies_error("${target}: find_package failed for dependency ${dep}\n"
+                        cfmake_check_dependencies_error("${target}: find_package failed for dependency ${dep}\n"
                                         "${${PACKAGE_NAME}_NOT_FOUND_MESSAGE}")
                         continue()
                     endif()
                 endif()
             endif()
 
-            if(CSTOOLKIT_CHECK_DEPENDENCIES)
-                find_library(${dep}_LIB ${dep} NO_CACHE PATHS "${CSTOOLKIT_WINDOWS_KITS_LIB_DIR}")
+            if(CFMAKE_CHECK_DEPENDENCIES)
+                find_library(${dep}_LIB ${dep} NO_CACHE PATHS "${CFMAKE_WINDOWS_KITS_LIB_DIR}")
                 if(${dep}_LIB)
                     continue()
                 endif()
@@ -265,27 +265,27 @@ function(cstoolkit_check_dependencies target)
                     continue()
                 endif()
                 
-                cstoolkit_check_dependencies_warning("${target}: Unknown dependency ${dep}")
+                cfmake_check_dependencies_warning("${target}: Unknown dependency ${dep}")
             endif()
         endif()
     endforeach()
 endfunction()
 
-macro(cstoolkit_check_dependencies_error)
-    if(CSTOOLKIT_CHECK_DEPENDENCIES)
-        message(NOTICE ${COLOR_RED_BOLD} "CSToolkit: " ${ARGN} ${COLOR_RESET})
+macro(cfmake_check_dependencies_error)
+    if(CFMAKE_CHECK_DEPENDENCIES)
+        message(NOTICE ${COLOR_RED_BOLD} "CFMake: " ${ARGN} ${COLOR_RESET})
     endif()
 endmacro()
 
-macro(cstoolkit_check_dependencies_warning)
-    if(CSTOOLKIT_CHECK_DEPENDENCIES)
-        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: " ${ARGN} ${COLOR_RESET})
+macro(cfmake_check_dependencies_warning)
+    if(CFMAKE_CHECK_DEPENDENCIES)
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: " ${ARGN} ${COLOR_RESET})
     endif()
 endmacro()
 
-function(cstoolkit_compute_runtime_dependencies target)
+function(cfmake_compute_runtime_dependencies target)
     set(TARGET_GENEX_RUNTIME_DEPENDENCIES "")
-    cstoolkit_get_runtime_dependencies(${target} TARGET_RUNTIME_DEPENDENCIES TARGET_GENEX_RUNTIME_DEPENDENCIES)
+    cfmake_get_runtime_dependencies(${target} TARGET_RUNTIME_DEPENDENCIES TARGET_GENEX_RUNTIME_DEPENDENCIES)
     set_target_properties(${target} PROPERTIES RUNTIME_DEPENDENCIES "${TARGET_RUNTIME_DEPENDENCIES};${TARGET_GENEX_RUNTIME_DEPENDENCIES}")
 
     get_target_property(PLUGINS_DESTINATION_SIZE ${target} PLUGINS_DESTINATION_SIZE)
@@ -309,10 +309,10 @@ function(cstoolkit_compute_runtime_dependencies target)
 
         foreach(_plugin ${PLUGINS_LIST})
             if(NOT TARGET ${_plugin})
-                message(NOTICE "CSToolkit: add_target(${target}): Plugin \"${_plugin}\" is not a defined target and will be ignored.")
+                message(NOTICE "CFMake: add_target(${target}): Plugin \"${_plugin}\" is not a defined target and will be ignored.")
                 continue()
             endif()
-            cstoolkit_get_runtime_dependencies(${_plugin} PLUGINS_LIST_DEPENDENCIES PLUGINS_LIST_GENEX_DEPENDENCIES)
+            cfmake_get_runtime_dependencies(${_plugin} PLUGINS_LIST_DEPENDENCIES PLUGINS_LIST_GENEX_DEPENDENCIES)
         endforeach()
 
         list(APPEND PLUGINS_DEPENDENCIES ${PLUGINS_LIST_DEPENDENCIES} "${PLUGINS_LIST_GENEX_DEPENDENCIES}")
@@ -327,7 +327,7 @@ function(cstoolkit_compute_runtime_dependencies target)
     set_target_properties(${target} PROPERTIES PLUGINS_DEPENDENCIES "${PLUGINS_DEPENDENCIES}")
 endfunction()
 
-function(cstoolkit_get_runtime_dependencies target runtime_dependencies genex_runtime_dependencies)
+function(cfmake_get_runtime_dependencies target runtime_dependencies genex_runtime_dependencies)
     get_target_property(IMPORTED ${target} IMPORTED)
     set(_target_dependencies)
     set(_target_genex_dependencies)
@@ -368,7 +368,7 @@ function(cstoolkit_get_runtime_dependencies target runtime_dependencies genex_ru
         endif()
     endif()
     
-    cstoolkit_genex_extract("${_target_dependencies}" _target_dependencies _target_genex_dependencies_list)
+    cfmake_genex_extract("${_target_dependencies}" _target_dependencies _target_genex_dependencies_list)
     foreach(elem ${_target_genex_dependencies_list})
         list(APPEND _target_genex_dependencies "${${elem}}")
     endforeach()
@@ -382,7 +382,7 @@ function(cstoolkit_get_runtime_dependencies target runtime_dependencies genex_ru
         if(TARGET "${_dep}")
             if(NOT _dep IN_LIST ${runtime_dependencies})
                 list(APPEND ${runtime_dependencies} "${_dep}")
-                cstoolkit_get_runtime_dependencies(${_dep} ${runtime_dependencies} ${genex_runtime_dependencies})
+                cfmake_get_runtime_dependencies(${_dep} ${runtime_dependencies} ${genex_runtime_dependencies})
             endif()
         endif()
     endforeach()
@@ -390,7 +390,7 @@ function(cstoolkit_get_runtime_dependencies target runtime_dependencies genex_ru
     set(${genex_runtime_dependencies} "${${genex_runtime_dependencies}}" PARENT_SCOPE)
 endfunction()
 
-function(cstoolkit_list_intersection lista listb outputlist)
+function(cfmake_list_intersection lista listb outputlist)
     set(aminusb ${${lista}})
     list(REMOVE_ITEM aminusb ${${listb}})
 
@@ -405,25 +405,25 @@ function(cstoolkit_list_intersection lista listb outputlist)
     set(${outputlist} "${${outputlist}}" PARENT_SCOPE)
 endfunction()
 
-macro(cstoolkit_internal_install_prefix_injection)
+macro(cfmake_internal_install_prefix_injection)
     set(CMAKE_INSTALL_PREFIX_GENEX "${CMAKE_INSTALL_PREFIX}")
-    cstoolkit_genex_eval(CMAKE_INSTALL_PREFIX_GENEX)
+    cfmake_genex_eval(CMAKE_INSTALL_PREFIX_GENEX)
     if(NOT CMAKE_INSTALL_PREFIX_GENEX STREQUAL CMAKE_INSTALL_PREFIX)
         list(LENGTH CMAKE_INSTALL_PREFIX_GENEX CMAKE_INSTALL_PREFIX_GENEX_LENGTH)
         if(CMAKE_INSTALL_PREFIX_GENEX_LENGTH GREATER 1)
-            cstoolkit_internal_get_priority_install_config_index(index)
+            cfmake_internal_get_priority_install_config_index(index)
             list(GET CMAKE_INSTALL_PREFIX_GENEX ${index} install_prefix)
             list(GET CMAKE_CONFIGURATION_TYPES ${index} config)
 
             set(CMAKE_INSTALL_PREFIX "${install_prefix}\")") # Injection
 
             string(APPEND CMAKE_INSTALL_PREFIX "
-  # CSToolkit injected install prefix per configuration
+  # CFMake injected install prefix per configuration
   if(NOT DEFINED CMAKE_INSTALL_CONFIG_NAME AND BUILD_TYPE)
     string(REGEX REPLACE \"^[^A-Za-z0-9_]+\" \"\"
-           CSTOOLKIT_INSTALL_CONFIG_NAME \"\${BUILD_TYPE}\")
+           CFMAKE_INSTALL_CONFIG_NAME \"\${BUILD_TYPE}\")
   else()
-    set(CSTOOLKIT_INSTALL_CONFIG_NAME \"\${CMAKE_INSTALL_CONFIG_NAME}\")
+    set(CFMAKE_INSTALL_CONFIG_NAME \"\${CMAKE_INSTALL_CONFIG_NAME}\")
   endif()")
 
             math(EXPR last_index "${CMAKE_INSTALL_PREFIX_GENEX_LENGTH} - 1")
@@ -431,9 +431,9 @@ macro(cstoolkit_internal_install_prefix_injection)
                 list(GET CMAKE_INSTALL_PREFIX_GENEX ${index} install_prefix)
                 list(GET CMAKE_CONFIGURATION_TYPES ${index} config)
     
-                cstoolkit_internal_install_config_regex(config)
+                cfmake_internal_install_config_regex(config)
                 string(APPEND CMAKE_INSTALL_PREFIX "
-  if(CSTOOLKIT_INSTALL_CONFIG_NAME MATCHES \"${config}\")
+  if(CFMAKE_INSTALL_CONFIG_NAME MATCHES \"${config}\")
     set(CMAKE_INSTALL_PREFIX \"${install_prefix}\")
   endif()")
             endforeach()
@@ -446,7 +446,7 @@ macro(cstoolkit_internal_install_prefix_injection)
     endif()
 endmacro()
 
-function(cstoolkit_internal_install_config_regex install_config)
+function(cfmake_internal_install_config_regex install_config)
     set(_install_config_regex "^(")
 
     string(TOLOWER ${${install_config}} _lower_config)
@@ -465,7 +465,7 @@ function(cstoolkit_internal_install_config_regex install_config)
     set(${install_config} "${_install_config_regex}" PARENT_SCOPE)
 endfunction()
 
-function(cstoolkit_internal_get_priority_install_config_index output)
+function(cfmake_internal_get_priority_install_config_index output)
     string(TOLOWER "${CMAKE_CONFIGURATION_TYPES}" _lower_configs)
     
     # Check priority order: Release > MinSizeRel > RelWithDebInfo > Debug

@@ -2,7 +2,7 @@ if(TARGET libVLC::vlc)
     return()
 endif()
 
-set(VLC_ROOT_DIR "${CSTOOLKIT_EXTERNALS}/libVLC/")
+set(VLC_ROOT_DIR "${CFMAKE_EXTERNALS}/libVLC/")
 set(VLC_LIBRARIES "libVLC::vlc" "libVLC::vlccore")
 
 add_library(libVLC::vlccore MODULE IMPORTED)

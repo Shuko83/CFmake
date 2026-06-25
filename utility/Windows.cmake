@@ -1,4 +1,4 @@
-function(cstoolkit_get_windowssdk_library_dir _var)
+function(cfmake_get_windowssdk_library_dir _var)
     if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION)
         string(REGEX MATCH "^([0-9]+\\.[0-9]+)" _winsdk_ver ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION})
     else() # CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION is only defined for Win10 and up
@@ -32,16 +32,16 @@ function(cstoolkit_get_windowssdk_library_dir _var)
     set(${_var} ${_winsdk_lib_dir} PARENT_SCOPE)
 endfunction()
 
-macro(cstoolkit_windows_sdk_raise_warning)
-message(WARNING "CSToolkit: Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio ${CSTOOLKIT_COMPILER_VERSION} (MSVC v${MSVC_TOOLSET_VERSION} toolset)
+macro(cfmake_windows_sdk_raise_warning)
+message(WARNING "CFMake: Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio ${CFMAKE_COMPILER_VERSION} (MSVC v${MSVC_TOOLSET_VERSION} toolset)
 The latest officially compatible version is ${OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION}
-Install Windows SDK and set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM before call to project or set CSTOOLKIT_WINDOWS_SDK_WARNING=OFF to remove this warning")
+Install Windows SDK and set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM before call to project or set CFMAKE_WINDOWS_SDK_WARNING=OFF to remove this warning")
 endmacro()
 
 if(MSVC)
-    cstoolkit_get_windowssdk_library_dir(CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
-    if(NOT CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
-        unset(CSTOOLKIT_WINDOWS_KITS_LIB_DIR)
+    cfmake_get_windowssdk_library_dir(CFMAKE_WINDOWS_KITS_LIB_DIR)
+    if(NOT CFMAKE_WINDOWS_KITS_LIB_DIR)
+        unset(CFMAKE_WINDOWS_KITS_LIB_DIR)
     endif()
 
     if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION)
@@ -55,29 +55,29 @@ if(MSVC)
             set(OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION "${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}")
         endif()
     endif()
-    if(CSTOOLKIT_WINDOWS_SDK_WARNING)
+    if(CFMAKE_WINDOWS_SDK_WARNING)
         if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION)
             if(CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION VERSION_GREATER OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION)
-message(WARNING "CSToolkit: Detected Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio ${CSTOOLKIT_COMPILER_VERSION} (MSVC toolset v${MSVC_TOOLSET_VERSION})
+message(WARNING "CFMake: Detected Windows SDK version ${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION} is not officially compatible with Visual Studio ${CFMAKE_COMPILER_VERSION} (MSVC toolset v${MSVC_TOOLSET_VERSION})
 The latest officially compatible version is: ${OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION}
   To resolve this warning:
     - Install compatible Windows SDK, and
     - Set CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM to ${OFFICIAL_VS_WINDOWS_TARGET_PLATFORM_VERSION} before the 'project()' call
       or
-    - Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
+    - Set CFMAKE_WINDOWS_SDK_WARNING to OFF to suppress this warning
 ")
             endif()
         else()
-            message(WARNING "CSToolkit: No Windows SDK found
-Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
+            message(WARNING "CFMake: No Windows SDK found
+Set CFMAKE_WINDOWS_SDK_WARNING to OFF to suppress this warning
 ")
         endif()
     endif()
 
     # Find VCRedist Installer
     if(MSVC)
-        unset(CSTOOLKIT_LOCAL_VCREDIST)
-        unset(CSTOOLKIT_LOCAL_VCREDIST_VERSION)
+        unset(CFMAKE_LOCAL_VCREDIST)
+        unset(CFMAKE_LOCAL_VCREDIST_VERSION)
         if(CMAKE_GENERATOR_INSTANCE)
             if(IS_DIRECTORY "${CMAKE_GENERATOR_INSTANCE}/VC")
                 set(VCINSTALLDIR "${CMAKE_GENERATOR_INSTANCE}/VC")
@@ -86,15 +86,15 @@ Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
                 foreach(_redist_subdir ${_VCToolsRedistDir_subdirs})
                     if(IS_DIRECTORY "${VCINSTALLDIR}/Redist/MSVC/${_redist_subdir}/debug_nonredist")
                         set(VCToolsRedistDir "${VCINSTALLDIR}/Redist/MSVC/${_redist_subdir}")
-                        set(CSTOOLKIT_LOCAL_VCREDIST_VERSION "${_redist_subdir}")
+                        set(CFMAKE_LOCAL_VCREDIST_VERSION "${_redist_subdir}")
                     endif()
                 endforeach()
                 unset(_VCToolsRedistDir_subdirs)
                 if(VCToolsRedistDir)
-                    if(EXISTS "${VCToolsRedistDir}/vc_redist.${CSTOOLKIT_HOST_ARCH}.exe")
-                        set(CSTOOLKIT_LOCAL_VCREDIST "${VCToolsRedistDir}/vc_redist.${CSTOOLKIT_HOST_ARCH}.exe")
+                    if(EXISTS "${VCToolsRedistDir}/vc_redist.${CFMAKE_HOST_ARCH}.exe")
+                        set(CFMAKE_LOCAL_VCREDIST "${VCToolsRedistDir}/vc_redist.${CFMAKE_HOST_ARCH}.exe")
                     else()
-                        unset(CSTOOLKIT_LOCAL_VCREDIST_VERSION)
+                        unset(CFMAKE_LOCAL_VCREDIST_VERSION)
                     endif()
                 endif()
             endif()
@@ -104,46 +104,46 @@ Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
             string(REGEX REPLACE "/$" "" VCINSTALLDIR "${VCINSTALLDIR}")
             if(IS_DIRECTORY "${VCINSTALLDIR}/redist")
                 set(VCToolsRedistDir "${VCINSTALLDIR}/redist")
-                if(EXISTS "${VCToolsRedistDir}/1033/vcredist_${CSTOOLKIT_HOST_ARCH}.exe")
-                    set(CSTOOLKIT_LOCAL_VCREDIST "${VCToolsRedistDir}/1033/vcredist_${CSTOOLKIT_HOST_ARCH}.exe")
-                    set(CSTOOLKIT_LOCAL_VCREDIST_VERSION "14.0")
+                if(EXISTS "${VCToolsRedistDir}/1033/vcredist_${CFMAKE_HOST_ARCH}.exe")
+                    set(CFMAKE_LOCAL_VCREDIST "${VCToolsRedistDir}/1033/vcredist_${CFMAKE_HOST_ARCH}.exe")
+                    set(CFMAKE_LOCAL_VCREDIST_VERSION "14.0")
                 endif()
             endif()
         endif()
 
-        if(NOT CSTOOLKIT_ARTIFACTORY_URL)
-            set(CSTOOLKIT_VCREDIST "${CSTOOLKIT_LOCAL_VCREDIST}")
-            set(CSTOOLKIT_VCREDIST_VERSION "${CSTOOLKIT_LOCAL_VCREDIST_VERSION}")
+        if(NOT CFMAKE_ARTIFACTORY_URL)
+            set(CFMAKE_VCREDIST "${CFMAKE_LOCAL_VCREDIST}")
+            set(CFMAKE_VCREDIST_VERSION "${CFMAKE_LOCAL_VCREDIST_VERSION}")
         else()
-            set(CSTOOLKIT_VCREDIST "")
-            set(CSTOOLKIT_VCREDIST_VERSION "")
+            set(CFMAKE_VCREDIST "")
+            set(CFMAKE_VCREDIST_VERSION "")
             
             # vcredist_watch: lazily download latest VCRedist from Artifactory when the variable is first read
-            function(_cstoolkit_vcredist_watch variable access value current_list_file stack)
+            function(_cfmake_vcredist_watch variable access value current_list_file stack)
                 if(access STREQUAL "MODIFIED_ACCESS" OR access STREQUAL "UNKNOWN_MODIFIED_ACCESS" OR access STREQUAL "REMOVED_ACCESS")
-                    if(NOT _cstoolkit_vcredist_watch_guard)
+                    if(NOT _cfmake_vcredist_watch_guard)
                         message(WARNING "Attempt to change readonly variable '${variable}'!")
                     endif()
                     return()
                 endif()
 
-                set(_cstoolkit_vcredist_watch_guard 1)
+                set(_cfmake_vcredist_watch_guard 1)
 
                 # Check if already downloaded via global properties
-                get_property(_set GLOBAL PROPERTY CSTOOLKIT_VCREDIST SET)
+                get_property(_set GLOBAL PROPERTY CFMAKE_VCREDIST SET)
                 if(_set)
-                    get_property(_cached_exe GLOBAL PROPERTY CSTOOLKIT_VCREDIST)
+                    get_property(_cached_exe GLOBAL PROPERTY CFMAKE_VCREDIST)
                     if(_cached_exe)
-                        get_property(_cached_version GLOBAL PROPERTY CSTOOLKIT_VCREDIST_VERSION)
-                        set(CSTOOLKIT_VCREDIST "${_cached_exe}" PARENT_SCOPE)
-                        set(CSTOOLKIT_VCREDIST_VERSION "${_cached_version}" PARENT_SCOPE)
+                        get_property(_cached_version GLOBAL PROPERTY CFMAKE_VCREDIST_VERSION)
+                        set(CFMAKE_VCREDIST "${_cached_exe}" PARENT_SCOPE)
+                        set(CFMAKE_VCREDIST_VERSION "${_cached_version}" PARENT_SCOPE)
                     endif()
-                    set(_cstoolkit_vcredist_watch_guard 0)
+                    set(_cfmake_vcredist_watch_guard 0)
                     return()
                 endif()
 
-                cstoolkit_download(
-                    "${CSTOOLKIT_ARTIFACTORY_URL}/thirdParty/VCRedist/v14/latest/vcredist_latest_${CSTOOLKIT_HOST_ARCH}.7z"
+                cfmake_download(
+                    "${CFMAKE_ARTIFACTORY_URL}/thirdParty/VCRedist/v14/latest/vcredist_latest_${CFMAKE_HOST_ARCH}.7z"
                     _vcredist_dir
                 )
 
@@ -154,15 +154,15 @@ Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
                     file(STRINGS "${_vcredist_dir}/version.txt" _vcredist_version LIMIT_COUNT 1)
                     string(STRIP "${_vcredist_version}" _vcredist_version)
 
-                    set(CSTOOLKIT_VCREDIST "${_vcredist_exe}" PARENT_SCOPE)
-                    set(CSTOOLKIT_VCREDIST_VERSION "${_vcredist_version}" PARENT_SCOPE)
+                    set(CFMAKE_VCREDIST "${_vcredist_exe}" PARENT_SCOPE)
+                    set(CFMAKE_VCREDIST_VERSION "${_vcredist_version}" PARENT_SCOPE)
 
-                    set_property(GLOBAL PROPERTY CSTOOLKIT_VCREDIST "${_vcredist_exe}")
-                    set_property(GLOBAL PROPERTY CSTOOLKIT_VCREDIST_VERSION "${_vcredist_version}")
+                    set_property(GLOBAL PROPERTY CFMAKE_VCREDIST "${_vcredist_exe}")
+                    set_property(GLOBAL PROPERTY CFMAKE_VCREDIST_VERSION "${_vcredist_version}")
                 else()
                     # Mark as attempted so we don't retry or re-warn
-                    set_property(GLOBAL PROPERTY CSTOOLKIT_VCREDIST "")
-                    set_property(GLOBAL PROPERTY CSTOOLKIT_VCREDIST_VERSION "")
+                    set_property(GLOBAL PROPERTY CFMAKE_VCREDIST "")
+                    set_property(GLOBAL PROPERTY CFMAKE_VCREDIST_VERSION "")
 
                     set(_reason "")
                     if(NOT _vcredist_files)
@@ -171,14 +171,14 @@ Set CSTOOLKIT_WINDOWS_SDK_WARNING to OFF to suppress this warning
                     if(NOT EXISTS "${_vcredist_dir}/version.txt")
                         string(APPEND _reason "\n  - Missing version.txt in ${_vcredist_dir}")
                     endif()
-                    message(WARNING "CSToolkit: Downloaded latest VCRedist archive appears corrupted:${_reason}")
+                    message(WARNING "CFMake: Downloaded latest VCRedist archive appears corrupted:${_reason}")
                 endif()
 
-                set(_cstoolkit_vcredist_watch_guard 0)
+                set(_cfmake_vcredist_watch_guard 0)
             endfunction()
 
-            variable_watch(CSTOOLKIT_VCREDIST _cstoolkit_vcredist_watch)
-            variable_watch(CSTOOLKIT_VCREDIST_VERSION _cstoolkit_vcredist_watch)
+            variable_watch(CFMAKE_VCREDIST _cfmake_vcredist_watch)
+            variable_watch(CFMAKE_VCREDIST_VERSION _cfmake_vcredist_watch)
         endif()
     endif()
 endif()

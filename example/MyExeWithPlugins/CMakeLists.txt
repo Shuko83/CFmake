@@ -1,6 +1,6 @@
 # Simple executable with some dependencies and Plugins
 # Plugins are dynamic libraries needed for execution but not for compilation
-cstoolkit_add_target(MyExeWithPlugins EXECUTABLE RECURSIVE
+cfmake_add_target(MyExeWithPlugins EXECUTABLE RECURSIVE
 	PRIVATE_LINK_LIBRARIES MyStaticLib
 	PLUGINS MyPlugin DESTINATION "a"
 	PLUGINS MyQtLib DESTINATION "b"
@@ -9,7 +9,7 @@ cstoolkit_add_target(MyExeWithPlugins EXECUTABLE RECURSIVE
 	PLUGINS Boost::log DESTINATION "z"
 )
 
-cstoolkit_streamwork_generate_devpaths(MyExeWithPlugins OUTPUT $<CONFIG>DevPaths.xml)
+cfmake_streamwork_generate_devpaths(MyExeWithPlugins OUTPUT $<CONFIG>DevPaths.xml)
 
 file(TOUCH "${CMAKE_CURRENT_BINARY_DIR}/deploy.stamp.depend")
 

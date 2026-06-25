@@ -37,7 +37,7 @@ set(LIBS_LIST_STRING "")
 set(DLLS_LIST_STRING "")
 
 set(Qwt_RUNTIME_DLLS
-    "${Qwt_ROOT}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/qwt.dll"
+    "${Qwt_ROOT}/win-msvc2015-${CFMAKE_HOST_ARCH}/qwt.dll"
 )
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if

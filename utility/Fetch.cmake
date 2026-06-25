@@ -1,23 +1,23 @@
-macro(cstoolkit_fetch_artifactory fetch_artifactory_name)
+macro(cfmake_fetch_artifactory fetch_artifactory_name)
     set(fetch_artifactory_OPTIONS QT LEGACY)
     set(fetch_artifactory_UNIQUE URL VERSION FOLDER ALIAS EXPORT_CONTROL MKSPECS)
     set(fetch_artifactory_MULTIPLE)
     cmake_parse_arguments(_fetch_artifactory "${fetch_artifactory_OPTIONS}" "${fetch_artifactory_UNIQUE}" "${fetch_artifactory_MULTIPLE}" ${ARGN})
 
     if(_fetch_artifactory_URL)
-        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): URL parameter deprecated, use cstoolkit_fetch_package(<package_name> URL <url> <options>)" ${COLOR_RESET})
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: cfmake_fetch_artifactory(${fetch_artifactory_name}): URL parameter deprecated, use cfmake_fetch_package(<package_name> URL <url> <options>)" ${COLOR_RESET})
     endif()
     if(_fetch_artifactory_ALIAS)
-        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): ALIAS parameter deprecated, normalize your package" ${COLOR_RESET})
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: cfmake_fetch_artifactory(${fetch_artifactory_name}): ALIAS parameter deprecated, normalize your package" ${COLOR_RESET})
     endif()
 
     if(NOT _fetch_artifactory_URL AND NOT _fetch_artifactory_VERSION)
-        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): Missing mandatory parameter VERSION")
+        message(SEND_ERROR "CFMake: cfmake_fetch_artifactory(${fetch_artifactory_name}): Missing mandatory parameter VERSION")
     elseif(_fetch_artifactory_QT AND (NOT QT_VERSION))
-        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_artifactory(${fetch_artifactory_name}): Qt was not found, unable to use option QT")
+        message(SEND_ERROR "CFMake: cfmake_fetch_artifactory(${fetch_artifactory_name}): Qt was not found, unable to use option QT")
     else()
         if(NOT _fetch_artifactory_URL)
-            _cstoolkit_internal_compute_url(_fetch_artifactory_URL ${CSTOOLKIT_ARTIFACTORY_URL} ${fetch_artifactory_name} ${ARGN})
+            _cfmake_internal_compute_url(_fetch_artifactory_URL ${CFMAKE_ARTIFACTORY_URL} ${fetch_artifactory_name} ${ARGN})
         endif()
 
         if(_fetch_artifactory_ALIAS)
@@ -26,7 +26,7 @@ macro(cstoolkit_fetch_artifactory fetch_artifactory_name)
             set(_fetch_artifactory_package_name ${fetch_artifactory_name})
         endif()
 
-        cstoolkit_fetch_package(${_fetch_artifactory_package_name} ${_fetch_artifactory_URL} ${ARGN})
+        cfmake_fetch_package(${_fetch_artifactory_package_name} ${_fetch_artifactory_URL} ${ARGN})
     endif()
     unset(fetch_artifactory_OPTIONS)
     unset(fetch_artifactory_UNIQUE)
@@ -42,32 +42,32 @@ macro(cstoolkit_fetch_artifactory fetch_artifactory_name)
     unset(_fetch_artifactory_package_name)
 endmacro()
 
-macro(cstoolkit_fetch_nexus fetch_nexus_name)
+macro(cfmake_fetch_nexus fetch_nexus_name)
     set(fetch_nexus_OPTIONS QT LEGACY ITAR)
     set(fetch_nexus_UNIQUE URL VERSION FOLDER ALIAS EXPORT_CONTROL MKSPECS)
     set(fetch_nexus_MULTIPLE)
     cmake_parse_arguments(_fetch_nexus "${fetch_nexus_OPTIONS}" "${fetch_nexus_UNIQUE}" "${fetch_nexus_MULTIPLE}" ${ARGN})
 
     if(_fetch_nexus_URL)
-        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_nexus(${fetch_nexus_name}): URL parameter deprecated, use cstoolkit_fetch_package(<package_name> URL <url> <options>)" ${COLOR_RESET})
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: cfmake_fetch_nexus(${fetch_nexus_name}): URL parameter deprecated, use cfmake_fetch_package(<package_name> URL <url> <options>)" ${COLOR_RESET})
     endif()
     if(_fetch_nexus_ALIAS)
-        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_fetch_nexus(${fetch_nexus_name}): ALIAS parameter deprecated, normalize your package" ${COLOR_RESET})
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: cfmake_fetch_nexus(${fetch_nexus_name}): ALIAS parameter deprecated, normalize your package" ${COLOR_RESET})
     endif()
 
     if(NOT _fetch_nexus_URL AND NOT _fetch_nexus_VERSION)
-        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_nexus(${fetch_nexus_name}): Missing mandatory parameter VERSION")
+        message(SEND_ERROR "CFMake: cfmake_fetch_nexus(${fetch_nexus_name}): Missing mandatory parameter VERSION")
     elseif(_fetch_nexus_QT AND (NOT QT_VERSION))
-        message(SEND_ERROR "CSToolkit: cstoolkit_fetch_nexus(${fetch_nexus_name}): Qt was not found, unable to use option QT")
+        message(SEND_ERROR "CFMake: cfmake_fetch_nexus(${fetch_nexus_name}): Qt was not found, unable to use option QT")
     else()
         if(_fetch_nexus_ITAR)
-            set(_fetch_nexus_root_url "${CSTOOLKIT_NEXUS_ITAR_URL}")
+            set(_fetch_nexus_root_url "${CFMAKE_NEXUS_ITAR_URL}")
         else()
-            set(_fetch_nexus_root_url "${CSTOOLKIT_NEXUS_DR_URL}")
+            set(_fetch_nexus_root_url "${CFMAKE_NEXUS_DR_URL}")
         endif()
 
         if(NOT _fetch_nexus_URL)
-            _cstoolkit_internal_compute_url(_fetch_nexus_URL ${_fetch_nexus_root_url} ${fetch_nexus_name} ${ARGN})
+            _cfmake_internal_compute_url(_fetch_nexus_URL ${_fetch_nexus_root_url} ${fetch_nexus_name} ${ARGN})
         endif()
 
         if(_fetch_nexus_ALIAS)
@@ -76,7 +76,7 @@ macro(cstoolkit_fetch_nexus fetch_nexus_name)
             set(_fetch_nexus_package_name ${fetch_nexus_name})
         endif()
 
-        cstoolkit_fetch_package(${_fetch_nexus_package_name} ${_fetch_nexus_URL} ${ARGN})
+        cfmake_fetch_package(${_fetch_nexus_package_name} ${_fetch_nexus_URL} ${ARGN})
     endif()
     unset(fetch_nexus_OPTIONS)
     unset(fetch_nexus_UNIQUE)
@@ -92,7 +92,7 @@ macro(cstoolkit_fetch_nexus fetch_nexus_name)
     unset(_fetch_nexus_package_name)
 endmacro()
 
-macro(cstoolkit_fetch_package fetch_package_name fetch_package_url)
+macro(cfmake_fetch_package fetch_package_name fetch_package_url)
     set(fetch_package_OPTIONS LEGACY MODULE CONFIG NO_MODULE GIT_SRC GIT_BUILD CODX)
     set(fetch_package_UNIQUE URL)
     set(fetch_package_MULTIPLE)
@@ -134,20 +134,20 @@ macro(cstoolkit_fetch_package fetch_package_name fetch_package_url)
         list(APPEND find_package_params CONFIG)
     endif()
 
-    if(CSTOOLKIT_FETCH_${fetch_package_name}_URL)
-        if(NOT CSTOOLKIT_FETCH_${fetch_package_name}_URL STREQUAL "${_fetch_params_URL}")
-            message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_package_name}: Different URL from ${CMAKE_CURRENT_LIST_FILE} ignored. Using definition ${CSTOOLKIT_FETCH_${fetch_package_name}_LIST_FILE}" ${COLOR_RESET})
+    if(CFMAKE_FETCH_${fetch_package_name}_URL)
+        if(NOT CFMAKE_FETCH_${fetch_package_name}_URL STREQUAL "${_fetch_params_URL}")
+            message(NOTICE ${COLOR_GREY} "CFMake: Package ${fetch_package_name}: Different URL from ${CMAKE_CURRENT_LIST_FILE} ignored. Using definition ${CFMAKE_FETCH_${fetch_package_name}_LIST_FILE}" ${COLOR_RESET})
         endif()
     else()
         # CMake property names in genex must respect [A-Za-z_][A-Za-z0-9_]*
         string(REGEX REPLACE "[^A-Za-z0-9_]" "_" fetch_package_name_identifier "${fetch_package_name}")
-        set_target_properties(CSTOOLKIT PROPERTIES FETCH_${fetch_package_name_identifier}_URL "${_fetch_params_URL}")
-        set_target_properties(CSTOOLKIT PROPERTIES FETCH_${fetch_package_name_identifier}_PARAMS "${fetch_dependencies_params}")
-        set(CSTOOLKIT_FETCH_${fetch_package_name}_URL "${_fetch_params_URL}")
-        set(CSTOOLKIT_FETCH_${fetch_package_name}_LIST_FILE "${CMAKE_CURRENT_LIST_FILE}")
-        cstoolkit_download_and_extract_package("${fetch_package_name}" "${_fetch_params_URL}" ${download_and_extract_params})
+        set_target_properties(CFMAKE PROPERTIES FETCH_${fetch_package_name_identifier}_URL "${_fetch_params_URL}")
+        set_target_properties(CFMAKE PROPERTIES FETCH_${fetch_package_name_identifier}_PARAMS "${fetch_dependencies_params}")
+        set(CFMAKE_FETCH_${fetch_package_name}_URL "${_fetch_params_URL}")
+        set(CFMAKE_FETCH_${fetch_package_name}_LIST_FILE "${CMAKE_CURRENT_LIST_FILE}")
+        cfmake_download_and_extract_package("${fetch_package_name}" "${_fetch_params_URL}" ${download_and_extract_params})
         if(NOT _fetch_params_GIT_BUILD)
-            _cstoolkit_internal_find_package("${fetch_package_name}" "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}" ${find_package_params})
+            _cfmake_internal_find_package("${fetch_package_name}" "${CFMAKE_EXTERNALS}/${fetch_package_name}" ${find_package_params})
         endif()
     endif()
 
@@ -167,16 +167,16 @@ macro(cstoolkit_fetch_package fetch_package_name fetch_package_url)
     unset(find_package_params)
 endmacro()
 
-function(cstoolkit_download_and_extract_package fetch_package_name fetch_package_url)
+function(cfmake_download_and_extract_package fetch_package_name fetch_package_url)
     set(FETCH_OPTIONS LEGACY CODX GIT_SRC GIT_BUILD)
     set(FETCH_UNIQUE)
     set(FETCH_MULTIPLE)
     cmake_parse_arguments(PARSE_ARGV 2 fetch_package "${FETCH_OPTIONS}" "${FETCH_UNIQUE}" "${FETCH_MULTIPLE}")
 
-    set(_fetch_package_download_dir "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/${fetch_package_name}")
-    set(_fetch_package_extract_dir "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}")
-    set(_fetch_package_src_dir "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}-src")
-    set(_fetch_package_binary_dir "${CSTOOLKIT_EXTERNALS}/${fetch_package_name}-build")
+    set(_fetch_package_download_dir "${CFMAKE_DOWNLOAD_BASE_DIR}/${fetch_package_name}")
+    set(_fetch_package_extract_dir "${CFMAKE_EXTERNALS}/${fetch_package_name}")
+    set(_fetch_package_src_dir "${CFMAKE_EXTERNALS}/${fetch_package_name}-src")
+    set(_fetch_package_binary_dir "${CFMAKE_EXTERNALS}/${fetch_package_name}-build")
     cmake_path(GET fetch_package_url FILENAME _fetch_package_filename)
 
     # Reconfigure if download.stamp modified
@@ -193,7 +193,7 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
         endif()
         if(_fetch_package_stamp_count GREATER 1)
             list(GET _fetch_package_stamp_lines 1 _fetch_package_previous_sha)
-        elseif(CSTOOLKIT_FETCH_CHECK_SHA AND EXISTS "${_fetch_package_download_dir}/${_fetch_package_filename}")
+        elseif(CFMAKE_FETCH_CHECK_SHA AND EXISTS "${_fetch_package_download_dir}/${_fetch_package_filename}")
             file(SHA256 "${_fetch_package_download_dir}/${_fetch_package_filename}" _fetch_package_previous_sha)
             file(WRITE "${_fetch_package_download_dir}/download.stamp" "${fetch_package_url}\n${_fetch_package_previous_sha}")
         endif()
@@ -201,10 +201,10 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
 
     # Determine if we need to extract git info
     set(_missing_gitinfo 0)
-    if((fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC OR CSTOOLKIT_FETCH_GIT_BUILD) AND NOT EXISTS "${_fetch_package_src_dir}")
+    if((fetch_package_GIT_SRC OR CFMAKE_FETCH_GIT_SRC OR CFMAKE_FETCH_GIT_BUILD) AND NOT EXISTS "${_fetch_package_src_dir}")
         if(EXISTS "${_fetch_package_extract_dir}/.gitinfo")
-            _cstoolkit_internal_read_gitinfo("${_fetch_package_extract_dir}/.gitinfo")
-            if(NOT _cstoolkit_internal_gitinfo_remote_origin)
+            _cfmake_internal_read_gitinfo("${_fetch_package_extract_dir}/.gitinfo")
+            if(NOT _cfmake_internal_gitinfo_remote_origin)
                 set(_missing_gitinfo 1)
             endif()
         else()
@@ -221,7 +221,7 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
     endif()
 
     # In GIT_BUILD we cannot rely on EXISTS "${_fetch_package_extract_dir}"
-    if(fetch_package_GIT_BUILD OR CSTOOLKIT_FETCH_GIT_BUILD)
+    if(fetch_package_GIT_BUILD OR CFMAKE_FETCH_GIT_BUILD)
         # Check src dir, if missing need git info in extract dir, if missing need archive, if missing need download
         if(NOT EXISTS "${_fetch_package_src_dir}" AND NOT EXISTS "${_fetch_package_extract_dir}" AND NOT EXISTS "${_fetch_package_download_dir}/${_fetch_package_filename}")
             set(_fetch_package_rebuild 1)
@@ -232,30 +232,30 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
     endif()
 
     # Check SHA if enabled (and not already marked for rebuild)
-    if(NOT _fetch_package_rebuild AND CSTOOLKIT_FETCH_CHECK_SHA)
-        _cstoolkit_internal_fetch_sha("${fetch_package_url}")
-        if(NOT _cstoolkit_internal_sha_value)
-            message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_package_name}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
-        elseif(NOT _cstoolkit_internal_sha_value STREQUAL _fetch_package_previous_sha)
+    if(NOT _fetch_package_rebuild AND CFMAKE_FETCH_CHECK_SHA)
+        _cfmake_internal_fetch_sha("${fetch_package_url}")
+        if(NOT _cfmake_internal_sha_value)
+            message(NOTICE ${COLOR_GREY} "CFMake: Package ${fetch_package_name}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
+        elseif(NOT _cfmake_internal_sha_value STREQUAL _fetch_package_previous_sha)
             set(_fetch_package_rebuild 1)
         endif()
     endif()
 
     # Download if needed
     if(_fetch_package_rebuild)
-        cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
-        message(STATUS "CSToolkit: Download package ${fetch_package_name}")
+        cfmake_start_timer(CFMAKE_FETCH_TIMER)
+        message(STATUS "CFMake: Download package ${fetch_package_name}")
 
-        _cstoolkit_internal_download("${fetch_package_url}" "${_fetch_package_download_dir}")
+        _cfmake_internal_download("${fetch_package_url}" "${_fetch_package_download_dir}")
 
-        file(WRITE "${_fetch_package_download_dir}/download.stamp" "${fetch_package_url}\n${_cstoolkit_internal_sha_value}")
+        file(WRITE "${_fetch_package_download_dir}/download.stamp" "${fetch_package_url}\n${_cfmake_internal_sha_value}")
 
-        cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
-        message(STATUS "CSToolkit: Download package ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+        cfmake_end_timer(CFMAKE_FETCH_TIMER CFMAKE_FETCH_ELAPSED)
+        message(STATUS "CFMake: Download package ${fetch_package_name} done (${CFMAKE_FETCH_ELAPSED}s)")
     endif()
 
     # In GIT_BUILD we cannot rely on EXISTS "${_fetch_package_extract_dir}"
-    if(fetch_package_GIT_BUILD OR CSTOOLKIT_FETCH_GIT_BUILD)
+    if(fetch_package_GIT_BUILD OR CFMAKE_FETCH_GIT_BUILD)
         # Check src dir, if missing need git info in extract dir
         if(NOT EXISTS "${_fetch_package_src_dir}" AND NOT EXISTS "${_fetch_package_extract_dir}")
             set(_fetch_package_rebuild 1)
@@ -267,87 +267,87 @@ function(cstoolkit_download_and_extract_package fetch_package_name fetch_package
 
     # Extract if needed
     if(_fetch_package_rebuild)
-        cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
-        message(STATUS "CSToolkit: Extract package ${fetch_package_name}")
+        cfmake_start_timer(CFMAKE_FETCH_TIMER)
+        message(STATUS "CFMake: Extract package ${fetch_package_name}")
 
         set(_internal_extract_params)
         if(fetch_package_GIT_BUILD)
             set(_internal_extract_params "GITINFO_ONLY")
-        elseif(CSTOOLKIT_FETCH_GIT_BUILD)
+        elseif(CFMAKE_FETCH_GIT_BUILD)
             set(_internal_extract_params "GITINFO_BEST_EFFORT")
         endif()
 
-        _cstoolkit_internal_extract("${_fetch_package_download_dir}/${_fetch_package_filename}" "${_fetch_package_extract_dir}" ${_internal_extract_params})
+        _cfmake_internal_extract("${_fetch_package_download_dir}/${_fetch_package_filename}" "${_fetch_package_extract_dir}" ${_internal_extract_params})
 
         # Overwrite Config file for LEGACY and CODX packages
         # No Config generation with GIT_BUILD option
-        if(fetch_package_LEGACY AND NOT fetch_package_GIT_BUILD AND NOT (CSTOOLKIT_FETCH_GIT_BUILD AND _cstoolkit_internal_gitinfo_remote_origin))
+        if(fetch_package_LEGACY AND NOT fetch_package_GIT_BUILD AND NOT (CFMAKE_FETCH_GIT_BUILD AND _cfmake_internal_gitinfo_remote_origin))
             if(EXISTS "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake")
-                message(STATUS "CSToolkit: Overwriting ${fetch_package_name}Config.cmake with generated legacy support Config file.")
+                message(STATUS "CFMake: Overwriting ${fetch_package_name}Config.cmake with generated legacy support Config file.")
             endif()
-            configure_file(${CSTOOLKIT_ROOT_DIR}/templates/FetchLegacyConfig.${CSTOOLKIT_HOST_PLATFORM}.in "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake" @ONLY)
-        elseif(fetch_package_CODX AND NOT fetch_package_GIT_BUILD AND NOT (CSTOOLKIT_FETCH_GIT_BUILD AND _cstoolkit_internal_gitinfo_remote_origin))
+            configure_file(${CFMAKE_ROOT_DIR}/templates/FetchLegacyConfig.${CFMAKE_HOST_PLATFORM}.in "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake" @ONLY)
+        elseif(fetch_package_CODX AND NOT fetch_package_GIT_BUILD AND NOT (CFMAKE_FETCH_GIT_BUILD AND _cfmake_internal_gitinfo_remote_origin))
             if(EXISTS "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake")
-                message(STATUS "CSToolkit: Overwriting ${fetch_package_name}Config.cmake with generated CODX support Config file.")
+                message(STATUS "CFMake: Overwriting ${fetch_package_name}Config.cmake with generated CODX support Config file.")
             endif()
-            configure_file(${CSTOOLKIT_ROOT_DIR}/templates/FetchCODXConfig.${CSTOOLKIT_HOST_PLATFORM}.in "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake" @ONLY)
+            configure_file(${CFMAKE_ROOT_DIR}/templates/FetchCODXConfig.${CFMAKE_HOST_PLATFORM}.in "${_fetch_package_extract_dir}/${fetch_package_name}Config.cmake" @ONLY)
         endif()
 
-        cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
-        message(STATUS "CSToolkit: Extract package ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+        cfmake_end_timer(CFMAKE_FETCH_TIMER CFMAKE_FETCH_ELAPSED)
+        message(STATUS "CFMake: Extract package ${fetch_package_name} done (${CFMAKE_FETCH_ELAPSED}s)")
     endif()
 
     # Clone git repository for sources if requested
     # Shallow clone if only GIT_SRC specified
-    if((fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC OR CSTOOLKIT_FETCH_GIT_BUILD) AND (_fetch_package_rebuild OR NOT EXISTS "${_fetch_package_src_dir}"))
+    if((fetch_package_GIT_SRC OR CFMAKE_FETCH_GIT_SRC OR CFMAKE_FETCH_GIT_BUILD) AND (_fetch_package_rebuild OR NOT EXISTS "${_fetch_package_src_dir}"))
         # Missing gitinfo
-        if(NOT _cstoolkit_internal_gitinfo_remote_origin)
-            # CSTOOLKIT_FETCH_GIT_SRC and CSTOOLKIT_FETCH_GIT_BUILD work as best effort
+        if(NOT _cfmake_internal_gitinfo_remote_origin)
+            # CFMAKE_FETCH_GIT_SRC and CFMAKE_FETCH_GIT_BUILD work as best effort
             if(fetch_package_GIT_SRC)
-                message(FATAL_ERROR "CSToolkit: Missing git informations for ${fetch_package_name}")
+                message(FATAL_ERROR "CFMake: Missing git informations for ${fetch_package_name}")
             else() # If previous package had gitinfo but this one doesn't we delete old src dir
-                cstoolkit_git_safe_delete("${_fetch_package_src_dir}")
+                cfmake_git_safe_delete("${_fetch_package_src_dir}")
             endif()
         else()
-            cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
-            message(STATUS "CSToolkit: Clone git repository ${fetch_package_name}")
+            cfmake_start_timer(CFMAKE_FETCH_TIMER)
+            message(STATUS "CFMake: Clone git repository ${fetch_package_name}")
 
             set(_internal_git_clone_params "SHALLOW")
-            if(fetch_package_GIT_BUILD OR CSTOOLKIT_FETCH_GIT_BUILD)
+            if(fetch_package_GIT_BUILD OR CFMAKE_FETCH_GIT_BUILD)
                 set(_internal_git_clone_params)
             endif()
 
-            _cstoolkit_internal_git_clone(${fetch_package_name} "${_cstoolkit_internal_gitinfo_remote_origin}" "${_cstoolkit_internal_gitinfo_last_commit}" "${_fetch_package_src_dir}" ${_internal_git_clone_params})
+            _cfmake_internal_git_clone(${fetch_package_name} "${_cfmake_internal_gitinfo_remote_origin}" "${_cfmake_internal_gitinfo_last_commit}" "${_fetch_package_src_dir}" ${_internal_git_clone_params})
 
-            cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
-            message(STATUS "CSToolkit: Clone git repository ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+            cfmake_end_timer(CFMAKE_FETCH_TIMER CFMAKE_FETCH_ELAPSED)
+            message(STATUS "CFMake: Clone git repository ${fetch_package_name} done (${CFMAKE_FETCH_ELAPSED}s)")
         endif()
     endif()
 
     # Clean up source directory if no more requested
-    if(NOT (fetch_package_GIT_SRC OR CSTOOLKIT_FETCH_GIT_SRC OR CSTOOLKIT_FETCH_GIT_BUILD))
-        cstoolkit_git_safe_delete("${_fetch_package_src_dir}")
+    if(NOT (fetch_package_GIT_SRC OR CFMAKE_FETCH_GIT_SRC OR CFMAKE_FETCH_GIT_BUILD))
+        cfmake_git_safe_delete("${_fetch_package_src_dir}")
     endif()
 
     # Full clone + add_subdirectory
-    if(fetch_package_GIT_BUILD OR (CSTOOLKIT_FETCH_GIT_BUILD AND EXISTS "${_fetch_package_src_dir}"))
-        _cstoolkit_internal_git_unshallow(${fetch_package_name} "${_fetch_package_src_dir}")
+    if(fetch_package_GIT_BUILD OR (CFMAKE_FETCH_GIT_BUILD AND EXISTS "${_fetch_package_src_dir}"))
+        _cfmake_internal_git_unshallow(${fetch_package_name} "${_fetch_package_src_dir}")
 
         file(REMOVE_RECURSE "${_fetch_package_extract_dir}")
 
-        cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
-        message(STATUS "CSToolkit: Configure ${fetch_package_name}")
+        cfmake_start_timer(CFMAKE_FETCH_TIMER)
+        message(STATUS "CFMake: Configure ${fetch_package_name}")
 
         add_subdirectory("${_fetch_package_src_dir}" "${_fetch_package_binary_dir}")
 
-        cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
-        message(STATUS "CSToolkit: Configure ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+        cfmake_end_timer(CFMAKE_FETCH_TIMER CFMAKE_FETCH_ELAPSED)
+        message(STATUS "CFMake: Configure ${fetch_package_name} done (${CFMAKE_FETCH_ELAPSED}s)")
     else()
         file(REMOVE_RECURSE "${_fetch_package_binary_dir}")
     endif()
 endfunction()
 
-function(_cstoolkit_internal_compute_url url_var url_root url_package_name)
+function(_cfmake_internal_compute_url url_var url_root url_package_name)
     set(_compute_url_OPTIONS QT LEGACY)
     set(_compute_url_UNIQUE VERSION FOLDER EXPORT_CONTROL MKSPECS)
     set(_compute_url_MULTIPLE)
@@ -358,11 +358,11 @@ function(_cstoolkit_internal_compute_url url_var url_root url_package_name)
     endif()
 
     if(NOT _compute_url_MKSPECS)
-        # Use CSTOOLKIT_EXTERNAL_MKSPECS if set, otherwise use CSTOOLKIT_BUILD_MKSPECS
-        if(CSTOOLKIT_EXTERNAL_MKSPECS)
-            set(_compute_url_MKSPECS "${CSTOOLKIT_EXTERNAL_MKSPECS}")
+        # Use CFMAKE_EXTERNAL_MKSPECS if set, otherwise use CFMAKE_BUILD_MKSPECS
+        if(CFMAKE_EXTERNAL_MKSPECS)
+            set(_compute_url_MKSPECS "${CFMAKE_EXTERNAL_MKSPECS}")
         else()
-            set(_compute_url_MKSPECS "${CSTOOLKIT_BUILD_MKSPECS}")
+            set(_compute_url_MKSPECS "${CFMAKE_BUILD_MKSPECS}")
         endif()
     endif()
 
@@ -399,16 +399,16 @@ function(_cstoolkit_internal_compute_url url_var url_root url_package_name)
     set(${url_var} ${${url_var}} PARENT_SCOPE)
 endfunction()
 
-macro(_cstoolkit_internal_find_package _internal_find_package_name _internal_find_package_dir)
+macro(_cfmake_internal_find_package _internal_find_package_name _internal_find_package_dir)
     # PARAMETER 3: MODE: MODULE / CONFIG|NO_MODULE
-    set(${_internal_find_package_name}_ROOT "${_internal_find_package_dir}" CACHE INTERNAL "Defined by call to cstoolkit_fetch_XXX")
+    set(${_internal_find_package_name}_ROOT "${_internal_find_package_dir}" CACHE INTERNAL "Defined by call to cfmake_fetch_XXX")
     set(FETCH_PACKAGE_HINTS "${${_internal_find_package_name}_ROOT}")
 
     if("${ARGV2}" STREQUAL "MODULE")
         find_package(${_internal_find_package_name} QUIET MODULE GLOBAL)
     elseif("${ARGV2}" STREQUAL "CONFIG" OR "${ARGV2}" STREQUAL "NO_MODULE")
         find_package(${_internal_find_package_name} QUIET CONFIG GLOBAL NO_DEFAULT_PATH HINTS "${FETCH_PACKAGE_HINTS}")
-    elseif(CSTOOLKIT_FETCH_PACKAGE_PREFER_MODULE)
+    elseif(CFMAKE_FETCH_PACKAGE_PREFER_MODULE)
         find_package(${_internal_find_package_name} QUIET MODULE GLOBAL)
         if(NOT ${${_internal_find_package_name}_FOUND})
             find_package(${_internal_find_package_name} QUIET CONFIG GLOBAL NO_DEFAULT_PATH HINTS "${FETCH_PACKAGE_HINTS}")
@@ -422,7 +422,7 @@ macro(_cstoolkit_internal_find_package _internal_find_package_name _internal_fin
     unset(FETCH_PACKAGE_HINTS)
 endmacro()
 
-function(_cstoolkit_internal_download _internal_download_url _internal_download_dir)
+function(_cfmake_internal_download _internal_download_url _internal_download_dir)
     cmake_parse_arguments(PARSE_ARGV 2 _internal_download "APPEND" "" "")
 
     if(NOT _internal_download_APPEND)
@@ -433,8 +433,8 @@ function(_cstoolkit_internal_download _internal_download_url _internal_download_
 
     # Autentication method
     # Use FIND instead of MATCHES because URL contains "."
-    string(FIND "${_internal_download_url}" "${CSTOOLKIT_NEXUS_DR_URL}" NEXUS_DR_INDEX)
-    string(FIND "${_internal_download_url}" "${CSTOOLKIT_NEXUS_ITAR_URL}" NEXUS_ITAR_INDEX)
+    string(FIND "${_internal_download_url}" "${CFMAKE_NEXUS_DR_URL}" NEXUS_DR_INDEX)
+    string(FIND "${_internal_download_url}" "${CFMAKE_NEXUS_ITAR_URL}" NEXUS_ITAR_INDEX)
     
     if(NEXUS_DR_INDEX EQUAL 0)
         set(_internal_download_header "TLS_VERIFY;OFF")
@@ -467,22 +467,22 @@ function(_cstoolkit_internal_download _internal_download_url _internal_download_
         else()
             file(REMOVE_RECURSE "${_internal_download_dir}")
         endif()
-        message(FATAL_ERROR "CSToolkit: Downloading '${_internal_download_url}' failed
+        message(FATAL_ERROR "CFMake: Downloading '${_internal_download_url}' failed
 STATUS: ${status_code} ${status_string}
         --- LOG BEGIN ---
 ${log}        --- LOG END ---
 ")
     else()
-        set(_cstoolkit_internal_sha_value "")
+        set(_cfmake_internal_sha_value "")
         # Skipping SHA calculation if not needed for faster configure
-        if(CSTOOLKIT_FETCH_CHECK_SHA)
-            file(SHA256 "${_internal_download_dir}/${_internal_download_filename}" _cstoolkit_internal_sha_value)
+        if(CFMAKE_FETCH_CHECK_SHA)
+            file(SHA256 "${_internal_download_dir}/${_internal_download_filename}" _cfmake_internal_sha_value)
         endif()
-        set(_cstoolkit_internal_sha_value "${_cstoolkit_internal_sha_value}" PARENT_SCOPE)
+        set(_cfmake_internal_sha_value "${_cfmake_internal_sha_value}" PARENT_SCOPE)
     endif()
 endfunction()
 
-function(_cstoolkit_internal_extract _internal_extract_file _internal_extract_dir)
+function(_cfmake_internal_extract _internal_extract_file _internal_extract_dir)
     cmake_parse_arguments(PARSE_ARGV 2 _internal_extract "GITINFO_ONLY;APPEND;GITINFO_BEST_EFFORT" "" "PATTERNS")
 
     cmake_path(GET _internal_extract_file PARENT_PATH _internal_extract_temp_dir)
@@ -497,8 +497,8 @@ function(_cstoolkit_internal_extract _internal_extract_file _internal_extract_di
     if(contents STREQUAL "")
         file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
         file(SIZE "${_internal_extract_file}" file_size)
-        _cstoolkit_internal_format_size(file_size)
-        message(FATAL_ERROR "CSToolkit: Extracting of '${_internal_extract_file}' failed
+        _cfmake_internal_format_size(file_size)
+        message(FATAL_ERROR "CFMake: Extracting of '${_internal_extract_file}' failed
 Output directory empty
 File size: ${file_size}")
         return()
@@ -516,9 +516,9 @@ File size: ${file_size}")
     endif()
 
     #extract gitinfo
-    _cstoolkit_internal_read_gitinfo("${contents}/.gitinfo" PARENT_SCOPE)
+    _cfmake_internal_read_gitinfo("${contents}/.gitinfo" PARENT_SCOPE)
 
-    if(_internal_extract_GITINFO_ONLY OR (_internal_extract_GITINFO_BEST_EFFORT AND _cstoolkit_internal_gitinfo_remote_origin))
+    if(_internal_extract_GITINFO_ONLY OR (_internal_extract_GITINFO_BEST_EFFORT AND _cfmake_internal_gitinfo_remote_origin))
         set(_fetch_package_extract_rv 0)
     elseif(_internal_extract_APPEND)
         set(_fetch_package_extract_rv 0)
@@ -532,21 +532,21 @@ File size: ${file_size}")
     file(REMOVE_RECURSE "${_internal_extract_temp_dir}")
     if(NOT _fetch_package_extract_rv EQUAL 0)
         file(REMOVE_RECURSE "${_internal_extract_dir}")
-        message(FATAL_ERROR "CSToolkit: Extracting of '${_internal_extract_file}' failed
+        message(FATAL_ERROR "CFMake: Extracting of '${_internal_extract_file}' failed
 ${_fetch_package_extract_rv}")
         return()
     endif()
 
-    # Delete archive after successful extraction if CSTOOLKIT_KEEP_ARCHIVE is OFF
-    if(NOT CSTOOLKIT_KEEP_ARCHIVE)
+    # Delete archive after successful extraction if CFMAKE_KEEP_ARCHIVE is OFF
+    if(NOT CFMAKE_KEEP_ARCHIVE)
         file(REMOVE "${_internal_extract_file}")
     endif()
 endfunction()
 
-function(_cstoolkit_internal_git_clone git_package git_url git_commit git_src_dir)
+function(_cfmake_internal_git_clone git_package git_url git_commit git_src_dir)
     cmake_parse_arguments(PARSE_ARGV 3 git_clone "SHALLOW" "" "")
 
-    cstoolkit_git_safe_delete("${git_src_dir}")
+    cfmake_git_safe_delete("${git_src_dir}")
 
     file(MAKE_DIRECTORY "${git_src_dir}")
     if(git_clone_SHALLOW)
@@ -558,7 +558,7 @@ function(_cstoolkit_internal_git_clone git_package git_url git_commit git_src_di
         )
         if(NOT _git_clone_rv EQUAL 0)
             file(REMOVE_RECURSE "${git_src_dir}")
-            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+            message(FATAL_ERROR "CFMake: Clone of ${git_package} failed
 ${_git_clone_output}")
             return()
         endif()
@@ -570,7 +570,7 @@ ${_git_clone_output}")
         )
         if(NOT _git_clone_rv EQUAL 0)
             file(REMOVE_RECURSE "${git_src_dir}")
-            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+            message(FATAL_ERROR "CFMake: Clone of ${git_package} failed
 ${_git_clone_output}")
             return()
         endif()
@@ -582,7 +582,7 @@ ${_git_clone_output}")
         )
         if(NOT _git_clone_rv EQUAL 0)
             file(REMOVE_RECURSE "${git_src_dir}")
-            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+            message(FATAL_ERROR "CFMake: Clone of ${git_package} failed
 ${_git_clone_output}")
             return()
         endif()
@@ -594,14 +594,14 @@ ${_git_clone_output}")
         )
         if(NOT _git_clone_rv EQUAL 0)
             file(REMOVE_RECURSE "${git_src_dir}")
-            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+            message(FATAL_ERROR "CFMake: Clone of ${git_package} failed
 ${_git_clone_output}")
             return()
         endif()
 
         file(WRITE "${git_src_dir}/.git/hooks/pre-commit"
 "#!/bin/sh
-echo \"This repository is set as READ ONLY by CSToolkit.\"
+echo \"This repository is set as READ ONLY by CFMake.\"
 exit 1")
         file(CHMOD "${git_src_dir}/.git/hooks/pre-commit" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE)
     else()
@@ -613,7 +613,7 @@ exit 1")
         )
         if(NOT _git_clone_rv EQUAL 0)
             file(REMOVE_RECURSE "${git_src_dir}")
-            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+            message(FATAL_ERROR "CFMake: Clone of ${git_package} failed
 ${_git_clone_output}")
             return()
         endif()
@@ -625,14 +625,14 @@ ${_git_clone_output}")
         )
         if(NOT _git_clone_rv EQUAL 0)
             file(REMOVE_RECURSE "${git_src_dir}")
-            message(FATAL_ERROR "CSToolkit: Clone of ${git_package} failed
+            message(FATAL_ERROR "CFMake: Clone of ${git_package} failed
 ${_git_clone_output}")
             return()
         endif()
     endif()
 endfunction()
 
-function(_cstoolkit_internal_git_unshallow git_package git_src_dir)
+function(_cfmake_internal_git_unshallow git_package git_src_dir)
     execute_process(COMMAND "${GIT_EXECUTABLE}" rev-parse --is-shallow-repository
         WORKING_DIRECTORY "${git_src_dir}"
         OUTPUT_VARIABLE _git_unshallow_is_shallow
@@ -643,8 +643,8 @@ function(_cstoolkit_internal_git_unshallow git_package git_src_dir)
         return()
     endif()
 
-    cstoolkit_start_timer(CSTOOLKIT_FETCH_TIMER)
-    message(STATUS "CSToolkit: Unshallow git repository ${fetch_package_name}")
+    cfmake_start_timer(CFMAKE_FETCH_TIMER)
+    message(STATUS "CFMake: Unshallow git repository ${fetch_package_name}")
 
     execute_process(COMMAND "${GIT_EXECUTABLE}" fetch --unshallow
         WORKING_DIRECTORY "${git_src_dir}"
@@ -654,23 +654,23 @@ function(_cstoolkit_internal_git_unshallow git_package git_src_dir)
     )
     if(NOT _git_unshallow_rv EQUAL 0)
         file(REMOVE_RECURSE "${git_src_dir}")
-        message(FATAL_ERROR "CSToolkit: Unshallow of ${git_package} failed
+        message(FATAL_ERROR "CFMake: Unshallow of ${git_package} failed
 ${_git_unshallow_output}")
         return()
     endif()
     file(REMOVE "${git_src_dir}/.git/hooks/pre-commit")
 
-    cstoolkit_end_timer(CSTOOLKIT_FETCH_TIMER CSTOOLKIT_FETCH_ELAPSED)
-    message(STATUS "CSToolkit: Unshallow git repository ${fetch_package_name} done (${CSTOOLKIT_FETCH_ELAPSED}s)")
+    cfmake_end_timer(CFMAKE_FETCH_TIMER CFMAKE_FETCH_ELAPSED)
+    message(STATUS "CFMake: Unshallow git repository ${fetch_package_name} done (${CFMAKE_FETCH_ELAPSED}s)")
 endfunction()
 
-macro(cstoolkit_download_url URL OUTPUT_VAR)
-    # Compatibility wrapper - forwards to cstoolkit_download
-    #message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_download_url(): signature deprecated, use cstoolkit_download()" ${COLOR_RESET})
-    cstoolkit_download(${URL} ${OUTPUT_VAR} ${ARGN})
+macro(cfmake_download_url URL OUTPUT_VAR)
+    # Compatibility wrapper - forwards to cfmake_download
+    #message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: cfmake_download_url(): signature deprecated, use cfmake_download()" ${COLOR_RESET})
+    cfmake_download(${URL} ${OUTPUT_VAR} ${ARGN})
 endmacro()
 
-function(cstoolkit_download URL OUTPUT_VAR)
+function(cfmake_download URL OUTPUT_VAR)
     set(options NO_EXTRACT APPEND)
     set(one_value_args)
     if(OUTPUT_VAR STREQUAL "DESTINATION")
@@ -680,12 +680,12 @@ function(cstoolkit_download URL OUTPUT_VAR)
     cmake_parse_arguments(PARSE_ARGV 1 _download "${options}" "${one_value_args}" "${multi_value_args}")
 
     if(OUTPUT_VAR STREQUAL "DESTINATION" AND NOT _download_DESTINATION)
-        message(SEND_ERROR "CSToolkit: cstoolkit_download(${URL}): Empty DESTINATION")
+        message(SEND_ERROR "CFMake: cfmake_download(${URL}): Empty DESTINATION")
         return()
     endif()
 
     if(_download_APPEND AND NOT OUTPUT_VAR STREQUAL "DESTINATION")
-        message(SEND_ERROR "CSToolkit: cstoolkit_download(${URL}): APPEND requires DESTINATION")
+        message(SEND_ERROR "CFMake: cfmake_download(${URL}): APPEND requires DESTINATION")
         return()
     endif()
 
@@ -694,14 +694,14 @@ function(cstoolkit_download URL OUTPUT_VAR)
     string(MD5 _HASH ${URL})
     string(SUBSTRING ${_HASH} 0 8 _HASH)
 
-    set(download_dir "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/${_FILENAME}_${_HASH}")
+    set(download_dir "${CFMAKE_DOWNLOAD_BASE_DIR}/${_FILENAME}_${_HASH}")
 
     if(NOT OUTPUT_VAR STREQUAL "DESTINATION")
         if(_download_NO_EXTRACT)
-            set(_download_DESTINATION "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
+            set(_download_DESTINATION "${CFMAKE_EXTERNALS}/${_FILENAME}_${_HASH}")
             set(${OUTPUT_VAR} "${_download_DESTINATION}/${_FULLFILENAME}")
         else()
-            set(_download_DESTINATION "${CSTOOLKIT_EXTERNALS}/${_FILENAME}_${_HASH}")
+            set(_download_DESTINATION "${CFMAKE_EXTERNALS}/${_FILENAME}_${_HASH}")
             set(${OUTPUT_VAR} "${_download_DESTINATION}")
         endif()
     
@@ -722,7 +722,7 @@ function(cstoolkit_download URL OUTPUT_VAR)
         endif()
         if(_download_stamp_count GREATER 1)
             list(GET _download_stamp_lines 1 _download_previous_sha)
-        elseif(CSTOOLKIT_FETCH_CHECK_SHA)
+        elseif(CFMAKE_FETCH_CHECK_SHA)
             # Compute SHA256 from existing file if not in stamp
             # File location depends on NO_EXTRACT parameter
             if(_download_NO_EXTRACT AND EXISTS "${_download_DESTINATION}/${_FULLFILENAME}")
@@ -755,52 +755,52 @@ function(cstoolkit_download URL OUTPUT_VAR)
     endif()
 
     # Check SHA if enabled (and not already marked for rebuild)
-    if(NOT _fresh_download AND CSTOOLKIT_FETCH_CHECK_SHA)
-        _cstoolkit_internal_fetch_sha("${fetch_package_url}")
-        if(NOT _cstoolkit_internal_sha_value)
-            message(NOTICE ${COLOR_GREY} "CSToolkit: File ${_FULLFILENAME}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
-        elseif(NOT _cstoolkit_internal_sha_value STREQUAL _fetch_package_previous_sha)
+    if(NOT _fresh_download AND CFMAKE_FETCH_CHECK_SHA)
+        _cfmake_internal_fetch_sha("${fetch_package_url}")
+        if(NOT _cfmake_internal_sha_value)
+            message(NOTICE ${COLOR_GREY} "CFMake: File ${_FULLFILENAME}: Unable to get SHA256, skipping SHA check." ${COLOR_RESET})
+        elseif(NOT _cfmake_internal_sha_value STREQUAL _fetch_package_previous_sha)
             set(_fresh_download 1)
         endif()
     endif()
 
     # Download if needed
     if(_fresh_download)
-        cstoolkit_start_timer(CSTOOLKIT_DOWNLOAD_TIMER)
-        message(STATUS "CSToolkit: Download ${URL}")
+        cfmake_start_timer(CFMAKE_DOWNLOAD_TIMER)
+        message(STATUS "CFMake: Download ${URL}")
 
         if(_download_NO_EXTRACT)
             set(_download_params)
             if(_download_APPEND)
                 list(APPEND _download_params APPEND)
             endif()
-            _cstoolkit_internal_download("${URL}" "${_download_DESTINATION}" ${_download_params})
+            _cfmake_internal_download("${URL}" "${_download_DESTINATION}" ${_download_params})
         else()
-            _cstoolkit_internal_download("${URL}" "${download_dir}")
+            _cfmake_internal_download("${URL}" "${download_dir}")
         endif()
 
-        file(WRITE "${download_dir}/download.stamp" "${URL}\n${_cstoolkit_internal_sha_value}")
+        file(WRITE "${download_dir}/download.stamp" "${URL}\n${_cfmake_internal_sha_value}")
 
-        cstoolkit_end_timer(CSTOOLKIT_DOWNLOAD_TIMER CSTOOLKIT_DOWNLOAD_ELAPSED)
-        message(STATUS "CSToolkit: Download ${URL} done (${CSTOOLKIT_DOWNLOAD_ELAPSED}s)")
+        cfmake_end_timer(CFMAKE_DOWNLOAD_TIMER CFMAKE_DOWNLOAD_ELAPSED)
+        message(STATUS "CFMake: Download ${URL} done (${CFMAKE_DOWNLOAD_ELAPSED}s)")
     endif()
 
     if((NOT _download_NO_EXTRACT) AND (_fresh_download OR NOT EXISTS "${_download_DESTINATION}"))
-        cstoolkit_start_timer(CSTOOLKIT_DOWNLOAD_TIMER)
-        message(STATUS "CSToolkit: Extract ${URL}")
+        cfmake_start_timer(CFMAKE_DOWNLOAD_TIMER)
+        message(STATUS "CFMake: Extract ${URL}")
 
         set(_extract_params PATTERNS ${_download_PATTERNS})
         if(_download_APPEND)
             list(APPEND _extract_params APPEND)
         endif()
-        _cstoolkit_internal_extract("${download_dir}/${_FULLFILENAME}" "${_download_DESTINATION}" ${_extract_params})
+        _cfmake_internal_extract("${download_dir}/${_FULLFILENAME}" "${_download_DESTINATION}" ${_extract_params})
 
-        cstoolkit_end_timer(CSTOOLKIT_DOWNLOAD_TIMER CSTOOLKIT_DOWNLOAD_ELAPSED)
-        message(STATUS "CSToolkit: Extract ${URL} done (${CSTOOLKIT_DOWNLOAD_ELAPSED}s)")
+        cfmake_end_timer(CFMAKE_DOWNLOAD_TIMER CFMAKE_DOWNLOAD_ELAPSED)
+        message(STATUS "CFMake: Extract ${URL} done (${CFMAKE_DOWNLOAD_ELAPSED}s)")
     endif()
 endfunction()
 
-function(_cstoolkit_internal_format_size _internal_size)
+function(_cfmake_internal_format_size _internal_size)
     if("${${file_size}}" GREATER 1073741824)
         math(EXPR size_gb_x10 "${${file_size}} * 10 / 1073741824")
         math(EXPR whole_part "${size_gb_x10} / 10")
@@ -821,9 +821,9 @@ function(_cstoolkit_internal_format_size _internal_size)
     endif()
 endfunction()
 
-macro(_cstoolkit_internal_read_gitinfo gitinfo_file)
+macro(_cfmake_internal_read_gitinfo gitinfo_file)
     foreach(key current_tree;last_commit;last_commit_date;branch;remote_origin;tag;source_dir;timestamp)
-        set(_cstoolkit_internal_gitinfo_${key})
+        set(_cfmake_internal_gitinfo_${key})
     endforeach()
 
     if(EXISTS "${gitinfo_file}")
@@ -840,11 +840,11 @@ macro(_cstoolkit_internal_read_gitinfo gitinfo_file)
 
             # Match key: value pattern
             if(line MATCHES "^([a-zA-Z0-9_]+): (.+)$")
-                set(_cstoolkit_internal_gitinfo_key "${CMAKE_MATCH_1}")
-                set(_cstoolkit_internal_gitinfo_value "${CMAKE_MATCH_2}")
-                string(STRIP "${_cstoolkit_internal_gitinfo_value}" _cstoolkit_internal_gitinfo_value)
+                set(_cfmake_internal_gitinfo_key "${CMAKE_MATCH_1}")
+                set(_cfmake_internal_gitinfo_value "${CMAKE_MATCH_2}")
+                string(STRIP "${_cfmake_internal_gitinfo_value}" _cfmake_internal_gitinfo_value)
 
-                set(_cstoolkit_internal_gitinfo_${_cstoolkit_internal_gitinfo_key} "${_cstoolkit_internal_gitinfo_value}")
+                set(_cfmake_internal_gitinfo_${_cfmake_internal_gitinfo_key} "${_cfmake_internal_gitinfo_value}")
             endif()
         endforeach()
     endif()
@@ -855,35 +855,35 @@ macro(_cstoolkit_internal_read_gitinfo gitinfo_file)
     endif()
 
     foreach(key current_tree;last_commit;last_commit_date;branch;remote_origin;tag;source_dir;timestamp)
-        set(_cstoolkit_internal_gitinfo_${key} "${_cstoolkit_internal_gitinfo_${key}}" ${gitinfo_parent_scope})
+        set(_cfmake_internal_gitinfo_${key} "${_cfmake_internal_gitinfo_${key}}" ${gitinfo_parent_scope})
     endforeach()
 endmacro()
 
-function(_cstoolkit_internal_fetch_sha url)
-    set(_cstoolkit_internal_sha_value "")
+function(_cfmake_internal_fetch_sha url)
+    set(_cfmake_internal_sha_value "")
     
     # Check if URL is a Nexus URL
-    string(FIND "${url}" "${CSTOOLKIT_NEXUS_DR_URL}" NEXUS_DR_INDEX)
-    string(FIND "${url}" "${CSTOOLKIT_NEXUS_ITAR_URL}" NEXUS_ITAR_INDEX)
+    string(FIND "${url}" "${CFMAKE_NEXUS_DR_URL}" NEXUS_DR_INDEX)
+    string(FIND "${url}" "${CFMAKE_NEXUS_ITAR_URL}" NEXUS_ITAR_INDEX)
     
     if(NEXUS_DR_INDEX EQUAL 0 OR NEXUS_ITAR_INDEX EQUAL 0)
         # Determine which Nexus server and build REST API URL
         if(NEXUS_DR_INDEX EQUAL 0)
-            string(REPLACE "/repository" "/service/rest/v1/search/assets" _nexus_rest_base "${CSTOOLKIT_NEXUS_DR_URL}")
+            string(REPLACE "/repository" "/service/rest/v1/search/assets" _nexus_rest_base "${CFMAKE_NEXUS_DR_URL}")
             set(_nexus_auth_header "TLS_VERIFY;OFF")
             if(DEFINED ENV{NEXUS_DR_AUTH})
                 set(_nexus_auth_header "${_nexus_auth_header};HTTPHEADER;Authorization: Basic $ENV{NEXUS_DR_AUTH}")
             endif()
             # Extract path after repository URL
-            string(LENGTH "${CSTOOLKIT_NEXUS_DR_URL}" _base_url_length)
+            string(LENGTH "${CFMAKE_NEXUS_DR_URL}" _base_url_length)
         else()
-            string(REPLACE "/repository" "/service/rest/v1/search/assets" _nexus_rest_base "${CSTOOLKIT_NEXUS_ITAR_URL}")
+            string(REPLACE "/repository" "/service/rest/v1/search/assets" _nexus_rest_base "${CFMAKE_NEXUS_ITAR_URL}")
             set(_nexus_auth_header "TLS_VERIFY;OFF")
             if(DEFINED ENV{NEXUS_ITAR_AUTH})
                 set(_nexus_auth_header "${_nexus_auth_header};HTTPHEADER;Authorization: Basic $ENV{NEXUS_ITAR_AUTH}")
             endif()
             # Extract path after repository URL
-            string(LENGTH "${CSTOOLKIT_NEXUS_ITAR_URL}" _base_url_length)
+            string(LENGTH "${CFMAKE_NEXUS_ITAR_URL}" _base_url_length)
         endif()
         
         # Extract repository name and asset path from URL
@@ -901,22 +901,22 @@ function(_cstoolkit_internal_fetch_sha url)
             # Make REST API request
             file(DOWNLOAD
                 "${_rest_url}"
-                "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/nexus_sha.json"
+                "${CFMAKE_DOWNLOAD_BASE_DIR}/nexus_sha.json"
                 ${_nexus_auth_header}
                 STATUS status
                 LOG log
             )
             list(GET status 0 status_code)
             
-            if(status_code EQUAL 0 AND EXISTS "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/nexus_sha.json")
-                file(READ "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/nexus_sha.json" _json_content)
-                file(REMOVE "${CSTOOLKIT_DOWNLOAD_BASE_DIR}/nexus_sha.json")
+            if(status_code EQUAL 0 AND EXISTS "${CFMAKE_DOWNLOAD_BASE_DIR}/nexus_sha.json")
+                file(READ "${CFMAKE_DOWNLOAD_BASE_DIR}/nexus_sha.json" _json_content)
+                file(REMOVE "${CFMAKE_DOWNLOAD_BASE_DIR}/nexus_sha.json")
                 
                 # Extract SHA256 from JSON response
                 # Looking for "checksum": { "sha256": "..." }
                 string(REGEX MATCH "\"sha256\"[ \t]*:[ \t]*\"([0-9A-Fa-f]+)\"" _sha_match "${_json_content}")
                 if(_sha_match)
-                    set(_cstoolkit_internal_sha_value "${CMAKE_MATCH_1}")
+                    set(_cfmake_internal_sha_value "${CMAKE_MATCH_1}")
                 endif()
             endif()
         endif()
@@ -933,26 +933,26 @@ function(_cstoolkit_internal_fetch_sha url)
         if(status_code EQUAL 0)
             string(REGEX MATCH "X-Checksum-Sha256:[ \t]*([0-9A-Fa-f]+)" _sha_line "${log}")
             if(_sha_line)
-                set(_cstoolkit_internal_sha_value "${CMAKE_MATCH_1}")
+                set(_cfmake_internal_sha_value "${CMAKE_MATCH_1}")
             endif()
         endif()
     endif()
 
-    set(_cstoolkit_internal_sha_value "${_cstoolkit_internal_sha_value}" PARENT_SCOPE)
+    set(_cfmake_internal_sha_value "${_cfmake_internal_sha_value}" PARENT_SCOPE)
 endfunction()
 
-macro(cstoolkit_fetch_dependency fetch_dependency_name fetch_dependency_url)
-    if(CSTOOLKIT_FETCH_DEPENDENCY)
-        if(CSTOOLKIT_FETCH_${fetch_dependency_name}_URL)
-            if(NOT CSTOOLKIT_FETCH_${fetch_dependency_name}_URL STREQUAL "${fetch_dependency_url}")
-                message(NOTICE ${COLOR_GREY} "CSToolkit: Package ${fetch_dependency_name}: Different URL from ${CMAKE_CURRENT_LIST_FILE} ignored. Using definition ${CSTOOLKIT_FETCH_${fetch_dependency_name}_LIST_FILE}" ${COLOR_RESET})
+macro(cfmake_fetch_dependency fetch_dependency_name fetch_dependency_url)
+    if(CFMAKE_FETCH_DEPENDENCY)
+        if(CFMAKE_FETCH_${fetch_dependency_name}_URL)
+            if(NOT CFMAKE_FETCH_${fetch_dependency_name}_URL STREQUAL "${fetch_dependency_url}")
+                message(NOTICE ${COLOR_GREY} "CFMake: Package ${fetch_dependency_name}: Different URL from ${CMAKE_CURRENT_LIST_FILE} ignored. Using definition ${CFMAKE_FETCH_${fetch_dependency_name}_LIST_FILE}" ${COLOR_RESET})
             endif()
         else()
             # no set_target_property, we dont store urls of dependencies
-            set(CSTOOLKIT_FETCH_${fetch_dependency_name}_URL "${fetch_dependency_url}")
-            set(CSTOOLKIT_FETCH_${fetch_dependency_name}_LIST_FILE "${CMAKE_CURRENT_LIST_FILE}")
-            cstoolkit_download_and_extract_package("${fetch_dependency_name}" "${fetch_dependency_url}" ${ARGN})
-            _cstoolkit_internal_find_package("${fetch_dependency_name}" "${CSTOOLKIT_EXTERNALS}/${fetch_dependency_name}")
+            set(CFMAKE_FETCH_${fetch_dependency_name}_URL "${fetch_dependency_url}")
+            set(CFMAKE_FETCH_${fetch_dependency_name}_LIST_FILE "${CMAKE_CURRENT_LIST_FILE}")
+            cfmake_download_and_extract_package("${fetch_dependency_name}" "${fetch_dependency_url}" ${ARGN})
+            _cfmake_internal_find_package("${fetch_dependency_name}" "${CFMAKE_EXTERNALS}/${fetch_dependency_name}")
         endif()
     endif()
 endmacro()

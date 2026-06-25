@@ -1,13 +1,13 @@
-function(cstoolkit_streamwork_generate_devpaths target)
+function(cfmake_streamwork_generate_devpaths target)
     if(NOT TARGET ${target})
-        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_devpaths(${target}): \"${target}\" is not a target")
+        message(SEND_ERROR "CFMake: cfmake_streamwork_generate_devpaths(${target}): \"${target}\" is not a target")
         return()
     endif()
 
     get_target_property(target_type ${target} TYPE)
 
     if(NOT target_type STREQUAL EXECUTABLE)
-        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_devpaths(${target}): \"${target}\" is not an executable target")
+        message(SEND_ERROR "CFMake: cfmake_streamwork_generate_devpaths(${target}): \"${target}\" is not an executable target")
         return()
     endif()
 
@@ -18,7 +18,7 @@ function(cstoolkit_streamwork_generate_devpaths target)
     cmake_parse_arguments(PARSE_ARGV 1 DEVPATHS "${DEVPATHS_OPTIONS}" "${DEVPATHS_UNIQUE}" "${DEVPATHS_MULTIPLE}")
 
     if(NOT DEVPATHS_OUTPUT)
-        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_devpaths(${target}): Missing mandatory parameter OUTPUT")
+        message(SEND_ERROR "CFMake: cfmake_streamwork_generate_devpaths(${target}): Missing mandatory parameter OUTPUT")
         return()
     endif()
 
@@ -55,9 +55,9 @@ function(cstoolkit_streamwork_generate_devpaths target)
 ")
 endfunction()
 
-function(cstoolkit_streamwork_generate_launchers target)
+function(cfmake_streamwork_generate_launchers target)
     if(NOT TARGET ${target})
-        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_launchers(${target}): \"${target}\" is not a target")
+        message(SEND_ERROR "CFMake: cfmake_streamwork_generate_launchers(${target}): \"${target}\" is not a target")
         return()
     endif()
 
@@ -68,17 +68,17 @@ function(cstoolkit_streamwork_generate_launchers target)
     cmake_parse_arguments(PARSE_ARGV 1 option "${DEVPATHS_OPTIONS}" "${DEVPATHS_UNIQUE}" "${DEVPATHS_MULTIPLE}")
   
     if(NOT option_APP_DIR_PATH)
-        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_launchers(${target}): Missing mandatory parameter APP_DIR_PATH")
+        message(SEND_ERROR "CFMake: cfmake_streamwork_generate_launchers(${target}): Missing mandatory parameter APP_DIR_PATH")
         return()
     endif()
 
     if(NOT option_DEVPATH)
-        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_launchers(${target}): Missing mandatory parameter DEVPATH")
+        message(SEND_ERROR "CFMake: cfmake_streamwork_generate_launchers(${target}): Missing mandatory parameter DEVPATH")
         return()
     endif()
 
     if(NOT option_STREAM)
-        message(SEND_ERROR "CSToolkit: cstoolkit_streamwork_generate_launchers(${target}): Missing mandatory parameter STREAM")
+        message(SEND_ERROR "CFMake: cfmake_streamwork_generate_launchers(${target}): Missing mandatory parameter STREAM")
         return()
     endif()
 

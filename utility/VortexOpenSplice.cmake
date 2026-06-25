@@ -1,6 +1,6 @@
-set_property(GLOBAL PROPERTY CSTOOLKIT_IDLPP_TARGET_DEPENDENCIES "CSTOOLKIT")
+set_property(GLOBAL PROPERTY CFMAKE_IDLPP_TARGET_DEPENDENCIES "CFMAKE")
 
-function(cstoolkit_idlpp_generate)
+function(cfmake_idlpp_generate)
     set(_options APPEND_PATH)
     set(_singleargs TARGET LANGUAGE MODE)
     set(_multiargs IDLS)
@@ -28,9 +28,9 @@ function(cstoolkit_idlpp_generate)
     endif()
 
     if(WIN32)
-        set(OpenSplice_IDLGEN_BINARY ${CMAKE_COMMAND} -E env ADLINK_LICENSE=${CSTOOLKIT_ADLINK_LICENSE} ${OPENSPLICE_IDLPP})
+        set(OpenSplice_IDLGEN_BINARY ${CMAKE_COMMAND} -E env ADLINK_LICENSE=${CFMAKE_ADLINK_LICENSE} ${OPENSPLICE_IDLPP})
     else()
-        set(OpenSplice_IDLGEN_BINARY ${CMAKE_COMMAND} -E env ADLINK_LICENSE=${CSTOOLKIT_ADLINK_LICENSE} LD_LIBRARY_PATH=${OSPL_LIB} ${OPENSPLICE_IDLPP})
+        set(OpenSplice_IDLGEN_BINARY ${CMAKE_COMMAND} -E env ADLINK_LICENSE=${CFMAKE_ADLINK_LICENSE} LD_LIBRARY_PATH=${OSPL_LIB} ${OPENSPLICE_IDLPP})
     endif()
 
     string(TOLOWER "${idlpp_generate_MODE}" idlpp_generate_MODE)
@@ -57,10 +57,10 @@ function(cstoolkit_idlpp_generate)
         get_filename_component(_idlname ${_idlfile} NAME_WE)
         cmake_path(RELATIVE_PATH _idlfile BASE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE _relpath)
 
-        cstoolkit_define_OpenSplice_SOURCES("${_out_dir}" "${idlpp_generate_LANGUAGE}" "${idlpp_generate_MODE}" "${_idlname}")
+        cfmake_define_OpenSplice_SOURCES("${_out_dir}" "${idlpp_generate_LANGUAGE}" "${idlpp_generate_MODE}" "${_idlname}")
 
         add_custom_command(OUTPUT ${_model_sources}
-            COMMAND ${CSTOOLKIT_LOCK} ${CMAKE_BINARY_DIR}/idlpp.lock ${OpenSplice_IDLGEN_BINARY}
+            COMMAND ${CFMAKE_LOCK} ${CMAKE_BINARY_DIR}/idlpp.lock ${OpenSplice_IDLGEN_BINARY}
             -I "$<JOIN:${IDL_PATH};$<TARGET_PROPERTY:${idlpp_generate_TARGET},INCLUDE_DIRECTORIES>,;-I;>" -S -l ${idlpp_generate_LANGUAGE} ${idlpp_mode} -d ${_out_dir} ${_idlfile}
             COMMENT "IDLPP ${_relpath}"
             MAIN_DEPENDENCY ${_idlfile}
@@ -81,12 +81,12 @@ function(cstoolkit_idlpp_generate)
     target_include_directories(${idlpp_generate_TARGET} PUBLIC $<BUILD_INTERFACE:${_out_dir}>)
 
     # Creating serialization between targets to avoid parrallel execution of idlpp
-    get_property(IDLPP_TARGET_DEPENDENCIES GLOBAL PROPERTY CSTOOLKIT_IDLPP_TARGET_DEPENDENCIES)
+    get_property(IDLPP_TARGET_DEPENDENCIES GLOBAL PROPERTY CFMAKE_IDLPP_TARGET_DEPENDENCIES)
     add_dependencies(${idlpp_generate_TARGET} "${IDLPP_TARGET_DEPENDENCIES}")
-    set_property(GLOBAL PROPERTY CSTOOLKIT_IDLPP_TARGET_DEPENDENCIES "${idlpp_generate_TARGET}")
+    set_property(GLOBAL PROPERTY CFMAKE_IDLPP_TARGET_DEPENDENCIES "${idlpp_generate_TARGET}")
 endfunction()
 
-macro(cstoolkit_define_OpenSplice_SOURCES dir lang mode idlfilename)
+macro(cfmake_define_OpenSplice_SOURCES dir lang mode idlfilename)
     set(_model_sources)
     set(_model_headers)
 

@@ -1,4 +1,4 @@
-function(cstoolkit_generate_rc_file)
+function(cfmake_generate_rc_file)
 
     set(options)
     set(one_value_keywords
@@ -14,7 +14,7 @@ function(cstoolkit_generate_rc_file)
     
     cmake_parse_arguments(PARSE_ARGV 0 PARAMS "${options}" "${one_value_keywords}" "${multi_value_keywords}")
 
-    message(DEBUG "cstoolkit_generate_rc_file: Valeur Target : " ${PARAMS_TARGET})
+    message(DEBUG "cfmake_generate_rc_file: Valeur Target : " ${PARAMS_TARGET})
     
     get_target_property(_target_type ${PARAMS_TARGET} TYPE)
     get_target_property(_suffix ${PARAMS_TARGET} SUFFIX)

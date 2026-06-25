@@ -1,4 +1,4 @@
-function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
+function(cfmake_add_target TARGET_NAME TARGET_TYPE)
     
     # Parse arguments
 
@@ -35,16 +35,16 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     cmake_parse_arguments(PARSE_ARGV 2 TARGET "${TARGET_OPTIONS}" "${TARGET_UNIQUE}" "${TARGET_MULTIPLE};${TARGET_REPETITIVE}")
 
     if(TARGET_NAME STREQUAL "")
-        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(): No NAME defined for target")
+        message(SEND_ERROR "CFMake: cfmake_add_target(): No NAME defined for target")
         return()
     endif()
 
     if(DEFINED TARGET_UNPARSED_ARGUMENTS)
-        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
+        message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Unkown arguments \"${TARGET_UNPARSED_ARGUMENTS}\"")
         return()
     endif()
 
-    cstoolkit_parse_repetitive_arguments(TARGET "${TARGET_REPETITIVE}" "${TARGET_OPTIONS};${TARGET_UNIQUE};${TARGET_MULTIPLE}" ${ARGN})
+    cfmake_parse_repetitive_arguments(TARGET "${TARGET_REPETITIVE}" "${TARGET_OPTIONS};${TARGET_UNIQUE};${TARGET_MULTIPLE}" ${ARGN})
 
     if(TARGET_TYPE STREQUAL "EXECUTABLE")
         set(TARGET_EXECUTABLE TRUE)
@@ -62,7 +62,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_SHARED TRUE)
         set(TARGET_STATIC TRUE)
     else()
-        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid TARGET_TYPE \"${TARGET_TYPE}\"")
+        message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Invalid TARGET_TYPE \"${TARGET_TYPE}\"")
         return()
     endif()
 
@@ -73,21 +73,21 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     if(TARGET_ALIAS)
-        message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): ALIAS parameter deprecated, use NAMESPACE" ${COLOR_RESET})
+        message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: cfmake_add_target(${TARGET_NAME}): ALIAS parameter deprecated, use NAMESPACE" ${COLOR_RESET})
     endif()
 
     if(TARGET_RECURSIVE)
         # Soon deprecated
-        # message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): RECURSIVE parameter deprecated, use 'FILES_MODE AUTO' or cache variable 'CSTOOLKIT_DEFAULT_FILES_MODE AUTO'" ${COLOR_RESET})
+        # message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: cfmake_add_target(${TARGET_NAME}): RECURSIVE parameter deprecated, use 'FILES_MODE AUTO' or cache variable 'CFMAKE_DEFAULT_FILES_MODE AUTO'" ${COLOR_RESET})
         if(NOT DEFINED TARGET_FILES_MODE)
             set(TARGET_FILES_MODE "AUTO")
         else()
-            message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Conflicting RECURSIVE and FILES_MODE parameters")
+            message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Conflicting RECURSIVE and FILES_MODE parameters")
         endif()
     endif()
 
     if(NOT DEFINED TARGET_FILES_MODE)
-        set(TARGET_FILES_MODE "${CSTOOLKIT_DEFAULT_FILES_MODE}")
+        set(TARGET_FILES_MODE "${CFMAKE_DEFAULT_FILES_MODE}")
     endif()
 
     # Library
@@ -95,8 +95,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_NAME_STATIC ${TARGET_NAME}_STATIC)
         add_library(${TARGET_NAME} SHARED)
         add_library(${TARGET_NAME_STATIC} STATIC)
-        set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_ALL_TARGETS "${TARGET_NAME}")
-        set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_ALL_TARGETS "${TARGET_NAME_STATIC}")
+        set_property(GLOBAL APPEND PROPERTY CFMAKE_ALL_TARGETS "${TARGET_NAME}")
+        set_property(GLOBAL APPEND PROPERTY CFMAKE_ALL_TARGETS "${TARGET_NAME_STATIC}")
         set_target_properties(${TARGET_NAME} PROPERTIES NAMESPACE "${TARGET_NAMESPACE}") # READONLY
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES NAMESPACE "${TARGET_NAMESPACE}") # READONLY
         add_library(${TARGET_NAMESPACE}${TARGET_NAME} ALIAS ${TARGET_NAME})
@@ -110,7 +110,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(TARGET_NAME_STATIC ${TARGET_NAME})
         endif()
         add_library(${TARGET_NAME} ${TARGET_TYPE})
-        set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_ALL_TARGETS "${TARGET_NAME}")
+        set_property(GLOBAL APPEND PROPERTY CFMAKE_ALL_TARGETS "${TARGET_NAME}")
         set_target_properties(${TARGET_NAME} PROPERTIES NAMESPACE "${TARGET_NAMESPACE}") # READONLY
         add_library(${TARGET_NAMESPACE}${TARGET_NAME} ALIAS ${TARGET_NAME})
         if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${TARGET_NAMESPACE}${TARGET_NAME})
@@ -126,14 +126,14 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         else()
             add_executable(${TARGET_NAME})
         endif()
-        set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_ALL_TARGETS "${TARGET_NAME}")
+        set_property(GLOBAL APPEND PROPERTY CFMAKE_ALL_TARGETS "${TARGET_NAME}")
         set_target_properties(${TARGET_NAME} PROPERTIES NAMESPACE "${TARGET_NAMESPACE}") # READONLY
         add_executable(${TARGET_NAMESPACE}${TARGET_NAME} ALIAS ${TARGET_NAME})
         if(TARGET_ALIAS AND NOT TARGET_ALIAS STREQUAL ${TARGET_NAMESPACE}${TARGET_NAME})
             add_executable(${TARGET_ALIAS} ALIAS ${TARGET_NAME})
         endif()
     elseif(TARGET_WIN32)
-        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid option WIN32 option for ${TARGET_TYPE} target")
+        message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Invalid option WIN32 option for ${TARGET_TYPE} target")
     endif()
 
     # Postfix, necessaire pour les executables
@@ -159,7 +159,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set_target_properties(${TARGET_NAME} PROPERTIES SUFFIX ".${TARGET_EXTENSION}")
     endif()
 
-    if(CSTOOLKIT_PREFIX_OUTPUT_NAME)
+    if(CFMAKE_PREFIX_OUTPUT_NAME)
         set(OUTPUT_NAME ${PROJECT_NAME}${TARGET_NAME})
         set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${OUTPUT_NAME}")
         if(TARGET_SHARED_AND_STATIC)
@@ -210,7 +210,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     string(APPEND _folder "/")
     string(REPLACE "-src/" "/" _folder "${_folder}")
     # Remove last occurrence of TARGET_NAME (case-insensitive)
-    cstoolkit_regex_make_case_insensitive("${TARGET_NAME}" _target_pattern)
+    cfmake_regex_make_case_insensitive("${TARGET_NAME}" _target_pattern)
     string(REGEX REPLACE "(.*)/${_target_pattern}/" "\\1/" _folder "${_folder}")
     string(REGEX REPLACE "/[Ss][Oo][Uu][Rr][Cc][Ee][Ss]/" "/" _folder "${_folder}")
     string(REGEX REPLACE "/[Ss][Rr][Cc]/" "/" _folder "${_folder}")
@@ -238,87 +238,87 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     if(NOT DEFINED TARGET_PUBLIC_HEADERS_DIRS)
-        set(TARGET_PUBLIC_HEADERS_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_PUBLIC_HEADERS_DIRS})
+        set(TARGET_PUBLIC_HEADERS_DIRS ${TARGET_PREFIX_DIR}${CFMAKE_DEFAULT_PUBLIC_HEADERS_DIRS})
     endif()
     if(NOT DEFINED TARGET_PRIVATE_HEADERS_DIRS)
-        set(TARGET_PRIVATE_HEADERS_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_PRIVATE_HEADERS_DIRS})
+        set(TARGET_PRIVATE_HEADERS_DIRS ${TARGET_PREFIX_DIR}${CFMAKE_DEFAULT_PRIVATE_HEADERS_DIRS})
     endif()
     if(NOT DEFINED TARGET_SOURCES_DIRS)
-        set(TARGET_SOURCES_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_SOURCES_DIRS})
+        set(TARGET_SOURCES_DIRS ${TARGET_PREFIX_DIR}${CFMAKE_DEFAULT_SOURCES_DIRS})
     endif()
     if(NOT DEFINED TARGET_UI_DIRS)
-        set(TARGET_UI_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_UI_DIRS})
+        set(TARGET_UI_DIRS ${TARGET_PREFIX_DIR}${CFMAKE_DEFAULT_UI_DIRS})
     endif()
     if(NOT DEFINED TARGET_RESOURCES_DIRS)
-        set(TARGET_RESOURCES_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_RESOURCES_DIRS})
+        set(TARGET_RESOURCES_DIRS ${TARGET_PREFIX_DIR}${CFMAKE_DEFAULT_RESOURCES_DIRS})
     endif()
     if(NOT DEFINED TARGET_TRANSLATION_DIRS)
-        set(TARGET_TRANSLATION_DIRS ${TARGET_PREFIX_DIR}${CSTOOLKIT_DEFAULT_TRANSLATION_DIRS})
+        set(TARGET_TRANSLATION_DIRS ${TARGET_PREFIX_DIR}${CFMAKE_DEFAULT_TRANSLATION_DIRS})
     endif()
 
     # Conversion to absolute path necessary for later call to source_group
-    cstoolkit_file_realpath_list(TARGET_PUBLIC_HEADERS_DIRS)
-    cstoolkit_file_realpath_list(TARGET_PRIVATE_HEADERS_DIRS)
-    cstoolkit_file_realpath_list(TARGET_SOURCES_DIRS)
-    cstoolkit_file_realpath_list(TARGET_UI_DIRS)
-    cstoolkit_file_realpath_list(TARGET_RESOURCES_DIRS)
-    cstoolkit_file_realpath_list(TARGET_TRANSLATION_DIRS)
+    cfmake_file_realpath_list(TARGET_PUBLIC_HEADERS_DIRS)
+    cfmake_file_realpath_list(TARGET_PRIVATE_HEADERS_DIRS)
+    cfmake_file_realpath_list(TARGET_SOURCES_DIRS)
+    cfmake_file_realpath_list(TARGET_UI_DIRS)
+    cfmake_file_realpath_list(TARGET_RESOURCES_DIRS)
+    cfmake_file_realpath_list(TARGET_TRANSLATION_DIRS)
 
     # Sources
     if(DEFINED TARGET_PUBLIC_HEADERS_FILES)
-        cstoolkit_file_realpath_list(TARGET_PUBLIC_HEADERS_FILES)
+        cfmake_file_realpath_list(TARGET_PUBLIC_HEADERS_FILES)
     endif()
     if(DEFINED TARGET_PRIVATE_HEADERS_FILES)
-        cstoolkit_file_realpath_list(TARGET_PRIVATE_HEADERS_FILES)
+        cfmake_file_realpath_list(TARGET_PRIVATE_HEADERS_FILES)
     endif()
     if(DEFINED TARGET_SOURCES_FILES)
-        cstoolkit_file_realpath_list(TARGET_SOURCES_FILES)
+        cfmake_file_realpath_list(TARGET_SOURCES_FILES)
     endif()
     if(DEFINED TARGET_UI_FILES)
-        cstoolkit_file_realpath_list(TARGET_UI_FILES)
+        cfmake_file_realpath_list(TARGET_UI_FILES)
     endif()
     if(DEFINED TARGET_RESOURCES_FILES)
-        cstoolkit_file_realpath_list(TARGET_RESOURCES_FILES)
+        cfmake_file_realpath_list(TARGET_RESOURCES_FILES)
     endif()
     if(DEFINED TARGET_TRANSLATION_FILES)
-        cstoolkit_file_realpath_list(TARGET_TRANSLATION_FILES)
+        cfmake_file_realpath_list(TARGET_TRANSLATION_FILES)
     endif()
 
     if(TARGET_FILES_MODE STREQUAL "AUTO" OR TARGET_FILES_MODE STREQUAL "APPEND")
-        list(TRANSFORM CSTOOLKIT_CXX_HEADER_FILE_EXTENSIONS PREPEND "*." OUTPUT_VARIABLE CXX_HEADERS_GLOB)
-        list(TRANSFORM CSTOOLKIT_CXX_SOURCE_FILE_EXTENSIONS PREPEND "*." OUTPUT_VARIABLE CXX_SOURCES_GLOB)
+        list(TRANSFORM CFMAKE_CXX_HEADER_FILE_EXTENSIONS PREPEND "*." OUTPUT_VARIABLE CXX_HEADERS_GLOB)
+        list(TRANSFORM CFMAKE_CXX_SOURCE_FILE_EXTENSIONS PREPEND "*." OUTPUT_VARIABLE CXX_SOURCES_GLOB)
         if(NOT DEFINED TARGET_PUBLIC_HEADERS_FILES OR TARGET_FILES_MODE STREQUAL "APPEND")
             if(TARGET_PUBLIC_HEADERS_NO_EXTENSION)
-                cstoolkit_file_glob_recurse_dirs(TARGET_PUBLIC_HEADERS_FILES "*" "${TARGET_PUBLIC_HEADERS_DIRS}" ${TARGET_FILES_MODE})
+                cfmake_file_glob_recurse_dirs(TARGET_PUBLIC_HEADERS_FILES "*" "${TARGET_PUBLIC_HEADERS_DIRS}" ${TARGET_FILES_MODE})
             else()
-                cstoolkit_file_glob_recurse_dirs(TARGET_PUBLIC_HEADERS_FILES "${CXX_HEADERS_GLOB}" "${TARGET_PUBLIC_HEADERS_DIRS}" ${TARGET_FILES_MODE})
+                cfmake_file_glob_recurse_dirs(TARGET_PUBLIC_HEADERS_FILES "${CXX_HEADERS_GLOB}" "${TARGET_PUBLIC_HEADERS_DIRS}" ${TARGET_FILES_MODE})
             endif()
         endif()
         if(NOT DEFINED TARGET_PRIVATE_HEADERS_FILES OR TARGET_FILES_MODE STREQUAL "APPEND")
-            cstoolkit_file_glob_recurse_dirs(TARGET_PRIVATE_HEADERS_FILES "${CXX_HEADERS_GLOB}" "${TARGET_PRIVATE_HEADERS_DIRS}" ${TARGET_FILES_MODE})
+            cfmake_file_glob_recurse_dirs(TARGET_PRIVATE_HEADERS_FILES "${CXX_HEADERS_GLOB}" "${TARGET_PRIVATE_HEADERS_DIRS}" ${TARGET_FILES_MODE})
         endif()
         if(NOT DEFINED TARGET_SOURCES_FILES OR TARGET_FILES_MODE STREQUAL "APPEND")
-            cstoolkit_file_glob_recurse_dirs(TARGET_SOURCES_FILES "${CXX_SOURCES_GLOB}" "${TARGET_SOURCES_DIRS}" ${TARGET_FILES_MODE})
+            cfmake_file_glob_recurse_dirs(TARGET_SOURCES_FILES "${CXX_SOURCES_GLOB}" "${TARGET_SOURCES_DIRS}" ${TARGET_FILES_MODE})
         endif()
         if(NOT DEFINED TARGET_UI_FILES OR TARGET_FILES_MODE STREQUAL "APPEND")
-            cstoolkit_file_glob_recurse_dirs(TARGET_UI_FILES "*.ui" "${TARGET_UI_DIRS}" ${TARGET_FILES_MODE})
+            cfmake_file_glob_recurse_dirs(TARGET_UI_FILES "*.ui" "${TARGET_UI_DIRS}" ${TARGET_FILES_MODE})
         endif()
         if(NOT DEFINED TARGET_RESOURCES_FILES OR TARGET_FILES_MODE STREQUAL "APPEND")
-            cstoolkit_file_glob_recurse_dirs(TARGET_RESOURCES_FILES "*.qrc" "${TARGET_RESOURCES_DIRS}" ${TARGET_FILES_MODE})
+            cfmake_file_glob_recurse_dirs(TARGET_RESOURCES_FILES "*.qrc" "${TARGET_RESOURCES_DIRS}" ${TARGET_FILES_MODE})
         endif()
         if(NOT DEFINED TARGET_TRANSLATION_FILES OR TARGET_FILES_MODE STREQUAL "APPEND")
-            cstoolkit_file_glob_recurse_dirs(TARGET_TRANSLATION_FILES "*.ts" "${TARGET_TRANSLATION_DIRS}" ${TARGET_FILES_MODE})
+            cfmake_file_glob_recurse_dirs(TARGET_TRANSLATION_FILES "*.ts" "${TARGET_TRANSLATION_DIRS}" ${TARGET_FILES_MODE})
         endif()
     endif()
 
     # Folders of files in visual studio project
 
-    cstoolkit_source_group(TREE ${TARGET_PRIVATE_HEADERS_DIRS} PREFIX "Header Files (Private)" FILES ${TARGET_PRIVATE_HEADERS_FILES})
-    cstoolkit_source_group(TREE ${TARGET_PUBLIC_HEADERS_DIRS} PREFIX "Header Files (Public)" FILES ${TARGET_PUBLIC_HEADERS_FILES})
-    cstoolkit_source_group(TREE ${TARGET_SOURCES_DIRS} PREFIX "Source Files" FILES ${TARGET_SOURCES_FILES})
-    cstoolkit_source_group(TREE ${TARGET_UI_DIRS} PREFIX "Form Files" FILES ${TARGET_UI_FILES})
-    cstoolkit_source_group(TREE ${TARGET_RESOURCES_DIRS} PREFIX "Resource Files" FILES ${TARGET_RESOURCES_FILES})
-    cstoolkit_source_group(TREE ${TARGET_TRANSLATION_DIRS} PREFIX "Translation Files" FILES ${TARGET_TRANSLATION_FILES})
+    cfmake_source_group(TREE ${TARGET_PRIVATE_HEADERS_DIRS} PREFIX "Header Files (Private)" FILES ${TARGET_PRIVATE_HEADERS_FILES})
+    cfmake_source_group(TREE ${TARGET_PUBLIC_HEADERS_DIRS} PREFIX "Header Files (Public)" FILES ${TARGET_PUBLIC_HEADERS_FILES})
+    cfmake_source_group(TREE ${TARGET_SOURCES_DIRS} PREFIX "Source Files" FILES ${TARGET_SOURCES_FILES})
+    cfmake_source_group(TREE ${TARGET_UI_DIRS} PREFIX "Form Files" FILES ${TARGET_UI_FILES})
+    cfmake_source_group(TREE ${TARGET_RESOURCES_DIRS} PREFIX "Resource Files" FILES ${TARGET_RESOURCES_FILES})
+    cfmake_source_group(TREE ${TARGET_TRANSLATION_DIRS} PREFIX "Translation Files" FILES ${TARGET_TRANSLATION_FILES})
 
     # Sources
 
@@ -421,7 +421,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     if(TARGET_EXECUTABLE OR TARGET_SHARED)
 	    target_link_options(${TARGET_NAME} PRIVATE ${TARGET_LINK_OPTIONS})
     elseif(TARGET_LINK_OPTIONS)
-        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter LINK_OPTIONS for ${TARGET_TYPE} target")
+        message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Invalid parameter LINK_OPTIONS for ${TARGET_TYPE} target")
     endif()
 
     # Links
@@ -430,7 +430,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         target_link_libraries(${TARGET_NAME}
             INTERFACE ${TARGET_PUBLIC_LINK_LIBRARIES})
         if(TARGET_PRIVATE_LINK_LIBRARIES)
-            message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter PRIVATE_LINK_LIBRARIES for ${TARGET_TYPE} target")
+            message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Invalid parameter PRIVATE_LINK_LIBRARIES for ${TARGET_TYPE} target")
         endif()
     else()
         target_link_libraries(${TARGET_NAME}
@@ -539,7 +539,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             endif()
         endif()
     elseif(TARGET_COMBINED_LINK_LIBRARIES)
-        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter COMBINED_LINK_LIBRARIES for ${TARGET_TYPE} target")
+        message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Invalid parameter COMBINED_LINK_LIBRARIES for ${TARGET_TYPE} target")
     endif()
 
     # Qt
@@ -547,12 +547,12 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     list(APPEND _qt_modules ${TARGET_PRIVATE_LINK_LIBRARIES})
     list(FILTER _qt_modules INCLUDE REGEX "^Qt5::")
     if(_qt_modules AND TARGET_SHARED_AND_STATIC)
-        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Unsupported Qt dependency with SHARED_AND_STATIC target")
+        message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Unsupported Qt dependency with SHARED_AND_STATIC target")
     elseif(_qt_modules AND NOT TARGET_INTERFACE )
 
         # MOC
         if(NOT CMAKE_AUTOMOC)
-            cstoolkit_qt_wrap_cpp(MOC_FILES TARGET ${TARGET_NAME}
+            cfmake_qt_wrap_cpp(MOC_FILES TARGET ${TARGET_NAME}
                 ${TARGET_PRIVATE_HEADERS_FILES} ${TARGET_PUBLIC_HEADERS_FILES}
                 ${TARGET_SOURCES_FILES}
             )
@@ -560,28 +560,28 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/$<LOWER_CASE:$<CONFIG>>)
 
             target_sources(${TARGET_NAME} PRIVATE ${MOC_FILES})
-            cstoolkit_source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${MOC_FILES})
+            cfmake_source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${MOC_FILES})
         endif()
 
         # UI
         if(NOT CMAKE_AUTOUIC AND TARGET_UI_FILES)
-            cstoolkit_qt_wrap_ui(UIC_FILES ${TARGET_UI_FILES})
+            cfmake_qt_wrap_ui(UIC_FILES ${TARGET_UI_FILES})
 
             target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/generated/uic/$<LOWER_CASE:$<CONFIG>>)
 
             target_sources(${TARGET_NAME} PRIVATE ${UIC_FILES})
-            cstoolkit_source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${UIC_FILES})
+            cfmake_source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${UIC_FILES})
         endif()
 
         # QRC
         if(NOT CMAKE_AUTORCC)
-            cstoolkit_qt_add_resources(RCC_FILES TARGET_QRC_RESOURCES_FILES ${TARGET_RESOURCES_FILES})
+            cfmake_qt_add_resources(RCC_FILES TARGET_QRC_RESOURCES_FILES ${TARGET_RESOURCES_FILES})
 
             target_sources(${TARGET_NAME} PRIVATE ${RCC_FILES})
-            cstoolkit_source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${RCC_FILES})
+            cfmake_source_group(TREE ${CMAKE_CURRENT_BINARY_DIR}/generated PREFIX "Generated Files" FILES ${RCC_FILES})
 
             target_sources(${TARGET_NAME} PRIVATE ${TARGET_QRC_RESOURCES_FILES})
-            cstoolkit_source_group(TREE ${TARGET_RESOURCES_DIRS} PREFIX "Resource Files" FILES ${TARGET_QRC_RESOURCES_FILES})
+            cfmake_source_group(TREE ${TARGET_RESOURCES_DIRS} PREFIX "Resource Files" FILES ${TARGET_QRC_RESOURCES_FILES})
         endif()
 
     endif()
@@ -597,7 +597,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(_generate_qt_info "QT")
         endif()
 
-        cstoolkit_generate_target_info(
+        cfmake_generate_target_info(
             TARGET "${TARGET_NAME}"
             VERSION "${PROJECT_VERSION}"
             PRODUCT "${PROJECT_NAME}"
@@ -609,7 +609,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         )
 
         if(MSVC)
-            cstoolkit_generate_rc_file(
+            cfmake_generate_rc_file(
                 TARGET "${TARGET_NAME}"
                 VERSION "${PROJECT_VERSION}"
                 COMPANY "CSGroup"
@@ -650,9 +650,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(TARGET_RUNTIME_DLLS "$<FILTER:${TARGET_RUNTIME_DLLS},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
         endif()
 
-        if(CSTOOLKIT_BUILD_DEPLOY)
+        if(CFMAKE_BUILD_DEPLOY)
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY} -e
+                COMMAND ${CFMAKE_COPY} -e
                     "${TARGET_RUNTIME_DLLS}"
                     "$<TARGET_FILE_DIR:${TARGET_NAME}>"
                     COMMAND_EXPAND_LISTS
@@ -664,9 +664,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         elseif(BORLAND)
             set(TARGET_RUNTIME_SYMBOLS "$<LIST:TRANSFORM,${TARGET_RUNTIME_DLLS},REPLACE,\(.*\)\\.[^.]+,\\1.tds>")
         endif()
-        if(TARGET_RUNTIME_SYMBOLS AND CSTOOLKIT_BUILD_DEPLOY)
+        if(TARGET_RUNTIME_SYMBOLS AND CFMAKE_BUILD_DEPLOY)
             add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                COMMAND ${CSTOOLKIT_COPY}
+                COMMAND ${CFMAKE_COPY}
                     "${TARGET_RUNTIME_SYMBOLS}"
                     "$<TARGET_FILE_DIR:${TARGET_NAME}>"
                     COMMAND_EXPAND_LISTS
@@ -676,9 +676,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         if(TARGET_PLUGINS)
             if(TARGET_PLUGINS_DIR)
                 if(TARGET_PLUGINSC GREATER 1 OR "DESTINATION" IN_LIST TARGET_PLUGINS)
-                    message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter PLUGINS_DIR")
+                    message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Invalid parameter PLUGINS_DIR")
                 else()
-                    message(NOTICE ${COLOR_YELLOW_BOLD} "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): PLUGINS_DIR parameter deprecated, use PLUGINS <plugins> DESTINATION <plugin_dir>" ${COLOR_RESET})
+                    message(NOTICE ${COLOR_YELLOW_BOLD} "CFMake: cfmake_add_target(${TARGET_NAME}): PLUGINS_DIR parameter deprecated, use PLUGINS <plugins> DESTINATION <plugin_dir>" ${COLOR_RESET})
                     list(APPEND TARGET_PLUGINSV0 DESTINATION "${TARGET_PLUGINS_DIR}")
                 endif()
             endif()
@@ -695,7 +695,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             foreach(target_plugins_args ${TARGET_PLUGINSV})
                 cmake_parse_arguments(${target_plugins_args} "" "DESTINATION" "PLUGINS" ${${target_plugins_args}})
                 if(DEFINED ${target_plugins_args}_UNPARSED_ARGUMENTS)
-                    message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Unkown arguments \"${${target_plugins_args}_UNPARSED_ARGUMENTS}\"")
+                    message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Unkown arguments \"${${target_plugins_args}_UNPARSED_ARGUMENTS}\"")
                     continue()
                 endif()
 
@@ -771,7 +771,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             while(DESTINATION_INDEX_A LESS TARGET_PLUGINS_DESTINATION_SIZE)
                 math(EXPR DESTINATION_INDEX_B "${DESTINATION_INDEX_A}+1")
                 while(DESTINATION_INDEX_B LESS TARGET_PLUGINS_DESTINATION_SIZE)
-                    cstoolkit_genex_list_intersection("${PLUGINS_TARGET_FILES${DESTINATION_INDEX_A}}" "${PLUGINS_TARGET_FILES${DESTINATION_INDEX_B}}" PLUGINS_TARGET_FILES_INTER)
+                    cfmake_genex_list_intersection("${PLUGINS_TARGET_FILES${DESTINATION_INDEX_A}}" "${PLUGINS_TARGET_FILES${DESTINATION_INDEX_B}}" PLUGINS_TARGET_FILES_INTER)
 
                     set(MOVE_TO_ROOT_PLUGINS "${MOVE_TO_ROOT_PLUGINS};${PLUGINS_TARGET_FILES_INTER}")
         
@@ -790,9 +790,9 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             set(DESTINATION_INDEX 0)
             while(DESTINATION_INDEX LESS TARGET_PLUGINS_DESTINATION_SIZE)
                 # Copy of the plugins files
-                if(CSTOOLKIT_BUILD_DEPLOY)
+                if(CFMAKE_BUILD_DEPLOY)
                     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                        COMMAND ${CSTOOLKIT_COPY} -e
+                        COMMAND ${CFMAKE_COPY} -e
                             "${PLUGINS_TARGET_FILES${DESTINATION_INDEX}}"
                             "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}"
                             COMMAND_EXPAND_LISTS
@@ -804,10 +804,10 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 elseif(BORLAND)
                     set(PLUGINS_TARGET_SYMBOLS${DESTINATION_INDEX} "$<LIST:TRANSFORM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},REPLACE,\(.*\)\\.[^.]+,\\1.tds>")
                 endif()
-                if(TARGET_RUNTIME_SYMBOLS AND CSTOOLKIT_BUILD_DEPLOY)
+                if(TARGET_RUNTIME_SYMBOLS AND CFMAKE_BUILD_DEPLOY)
                     # Copy of the plugins pdbs
                     add_custom_command(TARGET ${TARGET_NAME} POST_BUILD
-                        COMMAND ${CSTOOLKIT_COPY}
+                        COMMAND ${CFMAKE_COPY}
                             "${PLUGINS_TARGET_SYMBOLS${DESTINATION_INDEX}}"
                             "$<TARGET_FILE_DIR:${TARGET_NAME}>/${TARGET_PLUGINS_DESTINATION${DESTINATION_INDEX}}"
                             COMMAND_EXPAND_LISTS
@@ -818,13 +818,13 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
             endwhile()
         endif()
     elseif(TARGET_PLUGINS)
-        message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Invalid parameter PLUGINS for ${TARGET_TYPE} target")
+        message(SEND_ERROR "CFMake: cfmake_add_target(${TARGET_NAME}): Invalid parameter PLUGINS for ${TARGET_TYPE} target")
     endif()
 
     # Deploy of .deploy files
 
     foreach(_deploy_file ${TARGET_DEPLOY_FILES})
-        cstoolkit_deploy(${_deploy_file})
+        cfmake_deploy(${_deploy_file})
     endforeach()
 
     # Installation
@@ -840,14 +840,14 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_INSTALL_COMPONENT ${TARGET_INSTALL_INTER_DIR}_${TARGET_NAME})
         set(TARGET_INSTALL_DESTINATION externals/${TARGET_INSTALL_INTER_DIR}/${TARGET_NAME})
     else()
-        if((CSTOOLKIT_INSTALL_TARGETS AND TARGET_NAME IN_LIST CSTOOLKIT_INSTALL_TARGETS AND NOT TARGET_NO_INSTALL) # Specified targets
-            OR (NOT CSTOOLKIT_INSTALL_TARGETS AND NOT TARGET_NO_INSTALL)) # all targets
+        if((CFMAKE_INSTALL_TARGETS AND TARGET_NAME IN_LIST CFMAKE_INSTALL_TARGETS AND NOT TARGET_NO_INSTALL) # Specified targets
+            OR (NOT CFMAKE_INSTALL_TARGETS AND NOT TARGET_NO_INSTALL)) # all targets
             set(TARGET_INSTALL_EXCLUDE_FROM_ALL "")
             set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
             set(TARGET_INSTALL_TARGETS_NAME ${TARGET_INSTALL_CONFIG_NAME}Targets)
             set(TARGET_INSTALL_COMPONENT ${TARGET_NAME})
             set(TARGET_INSTALL_DESTINATION ${TARGET_NAME})
-            set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_INSTALLED_TARGETS "${TARGET_NAME}")
+            set_property(GLOBAL APPEND PROPERTY CFMAKE_INSTALLED_TARGETS "${TARGET_NAME}")
         else() #autres components à exclure
             set(TARGET_INSTALL_EXCLUDE_FROM_ALL "EXCLUDE_FROM_ALL")
             set(TARGET_INSTALL_CONFIG_NAME ${PROJECT_NAME}_${TARGET_NAME})
@@ -857,7 +857,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
     endif()
 
-    set_property(GLOBAL APPEND PROPERTY CSTOOLKIT_INSTALLED_TARGETS_ALL "${TARGET_NAME}")
+    set_property(GLOBAL APPEND PROPERTY CFMAKE_INSTALLED_TARGETS_ALL "${TARGET_NAME}")
 
     set(TARGET_CONFIG_NAME ${TARGET_INSTALL_CONFIG_NAME})
 
@@ -867,22 +867,22 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_COMPONENT "${TARGET_INSTALL_COMPONENT}") # READONLY
     set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_DESTINATION_DEFAULT "${TARGET_INSTALL_DESTINATION}") # READONLY
     set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_DESTINATION "${TARGET_INSTALL_DESTINATION}")
-    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_LIBDIR "${CSTOOLKIT_DEFAULT_INSTALL_LIBDIR}")
-    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_BINDIR "${CSTOOLKIT_DEFAULT_INSTALL_BINDIR}")
-    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_SYMBOLSDIR "${CSTOOLKIT_DEFAULT_INSTALL_SYMBOLSDIR}")
-    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_INCLUDEDIR "${CSTOOLKIT_DEFAULT_INSTALL_INCLUDEDIR}")
-    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_CMAKEDIR "${CSTOOLKIT_DEFAULT_INSTALL_CMAKEDIR}")
+    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_LIBDIR "${CFMAKE_DEFAULT_INSTALL_LIBDIR}")
+    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_BINDIR "${CFMAKE_DEFAULT_INSTALL_BINDIR}")
+    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_SYMBOLSDIR "${CFMAKE_DEFAULT_INSTALL_SYMBOLSDIR}")
+    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_INCLUDEDIR "${CFMAKE_DEFAULT_INSTALL_INCLUDEDIR}")
+    set_target_properties(${TARGET_NAME} PROPERTIES INSTALL_CMAKEDIR "${CFMAKE_DEFAULT_INSTALL_CMAKEDIR}")
     if(TARGET_SHARED_AND_STATIC)
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_EXCLUDE_FROM_ALL "${TARGET_INSTALL_EXCLUDE_FROM_ALL}") # READONLY
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_CONFIG_NAME "${TARGET_INSTALL_CONFIG_NAME}")
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_TARGETS_NAME "${TARGET_INSTALL_TARGETS_NAME}") # READONLY
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_COMPONENT "${TARGET_INSTALL_COMPONENT}") # READONLY
         set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_DESTINATION "${TARGET_INSTALL_DESTINATION}")
-        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_LIBDIR "${CSTOOLKIT_DEFAULT_INSTALL_LIBDIR}")
-        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_BINDIR "${CSTOOLKIT_DEFAULT_INSTALL_BINDIR}")
-        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_SYMBOLSDIR "${CSTOOLKIT_DEFAULT_INSTALL_SYMBOLSDIR}")
-        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_INCLUDEDIR "${CSTOOLKIT_DEFAULT_INSTALL_INCLUDEDIR}")
-        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_CMAKEDIR "${CSTOOLKIT_DEFAULT_INSTALL_CMAKEDIR}")
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_LIBDIR "${CFMAKE_DEFAULT_INSTALL_LIBDIR}")
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_BINDIR "${CFMAKE_DEFAULT_INSTALL_BINDIR}")
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_SYMBOLSDIR "${CFMAKE_DEFAULT_INSTALL_SYMBOLSDIR}")
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_INCLUDEDIR "${CFMAKE_DEFAULT_INSTALL_INCLUDEDIR}")
+        set_target_properties(${TARGET_NAME_STATIC} PROPERTIES INSTALL_CMAKEDIR "${CFMAKE_DEFAULT_INSTALL_CMAKEDIR}")
     endif()
 
     # Generator expression installs vars
@@ -898,7 +898,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
 
     if(TARGET_RECURSIVE_INTERFACE_INCLUDE AND TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS)
         foreach(_public_header_dir ${TARGET_RECURSIVE_PUBLIC_HEADERS_DIRS})
-            cstoolkit_relative_path_dirs(_public_header_dir BASE_DIRECTORIES ${TARGET_PUBLIC_HEADERS_DIRS} OUTPUT_VARIABLE _relative_public_header_dir)
+            cfmake_relative_path_dirs(_public_header_dir BASE_DIRECTORIES ${TARGET_PUBLIC_HEADERS_DIRS} OUTPUT_VARIABLE _relative_public_header_dir)
             set(_relative_public_header_dir ${TARGET_INSTALL_INCLUDEDIR}/${_relative_public_header_dir})
             list(APPEND TARGET_RECURSIVE_RELATIVE_PUBLIC_HEADERS_DIRS ${_relative_public_header_dir})
         endforeach()
@@ -949,11 +949,11 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
 
         # Qt
-        if(_qt_modules AND CSTOOLKIT_AUTO_DEPLOY_QT)
+        if(_qt_modules AND CFMAKE_AUTO_DEPLOY_QT)
             set(ALL_RUNTIME_DLLS "${TARGET_RUNTIME_DLLS};${PLUGINS_RUNTIME_DLLS}")
             set(ALL_RUNTIME_DLLS "$<LIST:REMOVE_DUPLICATES,${ALL_RUNTIME_DLLS}>")
             set(ALL_RUNTIME_DLLS "$<JOIN:${ALL_RUNTIME_DLLS},;>") # remove empty elements
-            cstoolkit_qt_generate_deploy_app_script(
+            cfmake_qt_generate_deploy_app_script(
                 TARGET ${TARGET_NAME}
                 INSTALL_DIR ${TARGET_INSTALL_BINDIR}
                 RUNTIME_DEPENDENCIES ${ALL_RUNTIME_DLLS}
@@ -967,7 +967,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # PDBS
     if(MSVC)
         if(TARGET_SHARED)
-            if(CSTOOLKIT_INSTALL_SYMBOLS_TO_SYMBOLSDIR)
+            if(CFMAKE_INSTALL_SYMBOLS_TO_SYMBOLSDIR)
                 install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_SYMBOLSDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
             else()
                 install(FILES $<TARGET_PDB_FILE:${TARGET_NAME}> DESTINATION ${TARGET_INSTALL_BINDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
@@ -985,7 +985,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         endif()
     elseif(BORLAND)
         if(TARGET_SHARED)
-            if(CSTOOLKIT_INSTALL_SYMBOLS_TO_SYMBOLSDIR)
+            if(CFMAKE_INSTALL_SYMBOLS_TO_SYMBOLSDIR)
                 install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_PREFIX:${TARGET_NAME}>$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.tds DESTINATION ${TARGET_INSTALL_SYMBOLSDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
             else()
                 install(FILES $<TARGET_FILE_DIR:${TARGET_NAME}>/$<TARGET_FILE_PREFIX:${TARGET_NAME}>$<TARGET_FILE_BASE_NAME:${TARGET_NAME}>.tds DESTINATION ${TARGET_INSTALL_BINDIR} COMPONENT ${TARGET_INSTALL_COMPONENT} OPTIONAL ${TARGET_INSTALL_EXCLUDE_FROM_ALL})
@@ -1072,7 +1072,7 @@ macro(generate_target_config)
     # Now FETCH_DEPENDENCY_GENEX contains "original_name|sanitized_name" pairs
     # \\1 = original name (for function call), \\2 = sanitized name (for property lookup)
     set(FETCH_DEPENDENCY_GENEX_BLOCK
-"$<1:$><$<1:$><BOOL:$<1:$><TARGET_PROPERTY:CSTOOLKIT$<COMMA>FETCH_\\2_URL$<ANGLE-R>$<ANGLE-R>:   cstoolkit_fetch_dependency(\\1 \"$<1:$><TARGET_PROPERTY:CSTOOLKIT$<COMMA>FETCH_\\2_URL$<ANGLE-R>\"$<1:$><TARGET_PROPERTY:CSTOOLKIT$<COMMA>FETCH_\\2_PARAMS$<ANGLE-R>)
+"$<1:$><$<1:$><BOOL:$<1:$><TARGET_PROPERTY:CFMAKE$<COMMA>FETCH_\\2_URL$<ANGLE-R>$<ANGLE-R>:   cfmake_fetch_dependency(\\1 \"$<1:$><TARGET_PROPERTY:CFMAKE$<COMMA>FETCH_\\2_URL$<ANGLE-R>\"$<1:$><TARGET_PROPERTY:CFMAKE$<COMMA>FETCH_\\2_PARAMS$<ANGLE-R>)
 $<ANGLE-R>")
     set(FETCH_DEPENDENCY_GENEX "$<LIST:TRANSFORM,${FETCH_DEPENDENCY_GENEX},REPLACE,([^|]+)\\|(.+),${FETCH_DEPENDENCY_GENEX_BLOCK}>")
     set(FETCH_DEPENDENCY_GENEX "$<GENEX_EVAL:${FETCH_DEPENDENCY_GENEX}>")

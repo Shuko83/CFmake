@@ -1,4 +1,4 @@
-function(cstoolkit_generate_target_info)
+function(cfmake_generate_target_info)
 
     set(options QT EXECUTABLE)
     set(one_value_keywords
@@ -11,7 +11,7 @@ function(cstoolkit_generate_target_info)
     
     cmake_parse_arguments(PARSE_ARGV 0 PARAMS "${options}" "${one_value_keywords}" "${multi_value_keywords}")
 
-    message(DEBUG "cstoolkit_generate_target_info: Valeur Target : " ${PARAMS_TARGET})
+    message(DEBUG "cfmake_generate_target_info: Valeur Target : " ${PARAMS_TARGET})
 
     set(INFO_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/generated/info)
     
@@ -19,9 +19,9 @@ function(cstoolkit_generate_target_info)
     set(target_info_h_filename ${INFO_DIRECTORY}/target_info.h)
 
     if(MSVC)
-        set(PARAMS_COMPILER "Visual Studio ${CSTOOLKIT_COMPILER_VERSION}, ${CMAKE_CXX_COMPILER_ID} ${CMAKE_VS_PLATFORM_TOOLSET} (${CMAKE_CXX_COMPILER_VERSION})")
+        set(PARAMS_COMPILER "Visual Studio ${CFMAKE_COMPILER_VERSION}, ${CMAKE_CXX_COMPILER_ID} ${CMAKE_VS_PLATFORM_TOOLSET} (${CMAKE_CXX_COMPILER_VERSION})")
     else()
-        set(PARAMS_COMPILER "${CSTOOLKIT_COMPILER_NAME} ${CMAKE_CXX_COMPILER_VERSION}")
+        set(PARAMS_COMPILER "${CFMAKE_COMPILER_NAME} ${CMAKE_CXX_COMPILER_VERSION}")
     endif()
 
     if(PARAMS_QT)

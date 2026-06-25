@@ -3,7 +3,7 @@ if(TARGET ccl::ccl)
     return()
 endif()
 
-set(ccl_ROOT_DIR "${CSTOOLKIT_EXTERNALS}/ccl")
+set(ccl_ROOT_DIR "${CFMAKE_EXTERNALS}/ccl")
 set(ccl_LIBRARIES "ccl::ccl" "ccl::ccl_STATIC")
 
 add_library(ccl::ccl SHARED IMPORTED)

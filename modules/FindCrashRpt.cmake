@@ -2,7 +2,7 @@ if(TARGET CrashRpt)
     return()
 endif()
 
-set(CrashRpt_ROOT_DIR "${CSTOOLKIT_EXTERNALS}/CrashRpt")
+set(CrashRpt_ROOT_DIR "${CFMAKE_EXTERNALS}/CrashRpt")
 set(CrashRpt_LIBRARIES "CrashRpt")
 
 add_library(CrashRpt SHARED IMPORTED)
@@ -13,13 +13,13 @@ set_target_properties(CrashRpt PROPERTIES
 
 set_target_properties(CrashRpt PROPERTIES
     IMPORTED_LINK_INTERFACE_LANGUAGES "CXX"
-    IMPORTED_IMPLIB "${CrashRpt_ROOT_DIR}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/CrashRpt.lib"
-    IMPORTED_LOCATION "${CrashRpt_ROOT_DIR}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/CrashRpt.dll"
+    IMPORTED_IMPLIB "${CrashRpt_ROOT_DIR}/win-msvc2015-${CFMAKE_HOST_ARCH}/CrashRpt.lib"
+    IMPORTED_LOCATION "${CrashRpt_ROOT_DIR}/win-msvc2015-${CFMAKE_HOST_ARCH}/CrashRpt.dll"
 )
 
 set(CrashRpt_RUNTIME_DLLS
-    "${CrashRpt_ROOT_DIR}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/dbghelp.dll"
-    "${CrashRpt_ROOT_DIR}/win-msvc2015-${CSTOOLKIT_HOST_ARCH}/CrashSaver.exe"
+    "${CrashRpt_ROOT_DIR}/win-msvc2015-${CFMAKE_HOST_ARCH}/dbghelp.dll"
+    "${CrashRpt_ROOT_DIR}/win-msvc2015-${CFMAKE_HOST_ARCH}/CrashSaver.exe"
 )
 
 # handle the QUIETLY and REQUIRED arguments and set xxx_FOUND to TRUE if

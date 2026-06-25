@@ -3,60 +3,60 @@ find_package(Git QUIET)
 if(GIT_EXECUTABLE)
     execute_process(COMMAND "${GIT_EXECUTABLE}" describe --all --dirty --broken --long --always
                     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_COMMIT
+                    OUTPUT_VARIABLE CFMAKE_GIT_COMMIT
                     ERROR_QUIET
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
     
     execute_process(COMMAND "${GIT_EXECUTABLE}" rev-parse HEAD
                     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_SHA
+                    OUTPUT_VARIABLE CFMAKE_GIT_SHA
                     ERROR_QUIET
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     execute_process(COMMAND "${GIT_EXECUTABLE}" describe --exact-match --tags
                     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_TAG
+                    OUTPUT_VARIABLE CFMAKE_GIT_TAG
                     ERROR_QUIET
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     execute_process(COMMAND "${GIT_EXECUTABLE}" rev-parse --abbrev-ref HEAD
                     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_BRANCH
+                    OUTPUT_VARIABLE CFMAKE_GIT_BRANCH
                     ERROR_QUIET
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     execute_process(COMMAND "${GIT_EXECUTABLE}" log -n 1 --pretty=%cD
                     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_DATE
+                    OUTPUT_VARIABLE CFMAKE_GIT_DATE
                     ERROR_QUIET
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     execute_process(COMMAND "${GIT_EXECUTABLE}" remote get-url origin
                     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_URL
+                    OUTPUT_VARIABLE CFMAKE_GIT_URL
                     ERROR_QUIET
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     execute_process(COMMAND "${GIT_EXECUTABLE}" rev-parse --show-toplevel
                     WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-                    OUTPUT_VARIABLE CSTOOLKIT_GIT_RELATIVE_TOP_LEVEL
+                    OUTPUT_VARIABLE CFMAKE_GIT_RELATIVE_TOP_LEVEL
                     ERROR_QUIET
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-    if(CSTOOLKIT_GIT_BRANCH STREQUAL "HEAD")
-        set(CSTOOLKIT_GIT_BRANCH "")
+    if(CFMAKE_GIT_BRANCH STREQUAL "HEAD")
+        set(CFMAKE_GIT_BRANCH "")
     endif()
 
-    if(CSTOOLKIT_GIT_RELATIVE_TOP_LEVEL)
-        cmake_path(RELATIVE_PATH CMAKE_SOURCE_DIR BASE_DIRECTORY "${CSTOOLKIT_GIT_RELATIVE_TOP_LEVEL}" OUTPUT_VARIABLE CSTOOLKIT_GIT_RELATIVE_TOP_LEVEL)
+    if(CFMAKE_GIT_RELATIVE_TOP_LEVEL)
+        cmake_path(RELATIVE_PATH CMAKE_SOURCE_DIR BASE_DIRECTORY "${CFMAKE_GIT_RELATIVE_TOP_LEVEL}" OUTPUT_VARIABLE CFMAKE_GIT_RELATIVE_TOP_LEVEL)
     endif()
 endif()
 
-function(cstoolkit_git_safe_delete git_src_dir)
+function(cfmake_git_safe_delete git_src_dir)
     # Check if directory exists and is not empty
     if(EXISTS "${git_src_dir}")
         if(NOT IS_DIRECTORY "${git_src_dir}")
-            message(FATAL_ERROR "CSToolkit: Delete git repository failed (${git_src_dir}), is not a directory")
+            message(FATAL_ERROR "CFMake: Delete git repository failed (${git_src_dir}), is not a directory")
             return()
         endif()
 
@@ -80,7 +80,7 @@ function(cstoolkit_git_safe_delete git_src_dir)
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     if(NOT _git_safe_delete_toplevel STREQUAL git_src_dir)
-        message(FATAL_ERROR "CSToolkit: Delete git repository failed (${git_src_dir}), not a git repository")
+        message(FATAL_ERROR "CFMake: Delete git repository failed (${git_src_dir}), not a git repository")
         return()
     endif()
 
@@ -92,7 +92,7 @@ function(cstoolkit_git_safe_delete git_src_dir)
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     if(NOT _git_safe_delete_status STREQUAL "")
-        message(FATAL_ERROR "CSToolkit: Delete git repository failed (${git_src_dir}), uncommitted changes")
+        message(FATAL_ERROR "CFMake: Delete git repository failed (${git_src_dir}), uncommitted changes")
         return()
     endif()
 
@@ -121,7 +121,7 @@ function(cstoolkit_git_safe_delete git_src_dir)
                 OUTPUT_STRIP_TRAILING_WHITESPACE
             )
             if(_git_safe_delete_contains STREQUAL "")
-                message(FATAL_ERROR "CSToolkit: Delete git repository failed (${git_src_dir}), detached HEAD commit is not pushed")
+                message(FATAL_ERROR "CFMake: Delete git repository failed (${git_src_dir}), detached HEAD commit is not pushed")
                 return()
             endif()
         endif()
@@ -146,7 +146,7 @@ function(cstoolkit_git_safe_delete git_src_dir)
             OUTPUT_STRIP_TRAILING_WHITESPACE
         )
         if(upstream_symbolic_name STREQUAL "")
-            message(FATAL_ERROR "CSToolkit: Delete git repository failed (${git_src_dir}), branch '${branch}' is untracked")
+            message(FATAL_ERROR "CFMake: Delete git repository failed (${git_src_dir}), branch '${branch}' is untracked")
             return()
         endif()
 
@@ -172,7 +172,7 @@ function(cstoolkit_git_safe_delete git_src_dir)
             ERROR_QUIET
         )
         if(NOT _git_safe_delete_gone EQUAL 0)
-            message(FATAL_ERROR "CSToolkit: Delete git repository failed (${git_src_dir}), branch '${branch}' tracks a gone remote branch")
+            message(FATAL_ERROR "CFMake: Delete git repository failed (${git_src_dir}), branch '${branch}' tracks a gone remote branch")
             return()
         endif()
 
@@ -183,7 +183,7 @@ function(cstoolkit_git_safe_delete git_src_dir)
             OUTPUT_STRIP_TRAILING_WHITESPACE
         )
         if(_git_safe_delete_unpushed GREATER 0)
-            message(FATAL_ERROR "CSToolkit: Delete git repository failed (${git_src_dir}), branch '${branch}' has unpushed commit(s)")
+            message(FATAL_ERROR "CFMake: Delete git repository failed (${git_src_dir}), branch '${branch}' has unpushed commit(s)")
             return()
         endif()
     endforeach()
@@ -196,7 +196,7 @@ function(cstoolkit_git_safe_delete git_src_dir)
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     if(NOT _git_safe_delete_stash STREQUAL "")
-        message(FATAL_ERROR "CSToolkit: Delete git repository failed (${git_src_dir}), stashed changes found")
+        message(FATAL_ERROR "CFMake: Delete git repository failed (${git_src_dir}), stashed changes found")
         return()
     endif()
 

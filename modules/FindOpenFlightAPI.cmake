@@ -13,7 +13,7 @@ add_library(OpenFlightAPI::fltdata SHARED IMPORTED)
 add_library(OpenFlightAPI::mgapilib SHARED IMPORTED)
 add_library(OpenFlightAPI::mgdd SHARED IMPORTED)
 
-if (${CSTOOLKIT_HOST_ARCH} STREQUAL "x64")
+if (${CFMAKE_HOST_ARCH} STREQUAL "x64")
     set(OpenFlightAPI_LIB_DIR "lib_x64")
     set(OpenFlightAPI_BIN_DIR "bin_x64")
 else()
