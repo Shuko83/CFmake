@@ -189,9 +189,15 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     endif()
 
     if(TARGET_MODULE) # Module libraries are always treated as library targets by cmake
-        set_target_properties(${TARGET_NAME} PROPERTIES
-            LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/$<LOWER_CASE:$<CONFIG>>"
-        )
+        if(WIN32)
+            set_target_properties(${TARGET_NAME} PROPERTIES
+                LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/$<LOWER_CASE:$<CONFIG>>"
+            )
+        else()
+            set_target_properties(${TARGET_NAME} PROPERTIES
+                LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib/$<LOWER_CASE:$<CONFIG>>"
+            )
+        endif()
     endif()
 
     # Version
@@ -910,7 +916,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_INSTALL_INCLUDES_DESTINATION INCLUDES DESTINATION ${TARGET_RECURSIVE_RELATIVE_PUBLIC_HEADERS_DIRS})
     endif()
 
-    if(TARGET_MODULE)
+    if(WIN32 AND TARGET_MODULE)
         set(TARGET_INSTALL_LIBRARY_DESTINATION ${TARGET_INSTALL_BINDIR})
     else()
         set(TARGET_INSTALL_LIBRARY_DESTINATION ${TARGET_INSTALL_LIBDIR})
