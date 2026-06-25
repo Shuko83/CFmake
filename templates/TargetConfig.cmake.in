@@ -40,9 +40,3 @@ macro(@TARGET_INSTALL_CONFIG_NAME@_find_dependency dep)
         endif()
     endif()
 endmacro()
-if(COMMAND cfmake_fetch_dependency)
-$<LIST:JOIN,@FETCH_DEPENDENCY_GENEX@,>endif()
-$<LIST:JOIN,@FIND_DEPENDENCY_GENEX@,
->
->
-include(${CMAKE_CURRENT_LIST_DIR}/@TARGET_INSTALL_CONFIG_NAME@Targets.cmake)
