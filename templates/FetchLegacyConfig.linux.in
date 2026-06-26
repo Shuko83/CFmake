@@ -135,11 +135,14 @@ foreach(_releaselib ${_RELEASE_SHARED_LIB_LIST})
     if(DEFINED _includedir)
         set_target_properties(@fetch_package_name@::${_libname} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_includedir}")
     endif()
+    get_filename_component(_release_soname "${_releaselib}" NAME)
+    get_filename_component(_debug_soname "${_debuglib}" NAME)
     set_target_properties(@fetch_package_name@::${_libname} PROPERTIES
         IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
         IMPORTED_LOCATION_RELEASE "${_releaselib}"
         IMPORTED_LOCATION_DEBUG "${_debuglib}"
-        IMPORTED_NO_SONAME 1
+        IMPORTED_SONAME_RELEASE "${_release_soname}"
+        IMPORTED_SONAME_DEBUG "${_debug_soname}"
     )
 
     list(APPEND @fetch_package_name@_LIBRARIES "@fetch_package_name@::${_libname}")
@@ -186,11 +189,14 @@ foreach(_lib ${_SHARED_LIB_LIST})
     if(DEFINED _includedir)
         set_target_properties(@fetch_package_name@::${_libname} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_includedir}")
     endif()
+    get_filename_component(_release_soname "${_releaselib}" NAME)
+    get_filename_component(_debug_soname "${_debuglib}" NAME)
     set_target_properties(@fetch_package_name@::${_libname} PROPERTIES
         IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
         IMPORTED_LOCATION_RELEASE "${_releaselib}"
         IMPORTED_LOCATION_DEBUG "${_debuglib}"
-        IMPORTED_NO_SONAME 1
+        IMPORTED_SONAME_RELEASE "${_release_soname}"
+        IMPORTED_SONAME_DEBUG "${_debug_soname}"
     )
 
     list(APPEND @fetch_package_name@_LIBRARIES "@fetch_package_name@::${_libname}")

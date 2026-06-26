@@ -34,11 +34,14 @@ foreach(_releaselib ${_LIB_LIST})
 
     add_library(@fetch_package_name@::${_libname} SHARED IMPORTED)
     set_target_properties(@fetch_package_name@::${_libname} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${_includedir}")
+    get_filename_component(_release_soname "${_releaselib}" NAME)
+    get_filename_component(_debug_soname "${_debuglib}" NAME)
     set_target_properties(@fetch_package_name@::${_libname} PROPERTIES
         IMPORTED_CONFIGURATIONS "RELEASE;DEBUG"
         IMPORTED_LOCATION_RELEASE "${_releaselib}"
         IMPORTED_LOCATION_DEBUG "${_debuglib}"
-        IMPORTED_NO_SONAME 1
+        IMPORTED_SONAME_RELEASE "${_release_soname}"
+        IMPORTED_SONAME_DEBUG "${_debug_soname}"
     )
 
     if(_libname STREQUAL "Messages")
