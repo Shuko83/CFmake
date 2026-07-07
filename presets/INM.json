@@ -114,8 +114,19 @@
         },
         {
             "name": "linux_x64",
-            "displayName": "linux_x64",
+            "displayName": "Linux x64",
             "description": "Configure project using ninja for unix",
+            "generator": "Ninja Multi-Config",
+            "binaryDir": "build/unix/$env{TARGET_MKSPECS}",
+            "cacheVariables": {
+                "CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE",
+                "CMAKE_CONFIGURATION_TYPES": "debug;release"
+            }
+        },
+        {
+            "name": "linux_x64_qt",
+            "displayName": "Linux Qt x64",
+            "description": "Configure project using ninja for unix with Qt support",
             "generator": "Ninja Multi-Config",
             "binaryDir": "build/unix/$env{TARGET_MKSPECS}",
             "cacheVariables": {
@@ -223,6 +234,26 @@
         {
             "name": "linux_release_x64",
             "configurePreset": "linux_x64",
+            "configuration": "release",
+            "targets": [
+                "all",
+                "install"
+            ],
+            "jobs": 4
+        },
+        {
+            "name": "linux_debug_x64_qt",
+            "configurePreset": "linux_x64_qt",
+            "configuration": "debug",
+            "targets": [
+                "all",
+                "install"
+            ],
+            "jobs": 4
+        },
+        {
+            "name": "linux_release_x64_qt",
+            "configurePreset": "linux_x64_qt",
             "configuration": "release",
             "targets": [
                 "all",
@@ -370,6 +401,23 @@
             ]
         },
         {
+            "name": "build_linux_x64_qt",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux_x64_qt"
+                },
+                {
+                    "type": "build",
+                    "name": "linux_debug_x64_qt"
+                },
+                {
+                    "type": "build",
+                    "name": "linux_release_x64_qt"
+                }
+            ]
+        },
+        {
             "name": "build_win_bl2010_x86",
             "steps": [
                 {
@@ -446,6 +494,15 @@
                 {
                     "type": "configure",
                     "name": "linux_x64"
+                }
+            ]
+        },
+        {
+            "name": "dev_linux_x64_qt",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux_x64_qt"
                 }
             ]
         }
