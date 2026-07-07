@@ -5,7 +5,6 @@
         "minor": 27,
         "patch": 0
     },
- 
     "configurePresets": [
         {
             "name": "win_msvc15_x64",
@@ -25,7 +24,6 @@
                 "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.14393.795"
             }
         },
-        
         {
             "name": "win_msvc15_x64_Qt5.9.6",
             "description": "Configure project using Visual Studio 2015 (v140) in x64 for Windows",
@@ -40,11 +38,10 @@
             },
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x64-Qt5.9.6/",
-                "Qt5_ROOT" : "$env{QT5_9_6}/msvc2015_64/",
+                "Qt5_ROOT": "$env{QT5_9_6}/msvc2015_64/",
                 "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.14393.795"
             }
         },
- 
         {
             "name": "win_msvc15_x86",
             "description": "Configure project using Visual Studio 2015 (v140) in x86 for Windows",
@@ -59,12 +56,10 @@
             },
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x86/",
-				"CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE",
+                "CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE",
                 "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.14393.795"
             }
         },
-       
- 
         {
             "name": "win_msvc15_x86_Qt5.9.6",
             "description": "Configure project using Visual Studio 2015 (v140) in x86 for Windows",
@@ -79,48 +74,42 @@
             },
             "cacheVariables": {
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2015-x86-Qt5.9.6/",
-                "Qt5_ROOT" : "$env{QT5_9_6}/msvc2015/",
+                "Qt5_ROOT": "$env{QT5_9_6}/msvc2015/",
                 "CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION_MAXIMUM": "10.0.14393.795"
             }
         },
-       
         {
             "name": "win_msvc22_x64",
             "description": "Configure project using Visual Studio 2022 (v143) in x64 for Windows",
             "binaryDir": "${sourceDir}/build/win-msvc2022-x64",
-            "toolset":
-            {
-            "value": "v143",
-            "strategy": "set"
+            "toolset": {
+                "value": "v143",
+                "strategy": "set"
             },
-            "architecture":
-            {
-            "value": "x64",
-            "strategy": "set"
+            "architecture": {
+                "value": "x64",
+                "strategy": "set"
             },
             "cacheVariables": {
-            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2022-x64/",
-			"CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2022-x64/",
+                "CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE"
             }
         },
-       
         {
             "name": "win_msvc22_x64_Qt5.15.14",
             "description": "Configure project using Visual Studio 2022 (v143) in x64 for Windows",
             "binaryDir": "${sourceDir}/build/win-msvc2022-x64-Qt5.15",
-            "toolset":
-            {
-            "value": "v143",
-            "strategy": "set"
+            "toolset": {
+                "value": "v143",
+                "strategy": "set"
             },
-            "architecture":
-            {
-            "value": "x64",
-            "strategy": "set"
+            "architecture": {
+                "value": "x64",
+                "strategy": "set"
             },
             "cacheVariables": {
-            "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2022-x64-Qt5.15/",
-            "Qt5_ROOT" : "$env{QT5_15_14}/msvc2022_64/"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-msvc2022-x64-Qt5.15/",
+                "Qt5_ROOT": "$env{QT5_15_14}/msvc2022_64/"
             }
         },
         {
@@ -131,10 +120,9 @@
             "binaryDir": "build/unix/$env{TARGET_MKSPECS}",
             "cacheVariables": {
                 "CMAKE_CONFIGURATION_TYPES": "debug;release",
-                "Qt5_ROOT" : "$env{QT_ROOT}/gcc_64/"
+                "Qt5_ROOT": "$env{QT_ROOT}/gcc_64/"
             }
         },
- 
         {
             "name": "win_bl2010_x86",
             "description": "Configure project using Borland 2010 in x86 for Windows",
@@ -143,14 +131,13 @@
             "cacheVariables": {
                 "CMAKE_CONFIGURATION_TYPES": "debug;release",
                 "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/win-bl2010-x86/",
-                "CMAKE_C_COMPILER":"bcc32",
-                "CMAKE_CXX_COMPILER":"bcc32",
-			    "CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE"
+                "CMAKE_C_COMPILER": "bcc32",
+                "CMAKE_CXX_COMPILER": "bcc32",
+                "CMAKE_DISABLE_FIND_PACKAGE_Qt5": "TRUE"
             }
         }
     ],
- 
-    "buildPresets" : [
+    "buildPresets": [
         {
             "name": "win_msvc2015_debug_x64",
             "configurePreset": "win_msvc15_x64",
@@ -227,138 +214,240 @@
             "name": "linux_debug_x64",
             "configurePreset": "linux_x64",
             "configuration": "debug",
-            "targets": ["all","install"],
+            "targets": [
+                "all",
+                "install"
+            ],
             "jobs": 4
         },
         {
             "name": "linux_release_x64",
             "configurePreset": "linux_x64",
             "configuration": "release",
-            "targets": ["all","install"],
+            "targets": [
+                "all",
+                "install"
+            ],
             "jobs": 4
         },
         {
             "name": "win_bl2010_debug_x86",
             "configurePreset": "win_bl2010_x86",
             "configuration": "Debug",
-            "targets": ["all","install"]
+            "targets": [
+                "all",
+                "install"
+            ]
         },
         {
             "name": "win_bl2010_release_x86",
             "configurePreset": "win_bl2010_x86",
             "configuration": "Release",
-            "targets": ["all","install"]
+            "targets": [
+                "all",
+                "install"
+            ]
         }
     ],
- 
-    "workflowPresets":[
+    "workflowPresets": [
         {
             "name": "build_win_msvc2015_x64",
-            "steps":[
-                { "type":"configure", "name":"win_msvc15_x64" },
-                { "type":"build", "name":"win_msvc2015_debug_x64" },
-                { "type":"build", "name":"win_msvc2015_release_x64" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc15_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2015_debug_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2015_release_x64"
+                }
             ]
         },
         {
             "name": "build_win_msvc2015_x64_Qt5.9.6",
-            "steps":[
-                { "type":"configure", "name":"win_msvc15_x64_Qt5.9.6" },
-                { "type":"build", "name":"win_msvc2015_debug_x64_Qt5.9.6" },
-                { "type":"build", "name":"win_msvc2015_release_x64_Qt5.9.6" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc15_x64_Qt5.9.6"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2015_debug_x64_Qt5.9.6"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2015_release_x64_Qt5.9.6"
+                }
             ]
         },
         {
             "name": "build_win_msvc2015_x86",
-            "steps":[
-                { "type":"configure", "name":"win_msvc15_x86" },
-                { "type":"build", "name":"win_msvc2015_debug_x86" },
-                { "type":"build", "name":"win_msvc2015_release_x86" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc15_x86"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2015_debug_x86"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2015_release_x86"
+                }
             ]
         },
         {
             "name": "build_win_msvc2015_x86_Qt5.9.6",
-            "steps":[
-                { "type":"configure", "name":"win_msvc15_x86_Qt5.9.6" },
-                { "type":"build", "name":"win_msvc2015_debug_x86_Qt5.9.6" },
-                { "type":"build", "name":"win_msvc2015_release_x86_Qt5.9.6" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc15_x86_Qt5.9.6"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2015_debug_x86_Qt5.9.6"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2015_release_x86_Qt5.9.6"
+                }
             ]
         },
         {
             "name": "build_win_msvc2022_x64",
-            "steps":[
-                { "type":"configure", "name":"win_msvc22_x64" },
-                { "type":"build", "name":"win_msvc2022_debug_x64" },
-                { "type":"build", "name":"win_msvc2022_release_x64" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc22_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2022_debug_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2022_release_x64"
+                }
             ]
         },
         {
             "name": "build_win_msvc2022_x64_Qt5.15.14",
-            "steps":[
-                { "type":"configure", "name":"win_msvc22_x64_Qt5.15.14" },
-                { "type":"build", "name":"win_msvc2022_debug_x64_Qt5.15.14" },
-                { "type":"build", "name":"win_msvc2022_release_x64_Qt5.15.14" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc22_x64_Qt5.15.14"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2022_debug_x64_Qt5.15.14"
+                },
+                {
+                    "type": "build",
+                    "name": "win_msvc2022_release_x64_Qt5.15.14"
+                }
             ]
         },
         {
             "name": "build_linux_x64",
-            "steps":[
-                { "type":"configure", "name":"linux_x64" },
-                { "type":"build", "name":"linux_debug_x64" },
-                { "type":"build", "name":"linux_release_x64" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "linux_debug_x64"
+                },
+                {
+                    "type": "build",
+                    "name": "linux_release_x64"
+                }
             ]
         },
         {
             "name": "build_win_bl2010_x86",
-            "steps":[
-                { "type":"configure", "name":"win_bl2010_x86" },
-                { "type":"build", "name":"win_bl2010_debug_x86" },
-                { "type":"build", "name":"win_bl2010_release_x86" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_bl2010_x86"
+                },
+                {
+                    "type": "build",
+                    "name": "win_bl2010_debug_x86"
+                },
+                {
+                    "type": "build",
+                    "name": "win_bl2010_release_x86"
+                }
             ]
         },
- 
         {
             "name": "dev_win_msvc2015_x64",
-            "steps":[
-                { "type":"configure", "name":"win_msvc15_x64" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc15_x64"
+                }
             ]
         },
         {
             "name": "dev_win_msvc2015_x64_Qt5.9.6",
-            "steps":[
-                { "type":"configure", "name":"win_msvc15_x64_Qt5.9.6" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc15_x64_Qt5.9.6"
+                }
             ]
         },
         {
             "name": "dev_win_msvc2015_x86",
-            "steps":[
-                { "type":"configure", "name":"win_msvc15_x86" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc15_x86"
+                }
             ]
         },
         {
             "name": "dev_win_msvc2015_x86_Qt5.9.6",
-            "steps":[
-                { "type":"configure", "name":"win_msvc15_x86_Qt5.9.6" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc15_x86_Qt5.9.6"
+                }
             ]
         },
         {
             "name": "dev_win_msvc2022_x64",
-            "steps":[
-                { "type":"configure", "name":"win_msvc22_x64" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc22_x64"
+                }
             ]
         },
         {
             "name": "dev_win_msvc2022_x64_Qt5.15.14",
-            "steps":[
-                { "type":"configure", "name":"win_msvc22_x64_Qt5.15.14" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "win_msvc22_x64_Qt5.15.14"
+                }
             ]
         },
         {
             "name": "dev_linux_x64",
-            "steps":[
-                { "type":"configure", "name":"linux_x64" }
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "linux_x64"
+                }
             ]
         }
     ]
 }
- 
