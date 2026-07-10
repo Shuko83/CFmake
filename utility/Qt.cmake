@@ -129,10 +129,11 @@ function(cstoolkit_qt_wrap_cpp outfiles)
 
     if(_WRAP_CPP_TESTS)
         set(moc_tests "/tests")
+        set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}${moc_tests}/generated/moc/$<LOWER_CASE:$<CONFIG>>/mocinclude_${moc_target}.tmp)
     else()
         set(moc_tests)
+        set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}/generated/moc/$<LOWER_CASE:$<CONFIG>>/mocinclude.tmp)
     endif()
-    set(_moc_include_file ${CMAKE_CURRENT_BINARY_DIR}${moc_tests}/generated/moc/$<LOWER_CASE:$<CONFIG>>/mocinclude.tmp)
 
     #filter generator expression moc_files
     cstoolkit_genex_extract("${moc_files}" moc_files _null)
