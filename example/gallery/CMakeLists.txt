@@ -1,6 +1,6 @@
 #Simple executable with some dependencies
 cstoolkit_add_target(gallery EXECUTABLE
-	PRIVATE_LINK_LIBRARIES Qt5::Qml Qt5::QuickControls2
+	PRIVATE_LINK_LIBRARIES Qt6::Qml Qt6::QuickControls2
 	SOURCES_FILES "src/gallery.cpp"
 	RESOURCES_FILES "resources/gallery.qrc"
 )

@@ -173,7 +173,7 @@ function(cstoolkit_add_test TARGET_NAME FRAMEWORK)
         add_executable(${_test_target})
         target_sources(${_test_target} PRIVATE ${_test_file})
         if(FRAMEWORK STREQUAL "QTEST")
-            target_link_libraries(${_test_target} PRIVATE Qt5::Test)
+            target_link_libraries(${_test_target} PRIVATE Qt6::Test)
         endif()
 
         set_target_properties(${_test_target} PROPERTIES FOLDER ${TARGET_FOLDER}/tests)
@@ -218,12 +218,12 @@ function(cstoolkit_add_test TARGET_NAME FRAMEWORK)
 
         add_test(NAME ${_test_target} COMMAND ${_test_target})
         if(FRAMEWORK STREQUAL "QTEST")
-            set_tests_properties(${_test_target} PROPERTIES ENVIRONMENT "PATH=${Qt5_ROOT}/bin;$ENV{PATH}")
+            set_tests_properties(${_test_target} PROPERTIES ENVIRONMENT "PATH=${Qt6_ROOT}/bin;$ENV{PATH}")
         endif()
 
         add_custom_command(TARGET ${_test_target} POST_BUILD
             COMMAND ${CSTOOLKIT_COPY} -e
-                "$<FILTER:$<TARGET_RUNTIME_DLLS:${_test_target}>,EXCLUDE,^${Qt5_INSTALL_PREFIX}>"
+                "$<FILTER:$<TARGET_RUNTIME_DLLS:${_test_target}>,EXCLUDE,^${Qt6_INSTALL_PREFIX}>"
                 "$<TARGET_FILE_DIR:${_test_target}>"
                 COMMAND_EXPAND_LISTS
         )

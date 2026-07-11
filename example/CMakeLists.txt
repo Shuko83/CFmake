@@ -26,7 +26,7 @@ find_package(Boost REQUIRED)
 
 cstoolkit_fetch_package(dcliUtils LEGACY URL "http://10.20.1.10:8081/artifactory/release/Libraries/DCLI/Utils/1.4.1.0/win-msvc2015/x64/Utils_1.4.1.0_win-msvc2015-x64.zip")
 
-#cstoolkit_fetch_package("QstBase" GIT_SRC URL "http://10.20.1.10:8081/artifactory/snapshot/Libraries/Qst/QstBase/2.2.0/QstBase_2.2.0.982_win-msvc2022-x64-Qt5.15.7z")
+#cstoolkit_fetch_package("QstBase" GIT_SRC URL "http://10.20.1.10:8081/artifactory/snapshot/Libraries/Qst/QstBase/2.2.0/QstBase_2.2.0.982_win-msvc2022-x64-Qt6.15.7z")
 
 # call to add_subdirectory includes the CMakeLists.txt in that directory
 # it's is not mandatory but recomended for a cleaner Directory Structure

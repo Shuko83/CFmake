@@ -16,7 +16,7 @@ list(APPEND tool_options @arg_DEPLOY_TOOL_OPTIONS@)
 message(STATUS "Running Qt deploy tool for @arg_TARGET@")
 
 execute_process(
-    COMMAND "${CMAKE_COMMAND}" -E env "PATH=@Qt5_INSTALL_PREFIX@/bin;$ENV{PATH}" -- "@QT_DEPLOY_TOOL@" "$<TARGET_FILE:@arg_TARGET@>" --dir "@arg_INSTALL_DIR@" --qmldir "$<TARGET_PROPERTY:@arg_TARGET@,SOURCE_DIR>" --force ${tool_options}
+    COMMAND "${CMAKE_COMMAND}" -E env "PATH=@Qt6_INSTALL_PREFIX@/bin;$ENV{PATH}" -- "@QT_DEPLOY_TOOL@" "$<TARGET_FILE:@arg_TARGET@>" --dir "@arg_INSTALL_DIR@" --qmldir "$<TARGET_PROPERTY:@arg_TARGET@,SOURCE_DIR>" --force ${tool_options}
     $<LIST:JOIN,$<LIST:TRANSFORM,$<LIST:TRANSFORM,@arg_RUNTIME_DEPENDENCIES@,PREPEND,">,APPEND,">,
     >
     WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}"

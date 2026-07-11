@@ -371,11 +371,7 @@ function(_cstoolkit_internal_compute_url url_var url_root url_package_name)
     endif()
 
     if(_compute_url_QT)
-        if(Qt5_VERSION_MAJOR LESS_EQUAL 5 AND Qt5_VERSION_MINOR LESS_EQUAL 9)
-            set(_compute_url_MKSPECS_QT "${_compute_url_MKSPECS}-Qt${QT_VERSION}")
-        else()
-            set(_compute_url_MKSPECS_QT "${_compute_url_MKSPECS}-Qt${QT_VERSION_MM}")
-        endif()
+        set(_compute_url_MKSPECS_QT "${_compute_url_MKSPECS}-Qt${QT_VERSION_MM}")
     endif()
     
     set(${url_var} "${url_root}/${_compute_url_FOLDER}/${url_package_name}/${_compute_url_VERSION}/${url_package_name}_${_compute_url_VERSION}${_compute_url_EXPORT_CONTROL}")

@@ -1,15 +1,21 @@
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "Generated Files")
 
-find_package(Qt5 COMPONENTS Core OPTIONAL_COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
-if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
-    find_package(Qt5Core QUIET)
+find_package(Qt6 COMPONENTS Core OPTIONAL_COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
+if(NOT Qt6_FOUND OR NOT TARGET Qt6::Core)
+    find_package(Qt6Core QUIET)
 endif()
 
-if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
+find_package(Qt6 COMPONENTS Core OPTIONAL_COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
+if(NOT Qt6_FOUND OR NOT TARGET Qt6::Core)
+    find_package(Qt6Core QUIET)
+endif()
+
+
+if(NOT Qt6_FOUND OR NOT TARGET Qt6::Core)
     # Finding QT_ROOT
-    if(NOT Qt5_ROOT AND NOT Qt5_DIR)
+    if(NOT Qt6_ROOT AND NOT Qt6_DIR)
         if(DEFINED ENV{QTDIR})
-            set(Qt5_ROOT $ENV{QTDIR})
+            set(Qt6_ROOT $ENV{QTDIR})
         else()
             find_program(CSTOOLKIT_QMAKE_EXECUTABLE qmake)
             if(NOT CSTOOLKIT_QMAKE_EXECUTABLE STREQUAL "CSTOOLKIT_QMAKE_EXECUTABLE-NOTFOUND")
@@ -19,7 +25,7 @@ if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
                     ERROR_QUIET
                     OUTPUT_STRIP_TRAILING_WHITESPACE)
                 if(NOT return_code)
-                    set(Qt5_ROOT "${_output}")
+                    set(Qt6_ROOT "${_output}")
                 endif()
                 unset(_return_code)
                 unset(_output)
@@ -27,15 +33,15 @@ if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
         endif()
     endif()
 
-    find_package(Qt5 COMPONENTS Core OPTIONAL_COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
-    if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
-        find_package(Qt5Core QUIET)
+    find_package(Qt6 COMPONENTS Core OPTIONAL_COMPONENTS Widgets QUIET) # Widgets car on a besoin de uic.exe
+    if(NOT Qt6_FOUND OR NOT TARGET Qt6::Core)
+        find_package(Qt6Core QUIET)
     endif()
 endif()
 
-if(NOT Qt5_FOUND OR NOT TARGET Qt5::Core)
+if(NOT Qt6_FOUND OR NOT TARGET Qt6::Core)
 
-set(QT_VERSION "Qt5-NOTFOUND")
+set(QT_VERSION "Qt6-NOTFOUND")
 set(QT_VERSION_MM "${QT_VERSION}")
 
 set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-${QT_VERSION}")
@@ -64,45 +70,40 @@ function(cstoolkit_qt_generate_deploy_app_script)
     message(SEND_ERROR "CSToolkit: Qt was not found, unable to use cstoolkit_qt_generate_deploy_app_script()")
 endfunction()
 
-else() # Qt5 Found
+else() # Qt6 Found
 
-set(QT_VERSION "${Qt5_VERSION}")
-set(QT_VERSION_MM "${Qt5_VERSION_MAJOR}.${Qt5_VERSION_MINOR}")
+set(QT_VERSION "${Qt6_VERSION}")
+set(QT_VERSION_MM "${Qt6_VERSION_MAJOR}.${Qt6_VERSION_MINOR}")
+set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
 
-if(Qt5_VERSION_MAJOR LESS_EQUAL 5 AND Qt5_VERSION_MINOR LESS_EQUAL 9)
-    set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION}")
-else()
-    set(CSTOOLKIT_BUILD_MKSPECS_QT "${CSTOOLKIT_BUILD_MKSPECS}-Qt${QT_VERSION_MM}")
-endif()
+set(Qt6_INSTALL_PREFIX "${_qt6Core_install_prefix}")
 
-set(Qt5_INSTALL_PREFIX "${_qt5Core_install_prefix}")
+message(STATUS "CSToolkit: Selecting Qt ${QT_VERSION} in: ${Qt6_INSTALL_PREFIX}")
 
-message(STATUS "CSToolkit: Selecting Qt ${QT_VERSION} in: ${Qt5_INSTALL_PREFIX}")
-
-set(CMAKE_VS_DEBUGGER_ENVIRONMENT "PATH=${Qt5_INSTALL_PREFIX}/bin;%PATH%")
+set(CMAKE_VS_DEBUGGER_ENVIRONMENT "PATH=${Qt6_INSTALL_PREFIX}/bin;%PATH%")
 
 if(WIN32)
-    if(NOT TARGET Qt5::windeployqt)
-        add_executable(Qt5::windeployqt IMPORTED)
+    if(NOT TARGET Qt6::windeployqt)
+        add_executable(Qt6::windeployqt IMPORTED)
 
-        set(imported_location "${_qt5Core_install_prefix}/bin/windeployqt.exe")
-        _qt5_Core_check_file_exists(${imported_location})
+        set(imported_location "${_qt6Core_install_prefix}/bin/windeployqt.exe")
+        _qt6_Core_check_file_exists(${imported_location})
 
-        set_target_properties(Qt5::windeployqt PROPERTIES
+        set_target_properties(Qt6::windeployqt PROPERTIES
             IMPORTED_LOCATION ${imported_location}
         )
         # For Deploy feature
-        get_target_property(QT_DEPLOY_TOOL Qt5::windeployqt LOCATION)
+        get_target_property(QT_DEPLOY_TOOL Qt6::windeployqt LOCATION)
     endif()
 endif()
 
 if(MSVC)
     # hushes some known Qt warnings
-    set_property(TARGET Qt5::Core APPEND PROPERTY INTERFACE_COMPILE_OPTIONS -wd4127 -wd4512 -wd4714 $<$<NOT:$<CONFIG:Debug>>:-wd4718>)
+    set_property(TARGET Qt6::Core APPEND PROPERTY INTERFACE_COMPILE_OPTIONS -wd4127 -wd4512 -wd4714 $<$<NOT:$<CONFIG:Debug>>:-wd4718>)
 endif()
 
-# qt5_wrap_cpp(outfiles inputfile ... )
-# partially copied from Qt5CoreMacros.cmake
+# qt6_wrap_cpp(outfiles inputfile ... )
+# partially copied from Qt6CoreMacros.cmake
 function(cstoolkit_qt_wrap_cpp outfiles)
     
     set(_moc_flags)
@@ -184,7 +185,7 @@ function(cstoolkit_qt_wrap_cpp outfiles)
         endif()
 
         add_custom_command(OUTPUT ${outfile}
-            COMMAND ${Qt5Core_MOC_EXECUTABLE}
+            COMMAND ${Qt6Core_MOC_EXECUTABLE}
             ARGS ${_moc_flags} @${_moc_include_file} "${infile}" -o "${outfile}"
             ${COMMAND_DEPENDENCIES}
             COMMENT "MOC ${relpath}"
@@ -207,13 +208,13 @@ function(cstoolkit_qt_wrap_cpp outfiles)
     set(${outfiles} ${${outfiles}} PARENT_SCOPE)
 endfunction()
 
-if(NOT Qt5Widgets_UIC_EXECUTABLE)
+if(NOT Qt6Widgets_UIC_EXECUTABLE)
 function(cstoolkit_qt_wrap_ui outfiles)
-    message(SEND_ERROR "CSToolkit: Qt5::uic was not found, unable to use cstoolkit_qt_wrap_ui()")
+    message(SEND_ERROR "CSToolkit: Qt6::uic was not found, unable to use cstoolkit_qt_wrap_ui()")
 endfunction()
 else()
-# qt5_wrap_ui(outfiles inputfile ... )
-# partially copied from Qt5WidgetsMacros.cmake
+# qt6_wrap_ui(outfiles inputfile ... )
+# partially copied from Qt6WidgetsMacros.cmake
 function(cstoolkit_qt_wrap_ui outfiles)
     set(options)
     set(oneValueArgs)
@@ -232,7 +233,7 @@ function(cstoolkit_qt_wrap_ui outfiles)
 
         add_custom_command(OUTPUT ${outfile}
             COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/generated/uic/$<LOWER_CASE:$<CONFIG>>
-            COMMAND ${Qt5Widgets_UIC_EXECUTABLE}
+            COMMAND ${Qt6Widgets_UIC_EXECUTABLE}
             ARGS ${ui_options} -o ${outfile} ${infile}
             MAIN_DEPENDENCY ${infile}
             VERBATIM
@@ -247,8 +248,8 @@ function(cstoolkit_qt_wrap_ui outfiles)
 endfunction()
 endif()
 
-# qt5_add_resources(outfiles inputfile ... )
-# partially copied from Qt5CoreMacros.cmake
+# qt6_add_resources(outfiles inputfile ... )
+# partially copied from Qt6CoreMacros.cmake
 function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
     set(options)
     set(oneValueArgs)
@@ -266,7 +267,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
         set(_rc_depends)
 
         # Parsing qrc
-        #_qt5_parse_qrc_file(${infile} _out_depends _rc_depends)
+        #_qt6_parse_qrc_file(${infile} _out_depends _rc_depends)
         set(RC_TOTAL_FILE_SIZE 0) # Total size of all referenced resources file in octet
         if(EXISTS "${infile}")
             get_filename_component(rc_path ${infile} PATH)
@@ -315,7 +316,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
             endif()
             add_custom_command(OUTPUT ${tmpoutfile}
                             COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${outdir}
-                            COMMAND ${Qt5Core_RCC_EXECUTABLE}
+                            COMMAND ${Qt6Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --pass 1 --output ${tmpoutfile} ${infile}
                             DEPENDS ${infile} ${_rc_depends}
                             VERBATIM
@@ -324,11 +325,11 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
             add_library(${rcctarget} OBJECT ${tmpoutfile})
             set_target_properties(${rcctarget} PROPERTIES AUTOMOC OFF)
             set_target_properties(${rcctarget} PROPERTIES AUTOUIC OFF)
-            target_link_libraries(${rcctarget} PUBLIC Qt5::Core)
+            target_link_libraries(${rcctarget} PUBLIC Qt6::Core)
             set_target_properties(${rcctarget} PROPERTIES FOLDER "QtBigResources")
 
             add_custom_command(OUTPUT ${outfile}
-                            COMMAND ${Qt5Core_RCC_EXECUTABLE}
+                            COMMAND ${Qt6Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --pass 2 --temp $<TARGET_OBJECTS:${rcctarget}> --output ${outfile} ${infile}
                             DEPENDS ${rcctarget} $<TARGET_OBJECTS:${rcctarget}>
                             VERBATIM
@@ -337,7 +338,7 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
             set(outfile ${outdir}/qrc_${outfilename}.cpp)
             add_custom_command(OUTPUT ${outfile}
                             COMMAND ${CMAKE_COMMAND} ARGS -E make_directory ${outdir}
-                            COMMAND ${Qt5Core_RCC_EXECUTABLE}
+                            COMMAND ${Qt6Core_RCC_EXECUTABLE}
                             ARGS ${rcc_options} --name ${outfilename} --output ${outfile} ${infile}
                             MAIN_DEPENDENCY ${infile}
                             DEPENDS ${_rc_depends}
@@ -353,8 +354,8 @@ function(cstoolkit_qt_add_resources outcppfiles outrscfiles)
     set(${outrscfiles} ${${outrscfiles}} PARENT_SCOPE)
 endfunction()
 
-# qt5_generate_repc(<VAR> rep_file output_type)
-# partially copied from Qt5RemoteObjectsMacros.cmake
+# qt6_generate_repc(<VAR> rep_file output_type)
+# partially copied from Qt6RemoteObjectsMacros.cmake
 function(cstoolkit_qt_generate_repc outfiles infile outputtype)
     # get include dirs and flags
     get_filename_component(abs_infile ${infile} ABSOLUTE)
@@ -373,17 +374,17 @@ function(cstoolkit_qt_generate_repc outfiles infile outputtype)
     set(_outfile_header "${CMAKE_CURRENT_BINARY_DIR}/${_outfile_base}.h")
     add_custom_command(OUTPUT ${_outfile_header}
         DEPENDS ${abs_infile}
-        COMMAND ${Qt5RemoteObjects_REPC_EXECUTABLE} ${abs_infile} ${_repc_args} ${_outfile_header}
+        COMMAND ${Qt6RemoteObjects_REPC_EXECUTABLE} ${abs_infile} ${_repc_args} ${_outfile_header}
         VERBATIM)
     set_source_files_properties(${_outfile_header} PROPERTIES
                                                 GENERATED TRUE
                                                 SKIP_AUTOMOC ON
                                                 SKIP_AUTOUIC ON)
 
-    qt5_get_moc_flags(_moc_flags)
-    # Make sure we get the compiler flags from the Qt5::RemoteObjects target (for includes)
-    # (code adapted from QT5_GET_MOC_FLAGS)
-    foreach(_current ${Qt5RemoteObjects_INCLUDE_DIRS})
+    qt6_get_moc_flags(_moc_flags)
+    # Make sure we get the compiler flags from the Qt6::RemoteObjects target (for includes)
+    # (code adapted from QT6_GET_MOC_FLAGS)
+    foreach(_current ${Qt6RemoteObjects_INCLUDE_DIRS})
         if("${_current}" MATCHES "\\.framework/?$")
             string(REGEX REPLACE "/[^/]+\\.framework" "" framework_path "${_current}")
             set(_moc_flags ${_moc_flags} "-F${framework_path}")
@@ -393,7 +394,7 @@ function(cstoolkit_qt_generate_repc outfiles infile outputtype)
     endforeach()
 
     set(_moc_outfile "${CMAKE_CURRENT_BINARY_DIR}/moc_${_outfile_base}.cpp")
-    qt5_create_moc_command(${_outfile_header} ${_moc_outfile} "${_moc_flags}" "" "" "")
+    qt6_create_moc_command(${_outfile_header} ${_moc_outfile} "${_moc_flags}" "" "" "")
     list(APPEND ${outfiles} "${_outfile_header}" ${_moc_outfile})
 endfunction()
 

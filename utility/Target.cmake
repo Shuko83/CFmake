@@ -554,7 +554,7 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
     # Qt
     set(_qt_modules ${TARGET_PUBLIC_LINK_LIBRARIES})
     list(APPEND _qt_modules ${TARGET_PRIVATE_LINK_LIBRARIES})
-    list(FILTER _qt_modules INCLUDE REGEX "^Qt5::")
+    list(FILTER _qt_modules INCLUDE REGEX "^Qt6::")
     if(_qt_modules AND TARGET_SHARED_AND_STATIC)
         message(SEND_ERROR "CSToolkit: cstoolkit_add_target(${TARGET_NAME}): Unsupported Qt dependency with SHARED_AND_STATIC target")
     elseif(_qt_modules AND NOT TARGET_INTERFACE )
@@ -655,8 +655,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
         set(TARGET_RUNTIME_DLLS "$<LIST:REMOVE_DUPLICATES,${TARGET_RUNTIME_DLLS}>")
         set(TARGET_RUNTIME_DLLS "$<JOIN:${TARGET_RUNTIME_DLLS},;>") # remove empty elements
 
-        if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls, necessary for development
-            set(TARGET_RUNTIME_DLLS "$<FILTER:${TARGET_RUNTIME_DLLS},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
+        if(Qt6_INSTALL_PREFIX) #Filtering of Qt's dlls, necessary for development
+            set(TARGET_RUNTIME_DLLS "$<FILTER:${TARGET_RUNTIME_DLLS},EXCLUDE,^${Qt6_INSTALL_PREFIX}>")
         endif()
 
         if(CSTOOLKIT_BUILD_DEPLOY)
@@ -758,8 +758,8 @@ function(cstoolkit_add_target TARGET_NAME TARGET_TYPE)
                 # Removes TARGET_RUNTIME_DLLS that are already deployed
                 set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<LIST:REMOVE_ITEM,${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},${TARGET_RUNTIME_DLLS}>")
 
-                if(Qt5_INSTALL_PREFIX) #Filtering of Qt's dlls, necessary for development
-                    set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<FILTER:${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},EXCLUDE,^${Qt5_INSTALL_PREFIX}>")
+                if(Qt6_INSTALL_PREFIX) #Filtering of Qt's dlls, necessary for development
+                    set(PLUGINS_TARGET_FILES${DESTINATION_INDEX} "$<FILTER:${PLUGINS_TARGET_FILES${DESTINATION_INDEX}},EXCLUDE,^${Qt6_INSTALL_PREFIX}>")
                 endif()
 
                 math(EXPR DESTINATION_INDEX "${DESTINATION_INDEX}+1")
